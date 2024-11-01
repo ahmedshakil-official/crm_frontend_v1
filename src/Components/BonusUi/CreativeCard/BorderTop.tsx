@@ -1,0 +1,23 @@
+import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
+import { TopBorder } from "@/Constant";
+import { BorderTopData } from "@/Data/BonusUi/CreativeCard";
+import { Card, CardBody, Col } from "reactstrap";
+
+const BorderTop = () => {
+  const BorderTopText1: string = "Tabs have long been used to show alternative views of the same group of information tabs in software. Known as";
+  const BorderTopTextEm: string = "“module tabs”";
+  const BorderTopText2: string = " , these are still used today in web sites. For instance, airline companies such as Ryanair, easyJet and AirMalta use module tabs to enable the user to switch between bookings for flights, hotels and car hire.";
+
+  return (
+    <Col sm="12" md="6">
+      <Card className="b-t-0">
+        <CommonCardHeader headClass="border-t-danger" title={TopBorder} span={BorderTopData} />
+        <CardBody>
+          <p className="mb-0">{BorderTopText1}<em className="text-danger">{BorderTopTextEm}</em>{BorderTopText2}</p>
+        </CardBody>
+      </Card>
+    </Col>
+  );
+};
+
+export default BorderTop;
