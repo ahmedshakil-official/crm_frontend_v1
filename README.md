@@ -1,12 +1,14 @@
-------------------------
- Version List
-------------------------
- Node :- v20.12.2
- React :- ^18.2.0
- Next :- 14.1.4
-------------------------
+---
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Version List
+
+Node :- v20.12.2
+React :- ^18.2.0
+Next :- 14.1.4
+
+---
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`]
 
 ## Getting Started
 
