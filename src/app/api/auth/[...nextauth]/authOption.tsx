@@ -1,8 +1,12 @@
-import { NextAuthOptions } from "next-auth";
+import axios from "axios";
+import { NextAuthOptions, User as NextAuthUser } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import isEqual from "lodash/isEqual";
+
+interface UserWithToken extends NextAuthUser {
+  token?: string;
+}
 
 export const authoption: NextAuthOptions = {
   session: {
@@ -16,21 +20,39 @@ export const authoption: NextAuthOptions = {
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
-      credentials: {},
-      async authorize(credentials: any) {    
-        const user = {
-          email: "Test123@gmail.com",
-          password: "Test@123",
-        };
-        if (
-          isEqual(user, {
-            email: credentials?.email,
-            password: credentials?.password,
-          })
-        ) {
-          return user as any;
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        try {
+          if (!credentials) {
+            throw new Error("No credentials provided");
+          }
+
+          const response = await axios.post(
+            "https://5ba3-103-49-202-226.ngrok-free.app/auth/jwt/create",
+            {
+              email: credentials.email,
+              password: credentials.password,
+            }
+          );
+          console.log("Response:", response.data);
+
+          if (response.data && response.data.access) {
+            return {
+              id: response.data.user_id || "default_id", // Use a unique ID here if available
+              name: response.data.name || credentials.email, // Or any other available name field
+              email: credentials.email,
+              token: response.data.access,
+            };
+          }
+
+          return null;
+        } catch (error) {
+          console.error("Login error:", error);
+          return null;
         }
-        return null;
       },
     }),
     Github({
@@ -44,16 +66,20 @@ export const authoption: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // Persist the OAuth access_token to the token right after signin
       if (user?.email) {
         token.email = user.email;
+
+        // NEW: Check if the user has a token, and assign it to token.accessToken
+        const userWithToken = user as UserWithToken;
+        if (userWithToken.token) {
+          token.accessToken = userWithToken.token;
+        }
       }
       return token;
-    },     
+    },
     async redirect({ url, baseUrl }) {
       return url.startsWith(baseUrl) ? url : baseUrl;
-    }
+    },
   },
-  debug:true
-  
+  debug: true,
 };
