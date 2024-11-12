@@ -48,7 +48,7 @@ export const LoginForm: React.FC<LoginFormProp> = ({ logoClass }) => {
             <Input
               type="email"
               required
-              placeholder="Test@gmail.com"
+              placeholder="Email"
               id="email"
               value={formData.email}
               onChange={handleInputChange}
@@ -63,7 +63,7 @@ export const LoginForm: React.FC<LoginFormProp> = ({ logoClass }) => {
                 type={isPasswordVisible ? "text" : "password"}
                 name="login[password]"
                 required
-                placeholder="*********"
+                placeholder="Password"
                 id="password"
                 value={formData.password}
                 onChange={handleInputChange}
