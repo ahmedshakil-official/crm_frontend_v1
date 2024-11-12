@@ -31,7 +31,7 @@ export const authoption: NextAuthOptions = {
           }
 
           const response = await axios.post(
-            "https://5ba3-103-49-202-226.ngrok-free.app/auth/jwt/create",
+            "https://fd85-103-49-202-226.ngrok-free.app/auth/jwt/create",
             {
               email: credentials.email,
               password: credentials.password,
