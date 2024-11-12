@@ -16,6 +16,11 @@ export const UserListData = [
     text: "Task",
     href: "/app/todo",
   },
+  {
+    icon: "Edit",
+    text: "Add User",
+    href: "/others/authentication/registersimple",
+  },
 ];
 
 export const MenuList: MenuItem[] | undefined = [
