@@ -10,7 +10,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Button, Col, Form, FormGroup, Input, Label } from "reactstrap";
 import { CommonLogo } from "./CommonLogo";
-import { SocialLinks } from "./SocialLinks";
 
 export const LoginForm: React.FC<LoginFormProp> = ({ logoClass }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -95,7 +94,7 @@ export const LoginForm: React.FC<LoginFormProp> = ({ logoClass }) => {
               </Button>
             </div>
           </FormGroup>
-          <SocialLinks />
+          {/* <SocialLinks /> */}
         </Form>
       </div>
     </div>

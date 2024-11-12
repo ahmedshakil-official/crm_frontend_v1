@@ -36,9 +36,9 @@ export const ResetPasswordForm = () => {
         </FormGroup>
         <Button color="primary" className="w-100 mt-3" block>{Done}</Button>
       </FormGroup>
-      <p className="mt-4 mb-0">{"Don't have account?"}
+      {/* <p className="mt-4 mb-0">{"Don't have account?"}
         <Link className="ms-2" href={`/others/authentication/registersimple`}>{CreateAccount}</Link>
-      </p>
+      </p> */}
     </Form>
   );
 };

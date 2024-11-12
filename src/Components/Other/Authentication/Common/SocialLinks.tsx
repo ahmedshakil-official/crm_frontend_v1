@@ -21,7 +21,7 @@ export const SocialLinks: React.FC<SocialLinksProp> = ({ logtext, btntext }) => 
           ))}
         </ul>
       </FormGroup>
-      <p className="mt-4 mb-0 text-center">
+      {/* <p className="mt-4 mb-0 text-center">
         {logtext ? logtext : "Don't have account?"}
         {!logtext && !btntext ? (
           <Link className="ms-2" href={`/others/authentication/registersimple`}>
@@ -32,7 +32,7 @@ export const SocialLinks: React.FC<SocialLinksProp> = ({ logtext, btntext }) => 
             {btntext}
           </Link>
         )}
-      </p>
+      </p> */}
     </>
   );
 };
