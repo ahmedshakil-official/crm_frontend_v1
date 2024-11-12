@@ -1,10 +1,12 @@
-import { CreateAccount } from "@/Constant";
 import { socialLinksData } from "@/Data/Pages/PagesData";
 import { SocialLinksProp } from "@/Types/PagesType";
 import Link from "next/link";
 import { FormGroup } from "reactstrap";
 
-export const SocialLinks: React.FC<SocialLinksProp> = ({ logtext, btntext }) => {
+export const SocialLinks: React.FC<SocialLinksProp> = ({
+  logtext,
+  btntext,
+}) => {
   return (
     <>
       <div className="login-social-title">
