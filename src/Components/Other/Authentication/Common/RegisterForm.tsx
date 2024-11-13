@@ -252,10 +252,10 @@ export const RegisterForm: React.FC<LoginFormProp> = ({ logoClass }) => {
               Create Account
             </Button>
           </FormGroup>
-          <SocialLinks
+          {/* <SocialLinks
             logtext="Already have an account?"
             btntext={SignIn || "Sign In"}
-          />
+          /> */}
         </Form>
       </div>
     </div>
