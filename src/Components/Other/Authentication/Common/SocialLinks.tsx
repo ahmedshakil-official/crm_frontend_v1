@@ -1,10 +1,12 @@
-import { CreateAccount } from "@/Constant";
 import { socialLinksData } from "@/Data/Pages/PagesData";
 import { SocialLinksProp } from "@/Types/PagesType";
 import Link from "next/link";
 import { FormGroup } from "reactstrap";
 
-export const SocialLinks: React.FC<SocialLinksProp> = ({ logtext, btntext }) => {
+export const SocialLinks: React.FC<SocialLinksProp> = ({
+  logtext,
+  btntext,
+}) => {
   return (
     <>
       <div className="login-social-title">
@@ -21,7 +23,7 @@ export const SocialLinks: React.FC<SocialLinksProp> = ({ logtext, btntext }) => 
           ))}
         </ul>
       </FormGroup>
-      <p className="mt-4 mb-0 text-center">
+      {/* <p className="mt-4 mb-0 text-center">
         {logtext ? logtext : "Don't have account?"}
         {!logtext && !btntext ? (
           <Link className="ms-2" href={`/others/authentication/registersimple`}>
@@ -32,7 +34,7 @@ export const SocialLinks: React.FC<SocialLinksProp> = ({ logtext, btntext }) => 
             {btntext}
           </Link>
         )}
-      </p>
+      </p> */}
     </>
   );
 };

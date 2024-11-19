@@ -10,7 +10,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Button, Col, Form, FormGroup, Input, Label } from "reactstrap";
 import { CommonLogo } from "./CommonLogo";
-import { SocialLinks } from "./SocialLinks";
 
 export const LoginForm: React.FC<LoginFormProp> = ({ logoClass }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -49,7 +48,7 @@ export const LoginForm: React.FC<LoginFormProp> = ({ logoClass }) => {
             <Input
               type="email"
               required
-              placeholder="Test@gmail.com"
+              placeholder="Email"
               id="email"
               value={formData.email}
               onChange={handleInputChange}
@@ -64,7 +63,7 @@ export const LoginForm: React.FC<LoginFormProp> = ({ logoClass }) => {
                 type={isPasswordVisible ? "text" : "password"}
                 name="login[password]"
                 required
-                placeholder="*********"
+                placeholder="Password"
                 id="password"
                 value={formData.password}
                 onChange={handleInputChange}
@@ -95,7 +94,7 @@ export const LoginForm: React.FC<LoginFormProp> = ({ logoClass }) => {
               </Button>
             </div>
           </FormGroup>
-          <SocialLinks />
+          {/* <SocialLinks /> */}
         </Form>
       </div>
     </div>
