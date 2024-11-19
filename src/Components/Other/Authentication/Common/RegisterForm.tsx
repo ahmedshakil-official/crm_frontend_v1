@@ -1,12 +1,9 @@
 import {
-  Agreewith,
   CreateYourAccount,
   EmailAddress,
-  Href,
   OrganizationName,
   Password,
   Phone,
-  SignIn,
   UserType,
   YourName,
 } from "@/Constant";
@@ -15,68 +12,77 @@ import axios from "axios";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { CommonLogo } from "./CommonLogo";
-import { SocialLinks } from "./SocialLinks";
 
 export const RegisterForm: React.FC<LoginFormProp> = ({ logoClass }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const toggle = () => setPasswordVisible(!isPasswordVisible);
 
   const [formData, setFormData] = useState({
+    email: "",
+    phone: "",
     first_name: "",
     last_name: "",
-    phone: "",
-    email: "",
+    profile_image: "",
+    user_type: "",
     password: "",
     organization_name: "",
-    user_type: "",
-    checkbox1: false,
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id, value, type, checked } = e.target;
-    setFormData({ ...formData, [id]: type === "checkbox" ? checked : value });
+    const { id, value, type, checked, files } = e.target;
+    if (type === "file") {
+      setFormData({ ...formData, [id]: files ? files[0] : null });
+    } else {
+      setFormData({ ...formData, [id]: type === "checkbox" ? checked : value });
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log("Attempting to register:", formData);
-      const response = await axios.post(
-        "https://jsonplaceholder.typicode.com/users",
-        formData,
-        { headers: { "Content-Type": "application/json" } }
-      );
-      console.log("Response received:", response);
+      const form = new FormData();
+      form.append("email", formData.email);
+      form.append("phone", formData.phone);
+      form.append("first_name", formData.first_name);
+      form.append("last_name", formData.last_name);
+      form.append("user_type", formData.user_type);
+      form.append("password", formData.password);
+      form.append("organization_name", formData.organization_name);
 
+      if (formData.profile_image) {
+        form.append("profile_image", formData.profile_image);
+      }
+      console.log("Attempting to register:", formData); //clg
+      const response = await axios.post(
+        "https://d3d1-123-253-215-58.ngrok-free.app/auth/users/",
+        form,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      console.log("Response received:", response); //clg
       if (response.status === 200) {
         alert("Registration successful!");
       }
     } catch (error: any) {
       if (axios.isAxiosError(error) && error.response) {
-        console.error("Server responded with error:", error.response.data);
         alert(
           `Registration failed: ${
             error.response.data.message || "Please try again."
           }`
         );
-      } else if (error.request) {
-        console.error("No response received:", error.request);
-        alert("No response from server.");
       } else {
-        console.error("Error in setup:", error.message);
         alert("An error occurred during registration setup.");
       }
     }
 
     setFormData({
+      email: "",
+      phone: "",
       first_name: "",
       last_name: "",
-      phone: "",
-      email: "",
+      profile_image: "",
+      user_type: "",
       password: "",
       organization_name: "",
-      user_type: "",
-      checkbox1: false,
     });
   };
 
@@ -118,6 +124,8 @@ export const RegisterForm: React.FC<LoginFormProp> = ({ logoClass }) => {
               </Col>
             </Row>
           </FormGroup>
+
+          {/* Other form inputs... */}
           <FormGroup>
             <Col>
               <Label>{Phone || "Phone"}</Label>
@@ -202,28 +210,28 @@ export const RegisterForm: React.FC<LoginFormProp> = ({ logoClass }) => {
                     <option
                       className="form-select-sm f-w-600  text-body-tertiary"
                       style={{ padding: "12px", fontSize: "13px" }}
-                      value="lead"
+                      value="LEAD"
                     >
                       Lead
                     </option>
                     <option
                       className="form-select-sm f-w-600  text-body-tertiary"
                       style={{ padding: "12px", fontSize: "13px" }}
-                      value="client"
+                      value="CLIENT"
                     >
                       Client
                     </option>
                     <option
                       className="form-select-sm f-w-600  text-body-tertiary"
                       style={{ padding: "12px", fontSize: "13px" }}
-                      value="introducer"
+                      value="INTRODUCER"
                     >
                       Introducer
                     </option>
                     <option
                       className="form-select-sm f-w-600  text-body-tertiary"
                       style={{ padding: "12px", fontSize: "13px" }}
-                      value="serviceHolder"
+                      value="SERVICE_HOLDER"
                     >
                       Service Holder
                     </option>
@@ -232,30 +240,22 @@ export const RegisterForm: React.FC<LoginFormProp> = ({ logoClass }) => {
               </Col>
             </Row>
           </FormGroup>
-          <FormGroup className="checkbox-checked">
-            <FormGroup check>
-              <Input
-                id="checkbox1"
-                type="checkbox"
-                checked={formData.checkbox1}
-                onChange={handleInputChange}
-              />
-              <Label className="text-muted" htmlFor="checkbox1" check>
-                {Agreewith || "Agree with the terms"}
-              </Label>
-              <a className="ms-3" href={Href || "#"}>
-                Privacy Policy
-              </a>
-            </FormGroup>
-            <Button color="primary" className="w-100 mt-3">
-              {/* {CreateAccount} */}
-              Create Account
-            </Button>
+
+          <FormGroup>
+            <Col>
+              <Label>Profile Image</Label>
+            </Col>
+            <Input
+              type="file"
+              id="profile_image"
+              accept="image/*"
+              onChange={handleInputChange}
+            />
           </FormGroup>
-          {/* <SocialLinks
-            logtext="Already have an account?"
-            btntext={SignIn || "Sign In"}
-          /> */}
+
+          <Button color="primary" className="w-100 mt-3">
+            Create Account
+          </Button>
         </Form>
       </div>
     </div>
