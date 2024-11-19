@@ -1,5 +1,7 @@
 "use client";
 
+import NavBar from "@/Components/Home/NavBar";
+
 export default function Home() {
   // const router = useRouter();
   // useEffect(() => {
@@ -7,7 +9,9 @@ export default function Home() {
   // }, [router]);
   return (
     <main>
+      <NavBar/>
       <h1>Hello world</h1>
+
     </main>
   );
 }
