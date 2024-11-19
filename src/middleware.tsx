@@ -6,11 +6,16 @@ export default withAuth({
     ...pagesOptions,
   },
 });
-  
- 
+
 export const config = {
   // restricted routes
+  // matcher: [
+  //   "/:path*"
+  // ],
   matcher: [
-    "/:path*"
+    // Protect all dashboard routes
+    "/dashboard/:path*",
+    // Protect specific user-related routes
+    "/users/:path*",
   ],
 };
