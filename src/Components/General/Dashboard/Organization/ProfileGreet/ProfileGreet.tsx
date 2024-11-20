@@ -1,5 +1,6 @@
 import SvgIcon from "@/CommonComponent/SVG/IconSvg";
 import { Href, ImagePath } from "@/Constant";
+import apiClient from "@/services/api-client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -42,30 +43,28 @@ const ProfileGreet = () => {
   }, []);
 
   // Fetch profile data
-  useEffect(() => {
-    if (!slug) return;
+  const fetchProfileData = async () => {
+    try {
+      console.log("Fetching data with slug:", slug); // Debugging
 
-    const fetchProfileData = async () => {
-      try {
-        console.log("Fetching data with slug:", slug); // Debugging
-        const response = await fetch(
-          `https://d3d1-123-253-215-58.ngrok-free.app/organization/${slug}/`
-        );
-        console.log("API Response Status:", response.status); // Debugging
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Fetched Data:", data); // Debugging
-          setProfileData(data);
-        } else {
-          console.error("Failed to fetch profile data");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
+      // Perform the GET request using Axios
+      const response = await apiClient.get(`/organization/${slug}/`);
 
-    fetchProfileData();
-  }, [slug]);
+      // Log response status
+      console.log("API Response Status:", response.status);
+
+      // Extract data directly from the Axios response
+      const data = response.data;
+
+      // Log fetched data
+      console.log("Fetched Data:", data);
+
+      // Set profile data
+      setProfileData(data);
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+    }
+  };
 
   // Update time every second
   useEffect(() => {

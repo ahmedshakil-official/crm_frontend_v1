@@ -7,6 +7,7 @@ import {
   UserType,
   YourName,
 } from "@/Constant";
+import apiClient from "@/services/api-client";
 import { LoginFormProp } from "@/Types/PagesType";
 import axios from "axios";
 import React, { ChangeEvent, FormEvent, useState } from "react";
@@ -53,11 +54,9 @@ export const RegisterForm: React.FC<LoginFormProp> = ({ logoClass }) => {
         form.append("profile_image", formData.profile_image);
       }
       console.log("Attempting to register:", formData); //clg
-      const response = await axios.post(
-        "https://d3d1-123-253-215-58.ngrok-free.app/auth/users/",
-        form,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      const response = await apiClient.post("/auth/users/", form, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       console.log("Response received:", response); //clg
       if (response.status === 200) {
         alert("Registration successful!");
