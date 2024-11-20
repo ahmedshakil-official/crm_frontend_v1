@@ -148,6 +148,9 @@ export const Live: string = "Live";
 export const ThisInvestCycle: string = "This Invest Cycle";
 export const CurrentBalance: string = "Current Balance this invest cycle";
 export const ManageInvoiceHeading: string = "Manage Invoice";
+//My Organization Dashboard
+export const OrganizationTitle:string = "Welcome back to your Organization! Continue your journey."
+
 //E-commerce Page
 export const ProductForm: string = "Product Form";
 export const AddProduct: string = "Add Product";

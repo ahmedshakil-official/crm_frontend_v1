@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiClient from "@/services/api-client";
 import { NextAuthOptions, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
@@ -30,13 +30,10 @@ export const authoption: NextAuthOptions = {
             throw new Error("No credentials provided");
           }
 
-          const response = await axios.post(
-            "https://d3d1-123-253-215-58.ngrok-free.app/auth/jwt/create/",
-            {
-              email: credentials.email,
-              password: credentials.password,
-            }
-          );
+          const response = await apiClient.post("/auth/jwt/create/", {
+            email: credentials.email,
+            password: credentials.password,
+          });
           console.log("Response:", response.data);
 
           if (response.data && response.data.access) {

@@ -2,10 +2,21 @@ import SvgIcon from "@/CommonComponent/SVG/IconSvg";
 import { Href, ImagePath } from "@/Constant";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader, Col } from "reactstrap";
 
 const ProfileGreet = () => {
+  const [currentTime, setCurrentTime] = useState(new Date());
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000); // Update every second
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <Col xl="4" sm="6" className="proorder-xxl-1 box-col-6">
       <Card className="welcome-banner">
@@ -26,7 +37,7 @@ const ProfileGreet = () => {
           <p>Welcome back! Let’s start from where you left.</p>
           <div className="d-flex align-center justify-content-between">
             <Link className="btn btn-pill btn-primary" href={Href}>Whats New!</Link>
-            <span><SvgIcon className="stroke-icon" iconId="watch" />11:14 AM</span>
+            <span><SvgIcon className="stroke-icon" iconId="watch" />{currentTime.toLocaleTimeString()}</span>
           </div>
         </CardBody>
       </Card>
@@ -35,3 +46,7 @@ const ProfileGreet = () => {
 };
 
 export default ProfileGreet;
+
+
+
+
