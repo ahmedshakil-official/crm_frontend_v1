@@ -33,10 +33,11 @@ export const MenuList: MenuItem[] | undefined = [
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
-        badge: "3",
+        badge: "4",
         lanClass: "lan-3",
         children: [
           { path: "/dashboard/default", title: "Default", type: "link", lanClass: "lan-4" },
+          { path: "/dashboard/organization", title: "My Organization", type: "link", lanClass: "lan-4" },
           { path: "/dashboard/ecommerce", title: "Ecommerce", type: "link", lanClass: "lan-5" },
           { path: "/dashboard/education", title: "Education", type: "link" },
         ],
