@@ -366,22 +366,23 @@ const EmployeeTable: React.FC = () => {
               <td>{employee.age}</td>
               <td>{employee.startDate}</td>
               <td>{employee.salary}</td>
-              <td className="text-center">
-                <Button
-                  color="success"
-                  size="sm"
-                  className="me-2"
-                  onClick={() => handleEdit(employee)}
-                >
-                  <i className="icon-pencil-alt"></i>
-                </Button>
-                <Button
-                  color="danger"
-                  size="sm"
-                  onClick={() => handleDelete(employee.name)}
-                >
-                  <i className="icon-trash"></i>
-                </Button>
+              <td className="text-center align-middle">
+                <div className="d-flex justify-content-center gap-2 align-items-center">
+                  <Button
+                    color="success"
+                    size="sm"
+                    onClick={() => handleEdit(employee)}
+                  >
+                    <i className="icon-pencil-alt"></i>
+                  </Button>
+                  <Button
+                    color="danger"
+                    size="sm"
+                    onClick={() => handleDelete(employee.name)}
+                  >
+                    <i className="icon-trash"></i>
+                  </Button>
+                </div>
               </td>
             </tr>
           ))}
@@ -389,71 +390,71 @@ const EmployeeTable: React.FC = () => {
       </Table>
 
       {/* pagination */}
+
       <div className="d-flex justify-content-end p-2">
-        <nav>
-          <ul className="pagination">
-            {/* First Page */}
-            {currentPage > 2 && (
+        <ul className="pagination">
+          {/* Always Show First Page if Current Page is Greater than 2 */}
+          {currentPage > 2 && (
+            <li
+              className="page-item"
+              onClick={() => handlePageChange(1)}
+              style={{ cursor: "pointer" }}
+            >
+              <span className="page-link">1</span>
+            </li>
+          )}
+
+          {/* Ellipsis Before */}
+          {currentPage > 3 && (
+            <li className="page-item disabled">
+              <span className="page-link">...</span>
+            </li>
+          )}
+
+          {/* Dynamic Page Numbers */}
+          {[...Array(totalPages)]
+            .map((_, i) => i + 1)
+            .filter(
+              (page) =>
+                page === currentPage || // Current page
+                page === currentPage - 1 || // Previous page
+                page === currentPage + 1 // Next page
+            )
+            .map((page) => (
               <li
-                className="page-item"
-                onClick={() => handlePageChange(1)}
+                key={page}
+                className={`page-item ${
+                  currentPage === page ? "active custom-active" : ""
+                }`}
+                onClick={() => handlePageChange(page)}
                 style={{ cursor: "pointer" }}
               >
-                <span className="page-link">1</span>
+                <span className="page-link">{page}</span>
               </li>
-            )}
+            ))}
 
-            {/* Ellipsis Before */}
-            {currentPage > 3 && (
-              <li className="page-item disabled">
-                <span className="page-link">...</span>
-              </li>
-            )}
+          {/* Ellipsis After */}
+          {currentPage < totalPages - 2 && (
+            <li className="page-item disabled">
+              <span className="page-link">...</span>
+            </li>
+          )}
 
-            {/* Dynamic Page Numbers */}
-            {[...Array(totalPages)]
-              .map((_, i) => i + 1)
-              .filter(
-                (page) =>
-                  page === currentPage || // Current page
-                  page === currentPage - 1 || // Previous page
-                  page === currentPage + 1 // Next page
-              )
-              .map((page) => (
-                <li
-                  key={page}
-                  className={`page-item ${
-                    currentPage === page ? "active custom-active" : ""
-                  }`}
-                  onClick={() => handlePageChange(page)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <span className="page-link">{page}</span>
-                </li>
-              ))}
-
-            {/* Ellipsis After */}
-            {currentPage < totalPages - 2 && (
-              <li className="page-item disabled">
-                <span className="page-link">...</span>
-              </li>
-            )}
-
-            {/* Last Page */}
-            {currentPage < totalPages - 1 && (
-              <li
-                className="page-item"
-                onClick={() => handlePageChange(totalPages)}
-                style={{ cursor: "pointer" }}
-              >
-                <span className="page-link">{totalPages}</span>
-              </li>
-            )}
-          </ul>
-        </nav>
+          {/* Last Page */}
+          {currentPage < totalPages - 1 && (
+            <li
+              className="page-item"
+              onClick={() => handlePageChange(totalPages)}
+              style={{ cursor: "pointer" }}
+            >
+              <span className="page-link">{totalPages}</span>
+            </li>
+          )}
+        </ul>
       </div>
 
       {/* pagination end */}
+
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>
           {currentEmployee?.name ? "Edit Employee" : "Add Employee"}
