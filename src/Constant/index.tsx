@@ -150,6 +150,7 @@ export const CurrentBalance: string = "Current Balance this invest cycle";
 export const ManageInvoiceHeading: string = "Manage Invoice";
 //My Organization Dashboard
 export const OrganizationTitle:string = "Welcome back to your Organization! Continue your journey."
+export const ListOfEmployee:string="Employee List"
 
 //E-commerce Page
 export const ProductForm: string = "Product Form";
