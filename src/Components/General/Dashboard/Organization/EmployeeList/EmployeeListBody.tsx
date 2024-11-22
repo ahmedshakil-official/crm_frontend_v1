@@ -12,6 +12,7 @@ import {
   Table,
 } from "reactstrap";
 import "./EmployeeList.css";
+import { EmployeeList } from "@/Constant";
 
 interface Employee {
   name: string;
@@ -346,7 +347,7 @@ const EmployeeListBody: React.FC = () => {
   return (
     <div className="container">
       <div className="d-flex justify-content-between pt-0 pb-2">
-        <h3>List of Employees</h3>
+        <h3>{EmployeeList}</h3>
         <Button color="primary" className="mt-0" onClick={handleAdd}>
           Add Employee
         </Button>
