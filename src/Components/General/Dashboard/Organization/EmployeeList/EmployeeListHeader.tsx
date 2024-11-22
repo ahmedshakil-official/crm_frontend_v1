@@ -2,7 +2,7 @@ const EmployeeListHeader = () => {
   return (
     <>
       <div className="pt-3 px-3">
-        <p>Lists of employee in my Organization</p>
+        <p>List of Employees in my Organization</p>
       </div>
     </>
   );
