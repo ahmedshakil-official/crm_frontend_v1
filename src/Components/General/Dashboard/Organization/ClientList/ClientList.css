@@ -1,0 +1,9 @@
+.pagination .page-item.active .page-link {
+    background-color: #308e87 !important; /* Change active color to red */
+    color: white !important; /* Text color */
+    border-color: #308e87 !important; /* Border color */
+  }
+  .pagination .page-item .page-link {
+    color: #308e87 !important; /* Text color */
+  }
+  

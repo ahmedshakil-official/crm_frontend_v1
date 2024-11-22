@@ -154,6 +154,7 @@ export const OrganizationTitle: string =
 export const EmployeeList: string = "List of Employees";
 export const LeadList: string = "List of Leads";
 export const IntroducerList: string = "List of Introducers";
+export const ClientList: string = "List of Clients";
 
 //E-commerce Page
 export const ProductForm: string = "Product Form";
