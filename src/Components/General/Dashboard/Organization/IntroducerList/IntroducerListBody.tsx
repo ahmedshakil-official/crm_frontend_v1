@@ -1,3 +1,4 @@
+import { IntroducerList } from "@/Constant";
 import React, { useState } from "react";
 import {
   Button,
@@ -12,7 +13,6 @@ import {
   Table,
 } from "reactstrap";
 import "./IntroducerList.css";
-import { IntroducerList } from "@/Constant";
 
 interface Introducer {
   name: string;
@@ -29,6 +29,132 @@ const initialIntroducers: Introducer[] = [
     contactNumber: "123-456-7890",
     email: "johndoe@example.com",
     referredLeads: 15,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
+  },
+  {
+    name: "Jane Smith",
+    location: "Los Angeles",
+    contactNumber: "987-654-3210",
+    email: "janesmith@example.com",
+    referredLeads: 20,
   },
   {
     name: "Jane Smith",
@@ -219,7 +345,7 @@ const IntroducerListBody: React.FC = () => {
       {/* Pagination */}
       <div className="d-flex justify-content-end p-2">
         <ul className="pagination">
-          {/* Previous Page */}
+          {/* Previous Page Button */}
           <li
             className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
             onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
@@ -229,9 +355,34 @@ const IntroducerListBody: React.FC = () => {
               <i className="fa-solid fa-angle-left"></i>
             </span>
           </li>
-          {/* Pagination Numbers */}
+
+          {/* Always Show First Page if Current Page is Greater than 2 */}
+          {currentPage > 2 && (
+            <li
+              className="page-item"
+              onClick={() => handlePageChange(1)}
+              style={{ cursor: "pointer" }}
+            >
+              <span className="page-link">1</span>
+            </li>
+          )}
+
+          {/* Ellipsis Before */}
+          {currentPage > 3 && (
+            <li className="page-item disabled">
+              <span className="page-link">...</span>
+            </li>
+          )}
+
+          {/* Dynamic Page Numbers */}
           {[...Array(totalPages)]
             .map((_, i) => i + 1)
+            .filter(
+              (page) =>
+                page === currentPage || // Current page
+                page === currentPage - 1 || // Previous page
+                page === currentPage + 1 // Next page
+            )
             .map((page) => (
               <li
                 key={page}
@@ -244,7 +395,26 @@ const IntroducerListBody: React.FC = () => {
                 <span className="page-link">{page}</span>
               </li>
             ))}
-          {/* Next Page */}
+
+          {/* Ellipsis After */}
+          {currentPage < totalPages - 2 && (
+            <li className="page-item disabled">
+              <span className="page-link">...</span>
+            </li>
+          )}
+
+          {/* Last Page */}
+          {currentPage < totalPages - 1 && (
+            <li
+              className="page-item"
+              onClick={() => handlePageChange(totalPages)}
+              style={{ cursor: "pointer" }}
+            >
+              <span className="page-link">{totalPages}</span>
+            </li>
+          )}
+
+          {/* Next Page Button */}
           <li
             className={`page-item ${
               currentPage === totalPages ? "disabled" : ""
@@ -262,6 +432,7 @@ const IntroducerListBody: React.FC = () => {
           </li>
         </ul>
       </div>
+      {/* Pagination end */}
 
       {/* Add/Edit Modal */}
       <Modal isOpen={modal} toggle={toggleModal}>
