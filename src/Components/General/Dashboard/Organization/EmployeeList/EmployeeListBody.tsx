@@ -1,4 +1,3 @@
-import { ListOfEmployee } from "@/Constant";
 import React, { useState } from "react";
 import {
   Button,
@@ -12,7 +11,8 @@ import {
   ModalHeader,
   Table,
 } from "reactstrap";
-import "./ListOfEmployee.css";
+import "./EmployeeList.css";
+import { EmployeeList } from "@/Constant";
 
 interface Employee {
   name: string;
@@ -258,15 +258,18 @@ const initialEmployees: Employee[] = [
   },
 ];
 
-const EmployeeTable: React.FC = () => {
+const EmployeeListBody: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>(initialEmployees);
   const [searchQuery, setSearchQuery] = useState("");
   const [modal, setModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [currentEmployee, setCurrentEmployee] = useState<Employee | null>(null);
+  const [employeeToDelete, setEmployeeToDelete] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const employeesPerPage = 10;
+  const employeesPerPage = 5;
 
   const toggleModal = () => setModal(!modal);
+  const toggleDeleteModal = () => setDeleteModal(!deleteModal);
 
   const filteredEmployees = employees.filter(
     (employee) =>
@@ -312,8 +315,19 @@ const EmployeeTable: React.FC = () => {
     toggleModal();
   };
 
-  const handleDelete = (name: string) => {
-    setEmployees(employees.filter((employee) => employee.name !== name));
+  const confirmDelete = () => {
+    if (employeeToDelete) {
+      setEmployees(
+        employees.filter((employee) => employee.name !== employeeToDelete)
+      );
+      setEmployeeToDelete(null);
+    }
+    toggleDeleteModal();
+  };
+
+  const handleDeleteClick = (name: string) => {
+    setEmployeeToDelete(name);
+    toggleDeleteModal();
   };
 
   // Pagination logic
@@ -333,7 +347,7 @@ const EmployeeTable: React.FC = () => {
   return (
     <div className="container">
       <div className="d-flex justify-content-between pt-0 pb-2">
-        <h3>{ListOfEmployee}</h3>
+        <h3>{EmployeeList}</h3>
         <Button color="primary" className="mt-0" onClick={handleAdd}>
           Add Employee
         </Button>
@@ -378,7 +392,7 @@ const EmployeeTable: React.FC = () => {
                   <Button
                     color="danger"
                     size="sm"
-                    onClick={() => handleDelete(employee.name)}
+                    onClick={() => handleDeleteClick(employee.name)}
                   >
                     <i className="icon-trash"></i>
                   </Button>
@@ -389,10 +403,20 @@ const EmployeeTable: React.FC = () => {
         </tbody>
       </Table>
 
-      {/* pagination */}
-
+      {/* Pagination */}
       <div className="d-flex justify-content-end p-2">
         <ul className="pagination">
+          {/* Previous Page Button */}
+          <li
+            className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+            onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+            style={{ cursor: currentPage > 1 ? "pointer" : "not-allowed" }}
+          >
+            <span className="page-link">
+              <i className="fa-solid fa-angle-left"></i>
+            </span>
+          </li>
+
           {/* Always Show First Page if Current Page is Greater than 2 */}
           {currentPage > 2 && (
             <li
@@ -450,11 +474,28 @@ const EmployeeTable: React.FC = () => {
               <span className="page-link">{totalPages}</span>
             </li>
           )}
+
+          {/* Next Page Button */}
+          <li
+            className={`page-item ${
+              currentPage === totalPages ? "disabled" : ""
+            }`}
+            onClick={() =>
+              currentPage < totalPages && handlePageChange(currentPage + 1)
+            }
+            style={{
+              cursor: currentPage < totalPages ? "pointer" : "not-allowed",
+            }}
+          >
+            <span className="page-link">
+              <i className="fa-solid fa-angle-right"></i>
+            </span>
+          </li>
         </ul>
       </div>
+      {/* Pagination end */}
 
-      {/* pagination end */}
-
+      {/* Add/Edit Employee Modal */}
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>
           {currentEmployee?.name ? "Edit Employee" : "Add Employee"}
@@ -532,8 +573,24 @@ const EmployeeTable: React.FC = () => {
           </Button>
         </ModalFooter>
       </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal isOpen={deleteModal} toggle={toggleDeleteModal}>
+        <ModalHeader toggle={toggleDeleteModal}>Confirm Delete</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete <strong>{employeeToDelete}</strong>?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={confirmDelete}>
+            Yes, Delete
+          </Button>
+          <Button color="secondary" onClick={toggleDeleteModal}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };
 
-export default EmployeeTable;
+export default EmployeeListBody;
