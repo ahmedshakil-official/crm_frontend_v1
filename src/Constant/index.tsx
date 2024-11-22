@@ -152,7 +152,7 @@ export const ManageInvoiceHeading: string = "Manage Invoice";
 export const OrganizationTitle: string =
   "Welcome back to your Organization! Continue your journey.";
 export const EmployeeList: string = "List of Employees";
-
+export const LeadList: string = "List of Leads";
 
 //E-commerce Page
 export const ProductForm: string = "Product Form";
