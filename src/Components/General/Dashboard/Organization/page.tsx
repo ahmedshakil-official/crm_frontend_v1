@@ -3,6 +3,7 @@ import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
 import { Container, Row } from "reactstrap";
 import EarningsTrend from "./EarningsTrend/EarningsTrend";
 import EmployeeList from "./EmployeeList/EmployeeList";
+import IntroducerList from "./IntroducerList/IntroducerList";
 import JobToday from "./JobToday/JobToday";
 import LeadList from "./LeadList/LeadList";
 import ProfileGreet from "./ProfileGreet/ProfileGreet";
@@ -22,6 +23,7 @@ const MyOrganizationContainer = () => {
           <JobToday />
           <EmployeeList />
           <LeadList />
+          <IntroducerList />
         </Row>
       </Container>
     </>
