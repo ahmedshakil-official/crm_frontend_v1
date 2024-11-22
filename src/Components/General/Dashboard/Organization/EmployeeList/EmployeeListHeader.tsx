@@ -1,4 +1,4 @@
-const ListOfEmployeeHeader = () => {
+const EmployeeListHeader = () => {
   return (
     <>
       <div className="pt-3 px-3">
@@ -8,4 +8,4 @@ const ListOfEmployeeHeader = () => {
   );
 };
 
-export default ListOfEmployeeHeader;
+export default EmployeeListHeader;

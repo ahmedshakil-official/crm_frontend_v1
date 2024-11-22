@@ -11,7 +11,7 @@ import {
   ModalHeader,
   Table,
 } from "reactstrap";
-import "./ListOfEmployee.css";
+import "./EmployeeList.css";
 
 interface Employee {
   name: string;
@@ -257,7 +257,7 @@ const initialEmployees: Employee[] = [
   },
 ];
 
-const ListOfEmployeeBody: React.FC = () => {
+const EmployeeListBody: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>(initialEmployees);
   const [searchQuery, setSearchQuery] = useState("");
   const [modal, setModal] = useState(false);
@@ -592,4 +592,4 @@ const ListOfEmployeeBody: React.FC = () => {
   );
 };
 
-export default ListOfEmployeeBody;
+export default EmployeeListBody;
