@@ -15,6 +15,7 @@ import {
 import "./IntroducerList.css";
 
 interface Introducer {
+  id: string;
   name: string;
   location: string;
   contactNumber: string;
@@ -24,172 +25,164 @@ interface Introducer {
 
 const initialIntroducers: Introducer[] = [
   {
-    name: "John Doe",
+    id: "1",
+    name: "John Davis",
     location: "New York",
     contactNumber: "123-456-7890",
     email: "johndoe@example.com",
     referredLeads: 15,
   },
   {
-    name: "Jane Smith",
+    id: "2",
+    name: "Samantha Clark",
     location: "Los Angeles",
     contactNumber: "987-654-3210",
     email: "janesmith@example.com",
     referredLeads: 20,
   },
   {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
+    id: "3",
+    name: "David King",
+    location: "Chicago",
+    contactNumber: "654-321-9870",
+    email: "davidking@example.com",
+    referredLeads: 18,
+  },
+  {
+    id: "4",
+    name: "Emma White",
+    location: "San Francisco",
+    contactNumber: "123-987-6543",
+    email: "emmawhite@example.com",
+    referredLeads: 25,
+  },
+  {
+    id: "5",
+    name: "Oliver Green",
+    location: "Austin",
+    contactNumber: "987-321-6540",
+    email: "olivergreen@example.com",
+    referredLeads: 30,
+  },
+  {
+    id: "6",
+    name: "Sophia Martinez",
+    location: "Miami",
+    contactNumber: "543-987-1234",
+    email: "sophiamartinez@example.com",
+    referredLeads: 12,
+  },
+  {
+    id: "7",
+    name: "James Taylor",
+    location: "Dallas",
+    contactNumber: "321-654-9870",
+    email: "jamestaylor@example.com",
+    referredLeads: 22,
+  },
+  {
+    id: "8",
+    name: "Lily Harris",
+    location: "Seattle",
+    contactNumber: "654-321-4321",
+    email: "lilyharris@example.com",
+    referredLeads: 18,
+  },
+  {
+    id: "9",
+    name: "Chris Lee",
+    location: "Boston",
+    contactNumber: "432-123-6547",
+    email: "chrislee@example.com",
+    referredLeads: 17,
+  },
+  {
+    id: "10",
+    name: "Rachel Adams",
+    location: "Chicago",
+    contactNumber: "321-432-7654",
+    email: "racheladams@example.com",
+    referredLeads: 24,
+  },
+  {
+    id: "11",
+    name: "William Harris",
+    location: "Denver",
+    contactNumber: "876-543-1234",
+    email: "williamharris@example.com",
+    referredLeads: 21,
+  },
+  {
+    id: "12",
+    name: "Charlotte Lewis",
+    location: "Atlanta",
+    contactNumber: "765-432-9876",
+    email: "charlottelewis@example.com",
+    referredLeads: 16,
+  },
+  {
+    id: "13",
+    name: "Lucas Wright",
+    location: "Phoenix",
+    contactNumber: "654-321-5432",
+    email: "lucaswright@example.com",
+    referredLeads: 19,
+  },
+  {
+    id: "14",
+    name: "Madison Scott",
+    location: "Orlando",
+    contactNumber: "543-210-9876",
+    email: "madisonscott@example.com",
+    referredLeads: 23,
+  },
+  {
+    id: "15",
+    name: "Benjamin Walker",
+    location: "Houston",
+    contactNumber: "432-654-3210",
+    email: "benjaminwalker@example.com",
     referredLeads: 20,
   },
   {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
+    id: "16",
+    name: "Amelia Harris",
+    location: "San Diego",
+    contactNumber: "321-765-4321",
+    email: "ameliaharris@example.com",
     referredLeads: 20,
   },
   {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
+    id: "17",
+    name: "Jack Williams",
+    location: "Las Vegas",
+    contactNumber: "987-654-1230",
+    email: "jackwilliams@example.com",
+    referredLeads: 22,
   },
   {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
+    id: "18",
+    name: "Avery Collins",
+    location: "Portland",
+    contactNumber: "765-432-8765",
+    email: "averycollins@example.com",
+    referredLeads: 18,
   },
   {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
+    id: "19",
+    name: "Grace Hall",
+    location: "Miami",
+    contactNumber: "432-123-6547",
+    email: "gracehall@example.com",
+    referredLeads: 19,
   },
   {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
-  },
-  {
-    name: "Jane Smith",
-    location: "Los Angeles",
-    contactNumber: "987-654-3210",
-    email: "janesmith@example.com",
-    referredLeads: 20,
+    id: "20",
+    name: "Henry Moore",
+    location: "New York",
+    contactNumber: "123-321-7654",
+    email: "henrymoore@example.com",
+    referredLeads: 28,
   },
 ];
 
@@ -221,16 +214,16 @@ const IntroducerListBody: React.FC = () => {
     if (currentIntroducer) {
       setCurrentIntroducer({
         ...currentIntroducer,
-        [e.target.name]: e.target.value,
+        [e.target.id]: e.target.value,
       });
     }
   };
 
   const handleSave = () => {
     if (currentIntroducer) {
-      const updatedIntroducers = currentIntroducer.name
+      const updatedIntroducers = currentIntroducer.id
         ? introducers.map((intro) =>
-            intro.name === currentIntroducer.name ? currentIntroducer : intro
+            intro.id === currentIntroducer.id ? currentIntroducer : intro
           )
         : [...introducers, currentIntroducer];
       setIntroducers(updatedIntroducers);
@@ -245,6 +238,7 @@ const IntroducerListBody: React.FC = () => {
 
   const handleAdd = () => {
     setCurrentIntroducer({
+      id: "",
       name: "",
       location: "",
       contactNumber: "",
@@ -257,17 +251,20 @@ const IntroducerListBody: React.FC = () => {
   const confirmDelete = () => {
     if (introducerToDelete) {
       setIntroducers(
-        introducers.filter(
-          (introducer) => introducer.name !== introducerToDelete
-        )
+        introducers.filter((introducer) => introducer.id !== introducerToDelete)
       );
       setIntroducerToDelete(null);
     }
     toggleDeleteModal();
   };
+  // Get the name of the employee to delete based on the ID
+  const introdicerToDeleteName = introducerToDelete
+    ? introducers.find((introducer) => introducer.id === introducerToDelete)
+        ?.name
+    : "";
 
-  const handleDeleteClick = (name: string) => {
-    setIntroducerToDelete(name);
+  const handleDeleteClick = (id: string) => {
+    setIntroducerToDelete(id);
     toggleDeleteModal();
   };
 
@@ -313,7 +310,7 @@ const IntroducerListBody: React.FC = () => {
         </thead>
         <tbody>
           {currentIntroducers.map((introducer, index) => (
-            <tr key={index}>
+            <tr key={introducer.id}>
               <td>{introducer.name}</td>
               <td>{introducer.location}</td>
               <td>{introducer.contactNumber}</td>
@@ -331,7 +328,7 @@ const IntroducerListBody: React.FC = () => {
                   <Button
                     color="danger"
                     size="sm"
-                    onClick={() => handleDeleteClick(introducer.name)}
+                    onClick={() => handleDeleteClick(introducer.id)}
                   >
                     <i className="icon-trash"></i>
                   </Button>
@@ -437,7 +434,7 @@ const IntroducerListBody: React.FC = () => {
       {/* Add/Edit Modal */}
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>
-          {currentIntroducer?.name ? "Edit Introducer" : "Add Introducer"}
+          {currentIntroducer?.id ? "Edit Introducer" : "Add Introducer"}
         </ModalHeader>
         <ModalBody>
           <Form>
@@ -507,7 +504,12 @@ const IntroducerListBody: React.FC = () => {
       <Modal isOpen={deleteModal} toggle={toggleDeleteModal}>
         <ModalHeader toggle={toggleDeleteModal}>Confirm Delete</ModalHeader>
         <ModalBody>
-          Are you sure you want to delete <strong className="text-danger">{introducerToDelete}</strong>?
+          {introdicerToDeleteName && (
+            <>
+              Are you sure you want to delete{" "}
+              <strong className="text-danger">{introdicerToDeleteName}</strong>?
+            </>
+          )}
         </ModalBody>
         <ModalFooter>
           <Button color="danger" onClick={confirmDelete}>
