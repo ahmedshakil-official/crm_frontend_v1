@@ -1,0 +1,14 @@
+/* Continuous rotation animation */
+.rotate-animation {
+  animation: rotate-clock 10s linear infinite; /* Spins in 2 seconds infinitely */
+  display: inline-block; /* Ensures proper alignment */
+}
+
+@keyframes rotate-clock {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
