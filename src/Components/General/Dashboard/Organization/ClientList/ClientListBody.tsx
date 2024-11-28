@@ -15,6 +15,7 @@ import {
 import "./ClientList.css";
 
 interface Client {
+  id: string;
   name: string;
   company: string;
   contactNumber: string;
@@ -24,6 +25,7 @@ interface Client {
 
 const initialClients: Client[] = [
   {
+    id: "1",
     name: "Alice Johnson",
     company: "TechCorp",
     contactNumber: "555-123-4567",
@@ -31,157 +33,155 @@ const initialClients: Client[] = [
     projectStatus: "Active",
   },
   {
-    name: "Alice Johnson",
+    id: "2",
+    name: "Bob Smith",
     company: "TechCorp",
-    contactNumber: "555-123-4567",
-    email: "alice.johnson@techcorp.com",
+    contactNumber: "555-123-4568",
+    email: "bob.smith@techcorp.com",
     projectStatus: "Active",
   },
   {
-    name: "Alice Johnson",
+    id: "3",
+    name: "Charlie Davis",
     company: "TechCorp",
-    contactNumber: "555-123-4567",
-    email: "alice.johnson@techcorp.com",
+    contactNumber: "555-123-4569",
+    email: "charlie.davis@techcorp.com",
     projectStatus: "Active",
   },
   {
-    name: "Alice Johnson",
+    id: "4",
+    name: "Diana Moore",
     company: "TechCorp",
-    contactNumber: "555-123-4567",
-    email: "alice.johnson@techcorp.com",
+    contactNumber: "555-123-4570",
+    email: "diana.moore@techcorp.com",
     projectStatus: "Active",
   },
   {
-    name: "Alice Johnson",
+    id: "5",
+    name: "Eva Taylor",
     company: "TechCorp",
-    contactNumber: "555-123-4567",
-    email: "alice.johnson@techcorp.com",
+    contactNumber: "555-123-4571",
+    email: "eva.taylor@techcorp.com",
     projectStatus: "Active",
   },
   {
-    name: "Alice Johnson",
+    id: "6",
+    name: "Frank White",
     company: "TechCorp",
-    contactNumber: "555-123-4567",
-    email: "alice.johnson@techcorp.com",
+    contactNumber: "555-123-4572",
+    email: "frank.white@techcorp.com",
     projectStatus: "Active",
   },
   {
-    name: "Alice Johnson",
+    id: "7",
+    name: "Grace Black",
     company: "TechCorp",
-    contactNumber: "555-123-4567",
-    email: "alice.johnson@techcorp.com",
+    contactNumber: "555-123-4573",
+    email: "grace.black@techcorp.com",
     projectStatus: "Active",
   },
   {
-    name: "Alice Johnson",
+    id: "8",
+    name: "Hannah Green",
     company: "TechCorp",
-    contactNumber: "555-123-4567",
-    email: "alice.johnson@techcorp.com",
+    contactNumber: "555-123-4574",
+    email: "hannah.green@techcorp.com",
     projectStatus: "Active",
   },
   {
-    name: "Alice Johnson",
-    company: "TechCorp",
-    contactNumber: "555-123-4567",
-    email: "alice.johnson@techcorp.com",
-    projectStatus: "Active",
-  },
-  {
-    name: "Bob Lee",
+    id: "9",
+    name: "Ivy Adams",
     company: "Innovate Inc.",
     contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    email: "ivy.adams@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "10",
+    name: "Jack Lee",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6544",
+    email: "jack.lee@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "11",
+    name: "Karen Young",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6545",
+    email: "karen.young@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "12",
+    name: "Louis King",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6546",
+    email: "louis.king@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "13",
+    name: "Megan White",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6547",
+    email: "megan.white@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "14",
+    name: "Nathan Brown",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6548",
+    email: "nathan.brown@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "15",
+    name: "Olivia Harris",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6549",
+    email: "olivia.harris@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "16",
+    name: "Paul Robinson",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6550",
+    email: "paul.robinson@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "17",
+    name: "Quincy Martin",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6551",
+    email: "quincy.martin@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "18",
+    name: "Rachel Scott",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6552",
+    email: "rachel.scott@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "19",
+    name: "Steve Allen",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6553",
+    email: "steve.allen@innovateinc.com",
     projectStatus: "Pending",
   },
   {
-    name: "Bob Lee",
+    id: "20",
+    name: "Tracy Carter",
     company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
-    projectStatus: "Pending",
-  },
-  {
-    name: "Bob Lee",
-    company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
-    projectStatus: "Pending",
-  },
-  {
-    name: "Bob Lee",
-    company: "Innovate Inc.",
-    contactNumber: "555-987-6543",
-    email: "bob.lee@innovateinc.com",
+    contactNumber: "555-987-6554",
+    email: "tracy.carter@innovateinc.com",
     projectStatus: "Pending",
   },
 ];
@@ -209,17 +209,15 @@ const ClientListBody: React.FC = () => {
     if (currentClient) {
       setCurrentClient({
         ...currentClient,
-        [e.target.name]: e.target.value,
+        [e.target.id]: e.target.value,
       });
     }
   };
 
   const handleSave = () => {
     if (currentClient) {
-      const updatedClients = currentClient.name
-        ? clients.map((cl) =>
-            cl.name === currentClient.name ? currentClient : cl
-          )
+      const updatedClients = currentClient.id
+        ? clients.map((cl) => (cl.id === currentClient.id ? currentClient : cl))
         : [...clients, currentClient];
       setClients(updatedClients);
     }
@@ -233,6 +231,7 @@ const ClientListBody: React.FC = () => {
 
   const handleAdd = () => {
     setCurrentClient({
+      id: "",
       name: "",
       company: "",
       contactNumber: "",
@@ -244,16 +243,20 @@ const ClientListBody: React.FC = () => {
 
   const confirmDelete = () => {
     if (clientToDelete) {
-      setClients(clients.filter((client) => client.name !== clientToDelete));
+      setClients(clients.filter((client) => client.id !== clientToDelete));
       setClientToDelete(null);
     }
     toggleDeleteModal();
   };
 
-  const handleDeleteClick = (name: string) => {
-    setClientToDelete(name);
+  const handleDeleteClick = (id: string) => {
+    setClientToDelete(id);
     toggleDeleteModal();
   };
+  // Get the name of the client to delete based on the ID
+  const clientToDeleteName = clientToDelete
+    ? clients.find((client) => client.id === clientToDelete)?.name
+    : "";
 
   // Pagination logic
   const indexOfLastClient = currentPage * clientsPerPage;
@@ -297,7 +300,7 @@ const ClientListBody: React.FC = () => {
         </thead>
         <tbody>
           {currentClients.map((client, index) => (
-            <tr key={index}>
+            <tr key={client.id}>
               <td>{client.name}</td>
               <td>{client.company}</td>
               <td>{client.contactNumber}</td>
@@ -315,7 +318,7 @@ const ClientListBody: React.FC = () => {
                   <Button
                     color="danger"
                     size="sm"
-                    onClick={() => handleDeleteClick(client.name)}
+                    onClick={() => handleDeleteClick(client.id)}
                   >
                     <i className="icon-trash"></i>
                   </Button>
@@ -421,7 +424,7 @@ const ClientListBody: React.FC = () => {
       {/* Add/Edit Modal */}
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>
-          {currentClient?.name ? "Edit Client" : "Add Client"}
+          {currentClient?.id ? "Edit Client" : "Add Client"}
         </ModalHeader>
         <ModalBody>
           <Form>
@@ -491,7 +494,12 @@ const ClientListBody: React.FC = () => {
       <Modal isOpen={deleteModal} toggle={toggleDeleteModal}>
         <ModalHeader toggle={toggleDeleteModal}>Confirm Delete</ModalHeader>
         <ModalBody>
-          Are you sure you want to delete <strong className="text-danger">{clientToDelete}</strong>?
+          {clientToDeleteName && (
+            <>
+              Are you sure you want to delete{" "}
+              <strong className="text-danger">{clientToDeleteName}</strong>?
+            </>
+          )}
         </ModalBody>
         <ModalFooter>
           <Button color="danger" onClick={confirmDelete}>

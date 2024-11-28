@@ -1,3 +1,4 @@
+import { EmployeeList } from "@/Constant";
 import React, { useState } from "react";
 import {
   Button,
@@ -12,9 +13,9 @@ import {
   Table,
 } from "reactstrap";
 import "./EmployeeList.css";
-import { EmployeeList } from "@/Constant";
 
 interface Employee {
+  id: string;
   name: string;
   position: string;
   office: string;
@@ -25,6 +26,7 @@ interface Employee {
 
 const initialEmployees: Employee[] = [
   {
+    id: "1",
     name: "Tiger Nixon",
     position: "Accountant",
     office: "Edinburgh",
@@ -33,6 +35,7 @@ const initialEmployees: Employee[] = [
     salary: "$320,800",
   },
   {
+    id: "2",
     name: "Garrett Winters",
     position: "Accountant",
     office: "Tokyo",
@@ -41,6 +44,7 @@ const initialEmployees: Employee[] = [
     salary: "$170,750",
   },
   {
+    id: "3",
     name: "Ashton Cox",
     position: "Junior Technical Author",
     office: "San Francisco",
@@ -49,6 +53,7 @@ const initialEmployees: Employee[] = [
     salary: "$86,000",
   },
   {
+    id: "4",
     name: "Cedric Kelly",
     position: "Senior Javascript Developer",
     office: "Edinburgh",
@@ -57,6 +62,7 @@ const initialEmployees: Employee[] = [
     salary: "$433,060",
   },
   {
+    id: "5",
     name: "Airi Satou",
     position: "Accountant",
     office: "Tokyo",
@@ -65,6 +71,7 @@ const initialEmployees: Employee[] = [
     salary: "$162,700",
   },
   {
+    id: "6",
     name: "Brielle Williamson",
     position: "Integration Specialist",
     office: "New York",
@@ -73,6 +80,7 @@ const initialEmployees: Employee[] = [
     salary: "$372,000",
   },
   {
+    id: "7",
     name: "Herrod Chandler",
     position: "Sales Assistant",
     office: "San Francisco",
@@ -81,6 +89,7 @@ const initialEmployees: Employee[] = [
     salary: "$137,500",
   },
   {
+    id: "8",
     name: "Rhona Davidson",
     position: "Integration Specialist",
     office: "Tokyo",
@@ -89,6 +98,7 @@ const initialEmployees: Employee[] = [
     salary: "$327,900",
   },
   {
+    id: "9",
     name: "Colleen Hurst",
     position: "Javascript Developer",
     office: "San Francisco",
@@ -97,6 +107,7 @@ const initialEmployees: Employee[] = [
     salary: "$205,500",
   },
   {
+    id: "10",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -105,6 +116,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "11",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -113,6 +125,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "12",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -121,6 +134,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "13",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -129,6 +143,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "14",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -137,6 +152,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "15",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -145,6 +161,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "16",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -153,6 +170,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "17",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -161,6 +179,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "18",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -169,6 +188,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "19",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -177,6 +197,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "20",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -185,6 +206,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "21",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -193,6 +215,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "22",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -201,6 +224,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "23",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -209,6 +233,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "24",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -217,6 +242,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "25",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -225,6 +251,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "26",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -233,6 +260,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "27",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -241,6 +269,7 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "28",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -249,6 +278,16 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
   {
+    id: "29",
+    name: "Sonya Frost",
+    position: "Software Engineer",
+    office: "Edinburgh",
+    age: 23,
+    startDate: "2008/12/13",
+    salary: "$103,600",
+  },
+  {
+    id: "30",
     name: "Sonya Frost",
     position: "Software Engineer",
     office: "Edinburgh",
@@ -257,14 +296,13 @@ const initialEmployees: Employee[] = [
     salary: "$103,600",
   },
 ];
-
 const EmployeeListBody: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>(initialEmployees);
   const [searchQuery, setSearchQuery] = useState("");
   const [modal, setModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [currentEmployee, setCurrentEmployee] = useState<Employee | null>(null);
-  const [employeeToDelete, setEmployeeToDelete] = useState<string | null>(null);
+  const [employeeToDelete, setEmployeeToDelete] = useState<string | null>(null); // Store employee ID to delete
   const [currentPage, setCurrentPage] = useState(1);
   const employeesPerPage = 5;
 
@@ -281,16 +319,16 @@ const EmployeeListBody: React.FC = () => {
     if (currentEmployee) {
       setCurrentEmployee({
         ...currentEmployee,
-        [e.target.name]: e.target.value,
+        [e.target.id]: e.target.value,
       });
     }
   };
 
   const handleSave = () => {
     if (currentEmployee) {
-      const updatedEmployees = currentEmployee.name
+      const updatedEmployees = currentEmployee.id
         ? employees.map((emp) =>
-            emp.name === currentEmployee.name ? currentEmployee : emp
+            emp.id === currentEmployee.id ? currentEmployee : emp
           )
         : [...employees, currentEmployee];
       setEmployees(updatedEmployees);
@@ -305,6 +343,7 @@ const EmployeeListBody: React.FC = () => {
 
   const handleAdd = () => {
     setCurrentEmployee({
+      id: "",
       name: "",
       position: "",
       office: "",
@@ -317,18 +356,24 @@ const EmployeeListBody: React.FC = () => {
 
   const confirmDelete = () => {
     if (employeeToDelete) {
+      // Remove the employee by matching the ID
       setEmployees(
-        employees.filter((employee) => employee.name !== employeeToDelete)
+        employees.filter((employee) => employee.id !== employeeToDelete)
       );
       setEmployeeToDelete(null);
     }
     toggleDeleteModal();
   };
 
-  const handleDeleteClick = (name: string) => {
-    setEmployeeToDelete(name);
+  const handleDeleteClick = (id: string) => {
+    setEmployeeToDelete(id); // Set employee ID to delete
     toggleDeleteModal();
   };
+
+  // Get the name of the employee to delete based on the ID
+  const employeeToDeleteName = employeeToDelete
+    ? employees.find((employee) => employee.id === employeeToDelete)?.name
+    : "";
 
   // Pagination logic
   const indexOfLastEmployee = currentPage * employeesPerPage;
@@ -373,7 +418,7 @@ const EmployeeListBody: React.FC = () => {
         </thead>
         <tbody>
           {currentEmployees.map((employee, index) => (
-            <tr key={index}>
+            <tr key={employee.id}>
               <td>{employee.name}</td>
               <td>{employee.position}</td>
               <td>{employee.office}</td>
@@ -392,7 +437,7 @@ const EmployeeListBody: React.FC = () => {
                   <Button
                     color="danger"
                     size="sm"
-                    onClick={() => handleDeleteClick(employee.name)}
+                    onClick={() => handleDeleteClick(employee.id)}
                   >
                     <i className="icon-trash"></i>
                   </Button>
@@ -493,12 +538,11 @@ const EmployeeListBody: React.FC = () => {
           </li>
         </ul>
       </div>
-      {/* Pagination end */}
 
       {/* Add/Edit Employee Modal */}
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>
-          {currentEmployee?.name ? "Edit Employee" : "Add Employee"}
+          {currentEmployee?.id ? "Edit Employee" : "Add Employee"}
         </ModalHeader>
         <ModalBody>
           <Form>
@@ -578,7 +622,12 @@ const EmployeeListBody: React.FC = () => {
       <Modal isOpen={deleteModal} toggle={toggleDeleteModal}>
         <ModalHeader toggle={toggleDeleteModal}>Confirm Delete</ModalHeader>
         <ModalBody>
-          Are you sure you want to delete <strong className="text-danger">{employeeToDelete}</strong>?
+          {employeeToDeleteName && (
+            <>
+              Are you sure you want to delete{" "}
+              <strong className="text-danger">{employeeToDeleteName}</strong>?
+            </>
+          )}
         </ModalBody>
         <ModalFooter>
           <Button color="danger" onClick={confirmDelete}>

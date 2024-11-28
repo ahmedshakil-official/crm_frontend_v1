@@ -15,6 +15,7 @@ import {
 import "./LeadList.css";
 
 interface Lead {
+  id: string;
   name: string;
   email: string;
   phone: string;
@@ -24,6 +25,7 @@ interface Lead {
 
 const initialLeads: Lead[] = [
   {
+    id: "1",
     name: "John Doe",
     email: "john@example.com",
     phone: "123-456-7890",
@@ -31,6 +33,7 @@ const initialLeads: Lead[] = [
     createdDate: "2024-01-10",
   },
   {
+    id: "2",
     name: "Jane Smith",
     email: "jane@example.com",
     phone: "987-654-3210",
@@ -38,6 +41,7 @@ const initialLeads: Lead[] = [
     createdDate: "2024-02-15",
   },
   {
+    id: "3",
     name: "John Doe",
     email: "john@example.com",
     phone: "123-456-7890",
@@ -45,6 +49,7 @@ const initialLeads: Lead[] = [
     createdDate: "2024-01-10",
   },
   {
+    id: "4",
     name: "Alice Brown",
     email: "alice@example.com",
     phone: "456-789-0123",
@@ -52,6 +57,7 @@ const initialLeads: Lead[] = [
     createdDate: "2024-03-01",
   },
   {
+    id: "5",
     name: "Jane Smith",
     email: "jane@example.com",
     phone: "987-654-3210",
@@ -59,6 +65,7 @@ const initialLeads: Lead[] = [
     createdDate: "2024-02-15",
   },
   {
+    id: "6",
     name: "Alice Brown",
     email: "alice@example.com",
     phone: "456-789-0123",
@@ -66,6 +73,7 @@ const initialLeads: Lead[] = [
     createdDate: "2024-03-01",
   },
   {
+    id: "7",
     name: "Bob Johnson",
     email: "bob@example.com",
     phone: "321-654-9870",
@@ -73,6 +81,7 @@ const initialLeads: Lead[] = [
     createdDate: "2024-04-05",
   },
   {
+    id: "8",
     name: "Bob Johnson",
     email: "bob@example.com",
     phone: "321-654-9870",
@@ -80,6 +89,7 @@ const initialLeads: Lead[] = [
     createdDate: "2024-04-05",
   },
   {
+    id: "9",
     name: "Bob Johnson",
     email: "bob@example.com",
     phone: "321-654-9870",
@@ -87,35 +97,40 @@ const initialLeads: Lead[] = [
     createdDate: "2024-04-05",
   },
   {
-    name: "Bob Johnson",
+    id: "10",
+    name: "Bob Johnson4",
     email: "bob@example.com",
     phone: "321-654-9870",
     status: "Converted",
     createdDate: "2024-04-05",
   },
   {
-    name: "Bob Johnson",
+    id: "11",
+    name: "Bob Johnson45",
     email: "bob@example.com",
     phone: "321-654-9870",
     status: "Converted",
     createdDate: "2024-04-05",
   },
   {
-    name: "Bob Johnson",
+    id: "12",
+    name: "Bob Johnson2",
     email: "bob@example.com",
     phone: "321-654-9870",
     status: "Converted",
     createdDate: "2024-04-05",
   },
   {
-    name: "Bob Johnson",
+    id: "13",
+    name: "Bob Johnson34",
     email: "bob@example.com",
     phone: "321-654-9870",
     status: "Converted",
     createdDate: "2024-04-05",
   },
   {
-    name: "Bob Johnson",
+    id: "14",
+    name: "Bob Johnson234",
     email: "bob@example.com",
     phone: "321-654-9870",
     status: "Converted",
@@ -146,17 +161,15 @@ const LeadListBody: React.FC = () => {
     if (currentLead) {
       setCurrentLead({
         ...currentLead,
-        [e.target.name]: e.target.value,
+        [e.target.id]: e.target.value,
       });
     }
   };
 
   const handleSave = () => {
     if (currentLead) {
-      const updatedLeads = currentLead.name
-        ? leads.map((lead) =>
-            lead.name === currentLead.name ? currentLead : lead
-          )
+      const updatedLeads = currentLead.id
+        ? leads.map((lead) => (lead.id === currentLead.id ? currentLead : lead))
         : [...leads, currentLead];
       setLeads(updatedLeads);
     }
@@ -170,6 +183,7 @@ const LeadListBody: React.FC = () => {
 
   const handleAdd = () => {
     setCurrentLead({
+      id: "",
       name: "",
       email: "",
       phone: "",
@@ -181,16 +195,20 @@ const LeadListBody: React.FC = () => {
 
   const confirmDelete = () => {
     if (leadToDelete) {
-      setLeads(leads.filter((lead) => lead.name !== leadToDelete));
+      setLeads(leads.filter((lead) => lead.id !== leadToDelete));
       setLeadToDelete(null);
     }
     toggleDeleteModal();
   };
 
-  const handleDeleteClick = (name: string) => {
-    setLeadToDelete(name);
+  const handleDeleteClick = (id: string) => {
+    setLeadToDelete(id);
     toggleDeleteModal();
   };
+  // Get the name of the Lead to delete based on the ID
+  const leadToDeleteName = leadToDelete
+    ? leads.find((lead) => lead.id === leadToDelete)?.name
+    : "";
 
   // Pagination logic
   const indexOfLastLead = currentPage * leadsPerPage;
@@ -230,14 +248,14 @@ const LeadListBody: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {currentLeads.map((lead, index) => (
-            <tr key={index}>
+          {currentLeads.map((lead) => (
+            <tr key={lead.id}>
               <td>{lead.name}</td>
               <td>{lead.email}</td>
               <td>{lead.phone}</td>
               <td>{lead.status}</td>
               <td>{lead.createdDate}</td>
-              <td className="text-center align-middle">
+              <td className="text-center">
                 <div className="d-flex justify-content-center gap-2 align-items-center">
                   <Button
                     color="success"
@@ -249,7 +267,7 @@ const LeadListBody: React.FC = () => {
                   <Button
                     color="danger"
                     size="sm"
-                    onClick={() => handleDeleteClick(lead.name)}
+                    onClick={() => handleDeleteClick(lead.id)}
                   >
                     <i className="icon-trash"></i>
                   </Button>
@@ -353,7 +371,7 @@ const LeadListBody: React.FC = () => {
       {/* Add/Edit Lead Modal */}
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>
-          {currentLead?.name ? "Edit Lead" : "Add Lead"}
+          {currentLead?.id ? "Edit Lead" : "Add Lead"}
         </ModalHeader>
         <ModalBody>
           <Form>
@@ -423,7 +441,12 @@ const LeadListBody: React.FC = () => {
       <Modal isOpen={deleteModal} toggle={toggleDeleteModal}>
         <ModalHeader toggle={toggleDeleteModal}>Confirm Delete</ModalHeader>
         <ModalBody>
-          Are you sure you want to delete <strong className="text-danger">{leadToDelete}</strong>?
+          {leadToDeleteName && (
+            <>
+              Are you sure you want to delete{" "}
+              <strong className="text-danger">{leadToDeleteName}</strong>?
+            </>
+          )}
         </ModalBody>
         <ModalFooter>
           <Button color="danger" onClick={confirmDelete}>
