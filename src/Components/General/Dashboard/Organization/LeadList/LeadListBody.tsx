@@ -423,7 +423,7 @@ const LeadListBody: React.FC = () => {
       <Modal isOpen={deleteModal} toggle={toggleDeleteModal}>
         <ModalHeader toggle={toggleDeleteModal}>Confirm Delete</ModalHeader>
         <ModalBody>
-          Are you sure you want to delete <strong>{leadToDelete}</strong>?
+          Are you sure you want to delete <strong className="text-danger">{leadToDelete}</strong>?
         </ModalBody>
         <ModalFooter>
           <Button color="danger" onClick={confirmDelete}>
