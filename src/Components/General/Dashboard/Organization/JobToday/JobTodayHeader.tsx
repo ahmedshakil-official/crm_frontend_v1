@@ -3,9 +3,9 @@ import { CardHeader } from "reactstrap";
 
 export const JobTodayHeader = () => {
   const today = new Date();
-  const day = today.toLocaleString("en-US", { weekday: "long" });
+  const day = today.toLocaleString("en-UK", { weekday: "long" });
   const date = today.getDate();
-  const month = today.toLocaleString("en-US", { month: "short" });
+  const month = today.toLocaleString("en-UK", { month: "short" });
   const year = today.getFullYear();
 
   return (

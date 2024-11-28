@@ -110,7 +110,7 @@ const ProfileGreet = () => {
             </Link>
             <span>
               <SvgIcon className="stroke-icon" iconId="watch" />
-              {currentTime.toLocaleTimeString()}
+              {currentTime.toLocaleTimeString("en-GB")}
             </span>
           </div>
         </CardBody>
