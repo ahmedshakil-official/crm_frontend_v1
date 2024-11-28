@@ -186,7 +186,7 @@ const initialClients: Client[] = [
   },
 ];
 
-const ClientListBody = () => {
+const ClientListBody: React.FC = () => {
   const [clients, setClients] = useState<Client[]>(initialClients);
   const [searchQuery, setSearchQuery] = useState("");
   const [modal, setModal] = useState(false);
