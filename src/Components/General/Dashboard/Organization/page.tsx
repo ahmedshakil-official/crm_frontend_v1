@@ -4,7 +4,6 @@ import { Container, Row } from "reactstrap";
 import AdvisorList from "./AdvisorList/AdvisorList";
 import ClientList from "./ClientList/ClientList";
 import EarningsTrend from "./EarningsTrend/EarningsTrend";
-import EmployeeList from "./EmployeeList/EmployeeList";
 import IntroducerList from "./IntroducerList/IntroducerList";
 import JobToday from "./JobToday/JobToday";
 import LeadList from "./LeadList/LeadList";
