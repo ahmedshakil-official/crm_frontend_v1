@@ -74,17 +74,17 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
       registration_number: formData.registration_number || null,
       degree: formData.degree || null,
     };
-
-
+  
     const handleSuccess = () => {
       toggle();
-      console.log("added success");
+      console.log("Advisor added successfully.");
+      onSave(); // Notify the parent to fetch the updated data.
     };
+  
     const handleError = (e: any) => {
-      console.log(e, "something went wrong");
+      console.error("Error adding advisor:", e);
     };
-
-
+  
     await apiClient
       .post("/director/advisors/", payload)
       .then(handleSuccess)

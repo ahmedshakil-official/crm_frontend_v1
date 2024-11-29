@@ -235,7 +235,7 @@ const AdvisorListBody: React.FC = () => {
       <AddAdvisorModal
         isOpen={isModalOpen}
         toggle={toggleModal}
-        onSave={handleSaveAdvisor}
+        onSave={() => fetchAdvisors()}
       />
     </div>
   );

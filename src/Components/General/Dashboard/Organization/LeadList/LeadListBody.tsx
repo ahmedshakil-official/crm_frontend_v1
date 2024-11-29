@@ -230,7 +230,7 @@ const LeadListBody: React.FC = () => {
       <AddLeadModal
         isOpen={isModalOpen}
         toggle={toggleModal}
-        onSave={handleSaveLead}
+        onSave={() => fetchLeads()}
       />
     </div>
   );

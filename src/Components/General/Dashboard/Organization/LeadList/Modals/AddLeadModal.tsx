@@ -53,6 +53,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
   };
 
   const handleSaveLead = async () => {
+    const newLead = { ...formData };
     let payload = {
       user: {
         first_name: formData.firstName,
@@ -73,7 +74,8 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
 
     const handleSuccess = () => {
       toggle();
-      console.log("added success");
+      console.log("Added success");
+      onSave();
     };
     const handleError = (e: any) => {
       console.log(e, "something went wrong");
