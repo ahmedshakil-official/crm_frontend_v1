@@ -74,6 +74,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
     const handleSuccess = () => {
       toggle();
       console.log("added success");
+      onSave();
     };
     const handleError = (e: any) => {
       console.log(e, "something went wrong");

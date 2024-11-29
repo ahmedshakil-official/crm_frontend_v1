@@ -240,7 +240,7 @@ const IntroducerListBody: React.FC = () => {
       <AddIntroducerModal
         isOpen={isModalOpen}
         toggle={toggleModal}
-        onSave={handleSaveIntroducer}
+        onSave={()=>fetchIntroducers()}
       />
     </div>
   );

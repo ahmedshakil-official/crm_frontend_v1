@@ -235,7 +235,7 @@ const ClientListBody: React.FC = () => {
       <AddClientModal
         isOpen={isModalOpen}
         toggle={toggleModal}
-        onSave={handleSaveClient}
+        onSave={() => fetchClients()}
       />
     </div>
   );
