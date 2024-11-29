@@ -1,6 +1,7 @@
 import Breadcrumbs from "@/CommonComponent/Breadcrumbs";
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
 import { Container, Row } from "reactstrap";
+import AdvisorList from "./AdvisorList/AdvisorList";
 import ClientList from "./ClientList/ClientList";
 import EarningsTrend from "./EarningsTrend/EarningsTrend";
 import IntroducerList from "./IntroducerList/IntroducerList";
@@ -22,15 +23,17 @@ const MyOrganizationContainer = () => {
           <EarningsTrend />
           <JobToday />
         </Row>
-        <Row></Row>
         <Row>
           <LeadList />
         </Row>
         <Row>
-          <IntroducerList />
+          <ClientList />
         </Row>
         <Row>
-          <ClientList />
+          <AdvisorList />
+        </Row>
+        <Row>
+          <IntroducerList />
         </Row>
       </Container>
     </>
