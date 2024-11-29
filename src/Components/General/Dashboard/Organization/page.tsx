@@ -25,20 +25,16 @@ const MyOrganizationContainer = () => {
           <JobToday />
         </Row>
         <Row>
-<<<<<<< Updated upstream
-          <EmployeeList />
-=======
-          <AdvisorList />
->>>>>>> Stashed changes
-        </Row>
-        <Row>
           <LeadList />
         </Row>
         <Row>
-          <IntroducerList />
+          <ClientList />
         </Row>
         <Row>
-          <ClientList />
+          <AdvisorList />
+        </Row>
+        <Row>
+          <IntroducerList />
         </Row>
       </Container>
     </>

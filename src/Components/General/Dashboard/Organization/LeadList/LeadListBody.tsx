@@ -1,6 +1,5 @@
-import { LeadList } from "@/Constant";
 import apiClient from "@/services/api-client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Input,
@@ -10,17 +9,28 @@ import {
   Table,
 } from "reactstrap";
 import "./LeadList.css";
-import LeadListHeader from "./LeadListHeader";
+import AddLeadModal from "./Modals/AddLeadModal";
 
-interface Lead {
+export interface Lead {
   alias: string;
   user: {
     first_name: string;
     last_name: string;
+    email: string;
+    phone: string;
+    password: string;
   };
+  role: string;
+  designation: string;
   official_email: string;
   official_phone: string;
-  role: string;
+  permanent_address: string;
+  present_address: string;
+  dob: string;
+  gender: string;
+  joining_date: string;
+  registration_number: string;
+  degree: string;
   created_by: {
     first_name: string;
     last_name: string;
@@ -32,54 +42,105 @@ const LeadListBody: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [leadsPerPage] = useState(5); // Number of leads per page
+  const [leadsPerPage] = useState(5);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedLead, setSelectedLead] = useState<Partial<Lead>>({
+    user: { first_name: "", last_name: "", email: "", phone: "", password: "" },
+    role: "",
+    designation: "",
+    official_email: "",
+    official_phone: "",
+    permanent_address: "",
+    present_address: "",
+    dob: "",
+    gender: "",
+    joining_date: "",
+    registration_number: "",
+    degree: "",
+  });
 
-  // Fetch leads from API
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+  const fetchLeads = async () => {
+    try {
+      const response = await apiClient.get("/director/leads/");
+      const LeadsData = Array.isArray(response.data)
+        ? response.data
+        : response.data.leads;
+      setLeads(LeadsData || []);
+    } catch (error) {
+      console.error("Error fetching Leads:", error);
+      setLeads([]);
+    }
+  };
+
   useEffect(() => {
-    const fetchLeads = async () => {
-      try {
-        const response = await apiClient.get("/director/leads/");
-        const leadsData = Array.isArray(response.data)
-          ? response.data
-          : response.data.leads; // Adjust this based on API structure
-        setLeads(leadsData || []); // Ensure it's always an array
-      } catch (error) {
-        console.error("Error fetching leads:", error);
-        setLeads([]); // Fallback to an empty array in case of error
-      }
-    };
     fetchLeads();
   }, []);
 
-  //search query
-  const filteredLeads = Array.isArray(leads)
-    ? leads.filter(
-        (lead) =>
-          lead.user.first_name
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          lead.official_email.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : [];
+  const handleSaveLead = async () => {
+    try {
+      if (selectedLead.alias) {
+        await apiClient.patch(
+          `/director/leads/${selectedLead.alias}/`,
+          selectedLead
+        );
+      } else {
+        await apiClient.post("/director/leads/", selectedLead);
+      }
+      fetchLeads();
+      toggleModal();
+    } catch (error) {
+      console.error("Error saving Lead:", error);
+    }
+  };
 
-  // Calculate indices for pagination
+  const openAddModal = () => {
+    setSelectedLead({
+      user: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        password: "",
+      },
+      role: "",
+      designation: "",
+      official_email: "",
+      official_phone: "",
+      permanent_address: "",
+      present_address: "",
+      dob: "",
+      gender: "",
+      joining_date: "",
+      registration_number: "",
+      degree: "",
+    });
+    toggleModal();
+  };
+
+  const openEditModal = (lead: Lead) => {
+    setSelectedLead(lead);
+    toggleModal();
+  };
+
+  const filteredLeads = leads.filter(
+    (lead) =>
+      lead.user.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      lead.official_email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const indexOfLastLead = currentPage * leadsPerPage;
   const indexOfFirstLead = indexOfLastLead - leadsPerPage;
   const currentLeads = filteredLeads.slice(indexOfFirstLead, indexOfLastLead);
 
   const totalPages = Math.ceil(filteredLeads.length / leadsPerPage);
 
-  // Handle page change
-  const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber);
-
   return (
-    <div className="container p-2">
-      <div>
-        <LeadListHeader />
-      </div>
+    <div className="container p-3">
       <div className="d-flex justify-content-between pt-0 pb-2">
-        <h3>{LeadList}</h3>
-        <Button color="primary" className="mt-0">
+        <h3>Lead List</h3>
+        <Button color="primary" className="mt-0" onClick={openAddModal}>
           Add Lead
         </Button>
       </div>
@@ -111,13 +172,18 @@ const LeadListBody: React.FC = () => {
               <td>{lead.official_email}</td>
               <td>{lead.official_phone}</td>
               <td>{lead.role}</td>
+              {/* <td className="hide">{lead.gender}</td> */}
               <td>
                 {lead.created_by.first_name} {lead.created_by.last_name}
               </td>
               <td>{new Date(lead.created_at).toLocaleString()}</td>
               <td className="text-center">
                 <div className="d-flex justify-content-center gap-2 align-items-center">
-                  <Button color="success" size="sm">
+                  <Button
+                    color="success"
+                    size="sm"
+                    onClick={() => openEditModal(lead)}
+                  >
                     <i className="icon-pencil-alt"></i>
                   </Button>
                   <Button color="danger" size="sm">
@@ -129,16 +195,14 @@ const LeadListBody: React.FC = () => {
           ))}
         </tbody>
       </Table>
-
-      {/* Pagination */}
       <Pagination className="d-flex justify-content-end p-2">
         <PaginationItem disabled={currentPage === 1}>
-          <PaginationLink first onClick={() => handlePageChange(1)} />
+          <PaginationLink first onClick={() => setCurrentPage(1)} />
         </PaginationItem>
         <PaginationItem disabled={currentPage === 1}>
           <PaginationLink
             previous
-            onClick={() => handlePageChange(currentPage - 1)}
+            onClick={() => setCurrentPage(currentPage - 1)}
           />
         </PaginationItem>
         {Array.from({ length: totalPages }, (_, i) => i + 1).map(
@@ -147,7 +211,7 @@ const LeadListBody: React.FC = () => {
               key={pageNumber}
               active={pageNumber === currentPage}
             >
-              <PaginationLink onClick={() => handlePageChange(pageNumber)}>
+              <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
                 {pageNumber}
               </PaginationLink>
             </PaginationItem>
@@ -156,13 +220,18 @@ const LeadListBody: React.FC = () => {
         <PaginationItem disabled={currentPage === totalPages}>
           <PaginationLink
             next
-            onClick={() => handlePageChange(currentPage + 1)}
+            onClick={() => setCurrentPage(currentPage + 1)}
           />
         </PaginationItem>
         <PaginationItem disabled={currentPage === totalPages}>
-          <PaginationLink last onClick={() => handlePageChange(totalPages)} />
+          <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
         </PaginationItem>
       </Pagination>
+      <AddLeadModal
+        isOpen={isModalOpen}
+        toggle={toggleModal}
+        onSave={handleSaveLead}
+      />
     </div>
   );
 };

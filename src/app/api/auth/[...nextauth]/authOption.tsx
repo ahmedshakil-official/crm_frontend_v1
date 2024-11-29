@@ -1,3 +1,4 @@
+import apiClient from "@/services/api-client";
 import axios from "axios";
 import { NextAuthOptions, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -50,7 +51,7 @@ export const authoption: NextAuthOptions = {
 
           // Make API call to obtain JWT token
           console.log("Sending credentials to API:", credentials);
-          const response = await axios.post("/auth/jwt/create/", {
+          const response = await apiClient.post("/auth/jwt/create/", {
             email: credentials.email,
             password: credentials.password,
           });

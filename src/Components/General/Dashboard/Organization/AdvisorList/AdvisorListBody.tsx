@@ -8,11 +8,8 @@ import {
   PaginationLink,
   Table,
 } from "reactstrap";
-import AdvisorListHeader from "./AdvisorListHeader";
 import "./AdvisorList.css";
 import AddAdvisorModal from "./Modals/AddAdvisorModal";
-
-
 
 export interface Advisor {
   alias: string;
@@ -41,7 +38,6 @@ export interface Advisor {
   created_at: string;
 }
 
-
 const AdvisorListBody: React.FC = () => {
   const [advisors, setAdvisors] = useState<Advisor[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,9 +59,7 @@ const AdvisorListBody: React.FC = () => {
     degree: "",
   });
 
-
   const toggleModal = () => setIsModalOpen(!isModalOpen);
-
 
   const fetchAdvisors = async () => {
     try {
@@ -80,11 +74,9 @@ const AdvisorListBody: React.FC = () => {
     }
   };
 
-
   useEffect(() => {
     fetchAdvisors();
   }, []);
-
 
   const handleSaveAdvisor = async () => {
     try {
@@ -102,7 +94,6 @@ const AdvisorListBody: React.FC = () => {
       console.error("Error saving advisor:", error);
     }
   };
-
 
   const openAddModal = () => {
     setSelectedAdvisor({
@@ -128,12 +119,10 @@ const AdvisorListBody: React.FC = () => {
     toggleModal();
   };
 
-
   const openEditModal = (advisor: Advisor) => {
     setSelectedAdvisor(advisor);
     toggleModal();
   };
-
 
   const filteredAdvisors = advisors.filter(
     (advisor) =>
@@ -143,7 +132,6 @@ const AdvisorListBody: React.FC = () => {
       advisor.official_email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
   const indexOfLastAdvisor = currentPage * advisorsPerPage;
   const indexOfFirstAdvisor = indexOfLastAdvisor - advisorsPerPage;
   const currentAdvisors = filteredAdvisors.slice(
@@ -151,13 +139,10 @@ const AdvisorListBody: React.FC = () => {
     indexOfLastAdvisor
   );
 
-
   const totalPages = Math.ceil(filteredAdvisors.length / advisorsPerPage);
 
-
   return (
-    <div className="container p-2">
-      <AdvisorListHeader />
+    <div className="container p-3">
       <div className="d-flex justify-content-between pt-0 pb-2">
         <h3>Advisor List</h3>
         <Button color="primary" className="mt-0" onClick={openAddModal}>
@@ -255,6 +240,5 @@ const AdvisorListBody: React.FC = () => {
     </div>
   );
 };
-
 
 export default AdvisorListBody;
