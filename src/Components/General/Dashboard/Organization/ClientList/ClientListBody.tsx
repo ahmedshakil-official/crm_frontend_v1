@@ -10,15 +10,21 @@ import {
 } from "reactstrap";
 import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
+import UpdateClientModal from "./Modals/UpdateCliientModal";
+
 
 export interface Client {
   alias: string;
   user: {
     first_name: string;
     last_name: string;
-    email: string;
-    phone: string;
-    password: string;
+    profile_image: string;
+    nid: string;
+    user_type: string;
+    city: string;
+    state: string;
+    country: string;
+    zip_code: string;
   };
   role: string;
   designation: string;
@@ -44,8 +50,19 @@ const ClientListBody: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [clientsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<Partial<Client>>({
-    user: { first_name: "", last_name: "", email: "", phone: "", password: "" },
+    user: {
+      first_name: "",
+      last_name: "",
+      profile_image: "",
+      nid: "",
+      user_type: "",
+      city: "",
+      state: "",
+      country: "",
+      zip_code: "",
+    },
     role: "",
     designation: "",
     official_email: "",
@@ -60,6 +77,7 @@ const ClientListBody: React.FC = () => {
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
 
   const fetchClients = async () => {
     try {
@@ -78,66 +96,26 @@ const ClientListBody: React.FC = () => {
     fetchClients();
   }, []);
 
-  const handleSaveClient = async () => {
-    try {
-      if (selectedClient.alias) {
-        await apiClient.patch(
-          `/director/clients/${selectedClient.alias}/`,
-          selectedClient
-        );
-      } else {
-        await apiClient.post("/director/clients/", selectedClient);
-      }
-      fetchClients();
-      toggleModal();
-    } catch (error) {
-      console.error("Error saving Client:", error);
-    }
-  };
-
+  // openmodals
   const openAddModal = () => {
-    setSelectedClient({
-      user: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone: "",
-        password: "",
-      },
-      role: "",
-      designation: "",
-      official_email: "",
-      official_phone: "",
-      permanent_address: "",
-      present_address: "",
-      dob: "",
-      gender: "",
-      joining_date: "",
-      registration_number: "",
-      degree: "",
-    });
     toggleModal();
   };
 
-  const openEditModal = (client: Client) => {
+  const openUpdateModal = (client: Client) => {
     setSelectedClient(client);
-    toggleModal();
+    toggleUpdateModal();
   };
+  // openmodals end
 
   const filteredClients = clients.filter(
     (client) =>
-      client.user.first_name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
+      client.user.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       client.official_email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const indexOfLastClient = currentPage * clientsPerPage;
   const indexOfFirstClient = indexOfLastClient - clientsPerPage;
-  const currentClients = filteredClients.slice(
-    indexOfFirstClient,
-    indexOfLastClient
-  );
+  const currentClients = filteredClients.slice(indexOfFirstClient, indexOfLastClient);
 
   const totalPages = Math.ceil(filteredClients.length / clientsPerPage);
 
@@ -187,11 +165,12 @@ const ClientListBody: React.FC = () => {
                   <Button
                     color="success"
                     size="sm"
-                    onClick={() => openEditModal(client)}
+                    title="Update User"
+                    onClick={() => openUpdateModal(client)}
                   >
                     <i className="icon-pencil-alt"></i>
                   </Button>
-                  <Button color="danger" size="sm">
+                  <Button color="danger" size="sm" title="Delete User">
                     <i className="icon-trash"></i>
                   </Button>
                 </div>
@@ -232,11 +211,22 @@ const ClientListBody: React.FC = () => {
           <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
         </PaginationItem>
       </Pagination>
+      {/* modals */}
       <AddClientModal
         isOpen={isModalOpen}
         toggle={toggleModal}
         onSave={() => fetchClients()}
       />
+      <UpdateClientModal
+        isOpen={isUpdateModalOpen}
+        toggle={toggleUpdateModal}
+        onSave={() => {
+          fetchClients(); // Refresh the list after saving
+          toggleUpdateModal(); // Close the modal
+        }}
+        selectedClient={selectedClient}
+      />
+      {/* modals end */}
     </div>
   );
 };
