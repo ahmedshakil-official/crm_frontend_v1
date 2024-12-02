@@ -220,7 +220,6 @@ const LeadListBody: React.FC = () => {
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
-          // handleSaveLead(updatedLead); // Save changes to the backend
           fetchLeads(); // Refresh the list after saving
           toggleUpdateModal(); // Close the modal
         }}

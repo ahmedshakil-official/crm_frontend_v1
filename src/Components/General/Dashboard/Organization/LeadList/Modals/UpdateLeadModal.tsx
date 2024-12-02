@@ -51,11 +51,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
   const handleUpdateLead = async (leadData: Partial<Lead>) => {
     try {
       if (leadData.alias) {
-        await apiClient.patch(`/director/leads/${leadData.alias}/`, leadData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await apiClient.patch(`/director/leads/${leadData.alias}/`, leadData);
       }
     } catch (error) {
       console.error("Error saving lead:", error);
