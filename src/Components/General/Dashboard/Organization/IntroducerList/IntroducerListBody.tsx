@@ -10,15 +10,20 @@ import {
 } from "reactstrap";
 import "./IntroducerList.css";
 import AddIntroducerModal from "./Modals/AddIntroducerModal";
+import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
 
 export interface Introducer {
   alias: string;
   user: {
     first_name: string;
     last_name: string;
-    email: string;
-    phone: string;
-    password: string;
+    profile_image: string;
+    nid: string;
+    user_type: string;
+    city: string;
+    state: string;
+    country: string;
+    zip_code: string;
   };
   role: string;
   designation: string;
@@ -44,10 +49,19 @@ const IntroducerListBody: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [introducersPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedIntroducer, setSelectedIntroducer] = useState<
-    Partial<Introducer>
-  >({
-    user: { first_name: "", last_name: "", email: "", phone: "", password: "" },
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedIntroducer, setSelectedIntroducer] = useState<Partial<Introducer>>({
+    user: {
+      first_name: "",
+      last_name: "",
+      profile_image: "",
+      nid: "",
+      user_type: "",
+      city: "",
+      state: "",
+      country: "",
+      zip_code: "",
+    },
     role: "",
     designation: "",
     official_email: "",
@@ -62,6 +76,7 @@ const IntroducerListBody: React.FC = () => {
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
 
   const fetchIntroducers = async () => {
     try {
@@ -80,68 +95,26 @@ const IntroducerListBody: React.FC = () => {
     fetchIntroducers();
   }, []);
 
-  const handleSaveIntroducer = async () => {
-    try {
-      if (selectedIntroducer.alias) {
-        await apiClient.patch(
-          `/director/introducers/${selectedIntroducer.alias}/`,
-          selectedIntroducer
-        );
-      } else {
-        await apiClient.post("/director/introducers/", selectedIntroducer);
-      }
-      fetchIntroducers();
-      toggleModal();
-    } catch (error) {
-      console.error("Error saving Introducer:", error);
-    }
-  };
-
+  // openmodals
   const openAddModal = () => {
-    setSelectedIntroducer({
-      user: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone: "",
-        password: "",
-      },
-      role: "",
-      designation: "",
-      official_email: "",
-      official_phone: "",
-      permanent_address: "",
-      present_address: "",
-      dob: "",
-      gender: "",
-      joining_date: "",
-      registration_number: "",
-      degree: "",
-    });
     toggleModal();
   };
 
-  const openEditModal = (introducer: Introducer) => {
+  const openUpdateModal = (introducer: Introducer) => {
     setSelectedIntroducer(introducer);
-    toggleModal();
+    toggleUpdateModal();
   };
+  // openmodals end
 
   const filteredIntroducers = introducers.filter(
     (introducer) =>
-      introducer.user.first_name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      introducer.official_email
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())
+      introducer.user.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      introducer.official_email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const indexOfLastIntroducer = currentPage * introducersPerPage;
   const indexOfFirstIntroducer = indexOfLastIntroducer - introducersPerPage;
-  const currentIntroducers = filteredIntroducers.slice(
-    indexOfFirstIntroducer,
-    indexOfLastIntroducer
-  );
+  const currentIntroducers = filteredIntroducers.slice(indexOfFirstIntroducer, indexOfLastIntroducer);
 
   const totalPages = Math.ceil(filteredIntroducers.length / introducersPerPage);
 
@@ -183,8 +156,7 @@ const IntroducerListBody: React.FC = () => {
               <td>{introducer.role}</td>
               {/* <td className="hide">{introducer.gender}</td> */}
               <td>
-                {introducer.created_by.first_name}{" "}
-                {introducer.created_by.last_name}
+                {introducer.created_by.first_name} {introducer.created_by.last_name}
               </td>
               <td>{new Date(introducer.created_at).toLocaleString()}</td>
               <td className="text-center">
@@ -192,11 +164,12 @@ const IntroducerListBody: React.FC = () => {
                   <Button
                     color="success"
                     size="sm"
-                    onClick={() => openEditModal(introducer)}
+                    title="Update User"
+                    onClick={() => openUpdateModal(introducer)}
                   >
                     <i className="icon-pencil-alt"></i>
                   </Button>
-                  <Button color="danger" size="sm">
+                  <Button color="danger" size="sm" title="Delete User">
                     <i className="icon-trash"></i>
                   </Button>
                 </div>
@@ -237,11 +210,22 @@ const IntroducerListBody: React.FC = () => {
           <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
         </PaginationItem>
       </Pagination>
+      {/* modals */}
       <AddIntroducerModal
         isOpen={isModalOpen}
         toggle={toggleModal}
-        onSave={()=>fetchIntroducers()}
+        onSave={() => fetchIntroducers()}
       />
+      <UpdateIntroducerModal
+        isOpen={isUpdateModalOpen}
+        toggle={toggleUpdateModal}
+        onSave={() => {
+          fetchIntroducers(); // Refresh the list after saving
+          toggleUpdateModal(); // Close the modal
+        }}
+        selectedIntroducer={selectedIntroducer}
+      />
+      {/* modals end */}
     </div>
   );
 };
