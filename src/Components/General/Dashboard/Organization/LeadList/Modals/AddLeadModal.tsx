@@ -96,7 +96,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
             {/* First Column */}
             <Col md={6}>
               <FormGroup>
-                <Label for="firstName">First Name</Label>
+                <Label for="firstName">
+                  First Name<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="firstName"
                   name="firstName"
@@ -108,7 +110,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
               </FormGroup>
 
               <FormGroup>
-                <Label for="email">Email</Label>
+                <Label for="email">
+                  Email<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="email"
                   name="email"
@@ -119,13 +123,14 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="password">Password</Label>
+                <Label for="password">Password<span className="text-danger">*</span></Label>
                 <Input
                   id="password"
                   name="password"
                   type="password"
                   value={formData.password}
                   onChange={(e) => handleInputChange(e, "password")}
+                  required
                 />
               </FormGroup>
               <FormGroup>
@@ -139,13 +144,14 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="gender">Gender</Label>
+                <Label for="gender">Gender<span className="text-danger">*</span></Label>
                 <Input
                   id="gender"
                   name="gender"
                   type="select"
                   value={formData.gender}
                   onChange={(e) => handleInputChange(e, "gender")}
+                  required 
                 >
                   <option value="">Select Gender</option>
                   <option value="MALE">MALE</option>
@@ -178,7 +184,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
             {/* Second Column */}
             <Col md={6}>
               <FormGroup>
-                <Label for="lastName">Last Name</Label>
+                <Label for="lastName">Last Name<span className="text-danger">*</span></Label>
                 <Input
                   id="lastName"
                   name="lastName"
