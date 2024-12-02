@@ -10,15 +10,20 @@ import {
 } from "reactstrap";
 import "./AdvisorList.css";
 import AddAdvisorModal from "./Modals/AddAdvisorModal";
+import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
 
 export interface Advisor {
   alias: string;
   user: {
     first_name: string;
     last_name: string;
-    email: string;
-    phone: string;
-    password: string;
+    profile_image: string;
+    nid: string;
+    user_type: string;
+    city: string;
+    state: string;
+    country: string;
+    zip_code: string;
   };
   role: string;
   designation: string;
@@ -44,8 +49,19 @@ const AdvisorListBody: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [advisorsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedAdvisor, setSelectedAdvisor] = useState<Partial<Advisor>>({
-    user: { first_name: "", last_name: "", email: "", phone: "", password: "" },
+    user: {
+      first_name: "",
+      last_name: "",
+      profile_image: "",
+      nid: "",
+      user_type: "",
+      city: "",
+      state: "",
+      country: "",
+      zip_code: "",
+    },
     role: "",
     designation: "",
     official_email: "",
@@ -60,16 +76,17 @@ const AdvisorListBody: React.FC = () => {
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
 
   const fetchAdvisors = async () => {
     try {
       const response = await apiClient.get("/director/advisors/");
-      const advisorsData = Array.isArray(response.data)
+      const AdvisorsData = Array.isArray(response.data)
         ? response.data
         : response.data.advisors;
-      setAdvisors(advisorsData || []);
+      setAdvisors(AdvisorsData || []);
     } catch (error) {
-      console.error("Error fetching advisors:", error);
+      console.error("Error fetching Advisors:", error);
       setAdvisors([]);
     }
   };
@@ -78,66 +95,26 @@ const AdvisorListBody: React.FC = () => {
     fetchAdvisors();
   }, []);
 
-  const handleSaveAdvisor = async () => {
-    try {
-      if (selectedAdvisor.alias) {
-        await apiClient.put(
-          `/director/advisors/${selectedAdvisor.alias}/`,
-          selectedAdvisor
-        );
-      } else {
-        await apiClient.post("/director/advisors/", selectedAdvisor);
-      }
-      fetchAdvisors();
-      toggleModal();
-    } catch (error) {
-      console.error("Error saving advisor:", error);
-    }
-  };
-
+  // openmodals
   const openAddModal = () => {
-    setSelectedAdvisor({
-      user: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone: "",
-        password: "",
-      },
-      role: "",
-      designation: "",
-      official_email: "",
-      official_phone: "",
-      permanent_address: "",
-      present_address: "",
-      dob: "",
-      gender: "",
-      joining_date: "",
-      registration_number: "",
-      degree: "",
-    });
     toggleModal();
   };
 
-  const openEditModal = (advisor: Advisor) => {
+  const openUpdateModal = (advisor: Advisor) => {
     setSelectedAdvisor(advisor);
-    toggleModal();
+    toggleUpdateModal();
   };
+  // openmodals end
 
   const filteredAdvisors = advisors.filter(
     (advisor) =>
-      advisor.user.first_name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
+      advisor.user.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       advisor.official_email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const indexOfLastAdvisor = currentPage * advisorsPerPage;
   const indexOfFirstAdvisor = indexOfLastAdvisor - advisorsPerPage;
-  const currentAdvisors = filteredAdvisors.slice(
-    indexOfFirstAdvisor,
-    indexOfLastAdvisor
-  );
+  const currentAdvisors = filteredAdvisors.slice(indexOfFirstAdvisor, indexOfLastAdvisor);
 
   const totalPages = Math.ceil(filteredAdvisors.length / advisorsPerPage);
 
@@ -187,11 +164,12 @@ const AdvisorListBody: React.FC = () => {
                   <Button
                     color="success"
                     size="sm"
-                    onClick={() => openEditModal(advisor)}
+                    title="Update User"
+                    onClick={() => openUpdateModal(advisor)}
                   >
                     <i className="icon-pencil-alt"></i>
                   </Button>
-                  <Button color="danger" size="sm">
+                  <Button color="danger" size="sm" title="Delete User">
                     <i className="icon-trash"></i>
                   </Button>
                 </div>
@@ -232,11 +210,22 @@ const AdvisorListBody: React.FC = () => {
           <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
         </PaginationItem>
       </Pagination>
+      {/* modals */}
       <AddAdvisorModal
         isOpen={isModalOpen}
         toggle={toggleModal}
         onSave={() => fetchAdvisors()}
       />
+      <UpdateAdvisorModal
+        isOpen={isUpdateModalOpen}
+        toggle={toggleUpdateModal}
+        onSave={() => {
+          fetchAdvisors(); // Refresh the list after saving
+          toggleUpdateModal(); // Close the modal
+        }}
+        selectedAdvisor={selectedAdvisor}
+      />
+      {/* modals end */}
     </div>
   );
 };
