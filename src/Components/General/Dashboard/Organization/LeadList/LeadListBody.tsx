@@ -10,15 +10,20 @@ import {
 } from "reactstrap";
 import "./LeadList.css";
 import AddLeadModal from "./Modals/AddLeadModal";
+import UpdateLeadModal from "./Modals/UpdateLeadModal";
 
 export interface Lead {
   alias: string;
   user: {
     first_name: string;
     last_name: string;
-    email: string;
-    phone: string;
-    password: string;
+    profile_image: string;
+    nid: string;
+    user_type: string;
+    city: string;
+    state: string;
+    country: string;
+    zip_code: string;
   };
   role: string;
   designation: string;
@@ -44,8 +49,19 @@ const LeadListBody: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [leadsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState<Partial<Lead>>({
-    user: { first_name: "", last_name: "", email: "", phone: "", password: "" },
+    user: {
+      first_name: "",
+      last_name: "",
+      profile_image: "",
+      nid: "",
+      user_type: "",
+      city: "",
+      state: "",
+      country: "",
+      zip_code: "",
+    },
     role: "",
     designation: "",
     official_email: "",
@@ -60,6 +76,7 @@ const LeadListBody: React.FC = () => {
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
 
   const fetchLeads = async () => {
     try {
@@ -78,51 +95,16 @@ const LeadListBody: React.FC = () => {
     fetchLeads();
   }, []);
 
-  const handleSaveLead = async () => {
-    try {
-      if (selectedLead.alias) {
-        await apiClient.patch(
-          `/director/leads/${selectedLead.alias}/`,
-          selectedLead
-        );
-      } else {
-        await apiClient.post("/director/leads/", selectedLead);
-      }
-      fetchLeads();
-      toggleModal();
-    } catch (error) {
-      console.error("Error saving Lead:", error);
-    }
-  };
-
+  // openmodals
   const openAddModal = () => {
-    setSelectedLead({
-      user: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone: "",
-        password: "",
-      },
-      role: "",
-      designation: "",
-      official_email: "",
-      official_phone: "",
-      permanent_address: "",
-      present_address: "",
-      dob: "",
-      gender: "",
-      joining_date: "",
-      registration_number: "",
-      degree: "",
-    });
     toggleModal();
   };
 
-  const openEditModal = (lead: Lead) => {
+  const openUpdateModal = (lead: Lead) => {
     setSelectedLead(lead);
-    toggleModal();
+    toggleUpdateModal();
   };
+  // openmodals end
 
   const filteredLeads = leads.filter(
     (lead) =>
@@ -182,11 +164,12 @@ const LeadListBody: React.FC = () => {
                   <Button
                     color="success"
                     size="sm"
-                    onClick={() => openEditModal(lead)}
+                    title="Update User"
+                    onClick={() => openUpdateModal(lead)}
                   >
                     <i className="icon-pencil-alt"></i>
                   </Button>
-                  <Button color="danger" size="sm">
+                  <Button color="danger" size="sm" title="Delete User">
                     <i className="icon-trash"></i>
                   </Button>
                 </div>
@@ -227,11 +210,23 @@ const LeadListBody: React.FC = () => {
           <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
         </PaginationItem>
       </Pagination>
+      {/* modals */}
       <AddLeadModal
         isOpen={isModalOpen}
         toggle={toggleModal}
         onSave={() => fetchLeads()}
       />
+      <UpdateLeadModal
+        isOpen={isUpdateModalOpen}
+        toggle={toggleUpdateModal}
+        onSave={() => {
+          // handleSaveLead(updatedLead); // Save changes to the backend
+          fetchLeads(); // Refresh the list after saving
+          toggleUpdateModal(); // Close the modal
+        }}
+        selectedLead={selectedLead}
+      />
+      {/* modals end */}
     </div>
   );
 };
