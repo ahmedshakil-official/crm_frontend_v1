@@ -12,3 +12,11 @@
     transform: rotate(360deg);
   }
 }
+.custom-hover {
+  text-decoration: none;
+  color: black;
+}
+
+.custom-hover:hover {
+  text-decoration: underline;
+}

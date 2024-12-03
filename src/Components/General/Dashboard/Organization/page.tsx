@@ -8,6 +8,7 @@ import IntroducerList from "./IntroducerList/IntroducerList";
 import JobToday from "./JobToday/JobToday";
 import LeadList from "./LeadList/LeadList";
 import ProfileGreet from "./ProfileGreet/ProfileGreet";
+import ActivityStatus from "./ActivityStatus/ActivityStatus";
 
 const MyOrganizationContainer = () => {
   return (
@@ -22,6 +23,9 @@ const MyOrganizationContainer = () => {
           <ProfileGreet />
           <EarningsTrend />
           <JobToday />
+        </Row>
+        <Row>
+          <ActivityStatus/>
         </Row>
         <Row>
           <LeadList />
