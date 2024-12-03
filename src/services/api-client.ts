@@ -3,7 +3,7 @@ import { getSession } from "next-auth/react";
 
 // Create a reusable Axios instance
 const apiClient = axios.create({
-  baseURL: "https://2d6e-123-253-215-58.ngrok-free.app", // Replace with your actual api base URL
+  baseURL: "http://162.0.230.24:8000", // Replace with your actual api base URL
   headers: {
     "Content-Type": "application/json",
   },
