@@ -15,6 +15,8 @@ export const config = {
   matcher: [
     // Protect all dashboard routes
     "/dashboard/:path*",
+    // Protect dashboard organization routes
+    "/dashboard/organization/:path*",
     // Protect specific user-related routes
     "/users/:path*",
   ],

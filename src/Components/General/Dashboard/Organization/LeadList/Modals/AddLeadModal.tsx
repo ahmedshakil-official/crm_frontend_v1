@@ -1,5 +1,6 @@
 import apiClient from "@/services/api-client";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -53,8 +54,17 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
   };
 
   const handleSaveLead = async () => {
-    const newLead = { ...formData };
-    let payload = {
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.password
+    ) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    const payload = {
       user: {
         first_name: formData.firstName,
         last_name: formData.lastName,
@@ -72,19 +82,37 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
       degree: formData.degree || null,
     };
 
-    const handleSuccess = () => {
-      toggle();
-      console.log("Added success");
-      onSave();
-    };
-    const handleError = (e: any) => {
-      console.log(e, "something went wrong");
-    };
+    try {
+      const result = await apiClient.post("/director/leads/", payload);
 
-    await apiClient
-      .post("/director/leads/", payload)
-      .then(handleSuccess)
-      .catch(handleError);
+      if (result.status >= 200 && result.status < 300) {
+        toast.success("Lead added successfully.");
+
+        // Reset form and close modal
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          password: "",
+          designation: "",
+          permanent_address: "",
+          present_address: "",
+          dob: "",
+          gender: "",
+          joining_date: "",
+          registration_number: "",
+          degree: "",
+        });
+        toggle();
+        onSave();
+      } else {
+        toast.error("Invalid Request...");
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+      console.error("Error creating lead:", error);
+    }
   };
 
   return (
@@ -123,7 +151,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="password">Password<span className="text-danger">*</span></Label>
+                <Label for="password">
+                  Password<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="password"
                   name="password"
@@ -144,14 +174,16 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="gender">Gender<span className="text-danger">*</span></Label>
+                <Label for="gender">
+                  Gender<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="gender"
                   name="gender"
                   type="select"
                   value={formData.gender}
                   onChange={(e) => handleInputChange(e, "gender")}
-                  required 
+                  required
                 >
                   <option value="">Select Gender</option>
                   <option value="MALE">MALE</option>
@@ -184,7 +216,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
             {/* Second Column */}
             <Col md={6}>
               <FormGroup>
-                <Label for="lastName">Last Name<span className="text-danger">*</span></Label>
+                <Label for="lastName">
+                  Last Name<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="lastName"
                   name="lastName"

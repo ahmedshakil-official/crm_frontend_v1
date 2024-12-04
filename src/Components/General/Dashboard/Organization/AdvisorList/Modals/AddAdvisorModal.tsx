@@ -1,5 +1,6 @@
 import apiClient from "@/services/api-client";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -14,13 +15,11 @@ import {
   Row,
 } from "reactstrap";
 
-
 interface AddAdvisorModalProps {
   isOpen: boolean;
   toggle: () => void;
   onSave: () => void;
 }
-
 
 const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
   isOpen,
@@ -43,11 +42,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     degree: "",
   });
 
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -55,9 +50,14 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     }));
   };
 
-
   const handleSaveAdvisor = async () => {
-    let payload = {
+    // Validate required fields
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    const payload = {
       user: {
         first_name: formData.firstName,
         last_name: formData.lastName,
@@ -74,23 +74,38 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
       registration_number: formData.registration_number || null,
       degree: formData.degree || null,
     };
-  
-    const handleSuccess = () => {
-      toggle();
-      console.log("Advisor added successfully.");
-      onSave(); // Notify the parent to fetch the updated data.
-    };
-  
-    const handleError = (e: any) => {
-      console.error("Error adding advisor:", e);
-    };
-  
-    await apiClient
-      .post("/director/advisors/", payload)
-      .then(handleSuccess)
-      .catch(handleError);
-  };
 
+    try {
+      const result = await apiClient.post("/director/advisors/", payload);
+      if (result.status >= 200 && result.status < 300) {
+        toast.success("Advisor added successfully.");
+
+        // Reset form and close modal
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          password: "",
+          designation: "",
+          permanent_address: "",
+          present_address: "",
+          dob: "",
+          gender: "",
+          joining_date: "",
+          registration_number: "",
+          degree: "",
+        });
+        toggle();
+        onSave();
+      } else {
+        toast.error("Invalid request. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+      console.error("Error adding advisor:", error);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
@@ -101,37 +116,42 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
             {/* First Column */}
             <Col md={6}>
               <FormGroup>
-                <Label for="firstName">First Name</Label>
+                <Label for="firstName">
+                  First Name<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="firstName"
                   name="firstName"
                   type="text"
                   value={formData.firstName}
-                  onChange={(e) => handleInputChange(e, "firstName")}
+                  onChange={handleInputChange}
                   required
                 />
               </FormGroup>
-
-
               <FormGroup>
-                <Label for="email">Email</Label>
+                <Label for="email">
+                  Email<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => handleInputChange(e, "email")}
+                  onChange={handleInputChange}
                   required
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="password">Password</Label>
+                <Label for="password">
+                  Password<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="password"
                   name="password"
                   type="password"
                   value={formData.password}
-                  onChange={(e) => handleInputChange(e, "password")}
+                  onChange={handleInputChange}
+                  required
                 />
               </FormGroup>
               <FormGroup>
@@ -141,17 +161,20 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                   name="phone"
                   type="text"
                   value={formData.phone}
-                  onChange={(e) => handleInputChange(e, "phone")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="gender">Gender</Label>
+                <Label for="gender">
+                  Gender<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="gender"
                   name="gender"
                   type="select"
                   value={formData.gender}
-                  onChange={(e) => handleInputChange(e, "gender")}
+                  onChange={handleInputChange}
+                  required
                 >
                   <option value="">Select Gender</option>
                   <option value="MALE">MALE</option>
@@ -166,7 +189,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                   name="permanent_address"
                   type="text"
                   value={formData.permanent_address}
-                  onChange={(e) => handleInputChange(e, "permanent_address")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
               <FormGroup>
@@ -176,22 +199,23 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                   name="degree"
                   type="text"
                   value={formData.degree}
-                  onChange={(e) => handleInputChange(e, "degree")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
             </Col>
 
-
             {/* Second Column */}
             <Col md={6}>
               <FormGroup>
-                <Label for="lastName">Last Name</Label>
+                <Label for="lastName">
+                  Last Name<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="lastName"
                   name="lastName"
                   type="text"
                   value={formData.lastName}
-                  onChange={(e) => handleInputChange(e, "lastName")}
+                  onChange={handleInputChange}
                   required
                 />
               </FormGroup>
@@ -202,11 +226,9 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                   name="designation"
                   type="text"
                   value={formData.designation}
-                  onChange={(e) => handleInputChange(e, "designation")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
-
-
               <FormGroup>
                 <Label for="dob">Date of Birth</Label>
                 <Input
@@ -214,7 +236,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                   name="dob"
                   type="date"
                   value={formData.dob}
-                  onChange={(e) => handleInputChange(e, "dob")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
               <FormGroup>
@@ -224,7 +246,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                   name="joining_date"
                   type="date"
                   value={formData.joining_date}
-                  onChange={(e) => handleInputChange(e, "joining_date")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
               <FormGroup>
@@ -234,7 +256,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                   name="present_address"
                   type="text"
                   value={formData.present_address}
-                  onChange={(e) => handleInputChange(e, "present_address")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
               <FormGroup>
@@ -244,7 +266,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                   name="registration_number"
                   type="text"
                   value={formData.registration_number}
-                  onChange={(e) => handleInputChange(e, "registration_number")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
             </Col>
@@ -262,6 +284,5 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     </Modal>
   );
 };
-
 
 export default AddAdvisorModal;
