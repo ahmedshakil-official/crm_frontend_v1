@@ -1,5 +1,6 @@
 import apiClient from "@/services/api-client";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -53,6 +54,15 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
   };
 
   const handleSaveClient = async () => {
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.password
+    ) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
     let payload = {
       user: {
         first_name: formData.firstName,
@@ -71,19 +81,36 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
       degree: formData.degree || null,
     };
 
-    const handleSuccess = () => {
-      toggle();
-      console.log("added success");
-      onSave();
-    };
-    const handleError = (e: any) => {
-      console.log(e, "something went wrong");
-    };
+    try {
+      const result = await apiClient.post("/director/clients/", payload);
+      if (result.status >= 200 && result.status < 300) {
+        toast.success("Client added successfully.");
 
-    await apiClient
-      .post("/director/clients/", payload)
-      .then(handleSuccess)
-      .catch(handleError);
+        // Reset form and close modal
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          password: "",
+          designation: "",
+          permanent_address: "",
+          present_address: "",
+          dob: "",
+          gender: "",
+          joining_date: "",
+          registration_number: "",
+          degree: "",
+        });
+        toggle();
+        onSave();
+      } else {
+        toast.error("Invalid Request...");
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+      console.error("Error creating client:", error);
+    }
   };
 
   return (
@@ -95,7 +122,9 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
             {/* First Column */}
             <Col md={6}>
               <FormGroup>
-                <Label for="firstName">First Name</Label>
+                <Label for="firstName">
+                  First Name<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="firstName"
                   name="firstName"
@@ -107,7 +136,9 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
               </FormGroup>
 
               <FormGroup>
-                <Label for="email">Email</Label>
+                <Label for="email">
+                  Email<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="email"
                   name="email"
@@ -118,7 +149,9 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="password">Password</Label>
+                <Label for="password">
+                  Password<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="password"
                   name="password"
@@ -138,7 +171,9 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="gender">Gender</Label>
+                <Label for="gender">
+                  Gender<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="gender"
                   name="gender"
@@ -177,7 +212,9 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
             {/* Second Column */}
             <Col md={6}>
               <FormGroup>
-                <Label for="lastName">Last Name</Label>
+                <Label for="lastName">
+                  Last Name<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="lastName"
                   name="lastName"

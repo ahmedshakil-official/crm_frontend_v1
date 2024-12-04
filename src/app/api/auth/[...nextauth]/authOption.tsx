@@ -28,7 +28,7 @@ declare module "next-auth" {
 export const authoption: NextAuthOptions = {
   session: {
     strategy: "jwt", // Use JWT strategy for managing sessions
-    maxAge: 30 * 2 * 60 * 60,
+    maxAge: 12 * 60 * 60, // 43,200 seconds/12h
   },
   pages: {
     signIn: "/auth/login", // Custom login page
@@ -43,27 +43,21 @@ export const authoption: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("Attempting to authorize with credentials:", credentials); // Log credentials
+        // console.log("Attempting to authorize with credentials:", credentials); // Log credentials
         try {
           if (!credentials) {
             throw new Error("No credentials provided");
           }
 
           // Make API call to obtain JWT token
-          console.log("Sending credentials to API:", credentials);
+          // console.log("Sending credentials to API:", credentials);
           const response = await apiClient.post("/auth/jwt/create/", {
             email: credentials.email,
             password: credentials.password,
           });
-          console.log("API response:", response.data);
-
-          console.log({ response: response.data });
-
-          // Log the full response
-          console.log("Response from backend:", response.data);
+          // console.log("API response:", response.data);
 
           if (response.data?.access) {
-            // console.log("Access Token:", response.data.access);
             return {
               id: response.data.user_id || "default_id",
               name: response.data.name || credentials.email,
