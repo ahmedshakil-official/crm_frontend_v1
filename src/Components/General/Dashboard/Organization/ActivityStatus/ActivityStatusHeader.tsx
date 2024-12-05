@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 import { FaClock } from "react-icons/fa"; // Importing a clock icon
 import { Button, CardHeader } from "reactstrap";
@@ -20,26 +21,37 @@ const ActivityStatusHeader = () => {
   };
 
   return (
-    <CardHeader className="pb-0 card-no-border">
-      <div className="header-top text-center">
-        <div className="icon-wrapper d-flex">
-          <h3>Activity Status</h3>
-          <FaClock className="fs-6 text-success rotate-animation" />
+    <CardHeader className="pb-1 px-0 card-no-border">
+      <div className="header-top d-flex justify-content-between ">
+        {/* Left Side Content */}
+        <div className="">
+          <div className="d-flex align-items-center">
+            <h3 className="mb-1">Activity Status</h3>
+            <FaClock className="fs-6 text-success me-2 rotate-animation" />
+          </div>
+          <div>
+            <p className="mb-0">
+              {day} {date},{" "}
+              <span>
+                {month} {year}
+              </span>
+            </p>
+          </div>
         </div>
-        <div>
+
+        {/* Right Side Buttons */}
+        <div className="d-flex gap-2">
           <Button color="primary" onClick={openAddNewCaseModal}>
             Add New Case
           </Button>
-        </div>
-        <div>
-          <p>
-            {day} {date},{" "}
-            <span>
-              {month} {year}
-            </span>
-          </p>
+          <Button color="success">
+            <Link className="text-white" href="/dashboard/organization/allcase">
+              View All Case
+            </Link>
+          </Button>
         </div>
       </div>
+
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}

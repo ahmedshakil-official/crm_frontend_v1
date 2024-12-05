@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { Button, Input, Table } from "reactstrap";
+import ActivityStatusHeader from "./ActivityStatusHeader";
 
 const ActivityStatusBody = () => {
   return (
-    <div className="container p-3">
+    <div className="container py-3">
+      <ActivityStatusHeader />
       <Input type="text" placeholder="Search Case" className="mb-3" />
       <Table bordered hover responsive>
         <thead className="thead-light text-center">
