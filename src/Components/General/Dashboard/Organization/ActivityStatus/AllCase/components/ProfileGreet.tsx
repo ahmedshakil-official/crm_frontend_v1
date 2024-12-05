@@ -29,42 +29,19 @@ interface ProfileData {
 const ProfileGreet = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
-  const [slug, setSlug] = useState("");
-
-  // Retrieve slug from localStorage
-  useEffect(() => {
-    const storedSlug = localStorage.getItem("slug");
-    console.log("Retrieved slug:", storedSlug); // Debugging
-    if (storedSlug) {
-      setSlug(storedSlug);
-    } else {
-      console.error("Slug not found. Please log in.");
-    }
-  }, []);
 
   // Fetch profile data
   const fetchProfileData = async () => {
     try {
-      console.log("Fetching data with slug:", slug); // Debugging
-
-      // Perform the GET request using Axios
-      const response = await apiClient.get(`/organization/${slug}/`);
-
-      // Log response status
-      console.log("API Response Status:", response.status);
-
-      // Extract data directly from the Axios response
-      const data = response.data;
-
-      // Log fetched data
-      console.log("Fetched Data:", data);
-
-      // Set profile data
-      setProfileData(data);
+      const response = await apiClient.get("/organization/details/");
+      setProfileData(response.data);
     } catch (error) {
       console.error("Error fetching profile data:", error);
     }
   };
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
   // Update time every second
   useEffect(() => {
@@ -82,7 +59,11 @@ const ProfileGreet = () => {
           <div className="welcome-card">
             <img
               className="w-100 img-fluid"
-              src="../../assets/images/dashboard-1/welcome-bg.png"
+              src={
+                profileData && profileData.profile_image
+                  ? profileData.profile_image
+                  : "../../assets/images/dashboard-1/welcome-bg.png"
+              }
               alt="ProfileGreet"
             />
           </div>
@@ -101,16 +82,16 @@ const ProfileGreet = () => {
           </div>
           <p>
             {profileData
-              ? `Welcome back, ${profileData.contact_person || "user"}!`
+              ? `Welcome back, ${profileData.email || "user"}!`
               : "Fetching your details..."}
           </p>
           <div className="d-flex align-center justify-content-between">
             <Link className="btn btn-pill btn-primary" href={Href}>
-              What's New!
+              Veiw Details
             </Link>
             <span>
               <SvgIcon className="stroke-icon" iconId="watch" />
-              {currentTime.toLocaleTimeString()}
+              {currentTime.toLocaleTimeString("en-GB")}
             </span>
           </div>
         </CardBody>
