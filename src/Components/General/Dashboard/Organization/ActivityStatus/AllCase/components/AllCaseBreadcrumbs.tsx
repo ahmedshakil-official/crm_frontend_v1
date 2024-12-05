@@ -1,14 +1,17 @@
 import { PropsTypes } from "@/Types/LayoutTypes";
 import Link from "next/link";
+import React from "react";
 import { Breadcrumb, BreadcrumbItem, Col, Container, Row } from "reactstrap";
 
-const Breadcrumbs: React.FC<PropsTypes> = ({ mainTitle, parent, title }) => {
+const AllCaseBreadcrumbs: React.FC<PropsTypes> = ({ mainTitle, parent }) => {
   return (
     <Container fluid>
       <Row className="page-title">
         <Col sm="6">
-          <h2>{mainTitle}</h2>
-          {title && <p className="mb-0 text-title-gray">{title}</p>}
+          <h2>All Case</h2>
+          <p className="mb-0 text-title-gray">
+            Welcome! Continue your journey.
+          </p>
         </Col>
         <Col sm="6">
           <Breadcrumb className="justify-content-sm-end align-items-center">
@@ -19,6 +22,7 @@ const Breadcrumbs: React.FC<PropsTypes> = ({ mainTitle, parent, title }) => {
             </BreadcrumbItem>
             <BreadcrumbItem>{parent}</BreadcrumbItem>
             <BreadcrumbItem className="active">{mainTitle}</BreadcrumbItem>
+            <BreadcrumbItem className="active">Allcase</BreadcrumbItem>
           </Breadcrumb>
         </Col>
       </Row>
@@ -26,4 +30,4 @@ const Breadcrumbs: React.FC<PropsTypes> = ({ mainTitle, parent, title }) => {
   );
 };
 
-export default Breadcrumbs;
+export default AllCaseBreadcrumbs;
