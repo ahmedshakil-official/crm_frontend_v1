@@ -21,7 +21,9 @@ const AllCaseBreadcrumbs: React.FC<PropsTypes> = ({ mainTitle, parent }) => {
               </Link>
             </BreadcrumbItem>
             <BreadcrumbItem>{parent}</BreadcrumbItem>
-            <BreadcrumbItem className="active">{mainTitle}</BreadcrumbItem>
+            <BreadcrumbItem className="active">
+              <Link href="/dashboard/organization" className="text-primary">{mainTitle}</Link>
+            </BreadcrumbItem>
             <BreadcrumbItem className="active">Allcase</BreadcrumbItem>
           </Breadcrumb>
         </Col>
