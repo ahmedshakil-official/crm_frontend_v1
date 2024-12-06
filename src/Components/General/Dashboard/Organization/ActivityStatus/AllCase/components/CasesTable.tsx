@@ -45,8 +45,8 @@ export interface CaseInfo {
 const CaseTable: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [casesPerPage] = useState(10);
 
   const fetchCaseInfo = async () => {
     try {
@@ -69,17 +69,11 @@ const CaseTable: React.FC = () => {
     caseItem.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const pageCount = Math.ceil(filteredCases.length / itemsPerPage);
+  const indexOfLastCase = currentPage * casesPerPage;
+  const indexOfFirstCase = indexOfLastCase - casesPerPage;
+  const currentCases = filteredCases.slice(indexOfFirstCase, indexOfLastCase);
 
-  const handlePageClick = (data: { selected: number }) => {
-    setCurrentPage(data.selected);
-  };
-
-  const startOffset = currentPage * itemsPerPage;
-  const currentCases = filteredCases.slice(
-    startOffset,
-    startOffset + itemsPerPage
-  );
+  const pageCount = Math.ceil(filteredCases.length / casesPerPage);
 
   return (
     <Card>
@@ -186,9 +180,9 @@ const CaseTable: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredCases.length > 0 ? (
-              filteredCases.map((caseItem, index) => (
-                <tr key={index}>
+            {currentCases.length > 0 ? (
+              currentCases.map((caseItem) => (
+                <tr key={caseItem.alias}>
                   <td>{caseItem.name}</td>
                   <td>
                     {caseItem.lead_user
@@ -198,7 +192,11 @@ const CaseTable: React.FC = () => {
                   <td>{caseItem.case_category}</td>
                   <td>{caseItem.applicant_type}</td>
                   <td>{caseItem.case_status}</td>
-                  <td>{caseItem.case_stage}</td>
+                  <td>
+                    <span className="bg-success rounded-4 px-2">
+                      {caseItem.case_stage}
+                    </span>
+                  </td>
                   <td>
                     {caseItem.created_by.first_name}{" "}
                     {caseItem.created_by.last_name}
