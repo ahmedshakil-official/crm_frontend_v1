@@ -1,3 +1,5 @@
+import apiClient from "@/services/api-client";
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -7,14 +9,74 @@ import {
   Input,
   InputGroup,
   InputGroupText,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
   Row,
   Table,
 } from "reactstrap";
+import "../../ActivityStatus.css";
 
-const CaseTable = () => {
+export interface CaseInfo {
+  alias: string;
+  name: string;
+  lead_user: {
+    email: string;
+    phone: string;
+    first_name: string;
+    last_name: string;
+    profile_image: string;
+    user_type: string;
+  };
+  case_category: string;
+  applicant_type: string;
+  case_status: string;
+  case_stage: string;
+  created_by: {
+    first_name: string;
+    last_name: string;
+  };
+  updated_by: {
+    first_name: string;
+    last_name: string;
+  };
+}
+
+const CaseTable: React.FC = () => {
+  const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [casesPerPage] = useState(10);
+
+  const fetchCaseInfo = async () => {
+    try {
+      const response = await apiClient.get("/cases");
+      const CaseData = Array.isArray(response.data)
+        ? response.data
+        : response.data.cases;
+      setCaseInfo(CaseData || []);
+    } catch (error) {
+      console.error("Error Fetching Cases", error);
+      setCaseInfo([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchCaseInfo();
+  }, []);
+
+  const filteredCases = caseInfo.filter((caseItem) =>
+    caseItem.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const indexOfLastCase = currentPage * casesPerPage;
+  const indexOfFirstCase = indexOfLastCase - casesPerPage;
+  const currentCases = filteredCases.slice(indexOfFirstCase, indexOfLastCase);
+
+  const pageCount = Math.ceil(filteredCases.length / casesPerPage);
+
   return (
     <Card>
-      {/* Card Header */}
       <CardHeader className="pb-0">
         <Row className="align-items-center">
           <Col md="3">
@@ -25,10 +87,12 @@ const CaseTable = () => {
               <Input
                 type="text"
                 placeholder="Search..."
-                className="pe-5 rounded z-1" // Adds space for the icon
+                className="pe-5 rounded z-1"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <InputGroupText className="position-absolute z-2 fixed-end end-0 top-50 translate-middle-y bg-transparent border-0 pe-3">
-                <i className="fa-solid fa-magnifying-glass  text-primary"></i>
+                <i className="fa-solid fa-magnifying-glass text-primary"></i>
               </InputGroupText>
             </InputGroup>
           </Col>
@@ -105,40 +169,90 @@ const CaseTable = () => {
           <thead>
             <tr>
               <th>Case Name</th>
-              <th>Create Time</th>
-              <th>Created By</th>
+              <th>Lead User</th>
+              <th>Case Category</th>
+              <th>Applicant Type</th>
+              <th>Case Status</th>
+              <th>Case Stage</th>
+              <th>Created by</th>
+              <th>Updated By</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Example Case 1</td>
-              <td>2024-12-01</td>
-              <td>John Doe</td>
-              <td>
-                <Button size="sm" color="warning" className="me-2">
-                  Edit
-                </Button>
-                <Button size="sm" color="danger">
-                  Delete
-                </Button>
-              </td>
-            </tr>
-            <tr>
-              <td>Example Case 2</td>
-              <td>2024-12-02</td>
-              <td>Jane Smith</td>
-              <td>
-                <Button size="sm" color="warning" className="me-2">
-                  Edit
-                </Button>
-                <Button size="sm" color="danger">
-                  Delete
-                </Button>
-              </td>
-            </tr>
+            {currentCases.length > 0 ? (
+              currentCases.map((caseItem) => (
+                <tr key={caseItem.alias}>
+                  <td>{caseItem.name}</td>
+                  <td>
+                    {caseItem.lead_user
+                      ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
+                      : "N/A"}
+                  </td>
+                  <td>{caseItem.case_category}</td>
+                  <td>{caseItem.applicant_type}</td>
+                  <td>{caseItem.case_status}</td>
+                  <td>
+                    <span className="bg-success rounded-4 px-2">
+                      {caseItem.case_stage}
+                    </span>
+                  </td>
+                  <td>
+                    {caseItem.created_by.first_name}{" "}
+                    {caseItem.created_by.last_name}
+                  </td>
+                  <td>{caseItem.updated_by?.first_name}</td>
+                  <td>
+                    <Button size="sm" color="warning" className="me-2">
+                      Edit
+                    </Button>
+                    <Button size="sm" color="danger">
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={10} className="text-center">
+                  No cases found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </Table>
+        <Pagination className="d-flex justify-content-end p-2">
+          <PaginationItem disabled={currentPage === 1}>
+            <PaginationLink first onClick={() => setCurrentPage(1)} />
+          </PaginationItem>
+          <PaginationItem disabled={currentPage === 1}>
+            <PaginationLink
+              previous
+              onClick={() => setCurrentPage(currentPage - 1)}
+            />
+          </PaginationItem>
+          {Array.from({ length: pageCount }, (_, i) => i + 1).map(
+            (pageNumber) => (
+              <PaginationItem
+                key={pageNumber}
+                active={pageNumber === currentPage}
+              >
+                <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
+                  {pageNumber}
+                </PaginationLink>
+              </PaginationItem>
+            )
+          )}
+          <PaginationItem disabled={currentPage === pageCount}>
+            <PaginationLink
+              next
+              onClick={() => setCurrentPage(currentPage + 1)}
+            />
+          </PaginationItem>
+          <PaginationItem disabled={currentPage === pageCount}>
+            <PaginationLink last onClick={() => setCurrentPage(pageCount)} />
+          </PaginationItem>
+        </Pagination>
       </CardBody>
     </Card>
   );
