@@ -16,9 +16,11 @@ import {
   Table,
 } from "reactstrap";
 import "../../ActivityStatus.css";
+import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 
 export interface CaseInfo {
   alias: string;
+  lead: number;
   name: string;
   lead_user: {
     email: string;
@@ -44,13 +46,21 @@ export interface CaseInfo {
 
 const CaseTable: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
+  const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(10);
 
+  const toggleAddNewCaseModal = () =>
+    setIsAddNewCaseModalOpen(!isAddNewCaseModalOpen);
+
+  const openAddNewCaseModal = () => {
+    toggleAddNewCaseModal();
+  };
+
   const fetchCaseInfo = async () => {
     try {
-      const response = await apiClient.get("/cases");
+      const response = await apiClient.get("/cases/");
       const CaseData = Array.isArray(response.data)
         ? response.data
         : response.data.cases;
@@ -97,7 +107,9 @@ const CaseTable: React.FC = () => {
             </InputGroup>
           </Col>
           <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
-            <Button color="primary">Add New Case</Button>
+            <Button color="primary" onClick={openAddNewCaseModal}>
+              Add New Case
+            </Button>
           </Col>
         </Row>
         {/* Filter Options */}
@@ -164,9 +176,9 @@ const CaseTable: React.FC = () => {
       </CardHeader>
 
       {/* Card Body */}
-      <CardBody>
+      <CardBody className="px-0 mx-0">
         <Table bordered hover responsive>
-          <thead>
+          <thead className="thead-light text-center">
             <tr>
               <th>Case Name</th>
               <th>Lead User</th>
@@ -179,7 +191,7 @@ const CaseTable: React.FC = () => {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-center">
             {currentCases.length > 0 ? (
               currentCases.map((caseItem) => (
                 <tr key={caseItem.alias}>
@@ -203,12 +215,19 @@ const CaseTable: React.FC = () => {
                   </td>
                   <td>{caseItem.updated_by?.first_name}</td>
                   <td>
-                    <Button size="sm" color="warning" className="me-2">
-                      Edit
-                    </Button>
-                    <Button size="sm" color="danger">
-                      Delete
-                    </Button>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <Button
+                        size="sm"
+                        color="success"
+                        title="Edit"
+                        className="me-2"
+                      >
+                        <i className="icon-pencil-alt"></i>
+                      </Button>
+                      <Button size="sm" color="danger" title="Delete Case">
+                        <i className="icon-trash"></i>
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))
@@ -254,6 +273,12 @@ const CaseTable: React.FC = () => {
           </PaginationItem>
         </Pagination>
       </CardBody>
+      {/* Modals  */}
+      <AddNewCaseModal
+        isOpen={isAddNewCaseModalOpen}
+        toggle={toggleAddNewCaseModal}
+        onSave={() => fetchCaseInfo()}
+      />
     </Card>
   );
 };

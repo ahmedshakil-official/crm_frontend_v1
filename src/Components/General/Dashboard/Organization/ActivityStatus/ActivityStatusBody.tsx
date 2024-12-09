@@ -11,7 +11,7 @@ const ActivityStatusBody = () => {
 
   const fetchCaseInfo = async () => {
     try {
-      const response = await apiClient.get("/cases");
+      const response = await apiClient.get("/cases/");
       const CaseData = Array.isArray(response.data)
         ? response.data
         : response.data.cases;
@@ -31,7 +31,7 @@ const ActivityStatusBody = () => {
   );
   return (
     <div className="container py-3">
-      <ActivityStatusHeader />
+      <ActivityStatusHeader fetchCaseInfo={fetchCaseInfo}  />
       <Input
         type="text"
         placeholder="Search Case"
