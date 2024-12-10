@@ -5,7 +5,13 @@ import { Button, CardHeader } from "reactstrap";
 import "./ActivityStatus.css";
 import AddNewCaseModal from "./Modals/AddNewCaseModal";
 
-const ActivityStatusHeader = () => {
+interface ActivityStatusHeaderProps {
+  fetchCaseInfo: () => void;
+}
+
+const ActivityStatusHeader: React.FC<ActivityStatusHeaderProps> = ({
+  fetchCaseInfo,
+}) => {
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const today = new Date();
   const day = today.toLocaleString("en-UK", { weekday: "long" });
@@ -55,7 +61,7 @@ const ActivityStatusHeader = () => {
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
-        onSave={() => console.log("dkfjd")}
+        onSave={() => fetchCaseInfo()}
       />
     </CardHeader>
   );

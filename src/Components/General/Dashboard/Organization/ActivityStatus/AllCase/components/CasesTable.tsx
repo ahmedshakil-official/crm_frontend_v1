@@ -16,9 +16,11 @@ import {
   Table,
 } from "reactstrap";
 import "../../ActivityStatus.css";
+import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 
 export interface CaseInfo {
   alias: string;
+  lead: number;
   name: string;
   lead_user: {
     email: string;
@@ -44,13 +46,23 @@ export interface CaseInfo {
 
 const CaseTable: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(10);
 
+  const toggleAddNewCaseModal = () =>
+    setIsAddNewCaseModalOpen(!isAddNewCaseModalOpen);
+
+  const openAddNewCaseModal = () => {
+    toggleAddNewCaseModal();
+  };
+
   const fetchCaseInfo = async () => {
+    setIsLoading(true);
     try {
-      const response = await apiClient.get("/cases");
+      const response = await apiClient.get("/cases/");
       const CaseData = Array.isArray(response.data)
         ? response.data
         : response.data.cases;
@@ -58,6 +70,8 @@ const CaseTable: React.FC = () => {
     } catch (error) {
       console.error("Error Fetching Cases", error);
       setCaseInfo([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -97,7 +111,9 @@ const CaseTable: React.FC = () => {
             </InputGroup>
           </Col>
           <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
-            <Button color="primary">Add New Case</Button>
+            <Button color="primary" onClick={openAddNewCaseModal}>
+              Add New Case
+            </Button>
           </Col>
         </Row>
         {/* Filter Options */}
@@ -106,7 +122,7 @@ const CaseTable: React.FC = () => {
             {/* All Employee Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="employeeFilter" className="py-1">
-                <option value="">All Employees</option>
+                <option value="">Select Employees</option>
                 <option value="employee1">Employee 1</option>
                 <option value="employee2">Employee 2</option>
                 <option value="employee3">Employee 3</option>
@@ -116,40 +132,52 @@ const CaseTable: React.FC = () => {
             {/* Case Category Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="caseCategory" className="py-1">
-                <option value="">All Categories</option>
-                <option value="category1">Category 1</option>
-                <option value="category2">Category 2</option>
-                <option value="category3">Category 3</option>
+                <option value="">Select Categories</option>
+                <option value="MORTGAGE">Mortgage</option>
+                <option value="PROTECTION">Protection</option>
+                <option value="GENERAL_INSURANCE">General Insurance</option>
               </Input>
             </Col>
 
             {/* Application Type Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="applicationType" className="py-1">
-                <option value="">All Types</option>
-                <option value="type1">Type 1</option>
-                <option value="type2">Type 2</option>
-                <option value="type3">Type 3</option>
+                <option value="">Select Types</option>
+                <option value="SINGLE">Single</option>
+                <option value="JOINT">Joint</option>
               </Input>
             </Col>
 
             {/* Case Status Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="caseStatus" className="py-1">
-                <option value="">All Statuses</option>
-                <option value="status1">Status 1</option>
-                <option value="status2">Status 2</option>
-                <option value="status3">Status 3</option>
+                <option value="">Select Status</option>
+                <option value="NEW_LEAD">New Lead</option>
+                <option value="CALL_BACK">Call Back</option>
+                <option value="MEETING">Meeting</option>
               </Input>
             </Col>
 
             {/* Case Stage Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="caseStage" className="py-1">
-                <option value="">All Stages</option>
-                <option value="stage1">Stage 1</option>
-                <option value="stage2">Stage 2</option>
-                <option value="stage3">Stage 3</option>
+                <option value="">Select Stages</option>
+                <option value="INQUIRY">Inquiry</option>
+                <option value="FACT_FIND">Fact Find</option>
+                <option value="RESEARCH_COMPLIANCE_CHECK">
+                  Research and Compliance Check
+                </option>
+                <option value="DECISION_IN_PRINCIPLE">
+                  Decision in Principle
+                </option>
+                <option value="FULL_MORTGAGE_APPLICATION">
+                  Full Mortgage Application
+                </option>
+                <option value="OFFER_FROM_BANK">Offer From Bank</option>
+                <option value="LEGAL">Legal</option>
+                <option value="COMPLETION">Completion</option>
+                <option value="FUTURE_OPPORTUNITY">Future Opportunity</option>
+                <option value="NOT_PROCEED">Not Proceed</option>
               </Input>
             </Col>
 
@@ -164,9 +192,9 @@ const CaseTable: React.FC = () => {
       </CardHeader>
 
       {/* Card Body */}
-      <CardBody>
+      <CardBody className="px-0 mx-0">
         <Table bordered hover responsive>
-          <thead>
+          <thead className="thead-light text-center">
             <tr>
               <th>Case Name</th>
               <th>Lead User</th>
@@ -179,8 +207,16 @@ const CaseTable: React.FC = () => {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            {currentCases.length > 0 ? (
+          <tbody className="text-center">
+            {isLoading ? (
+              <tr>
+                <td colSpan={9} className="text-center">
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+              </tr>
+            ) : currentCases.length > 0 ? (
               currentCases.map((caseItem) => (
                 <tr key={caseItem.alias}>
                   <td>{caseItem.name}</td>
@@ -193,7 +229,31 @@ const CaseTable: React.FC = () => {
                   <td>{caseItem.applicant_type}</td>
                   <td>{caseItem.case_status}</td>
                   <td>
-                    <span className="bg-success rounded-4 px-2">
+                    <span
+                      className={`rounded-4 px-2 text-white ${
+                        caseItem.case_stage === "INQUIRY"
+                          ? "bg-success"
+                          : caseItem.case_stage === "FACT_FIND"
+                          ? "bg-warning"
+                          : caseItem.case_stage === "RESEARCH_COMPLIANCE_CHECK"
+                          ? "bg-dark"
+                          : caseItem.case_stage === "DECISION_IN_PRINCIPLE"
+                          ? "bg-info"
+                          : caseItem.case_stage === "FULL_MORTGAGE_APPLICATION"
+                          ? "bg-light"
+                          : caseItem.case_stage === "OFFER_FROM_BANK"
+                          ? "bg-dark"
+                          : caseItem.case_stage === "LEGAL"
+                          ? "bg-warning"
+                          : caseItem.case_stage === "COMPLETION"
+                          ? "bg-primary"
+                          : caseItem.case_stage === "FUTURE_OPPORTUNITY"
+                          ? "bg-info"
+                          : caseItem.case_stage === "NOT_PROCEED"
+                          ? "bg-danger"
+                          : "bg-secondary" // Default color for unknown stages
+                      }`}
+                    >
                       {caseItem.case_stage}
                     </span>
                   </td>
@@ -201,26 +261,34 @@ const CaseTable: React.FC = () => {
                     {caseItem.created_by.first_name}{" "}
                     {caseItem.created_by.last_name}
                   </td>
-                  <td>{caseItem.updated_by?.first_name}</td>
+                  <td>{caseItem.updated_by?.first_name || "N/A"}</td>
                   <td>
-                    <Button size="sm" color="warning" className="me-2">
-                      Edit
-                    </Button>
-                    <Button size="sm" color="danger">
-                      Delete
-                    </Button>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <Button
+                        size="sm"
+                        color="success"
+                        title="Edit"
+                        className="me-2"
+                      >
+                        <i className="icon-pencil-alt"></i>
+                      </Button>
+                      <Button size="sm" color="danger" title="Delete Case">
+                        <i className="icon-trash"></i>
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={10} className="text-center">
+                <td colSpan={9} className="text-center">
                   No cases found.
                 </td>
               </tr>
             )}
           </tbody>
         </Table>
+
         <Pagination className="d-flex justify-content-end p-2">
           <PaginationItem disabled={currentPage === 1}>
             <PaginationLink first onClick={() => setCurrentPage(1)} />
@@ -254,6 +322,12 @@ const CaseTable: React.FC = () => {
           </PaginationItem>
         </Pagination>
       </CardBody>
+      {/* Modals  */}
+      <AddNewCaseModal
+        isOpen={isAddNewCaseModalOpen}
+        toggle={toggleAddNewCaseModal}
+        onSave={() => fetchCaseInfo()}
+      />
     </Card>
   );
 };
