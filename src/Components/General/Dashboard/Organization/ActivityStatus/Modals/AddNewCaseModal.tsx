@@ -143,7 +143,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
               onChange={handleChange}
             >
               <option value="">Select Category</option>
-              <option value="MORTGAGES">Mortgages</option>
+              <option value="MORTGAGE">Mortgage</option>
               <option value="PROTECTION">Protection</option>
               <option value="GENERAL_INSURANCE">General Insurance</option>
             </Input>

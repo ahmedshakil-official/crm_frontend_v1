@@ -117,7 +117,7 @@ const ActivityStatusBody = () => {
                   {caseItem.created_by.first_name}{" "}
                   {caseItem.created_by.last_name}
                 </td>
-                <td>{caseItem.updated_by?.first_name}</td>
+                <td>{caseItem.updated_by?.first_name || "N/A"}</td>
                 <td className="text-center">
                   <div className="d-flex justify-content-center gap-2 align-items-center">
                     <Link href="/dashboard/organization/case">

@@ -122,7 +122,7 @@ const CaseTable: React.FC = () => {
             {/* All Employee Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="employeeFilter" className="py-1">
-                <option value="">All Employees</option>
+                <option value="">Select Employees</option>
                 <option value="employee1">Employee 1</option>
                 <option value="employee2">Employee 2</option>
                 <option value="employee3">Employee 3</option>
@@ -132,40 +132,52 @@ const CaseTable: React.FC = () => {
             {/* Case Category Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="caseCategory" className="py-1">
-                <option value="">All Categories</option>
-                <option value="category1">Category 1</option>
-                <option value="category2">Category 2</option>
-                <option value="category3">Category 3</option>
+                <option value="">Select Categories</option>
+                <option value="MORTGAGE">Mortgage</option>
+                <option value="PROTECTION">Protection</option>
+                <option value="GENERAL_INSURANCE">General Insurance</option>
               </Input>
             </Col>
 
             {/* Application Type Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="applicationType" className="py-1">
-                <option value="">All Types</option>
-                <option value="type1">Type 1</option>
-                <option value="type2">Type 2</option>
-                <option value="type3">Type 3</option>
+                <option value="">Select Types</option>
+                <option value="SINGLE">Single</option>
+                <option value="JOINT">Joint</option>
               </Input>
             </Col>
 
             {/* Case Status Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="caseStatus" className="py-1">
-                <option value="">All Statuses</option>
-                <option value="status1">Status 1</option>
-                <option value="status2">Status 2</option>
-                <option value="status3">Status 3</option>
+                <option value="">Select Status</option>
+                <option value="NEW_LEAD">New Lead</option>
+                <option value="CALL_BACK">Call Back</option>
+                <option value="MEETING">Meeting</option>
               </Input>
             </Col>
 
             {/* Case Stage Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Input type="select" id="caseStage" className="py-1">
-                <option value="">All Stages</option>
-                <option value="stage1">Stage 1</option>
-                <option value="stage2">Stage 2</option>
-                <option value="stage3">Stage 3</option>
+                <option value="">Select Stages</option>
+                <option value="INQUIRY">Inquiry</option>
+                <option value="FACT_FIND">Fact Find</option>
+                <option value="RESEARCH_COMPLIANCE_CHECK">
+                  Research and Compliance Check
+                </option>
+                <option value="DECISION_IN_PRINCIPLE">
+                  Decision in Principle
+                </option>
+                <option value="FULL_MORTGAGE_APPLICATION">
+                  Full Mortgage Application
+                </option>
+                <option value="OFFER_FROM_BANK">Offer From Bank</option>
+                <option value="LEGAL">Legal</option>
+                <option value="COMPLETION">Completion</option>
+                <option value="FUTURE_OPPORTUNITY">Future Opportunity</option>
+                <option value="NOT_PROCEED">Not Proceed</option>
               </Input>
             </Col>
 
