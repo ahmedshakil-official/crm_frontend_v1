@@ -141,7 +141,7 @@ const CaseTable: React.FC = () => {
         </Row>
 
         {/* Filter Options */}
-        <Card className="pt-3 mt-4 bg-primary p-3 rounded-1">
+        <Card className="pt-3 mt-4 shadow-lg p-3 rounded-1">
           <Row className="justify-content-center text-center g-3">
             {/* Employee Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
@@ -246,10 +246,8 @@ const CaseTable: React.FC = () => {
             {/* Show Removed Cases Button */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Button
-                className={`btn w-100 ${
-                  showRemovedCases
-                    ? "btn-danger text-white"
-                    : "btn-light text-black"
+                className={`btn w-100 text-white ${
+                  showRemovedCases ? "btn-success" : "btn-danger"
                 }`}
                 onClick={toggleRemovedCases}
               >
@@ -289,7 +287,7 @@ const CaseTable: React.FC = () => {
               filteredCases.map((caseItem) => (
                 <tr key={caseItem.alias}>
                   <td>
-                    <Link href="/dashboard/organization/case">
+                    <Link href="/dashboard/organization/singlecase">
                       <span className="text-black custom-hover">
                         {caseItem.name}
                       </span>
