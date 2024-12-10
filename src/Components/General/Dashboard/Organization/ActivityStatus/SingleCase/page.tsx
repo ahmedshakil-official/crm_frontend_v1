@@ -1,12 +1,12 @@
 import { Container, Row } from "reactstrap";
-import CaseCategory from "./components/CaseCategory";
+import SingleCaseBody from "./components/SingleCaseBody";
 
 const CaseContainer = () => {
   return (
     <>
       <Container fluid>
-        <Row>
-          <CaseCategory />
+        <Row className="row">
+          <SingleCaseBody />
         </Row>
       </Container>
     </>
