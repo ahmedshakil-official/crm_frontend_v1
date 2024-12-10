@@ -15,6 +15,7 @@ import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
 export interface Advisor {
   alias: string;
   user: {
+    id: number;
     first_name: string;
     last_name: string;
     profile_image: string;
@@ -52,6 +53,7 @@ const AdvisorListBody: React.FC = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedAdvisor, setSelectedAdvisor] = useState<Partial<Advisor>>({
     user: {
+      id:0,
       first_name: "",
       last_name: "",
       profile_image: "",
