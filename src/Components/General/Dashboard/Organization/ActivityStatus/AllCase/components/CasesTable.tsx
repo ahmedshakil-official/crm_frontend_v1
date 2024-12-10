@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -7,14 +8,13 @@ import {
   CardHeader,
   Col,
   Input,
-  InputGroup,
-  InputGroupText,
   Pagination,
   PaginationItem,
   PaginationLink,
   Row,
   Table,
 } from "reactstrap";
+import { Advisor } from "../../../AdvisorList/AdvisorListBody";
 import "../../ActivityStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 
@@ -46,30 +46,63 @@ export interface CaseInfo {
 
 const CaseTable: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
+  const [advisors, setAdvisors] = useState<Advisor[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(10);
+  const [showRemovedCases, setShowRemovedCases] = useState(false);
+
+  const [filters, setFilters] = useState({
+    created_by: "", // Employee ID should be a number
+    case_category: "",
+    applicant_type: "",
+    case_status: "",
+    case_stage: "",
+    is_removed: "", // Boolean value for removed cases
+  });
+
+  const toggleRemovedCases = () => {
+    setShowRemovedCases((prevState) => !prevState);
+    handleFilterChange("is_removed", showRemovedCases ? "false" : "true");
+  };
 
   const toggleAddNewCaseModal = () =>
     setIsAddNewCaseModalOpen(!isAddNewCaseModalOpen);
-
   const openAddNewCaseModal = () => {
     toggleAddNewCaseModal();
   };
 
+  const fetchAdvisors = async () => {
+    try {
+      const response = await apiClient.get("/director/advisors/");
+      const AdvisorsData = Array.isArray(response.data)
+        ? response.data
+        : response.data.advisors;
+      setAdvisors(AdvisorsData || []);
+    } catch (error) {
+      console.error("Error fetching Advisors:", error);
+      setAdvisors([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchAdvisors();
+  }, []);
+
   const fetchCaseInfo = async () => {
     setIsLoading(true);
     try {
-      const response = await apiClient.get("/cases/");
-      const CaseData = Array.isArray(response.data)
-        ? response.data
-        : response.data.cases;
-      setCaseInfo(CaseData || []);
+      const queryParams = new URLSearchParams({
+        ...filters, // Ensure all filters are included
+        search: searchQuery, // If you're using searchQuery, include it here
+      });
+      console.log("Filters applied:", filters); // Check the filters being used
+      const response = await apiClient.get(`/cases?${queryParams.toString()}`);
+      setCaseInfo(response.data || []);
     } catch (error) {
       console.error("Error Fetching Cases", error);
-      setCaseInfo([]);
     } finally {
       setIsLoading(false);
     }
@@ -77,38 +110,28 @@ const CaseTable: React.FC = () => {
 
   useEffect(() => {
     fetchCaseInfo();
-  }, []);
+  }, [filters]); // Re-run the fetchCaseInfo function when filters change
 
-  const filteredCases = caseInfo.filter((caseItem) =>
-    caseItem.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const handleFilterChange = (filterKey: string, value: string) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterKey]: value,
+    }));
+  };
+
+  const filteredCases = caseInfo.slice(
+    (currentPage - 1) * casesPerPage,
+    currentPage * casesPerPage
   );
 
-  const indexOfLastCase = currentPage * casesPerPage;
-  const indexOfFirstCase = indexOfLastCase - casesPerPage;
-  const currentCases = filteredCases.slice(indexOfFirstCase, indexOfLastCase);
-
-  const pageCount = Math.ceil(filteredCases.length / casesPerPage);
+  const pageCount = Math.ceil(caseInfo.length / casesPerPage);
 
   return (
     <Card>
       <CardHeader className="pb-0">
-        <Row className="align-items-center">
+        <Row className="flex justify-content-between">
           <Col md="3">
             <h3>All Cases</h3>
-          </Col>
-          <Col md="6">
-            <InputGroup>
-              <Input
-                type="text"
-                placeholder="Search..."
-                className="pe-5 rounded z-1"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <InputGroupText className="position-absolute z-2 fixed-end end-0 top-50 translate-middle-y bg-transparent border-0 pe-3">
-                <i className="fa-solid fa-magnifying-glass text-primary"></i>
-              </InputGroupText>
-            </InputGroup>
           </Col>
           <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
             <Button color="primary" onClick={openAddNewCaseModal}>
@@ -116,22 +139,40 @@ const CaseTable: React.FC = () => {
             </Button>
           </Col>
         </Row>
+
         {/* Filter Options */}
-        <Card className="pt-3 mt-4 bg-primary p-3 rounded-1">
+        <Card className="pt-3 mt-4 shadow-lg p-3 rounded-1">
           <Row className="justify-content-center text-center g-3">
-            {/* All Employee Filter */}
+            {/* Employee Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
-              <Input type="select" id="employeeFilter" className="py-1">
-                <option value="">Select Employees</option>
-                <option value="employee1">Employee 1</option>
-                <option value="employee2">Employee 2</option>
-                <option value="employee3">Employee 3</option>
+              <Input
+                type="select"
+                id="employeeFilter"
+                className="py-1"
+                onChange={(e) =>
+                  handleFilterChange("created_by", e.target.value)
+                }
+              >
+                <option value="">Select Employee</option>
+                {advisors &&
+                  advisors.map((advisor) => (
+                    <option key={advisor.alias} value={advisor.user.id}>
+                      {advisor.user.first_name} {advisor.user.last_name}
+                    </option>
+                  ))}
               </Input>
             </Col>
 
             {/* Case Category Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
-              <Input type="select" id="caseCategory" className="py-1">
+              <Input
+                type="select"
+                id="caseCategory"
+                className="py-1"
+                onChange={(e) =>
+                  handleFilterChange("case_category", e.target.value)
+                }
+              >
                 <option value="">Select Categories</option>
                 <option value="MORTGAGE">Mortgage</option>
                 <option value="PROTECTION">Protection</option>
@@ -141,7 +182,14 @@ const CaseTable: React.FC = () => {
 
             {/* Application Type Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
-              <Input type="select" id="applicationType" className="py-1">
+              <Input
+                type="select"
+                id="applicationType"
+                className="py-1"
+                onChange={(e) =>
+                  handleFilterChange("applicant_type", e.target.value)
+                }
+              >
                 <option value="">Select Types</option>
                 <option value="SINGLE">Single</option>
                 <option value="JOINT">Joint</option>
@@ -150,7 +198,14 @@ const CaseTable: React.FC = () => {
 
             {/* Case Status Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
-              <Input type="select" id="caseStatus" className="py-1">
+              <Input
+                type="select"
+                id="caseStatus"
+                className="py-1"
+                onChange={(e) =>
+                  handleFilterChange("case_status", e.target.value)
+                }
+              >
                 <option value="">Select Status</option>
                 <option value="NEW_LEAD">New Lead</option>
                 <option value="CALL_BACK">Call Back</option>
@@ -160,7 +215,14 @@ const CaseTable: React.FC = () => {
 
             {/* Case Stage Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
-              <Input type="select" id="caseStage" className="py-1">
+              <Input
+                type="select"
+                id="caseStage"
+                className="py-1"
+                onChange={(e) =>
+                  handleFilterChange("case_stage", e.target.value)
+                }
+              >
                 <option value="">Select Stages</option>
                 <option value="INQUIRY">Inquiry</option>
                 <option value="FACT_FIND">Fact Find</option>
@@ -183,8 +245,13 @@ const CaseTable: React.FC = () => {
 
             {/* Show Removed Cases Button */}
             <Col xs="12" sm="6" md="4" lg="2">
-              <Button className="btn btn-light text-black w-100">
-                Removed Case
+              <Button
+                className={`btn w-100 text-white ${
+                  showRemovedCases ? "btn-success" : "btn-danger"
+                }`}
+                onClick={toggleRemovedCases}
+              >
+                {showRemovedCases ? "Show All Cases" : "Show Removed Cases"}
               </Button>
             </Col>
           </Row>
@@ -216,10 +283,16 @@ const CaseTable: React.FC = () => {
                   </div>
                 </td>
               </tr>
-            ) : currentCases.length > 0 ? (
-              currentCases.map((caseItem) => (
+            ) : filteredCases.length > 0 ? (
+              filteredCases.map((caseItem) => (
                 <tr key={caseItem.alias}>
-                  <td>{caseItem.name}</td>
+                  <td>
+                    <Link href="/dashboard/organization/singlecase">
+                      <span className="text-black custom-hover">
+                        {caseItem.name}
+                      </span>
+                    </Link>
+                  </td>
                   <td>
                     {caseItem.lead_user
                       ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
@@ -251,7 +324,7 @@ const CaseTable: React.FC = () => {
                           ? "bg-info"
                           : caseItem.case_stage === "NOT_PROCEED"
                           ? "bg-danger"
-                          : "bg-secondary" // Default color for unknown stages
+                          : "bg-secondary"
                       }`}
                     >
                       {caseItem.case_stage}
@@ -322,7 +395,8 @@ const CaseTable: React.FC = () => {
           </PaginationItem>
         </Pagination>
       </CardBody>
-      {/* Modals  */}
+
+      {/* Modals */}
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
