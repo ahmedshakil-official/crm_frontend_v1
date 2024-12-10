@@ -6,7 +6,7 @@ const OrganizationCase = () => {
   useEffect(() => {
     (async () => {
       if (typeof window !== "undefined") {
-        const newClient = (await import("../../../../../Components/General/Dashboard/Organization/ActivityStatus/Case/page")).default;
+        const newClient = (await import("../../../../../Components/General/Dashboard/Organization/ActivityStatus/SingleCase/page")).default;
         setClient(() => newClient);
       }
     })();
