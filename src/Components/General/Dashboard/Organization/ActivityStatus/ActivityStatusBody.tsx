@@ -7,9 +7,11 @@ import { CaseInfo } from "./AllCase/components/CasesTable";
 
 const ActivityStatusBody = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchCaseInfo = async () => {
+    setIsLoading(true);
     try {
       const response = await apiClient.get("/cases/");
       const CaseData = Array.isArray(response.data)
@@ -19,6 +21,8 @@ const ActivityStatusBody = () => {
     } catch (error) {
       console.error("Error Fetching Cases", error);
       setCaseInfo([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -31,7 +35,7 @@ const ActivityStatusBody = () => {
   );
   return (
     <div className="container py-3">
-      <ActivityStatusHeader fetchCaseInfo={fetchCaseInfo}  />
+      <ActivityStatusHeader fetchCaseInfo={fetchCaseInfo} />
       <Input
         type="text"
         placeholder="Search Case"
@@ -54,7 +58,15 @@ const ActivityStatusBody = () => {
           </tr>
         </thead>
         <tbody className="text-center">
-          {filteredCases.length > 0 ? (
+          {isLoading ? (
+            <tr>
+              <td colSpan={9} className="text-center">
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </td>
+            </tr>
+          ) : filteredCases.length > 0 ? (
             filteredCases.slice(0, 5).map((caseItem, index) => (
               <tr key={index}>
                 <td>
@@ -73,7 +85,31 @@ const ActivityStatusBody = () => {
                 <td>{caseItem.applicant_type}</td>
                 <td>{caseItem.case_status}</td>
                 <td>
-                  <span className="bg-success rounded-4 px-2">
+                  <span
+                    className={`rounded-4 px-2 text-white ${
+                      caseItem.case_stage === "INQUIRY"
+                        ? "bg-success"
+                        : caseItem.case_stage === "FACT_FIND"
+                        ? "bg-warning"
+                        : caseItem.case_stage === "RESEARCH_COMPLIANCE_CHECK"
+                        ? "bg-dark"
+                        : caseItem.case_stage === "DECISION_IN_PRINCIPLE"
+                        ? "bg-info"
+                        : caseItem.case_stage === "FULL_MORTGAGE_APPLICATION"
+                        ? "bg-light"
+                        : caseItem.case_stage === "OFFER_FROM_BANK"
+                        ? "bg-dark"
+                        : caseItem.case_stage === "LEGAL"
+                        ? "bg-warning"
+                        : caseItem.case_stage === "COMPLETION"
+                        ? "bg-primary"
+                        : caseItem.case_stage === "FUTURE_OPPORTUNITY"
+                        ? "bg-info"
+                        : caseItem.case_stage === "NOT_PROCEED"
+                        ? "bg-danger"
+                        : "bg-secondary" // Default color for unknown stages
+                    }`}
+                  >
                     {caseItem.case_stage}
                   </span>
                 </td>

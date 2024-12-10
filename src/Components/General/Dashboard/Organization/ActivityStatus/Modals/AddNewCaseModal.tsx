@@ -1,5 +1,6 @@
 import apiClient from "@/services/api-client";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Form,
@@ -33,13 +34,14 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   onSave,
 }) => {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     lead: 0,
     case_category: "",
     applicant_type: "",
     case_status: "",
     case_stage: "",
-    notes: "hii",
+    notes: "",
   });
 
   // Fetch leads data from backend
@@ -60,7 +62,6 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
     fetchLeadsForCaseModal();
   }, []);
 
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -73,10 +74,24 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true); // Start loading
     try {
-      await apiClient.post("/cases/", formData);
-      onSave(); // Notify parent to refresh data
-      toggle(); // Close modal
+      const result = await apiClient.post("/cases/", formData);
+      if (result.status >= 200 && result.status < 300) {
+        toast.success("Case added successfully!");
+        setFormData({
+          lead: 0,
+          case_category: "",
+          applicant_type: "",
+          case_status: "",
+          case_stage: "",
+          notes: "",
+        });
+        onSave(); // Notify parent to refresh data
+        toggle(); // Close modal
+      } else {
+        toast.error("Invalid Request...");
+      }
     } catch (error: any) {
       if (error.response) {
         console.error("Backend Error:", error.response.data);
@@ -85,6 +100,8 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
       } else {
         console.error("Error during request setup:", error.message);
       }
+    } finally {
+      setIsLoading(false); // End loading
     }
   };
 
@@ -209,10 +226,26 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" color="primary">
-            Save
+          <Button type="submit" color="primary" disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <span
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>{" "}
+                Saving...
+              </>
+            ) : (
+              "Save"
+            )}
           </Button>
-          <Button type="button" color="secondary" onClick={toggle}>
+          <Button
+            type="button"
+            color="secondary"
+            onClick={toggle}
+            disabled={isLoading}
+          >
             Cancel
           </Button>
         </ModalFooter>

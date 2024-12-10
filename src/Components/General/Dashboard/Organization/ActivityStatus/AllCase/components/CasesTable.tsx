@@ -46,6 +46,7 @@ export interface CaseInfo {
 
 const CaseTable: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,6 +60,7 @@ const CaseTable: React.FC = () => {
   };
 
   const fetchCaseInfo = async () => {
+    setIsLoading(true);
     try {
       const response = await apiClient.get("/cases/");
       const CaseData = Array.isArray(response.data)
@@ -68,6 +70,8 @@ const CaseTable: React.FC = () => {
     } catch (error) {
       console.error("Error Fetching Cases", error);
       setCaseInfo([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -192,7 +196,15 @@ const CaseTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className="text-center">
-            {currentCases.length > 0 ? (
+            {isLoading ? (
+              <tr>
+                <td colSpan={9} className="text-center">
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+              </tr>
+            ) : currentCases.length > 0 ? (
               currentCases.map((caseItem) => (
                 <tr key={caseItem.alias}>
                   <td>{caseItem.name}</td>
@@ -205,7 +217,31 @@ const CaseTable: React.FC = () => {
                   <td>{caseItem.applicant_type}</td>
                   <td>{caseItem.case_status}</td>
                   <td>
-                    <span className="bg-success rounded-4 px-2">
+                    <span
+                      className={`rounded-4 px-2 text-white ${
+                        caseItem.case_stage === "INQUIRY"
+                          ? "bg-success"
+                          : caseItem.case_stage === "FACT_FIND"
+                          ? "bg-warning"
+                          : caseItem.case_stage === "RESEARCH_COMPLIANCE_CHECK"
+                          ? "bg-dark"
+                          : caseItem.case_stage === "DECISION_IN_PRINCIPLE"
+                          ? "bg-info"
+                          : caseItem.case_stage === "FULL_MORTGAGE_APPLICATION"
+                          ? "bg-light"
+                          : caseItem.case_stage === "OFFER_FROM_BANK"
+                          ? "bg-dark"
+                          : caseItem.case_stage === "LEGAL"
+                          ? "bg-warning"
+                          : caseItem.case_stage === "COMPLETION"
+                          ? "bg-primary"
+                          : caseItem.case_stage === "FUTURE_OPPORTUNITY"
+                          ? "bg-info"
+                          : caseItem.case_stage === "NOT_PROCEED"
+                          ? "bg-danger"
+                          : "bg-secondary" // Default color for unknown stages
+                      }`}
+                    >
                       {caseItem.case_stage}
                     </span>
                   </td>
@@ -213,7 +249,7 @@ const CaseTable: React.FC = () => {
                     {caseItem.created_by.first_name}{" "}
                     {caseItem.created_by.last_name}
                   </td>
-                  <td>{caseItem.updated_by?.first_name}</td>
+                  <td>{caseItem.updated_by?.first_name || "N/A"}</td>
                   <td>
                     <div className="d-flex justify-content-center align-items-center">
                       <Button
@@ -233,13 +269,14 @@ const CaseTable: React.FC = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={10} className="text-center">
+                <td colSpan={9} className="text-center">
                   No cases found.
                 </td>
               </tr>
             )}
           </tbody>
         </Table>
+
         <Pagination className="d-flex justify-content-end p-2">
           <PaginationItem disabled={currentPage === 1}>
             <PaginationLink first onClick={() => setCurrentPage(1)} />
