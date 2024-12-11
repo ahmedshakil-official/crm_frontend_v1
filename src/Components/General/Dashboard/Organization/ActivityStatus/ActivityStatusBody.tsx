@@ -52,7 +52,7 @@ const ActivityStatusBody = () => {
             <th>Applicant Type</th>
             <th>Case Status</th>
             <th>Case Stage</th>
-            <th>Created by</th>
+            <th>Created By</th>
             <th>Updated By</th>
             <th>Action</th>
           </tr>
