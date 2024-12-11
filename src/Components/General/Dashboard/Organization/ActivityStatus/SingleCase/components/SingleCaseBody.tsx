@@ -1,13 +1,13 @@
-import CaseInfo from "./CaseInfo";
 import FileManager from "./FileManager";
+import SingleCaseInfo from "./SingleCaseInfo";
 
 const SingleCaseBody = () => {
   return (
-    <div>
-      <div className="col-12 col-md-6 mb-3">
-        <CaseInfo />
+    <div className="d-flex gap-1">
+      <div className="col-12 col-md-5">
+        <SingleCaseInfo />
       </div>
-      <div className="col-12 col-md-6">
+      <div className="col-12 col-md-7">
         <FileManager />
       </div>
     </div>

@@ -269,7 +269,7 @@ const CaseTable: React.FC = () => {
               <th>Applicant Type</th>
               <th>Case Status</th>
               <th>Case Stage</th>
-              <th>Created by</th>
+              <th>Created By</th>
               <th>Updated By</th>
               <th>Action</th>
             </tr>
@@ -287,7 +287,9 @@ const CaseTable: React.FC = () => {
               filteredCases.map((caseItem) => (
                 <tr key={caseItem.alias}>
                   <td>
-                    <Link href="/dashboard/organization/case">
+                    <Link
+                      href={`/dashboard/organization/singlecase/${caseItem.alias}`}
+                    >
                       <span className="text-black custom-hover">
                         {caseItem.name}
                       </span>
