@@ -287,9 +287,7 @@ const CaseTable: React.FC = () => {
               filteredCases.map((caseItem) => (
                 <tr key={caseItem.alias}>
                   <td>
-                    <Link
-                      href={`/dashboard/organization/singlecase/${caseItem.alias}`}
-                    >
+                    <Link href={`/dashboard/organization/singlecase/`}>
                       <span className="text-black custom-hover">
                         {caseItem.name}
                       </span>

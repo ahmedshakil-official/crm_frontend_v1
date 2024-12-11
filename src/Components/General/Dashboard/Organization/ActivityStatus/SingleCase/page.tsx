@@ -1,7 +1,10 @@
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
 import { Container, Row } from "reactstrap";
-import SingleCaseBody from "./components/SingleCaseBody";
+import FileManager from "./components/FileManager";
+import JointUsers from "./components/JointUsers";
+import MeetingHistory from "./components/MeetingHistory";
 import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
+import SingleCaseInfo from "./components/SingleCaseInfo";
 
 const CaseContainer = () => {
   return (
@@ -13,7 +16,12 @@ const CaseContainer = () => {
       />
       <Container fluid>
         <Row className="row">
-          <SingleCaseBody />
+          <SingleCaseInfo />
+          <FileManager />
+        </Row>
+        <Row>
+          <JointUsers />
+          <MeetingHistory />
         </Row>
       </Container>
     </>
