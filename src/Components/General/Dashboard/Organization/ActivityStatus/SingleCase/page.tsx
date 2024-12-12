@@ -1,10 +1,11 @@
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
 import { Container, Row } from "reactstrap";
+import CalenderContainer from "./components/Calender/CalenderContainer";
 import FileManager from "./components/FileManager";
 import JointUsers from "./components/JointUsers";
 import MeetingHistory from "./components/MeetingHistory";
 import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
-import SingleCaseInfo from "./components/SingleCaseInfo";
+import SingleCaseInfo from "./components/SingleCaseInfo/SingleCaseInfo";
 
 const CaseContainer = () => {
   return (
@@ -22,6 +23,9 @@ const CaseContainer = () => {
         <Row>
           <JointUsers />
           <MeetingHistory />
+        </Row>
+        <Row>
+          <CalenderContainer />
         </Row>
       </Container>
     </>

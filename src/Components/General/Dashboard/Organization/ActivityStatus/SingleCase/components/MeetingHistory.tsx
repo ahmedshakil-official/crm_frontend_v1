@@ -32,7 +32,7 @@ const MeetingHistory = () => {
                     <td>
                       <div className="d-flex align-items-center gap-3">
                         <div className="flex-shrink-0 comman-round">
-                          <h3 className="bg-success rounded-circle p-2">AA</h3>
+                          <h3 className="bg-success rounded-start-circle p-2">AA</h3>
                         </div>
                         <div className="flex-grow-1">
                           <Link href={"/ecommerce/product"}>

@@ -7,9 +7,9 @@ import {
   Col,
 } from "reactstrap";
 
-const SingleCaseInfo = () => {
+const SingleCaseInfoDemo = () => {
   return (
-    <Col xxl="6" xl="7" className="box-col-12">
+    <Col xxl="5" md="6" className="box-col-12">
       <Card>
         <CardHeader>
           <h4 className="text-primary opacity-75">Case Info</h4>
@@ -102,4 +102,4 @@ const SingleCaseInfo = () => {
   );
 };
 
-export default SingleCaseInfo;
+export default SingleCaseInfoDemo;
