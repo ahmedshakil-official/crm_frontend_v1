@@ -8,12 +8,14 @@ const SingleCaseBreadcrumbs: React.FC<PropsTypes> = ({ mainTitle, parent }) => {
     <Container fluid>
       <Row className="page-title">
         <Col sm="6">
-          <h2>Case</h2>
+          <h2>
+            Case Details <strong>(DIP-kdfj38347)</strong>
+          </h2>
           <p className="mb-0 text-title-gray">
             Welcome! Continue your journey.
           </p>
         </Col>
-        <Col sm="6">
+        <Col sm="12">
           <Breadcrumb className="justify-content-sm-end align-items-center">
             <BreadcrumbItem>
               <Link href={`/dashboard/default`}>
@@ -24,6 +26,14 @@ const SingleCaseBreadcrumbs: React.FC<PropsTypes> = ({ mainTitle, parent }) => {
             <BreadcrumbItem className="active">
               <Link href="/dashboard/organization" className="text-primary">
                 {mainTitle}
+              </Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem className="active">
+              <Link
+                href="/dashboard/organization/allcase"
+                className="text-primary"
+              >
+                AllCase
               </Link>
             </BreadcrumbItem>
             <BreadcrumbItem className="active">case</BreadcrumbItem>

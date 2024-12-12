@@ -11,7 +11,7 @@ const UserLogin = () => {
 
   useEffect(() => {
     if (session) {
-      router.push("/dashboard/ecommerce");
+      router.push("/dashboard/organization");
     }
   }, [session, router]);
 

@@ -14,23 +14,22 @@ export const CalenderInitialData = {
   events: [
     {
       className: "bg-primary",
-      title: "Meeting",
+      title: "Make New Meeting",
       id: "1",
-      icon: "fa fa-birthday-cake",
-    },
-    { className: "bg-primary", title: "Party", id: "2", icon: "fa fa-user" },
-    { className: "bg-primary", title: "Long Event", id: "3", icon: "fa fa-plane" },
-    {
-      className: "bg-primary",
-      title: "Lunch",
-      id: "4",
-      icon: "fa fa-file-text",
+      icon: "fa-solid fa-circle-play",
     },
     {
-      className: "bg-primary",
-      title: "Happy Hour",
-      id: "5",
-      icon: "fa fa-briefcase",
+      className: "bg-warning",
+      title: "Upcoming Meeting",
+      id: "2",
+      icon: "fa-solid fa-video",
     },
+    {
+      className: "bg-danger",
+      title: "Previous Meeting",
+      id: "3",
+      icon: "fa-solid fa-video-slash",
+    },
+    
   ],
 };

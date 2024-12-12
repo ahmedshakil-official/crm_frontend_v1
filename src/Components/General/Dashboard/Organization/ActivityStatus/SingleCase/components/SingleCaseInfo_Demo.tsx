@@ -1,8 +1,15 @@
-import { Button, Card, CardBody, CardFooter, CardHeader } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Col,
+} from "reactstrap";
 
-const SingleCaseInfo = () => {
+const SingleCaseInfoDemo = () => {
   return (
-    <>
+    <Col xxl="5" md="6" className="box-col-12">
       <Card>
         <CardHeader>
           <h4 className="text-primary opacity-75">Case Info</h4>
@@ -10,7 +17,7 @@ const SingleCaseInfo = () => {
         <CardBody>
           <div className="d-flex justify-content-center gap-2 text-success">
             <h5>Case Name:</h5>
-            <p>Md Mahbub Rahman</p>
+            <p>INQ-67caac70</p>
           </div>
           <div className="d-flex justify-content-between px-2">
             <div>
@@ -89,11 +96,10 @@ const SingleCaseInfo = () => {
         </CardBody>
         <CardFooter className="d-flex justify-content-center gap-2">
           <Button color="primary">Update</Button>
-          <Button color="danger">Delete</Button>
         </CardFooter>
       </Card>
-    </>
+    </Col>
   );
 };
 
-export default SingleCaseInfo;
+export default SingleCaseInfoDemo;
