@@ -151,16 +151,16 @@ const AdvisorListBody: React.FC = () => {
           {currentAdvisors.map((advisor) => (
             <tr key={advisor.alias}>
               <td>
-                {advisor.user.first_name} {advisor.user.last_name}
+                {advisor?.user?.first_name} {advisor.user.last_name}
               </td>
-              <td>{advisor.official_email}</td>
-              <td>{advisor.official_phone}</td>
-              <td>{advisor.role}</td>
+              <td>{advisor?.official_email}</td>
+              <td>{advisor?.official_phone}</td>
+              <td>{advisor?.role}</td>
               {/* <td className="hide">{advisor.gender}</td> */}
               <td>
-                {advisor.created_by.first_name} {advisor.created_by.last_name}
+                {advisor?.created_by?.first_name} {advisor?.created_by?.last_name}
               </td>
-              <td>{new Date(advisor.created_at).toLocaleString()}</td>
+              <td>{new Date(advisor?.created_at).toLocaleString()}</td>
               <td className="text-center">
                 <div className="d-flex justify-content-center gap-2 align-items-center">
                   <Button
