@@ -70,7 +70,7 @@ const ActivityStatusBody = () => {
             filteredCases.slice(0, 5).map((caseItem, index) => (
               <tr key={index}>
                 <td>
-                  <Link href="/dashboard/organization/singlecase">
+                  <Link href={`/dashboard/organization/${caseItem.alias}`}>
                     <span className="text-black custom-hover">
                       {caseItem.name}
                     </span>
