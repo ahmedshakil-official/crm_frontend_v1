@@ -9,7 +9,8 @@ import FileManager from "./components/FileManager";
 import JointUsers from "./components/JointUsers";
 import MeetingHistory from "./components/MeetingHistory";
 import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
-import SingleCaseInfo from "./components/SingleCaseInfo/SingleCaseInfo";
+import SingleCaseInfo from "./components/SingleCaseInfo";
+
 
 const CaseContainer = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();

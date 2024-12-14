@@ -1,7 +1,7 @@
-import { IsingleCaseInfo } from "@/Types/LayoutTypes";
+import { SingleCaseInfoProps } from "@/Types/LayoutTypes";
 import { Card, CardBody, CardHeader, Col, Progress, Row } from "reactstrap";
 
-const SingleCaseInfo: React.FC<IsingleCaseInfo> = ({ caseInfo }) => {
+const SingleCaseInfo: React.FC<SingleCaseInfoProps> = ({ caseInfo }) => {
   return (
     <Col xl="6" md="6">
       <Card>
@@ -50,14 +50,19 @@ const SingleCaseInfo: React.FC<IsingleCaseInfo> = ({ caseInfo }) => {
                 <Row className="pt-2">
                   <Col xs="12">
                     <span className="pt-1">
-                      <strong>Case Id:</strong> {caseInfo?.alias}
+                      <strong>Case Id:</strong>{" "}
+                      {caseInfo?.alias
+                        ? caseInfo.alias.substring(0, 8)
+                        : "No alias available"}
                     </span>
                     <span className="pt-1">
                       <strong>Case Category:</strong> {caseInfo?.case_category}
                     </span>
                     <span className="pt-1">
                       <strong>Applicent Type:</strong>{" "}
-                      <span className="bg-success px-1 rounded-5">{caseInfo?.applicant_type}</span>
+                      <span className="bg-success px-1 rounded-5">
+                        {caseInfo?.applicant_type}
+                      </span>
                     </span>
                   </Col>
                 </Row>
@@ -81,15 +86,19 @@ const SingleCaseInfo: React.FC<IsingleCaseInfo> = ({ caseInfo }) => {
                 <Row className="pt-2">
                   <Col xs="12">
                     <span className="pt-1">
-                      <strong>Case Status:</strong> Someone
+                      <strong>Case Status:</strong> {caseInfo?.case_status}
                     </span>
                     <span className="pt-1">
                       <strong>Active Status:</strong>{" "}
-                      <span className="bg-success px-2 rounded-5">Active</span>
+                      <span className="bg-success px-2 rounded-5">
+                        {caseInfo?.is_removed === false ? "Active" : "Removed"}
+                      </span>
                     </span>
                     <span className="pt-1">
                       <strong>Case Stage:</strong>{" "}
-                      <span className="bg-info px-2 rounded-5">RCC</span>
+                      <span className="bg-info px-2 rounded-5">
+                        {caseInfo?.case_stage}
+                      </span>
                     </span>
                   </Col>
                 </Row>
@@ -113,13 +122,15 @@ const SingleCaseInfo: React.FC<IsingleCaseInfo> = ({ caseInfo }) => {
                 <Row className="pt-2">
                   <Col xs="12">
                     <span className="pt-1">
-                      <strong>Name:</strong> {caseInfo?.lead_user.first_name}
+                      <strong>Name:</strong> {caseInfo?.created_by?.first_name}{" "}
+                      {caseInfo?.created_by?.last_name}
                     </span>
                     <span className="pt-1">
-                      <strong>Email:</strong> dfdjfhjs@gmai.com
+                      <strong>Email:</strong> {caseInfo?.created_by?.email}
                     </span>
                     <span className="pt-1">
-                      <strong>User Type:</strong> +8801521545
+                      <strong>User Type:</strong>
+                      {caseInfo?.created_by?.user_type}
                     </span>
                   </Col>
                 </Row>
@@ -137,11 +148,7 @@ const SingleCaseInfo: React.FC<IsingleCaseInfo> = ({ caseInfo }) => {
         <Row className="px-3">
           <div>
             <h4>Notes:</h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique
-              eligendi reiciendis nobis ab sunt aperiam iusto fugiat! Omnis,
-              provident sit.
-            </p>
+            <p>{caseInfo?.notes ? caseInfo.notes : "Notes not available"}</p>
           </div>
         </Row>
       </Card>
