@@ -81,7 +81,7 @@ export interface PropsTypes {
   caseInfo?: CaseInfo;
 }
 
-export interface IsingleCaseInfo {
+export interface SingleCaseInfoProps {
   caseInfo: CaseInfo | undefined;
 }
 

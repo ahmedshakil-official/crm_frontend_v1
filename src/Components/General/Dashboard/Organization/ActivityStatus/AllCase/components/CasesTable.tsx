@@ -34,13 +34,23 @@ export interface CaseInfo {
   applicant_type: string;
   case_status: string;
   case_stage: string;
+  notes: string;
+  is_removed: boolean;
   created_by: {
+    email: string;
+    phone: string;
     first_name: string;
     last_name: string;
+    profile_image: null;
+    user_type: string;
   };
   updated_by: {
+    email: string;
+    phone: string;
     first_name: string;
     last_name: string;
+    profile_image: null;
+    user_type: string;
   };
 }
 
