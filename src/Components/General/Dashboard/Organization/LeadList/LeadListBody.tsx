@@ -149,14 +149,14 @@ const LeadListBody: React.FC = () => {
           {currentLeads.map((lead) => (
             <tr key={lead.alias}>
               <td>
-                {lead.user.first_name} {lead.user.last_name}
+                {lead?.user?.first_name} {lead?.user?.last_name}
               </td>
-              <td>{lead.official_email}</td>
-              <td>{lead.official_phone}</td>
-              <td>{lead.role}</td>
+              <td>{lead?.official_email}</td>
+              <td>{lead?.official_phone}</td>
+              <td>{lead?.role}</td>
               {/* <td className="hide">{lead.gender}</td> */}
               <td>
-                {lead.created_by.first_name} {lead.created_by.last_name}
+                {lead?.created_by?.first_name} {lead?.created_by?.last_name}
               </td>
               <td>{new Date(lead.created_at).toLocaleString()}</td>
               <td className="text-center">

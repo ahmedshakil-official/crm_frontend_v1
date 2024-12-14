@@ -1,3 +1,5 @@
+import { CaseInfo } from "@/Components/General/Dashboard/Organization/ActivityStatus/AllCase/components/CasesTable";
+
 export interface MenuItem {
   badge?: string;
   title: string;
@@ -62,13 +64,13 @@ export interface BookmarkedDataType {
   icon?: string;
   path?: string;
   title?: string;
-  color?:string
+  color?: string;
   id?: number | undefined;
   bookmarked?: boolean;
 }
 
 export interface BookmarkSliceType {
-  linkItemsArray: BookmarkedDataType[]|[];
+  linkItemsArray: BookmarkedDataType[] | [];
   bookmarkedData: BookmarkedDataType[];
 }
 
@@ -76,6 +78,11 @@ export interface PropsTypes {
   mainTitle: string;
   parent: string;
   title?: string;
+  caseInfo?: CaseInfo;
+}
+
+export interface IsingleCaseInfo {
+  caseInfo: CaseInfo | undefined;
 }
 
 export interface CartHeaderDataType {

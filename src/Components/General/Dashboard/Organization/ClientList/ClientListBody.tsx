@@ -12,7 +12,6 @@ import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
 import UpdateClientModal from "./Modals/UpdateCliientModal";
 
-
 export interface Client {
   alias: string;
   user: {
@@ -109,13 +108,18 @@ const ClientListBody: React.FC = () => {
 
   const filteredClients = clients.filter(
     (client) =>
-      client.user.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.user.first_name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
       client.official_email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const indexOfLastClient = currentPage * clientsPerPage;
   const indexOfFirstClient = indexOfLastClient - clientsPerPage;
-  const currentClients = filteredClients.slice(indexOfFirstClient, indexOfLastClient);
+  const currentClients = filteredClients.slice(
+    indexOfFirstClient,
+    indexOfLastClient
+  );
 
   const totalPages = Math.ceil(filteredClients.length / clientsPerPage);
 
@@ -150,16 +154,16 @@ const ClientListBody: React.FC = () => {
           {currentClients.map((client) => (
             <tr key={client.alias}>
               <td>
-                {client.user.first_name} {client.user.last_name}
+                {client?.user?.first_name} {client?.user?.last_name}
               </td>
               <td>{client.official_email}</td>
               <td>{client.official_phone}</td>
               <td>{client.role}</td>
               {/* <td className="hide">{client.gender}</td> */}
               <td>
-                {client.created_by.first_name} {client.created_by.last_name}
+                {client?.created_by?.first_name} {client?.created_by?.last_name}
               </td>
-              <td>{new Date(client.created_at).toLocaleString()}</td>
+              <td>{new Date(client?.created_at).toLocaleString()}</td>
               <td className="text-center">
                 <div className="d-flex justify-content-center gap-2 align-items-center">
                   <Button

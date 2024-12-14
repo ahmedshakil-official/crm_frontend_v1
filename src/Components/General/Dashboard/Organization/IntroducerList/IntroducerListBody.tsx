@@ -149,16 +149,16 @@ const IntroducerListBody: React.FC = () => {
           {currentIntroducers.map((introducer) => (
             <tr key={introducer.alias}>
               <td>
-                {introducer.user.first_name} {introducer.user.last_name}
+                {introducer?.user?.first_name} {introducer?.user?.last_name}
               </td>
-              <td>{introducer.official_email}</td>
-              <td>{introducer.official_phone}</td>
-              <td>{introducer.role}</td>
+              <td>{introducer?.official_email}</td>
+              <td>{introducer?.official_phone}</td>
+              <td>{introducer?.role}</td>
               {/* <td className="hide">{introducer.gender}</td> */}
               <td>
-                {introducer.created_by.first_name} {introducer.created_by.last_name}
+                {introducer?.created_by?.first_name} {introducer?.created_by?.last_name}
               </td>
-              <td>{new Date(introducer.created_at).toLocaleString()}</td>
+              <td>{new Date(introducer?.created_at).toLocaleString()}</td>
               <td className="text-center">
                 <div className="d-flex justify-content-center gap-2 align-items-center">
                   <Button
