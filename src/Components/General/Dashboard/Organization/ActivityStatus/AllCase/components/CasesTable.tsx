@@ -12,6 +12,7 @@ import {
   PaginationItem,
   PaginationLink,
   Row,
+  Spinner,
   Table,
 } from "reactstrap";
 import { Advisor } from "../../../AdvisorList/AdvisorListBody";
@@ -138,7 +139,7 @@ const CaseTable: React.FC = () => {
 
   return (
     <Card>
-      <CardHeader className="pb-0">
+      <CardHeader>
         <Row className="flex justify-content-between">
           <Col md="3">
             <h3>All Cases</h3>
@@ -149,9 +150,10 @@ const CaseTable: React.FC = () => {
             </Button>
           </Col>
         </Row>
-
+      </CardHeader>
+      <CardBody className="p-0 m-0 mt-3">
         {/* Filter Options */}
-        <Card className="pt-3 mt-4 shadow-lg p-3 rounded-1">
+        <Card className="shadow-lg rounded-1 p-3">
           <Row className="justify-content-center text-center g-3">
             {/* Employee Filter */}
             <Col xs="12" sm="6" md="4" lg="2">
@@ -256,20 +258,19 @@ const CaseTable: React.FC = () => {
             {/* Show Removed Cases Button */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Button
-                className={`btn w-100 text-white ${
+                className={`btn w-100 ${
                   showRemovedCases ? "btn-success" : "btn-danger"
                 }`}
                 onClick={toggleRemovedCases}
               >
-                {showRemovedCases ? "Show All Cases" : "Show Removed Cases"}
+                {showRemovedCases ? "All Cases" : "Removed Cases"}
               </Button>
             </Col>
           </Row>
         </Card>
-      </CardHeader>
-
+      </CardBody>
       {/* Card Body */}
-      <CardBody className="px-0 mx-0">
+      <CardBody className="p-0 m-0">
         <Table bordered hover responsive>
           <thead className="thead-light text-center">
             <tr>
@@ -287,9 +288,9 @@ const CaseTable: React.FC = () => {
           <tbody className="text-center">
             {isLoading ? (
               <tr>
-                <td colSpan={9} className="text-center">
-                  <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading...</span>
+                <td colSpan={7} className="text-center">
+                  <div className="d-flex justify-content-center align-items-center">
+                    <Spinner color="primary" />
                   </div>
                 </td>
               </tr>
@@ -382,18 +383,61 @@ const CaseTable: React.FC = () => {
               onClick={() => setCurrentPage(currentPage - 1)}
             />
           </PaginationItem>
-          {Array.from({ length: pageCount }, (_, i) => i + 1).map(
-            (pageNumber) => (
-              <PaginationItem
-                key={pageNumber}
-                active={pageNumber === currentPage}
-              >
-                <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
-                  {pageNumber}
+
+          {pageCount <= 5 ? (
+            Array.from({ length: pageCount }, (_, i) => i + 1).map(
+              (pageNumber) => (
+                <PaginationItem
+                  key={pageNumber}
+                  active={pageNumber === currentPage}
+                >
+                  <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
+                    {pageNumber}
+                  </PaginationLink>
+                </PaginationItem>
+              )
+            )
+          ) : (
+            <>
+              <PaginationItem active={currentPage === 1}>
+                <PaginationLink onClick={() => setCurrentPage(1)}>
+                  1
                 </PaginationLink>
               </PaginationItem>
-            )
+
+              {currentPage > 3 && (
+                <PaginationItem disabled>
+                  <PaginationLink>...</PaginationLink>
+                </PaginationItem>
+              )}
+
+              {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
+                .filter((page) => page > 1 && page < pageCount)
+                .map((pageNumber) => (
+                  <PaginationItem
+                    key={pageNumber}
+                    active={pageNumber === currentPage}
+                  >
+                    <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
+                      {pageNumber}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+
+              {currentPage < pageCount - 2 && (
+                <PaginationItem disabled>
+                  <PaginationLink>...</PaginationLink>
+                </PaginationItem>
+              )}
+
+              <PaginationItem active={currentPage === pageCount}>
+                <PaginationLink onClick={() => setCurrentPage(pageCount)}>
+                  {pageCount}
+                </PaginationLink>
+              </PaginationItem>
+            </>
           )}
+
           <PaginationItem disabled={currentPage === pageCount}>
             <PaginationLink
               next

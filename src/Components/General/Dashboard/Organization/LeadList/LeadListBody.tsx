@@ -6,6 +6,7 @@ import {
   Pagination,
   PaginationItem,
   PaginationLink,
+  Spinner,
   Table,
 } from "reactstrap";
 import "./LeadList.css";
@@ -45,6 +46,7 @@ export interface Lead {
 
 const LeadListBody: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [leadsPerPage] = useState(5);
@@ -79,6 +81,7 @@ const LeadListBody: React.FC = () => {
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
 
   const fetchLeads = async () => {
+    setIsLoading(true);
     try {
       const response = await apiClient.get("/director/leads/");
       const LeadsData = Array.isArray(response.data)
@@ -88,6 +91,8 @@ const LeadListBody: React.FC = () => {
     } catch (error) {
       console.error("Error fetching Leads:", error);
       setLeads([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -146,36 +151,51 @@ const LeadListBody: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {currentLeads.map((lead) => (
-            <tr key={lead.alias}>
-              <td>
-                {lead?.user?.first_name} {lead?.user?.last_name}
-              </td>
-              <td>{lead?.official_email}</td>
-              <td>{lead?.official_phone}</td>
-              <td>{lead?.role}</td>
-              {/* <td className="hide">{lead.gender}</td> */}
-              <td>
-                {lead?.created_by?.first_name} {lead?.created_by?.last_name}
-              </td>
-              <td>{new Date(lead.created_at).toLocaleString()}</td>
-              <td className="text-center">
-                <div className="d-flex justify-content-center gap-2 align-items-center">
-                  <Button
-                    color="success"
-                    size="sm"
-                    title="Update User"
-                    onClick={() => openUpdateModal(lead)}
-                  >
-                    <i className="icon-pencil-alt"></i>
-                  </Button>
-                  <Button color="danger" size="sm" title="Delete User">
-                    <i className="icon-trash"></i>
-                  </Button>
+          {isLoading ? (
+            <tr>
+              <td colSpan={7} className="text-center">
+                <div className="d-flex justify-content-center align-items-center">
+                  <Spinner color="primary" />
                 </div>
               </td>
             </tr>
-          ))}
+          ) : currentLeads.length > 0 ? (
+            currentLeads.map((lead) => (
+              <tr key={lead.alias}>
+                <td>
+                  {lead?.user?.first_name} {lead?.user?.last_name}
+                </td>
+                <td>{lead?.official_email}</td>
+                <td>{lead?.official_phone}</td>
+                <td>{lead?.role}</td>
+                <td>
+                  {lead?.created_by?.first_name} {lead?.created_by?.last_name}
+                </td>
+                <td>{new Date(lead.created_at).toLocaleString()}</td>
+                <td className="text-center">
+                  <div className="d-flex justify-content-center gap-2 align-items-center">
+                    <Button
+                      color="success"
+                      size="sm"
+                      title="Update User"
+                      onClick={() => openUpdateModal(lead)}
+                    >
+                      <i className="icon-pencil-alt"></i>
+                    </Button>
+                    <Button color="danger" size="sm" title="Delete User">
+                      <i className="icon-trash"></i>
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={7} className="text-center">
+                No leads available.
+              </td>
+            </tr>
+          )}
         </tbody>
       </Table>
       <Pagination className="d-flex justify-content-end p-2">
@@ -188,18 +208,61 @@ const LeadListBody: React.FC = () => {
             onClick={() => setCurrentPage(currentPage - 1)}
           />
         </PaginationItem>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-          (pageNumber) => (
-            <PaginationItem
-              key={pageNumber}
-              active={pageNumber === currentPage}
-            >
-              <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
-                {pageNumber}
+
+        {totalPages <= 5 ? (
+          Array.from({ length: totalPages }, (_, i) => i + 1).map(
+            (pageNumber) => (
+              <PaginationItem
+                key={pageNumber}
+                active={pageNumber === currentPage}
+              >
+                <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
+                  {pageNumber}
+                </PaginationLink>
+              </PaginationItem>
+            )
+          )
+        ) : (
+          <>
+            <PaginationItem active={currentPage === 1}>
+              <PaginationLink onClick={() => setCurrentPage(1)}>
+                1
               </PaginationLink>
             </PaginationItem>
-          )
+
+            {currentPage > 3 && (
+              <PaginationItem disabled>
+                <PaginationLink>...</PaginationLink>
+              </PaginationItem>
+            )}
+
+            {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
+              .filter((pageNumber) => pageNumber > 1 && pageNumber < totalPages)
+              .map((pageNumber) => (
+                <PaginationItem
+                  key={pageNumber}
+                  active={pageNumber === currentPage}
+                >
+                  <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
+                    {pageNumber}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+
+            {currentPage < totalPages - 2 && (
+              <PaginationItem disabled>
+                <PaginationLink>...</PaginationLink>
+              </PaginationItem>
+            )}
+
+            <PaginationItem active={currentPage === totalPages}>
+              <PaginationLink onClick={() => setCurrentPage(totalPages)}>
+                {totalPages}
+              </PaginationLink>
+            </PaginationItem>
+          </>
         )}
+
         <PaginationItem disabled={currentPage === totalPages}>
           <PaginationLink
             next
@@ -210,6 +273,7 @@ const LeadListBody: React.FC = () => {
           <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
         </PaginationItem>
       </Pagination>
+
       {/* modals */}
       <AddLeadModal
         isOpen={isModalOpen}

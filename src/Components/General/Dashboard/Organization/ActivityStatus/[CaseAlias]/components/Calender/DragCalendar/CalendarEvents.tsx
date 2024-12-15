@@ -6,7 +6,7 @@ import { useState } from "react";
 const CalendarEvents = () => {
   const [openCalender, setOpenCalender] = useState(false);
   return (
-    <Col xxl="3" className="box-col-4-end">
+    <Col lg="3" className="box-col-4-end">
       <div className="md-sidebar mb-3">
         <Button tag="a" color="primary" className="md-sidebar-toggle" href={Href} onClick={() => setOpenCalender(!openCalender)}>
           {CalendarFilter}

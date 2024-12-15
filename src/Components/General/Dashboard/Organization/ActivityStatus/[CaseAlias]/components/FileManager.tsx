@@ -46,7 +46,7 @@ const FileManager = () => {
   };
 
   return (
-    <Col xl="6" sm="12" className="box-col-12">
+    <Col lg="7" sm="12" className="box-col-12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3>File Manager</h3>
