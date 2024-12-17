@@ -6,7 +6,7 @@ import { Card, CardBody, Col, Progress, Table } from "reactstrap";
 
 const MeetingHistory = () => {
   return (
-    <Col xxl="6" xl="7" className="box-col-12">
+    <Col lg="6" sm="12" className="box-col-12">
       <Card>
         <DashboardCommonHeader title="Meeting History" />
         <CardBody className="pt-0 recent-order">

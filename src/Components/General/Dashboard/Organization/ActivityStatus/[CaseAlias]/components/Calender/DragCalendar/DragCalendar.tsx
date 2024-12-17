@@ -27,7 +27,7 @@ const DragCalendar = () => {
   return (
     <Fragment>
       <CalendarEvents />
-      <Col xl="9" md="8" className="box-col-8">
+      <Col  lg="9" className="box-col-8">
         <div className="demo-app-calendar">
           <FullCalendar
             initialView="dayGridMonth"

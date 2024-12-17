@@ -7,7 +7,7 @@ import { Card, CardBody, Col } from "reactstrap";
 
 const EarningsTrend = () => {
   return (
-    <Col xxl="3" xl="4" sm="6" className="proorder-xxl-2 box-col-6">
+    <Col lg="3" md="6" sm="12" className="proorder-xxl-2 box-col-6">
       <Card className="earning-card">
         <DashboardCommonHeader title={Earnings} dropdownTitle={Monthly} />
         <CardBody className="pb-0">

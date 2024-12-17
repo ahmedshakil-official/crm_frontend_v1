@@ -6,6 +6,7 @@ import {
   Pagination,
   PaginationItem,
   PaginationLink,
+  Spinner,
   Table,
 } from "reactstrap";
 import "./AdvisorList.css";
@@ -46,6 +47,7 @@ export interface Advisor {
 
 const AdvisorListBody: React.FC = () => {
   const [advisors, setAdvisors] = useState<Advisor[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [advisorsPerPage] = useState(5);
@@ -53,7 +55,7 @@ const AdvisorListBody: React.FC = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedAdvisor, setSelectedAdvisor] = useState<Partial<Advisor>>({
     user: {
-      id:0,
+      id: 0,
       first_name: "",
       last_name: "",
       profile_image: "",
@@ -81,6 +83,7 @@ const AdvisorListBody: React.FC = () => {
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
 
   const fetchAdvisors = async () => {
+    setIsLoading(true);
     try {
       const response = await apiClient.get("/director/advisors/");
       const AdvisorsData = Array.isArray(response.data)
@@ -90,6 +93,8 @@ const AdvisorListBody: React.FC = () => {
     } catch (error) {
       console.error("Error fetching Advisors:", error);
       setAdvisors([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -110,13 +115,18 @@ const AdvisorListBody: React.FC = () => {
 
   const filteredAdvisors = advisors.filter(
     (advisor) =>
-      advisor.user.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      advisor.user.first_name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
       advisor.official_email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const indexOfLastAdvisor = currentPage * advisorsPerPage;
   const indexOfFirstAdvisor = indexOfLastAdvisor - advisorsPerPage;
-  const currentAdvisors = filteredAdvisors.slice(indexOfFirstAdvisor, indexOfLastAdvisor);
+  const currentAdvisors = filteredAdvisors.slice(
+    indexOfFirstAdvisor,
+    indexOfLastAdvisor
+  );
 
   const totalPages = Math.ceil(filteredAdvisors.length / advisorsPerPage);
 
@@ -147,37 +157,54 @@ const AdvisorListBody: React.FC = () => {
             <th>Action</th>
           </tr>
         </thead>
+
         <tbody>
-          {currentAdvisors.map((advisor) => (
-            <tr key={advisor.alias}>
-              <td>
-                {advisor?.user?.first_name} {advisor.user.last_name}
-              </td>
-              <td>{advisor?.official_email}</td>
-              <td>{advisor?.official_phone}</td>
-              <td>{advisor?.role}</td>
-              {/* <td className="hide">{advisor.gender}</td> */}
-              <td>
-                {advisor?.created_by?.first_name} {advisor?.created_by?.last_name}
-              </td>
-              <td>{new Date(advisor?.created_at).toLocaleString()}</td>
-              <td className="text-center">
-                <div className="d-flex justify-content-center gap-2 align-items-center">
-                  <Button
-                    color="success"
-                    size="sm"
-                    title="Update User"
-                    onClick={() => openUpdateModal(advisor)}
-                  >
-                    <i className="icon-pencil-alt"></i>
-                  </Button>
-                  <Button color="danger" size="sm" title="Delete User">
-                    <i className="icon-trash"></i>
-                  </Button>
+          {isLoading ? (
+            <tr>
+              <td colSpan={7} className="text-center">
+                <div className="d-flex justify-content-center align-items-center">
+                  <Spinner color="primary" />
                 </div>
               </td>
             </tr>
-          ))}
+          ) : currentAdvisors.length > 0 ? (
+            currentAdvisors.map((advisor) => (
+              <tr key={advisor.alias}>
+                <td>
+                  {advisor?.user?.first_name} {advisor?.user?.last_name}
+                </td>
+                <td>{advisor?.official_email}</td>
+                <td>{advisor?.official_phone}</td>
+                <td>{advisor?.role}</td>
+                <td>
+                  {advisor?.created_by?.first_name}{" "}
+                  {advisor?.created_by?.last_name}
+                </td>
+                <td>{new Date(advisor?.created_at).toLocaleString()}</td>
+                <td className="text-center">
+                  <div className="d-flex justify-content-center gap-2 align-items-center">
+                    <Button
+                      color="success"
+                      size="sm"
+                      title="Update User"
+                      onClick={() => openUpdateModal(advisor)}
+                    >
+                      <i className="icon-pencil-alt"></i>
+                    </Button>
+                    <Button color="danger" size="sm" title="Delete User">
+                      <i className="icon-trash"></i>
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={7} className="text-center">
+                No advisors available.
+              </td>
+            </tr>
+          )}
         </tbody>
       </Table>
       <Pagination className="d-flex justify-content-end p-2">
@@ -190,18 +217,61 @@ const AdvisorListBody: React.FC = () => {
             onClick={() => setCurrentPage(currentPage - 1)}
           />
         </PaginationItem>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-          (pageNumber) => (
-            <PaginationItem
-              key={pageNumber}
-              active={pageNumber === currentPage}
-            >
-              <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
-                {pageNumber}
+
+        {totalPages <= 5 ? (
+          Array.from({ length: totalPages }, (_, i) => i + 1).map(
+            (pageNumber) => (
+              <PaginationItem
+                key={pageNumber}
+                active={pageNumber === currentPage}
+              >
+                <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
+                  {pageNumber}
+                </PaginationLink>
+              </PaginationItem>
+            )
+          )
+        ) : (
+          <>
+            <PaginationItem active={currentPage === 1}>
+              <PaginationLink onClick={() => setCurrentPage(1)}>
+                1
               </PaginationLink>
             </PaginationItem>
-          )
+
+            {currentPage > 3 && (
+              <PaginationItem disabled>
+                <PaginationLink>...</PaginationLink>
+              </PaginationItem>
+            )}
+
+            {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
+              .filter((pageNumber) => pageNumber > 1 && pageNumber < totalPages)
+              .map((pageNumber) => (
+                <PaginationItem
+                  key={pageNumber}
+                  active={pageNumber === currentPage}
+                >
+                  <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
+                    {pageNumber}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+
+            {currentPage < totalPages - 2 && (
+              <PaginationItem disabled>
+                <PaginationLink>...</PaginationLink>
+              </PaginationItem>
+            )}
+
+            <PaginationItem active={currentPage === totalPages}>
+              <PaginationLink onClick={() => setCurrentPage(totalPages)}>
+                {totalPages}
+              </PaginationLink>
+            </PaginationItem>
+          </>
         )}
+
         <PaginationItem disabled={currentPage === totalPages}>
           <PaginationLink
             next
@@ -212,6 +282,7 @@ const AdvisorListBody: React.FC = () => {
           <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
         </PaginationItem>
       </Pagination>
+
       {/* modals */}
       <AddAdvisorModal
         isOpen={isModalOpen}

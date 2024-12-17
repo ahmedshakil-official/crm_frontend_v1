@@ -53,7 +53,7 @@ const ProfileGreet = () => {
   }, []);
 
   return (
-    <Col xl="4" sm="6" className="proorder-xxl-1 box-col-6">
+    <Col lg="4" md="6" sm="12" className="proorder-xxl-1 box-col-6">
       <Card className="welcome-banner">
         <CardHeader className="p-0 card-no-border">
           <div className="welcome-card">

@@ -11,8 +11,13 @@ import MeetingHistory from "./components/MeetingHistory";
 import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
 import SingleCaseInfo from "./components/SingleCaseInfo";
 
+export interface SingleCaseProps{
+  caseInfo:CaseInfo | undefined;
+  isLoading:boolean;
+}
 
-const CaseContainer = () => {
+
+const CaseContainer:React.FC<SingleCaseProps> = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
@@ -41,10 +46,11 @@ const CaseContainer = () => {
         parent={Dashboard}
         title={OrganizationTitle}
         caseInfo={caseInfo}
+        isLoading={isLoading}
       />
       <Container fluid>
         <Row className="row">
-          <SingleCaseInfo caseInfo={caseInfo} />
+          <SingleCaseInfo caseInfo={caseInfo} isLoading={isLoading} />
           <FileManager />
         </Row>
         <Row>

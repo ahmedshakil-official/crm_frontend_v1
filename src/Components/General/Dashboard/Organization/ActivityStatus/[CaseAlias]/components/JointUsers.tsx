@@ -8,7 +8,7 @@ import { Col, Card, CardBody, Table, Progress } from 'reactstrap'
 
 const JointUsers = () => {
   return (
-    <Col xxl="6" xl="7" className="box-col-12">
+    <Col lg="6" sm="12" className="box-col-12">
       <Card>
         <DashboardCommonHeader title="Joint Users" />
         <CardBody className="pt-0 recent-order">

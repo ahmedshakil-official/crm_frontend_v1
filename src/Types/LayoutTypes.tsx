@@ -1,5 +1,3 @@
-import { CaseInfo } from "@/Components/General/Dashboard/Organization/ActivityStatus/AllCase/components/CasesTable";
-
 export interface MenuItem {
   badge?: string;
   title: string;
@@ -78,11 +76,6 @@ export interface PropsTypes {
   mainTitle: string;
   parent: string;
   title?: string;
-  caseInfo?: CaseInfo;
-}
-
-export interface SingleCaseInfoProps {
-  caseInfo: CaseInfo | undefined;
 }
 
 export interface CartHeaderDataType {
