@@ -1,9 +1,10 @@
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
 import apiClient from "@/services/api-client";
+import { CaseInfo, SingleCaseProps } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
-import { CaseInfo } from "../AllCase/components/CasesTable";
+
 import CalenderContainer from "./components/Calender/CalenderContainer";
 import FileManager from "./components/FileManager";
 import JointUsers from "./components/JointUsers";
@@ -11,13 +12,7 @@ import MeetingHistory from "./components/MeetingHistory";
 import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
 import SingleCaseInfo from "./components/SingleCaseInfo";
 
-export interface SingleCaseProps{
-  caseInfo:CaseInfo | undefined;
-  isLoading:boolean;
-}
-
-
-const CaseContainer:React.FC<SingleCaseProps> = () => {
+const CaseContainer: React.FC<SingleCaseProps> = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();

@@ -7,10 +7,12 @@ import AddNewCaseModal from "./Modals/AddNewCaseModal";
 
 interface ActivityStatusHeaderProps {
   fetchCaseInfo: () => void;
+  isFetchedLead:boolean
+  setIsFetchedLead:boolean
 }
 
 const ActivityStatusHeader: React.FC<ActivityStatusHeaderProps> = ({
-  fetchCaseInfo,
+  fetchCaseInfo, setIsFetchedLead, isFetchedLead
 }) => {
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const today = new Date();
@@ -61,6 +63,8 @@ const ActivityStatusHeader: React.FC<ActivityStatusHeaderProps> = ({
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
+        isFetchedLead={isFetchedLead}
+        setIsFetchedLead={setIsFetchedLead}
         onSave={() => fetchCaseInfo()}
       />
     </CardHeader>

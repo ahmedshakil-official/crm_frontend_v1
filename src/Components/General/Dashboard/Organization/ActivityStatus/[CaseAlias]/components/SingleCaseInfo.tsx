@@ -1,5 +1,6 @@
+import { SingleCaseProps } from "@/Types/Organization/CaseTypes";
 import { Card, CardBody, CardHeader, Col, Row, Spinner } from "reactstrap";
-import { SingleCaseProps } from "../page";
+
 
 const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
   return (

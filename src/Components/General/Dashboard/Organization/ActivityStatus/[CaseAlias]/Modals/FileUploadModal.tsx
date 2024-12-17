@@ -1,3 +1,4 @@
+import { FileUploadModalProps } from "@/Types/Organization/CaseTypes";
 import React, { useState } from "react";
 import {
   Button,
@@ -10,13 +11,6 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
-
-interface FileUploadModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: () => void;
-  handleFileUpload: any;
-}
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
   isOpen,
