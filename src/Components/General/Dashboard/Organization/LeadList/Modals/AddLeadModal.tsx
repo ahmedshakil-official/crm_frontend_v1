@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -21,10 +22,11 @@ interface AddLeadModalProps {
   onSave: () => void;
 }
 
-const AddLeadModal: React.FC<AddLeadModalProps> = ({
+const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
   isOpen,
   toggle,
   onSave,
+  setIsFetchedLead,
 }) => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -87,6 +89,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({
 
       if (result.status >= 200 && result.status < 300) {
         toast.success("Lead added successfully.");
+        setIsFetchedLead(true);
 
         // Reset form and close modal
         setFormData({

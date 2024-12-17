@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import { FetchLeadsProps, LeadsInfo } from "@/Types/Organization/LeadTypes";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -13,46 +14,15 @@ import "./LeadList.css";
 import AddLeadModal from "./Modals/AddLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
 
-export interface Lead {
-  alias: string;
-  user: {
-    first_name: string;
-    last_name: string;
-    profile_image: string;
-    nid: string;
-    user_type: string;
-    city: string;
-    state: string;
-    country: string;
-    zip_code: string;
-  };
-  role: string;
-  designation: string;
-  official_email: string;
-  official_phone: string;
-  permanent_address: string;
-  present_address: string;
-  dob: string;
-  gender: string;
-  joining_date: string;
-  registration_number: string;
-  degree: string;
-  created_by: {
-    first_name: string;
-    last_name: string;
-  };
-  created_at: string;
-}
-
-const LeadListBody: React.FC = () => {
-  const [leads, setLeads] = useState<Lead[]>([]);
+const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
+  const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [leadsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [selectedLead, setSelectedLead] = useState<Partial<Lead>>({
+  const [selectedLead, setSelectedLead] = useState<Partial<LeadsInfo>>({
     user: {
       first_name: "",
       last_name: "",
@@ -105,7 +75,7 @@ const LeadListBody: React.FC = () => {
     toggleModal();
   };
 
-  const openUpdateModal = (lead: Lead) => {
+  const openUpdateModal = (lead: LeadsInfo) => {
     setSelectedLead(lead);
     toggleUpdateModal();
   };
@@ -113,8 +83,13 @@ const LeadListBody: React.FC = () => {
 
   const filteredLeads = leads.filter(
     (lead) =>
-      lead.user.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.official_email.toLowerCase().includes(searchQuery.toLowerCase())
+      lead?.user?.first_name
+        ?.toLowerCase()
+        ?.includes(searchQuery?.toLowerCase()) ||
+      lead?.official_email
+        ?.toLowerCase()
+        ?.includes(searchQuery?.toLowerCase()) ||
+      "vogles"
   );
 
   const indexOfLastLead = currentPage * leadsPerPage;
@@ -274,21 +249,25 @@ const LeadListBody: React.FC = () => {
         </PaginationItem>
       </Pagination>
 
-      {/* modals */}
+      {/* Modals */}
       <AddLeadModal
         isOpen={isModalOpen}
         toggle={toggleModal}
-        onSave={() => fetchLeads()}
+        setIsFetchedLead={setIsFetchedLead} // Presuming AddLeadModal accepts this prop
+        onSave={() => fetchLeads()} // Fetch leads after saving
       />
+
       <UpdateLeadModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
           fetchLeads(); // Refresh the list after saving
+          setIsFetchedLead = { setIsFetchedLead }; // Update the fetched status
           toggleUpdateModal(); // Close the modal
         }}
-        selectedLead={selectedLead}
+        selectedLead={selectedLead} // Pass the selected lead
       />
+
       {/* modals end */}
     </div>
   );

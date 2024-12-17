@@ -1,5 +1,7 @@
 import apiClient from "@/services/api-client";
+import { FetchLeadsProps, LeadsInfo } from "@/Types/Organization/LeadTypes";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -13,21 +15,21 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import { Lead } from "../LeadListBody";
 
 export interface UpdateLeadModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: (leadData: Partial<Lead>) => void;
-  selectedLead: Partial<Lead>;
+  onSave: (leadData: Partial<LeadsInfo>) => void;
+  selectedLead: Partial<LeadsInfo>;
 }
-const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
+const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
   isOpen,
   toggle,
   onSave,
   selectedLead,
+  setIsFetchedLead,
 }) => {
-  const [leadData, setLeadData] = useState<Partial<Lead>>(selectedLead);
+  const [leadData, setLeadData] = useState<Partial<LeadsInfo>>(selectedLead);
 
   useEffect(() => {
     setLeadData(selectedLead);
@@ -36,7 +38,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const keys = name.split(".");
-    setLeadData((prev) => {
+    setLeadData((prev: any) => {
       const updatedData = { ...prev };
       let current: any = updatedData;
       for (let i = 0; i < keys.length - 1; i++) {
@@ -44,14 +46,23 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
         current = current[keys[i]];
       }
       current[keys[keys.length - 1]] = value;
-      return updatedData as Partial<Lead>;
+      return updatedData as Partial<LeadsInfo>;
     });
   };
 
-  const handleUpdateLead = async (leadData: Partial<Lead>) => {
+  const handleUpdateLead = async (leadData: Partial<LeadsInfo>) => {
     try {
       if (leadData.alias) {
-        await apiClient.patch(`/director/leads/${leadData.alias}/`, leadData);
+        const result = await apiClient.patch(
+          `/director/leads/${leadData.alias}/`,
+          leadData
+        );
+        if (result.status >= 200 && result.status < 300) {
+          toast.success("Lead update successfully.");
+          setIsFetchedLead(true);
+        } else {
+          toast.error("Invalid Request...");
+        }
       }
     } catch (error) {
       console.error("Error saving lead:", error);

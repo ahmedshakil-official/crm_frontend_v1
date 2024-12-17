@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -28,10 +29,12 @@ interface Lead {
   };
 }
 
-const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
+const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
   isOpen,
   toggle,
   onSave,
+  setIsFetchedLead,
+  isFetchedLead,
 }) => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +54,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
       const LeadsData = Array.isArray(response.data)
         ? response.data
         : response.data.leads;
+      setIsFetchedLead(false);
       setLeads(LeadsData || []);
     } catch (error) {
       console.error("Error fetching Leads:", error);
@@ -60,7 +64,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
 
   useEffect(() => {
     fetchLeadsForCaseModal();
-  }, []);
+  }, [isFetchedLead]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

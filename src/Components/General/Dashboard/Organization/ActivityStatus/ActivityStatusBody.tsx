@@ -1,11 +1,16 @@
 import apiClient from "@/services/api-client";
+import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button, Input, Table } from "reactstrap";
 import ActivityStatusHeader from "./ActivityStatusHeader";
-import { CaseInfo } from "./AllCase/components/CasesTable";
+import { CaseInfo } from "@/Types/Organization/CaseTypes";
 
-const ActivityStatusBody = () => {
+
+const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
+  isFetchedLead,
+  setIsFetchedLead,
+}) => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,7 +40,11 @@ const ActivityStatusBody = () => {
   );
   return (
     <div className="container py-3">
-      <ActivityStatusHeader fetchCaseInfo={fetchCaseInfo} />
+      <ActivityStatusHeader
+        setIsFetchedLead={setIsFetchedLead}
+        isFetchedLead={isFetchedLead}
+        fetchCaseInfo={fetchCaseInfo}
+      />
       <Input
         type="text"
         placeholder="Search Case"
