@@ -43,6 +43,34 @@ export interface FileUploadModalProps {
   onSave: () => void;
   handleFileUpload?: any;
 }
+export interface fileOwnerProps {
+  lead_user: {
+    id: number;
+    email: string;
+    phone: string;
+    first_name: string;
+    last_name: string;
+    profile_image: string | null;
+    user_type: string;
+  };
+  joint_users: {
+    joint_user: {
+      id: number;
+      email: string;
+      phone: string;
+      first_name: string;
+      last_name: string;
+      profile_image: string | null;
+      user_type: string;
+    };
+    relationship: string;
+    notes: string;
+    is_removed: boolean;
+  }[];
+}
+
+
+
 export interface CaseFileProps {
   alias: string;
   file?: string;

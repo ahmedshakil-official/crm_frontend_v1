@@ -1,5 +1,11 @@
-import { FileUploadModalProps } from "@/Types/Organization/CaseTypes";
-import React, { useState } from "react";
+import apiClient from "@/services/api-client";
+import {
+  fileOwnerProps,
+  FileUploadModalProps,
+} from "@/Types/Organization/CaseTypes";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Form,
@@ -16,23 +22,80 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   isOpen,
   toggle,
   onSave,
-  handleFileUpload,
 }) => {
-  // Modal state for file selection
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<File | null>(null);
+  const params = useParams();
+  const { casealias } = params;
 
-  // Handle file selection
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const uploadedFiles = Array.from(e.target.files);
-      setSelectedFiles(uploadedFiles);
+  const [formData, setFormData] = useState({
+    file: "",
+    fileType: "",
+    fileOwner: 0,
+    fileName: "",
+    description: "",
+    specialNotes: "",
+  });
+  const [fileOwners, setfileOwners] = useState<fileOwnerProps | null>(null);
+
+  const fetchCaseFileOwners = async () => {
+    try {
+      const response = await apiClient.get(`/cases/${casealias}/users/`);
+      setfileOwners(response.data || []);
+      console.log("Fetched File Owners:", response.data); // Debug log
+    } catch (error) {
+      console.error("Error Fetching Cases", error);
     }
   };
 
-  // Handle done button click to pass files back to parent component
-  const onDone = () => {
-    handleFileUpload(selectedFiles); // Callback to pass files to parent
-    toggle(); // Close the modal
+  useEffect(() => {
+    fetchCaseFileOwners();
+  }, []);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFiles(e.target.files[0]);
+    }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: name === "fileOwner" ? Number(value) : value,
+    });
+  };
+
+  const handleUpload = async () => {
+    if (!files || !formData.fileName) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    const payload = {
+      file: files, // Use 'files' here instead of formData.file
+      file_type: formData.fileType,
+      file_owner: formData.fileOwner,
+      name: formData.fileName,
+      description: formData.description,
+      special_notes: formData.specialNotes,
+    };
+
+    try {
+      const response = await apiClient.post(
+        `/cases/${casealias}/files/`,
+        payload,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      toast.success("File uploaded successfully!");
+      onSave(); // Callback to refresh data
+      toggle(); // Close modal
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      toast.error("Failed to upload file.");
+    }
   };
 
   return (
@@ -48,9 +111,10 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
               type="file"
               id="fileUpload"
               name="fileUpload"
-              onChange={onFileChange}
+              onChange={handleFileChange}
             />
           </FormGroup>
+
           <FormGroup>
             <Label for="fileType" className="form-label">
               Select File Type
@@ -59,13 +123,12 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
               type="select"
               id="fileType"
               name="fileType"
-              onChange={(e) =>
-                console.log(`Selected File Type: ${e.target.value}`)
-              } // Handle file type selection
+              value={formData.fileType}
+              onChange={handleInputChange}
             >
               <option value="">--Select File Type--</option>
               <option value="COMPLIANCE_DOCUMENTS">Compliance Documents</option>
-              <option value=" FACT_FINDS">Fact Finds</option>
+              <option value="FACT_FINDS">Fact Finds</option>
               <option value="IDS">IDs</option>
               <option value="PROOF_OF_ADDRESS">Proof of Address</option>
               <option value="INCOME_DOCUMENTS">Income Documents</option>
@@ -82,8 +145,10 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
                 Lender's Full Mortgage Application
               </option>
               <option value="LENDERS_OFFER">Lender's Offer</option>
-              <option value="SUITABILITY_LETTER ">Suitability Letter</option>
-              <option value="GENERAL_INSURANCE_DOCUMENTS">Audio</option>
+              <option value="SUITABILITY_LETTER">Suitability Letter</option>
+              <option value="GENERAL_INSURANCE_DOCUMENTS">
+                General Insurance Documents
+              </option>
               <option value="PROTECTION_DOCUMENTS">Protection Documents</option>
               <option value="AML_AND_SANCTIONS_SEARCH">
                 AML and Sanctions Search
@@ -91,6 +156,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
               <option value="OTHERS">Others</option>
             </Input>
           </FormGroup>
+
           <FormGroup>
             <Label for="fileOwner" className="form-label">
               File Owner
@@ -99,18 +165,49 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
               type="select"
               id="fileOwner"
               name="fileOwner"
-              onChange={(e) =>
-                console.log(`Selected File Owner: ${e.target.value}`)
-              } // Replace with your logic
+              value={formData.fileOwner}
+              onChange={handleInputChange}
             >
               <option value="">--Select File Owner--</option>
-              <option value="owner1">Owner 1</option>
-              <option value="owner2">Owner 2</option>
-              <option value="owner3">Owner 3</option>
+
+              {/* Options for Joint Users */}
+              {fileOwners && Object.keys(fileOwners).length > 0 ? (
+                <>
+                  {/* Lead User Option */}
+                  <option value={fileOwners?.lead_user?.id}>
+                    {`${fileOwners.lead_user?.first_name} ${fileOwners?.lead_user?.last_name} (Lead User)`}
+                  </option>
+
+                  {/* Joint Users Options */}
+                  {fileOwners.joint_users?.map((jointUser) => (
+                    <option
+                      key={jointUser.joint_user?.id}
+                      value={jointUser.joint_user?.id}
+                    >
+                      {`${jointUser.joint_user?.first_name} ${jointUser.joint_user?.last_name} (Joint User)`}
+                    </option>
+                  ))}
+                </>
+              ) : (
+                <option disabled>No file owners available</option>
+              )}
             </Input>
           </FormGroup>
 
-          {/* Description Field */}
+          <FormGroup>
+            <Label for="fileName" className="form-label">
+              File Name
+            </Label>
+            <Input
+              type="text"
+              id="fileName"
+              name="fileName"
+              placeholder="Write your file name"
+              value={formData.fileName}
+              onChange={handleInputChange}
+            />
+          </FormGroup>
+
           <FormGroup>
             <Label for="description" className="form-label">
               Description
@@ -119,12 +216,12 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
               type="textarea"
               id="description"
               name="description"
-              placeholder="Enter a description for the file"
-              onChange={(e) => console.log(`Description: ${e.target.value}`)} // Replace with your logic
+              placeholder="Enter description"
+              value={formData.description}
+              onChange={handleInputChange}
             />
           </FormGroup>
 
-          {/* Special Notes Field */}
           <FormGroup>
             <Label for="specialNotes" className="form-label">
               Special Notes
@@ -133,14 +230,15 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
               type="textarea"
               id="specialNotes"
               name="specialNotes"
-              placeholder="Enter any special notes"
-              onChange={(e) => console.log(`Special Notes: ${e.target.value}`)} // Replace with your logic
+              placeholder="Enter special notes"
+              value={formData.specialNotes}
+              onChange={handleInputChange}
             />
           </FormGroup>
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={onDone}>
+        <Button color="primary" onClick={handleUpload}>
           Upload
         </Button>
         <Button color="secondary" onClick={toggle}>

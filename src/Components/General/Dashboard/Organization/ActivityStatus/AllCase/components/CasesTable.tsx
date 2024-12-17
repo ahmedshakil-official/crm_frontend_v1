@@ -1,7 +1,9 @@
 import apiClient from "@/services/api-client";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
+import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import {
   Button,
   Card,
@@ -9,6 +11,8 @@ import {
   CardHeader,
   Col,
   Input,
+  InputGroup,
+  InputGroupText,
   Pagination,
   PaginationItem,
   PaginationLink,
@@ -20,7 +24,10 @@ import { Advisor } from "../../../AdvisorList/AdvisorListBody";
 import "../../ActivityStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 
-const CaseTable: React.FC = () => {
+const CaseTable: React.FC<FetchLeadsProps> = ({
+  setIsFetchedLead,
+  isFetchedLead,
+}) => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
   const [advisors, setAdvisors] = useState<Advisor[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,9 +79,9 @@ const CaseTable: React.FC = () => {
     try {
       const queryParams = new URLSearchParams({
         ...filters, // Ensure all filters are included
-        search: searchQuery, // If you're using searchQuery, include it here
+        search: searchQuery, // Add the search query to the API call
       });
-      console.log("Filters applied:", filters); // Check the filters being used
+      console.log("Filters applied:", filters, "Search query:", searchQuery); // Check filters and search query
       const response = await apiClient.get(`/cases?${queryParams.toString()}`);
       setCaseInfo(response.data || []);
     } catch (error) {
@@ -86,7 +93,7 @@ const CaseTable: React.FC = () => {
 
   useEffect(() => {
     fetchCaseInfo();
-  }, [filters]); // Re-run the fetchCaseInfo function when filters change
+  }, [filters, searchQuery]); // Re-run the fetchCaseInfo function when filters change
 
   const handleFilterChange = (filterKey: string, value: string) => {
     setFilters((prevFilters) => ({
@@ -108,6 +115,19 @@ const CaseTable: React.FC = () => {
         <Row className="flex justify-content-between">
           <Col md="3">
             <h3>All Cases</h3>
+          </Col>
+          <Col>
+            <InputGroup>
+              <Input
+                type="text"
+                placeholder="Search Case ..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <InputGroupText className="bg-success rounded-start-0 border-start-0">
+                <FaSearch />
+              </InputGroupText>
+            </InputGroup>
           </Col>
           <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
             <Button color="primary" onClick={openAddNewCaseModal}>
@@ -419,6 +439,8 @@ const CaseTable: React.FC = () => {
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
+        isFetchedLead={isFetchedLead}
+        setIsFetchedLead={setIsFetchedLead}
         onSave={() => fetchCaseInfo()}
       />
     </Card>

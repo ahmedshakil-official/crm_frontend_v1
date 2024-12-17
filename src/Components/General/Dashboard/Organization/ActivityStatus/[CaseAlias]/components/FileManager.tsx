@@ -8,6 +8,8 @@ import {
   CardBody,
   CardHeader,
   Col,
+  Input,
+  Row,
   Spinner,
   Table,
 } from "reactstrap";
@@ -59,17 +61,60 @@ const FileManager: React.FC = () => {
           </Button>
         </CardHeader>
         <CardBody>
+          <Card className="shadow-lg p-3 rounded-1">
+            <Row className="justify-content-center text-center g-3">
+              {/* Employee Filter */}
+              <Col xs="12" sm="6" md="3">
+                <Input type="select" id="1" className="py-1">
+                  <option value="">Select 1</option>
+                  <option value="1">Select Employee</option>
+                  <option value="2">Select Employee</option>
+                </Input>
+              </Col>
+
+              {/* Case Category Filter */}
+              <Col xs="12" sm="6" md="3">
+                <Input type="select" id="2" className="py-1">
+                  <option value="">Select 2</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </Input>
+              </Col>
+
+              {/* Application Type Filter */}
+              <Col xs="12" sm="6" md="3">
+                <Input type="select" id="3" className="py-1">
+                  <option value="">Select 3</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </Input>
+              </Col>
+              {/* Application Type Filter */}
+              <Col xs="12" sm="6" md="3">
+                <Input type="select" id="3" className="py-1">
+                  <option value="">Select 4</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </Input>
+              </Col>
+            </Row>
+          </Card>
+        </CardBody>
+        <CardBody>
           {isLoading ? (
             <div className="d-flex justify-content-center my-5">
               <Spinner color="primary" />
             </div>
           ) : (
             <>
-              <Table bordered hover className="text-center">
+              <Table bordered hover responsive className="text-center">
                 <thead>
                   <tr>
                     <th>#</th>
                     <th>File Name</th>
+                    <th>Owner Name</th>
+                    <th>File Type</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -80,23 +125,27 @@ const FileManager: React.FC = () => {
                         <td>{indexOfFirstFile + index + 1}</td>
                         <td>{file.name}</td>
                         <td>
-                          <Button
-                            color="success"
-                            size="sm"
-                            className="me-2"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={file.file}
-                          >
-                            Download
-                          </Button>
-                          <Button
-                            color="danger"
-                            size="sm"
-                            onClick={() => console.log(`Delete ${file.name}`)}
-                          >
-                            Delete
-                          </Button>
+                          {file?.file_owner_info?.first_name}{" "}
+                          {file?.file_owner_info?.last_name}
+                        </td>
+                        <td>{file.file_type}</td>
+                        <td>
+                          <div className="d-flex align-items-center gap-2">
+                            <a
+                              href={file.file}
+                              className="btn btn-success btn-sm"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <i className="fa-solid fa-download"></i>
+                            </a>
+                            <button
+                              className="btn btn-danger btn-sm"
+                              onClick={() => console.log(`Delete ${file.name}`)}
+                            >
+                              <i className="fa-regular fa-trash-can"></i>
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))
