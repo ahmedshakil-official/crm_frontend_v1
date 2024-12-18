@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardHeader, Col, Table } from "reactstrap";
 
 const MeetingHistory = () => {
   return (
-    <Col lg="6" sm="12" className="box-col-12">
+    <Col sm="12" className="box-col-12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3 className="mb-2">Meeting History</h3>

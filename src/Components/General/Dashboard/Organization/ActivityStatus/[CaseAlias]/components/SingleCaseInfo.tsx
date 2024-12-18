@@ -11,7 +11,7 @@ import {
 
 const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
   return (
-    <Col lg="5" sm="12">
+    <Col  sm="12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3 className="mb-2">Case Info</h3>
@@ -19,7 +19,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
         </CardHeader>
         <Row className="px-3 mt-3">
           {/* 1st card */}
-          <Col md="12">
+          <Col lg='6' md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-primary">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -55,7 +55,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 2nd card */}
-          <Col md="12">
+          <Col lg='6' md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-warning">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -102,7 +102,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 3rd card */}
-          <Col md="12">
+          <Col lg='6' md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-success">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -145,7 +145,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 4th card */}
-          <Col md="12">
+          <Col lg='6' md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-info">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
