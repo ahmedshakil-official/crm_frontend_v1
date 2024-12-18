@@ -1,3 +1,4 @@
+import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import Link from "next/link";
 import { useState } from "react";
 import { FaClock } from "react-icons/fa"; // Importing a clock icon
@@ -7,13 +8,11 @@ import AddNewCaseModal from "./Modals/AddNewCaseModal";
 
 interface ActivityStatusHeaderProps {
   fetchCaseInfo: () => void;
-  isFetchedLead:boolean
-  setIsFetchedLead:boolean
 }
 
-const ActivityStatusHeader: React.FC<ActivityStatusHeaderProps> = ({
-  fetchCaseInfo, setIsFetchedLead, isFetchedLead
-}) => {
+const ActivityStatusHeader: React.FC<
+  ActivityStatusHeaderProps & FetchLeadsProps
+> = ({ fetchCaseInfo, setIsFetchedLead, isFetchedLead }) => {
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const today = new Date();
   const day = today.toLocaleString("en-UK", { weekday: "long" });
@@ -52,7 +51,11 @@ const ActivityStatusHeader: React.FC<ActivityStatusHeaderProps> = ({
           <Button color="primary" onClick={openAddNewCaseModal}>
             Add New Case
           </Button>
-          <Button color="success">
+          <Button
+            color="success"
+            setIsFetchedLead={setIsFetchedLead}
+            isFetchedLead={isFetchedLead}
+          >
             <Link className="text-white" href="/dashboard/organization/allcase">
               View All Case
             </Link>

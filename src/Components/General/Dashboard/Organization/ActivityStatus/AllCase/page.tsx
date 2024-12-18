@@ -1,4 +1,5 @@
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
+import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import { Container, Row } from "reactstrap";
 import AllCaseBreadcrumbs from "./components/AllCaseBreadcrumbs";
 import CaseHistory from "./components/CaseHistory";
@@ -6,7 +7,10 @@ import CasesTable from "./components/CasesTable";
 import ProfileGreet from "./components/ProfileGreet";
 import SuccessFulCase from "./components/SuccessFulCase";
 
-const AllCaseContainer = () => {
+const AllCaseContainer: React.FC<FetchLeadsProps> = ({
+  setIsFetchedLead,
+  isFetchedLead,
+}) => {
   return (
     <>
       <AllCaseBreadcrumbs
@@ -21,7 +25,10 @@ const AllCaseContainer = () => {
           <CaseHistory />
         </Row>
         <Row>
-          <CasesTable />
+          <CasesTable
+            setIsFetchedLead={setIsFetchedLead}
+            isFetchedLead={isFetchedLead}
+          />
         </Row>
       </Container>
     </>
