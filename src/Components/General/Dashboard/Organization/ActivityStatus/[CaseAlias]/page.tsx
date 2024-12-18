@@ -68,7 +68,7 @@ const CaseContainer: React.FC<SingleCaseProps & JointUserProps> = () => {
           <FileManager />
         </Row>
         <Row>
-          <JointUsers jointUserInfo={jointUserInfo} isLoading={isLoading} />
+          <JointUsers jointUserInfo={jointUserInfo} isLoading={isLoading} fetchJointUserInfo={fetchJointUserInfo} />
           <MeetingHistory />
         </Row>
         <Row>
