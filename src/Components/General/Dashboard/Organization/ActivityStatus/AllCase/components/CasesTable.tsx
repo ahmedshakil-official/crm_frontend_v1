@@ -261,12 +261,12 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
             <tr>
               <th>Case Name</th>
               <th>Lead User</th>
+              <th>Phone</th>
               <th>Case Category</th>
               <th>Applicant Type</th>
               <th>Case Status</th>
               <th>Case Stage</th>
               <th>Created By</th>
-              <th>Updated By</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -294,6 +294,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                       ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
                       : "N/A"}
                   </td>
+                  <td>{caseItem.lead_user.phone}</td>
                   <td>{caseItem.case_category}</td>
                   <td>{caseItem.applicant_type}</td>
                   <td>{caseItem.case_status}</td>
@@ -326,11 +327,11 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                       {caseItem.case_stage}
                     </span>
                   </td>
+
                   <td>
-                    {caseItem.created_by.first_name}{" "}
-                    {caseItem.created_by.last_name}
+                    {caseItem.created_by?.first_name}{" "}
+                    {caseItem.created_by?.last_name}
                   </td>
-                  <td>{caseItem.updated_by?.first_name || "N/A"}</td>
                   <td>
                     <div className="d-flex justify-content-center align-items-center">
                       <Button

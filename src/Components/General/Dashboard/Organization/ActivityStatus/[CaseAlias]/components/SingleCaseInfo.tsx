@@ -1,13 +1,21 @@
 import { SingleCaseProps } from "@/Types/Organization/CaseTypes";
-import { Card, CardBody, CardHeader, Col, Row, Spinner } from "reactstrap";
-
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Row,
+  Spinner,
+} from "reactstrap";
 
 const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
   return (
     <Col lg="5" sm="12">
       <Card>
-        <CardHeader>
-          <h3 className="mb-3">Case Info</h3>
+        <CardHeader className="d-flex justify-content-between">
+          <h3 className="mb-2">Case Info</h3>
+          <Button color="primary">Update Info</Button>
         </CardHeader>
         <Row className="px-3 mt-3">
           {/* 1st card */}
