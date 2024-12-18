@@ -1,15 +1,24 @@
 import { JointUserProps } from "@/Types/Organization/JointUserTypes";
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, Card, CardBody, CardHeader, Col, Table } from "reactstrap";
+import AddJointUserModal from "../Modals/AddJointUserModal";
 
-const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
+const JointUsers: React.FC<JointUserProps> = ({
+  jointUserInfo,
+  fetchJointUserInfo,
+  isLoading,
+}) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const toggleModal = () => setModalOpen(!modalOpen);
   return (
     <Col lg="6" sm="12" className="box-col-12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3>Joint Users</h3>
-          <Button color="primary">Add Joint User</Button>
+          <Button color="primary" onClick={toggleModal}>
+            Add Joint User
+          </Button>
         </CardHeader>
         <CardBody className="pt-0 recent-order">
           <div className="table-responsive theme-scrollbar">
@@ -86,6 +95,11 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
             </Table>
           </div>
         </CardBody>
+        <AddJointUserModal
+          isOpen={modalOpen}
+          toggle={toggleModal}
+          onSave={fetchJointUserInfo}
+        />
       </Card>
     </Col>
   );
