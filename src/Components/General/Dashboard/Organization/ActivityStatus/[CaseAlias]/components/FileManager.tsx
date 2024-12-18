@@ -52,7 +52,7 @@ const FileManager: React.FC = () => {
   };
 
   return (
-    <Col lg="7" sm="12" className="box-col-12">
+    <Col  sm="12" className="box-col-12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3>File Manager</h3>
@@ -130,7 +130,7 @@ const FileManager: React.FC = () => {
                         </td>
                         <td>{file.file_type}</td>
                         <td>
-                          <div className="d-flex align-items-center gap-2">
+                          <div className="d-flex justify-content-center gap-2 align-items-center">
                             <a
                               href={file.file}
                               className="btn btn-success btn-sm"
@@ -151,7 +151,7 @@ const FileManager: React.FC = () => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={3} className="text-center">
+                      <td colSpan={6} className="text-center">
                         No Files Available
                       </td>
                     </tr>

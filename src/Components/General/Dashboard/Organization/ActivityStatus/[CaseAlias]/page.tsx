@@ -5,13 +5,13 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
 
+import { JointUserProps } from "@/Types/Organization/JointUserTypes";
 import CalenderContainer from "./components/Calender/CalenderContainer";
 import FileManager from "./components/FileManager";
 import JointUsers from "./components/JointUsers";
 import MeetingHistory from "./components/MeetingHistory";
 import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
 import SingleCaseInfo from "./components/SingleCaseInfo";
-import { JointUserProps } from "@/Types/Organization/JointUserTypes";
 
 const CaseContainer: React.FC<SingleCaseProps & JointUserProps> = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
@@ -63,12 +63,20 @@ const CaseContainer: React.FC<SingleCaseProps & JointUserProps> = () => {
         isLoading={isLoading}
       />
       <Container fluid>
-        <Row className="row">
+        <Row>
           <SingleCaseInfo caseInfo={caseInfo} isLoading={isLoading} />
+        </Row>
+        <Row>
           <FileManager />
         </Row>
         <Row>
-          <JointUsers jointUserInfo={jointUserInfo} isLoading={isLoading} fetchJointUserInfo={fetchJointUserInfo} />
+          <JointUsers
+            jointUserInfo={jointUserInfo}
+            isLoading={isLoading}
+            fetchJointUserInfo={fetchJointUserInfo}
+          />
+        </Row>
+        <Row>
           <MeetingHistory />
         </Row>
         <Row>

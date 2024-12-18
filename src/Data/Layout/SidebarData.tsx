@@ -43,7 +43,7 @@ export const MenuList: MenuItem[] | undefined = [
         ],
       },
       {
-        title: "Widgets",
+        title: "Cases",
         id: 2,
         icon: "Pie",
         type: "sub",
