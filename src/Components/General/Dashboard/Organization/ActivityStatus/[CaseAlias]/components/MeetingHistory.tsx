@@ -1,14 +1,15 @@
-import DashboardCommonHeader from "@/Components/General/Common/DashboardCommonHeader/DashboardCommonHeader";
 import { RecentOrdersData } from "@/Data/General/Dashboard/Ecommerce/EcommerceData";
-import Link from "next/link";
 
-import { Card, CardBody, Col, Progress, Table } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Table } from "reactstrap";
 
 const MeetingHistory = () => {
   return (
     <Col lg="6" sm="12" className="box-col-12">
       <Card>
-        <DashboardCommonHeader title="Meeting History" />
+        <CardHeader className="d-flex justify-content-between">
+          <h3 className="mb-2">Meeting History</h3>
+          {/* <Button color="primary">Add Joint User</Button> */}
+        </CardHeader>
         <CardBody className="pt-0 recent-order">
           <div className="table-responsive theme-scrollbar">
             <Table
@@ -27,18 +28,15 @@ const MeetingHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {RecentOrdersData.map((data, index) => (
+                {RecentOrdersData.slice(0, 4).map((data, index) => (
                   <tr key={index}>
                     <td>
                       <div className="d-flex align-items-center gap-3">
                         <div className="flex-shrink-0 comman-round">
-                          <h3 className="bg-success rounded-start-circle p-2">AA</h3>
+                          <h3 className="bg-success rounded-circle p-2">AA</h3>
                         </div>
                         <div className="flex-grow-1">
-                          <Link href={"/ecommerce/product"}>
-                            <h6>{data.title}</h6>
-                          </Link>
-                          <p>{data.text}</p>
+                          <h6>{data.title}</h6>
                         </div>
                       </div>
                     </td>
@@ -48,18 +46,10 @@ const MeetingHistory = () => {
                     <td>
                       <div className="status-showcase">
                         <p>{data.status}%</p>
-                        <Progress
-                          value={data.status}
-                          className={`bg-light-${data.color}`}
-                          color={data.color}
-                        />
                       </div>
                     </td>
                     <td className="text-end">
-                      <h6>
-                        {data.rating}
-                        <span>{data.votes}</span>
-                      </h6>
+                      <h6>{data.rating}</h6>
                     </td>
                   </tr>
                 ))}

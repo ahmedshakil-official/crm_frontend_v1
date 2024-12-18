@@ -11,10 +11,12 @@ import JointUsers from "./components/JointUsers";
 import MeetingHistory from "./components/MeetingHistory";
 import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
 import SingleCaseInfo from "./components/SingleCaseInfo";
+import { JointUserProps } from "@/Types/Organization/JointUserTypes";
 
-const CaseContainer: React.FC<SingleCaseProps> = () => {
+const CaseContainer: React.FC<SingleCaseProps & JointUserProps> = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
   const [isLoading, setIsLoading] = useState(false);
+  const [jointUserInfo, setJointUserInfo] = useState<JointUserProps[]>([]);
   const params = useParams();
   const { casealias } = params;
 
@@ -34,6 +36,23 @@ const CaseContainer: React.FC<SingleCaseProps> = () => {
     fetchCaseInfo();
   }, []);
 
+  // fetch joint users info
+  const fetchJointUserInfo = async () => {
+    setIsLoading(true);
+    try {
+      const result = await apiClient.get(`/cases/${casealias}/joint/users/`);
+      setJointUserInfo(result.data || {});
+      console.log(result.data);
+    } catch (error) {
+      console.error("Error Fetching Joint user Info", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchJointUserInfo();
+  }, []);
+
   return (
     <>
       <SingleCaseBreadcrumbs
@@ -49,7 +68,7 @@ const CaseContainer: React.FC<SingleCaseProps> = () => {
           <FileManager />
         </Row>
         <Row>
-          <JointUsers />
+          <JointUsers jointUserInfo={jointUserInfo} isLoading={isLoading} />
           <MeetingHistory />
         </Row>
         <Row>

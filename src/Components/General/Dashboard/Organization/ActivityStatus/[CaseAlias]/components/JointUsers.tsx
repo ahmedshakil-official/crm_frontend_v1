@@ -1,43 +1,85 @@
-import DashboardCommonHeader from '@/Components/General/Common/DashboardCommonHeader/DashboardCommonHeader'
-import { RecentOrdersHeading, ImagePath } from '@/Constant'
-import { RecentOrdersData } from '@/Data/General/Dashboard/Ecommerce/EcommerceData'
-import Link from 'next/link'
-import React from 'react'
+import { JointUserProps } from "@/Types/Organization/JointUserTypes";
+import React from "react";
 
-import { Col, Card, CardBody, Table, Progress } from 'reactstrap'
+import { Button, Card, CardBody, CardHeader, Col, Table } from "reactstrap";
 
-const JointUsers = () => {
+const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
   return (
     <Col lg="6" sm="12" className="box-col-12">
       <Card>
-        <DashboardCommonHeader title="Joint Users" />
+        <CardHeader className="d-flex justify-content-between">
+          <h3>Joint Users</h3>
+          <Button color="primary">Add Joint User</Button>
+        </CardHeader>
         <CardBody className="pt-0 recent-order">
           <div className="table-responsive theme-scrollbar">
-            <Table className="display table-bordernone mt-0" id="recent-order" style={{ width: "100%" }}>
+            <Table
+              className="display table-bordernone mt-0"
+              id="recent-order"
+              style={{ width: "100%" }}
+            >
               <thead>
-                <tr><th>Customer</th><th>Product</th><th>amount</th><th>vendor</th><th>status</th><th className="text-center">rating</th></tr>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  {/* <th>User Type</th> */}
+                  <th>Relationship</th>
+                  <th className="text-center">Action</th>
+                </tr>
               </thead>
               <tbody>
-                {RecentOrdersData.map((data, index) => (
+                {jointUserInfo.map((userInfo: any, index: any) => (
                   <tr key={index}>
                     <td>
                       <div className="d-flex align-items-center gap-3">
                         <div className="flex-shrink-0 comman-round">
-                            <h3 className='bg-success rounded-start-circle p-2'>AA</h3>
+                          {userInfo?.joint_user_details?.profile_image ? (
+                            <img
+                              src={userInfo?.joint_user_details?.profile_image}
+                              alt="User Image"
+                              className="rounded-circle"
+                              width={40}
+                              height={40}
+                            />
+                          ) : (
+                            <h3 className="bg-success rounded-circle p-2">
+                              {userInfo?.joint_user_details?.first_name?.[0]?.toUpperCase() ||
+                                ""}
+                              {userInfo?.joint_user_details?.last_name?.[0]?.toUpperCase() ||
+                                ""}
+                            </h3>
+                          )}
                         </div>
+
                         <div className="flex-grow-1">
-                          <Link href={"/ecommerce/product"}><h6>{data.title}</h6></Link>
-                          <p>{data.text}</p>
+                          <h6>
+                            {userInfo.joint_user_details?.first_name}{" "}
+                            {userInfo?.joint_user_details?.last_name}
+                          </h6>
                         </div>
                       </div>
                     </td>
-                    <td className="f-w-600">{data.product}</td>
-                    <td className="font-primary f-w-600">{data.amount}</td>
-                    <td className="f-w-600">{data.vendor}</td>
-                    <td>
-                      <div className="status-showcase"><p>{data.status}%</p><Progress value={data.status} className={`bg-light-${data.color}`} color={data.color} /></div>
+                    <td className="f-w-600">
+                      {userInfo.joint_user_details?.email}
                     </td>
-                    <td className="text-end"><h6>{data.rating}<span>{data.votes}</span></h6></td>
+                    <td className="font-primary f-w-600">
+                      {userInfo.joint_user_details?.phone}
+                    </td>
+                    {/* <td className="f-w-600">
+                      {userInfo.joint_user_details?.user_type}
+                    </td> */}
+                    <td>{userInfo?.relationship}</td>
+                    <td className="text-center">
+                      <div className="d-flex justify-content-center gap-2 align-items-center">
+                        <Button color="success" size="sm" title="Update User">
+                          <i className="icon-pencil-alt"></i>
+                        </Button>
+                        <Button color="danger" size="sm" title="Delete User">
+                          <i className="icon-trash"></i>
+                        </Button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -46,7 +88,7 @@ const JointUsers = () => {
         </CardBody>
       </Card>
     </Col>
-  )
-}
+  );
+};
 
-export default JointUsers
+export default JointUsers;

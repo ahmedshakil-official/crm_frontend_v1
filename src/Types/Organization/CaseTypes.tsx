@@ -43,7 +43,7 @@ export interface FileUploadModalProps {
   onSave: () => void;
   handleFileUpload?: any;
 }
-export interface fileOwnerProps {
+export interface FileOwnerProps {
   lead_user: {
     id: number;
     email: string;

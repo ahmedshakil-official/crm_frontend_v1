@@ -1,6 +1,6 @@
 import apiClient from "@/services/api-client";
 import {
-  fileOwnerProps,
+  FileOwnerProps,
   FileUploadModalProps,
 } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
@@ -35,7 +35,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     description: "",
     specialNotes: "",
   });
-  const [fileOwners, setfileOwners] = useState<fileOwnerProps | null>(null);
+  const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
 
   const fetchCaseFileOwners = async () => {
     try {
