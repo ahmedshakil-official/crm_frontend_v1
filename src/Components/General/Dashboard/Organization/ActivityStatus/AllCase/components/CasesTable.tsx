@@ -55,6 +55,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
 
   const toggleAddNewCaseModal = () =>
     setIsAddNewCaseModalOpen(!isAddNewCaseModalOpen);
+
   const openAddNewCaseModal = () => {
     toggleAddNewCaseModal();
   };

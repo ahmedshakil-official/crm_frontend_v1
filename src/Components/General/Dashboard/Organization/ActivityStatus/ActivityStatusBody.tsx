@@ -148,7 +148,7 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
                   </td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
-                      <Link href="/dashboard/organization/case">
+                      <Link href={`/dashboard/organization/${caseItem.alias}`}>
                         <Button color="primary" size="sm" title="View">
                           <i className="fa-regular fa-eye"></i>
                         </Button>

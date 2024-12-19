@@ -6,11 +6,12 @@ import CaseHistory from "./components/CaseHistory";
 import CasesTable from "./components/CasesTable";
 import ProfileGreet from "./components/ProfileGreet";
 import SuccessFulCase from "./components/SuccessFulCase";
+import { useState } from "react";
 
-const AllCaseContainer: React.FC<FetchLeadsProps> = ({
-  setIsFetchedLead,
-  isFetchedLead,
+const AllCaseContainer: React.FC = ({
+
 }) => {
+  const [isFetchedLead, setIsFetchedLead] = useState(false);
   return (
     <>
       <AllCaseBreadcrumbs
