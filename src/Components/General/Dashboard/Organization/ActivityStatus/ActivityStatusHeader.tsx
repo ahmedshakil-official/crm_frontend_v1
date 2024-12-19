@@ -28,7 +28,7 @@ const ActivityStatusHeader: React.FC<
   };
 
   return (
-    <CardHeader className="pb-1 px-0 card-no-border">
+    <CardHeader className="pb-1 px-3 card-no-border">
       <div className="header-top d-flex justify-content-between ">
         {/* Left Side Content */}
         <div className="">

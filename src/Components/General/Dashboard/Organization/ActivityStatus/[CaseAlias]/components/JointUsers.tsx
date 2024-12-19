@@ -71,12 +71,19 @@ const JointUsers: React.FC<JointUserProps> = ({
                                   userInfo?.joint_user_details?.profile_image
                                 }
                                 alt="User Image"
-                                className="rounded-circle"
+                                className="rounded-circle object-fit-cover"
                                 width={40}
                                 height={40}
                               />
                             ) : (
-                              <h3 className="bg-success rounded-circle p-2">
+                              <h3
+                                className="bg-success rounded-circle d-flex align-items-center justify-content-center text-white"
+                                style={{
+                                  width: "40px",
+                                  height: "40px",
+                                  margin: 0,
+                                }}
+                              >
                                 {userInfo?.joint_user_details?.first_name?.[0]?.toUpperCase() ||
                                   ""}
                                 {userInfo?.joint_user_details?.last_name?.[0]?.toUpperCase() ||
