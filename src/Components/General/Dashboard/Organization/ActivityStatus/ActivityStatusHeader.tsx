@@ -51,11 +51,7 @@ const ActivityStatusHeader: React.FC<
           <Button color="primary" onClick={openAddNewCaseModal}>
             Add New Case
           </Button>
-          <Button
-            color="success"
-            setIsFetchedLead={setIsFetchedLead}
-            isFetchedLead={isFetchedLead}
-          >
+          <Button color="success">
             <Link className="text-white" href="/dashboard/organization/allcase">
               View All Case
             </Link>
