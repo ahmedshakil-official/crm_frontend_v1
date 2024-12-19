@@ -37,14 +37,16 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
   const [casesPerPage] = useState(10);
   const [showRemovedCases, setShowRemovedCases] = useState(false);
 
-  const [filters, setFilters] = useState({
-    created_by: "", // Employee ID should be a number
+  // Default filters
+  const defaultFilters = {
+    created_by: "",
     case_category: "",
     applicant_type: "",
     case_status: "",
     case_stage: "",
-    is_removed: "", // Boolean value for removed cases
-  });
+    is_removed: "",
+  };
+  const [filters, setFilters] = useState(defaultFilters);
 
   const toggleRemovedCases = () => {
     setShowRemovedCases((prevState) => !prevState);
@@ -74,26 +76,70 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
     fetchAdvisors();
   }, []);
 
-  const fetchCaseInfo = async () => {
+  const fetchCaseInfo = async (
+    searchQuery: string = "",
+    filters: Record<string, string | number> = {}
+  ) => {
     setIsLoading(true);
     try {
       const queryParams = new URLSearchParams({
-        ...filters, // Ensure all filters are included
-        search: searchQuery, // Add the search query to the API call
+        ...filters, // Include all filters dynamically
+        search: searchQuery, // Add the search query
       });
-      console.log("Filters applied:", filters, "Search query:", searchQuery); // Check filters and search query
+
+      console.log("Filters applied:", filters, "Search query:", searchQuery); // Debugging log
+
       const response = await apiClient.get(`/cases?${queryParams.toString()}`);
       setCaseInfo(response.data || []);
     } catch (error) {
-      console.error("Error Fetching Cases", error);
+      console.error("Error Fetching Cases:", error);
+      setCaseInfo([]); // Reset case info on error
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCaseInfo();
-  }, [filters, searchQuery]); // Re-run the fetchCaseInfo function when filters change
+    const debounceFetch = setTimeout(() => {
+      fetchCaseInfo(searchQuery, filters);
+    }, 300);
+
+    return () => clearTimeout(debounceFetch);
+  }, [filters, searchQuery]);
+
+  const clearFilters = () => {
+    setFilters(defaultFilters); // Reset filters to default
+    setSearchQuery(""); // Clear search query
+
+    // Reset the "Show Removed Cases" state
+    setShowRemovedCases(false); // <-- Added this line
+
+    // Ensure the "is_removed" filter is cleared
+    handleFilterChange("is_removed", "false"); // <-- Added this line
+
+    // Clear all dropdown filters
+    const employeeFilter = document.getElementById(
+      "employeeFilter"
+    ) as HTMLSelectElement;
+    const caseCategory = document.getElementById(
+      "caseCategory"
+    ) as HTMLSelectElement;
+    const applicationType = document.getElementById(
+      "applicationType"
+    ) as HTMLSelectElement;
+    const caseStatus = document.getElementById(
+      "caseStatus"
+    ) as HTMLSelectElement;
+    const caseStage = document.getElementById("caseStage") as HTMLSelectElement;
+
+    if (employeeFilter) employeeFilter.value = "";
+    if (caseCategory) caseCategory.value = "";
+    if (applicationType) applicationType.value = "";
+    if (caseStatus) caseStatus.value = "";
+    if (caseStage) caseStage.value = "";
+
+    fetchCaseInfo(""); // Fetch data with cleared filters
+  };
 
   const handleFilterChange = (filterKey: string, value: string) => {
     setFilters((prevFilters) => ({
@@ -120,7 +166,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
             <InputGroup>
               <Input
                 type="text"
-                placeholder="Search Case ..."
+                placeholder="Search Case..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -256,108 +302,120 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
       </CardBody>
       {/* Card Body */}
       <CardBody className="p-0 m-0">
-        <Table bordered hover responsive>
-          <thead className="thead-light text-center">
-            <tr>
-              <th>Case Name</th>
-              <th>Lead User</th>
-              <th>Phone</th>
-              <th>Case Category</th>
-              <th>Applicant Type</th>
-              <th>Case Status</th>
-              <th>Case Stage</th>
-              <th>Created By</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            {isLoading ? (
+        <Row className="d-flex justify-content-start mb-3">
+          {/* Clear All Filters Button */}
+          <Col xs="12" sm="6" md="4" lg="2">
+            <Button className="btn btn-secondary w-100" onClick={clearFilters}>
+              Clear All Filters
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Table bordered hover responsive>
+            <thead className="thead-light text-center">
               <tr>
-                <td colSpan={7} className="text-center">
-                  <div className="d-flex justify-content-center align-items-center">
-                    <Spinner color="primary" />
-                  </div>
-                </td>
+                <th>Case Name</th>
+                <th>Lead User</th>
+                <th>Phone</th>
+                <th>Case Category</th>
+                <th>Applicant Type</th>
+                <th>Case Status</th>
+                <th>Case Stage</th>
+                <th>Created By</th>
+                <th>Action</th>
               </tr>
-            ) : filteredCases.length > 0 ? (
-              filteredCases.map((caseItem) => (
-                <tr key={caseItem.alias}>
-                  <td>
-                    <Link href={`/dashboard/organization/${caseItem.alias}`}>
-                      <span className="text-black custom-hover">
-                        {caseItem.name}
-                      </span>
-                    </Link>
-                  </td>
-                  <td>
-                    {caseItem.lead_user
-                      ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
-                      : "N/A"}
-                  </td>
-                  <td>{caseItem.lead_user.phone}</td>
-                  <td>{caseItem.case_category}</td>
-                  <td>{caseItem.applicant_type}</td>
-                  <td>{caseItem.case_status}</td>
-                  <td>
-                    <span
-                      className={`rounded-4 px-2 text-white ${
-                        caseItem.case_stage === "INQUIRY"
-                          ? "bg-success"
-                          : caseItem.case_stage === "FACT_FIND"
-                          ? "bg-warning"
-                          : caseItem.case_stage === "RESEARCH_COMPLIANCE_CHECK"
-                          ? "bg-dark"
-                          : caseItem.case_stage === "DECISION_IN_PRINCIPLE"
-                          ? "bg-info"
-                          : caseItem.case_stage === "FULL_MORTGAGE_APPLICATION"
-                          ? "bg-light"
-                          : caseItem.case_stage === "OFFER_FROM_BANK"
-                          ? "bg-dark"
-                          : caseItem.case_stage === "LEGAL"
-                          ? "bg-warning"
-                          : caseItem.case_stage === "COMPLETION"
-                          ? "bg-primary"
-                          : caseItem.case_stage === "FUTURE_OPPORTUNITY"
-                          ? "bg-info"
-                          : caseItem.case_stage === "NOT_PROCEED"
-                          ? "bg-danger"
-                          : "bg-secondary"
-                      }`}
-                    >
-                      {caseItem.case_stage}
-                    </span>
-                  </td>
-
-                  <td>
-                    {caseItem.created_by?.first_name}{" "}
-                    {caseItem.created_by?.last_name}
-                  </td>
-                  <td>
+            </thead>
+            <tbody className="text-center">
+              {isLoading ? (
+                <tr>
+                  <td colSpan={12} className="text-center">
                     <div className="d-flex justify-content-center align-items-center">
-                      <Button
-                        size="sm"
-                        color="success"
-                        title="Edit"
-                        className="me-2"
-                      >
-                        <i className="icon-pencil-alt"></i>
-                      </Button>
-                      <Button size="sm" color="danger" title="Delete Case">
-                        <i className="icon-trash"></i>
-                      </Button>
+                      <Spinner color="primary" />
                     </div>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={9} className="text-center">
-                  No cases found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+              ) : filteredCases.length > 0 ? (
+                filteredCases.map((caseItem) => (
+                  <tr key={caseItem.alias}>
+                    <td>
+                      <Link href={`/dashboard/organization/${caseItem.alias}`}>
+                        <span className="text-black custom-hover">
+                          {caseItem.name}
+                        </span>
+                      </Link>
+                    </td>
+                    <td>
+                      {caseItem.lead_user
+                        ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
+                        : "N/A"}
+                    </td>
+                    <td>{caseItem.lead_user.phone}</td>
+                    <td>{caseItem.case_category}</td>
+                    <td>{caseItem.applicant_type}</td>
+                    <td>{caseItem.case_status}</td>
+                    <td>
+                      <span
+                        className={`rounded-4 px-2 text-white ${
+                          caseItem.case_stage === "INQUIRY"
+                            ? "bg-success"
+                            : caseItem.case_stage === "FACT_FIND"
+                            ? "bg-warning"
+                            : caseItem.case_stage ===
+                              "RESEARCH_COMPLIANCE_CHECK"
+                            ? "bg-dark"
+                            : caseItem.case_stage === "DECISION_IN_PRINCIPLE"
+                            ? "bg-info"
+                            : caseItem.case_stage ===
+                              "FULL_MORTGAGE_APPLICATION"
+                            ? "bg-light"
+                            : caseItem.case_stage === "OFFER_FROM_BANK"
+                            ? "bg-dark"
+                            : caseItem.case_stage === "LEGAL"
+                            ? "bg-warning"
+                            : caseItem.case_stage === "COMPLETION"
+                            ? "bg-primary"
+                            : caseItem.case_stage === "FUTURE_OPPORTUNITY"
+                            ? "bg-info"
+                            : caseItem.case_stage === "NOT_PROCEED"
+                            ? "bg-danger"
+                            : "bg-secondary"
+                        }`}
+                      >
+                        {caseItem.case_stage}
+                      </span>
+                    </td>
+
+                    <td>
+                      {caseItem.created_by?.first_name}{" "}
+                      {caseItem.created_by?.last_name}
+                    </td>
+                    <td>
+                      <div className="d-flex justify-content-center align-items-center">
+                        <Button
+                          size="sm"
+                          color="success"
+                          title="Edit"
+                          className="me-2"
+                        >
+                          <i className="icon-pencil-alt"></i>
+                        </Button>
+                        <Button size="sm" color="danger" title="Delete Case">
+                          <i className="icon-trash"></i>
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={9} className="text-center">
+                    No cases found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </Row>
 
         <Pagination className="d-flex justify-content-end p-2">
           <PaginationItem disabled={currentPage === 1}>
