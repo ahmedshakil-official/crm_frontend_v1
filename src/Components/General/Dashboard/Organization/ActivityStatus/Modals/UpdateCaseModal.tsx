@@ -1,5 +1,5 @@
 import apiClient from "@/services/api-client";
-import { CaseInfo } from "@/Types/Organization/CaseTypes";
+import { CaseInfo, UpdateCaseModalProps } from "@/Types/Organization/CaseTypes";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -12,13 +12,6 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
-
-interface UpdateCaseModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  caseData: CaseInfo;
-  onSave: () => void;
-}
 
 const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
   isOpen,
