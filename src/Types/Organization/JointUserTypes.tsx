@@ -2,6 +2,7 @@ export interface JointUserProps {
   jointUserInfo?: any | undefined;
   fetchJointUserInfo?: any | undefined;
   isLoading?: boolean;
+  alias?: string;
   joint_user_details?: {
     email?: string;
     phone?: string;
@@ -13,8 +14,14 @@ export interface JointUserProps {
   relationship?: string;
 }
 export interface AddJointUserModalProps {
-    isOpen: boolean;
-    toggle: () => void;
-    onSave: () => void;
-    handleFileUpload?: any;
-  }
+  isOpen: boolean;
+  toggle: () => void;
+  onSave: () => void;
+  handleFileUpload?: any;
+}
+export interface UpdateJointUserModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  onSave: () => void;
+  alias?: any;
+}

@@ -125,7 +125,7 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
                           : caseItem.case_stage === "DECISION_IN_PRINCIPLE"
                           ? "bg-info"
                           : caseItem.case_stage === "FULL_MORTGAGE_APPLICATION"
-                          ? "bg-light"
+                          ? "bg-dark"
                           : caseItem.case_stage === "OFFER_FROM_BANK"
                           ? "bg-dark"
                           : caseItem.case_stage === "LEGAL"

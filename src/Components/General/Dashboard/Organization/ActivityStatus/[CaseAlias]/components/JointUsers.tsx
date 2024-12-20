@@ -1,6 +1,4 @@
-import { JointUserProps } from "@/Types/Organization/JointUserTypes";
 import React, { useState } from "react";
-
 import {
   Button,
   Card,
@@ -11,20 +9,32 @@ import {
   Table,
 } from "reactstrap";
 import AddJointUserModal from "../Modals/AddJointUserModal";
+import UpdateJointUserModal from "../Modals/UpdateJointUserModal";
+import { JointUserProps } from "@/Types/Organization/JointUserTypes";
 
 const JointUsers: React.FC<JointUserProps> = ({
   jointUserInfo,
   fetchJointUserInfo,
   isLoading,
 }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const toggleModal = () => setModalOpen(!modalOpen);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const toggleAddModal = () => setAddModalOpen(!addModalOpen);
+  const toggleUpdateModal = () => setUpdateModalOpen(!updateModalOpen);
+
+  const handleUpdateClick = (user: any) => {
+    setSelectedUser(user);
+    toggleUpdateModal();
+  };
+
   return (
     <Col sm="12" className="box-col-12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3>Joint Users</h3>
-          <Button color="primary" onClick={toggleModal}>
+          <Button color="primary" onClick={toggleAddModal}>
             Add Joint User
           </Button>
         </CardHeader>
@@ -50,27 +60,25 @@ const JointUsers: React.FC<JointUserProps> = ({
                 {isLoading ? (
                   <tr>
                     <td colSpan={6} className="text-center">
-                      <Spinner color="primary" /> {/* Use reactstrap Spinner */}
+                      <Spinner color="primary" />
                     </td>
                   </tr>
                 ) : jointUserInfo.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="text-center">
-                      <p>No joint users available</p>{" "}
+                      <p>No joint users available</p>
                     </td>
                   </tr>
                 ) : (
-                  jointUserInfo.map((userInfo: any, index: any) => (
+                  jointUserInfo.map((userInfo: any, index: number) => (
                     <tr key={index}>
                       <td>
                         <div className="d-flex align-items-center gap-3">
                           <div className="flex-shrink-0 comman-round">
                             {userInfo?.joint_user_details?.profile_image ? (
                               <img
-                                src={
-                                  userInfo?.joint_user_details?.profile_image
-                                }
-                                alt="User Image"
+                                src={userInfo?.joint_user_details?.profile_image}
+                                alt="User"
                                 className="rounded-circle object-fit-cover"
                                 width={40}
                                 height={40}
@@ -91,7 +99,6 @@ const JointUsers: React.FC<JointUserProps> = ({
                               </h3>
                             )}
                           </div>
-
                           <div className="flex-grow-1">
                             <h6>
                               {userInfo.joint_user_details?.first_name}{" "}
@@ -112,7 +119,12 @@ const JointUsers: React.FC<JointUserProps> = ({
                       <td>{userInfo?.relationship}</td>
                       <td className="text-center">
                         <div className="d-flex justify-content-center gap-2 align-items-center">
-                          <Button color="success" size="sm" title="Update User">
+                          <Button
+                            color="success"
+                            size="sm"
+                            title="Update User"
+                            onClick={() => handleUpdateClick(userInfo)}
+                          >
                             <i className="icon-pencil-alt"></i>
                           </Button>
                           <Button color="danger" size="sm" title="Delete User">
@@ -128,8 +140,14 @@ const JointUsers: React.FC<JointUserProps> = ({
           </div>
         </CardBody>
         <AddJointUserModal
-          isOpen={modalOpen}
-          toggle={toggleModal}
+          isOpen={addModalOpen}
+          toggle={toggleAddModal}
+          onSave={fetchJointUserInfo}
+        />
+        <UpdateJointUserModal
+          isOpen={updateModalOpen}
+          toggle={toggleUpdateModal}
+          user={selectedUser}
           onSave={fetchJointUserInfo}
         />
       </Card>

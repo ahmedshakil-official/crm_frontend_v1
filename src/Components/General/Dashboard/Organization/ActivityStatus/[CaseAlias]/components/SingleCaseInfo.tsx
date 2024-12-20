@@ -11,7 +11,7 @@ import {
 
 const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
   return (
-    <Col  sm="12">
+    <Col sm="12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3 className="mb-2">Case Info</h3>
@@ -19,7 +19,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
         </CardHeader>
         <Row className="px-3 mt-3">
           {/* 1st card */}
-          <Col lg='6' md="12">
+          <Col lg="6" md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-primary">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -55,7 +55,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 2nd card */}
-          <Col lg='6' md="12">
+          <Col lg="6" md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-warning">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -102,7 +102,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 3rd card */}
-          <Col lg='6' md="12">
+          <Col lg="6" md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-success">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -126,10 +126,12 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       </h6>
                       <h6 className="pt-1">
                         <strong>Active Status:</strong>{" "}
-                        <span className="bg-success px-2 py-1 rounded-5">
-                          {caseInfo?.is_removed === false
-                            ? "Active"
-                            : "Removed"}
+                        <span
+                          className={`px-2 py-1 rounded-5 ${
+                            caseInfo?.is_removed ? "bg-danger" : "bg-success"
+                          }`}
+                        >
+                          {caseInfo?.is_removed ? "Removed" : "Active"}
                         </span>
                       </h6>
                       <h6 className="pt-1">
@@ -145,7 +147,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 4th card */}
-          <Col lg='6' md="12">
+          <Col lg="6" md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-info">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
