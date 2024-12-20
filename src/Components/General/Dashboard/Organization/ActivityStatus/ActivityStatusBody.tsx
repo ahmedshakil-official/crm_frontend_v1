@@ -13,6 +13,7 @@ import {
   Table,
 } from "reactstrap";
 import ActivityStatusHeader from "./ActivityStatusHeader";
+import DeleteCaseModal from "./Modals/DeleteCaseModal";
 
 const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
   isFetchedLead,
@@ -21,6 +22,32 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
+  // State for Delete Modal
+  const [isDeleteCaseModalOpen, setIsDeleteCaseModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const toggleDeleteCaseModal = () =>
+    setIsDeleteCaseModalOpen(!isDeleteCaseModalOpen);
+
+  const openDeleteCaseModal = (caseItem: CaseInfo) => {
+    setCurrentCase(caseItem); // Set the case to be deleted
+    toggleDeleteCaseModal(); // Open the modal
+  };
+
+  const handleCaseDeletion = async (caseAlias: string) => {
+    setIsDeleting(true);
+    try {
+      await apiClient.delete(`/cases/${caseAlias}/`);
+      // Refresh case list after deletion
+      fetchCaseInfo();
+      toggleDeleteCaseModal();
+    } catch (error) {
+      console.error("Error deleting case:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   const fetchCaseInfo = async (searchQuery: string = "") => {
     setIsLoading(true);
@@ -153,7 +180,12 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
                           <i className="fa-regular fa-eye"></i>
                         </Button>
                       </Link>
-                      <Button color="danger" size="sm" title="Delete Case">
+                      <Button
+                        color="danger"
+                        size="sm"
+                        title="Delete Case"
+                        onClick={() => openDeleteCaseModal(caseItem)}
+                      >
                         <i className="icon-trash"></i>
                       </Button>
                     </div>
@@ -169,6 +201,16 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
             )}
           </tbody>
         </Table>
+        {/* Delete Modal */}
+        <DeleteCaseModal
+          isOpen={isDeleteCaseModalOpen}
+          toggle={toggleDeleteCaseModal}
+          caseData={currentCase} // Pass the case to delete
+          isDeleting={isDeleting}
+          onDelete={() => {
+            if (currentCase) handleCaseDeletion(currentCase.alias);
+          }}
+        />
       </Row>
     </div>
   );

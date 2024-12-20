@@ -104,3 +104,17 @@ export interface CaseFileProps {
   created_at: string;
   updated_at: string;
 }
+
+export interface UpdateCaseModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  caseData: CaseInfo;
+  onSave: () => void;
+}
+export interface DeleteCaseModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  caseData: CaseInfo | null; // The case to delete
+  onDelete: () => void; // Callback to handle deletion
+  isDeleting?: any;
+}

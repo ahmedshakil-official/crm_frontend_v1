@@ -23,6 +23,7 @@ import {
 import { Advisor } from "../../../AdvisorList/AdvisorListBody";
 import "../../ActivityStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
+import DeleteCaseModal from "../../Modals/DeleteCaseModal";
 import UpdateCaseModal from "../../Modals/UpdateCaseModal";
 
 const CaseTable: React.FC<FetchLeadsProps> = ({
@@ -38,7 +39,10 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(10);
-  const [showRemovedCases, setShowRemovedCases] = useState(false);
+
+  // State for Delete Modal
+  const [isDeleteCaseModalOpen, setIsDeleteCaseModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Default filters
   const defaultFilters = {
@@ -50,11 +54,6 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
     is_removed: "",
   };
   const [filters, setFilters] = useState(defaultFilters);
-
-  const toggleRemovedCases = () => {
-    setShowRemovedCases((prevState) => !prevState);
-    handleFilterChange("is_removed", showRemovedCases ? "false" : "true");
-  };
 
   const toggleUpdateCaseModal = () =>
     setIsUpdateCaseModalOpen(!isUpdateCaseModalOpen);
@@ -69,6 +68,28 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
   const openUpdateCaseModal = (caseItem: CaseInfo) => {
     setCurrentCase(caseItem);
     toggleUpdateCaseModal();
+  };
+
+  const toggleDeleteCaseModal = () =>
+    setIsDeleteCaseModalOpen(!isDeleteCaseModalOpen);
+
+  const openDeleteCaseModal = (caseItem: CaseInfo) => {
+    setCurrentCase(caseItem); // Set the case to be deleted
+    toggleDeleteCaseModal(); // Open the modal
+  };
+
+  const handleCaseDeletion = async (caseAlias: string) => {
+    setIsDeleting(true);
+    try {
+      await apiClient.delete(`/cases/${caseAlias}/`);
+      // Refresh case list after deletion
+      fetchCaseInfo();
+      toggleDeleteCaseModal();
+    } catch (error) {
+      console.error("Error deleting case:", error);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const fetchAdvisors = async () => {
@@ -122,12 +143,6 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
   const clearFilters = () => {
     setFilters(defaultFilters); // Reset filters to default
     setSearchQuery(""); // Clear search query
-
-    // Reset the "Show Removed Cases" state
-    setShowRemovedCases(false); // <-- Added this line
-
-    // Ensure the "is_removed" filter is cleared
-    handleFilterChange("is_removed", "false"); // <-- Added this line
 
     // Clear all dropdown filters
     const employeeFilter = document.getElementById(
@@ -297,16 +312,13 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                 <option value="NOT_PROCEED">Not Proceed</option>
               </Input>
             </Col>
-
-            {/* Show Removed Cases Button */}
+            {/* Clear All Filters Button */}
             <Col xs="12" sm="6" md="4" lg="2">
               <Button
-                className={`btn w-100 ${
-                  showRemovedCases ? "btn-success" : "btn-danger"
-                }`}
-                onClick={toggleRemovedCases}
+                className="btn btn-secondary w-100"
+                onClick={clearFilters}
               >
-                {showRemovedCases ? "All Cases" : "Removed Cases"}
+                Clear All Filters
               </Button>
             </Col>
           </Row>
@@ -314,14 +326,6 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
       </CardBody>
       {/* Card Body */}
       <CardBody className="p-0 m-0">
-        <Row className="d-flex justify-content-start mb-3">
-          {/* Clear All Filters Button */}
-          <Col xs="12" sm="6" md="4" lg="2">
-            <Button className="btn btn-secondary w-100" onClick={clearFilters}>
-              Clear All Filters
-            </Button>
-          </Col>
-        </Row>
         <Row>
           <Table bordered hover responsive>
             <thead className="thead-light text-center">
@@ -412,7 +416,12 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                         >
                           <i className="icon-pencil-alt"></i>
                         </Button>
-                        <Button size="sm" color="danger" title="Delete Case">
+                        <Button
+                          size="sm"
+                          color="danger"
+                          title="Delete Case"
+                          onClick={() => openDeleteCaseModal(caseItem)}
+                        >
                           <i className="icon-trash"></i>
                         </Button>
                       </div>
@@ -522,6 +531,16 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
         onSave={() => {
           fetchCaseInfo(); // Refresh the case table after saving
           toggleUpdateCaseModal(); // Close the modal
+        }}
+      />
+      {/* Delete Modal */}
+      <DeleteCaseModal
+        isOpen={isDeleteCaseModalOpen}
+        toggle={toggleDeleteCaseModal}
+        caseData={currentCase} // Pass the case to delete
+        isDeleting={isDeleting}
+        onDelete={() => {
+          if (currentCase) handleCaseDeletion(currentCase.alias);
         }}
       />
     </Card>
