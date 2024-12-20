@@ -23,6 +23,7 @@ import {
 import { Advisor } from "../../../AdvisorList/AdvisorListBody";
 import "../../ActivityStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
+import UpdateCaseModal from "../../Modals/UpdateCaseModal";
 
 const CaseTable: React.FC<FetchLeadsProps> = ({
   setIsFetchedLead,
@@ -32,6 +33,8 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
   const [advisors, setAdvisors] = useState<Advisor[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
+  const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
+  const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(10);
@@ -53,11 +56,19 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
     handleFilterChange("is_removed", showRemovedCases ? "false" : "true");
   };
 
+  const toggleUpdateCaseModal = () =>
+    setIsUpdateCaseModalOpen(!isUpdateCaseModalOpen);
+
   const toggleAddNewCaseModal = () =>
     setIsAddNewCaseModalOpen(!isAddNewCaseModalOpen);
 
   const openAddNewCaseModal = () => {
     toggleAddNewCaseModal();
+  };
+
+  const openUpdateCaseModal = (caseItem: CaseInfo) => {
+    setCurrentCase(caseItem);
+    toggleUpdateCaseModal();
   };
 
   const fetchAdvisors = async () => {
@@ -368,7 +379,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                             ? "bg-info"
                             : caseItem.case_stage ===
                               "FULL_MORTGAGE_APPLICATION"
-                            ? "bg-light"
+                            ? "bg-dark"
                             : caseItem.case_stage === "OFFER_FROM_BANK"
                             ? "bg-dark"
                             : caseItem.case_stage === "LEGAL"
@@ -397,6 +408,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                           color="success"
                           title="Edit"
                           className="me-2"
+                          onClick={() => openUpdateCaseModal(caseItem)}
                         >
                           <i className="icon-pencil-alt"></i>
                         </Button>
@@ -502,6 +514,15 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
         isFetchedLead={isFetchedLead}
         setIsFetchedLead={setIsFetchedLead}
         onSave={() => fetchCaseInfo()}
+      />
+      <UpdateCaseModal
+        isOpen={isUpdateCaseModalOpen}
+        toggle={toggleUpdateCaseModal}
+        caseData={currentCase as CaseInfo} // Pass the selected case
+        onSave={() => {
+          fetchCaseInfo(); // Refresh the case table after saving
+          toggleUpdateCaseModal(); // Close the modal
+        }}
       />
     </Card>
   );
