@@ -110,6 +110,7 @@ export interface FileDeleteModalProps {
   toggle: () => void;
   file: { name?: string };
   onDelete: () => void;
+  isDeleting?: any;
 }
 
 export interface UpdateCaseModalProps {

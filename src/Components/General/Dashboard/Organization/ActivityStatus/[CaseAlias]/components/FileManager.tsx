@@ -1,5 +1,8 @@
 import apiClient from "@/services/api-client";
-import { CaseFileProps, FileDeleteModalProps } from "@/Types/Organization/CaseTypes";
+import {
+  CaseFileProps,
+  FileDeleteModalProps,
+} from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -13,8 +16,8 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import FileUploadModal from "../Modals/FileUploadModal";
 import FileDeleteModal from "../Modals/FileDeleteModal";
+import FileUploadModal from "../Modals/FileUploadModal";
 
 const FileManager: React.FC<FileDeleteModalProps> = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +27,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<CaseFileProps | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const params = useParams();
   const { casealias } = params;
 
@@ -45,6 +49,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
   };
 
   const deleteFile = async (alias: string) => {
+    setIsDeleting(true);
     setIsLoading(true);
     try {
       await apiClient.delete(`/cases/${casealias}/files/${alias}/`);
@@ -53,6 +58,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
       console.error("Error Deleting File", error);
     } finally {
       setIsLoading(false);
+      setIsDeleting(false);
       toggleDeleteModal();
     }
   };
@@ -141,7 +147,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                         <td>{indexOfFirstFile + index + 1}</td>
                         <td>{file.name}</td>
                         <td>
-                          {file?.file_owner_info?.first_name} {" "}
+                          {file?.file_owner_info?.first_name}{" "}
                           {file?.file_owner_info?.last_name}
                         </td>
                         <td>{file.file_type}</td>
@@ -224,6 +230,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
           isOpen={deleteModalOpen}
           toggle={toggleDeleteModal}
           file={selectedFile}
+          isDeleting={isDeleting}
           onDelete={() => deleteFile(selectedFile.alias)}
         />
       )}

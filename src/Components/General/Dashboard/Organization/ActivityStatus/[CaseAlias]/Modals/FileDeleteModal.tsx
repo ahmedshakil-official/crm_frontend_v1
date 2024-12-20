@@ -4,7 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 
 
-const FileDeleteModal: React.FC<FileDeleteModalProps> = ({ isOpen, toggle, file, onDelete }) => {
+const FileDeleteModal: React.FC<FileDeleteModalProps> = ({ isOpen, toggle, file, onDelete,isDeleting }) => {
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>Confirm Delete</ModalHeader>
@@ -13,7 +13,7 @@ const FileDeleteModal: React.FC<FileDeleteModalProps> = ({ isOpen, toggle, file,
       </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={onDelete}>
-          Delete
+          {isDeleting ? "Deleting...": "Delete"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel
