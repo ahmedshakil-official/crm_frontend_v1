@@ -1,4 +1,6 @@
-import { SingleCaseProps } from "@/Types/Organization/CaseTypes";
+import { CaseInfo, SingleCaseProps } from "@/Types/Organization/CaseTypes";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 import {
   Button,
   Card,
@@ -8,15 +10,40 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
+import UpdateCaseModal from "../../Modals/UpdateCaseModal";
 
-const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
+const SingleCaseInfo: React.FC<SingleCaseProps> = ({
+  caseInfo,
+  isLoading,
+  fetchCaseInfo,
+}) => {
+  const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
+  const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
+  const params = useParams();
+  const { casealias } = params;
+
+  const toggleUpdateCaseModal = () =>
+    setIsUpdateCaseModalOpen(!isUpdateCaseModalOpen);
+
+  const openUpdateCaseModal = (caseInfo: CaseInfo) => {
+    setCurrentCase(caseInfo);
+    toggleUpdateCaseModal();
+  };
+
   return (
     <Col sm="12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3 className="mb-2">Case Info</h3>
-          <Button color="primary">Update Info</Button>
+          <Button
+            color="primary"
+            onClick={() => openUpdateCaseModal(caseInfo!)}
+            disabled={!caseInfo} // Disable if caseInfo is null
+          >
+            Update Info
+          </Button>
         </CardHeader>
+
         <Row className="px-3 mt-3">
           {/* 1st card */}
           <Col lg="6" md="12">
@@ -188,6 +215,15 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
           </div>
         </Row>
       </Card>
+      <UpdateCaseModal
+        isOpen={isUpdateCaseModalOpen}
+        toggle={toggleUpdateCaseModal}
+        caseData={currentCase as CaseInfo} // Pass the selected case
+        onSave={() => {
+          fetchCaseInfo(); // Refresh the case table after saving
+          toggleUpdateCaseModal(); // Close the modal
+        }}
+      />
     </Col>
   );
 };
