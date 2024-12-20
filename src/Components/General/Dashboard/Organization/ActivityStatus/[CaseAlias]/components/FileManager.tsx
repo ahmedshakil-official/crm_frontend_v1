@@ -1,5 +1,5 @@
 import apiClient from "@/services/api-client";
-import { CaseFileProps } from "@/Types/Organization/CaseTypes";
+import { CaseFileProps, FileDeleteModalProps } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -14,12 +14,15 @@ import {
   Table,
 } from "reactstrap";
 import FileUploadModal from "../Modals/FileUploadModal";
+import FileDeleteModal from "../Modals/FileDeleteModal";
 
-const FileManager: React.FC = () => {
+const FileManager: React.FC<FileDeleteModalProps> = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const filesPerPage = 5;
   const [caseFiles, setCaseFiles] = useState<CaseFileProps[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<CaseFileProps | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const { casealias } = params;
@@ -32,7 +35,7 @@ const FileManager: React.FC = () => {
   const fetchCaseFiles = async () => {
     setIsLoading(true);
     try {
-      const CaseData = await apiClient.get(`/cases/${casealias}/files`);
+      const CaseData = await apiClient.get(`/cases/${casealias}/files/`);
       setCaseFiles(CaseData?.data || []);
     } catch (error) {
       console.error("Error Fetching Cases", error);
@@ -41,18 +44,37 @@ const FileManager: React.FC = () => {
     }
   };
 
+  const deleteFile = async (alias: string) => {
+    setIsLoading(true);
+    try {
+      await apiClient.delete(`/cases/${casealias}/files/${alias}/`);
+      fetchCaseFiles();
+    } catch (error) {
+      console.error("Error Deleting File", error);
+    } finally {
+      setIsLoading(false);
+      toggleDeleteModal();
+    }
+  };
+
   useEffect(() => {
     fetchCaseFiles();
   }, []);
 
   const toggleModal = () => setModalOpen(!modalOpen);
+  const toggleDeleteModal = () => setDeleteModalOpen(!deleteModalOpen);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
+  const handleDeleteClick = (file: CaseFileProps) => {
+    setSelectedFile(file);
+    toggleDeleteModal();
+  };
+
   return (
-    <Col  sm="12" className="box-col-12">
+    <Col sm="12" className="box-col-12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3>File Manager</h3>
@@ -63,7 +85,6 @@ const FileManager: React.FC = () => {
         <CardBody>
           <Card className="shadow-lg p-3 rounded-1">
             <Row className="justify-content-center text-center g-3">
-              {/* Employee Filter */}
               <Col xs="12" sm="6" md="3">
                 <Input type="select" id="1" className="py-1">
                   <option value="">Select 1</option>
@@ -71,8 +92,6 @@ const FileManager: React.FC = () => {
                   <option value="2">Select Employee</option>
                 </Input>
               </Col>
-
-              {/* Case Category Filter */}
               <Col xs="12" sm="6" md="3">
                 <Input type="select" id="2" className="py-1">
                   <option value="">Select 2</option>
@@ -81,8 +100,6 @@ const FileManager: React.FC = () => {
                   <option value="3">3</option>
                 </Input>
               </Col>
-
-              {/* Application Type Filter */}
               <Col xs="12" sm="6" md="3">
                 <Input type="select" id="3" className="py-1">
                   <option value="">Select 3</option>
@@ -90,9 +107,8 @@ const FileManager: React.FC = () => {
                   <option value="2">2</option>
                 </Input>
               </Col>
-              {/* Application Type Filter */}
               <Col xs="12" sm="6" md="3">
-                <Input type="select" id="3" className="py-1">
+                <Input type="select" id="4" className="py-1">
                   <option value="">Select 4</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -125,7 +141,7 @@ const FileManager: React.FC = () => {
                         <td>{indexOfFirstFile + index + 1}</td>
                         <td>{file.name}</td>
                         <td>
-                          {file?.file_owner_info?.first_name}{" "}
+                          {file?.file_owner_info?.first_name} {" "}
                           {file?.file_owner_info?.last_name}
                         </td>
                         <td>{file.file_type}</td>
@@ -141,7 +157,7 @@ const FileManager: React.FC = () => {
                             </a>
                             <button
                               className="btn btn-danger btn-sm"
-                              onClick={() => console.log(`Delete ${file.name}`)}
+                              onClick={() => handleDeleteClick(file)}
                             >
                               <i className="fa-regular fa-trash-can"></i>
                             </button>
@@ -202,6 +218,15 @@ const FileManager: React.FC = () => {
         toggle={toggleModal}
         onSave={fetchCaseFiles}
       />
+
+      {selectedFile && (
+        <FileDeleteModal
+          isOpen={deleteModalOpen}
+          toggle={toggleDeleteModal}
+          file={selectedFile}
+          onDelete={() => deleteFile(selectedFile.alias)}
+        />
+      )}
     </Col>
   );
 };
