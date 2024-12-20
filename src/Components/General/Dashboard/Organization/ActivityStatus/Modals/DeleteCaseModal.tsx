@@ -23,10 +23,10 @@ const DeleteCaseModal: React.FC<DeleteCaseModalProps> = ({
         )}
       </ModalBody>
       <ModalFooter>
-        <Button color="danger" onClick={onDelete} disabled={!caseData}>
-        {isDeleting ? "Deleting..." : "Delete"}
+        <Button color="danger" onClick={onDelete} disabled={isDeleting}>
+          {isDeleting ? "Deleting..." : "Delete"}
         </Button>
-        <Button color="secondary" onClick={toggle}>
+        <Button color="secondary" onClick={toggle} disabled={isDeleting}>
           Cancel
         </Button>
       </ModalFooter>

@@ -1,3 +1,6 @@
+import { JointUserProps } from "@/Types/Organization/JointUserTypes";
+import apiClient from "@/services/api-client"; // Import your API client
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import {
   Button,
@@ -9,8 +12,8 @@ import {
   Table,
 } from "reactstrap";
 import AddJointUserModal from "../Modals/AddJointUserModal";
+import JointUserDeleteModal from "../Modals/JointUserDeleteModal"; // Import the delete modal
 import UpdateJointUserModal from "../Modals/UpdateJointUserModal";
-import { JointUserProps } from "@/Types/Organization/JointUserTypes";
 
 const JointUsers: React.FC<JointUserProps> = ({
   jointUserInfo,
@@ -19,14 +22,40 @@ const JointUsers: React.FC<JointUserProps> = ({
 }) => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const params = useParams();
+  const { casealias } = params;
 
   const toggleAddModal = () => setAddModalOpen(!addModalOpen);
   const toggleUpdateModal = () => setUpdateModalOpen(!updateModalOpen);
+  const toggleDeleteModal = () => setDeleteModalOpen(!deleteModalOpen);
 
   const handleUpdateClick = (user: any) => {
     setSelectedUser(user);
     toggleUpdateModal();
+  };
+
+  const handleDeleteClick = (user: any) => {
+    setSelectedUser(user);
+    toggleDeleteModal();
+  };
+
+  const deleteUser = async () => {
+    if (!selectedUser) return;
+    setIsDeleting(true);
+    try {
+      await apiClient.delete(
+        `/cases/${casealias}/joint/users/${selectedUser.alias}/`
+      );
+      toggleDeleteModal();
+      fetchJointUserInfo(); // Refresh the joint user list
+    } catch (error) {
+      console.error("Error deleting joint user:", error);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -77,7 +106,9 @@ const JointUsers: React.FC<JointUserProps> = ({
                           <div className="flex-shrink-0 comman-round">
                             {userInfo?.joint_user_details?.profile_image ? (
                               <img
-                                src={userInfo?.joint_user_details?.profile_image}
+                                src={
+                                  userInfo?.joint_user_details?.profile_image
+                                }
                                 alt="User"
                                 className="rounded-circle object-fit-cover"
                                 width={40}
@@ -127,7 +158,12 @@ const JointUsers: React.FC<JointUserProps> = ({
                           >
                             <i className="icon-pencil-alt"></i>
                           </Button>
-                          <Button color="danger" size="sm" title="Delete User">
+                          <Button
+                            color="danger"
+                            size="sm"
+                            title="Delete User"
+                            onClick={() => handleDeleteClick(userInfo)}
+                          >
                             <i className="icon-trash"></i>
                           </Button>
                         </div>
@@ -149,6 +185,13 @@ const JointUsers: React.FC<JointUserProps> = ({
           toggle={toggleUpdateModal}
           user={selectedUser}
           onSave={fetchJointUserInfo}
+        />
+        <JointUserDeleteModal
+          isOpen={deleteModalOpen}
+          toggle={toggleDeleteModal}
+          onConfirm={deleteUser}
+          isLoading={isDeleting}
+          selectedUser={selectedUser}
         />
       </Card>
     </Col>

@@ -25,3 +25,10 @@ export interface UpdateJointUserModalProps {
   onSave: () => void;
   alias?: any;
 }
+export interface JointUserDeleteModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  onConfirm: () => void;
+  isLoading?: boolean;
+  selectedUser?: any;
+}
