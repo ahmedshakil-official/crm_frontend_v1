@@ -36,6 +36,7 @@ export interface CaseInfo {
 }
 export interface SingleCaseProps {
   caseInfo: CaseInfo | undefined;
+  fetchCaseInfo?: any;
   isLoading: boolean;
 }
 export interface FileUploadModalProps {

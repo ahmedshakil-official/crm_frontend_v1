@@ -64,7 +64,7 @@ const CaseContainer: React.FC<SingleCaseProps & JointUserProps> = () => {
       />
       <Container fluid>
         <Row>
-          <SingleCaseInfo caseInfo={caseInfo} isLoading={isLoading} />
+          <SingleCaseInfo caseInfo={caseInfo} isLoading={isLoading} fetchCaseInfo={fetchCaseInfo}/>
         </Row>
         <Row>
           <FileManager />
