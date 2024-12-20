@@ -1,0 +1,26 @@
+import { FileDeleteModalProps } from "@/Types/Organization/CaseTypes";
+import React from "react";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+
+
+
+const FileDeleteModal: React.FC<FileDeleteModalProps> = ({ isOpen, toggle, file, onDelete }) => {
+  return (
+    <Modal isOpen={isOpen} toggle={toggle}>
+      <ModalHeader toggle={toggle}>Confirm Delete</ModalHeader>
+      <ModalBody>
+        Are you sure you want to delete the file <strong>{file.name}</strong>?
+      </ModalBody>
+      <ModalFooter>
+        <Button color="danger" onClick={onDelete}>
+          Delete
+        </Button>
+        <Button color="secondary" onClick={toggle}>
+          Cancel
+        </Button>
+      </ModalFooter>
+    </Modal>
+  );
+};
+
+export default FileDeleteModal;

@@ -105,6 +105,12 @@ export interface CaseFileProps {
   created_at: string;
   updated_at: string;
 }
+export interface FileDeleteModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  file: { name?: string };
+  onDelete: () => void;
+}
 
 export interface UpdateCaseModalProps {
   isOpen: boolean;
