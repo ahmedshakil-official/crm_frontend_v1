@@ -32,6 +32,7 @@ export interface CaseInfo {
     profile_image: null;
     user_type: string;
   };
+  caseData?: any;
 }
 export interface SingleCaseProps {
   caseInfo: CaseInfo | undefined;
@@ -68,8 +69,6 @@ export interface FileOwnerProps {
     is_removed: boolean;
   }[];
 }
-
-
 
 export interface CaseFileProps {
   alias: string;
