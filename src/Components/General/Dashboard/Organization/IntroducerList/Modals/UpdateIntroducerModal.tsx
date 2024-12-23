@@ -1,6 +1,10 @@
 import apiClient from "@/services/api-client";
-import { IntroducerInfoProps, UpdateIntroducerModalProps } from "@/Types/Organization/IntroducerTypes";
+import {
+  IntroducerInfoProps,
+  UpdateIntroducerModalProps,
+} from "@/Types/Organization/IntroducerTypes";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -15,14 +19,16 @@ import {
   Row,
 } from "reactstrap";
 
-
 const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
   isOpen,
   toggle,
   onSave,
   selectedIntroducer,
+  fetchIntroducers,
 }) => {
-  const [introducerData, setIntroducerData] = useState<Partial<IntroducerInfoProps>>(selectedIntroducer);
+  const [introducerData, setIntroducerData] =
+    useState<Partial<IntroducerInfoProps>>(selectedIntroducer);
+  const [isupdating, setIsupdating] = useState(false);
 
   useEffect(() => {
     setIntroducerData(selectedIntroducer);
@@ -43,13 +49,27 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
     });
   };
 
-  const handleUpdateIntroducer = async (introducerData: Partial<IntroducerInfoProps>) => {
+  const handleUpdateIntroducer = async (
+    introducerData: Partial<IntroducerInfoProps>
+  ) => {
     try {
+      setIsupdating(true);
       if (introducerData.alias) {
-        await apiClient.patch(`/director/introducers/${introducerData.alias}/`, introducerData);
+        const result = await apiClient.put(
+          `/director/introducers/${introducerData.alias}/`,
+          introducerData
+        );
+        fetchIntroducers();
+        if (result.status >= 200 && result.status < 300) {
+          toast.success("Introducer update successfully.");
+        } else {
+          toast.error("Invalid Request...");
+        }
       }
     } catch (error) {
       console.error("Error saving introducer:", error);
+    } finally {
+      setIsupdating(false);
     }
   };
 
@@ -75,7 +95,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="firstName"
                   name="user.first_name"
                   placeholder="First Name"
-                  value={introducerData.user?.first_name || ""}
+                  value={introducerData?.user?.first_name || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -87,7 +107,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="official_email"
                   name="official_email"
                   placeholder="Official Email"
-                  value={introducerData.official_email || ""}
+                  value={introducerData?.official_email || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -99,7 +119,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="official_phone"
                   name="official_phone"
                   placeholder="Official Phone"
-                  value={introducerData.official_phone || ""}
+                  value={introducerData?.official_phone || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -111,7 +131,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="nid"
                   name="user.nid"
                   placeholder="NID Number"
-                  value={introducerData.user?.nid || ""}
+                  value={introducerData?.user?.nid || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -123,7 +143,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="city"
                   name="user.city"
                   placeholder="City"
-                  value={introducerData.user?.city || ""}
+                  value={introducerData?.user?.city || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -135,7 +155,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="state"
                   name="user.state"
                   placeholder="State"
-                  value={introducerData.user?.state || ""}
+                  value={introducerData?.user?.state || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -147,7 +167,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="zip_code"
                   name="user.zip_code"
                   placeholder="Zip Code"
-                  value={introducerData.user?.zip_code || ""}
+                  value={introducerData?.user?.zip_code || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -159,7 +179,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="country"
                   name="user.country"
                   placeholder="Country"
-                  value={introducerData.user?.country || ""}
+                  value={introducerData?.user?.country || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -171,7 +191,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="permanent_address"
                   name="permanent_address"
                   placeholder="Permanent Address"
-                  value={introducerData.permanent_address || ""}
+                  value={introducerData?.permanent_address || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -183,7 +203,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="present_address"
                   name="present_address"
                   placeholder="Present Address"
-                  value={introducerData.present_address || ""}
+                  value={introducerData?.present_address || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -198,7 +218,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="lastName"
                   name="user.last_name"
                   placeholder="Last Name"
-                  value={introducerData.user?.last_name || ""}
+                  value={introducerData?.user?.last_name || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -210,7 +230,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="user_type"
                   name="user.user_type"
                   placeholder="User Type"
-                  value={introducerData.user?.user_type || ""}
+                  value={introducerData?.user?.user_type || ""}
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
@@ -228,7 +248,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="role"
                   name="role"
                   placeholder="Role"
-                  value={introducerData.role || ""}
+                  value={introducerData?.role || ""}
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
@@ -246,7 +266,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="joining_date"
                   name="joining_date"
                   placeholder="Joining Date"
-                  value={introducerData.joining_date || ""}
+                  value={introducerData?.joining_date || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -258,7 +278,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="dob"
                   name="dob"
                   placeholder="Date of Birth"
-                  value={introducerData.dob || ""}
+                  value={introducerData?.dob || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -270,7 +290,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="registration_number"
                   name="registration_number"
                   placeholder="Registration Number"
-                  value={introducerData.registration_number || ""}
+                  value={introducerData?.registration_number || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -282,7 +302,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="degree"
                   name="degree"
                   placeholder="Degree"
-                  value={introducerData.degree || ""}
+                  value={introducerData?.degree || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -294,7 +314,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   id="designation"
                   name="designation"
                   placeholder="Designation"
-                  value={introducerData.designation || ""}
+                  value={introducerData?.designation || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -316,7 +336,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
         </ModalBody>
         <ModalFooter>
           <Button type="submit" color="primary">
-            Update
+            {isupdating ? "Updating.." : "Update"}
           </Button>
           <Button type="button" color="secondary" onClick={toggle}>
             Cancel

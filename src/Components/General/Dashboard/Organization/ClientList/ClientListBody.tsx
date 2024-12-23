@@ -14,7 +14,7 @@ import {
 import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
-import UpdateClientModal from "./Modals/UpdateCliientModal";
+import UpdateClientModal from "./Modals/UpdateClientModal";
 
 const ClientListBody: React.FC = () => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
@@ -296,9 +296,9 @@ const ClientListBody: React.FC = () => {
       <UpdateClientModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
+        fetchClients={fetchClients}
         onSave={() => {
-          fetchClients(); // Refresh the list after saving
-          toggleUpdateModal(); // Close the modal
+          toggleUpdateModal();
         }}
         selectedClient={selectedClient}
       />

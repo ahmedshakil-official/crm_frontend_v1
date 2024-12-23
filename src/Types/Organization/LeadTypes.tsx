@@ -33,7 +33,13 @@ export interface FetchLeadsProps {
   setIsFetchedLead?: any;
   isFetchedLead?: any;
 }
-
+export interface UpdateLeadModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  onSave: (leadData: Partial<LeadsInfo>) => void;
+  selectedLead: Partial<LeadsInfo>;
+  fetchLeads?: any;
+}
 export interface DeleteLeadModalProps {
   isOpen: boolean;
   toggle: () => void;

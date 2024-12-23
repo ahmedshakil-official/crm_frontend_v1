@@ -295,8 +295,8 @@ const IntroducerListBody: React.FC = () => {
       <UpdateIntroducerModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
+        fetchIntroducers={fetchIntroducers}
         onSave={() => {
-          fetchIntroducers(); // Refresh the list after saving
           toggleUpdateModal(); // Close the modal
         }}
         selectedIntroducer={selectedIntroducer}

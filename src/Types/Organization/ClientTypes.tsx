@@ -38,6 +38,7 @@ export interface UpdateClientModalProps {
   toggle: () => void;
   onSave: (clientData: Partial<ClientInfoProps>) => void;
   selectedClient: Partial<ClientInfoProps>;
+  fetchClients?: any;
 }
 export interface DeleteClientModalProps {
   isOpen: boolean;
