@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -11,49 +12,20 @@ import {
 } from "reactstrap";
 import "./AdvisorList.css";
 import AddAdvisorModal from "./Modals/AddAdvisorModal";
+import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
 import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
 
-export interface Advisor {
-  alias: string;
-  user: {
-    id: number;
-    first_name: string;
-    last_name: string;
-    profile_image: string;
-    nid: string;
-    user_type: string;
-    city: string;
-    state: string;
-    country: string;
-    zip_code: string;
-  };
-  role: string;
-  designation: string;
-  official_email: string;
-  official_phone: string;
-  permanent_address: string;
-  present_address: string;
-  dob: string;
-  gender: string;
-  joining_date: string;
-  registration_number: string;
-  degree: string;
-  created_by: {
-    first_name: string;
-    last_name: string;
-  };
-  created_at: string;
-}
-
 const AdvisorListBody: React.FC = () => {
-  const [advisors, setAdvisors] = useState<Advisor[]>([]);
+  const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [advisorsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [selectedAdvisor, setSelectedAdvisor] = useState<Partial<Advisor>>({
+  const [selectedAdvisor, setSelectedAdvisor] = useState<
+    Partial<AdvisorInfoProps>
+  >({
     user: {
       id: 0,
       first_name: "",
@@ -81,6 +53,17 @@ const AdvisorListBody: React.FC = () => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [advisorToDelete, setAdvisorToDelete] =
+    useState<AdvisorInfoProps | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
+
+  const openDeleteModal = (advisor: AdvisorInfoProps) => {
+    setAdvisorToDelete(advisor);
+    toggleDeleteModal();
+  };
 
   const fetchAdvisors = async () => {
     setIsLoading(true);
@@ -102,12 +85,26 @@ const AdvisorListBody: React.FC = () => {
     fetchAdvisors();
   }, []);
 
+  //delete advisor
+  const deleteAdvisor = async (alias: string) => {
+    if (!alias) return;
+    try {
+      setIsDeleting(true);
+      await apiClient.delete(`/director/advisors/${alias}/`);
+      fetchAdvisors();
+    } catch (error) {
+      console.error("Error deleting Advisor", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   // openmodals
   const openAddModal = () => {
     toggleModal();
   };
 
-  const openUpdateModal = (advisor: Advisor) => {
+  const openUpdateModal = (advisor: AdvisorInfoProps) => {
     setSelectedAdvisor(advisor);
     toggleUpdateModal();
   };
@@ -191,7 +188,12 @@ const AdvisorListBody: React.FC = () => {
                     >
                       <i className="icon-pencil-alt"></i>
                     </Button>
-                    <Button color="danger" size="sm" title="Delete User">
+                    <Button
+                      color="danger"
+                      size="sm"
+                      title="Delete User"
+                      onClick={() => openDeleteModal(advisor)}
+                    >
                       <i className="icon-trash"></i>
                     </Button>
                   </div>
@@ -297,6 +299,16 @@ const AdvisorListBody: React.FC = () => {
           toggleUpdateModal(); // Close the modal
         }}
         selectedAdvisor={selectedAdvisor}
+      />
+      <DeleteAdvisorModal
+        isOpen={isDeleteModalOpen}
+        toggle={toggleDeleteModal}
+        onDelete={() => {
+          if (advisorToDelete) deleteAdvisor(advisorToDelete.alias);
+          toggleDeleteModal();
+        }}
+        isDeleting={isDeleting}
+        advisorName={`${advisorToDelete?.user?.first_name} ${advisorToDelete?.user?.last_name}`}
       />
       {/* modals end */}
     </div>

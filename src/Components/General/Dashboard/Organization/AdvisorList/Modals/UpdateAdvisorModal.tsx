@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import { AdvisorInfoProps, UpdateAdvisorModalProps } from "@/Types/Organization/AdvisorTypes";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -13,21 +14,16 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import { Advisor } from "../AdvisorListBody";
 
-export interface UpdateAdvisorModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: (AdvisorData: Partial<Advisor>) => void;
-  selectedAdvisor: Partial<Advisor>;
-}
+
+
 const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
   isOpen,
   toggle,
   onSave,
   selectedAdvisor,
 }) => {
-  const [advisorData, setAdvisorData] = useState<Partial<Advisor>>(selectedAdvisor);
+  const [advisorData, setAdvisorData] = useState<Partial<AdvisorInfoProps>>(selectedAdvisor);
 
   useEffect(() => {
     setAdvisorData(selectedAdvisor);
@@ -44,11 +40,11 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
         current = current[keys[i]];
       }
       current[keys[keys.length - 1]] = value;
-      return updatedData as Partial<Advisor>;
+      return updatedData as Partial<AdvisorInfoProps>;
     });
   };
 
-  const handleUpdateAdvisor = async (advisorData: Partial<Advisor>) => {
+  const handleUpdateAdvisor = async (advisorData: Partial<AdvisorInfoProps>) => {
     try {
       if (advisorData.alias) {
         await apiClient.patch(`/director/advisors/${advisorData.alias}/`, advisorData);

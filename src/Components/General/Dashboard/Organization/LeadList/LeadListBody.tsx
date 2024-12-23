@@ -81,6 +81,7 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
     fetchLeads();
   }, []);
 
+  //delete lead
   const deleteLead = async (alias: string) => {
     if (!alias) return;
     
