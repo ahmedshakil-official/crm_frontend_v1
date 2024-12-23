@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import { AddIntroducerModalProps } from "@/Types/Organization/IntroducerTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -15,11 +16,7 @@ import {
   Row,
 } from "reactstrap";
 
-interface AddIntroducerModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: () => void;
-}
+
 
 const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
   isOpen,
