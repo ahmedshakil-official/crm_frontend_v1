@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import { IntroducerInfoProps, UpdateIntroducerModalProps } from "@/Types/Organization/IntroducerTypes";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -13,21 +14,15 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import { Introducer } from "../IntroducerListBody";
 
-export interface UpdateIntroducerModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: (introducerData: Partial<Introducer>) => void;
-  selectedIntroducer: Partial<Introducer>;
-}
+
 const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
   isOpen,
   toggle,
   onSave,
   selectedIntroducer,
 }) => {
-  const [introducerData, setIntroducerData] = useState<Partial<Introducer>>(selectedIntroducer);
+  const [introducerData, setIntroducerData] = useState<Partial<IntroducerInfoProps>>(selectedIntroducer);
 
   useEffect(() => {
     setIntroducerData(selectedIntroducer);
@@ -44,11 +39,11 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
         current = current[keys[i]];
       }
       current[keys[keys.length - 1]] = value;
-      return updatedData as Partial<Introducer>;
+      return updatedData as Partial<IntroducerInfoProps>;
     });
   };
 
-  const handleUpdateIntroducer = async (introducerData: Partial<Introducer>) => {
+  const handleUpdateIntroducer = async (introducerData: Partial<IntroducerInfoProps>) => {
     try {
       if (introducerData.alias) {
         await apiClient.patch(`/director/introducers/${introducerData.alias}/`, introducerData);
