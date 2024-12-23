@@ -34,16 +34,17 @@ export interface AddAdvisorModalProps {
   toggle: () => void;
   onSave: () => void;
 }
-export  interface UpdateAdvisorModalProps {
+export interface UpdateAdvisorModalProps {
   isOpen: boolean;
   toggle: () => void;
   onSave: (AdvisorData: Partial<AdvisorInfoProps>) => void;
   selectedAdvisor: Partial<AdvisorInfoProps>;
+  fetchAdvisors?: any;
 }
 export interface DeleteAdvisorModalProps {
-    isOpen: boolean;
-    toggle: () => void;
-    onDelete: () => void;
-    advisorName: string;
-    isDeleting?: any;
-  }
+  isOpen: boolean;
+  toggle: () => void;
+  onDelete: () => void;
+  advisorName: string;
+  isDeleting?: any;
+}

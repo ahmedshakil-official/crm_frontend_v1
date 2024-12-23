@@ -1,6 +1,10 @@
 import apiClient from "@/services/api-client";
-import { AdvisorInfoProps, UpdateAdvisorModalProps } from "@/Types/Organization/AdvisorTypes";
+import {
+  AdvisorInfoProps,
+  UpdateAdvisorModalProps,
+} from "@/Types/Organization/AdvisorTypes";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -15,15 +19,16 @@ import {
   Row,
 } from "reactstrap";
 
-
-
 const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
   isOpen,
   toggle,
   onSave,
+  fetchAdvisors,
   selectedAdvisor,
 }) => {
-  const [advisorData, setAdvisorData] = useState<Partial<AdvisorInfoProps>>(selectedAdvisor);
+  const [advisorData, setAdvisorData] =
+    useState<Partial<AdvisorInfoProps>>(selectedAdvisor);
+  const [isupdating, setIsupdating] = useState(false);
 
   useEffect(() => {
     setAdvisorData(selectedAdvisor);
@@ -44,13 +49,28 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
     });
   };
 
-  const handleUpdateAdvisor = async (advisorData: Partial<AdvisorInfoProps>) => {
+  const handleUpdateAdvisor = async (
+    advisorData: Partial<AdvisorInfoProps>
+  ) => {
     try {
+      setIsupdating(true);
       if (advisorData.alias) {
-        await apiClient.patch(`/director/advisors/${advisorData.alias}/`, advisorData);
+        const result = await apiClient.patch(
+          `/director/advisors/${advisorData.alias}/`,
+          advisorData
+        );
+
+        fetchAdvisors();
+        if (result.status >= 200 && result.status < 300) {
+          toast.success("Advisor update successfully.");
+        } else {
+          toast.error("Invalid Request...");
+        }
       }
     } catch (error) {
       console.error("Error saving advisor:", error);
+    } finally {
+      setIsupdating(false);
     }
   };
 
@@ -317,7 +337,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
         </ModalBody>
         <ModalFooter>
           <Button type="submit" color="primary">
-            Update
+            {isupdating ? "Updating.." : "Update"}
           </Button>
           <Button type="button" color="secondary" onClick={toggle}>
             Cancel

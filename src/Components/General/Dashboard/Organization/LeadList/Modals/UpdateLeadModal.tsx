@@ -1,5 +1,9 @@
 import apiClient from "@/services/api-client";
-import { FetchLeadsProps, LeadsInfo } from "@/Types/Organization/LeadTypes";
+import {
+  FetchLeadsProps,
+  LeadsInfo,
+  UpdateLeadModalProps,
+} from "@/Types/Organization/LeadTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -16,20 +20,16 @@ import {
   Row,
 } from "reactstrap";
 
-export interface UpdateLeadModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: (leadData: Partial<LeadsInfo>) => void;
-  selectedLead: Partial<LeadsInfo>;
-}
 const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
   isOpen,
   toggle,
   onSave,
   selectedLead,
+  fetchLeads,
   setIsFetchedLead,
 }) => {
   const [leadData, setLeadData] = useState<Partial<LeadsInfo>>(selectedLead);
+  const [isupdating, setIsupdating] = useState(false);
 
   useEffect(() => {
     setLeadData(selectedLead);
@@ -52,11 +52,13 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
 
   const handleUpdateLead = async (leadData: Partial<LeadsInfo>) => {
     try {
+      setIsupdating(true);
       if (leadData.alias) {
-        const result = await apiClient.patch(
+        const result = await apiClient.put(
           `/director/leads/${leadData.alias}/`,
           leadData
         );
+        fetchLeads();
         if (result.status >= 200 && result.status < 300) {
           toast.success("Lead update successfully.");
           setIsFetchedLead(true);
@@ -66,6 +68,8 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
       }
     } catch (error) {
       console.error("Error saving lead:", error);
+    } finally {
+      setIsupdating(false);
     }
   };
 
@@ -91,7 +95,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="firstName"
                   name="user.first_name"
                   placeholder="First Name"
-                  value={leadData.user?.first_name || ""}
+                  value={leadData?.user?.first_name || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -103,7 +107,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="official_email"
                   name="official_email"
                   placeholder="Official Email"
-                  value={leadData.official_email || ""}
+                  value={leadData?.official_email || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -115,7 +119,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="official_phone"
                   name="official_phone"
                   placeholder="Official Phone"
-                  value={leadData.official_phone || ""}
+                  value={leadData?.official_phone || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -127,7 +131,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="nid"
                   name="user.nid"
                   placeholder="NID Number"
-                  value={leadData.user?.nid || ""}
+                  value={leadData?.user?.nid || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -139,7 +143,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="city"
                   name="user.city"
                   placeholder="City"
-                  value={leadData.user?.city || ""}
+                  value={leadData?.user?.city || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -151,7 +155,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="state"
                   name="user.state"
                   placeholder="State"
-                  value={leadData.user?.state || ""}
+                  value={leadData?.user?.state || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -163,7 +167,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="zip_code"
                   name="user.zip_code"
                   placeholder="Zip Code"
-                  value={leadData.user?.zip_code || ""}
+                  value={leadData?.user?.zip_code || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -175,7 +179,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="country"
                   name="user.country"
                   placeholder="Country"
-                  value={leadData.user?.country || ""}
+                  value={leadData?.user?.country || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -187,7 +191,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="permanent_address"
                   name="permanent_address"
                   placeholder="Permanent Address"
-                  value={leadData.permanent_address || ""}
+                  value={leadData?.permanent_address || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -199,7 +203,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="present_address"
                   name="present_address"
                   placeholder="Present Address"
-                  value={leadData.present_address || ""}
+                  value={leadData?.present_address || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -214,7 +218,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="lastName"
                   name="user.last_name"
                   placeholder="Last Name"
-                  value={leadData.user?.last_name || ""}
+                  value={leadData?.user?.last_name || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -226,7 +230,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="user_type"
                   name="user.user_type"
                   placeholder="User Type"
-                  value={leadData.user?.user_type || ""}
+                  value={leadData?.user?.user_type || ""}
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
@@ -244,7 +248,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="role"
                   name="role"
                   placeholder="Role"
-                  value={leadData.role || ""}
+                  value={leadData?.role || ""}
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
@@ -262,7 +266,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="joining_date"
                   name="joining_date"
                   placeholder="Joining Date"
-                  value={leadData.joining_date || ""}
+                  value={leadData?.joining_date || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -274,7 +278,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="dob"
                   name="dob"
                   placeholder="Date of Birth"
-                  value={leadData.dob || ""}
+                  value={leadData?.dob || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -286,7 +290,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="registration_number"
                   name="registration_number"
                   placeholder="Registration Number"
-                  value={leadData.registration_number || ""}
+                  value={leadData?.registration_number || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -298,7 +302,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="degree"
                   name="degree"
                   placeholder="Degree"
-                  value={leadData.degree || ""}
+                  value={leadData?.degree || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -310,7 +314,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   id="designation"
                   name="designation"
                   placeholder="Designation"
-                  value={leadData.designation || ""}
+                  value={leadData?.designation || ""}
                   onChange={handleChange}
                   className="mb-2"
                 />
@@ -332,7 +336,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
         </ModalBody>
         <ModalFooter>
           <Button type="submit" color="primary">
-            Update
+            {isupdating ? "Updating.." : "Update"}
           </Button>
           <Button type="button" color="secondary" onClick={toggle}>
             Cancel

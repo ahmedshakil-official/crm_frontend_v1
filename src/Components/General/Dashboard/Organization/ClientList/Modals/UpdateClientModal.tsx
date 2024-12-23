@@ -4,6 +4,7 @@ import {
   UpdateClientModalProps,
 } from "@/Types/Organization/ClientTypes";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -22,10 +23,12 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
   isOpen,
   toggle,
   onSave,
+  fetchClients,
   selectedClient,
 }) => {
   const [clientData, setClientData] =
     useState<Partial<ClientInfoProps>>(selectedClient);
+  const [isupdating, setIsupdating] = useState(false);
 
   useEffect(() => {
     setClientData(selectedClient);
@@ -48,14 +51,23 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
 
   const handleUpdateClient = async (clientData: Partial<ClientInfoProps>) => {
     try {
+      setIsupdating(true);
       if (clientData.alias) {
-        await apiClient.patch(
+        const result = await apiClient.put(
           `/director/clients/${clientData.alias}/`,
           clientData
         );
+        fetchClients();
+        if (result.status >= 200 && result.status < 300) {
+          toast.success("Client update successfully.");
+        } else {
+          toast.error("Invalid Request...");
+        }
       }
     } catch (error) {
       console.error("Error saving client:", error);
+    } finally {
+      setIsupdating(false);
     }
   };
 
@@ -322,7 +334,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
         </ModalBody>
         <ModalFooter>
           <Button type="submit" color="primary">
-            Update
+            {isupdating ? "Updating.." : "Update"}
           </Button>
           <Button type="button" color="secondary" onClick={toggle}>
             Cancel

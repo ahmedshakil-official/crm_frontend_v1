@@ -291,8 +291,8 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
       <UpdateLeadModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
+        fetchLeads={fetchLeads}
         onSave={() => {
-          fetchLeads();
           setIsFetchedLead = { setIsFetchedLead };
           toggleUpdateModal();
         }}

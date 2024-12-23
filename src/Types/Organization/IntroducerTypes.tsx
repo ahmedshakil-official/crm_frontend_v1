@@ -38,11 +38,12 @@ export interface UpdateIntroducerModalProps {
   toggle: () => void;
   onSave: (introducerData: Partial<IntroducerInfoProps>) => void;
   selectedIntroducer: Partial<IntroducerInfoProps>;
+  fetchIntroducers?: any;
 }
 export interface DeleteIntroducerModalProps {
-    isOpen: boolean;
-    toggle: () => void;
-    onDelete: () => void;
-    introducerName: string;
-    isDeleting?: any;
-  }
+  isOpen: boolean;
+  toggle: () => void;
+  onDelete: () => void;
+  introducerName: string;
+  isDeleting?: any;
+}
