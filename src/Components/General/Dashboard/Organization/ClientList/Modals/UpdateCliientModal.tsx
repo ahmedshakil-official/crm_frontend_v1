@@ -1,4 +1,8 @@
 import apiClient from "@/services/api-client";
+import {
+  ClientInfoProps,
+  UpdateClientModalProps,
+} from "@/Types/Organization/ClientTypes";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -13,21 +17,15 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import { Client } from "../ClientListBody";
 
-export interface UpdateClientModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: (clientData: Partial<Client>) => void;
-  selectedClient: Partial<Client>;
-}
 const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
   isOpen,
   toggle,
   onSave,
   selectedClient,
 }) => {
-  const [clientData, setClientData] = useState<Partial<Client>>(selectedClient);
+  const [clientData, setClientData] =
+    useState<Partial<ClientInfoProps>>(selectedClient);
 
   useEffect(() => {
     setClientData(selectedClient);
@@ -44,14 +42,17 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
         current = current[keys[i]];
       }
       current[keys[keys.length - 1]] = value;
-      return updatedData as Partial<Client>;
+      return updatedData as Partial<ClientInfoProps>;
     });
   };
 
-  const handleUpdateClient = async (clientData: Partial<Client>) => {
+  const handleUpdateClient = async (clientData: Partial<ClientInfoProps>) => {
     try {
       if (clientData.alias) {
-        await apiClient.patch(`/director/clients/${clientData.alias}/`, clientData);
+        await apiClient.patch(
+          `/director/clients/${clientData.alias}/`,
+          clientData
+        );
       }
     } catch (error) {
       console.error("Error saving client:", error);

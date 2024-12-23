@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import { AddClientModalProps } from "@/Types/Organization/ClientTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -15,11 +16,7 @@ import {
   Row,
 } from "reactstrap";
 
-interface AddClientModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: () => void;
-}
+
 
 const AddClientModal: React.FC<AddClientModalProps> = ({
   isOpen,

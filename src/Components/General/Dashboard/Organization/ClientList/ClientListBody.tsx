@@ -1,4 +1,6 @@
 import apiClient from "@/services/api-client";
+
+import { ClientInfoProps } from "@/Types/Organization/ClientTypes";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -11,48 +13,20 @@ import {
 } from "reactstrap";
 import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
+import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateCliientModal";
 
-export interface Client {
-  alias: string;
-  user: {
-    first_name: string;
-    last_name: string;
-    profile_image: string;
-    nid: string;
-    user_type: string;
-    city: string;
-    state: string;
-    country: string;
-    zip_code: string;
-  };
-  role: string;
-  designation: string;
-  official_email: string;
-  official_phone: string;
-  permanent_address: string;
-  present_address: string;
-  dob: string;
-  gender: string;
-  joining_date: string;
-  registration_number: string;
-  degree: string;
-  created_by: {
-    first_name: string;
-    last_name: string;
-  };
-  created_at: string;
-}
-
 const ClientListBody: React.FC = () => {
-  const [clients, setClients] = useState<Client[]>([]);
+  const [clients, setClients] = useState<ClientInfoProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [clientsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [selectedClient, setSelectedClient] = useState<Partial<Client>>({
+  const [selectedClient, setSelectedClient] = useState<
+    Partial<ClientInfoProps>
+  >({
     user: {
       first_name: "",
       last_name: "",
@@ -79,6 +53,18 @@ const ClientListBody: React.FC = () => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [clientToDelete, setClientToDelete] = useState<ClientInfoProps | null>(
+    null
+  );
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
+
+  const openDeleteModal = (lead: ClientInfoProps) => {
+    setClientToDelete(lead);
+    toggleDeleteModal();
+  };
 
   const fetchClients = async () => {
     setIsLoading(true);
@@ -100,12 +86,27 @@ const ClientListBody: React.FC = () => {
     fetchClients();
   }, []);
 
+  //delete fanctionality
+  const deleteClient = async (alias: string) => {
+    if (!alias) return;
+
+    try {
+      setIsDeleting(true);
+      await apiClient.delete(`/director/clients/${alias}/`);
+      fetchClients();
+    } catch (error) {
+      console.log("Error deleting Client:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   // openmodals
   const openAddModal = () => {
     toggleModal();
   };
 
-  const openUpdateModal = (client: Client) => {
+  const openUpdateModal = (client: ClientInfoProps) => {
     setSelectedClient(client);
     toggleUpdateModal();
   };
@@ -189,7 +190,12 @@ const ClientListBody: React.FC = () => {
                     >
                       <i className="icon-pencil-alt"></i>
                     </Button>
-                    <Button color="danger" size="sm" title="Delete User">
+                    <Button
+                      color="danger"
+                      size="sm"
+                      title="Delete User"
+                      onClick={() => openDeleteModal(client)}
+                    >
                       <i className="icon-trash"></i>
                     </Button>
                   </div>
@@ -295,6 +301,16 @@ const ClientListBody: React.FC = () => {
           toggleUpdateModal(); // Close the modal
         }}
         selectedClient={selectedClient}
+      />
+      <DeleteClientModal
+        isOpen={isDeleteModalOpen}
+        toggle={toggleDeleteModal}
+        onDelete={() => {
+          if (clientToDelete) deleteClient(clientToDelete.alias);
+          toggleDeleteModal();
+        }}
+        isDeleting={isDeleting}
+        clientName={`${clientToDelete?.user?.first_name} ${clientToDelete?.user?.last_name}`}
       />
       {/* modals end */}
     </div>
