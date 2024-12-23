@@ -1,4 +1,5 @@
 import apiClient from "@/services/api-client";
+import { AddAdvisorModalProps } from "@/Types/Organization/AdvisorTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -14,12 +15,6 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-
-interface AddAdvisorModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: () => void;
-}
 
 const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
   isOpen,

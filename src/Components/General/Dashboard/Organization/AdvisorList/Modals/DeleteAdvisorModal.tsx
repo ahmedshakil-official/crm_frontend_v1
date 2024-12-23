@@ -1,19 +1,19 @@
-import { DeleteClientModalProps } from "@/Types/Organization/ClientTypes";
+import { DeleteAdvisorModalProps } from "@/Types/Organization/AdvisorTypes";
 import React from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
-const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
+const DeleteAdvisorModal: React.FC<DeleteAdvisorModalProps> = ({
   isOpen,
   toggle,
   onDelete,
-  clientName,
+  advisorName,
   isDeleting,
 }) => {
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Delete Client</ModalHeader>
+      <ModalHeader toggle={toggle}>Delete Advisor</ModalHeader>
       <ModalBody>
-        Are you sure you want to delete the client <strong>{clientName}</strong>?
+        Are you sure you want to delete the advisor <strong>{advisorName}</strong>?
         This action cannot be undone.
       </ModalBody>
       <ModalFooter>
@@ -28,4 +28,4 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
   );
 };
 
-export default DeleteClientModal;
+export default DeleteAdvisorModal;

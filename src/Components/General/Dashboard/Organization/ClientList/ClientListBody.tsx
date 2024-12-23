@@ -61,8 +61,8 @@ const ClientListBody: React.FC = () => {
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
-  const openDeleteModal = (lead: ClientInfoProps) => {
-    setClientToDelete(lead);
+  const openDeleteModal = (client: ClientInfoProps) => {
+    setClientToDelete(client);
     toggleDeleteModal();
   };
 
@@ -95,7 +95,7 @@ const ClientListBody: React.FC = () => {
       await apiClient.delete(`/director/clients/${alias}/`);
       fetchClients();
     } catch (error) {
-      console.log("Error deleting Client:", error);
+      console.error("Error deleting Client:", error);
     } finally {
       setIsDeleting(false);
     }
