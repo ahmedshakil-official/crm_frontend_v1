@@ -17,6 +17,8 @@ export const config = {
     "/dashboard/:path*",
     // Protect dashboard organization routes
     "/dashboard/organization/:path*",
+    // Protect dashboard network routes
+    "/dashboard/network/:path*",
     // Protect specific user-related routes
     "/users/:path*",
   ],
