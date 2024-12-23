@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import "./LeadList.css";
 import AddLeadModal from "./Modals/AddLeadModal";
+import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
 
 const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
@@ -49,6 +50,16 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
+
+  const openDeleteModal = (lead: LeadsInfo) => {
+    setLeadToDelete(lead);
+    toggleDeleteModal();
+  };
 
   const fetchLeads = async () => {
     setIsLoading(true);
@@ -69,6 +80,20 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
   useEffect(() => {
     fetchLeads();
   }, []);
+
+  const deleteLead = async (alias: string) => {
+    if (!alias) return;
+    
+    try {
+      setIsDeleting(true)
+      await apiClient.delete(`/director/leads/${alias}/`);
+      fetchLeads(); // Refresh the leads after deletion
+    } catch (error) {
+      console.error("Error deleting Lead:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   // openmodals
   const openAddModal = () => {
@@ -157,7 +182,12 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
                     >
                       <i className="icon-pencil-alt"></i>
                     </Button>
-                    <Button color="danger" size="sm" title="Delete User">
+                    <Button
+                      color="danger"
+                      size="sm"
+                      title="Delete User"
+                      onClick={() => openDeleteModal(lead)}
+                    >
                       <i className="icon-trash"></i>
                     </Button>
                   </div>
@@ -253,19 +283,29 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
       <AddLeadModal
         isOpen={isModalOpen}
         toggle={toggleModal}
-        setIsFetchedLead={setIsFetchedLead} // Presuming AddLeadModal accepts this prop
-        onSave={() => fetchLeads()} // Fetch leads after saving
+        setIsFetchedLead={setIsFetchedLead}
+        onSave={() => fetchLeads()}
       />
 
       <UpdateLeadModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
-          fetchLeads(); // Refresh the list after saving
-          setIsFetchedLead = { setIsFetchedLead }; // Update the fetched status
-          toggleUpdateModal(); // Close the modal
+          fetchLeads();
+          setIsFetchedLead = { setIsFetchedLead };
+          toggleUpdateModal();
         }}
-        selectedLead={selectedLead} // Pass the selected lead
+        selectedLead={selectedLead}
+      />
+      <DeleteLeadModal
+        isOpen={isDeleteModalOpen}
+        toggle={toggleDeleteModal}
+        onDelete={() => {
+          if (leadToDelete) deleteLead(leadToDelete.alias);
+          toggleDeleteModal();
+        }}
+        isDeleting={isDeleting}
+        leadName={`${leadToDelete?.user?.first_name} ${leadToDelete?.user?.last_name}`}
       />
 
       {/* modals end */}
