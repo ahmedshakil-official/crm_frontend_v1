@@ -33,3 +33,11 @@ export interface FetchLeadsProps {
   setIsFetchedLead?: any;
   isFetchedLead?: any;
 }
+
+export interface DeleteLeadModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  onDelete: () => void;
+  leadName: string;
+  isDeleting?: any;
+}
