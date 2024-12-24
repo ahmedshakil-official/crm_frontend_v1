@@ -20,7 +20,8 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import { Advisor } from "../../../AdvisorList/AdvisorListBody";
+
+import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import "../../ActivityStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 import DeleteCaseModal from "../../Modals/DeleteCaseModal";
@@ -31,7 +32,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
   isFetchedLead,
 }) => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
-  const [advisors, setAdvisors] = useState<Advisor[]>([]);
+  const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
