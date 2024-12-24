@@ -19,6 +19,7 @@ const ContainerNetwork = () => {
         <Row>
           <OrganizationCards />
         </Row>
+        {/* load Organization dashboard data  */}
         <Row>
           <ActivityStatus isFetchedLead={isFetchedLead}  setIsFetchedLead={setIsFetchedLead}/>
         </Row>
@@ -34,6 +35,7 @@ const ContainerNetwork = () => {
         <Row>
           <IntroducerList />
         </Row>
+        {/* load Organization dashboard data end */}
       </Container>
     </>
   );
