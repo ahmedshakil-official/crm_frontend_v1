@@ -3,15 +3,7 @@ import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import {
-  Button,
-  Input,
-  InputGroup,
-  InputGroupText,
-  Row,
-  Table,
-} from "reactstrap";
+import { Button, Row, Table } from "reactstrap";
 import ActivityStatusHeader from "./ActivityStatusHeader";
 import DeleteCaseModal from "./Modals/DeleteCaseModal";
 
@@ -82,20 +74,9 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
           setIsFetchedLead={setIsFetchedLead}
           isFetchedLead={isFetchedLead}
           fetchCaseInfo={fetchCaseInfo}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
-      </Row>
-      <Row className="my-3">
-        <InputGroup>
-          <Input
-            type="text"
-            placeholder="Search Case..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <InputGroupText className="bg-success rounded-start-0 border-start-0">
-            <FaSearch />
-          </InputGroupText>
-        </InputGroup>
       </Row>
       <Row className="my-3">
         <Table bordered hover responsive>

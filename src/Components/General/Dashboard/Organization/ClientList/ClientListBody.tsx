@@ -2,12 +2,17 @@ import apiClient from "@/services/api-client";
 
 import { ClientInfoProps } from "@/Types/Organization/ClientTypes";
 import React, { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import {
   Button,
+  Col,
   Input,
+  InputGroup,
+  InputGroupText,
   Pagination,
   PaginationItem,
   PaginationLink,
+  Row,
   Spinner,
   Table,
 } from "reactstrap";
@@ -112,13 +117,16 @@ const ClientListBody: React.FC = () => {
   };
   // openmodals end
 
-  const filteredClients = clients.filter(
-    (client) =>
-      client.user.first_name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      client.official_email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredClients = clients.filter((client) => {
+    const fullName = `${client?.user?.first_name || ""} ${
+      client?.user?.last_name || ""
+    }`.toLowerCase();
+
+    return (
+      fullName.includes(searchQuery.toLowerCase()) ||
+      client?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   const indexOfLastClient = currentPage * clientsPerPage;
   const indexOfFirstClient = indexOfLastClient - clientsPerPage;
@@ -130,128 +138,114 @@ const ClientListBody: React.FC = () => {
   const totalPages = Math.ceil(filteredClients.length / clientsPerPage);
 
   return (
-    <div className="container p-3">
-      <div className="d-flex justify-content-between pt-0 pb-2">
-        <h3>Client List</h3>
-        <Button color="primary" className="mt-0" onClick={openAddModal}>
-          Add Client
-        </Button>
-      </div>
-      <Input
-        type="text"
-        placeholder="Search by name or email"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="mb-3"
-      />
-      <Table bordered hover responsive>
-        <thead className="thead-light">
-          <tr className="text-center">
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Role</th>
-            <th>Created By</th>
-            <th>Created At</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {isLoading ? (
-            <tr>
-              <td colSpan={7} className="text-center">
-                <div className="d-flex justify-content-center align-items-center">
-                  <Spinner color="primary" />
-                </div>
-              </td>
+    <div className="container mt-1">
+      <Row className="flex justify-content-between py-4">
+        <Col md="3">
+          <h2>Client List</h2>
+        </Col>
+        <Col>
+          <InputGroup>
+            <Input
+              type="text"
+              placeholder="Search by name or email... "
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <InputGroupText className="bg-success rounded-start-0 border-start-0">
+              <FaSearch />
+            </InputGroupText>
+          </InputGroup>
+        </Col>
+        <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
+          <Button color="primary" onClick={openAddModal}>
+            Add Client
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Table bordered hover responsive>
+          <thead className="thead-light">
+            <tr className="text-center">
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Created By</th>
+              <th>Created At</th>
+              <th>Action</th>
             </tr>
-          ) : currentClients.length > 0 ? (
-            currentClients.map((client) => (
-              <tr key={client.alias}>
-                <td>
-                  {client?.user?.first_name} {client?.user?.last_name}
-                </td>
-                <td>{client.official_email}</td>
-                <td>{client.official_phone}</td>
-                <td>{client.role}</td>
-                <td>
-                  {client?.created_by?.first_name}{" "}
-                  {client?.created_by?.last_name}
-                </td>
-                <td>{new Date(client?.created_at).toLocaleString()}</td>
-                <td className="text-center">
-                  <div className="d-flex justify-content-center gap-2 align-items-center">
-                    <Button
-                      color="success"
-                      size="sm"
-                      title="Update User"
-                      onClick={() => openUpdateModal(client)}
-                    >
-                      <i className="icon-pencil-alt"></i>
-                    </Button>
-                    <Button
-                      color="danger"
-                      size="sm"
-                      title="Delete User"
-                      onClick={() => openDeleteModal(client)}
-                    >
-                      <i className="icon-trash"></i>
-                    </Button>
+          </thead>
+
+          <tbody>
+            {isLoading ? (
+              <tr>
+                <td colSpan={7} className="text-center">
+                  <div className="d-flex justify-content-center align-items-center">
+                    <Spinner color="primary" />
                   </div>
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={7} className="text-center">
-                No clients available.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-      <Pagination className="d-flex justify-content-end p-2">
-        <PaginationItem disabled={currentPage === 1}>
-          <PaginationLink first onClick={() => setCurrentPage(1)} />
-        </PaginationItem>
-        <PaginationItem disabled={currentPage === 1}>
-          <PaginationLink
-            previous
-            onClick={() => setCurrentPage(currentPage - 1)}
-          />
-        </PaginationItem>
-
-        {totalPages <= 5 ? (
-          Array.from({ length: totalPages }, (_, i) => i + 1).map(
-            (pageNumber) => (
-              <PaginationItem
-                key={pageNumber}
-                active={pageNumber === currentPage}
-              >
-                <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
-                  {pageNumber}
-                </PaginationLink>
-              </PaginationItem>
-            )
-          )
-        ) : (
-          <>
-            <PaginationItem active={currentPage === 1}>
-              <PaginationLink onClick={() => setCurrentPage(1)}>
-                1
-              </PaginationLink>
-            </PaginationItem>
-
-            {currentPage > 3 && (
-              <PaginationItem disabled>
-                <PaginationLink>...</PaginationLink>
-              </PaginationItem>
+            ) : currentClients.length > 0 ? (
+              currentClients.map((client) => (
+                <tr key={client.alias}>
+                  <td>
+                    {client?.user?.first_name} {client?.user?.last_name}
+                  </td>
+                  <td>{client.official_email}</td>
+                  <td>{client.official_phone}</td>
+                  <td>{client.role}</td>
+                  <td>
+                    {client?.created_by?.first_name}{" "}
+                    {client?.created_by?.last_name}
+                  </td>
+                  <td>{new Date(client?.created_at).toLocaleString()}</td>
+                  <td className="text-center">
+                    <div className="d-flex justify-content-center gap-2 align-items-center">
+                      <Button
+                        color="success"
+                        size="sm"
+                        title="Update User"
+                        onClick={() => openUpdateModal(client)}
+                      >
+                        <i className="icon-pencil-alt"></i>
+                      </Button>
+                      <Button
+                        color="danger"
+                        size="sm"
+                        title="Delete User"
+                        onClick={() => openDeleteModal(client)}
+                      >
+                        <i className="icon-trash"></i>
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7} className="text-center">
+                  No clients available.
+                </td>
+              </tr>
             )}
+          </tbody>
+        </Table>
+      </Row>
+      <Row>
+        <Pagination className="d-flex justify-content-end p-2">
+          <PaginationItem disabled={currentPage === 1}>
+            <PaginationLink first onClick={() => setCurrentPage(1)} />
+          </PaginationItem>
+          <PaginationItem disabled={currentPage === 1}>
+            <PaginationLink
+              previous
+              onClick={() => setCurrentPage(currentPage - 1)}
+            />
+          </PaginationItem>
 
-            {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
-              .filter((pageNumber) => pageNumber > 1 && pageNumber < totalPages)
-              .map((pageNumber) => (
+          {totalPages <= 5 ? (
+            Array.from({ length: totalPages }, (_, i) => i + 1).map(
+              (pageNumber) => (
                 <PaginationItem
                   key={pageNumber}
                   active={pageNumber === currentPage}
@@ -260,32 +254,62 @@ const ClientListBody: React.FC = () => {
                     {pageNumber}
                   </PaginationLink>
                 </PaginationItem>
-              ))}
-
-            {currentPage < totalPages - 2 && (
-              <PaginationItem disabled>
-                <PaginationLink>...</PaginationLink>
+              )
+            )
+          ) : (
+            <>
+              <PaginationItem active={currentPage === 1}>
+                <PaginationLink onClick={() => setCurrentPage(1)}>
+                  1
+                </PaginationLink>
               </PaginationItem>
-            )}
 
-            <PaginationItem active={currentPage === totalPages}>
-              <PaginationLink onClick={() => setCurrentPage(totalPages)}>
-                {totalPages}
-              </PaginationLink>
-            </PaginationItem>
-          </>
-        )}
+              {currentPage > 3 && (
+                <PaginationItem disabled>
+                  <PaginationLink>...</PaginationLink>
+                </PaginationItem>
+              )}
 
-        <PaginationItem disabled={currentPage === totalPages}>
-          <PaginationLink
-            next
-            onClick={() => setCurrentPage(currentPage + 1)}
-          />
-        </PaginationItem>
-        <PaginationItem disabled={currentPage === totalPages}>
-          <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
-        </PaginationItem>
-      </Pagination>
+              {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
+                .filter(
+                  (pageNumber) => pageNumber > 1 && pageNumber < totalPages
+                )
+                .map((pageNumber) => (
+                  <PaginationItem
+                    key={pageNumber}
+                    active={pageNumber === currentPage}
+                  >
+                    <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
+                      {pageNumber}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+
+              {currentPage < totalPages - 2 && (
+                <PaginationItem disabled>
+                  <PaginationLink>...</PaginationLink>
+                </PaginationItem>
+              )}
+
+              <PaginationItem active={currentPage === totalPages}>
+                <PaginationLink onClick={() => setCurrentPage(totalPages)}>
+                  {totalPages}
+                </PaginationLink>
+              </PaginationItem>
+            </>
+          )}
+
+          <PaginationItem disabled={currentPage === totalPages}>
+            <PaginationLink
+              next
+              onClick={() => setCurrentPage(currentPage + 1)}
+            />
+          </PaginationItem>
+          <PaginationItem disabled={currentPage === totalPages}>
+            <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
+          </PaginationItem>
+        </Pagination>
+      </Row>
 
       {/* modals */}
       <AddClientModal

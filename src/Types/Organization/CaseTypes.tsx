@@ -39,6 +39,11 @@ export interface SingleCaseProps {
   fetchCaseInfo?: any;
   isLoading: boolean;
 }
+export interface CaseSearchProps {
+  fetchCaseInfo?: any;
+  searchQuery?: any;
+  setSearchQuery?: any;
+}
 export interface FileUploadModalProps {
   isOpen: boolean;
   toggle: () => void;
