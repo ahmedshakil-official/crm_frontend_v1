@@ -1,6 +1,6 @@
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
 import apiClient from "@/services/api-client";
-import { CaseInfo, SingleCaseProps } from "@/Types/Organization/CaseTypes";
+import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
@@ -13,7 +13,7 @@ import MeetingHistory from "./components/MeetingHistory";
 import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
 import SingleCaseInfo from "./components/SingleCaseInfo";
 
-const CaseContainer: React.FC<SingleCaseProps & JointUserProps> = () => {
+const CaseContainer: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
   const [isLoading, setIsLoading] = useState(false);
   const [jointUserInfo, setJointUserInfo] = useState<JointUserProps[]>([]);
@@ -64,7 +64,11 @@ const CaseContainer: React.FC<SingleCaseProps & JointUserProps> = () => {
       />
       <Container fluid>
         <Row>
-          <SingleCaseInfo caseInfo={caseInfo} isLoading={isLoading} fetchCaseInfo={fetchCaseInfo}/>
+          <SingleCaseInfo
+            caseInfo={caseInfo}
+            isLoading={isLoading}
+            fetchCaseInfo={fetchCaseInfo}
+          />
         </Row>
         <Row>
           <FileManager />
