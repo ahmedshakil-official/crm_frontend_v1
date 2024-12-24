@@ -1,6 +1,7 @@
 import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Form,
@@ -38,6 +39,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     phone: "",
     relationship: "",
   });
+  const [isUpdating, setisUpdating] = useState(false);
 
   // Populate formData when user changes
   useEffect(() => {
@@ -59,15 +61,19 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
 
   const handleSave = async () => {
     try {
+      setisUpdating(true);
       const result = await apiClient.patch(
-        `/cases/${casealias}/joint/users/${user.alias}/`, // Use the correct endpoint
-        formData // Send formData as the payload for the update
+        `/cases/${casealias}/joint/users/${user.alias}/`,
+        formData
       );
-      console.log("User updated successfully:", result.data);
+      toast.success("User updated successfully!");
       onSave(); // Refresh the user info after update
       toggle(); // Close the modal after save
     } catch (error) {
       console.error("Error updating joint user info:", error);
+      toast.error("Failed to update user information.");
+    } finally {
+      setisUpdating(false);
     }
   };
 
@@ -127,7 +133,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleSave}>
-          Save
+          {isUpdating ? "Updating..." : "Update"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel
