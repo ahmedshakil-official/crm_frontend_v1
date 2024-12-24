@@ -76,8 +76,8 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
   }, [searchQuery]);
 
   return (
-    <div className="container py-3">
-      <Row className="my-3">
+    <div className="container pb-3">
+      <Row className="mb-3">
         <ActivityStatusHeader
           setIsFetchedLead={setIsFetchedLead}
           isFetchedLead={isFetchedLead}
