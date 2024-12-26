@@ -58,7 +58,6 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
@@ -91,7 +90,7 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
   const deleteLead = async (alias: string) => {
     if (!alias) return;
     try {
-      setIsDeleting(true);
+      setIsLoading(true);
       await apiClient.delete(`/director/leads/${alias}/`);
       fetchLeads(); // Refresh the leads after deletion
       toast.success("Lead deleted successfully.");
@@ -99,7 +98,7 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
       console.error("Error deleting lead:", error);
       toast.error("Failed to delete the lead. Please try again.");
     } finally {
-      setIsDeleting(false);
+      setIsLoading(false);
     }
   };
 
@@ -328,7 +327,7 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
           if (leadToDelete) deleteLead(leadToDelete.alias);
           toggleDeleteModal();
         }}
-        isDeleting={isDeleting}
+        isLoading={isLoading}
         leadName={`${leadToDelete?.user?.first_name} ${leadToDelete?.user?.last_name}`}
       />
 

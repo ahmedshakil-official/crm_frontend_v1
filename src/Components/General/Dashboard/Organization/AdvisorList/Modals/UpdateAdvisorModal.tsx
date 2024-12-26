@@ -28,7 +28,11 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
 }) => {
   const [advisorData, setAdvisorData] =
     useState<Partial<AdvisorInfoProps>>(selectedAdvisor);
-  const [isupdating, setIsupdating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Compare current data with the original data
+  const hasChanges =
+    JSON.stringify(advisorData) !== JSON.stringify(selectedAdvisor);
 
   useEffect(() => {
     setAdvisorData(selectedAdvisor);
@@ -53,7 +57,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
     advisorData: Partial<AdvisorInfoProps>
   ) => {
     try {
-      setIsupdating(true);
+      setIsLoading(true);
       if (advisorData.alias) {
         const result = await apiClient.patch(
           `/director/advisors/${advisorData.alias}/`,
@@ -70,7 +74,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
     } catch (error) {
       console.error("Error saving advisor:", error);
     } finally {
-      setIsupdating(false);
+      setIsLoading(false);
     }
   };
 
@@ -78,7 +82,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
     e.preventDefault();
     handleUpdateAdvisor(advisorData); // Pass the updated data to the server
     onSave(advisorData); // Pass the updated data to the parent component
-    toggle(); // Close the modal
+    toggle();
   };
 
   return (
@@ -235,7 +239,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
-                  <option value="">Select Type</option>
+                  <option value="">--Select Type--</option>
                   <option value="LEAD">LEAD</option>
                   <option value="CLIENT">CLIENT</option>
                   <option value="ADVISOR">ADVISOR</option>
@@ -253,7 +257,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
-                  <option value="">Select Type</option>
+                  <option value="">--Select Role--</option>
                   <option value="LEAD">LEAD</option>
                   <option value="CLIENT">CLIENT</option>
                   <option value="ADVISOR">ADVISOR</option>
@@ -336,8 +340,12 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
           </Row>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" color="primary">
-            {isupdating ? "Updating.." : "Update"}
+          <Button
+            type="submit"
+            color="primary"
+            disabled={!hasChanges || isLoading}
+          >
+            {isLoading ? "Saving..." : "Save Changes"}
           </Button>
           <Button type="button" color="secondary" onClick={toggle}>
             Cancel

@@ -29,7 +29,11 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
   setIsFetchedLead,
 }) => {
   const [leadData, setLeadData] = useState<Partial<LeadsInfo>>(selectedLead);
-  const [isupdating, setIsupdating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Compare current data with the original data
+  const hasChanges =
+    JSON.stringify(leadData) !== JSON.stringify(selectedLead);
 
   useEffect(() => {
     setLeadData(selectedLead);
@@ -52,7 +56,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
 
   const handleUpdateLead = async (leadData: Partial<LeadsInfo>) => {
     try {
-      setIsupdating(true);
+      setIsLoading(true);
       if (leadData.alias) {
         const result = await apiClient.put(
           `/director/leads/${leadData.alias}/`,
@@ -69,7 +73,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
     } catch (error) {
       console.error("Error saving lead:", error);
     } finally {
-      setIsupdating(false);
+      setIsLoading(false);
     }
   };
 
@@ -234,7 +238,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
-                  <option value="">Select Type</option>
+                  <option value="">--Select Type--</option>
                   <option value="LEAD">LEAD</option>
                   <option value="CLIENT">CLIENT</option>
                   <option value="ADVISOR">ADVISOR</option>
@@ -252,7 +256,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
-                  <option value="">Select Type</option>
+                  <option value="">--Select Role--</option>
                   <option value="LEAD">LEAD</option>
                   <option value="CLIENT">CLIENT</option>
                   <option value="ADVISOR">ADVISOR</option>
@@ -335,8 +339,8 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
           </Row>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" color="primary">
-            {isupdating ? "Updating.." : "Update"}
+          <Button type="submit" color="primary" disabled={!hasChanges || isLoading}>
+            {isLoading ? "Saving..." : "Save Changes"}
           </Button>
           <Button type="button" color="secondary" onClick={toggle}>
             Cancel

@@ -7,7 +7,7 @@ const DeleteIntroducerModal: React.FC<DeleteIntroducerModalProps> = ({
   toggle,
   onDelete,
   introducerName,
-  isDeleting,
+  isLoading,
 }) => {
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
@@ -18,7 +18,7 @@ const DeleteIntroducerModal: React.FC<DeleteIntroducerModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={onDelete}>
-          {isDeleting ? "Deleting..." : "Delete"}
+          {isLoading ? "Deleting..." : "Delete"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

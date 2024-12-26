@@ -62,7 +62,6 @@ const AdvisorListBody: React.FC = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [advisorToDelete, setAdvisorToDelete] =
     useState<AdvisorInfoProps | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
@@ -95,7 +94,7 @@ const AdvisorListBody: React.FC = () => {
   const deleteAdvisor = async (alias: string) => {
     if (!alias) return;
     try {
-      setIsDeleting(true);
+      setIsLoading(true);
       await apiClient.delete(`/director/advisors/${alias}/`);
       fetchAdvisors();
       toast.success("Advisor deleted successfully.");
@@ -103,7 +102,7 @@ const AdvisorListBody: React.FC = () => {
       console.error("Error deleting advisor", error);
       toast.error("Failed to delete the advisor. Please try again.");
     } finally {
-      setIsDeleting(false);
+      setIsLoading(false);
     }
   };
 
@@ -334,7 +333,7 @@ const AdvisorListBody: React.FC = () => {
           if (advisorToDelete) deleteAdvisor(advisorToDelete.alias);
           toggleDeleteModal();
         }}
-        isDeleting={isDeleting}
+        isLoading={isLoading}
         advisorName={`${advisorToDelete?.user?.first_name} ${advisorToDelete?.user?.last_name}`}
       />
       {/* modals end */}

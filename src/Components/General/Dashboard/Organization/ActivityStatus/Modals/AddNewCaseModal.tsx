@@ -78,8 +78,8 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true); // Start loading
     try {
+      setIsLoading(true);
       const result = await apiClient.post("/cases/", formData);
       if (result.status >= 200 && result.status < 300) {
         toast.success("Case added successfully!");
@@ -91,21 +91,15 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
           case_stage: "",
           notes: "",
         });
-        onSave(); // Notify parent to refresh data
-        toggle(); // Close modal
+        onSave();
+        toggle();
       } else {
         toast.error("Invalid Request...");
       }
-    } catch (error: any) {
-      if (error.response) {
-        console.error("Backend Error:", error.response.data);
-      } else if (error.request) {
-        console.error("No response from server:", error.request);
-      } else {
-        console.error("Error during request setup:", error.message);
-      }
+    } catch (error) {
+      console.error("Error during request setup:", error);
     } finally {
-      setIsLoading(false); // End loading
+      setIsLoading(false);
     }
   };
 
@@ -126,7 +120,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
               value={formData.lead}
               onChange={handleChange}
             >
-              <option value="">Select Lead</option>
+              <option value="">--Select Lead--</option>
               {leads.map((lead) => (
                 <option key={lead.user.id} value={lead.user.id}>
                   {`${lead.user?.first_name} ${lead.user?.last_name}`}
@@ -146,7 +140,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
               value={formData.case_category}
               onChange={handleChange}
             >
-              <option value="">Select Category</option>
+              <option value="">--Select Category--</option>
               <option value="MORTGAGE">Mortgage</option>
               <option value="PROTECTION">Protection</option>
               <option value="GENERAL_INSURANCE">General Insurance</option>
@@ -164,7 +158,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
               value={formData.applicant_type}
               onChange={handleChange}
             >
-              <option value="">Applicant Type</option>
+              <option value="">--Applicant Type--</option>
               <option value="SINGLE">Single</option>
               <option value="JOINT">Joint</option>
             </Input>
@@ -181,7 +175,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
               value={formData.case_status}
               onChange={handleChange}
             >
-              <option value="">Case Status</option>
+              <option value="">--Case Status--</option>
               <option value="NEW_LEAD">New Lead</option>
               <option value="CALL_BACK">Call Back</option>
               <option value="MEETING">Meeting</option>
@@ -199,7 +193,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
               value={formData.case_stage}
               onChange={handleChange}
             >
-              <option value="">Case Stage</option>
+              <option value="">--Case Stage--</option>
               <option value="INQUIRY">Inquiry</option>
               <option value="FACT_FIND">Fact Find</option>
               <option value="RESEARCH_COMPLIANCE_CHECK">
@@ -231,18 +225,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
         </ModalBody>
         <ModalFooter>
           <Button type="submit" color="primary" disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <span
-                  className="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>{" "}
-                Saving...
-              </>
-            ) : (
-              "Save"
-            )}
+            {isLoading ? "Saving..." : "Save"}
           </Button>
           <Button
             type="button"

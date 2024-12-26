@@ -45,5 +45,5 @@ export interface DeleteClientModalProps {
   toggle: () => void;
   onDelete: () => void;
   clientName: string;
-  isDeleting?: any;
+  isLoading?: any;
 }

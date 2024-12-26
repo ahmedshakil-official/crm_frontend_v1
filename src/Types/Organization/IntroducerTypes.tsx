@@ -45,5 +45,5 @@ export interface DeleteIntroducerModalProps {
   toggle: () => void;
   onDelete: () => void;
   introducerName: string;
-  isDeleting?: any;
+  isLoading?: any;
 }

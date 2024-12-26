@@ -16,13 +16,12 @@ import {
   Row,
 } from "reactstrap";
 
-
-
 const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
   isOpen,
   toggle,
   onSave,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -77,11 +76,10 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
     };
 
     try {
+      setIsLoading(true);
       const result = await apiClient.post("/director/introducers/", payload);
-
       if (result.status >= 200 && result.status < 300) {
         toast.success("Introducer added successfully.");
-
         // Reset form and close modal
         setFormData({
           firstName: "",
@@ -106,6 +104,8 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Error creating introducer:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -179,7 +179,7 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
                   onChange={handleInputChange}
                   required
                 >
-                  <option value="">Select Gender</option>
+                  <option value="">--Select Gender--</option>
                   <option value="MALE">MALE</option>
                   <option value="FEMALE">FEMALE</option>
                   <option value="OTHER">OTHER</option>
@@ -279,7 +279,7 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleSaveIntroducer}>
-          Save
+          {isLoading ? "Saving..." : "Save"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

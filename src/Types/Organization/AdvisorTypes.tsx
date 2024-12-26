@@ -46,5 +46,5 @@ export interface DeleteAdvisorModalProps {
   toggle: () => void;
   onDelete: () => void;
   advisorName: string;
-  isDeleting?: any;
+  isLoading?: any;
 }

@@ -23,7 +23,8 @@ export interface UpdateJointUserModalProps {
   isOpen: boolean;
   toggle: () => void;
   onSave: () => void;
-  alias?: any;
+  // alias?: any;
+  user: any;
 }
 export interface JointUserDeleteModalProps {
   isOpen: boolean;

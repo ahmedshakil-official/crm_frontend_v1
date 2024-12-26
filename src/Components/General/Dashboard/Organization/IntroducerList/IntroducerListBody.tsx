@@ -61,8 +61,6 @@ const IntroducerListBody: React.FC = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [introducerToDelete, setIntroducerToDelete] =
     useState<IntroducerInfoProps | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
-
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
   const openDeleteModal = (introducer: IntroducerInfoProps) => {
@@ -94,7 +92,7 @@ const IntroducerListBody: React.FC = () => {
   const deleteIntoducer = async (alias: string) => {
     if (!alias) return;
     try {
-      setIsDeleting(true);
+      setIsLoading(true);
       await apiClient.delete(`/director/introducers/${alias}/`);
       fetchIntroducers();
       toast.success("Introducer deleted successfully.");
@@ -102,7 +100,7 @@ const IntroducerListBody: React.FC = () => {
       console.error("Error deleting introducer:", error);
       toast.error("Failed to delete the introducer. Please try again.");
     } finally {
-      setIsDeleting(false);
+      setIsLoading(false);
     }
   };
 
@@ -335,7 +333,7 @@ const IntroducerListBody: React.FC = () => {
           if (introducerToDelete) deleteIntoducer(introducerToDelete.alias);
           toggleDeleteModal();
         }}
-        isDeleting={isDeleting}
+        isLoading={isLoading}
         introducerName={`${introducerToDelete?.user?.first_name} ${introducerToDelete?.user?.last_name}`}
       />
       {/* modals end */}

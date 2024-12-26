@@ -1,4 +1,6 @@
 import apiClient from "@/services/api-client";
+import { UpdateJointUserModalProps } from "@/Types/Organization/JointUserTypes";
+import { isEqual } from "lodash";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -14,19 +16,10 @@ import {
   ModalHeader,
 } from "reactstrap";
 
-interface UpdateJointUserModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  user: any;
-  alias?: string;
-  onSave: () => void;
-}
-
 const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
   isOpen,
   toggle,
   user,
-  alias,
   onSave,
 }) => {
   const params = useParams();
@@ -39,7 +32,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     phone: "",
     relationship: "",
   });
-  const [isUpdating, setisUpdating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Populate formData when user changes
   useEffect(() => {
@@ -61,8 +54,8 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
 
   const handleSave = async () => {
     try {
-      setisUpdating(true);
-      const result = await apiClient.patch(
+      setIsLoading(true);
+      await apiClient.patch(
         `/cases/${casealias}/joint/users/${user.alias}/`,
         formData
       );
@@ -73,9 +66,18 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
       console.error("Error updating joint user info:", error);
       toast.error("Failed to update user information.");
     } finally {
-      setisUpdating(false);
+      setIsLoading(false);
     }
   };
+
+  // Compare current data with the original data
+  const hasChanges = !isEqual(formData, {
+    first_name: user?.joint_user_details?.first_name || "",
+    last_name: user?.joint_user_details?.last_name || "",
+    email: user?.joint_user_details?.email || "",
+    phone: user?.joint_user_details?.phone || "",
+    relationship: user?.relationship || "",
+  });
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
@@ -132,8 +134,12 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={handleSave}>
-          {isUpdating ? "Updating..." : "Update"}
+        <Button
+          color="primary"
+          onClick={handleSave}
+          disabled={!hasChanges || isLoading}
+        >
+          {isLoading ? "Saving..." : "Save Changes"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel
