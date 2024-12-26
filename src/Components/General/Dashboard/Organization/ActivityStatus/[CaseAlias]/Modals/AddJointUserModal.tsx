@@ -21,6 +21,7 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
   onSave,
 }) => {
   const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [isSaving, setisSaving] = useState(false);
   const params = useParams();
   const { casealias } = params;
 
@@ -70,6 +71,7 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
     };
 
     try {
+      setisSaving(true);
       // Make the API request
       const response = await apiClient.post(
         `/cases/${casealias}/joint/users/`,
@@ -83,6 +85,8 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
     } catch (error) {
       console.error("Error adding joint user:", error);
       toast.error("Failed to add joint user.");
+    } finally {
+      setisSaving(false);
     }
   };
 
@@ -212,7 +216,7 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleSubmit}>
-          Save
+          {isSaving ? "Saving..." : "Save"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

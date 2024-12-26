@@ -3,6 +3,7 @@ import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Button, Row, Table } from "reactstrap";
 import ActivityStatusHeader from "./ActivityStatusHeader";
 import DeleteCaseModal from "./Modals/DeleteCaseModal";
@@ -34,8 +35,10 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
       // Refresh case list after deletion
       fetchCaseInfo();
       toggleDeleteCaseModal();
+      toast.success("Case deleted successfully.");
     } catch (error) {
       console.error("Error deleting case:", error);
+      toast.error("Failed to delete the case. Please try again.");
     } finally {
       setIsDeleting(false);
     }

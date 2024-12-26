@@ -22,6 +22,7 @@ import {
 } from "reactstrap";
 
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
+import { toast } from "react-toastify";
 import "../../ActivityStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 import DeleteCaseModal from "../../Modals/DeleteCaseModal";
@@ -87,11 +88,13 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
     setIsDeleting(true);
     try {
       await apiClient.delete(`/cases/${caseAlias}/`);
+      toast.success("Case deleted successfully.");
       // Refresh case list after deletion
       fetchCaseInfo();
       toggleDeleteCaseModal();
     } catch (error) {
       console.error("Error deleting case:", error);
+      toast.error("Failed to delete case. Please try again.");
     } finally {
       setIsDeleting(false);
     }

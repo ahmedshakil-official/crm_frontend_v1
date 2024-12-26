@@ -20,6 +20,7 @@ import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
+import { toast } from "react-toastify";
 
 const ClientListBody: React.FC = () => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
@@ -94,13 +95,14 @@ const ClientListBody: React.FC = () => {
   //delete fanctionality
   const deleteClient = async (alias: string) => {
     if (!alias) return;
-
     try {
       setIsDeleting(true);
       await apiClient.delete(`/director/clients/${alias}/`);
       fetchClients();
+      toast.success("Client deleted successfully.");
     } catch (error) {
-      console.error("Error deleting Client:", error);
+      console.error("Error deleting client:", error);
+      toast.error("Failed to delete the client. Please try again.");
     } finally {
       setIsDeleting(false);
     }
