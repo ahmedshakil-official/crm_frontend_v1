@@ -40,6 +40,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(10);
+  const [filterIcon, setFilterIcon] = useState(false);
 
   // State for Delete Modal
   const [isDeleteCaseModalOpen, setIsDeleteCaseModalOpen] = useState(false);
@@ -55,6 +56,9 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
     is_removed: "",
   };
   const [filters, setFilters] = useState(defaultFilters);
+
+  //filter icon toggle
+  const toggleFilterIcon = () => setFilterIcon(!filterIcon);
 
   const toggleUpdateCaseModal = () =>
     setIsUpdateCaseModalOpen(!isUpdateCaseModalOpen);
@@ -204,129 +208,141 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
             </InputGroup>
           </Col>
           <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
+            <Button onClick={toggleFilterIcon} className="me-2">
+              {filterIcon ? (
+                <i className="fa-solid fa-filter-circle-xmark"></i>
+              ) : (
+                <i className="fa-solid fa-filter"></i>
+              )}
+            </Button>
             <Button color="primary" onClick={openAddNewCaseModal}>
               Add New Case
             </Button>
           </Col>
         </Row>
       </CardHeader>
-      <CardBody className="p-0 m-0 mt-3">
-        {/* Filter Options */}
-        <Card className="shadow-lg rounded-1 p-3">
-          <Row className="justify-content-center text-center g-3">
-            {/* Employee Filter */}
-            <Col xs="12" sm="6" md="4" lg="2">
-              <Input
-                type="select"
-                id="employeeFilter"
-                className="py-1"
-                onChange={(e) =>
-                  handleFilterChange("created_by", e.target.value)
-                }
-              >
-                <option value="">Select Employee</option>
-                {advisors &&
-                  advisors.map((advisor) => (
-                    <option key={advisor.alias} value={advisor.user.id}>
-                      {advisor.user.first_name} {advisor.user.last_name}
-                    </option>
-                  ))}
-              </Input>
-            </Col>
 
-            {/* Case Category Filter */}
-            <Col xs="12" sm="6" md="4" lg="2">
-              <Input
-                type="select"
-                id="caseCategory"
-                className="py-1"
-                onChange={(e) =>
-                  handleFilterChange("case_category", e.target.value)
-                }
-              >
-                <option value="">Select Categories</option>
-                <option value="MORTGAGE">Mortgage</option>
-                <option value="PROTECTION">Protection</option>
-                <option value="GENERAL_INSURANCE">General Insurance</option>
-              </Input>
-            </Col>
-
-            {/* Application Type Filter */}
-            <Col xs="12" sm="6" md="4" lg="2">
-              <Input
-                type="select"
-                id="applicationType"
-                className="py-1"
-                onChange={(e) =>
-                  handleFilterChange("applicant_type", e.target.value)
-                }
-              >
-                <option value="">Select Types</option>
-                <option value="SINGLE">Single</option>
-                <option value="JOINT">Joint</option>
-              </Input>
-            </Col>
-
-            {/* Case Status Filter */}
-            <Col xs="12" sm="6" md="4" lg="2">
-              <Input
-                type="select"
-                id="caseStatus"
-                className="py-1"
-                onChange={(e) =>
-                  handleFilterChange("case_status", e.target.value)
-                }
-              >
-                <option value="">Select Status</option>
-                <option value="NEW_LEAD">New Lead</option>
-                <option value="CALL_BACK">Call Back</option>
-                <option value="MEETING">Meeting</option>
-              </Input>
-            </Col>
-
-            {/* Case Stage Filter */}
-            <Col xs="12" sm="6" md="4" lg="2">
-              <Input
-                type="select"
-                id="caseStage"
-                className="py-1"
-                onChange={(e) =>
-                  handleFilterChange("case_stage", e.target.value)
-                }
-              >
-                <option value="">Select Stages</option>
-                <option value="INQUIRY">Inquiry</option>
-                <option value="FACT_FIND">Fact Find</option>
-                <option value="RESEARCH_COMPLIANCE_CHECK">
-                  Research and Compliance Check
-                </option>
-                <option value="DECISION_IN_PRINCIPLE">
-                  Decision in Principle
-                </option>
-                <option value="FULL_MORTGAGE_APPLICATION">
-                  Full Mortgage Application
-                </option>
-                <option value="OFFER_FROM_BANK">Offer From Bank</option>
-                <option value="LEGAL">Legal</option>
-                <option value="COMPLETION">Completion</option>
-                <option value="FUTURE_OPPORTUNITY">Future Opportunity</option>
-                <option value="NOT_PROCEED">Not Proceed</option>
-              </Input>
-            </Col>
-            {/* Clear All Filters Button */}
-            <Col xs="12" sm="6" md="4" lg="2">
-              <Button
-                className="btn btn-secondary w-100"
-                onClick={clearFilters}
-              >
-                Clear All Filters
-              </Button>
-            </Col>
-          </Row>
-        </Card>
-      </CardBody>
       {/* Card Body */}
       <CardBody className="p-0 m-0">
+        <Row className="p-0 m-0 mt-3">
+          {/* Filter Options */}
+          {filterIcon && (
+            <Card className="shadow-lg rounded-1 p-3">
+              <Row className="justify-content-center text-center g-3">
+                {/* Employee Filter */}
+                <Col xs="12" sm="6" md="4" lg="2">
+                  <Input
+                    type="select"
+                    id="employeeFilter"
+                    className="py-1"
+                    onChange={(e) =>
+                      handleFilterChange("created_by", e.target.value)
+                    }
+                  >
+                    <option value="">Select Employee</option>
+                    {advisors &&
+                      advisors.map((advisor) => (
+                        <option key={advisor.alias} value={advisor.user.id}>
+                          {advisor.user.first_name} {advisor.user.last_name}
+                        </option>
+                      ))}
+                  </Input>
+                </Col>
+
+                {/* Case Category Filter */}
+                <Col xs="12" sm="6" md="4" lg="2">
+                  <Input
+                    type="select"
+                    id="caseCategory"
+                    className="py-1"
+                    onChange={(e) =>
+                      handleFilterChange("case_category", e.target.value)
+                    }
+                  >
+                    <option value="">Select Categories</option>
+                    <option value="MORTGAGE">Mortgage</option>
+                    <option value="PROTECTION">Protection</option>
+                    <option value="GENERAL_INSURANCE">General Insurance</option>
+                  </Input>
+                </Col>
+
+                {/* Application Type Filter */}
+                <Col xs="12" sm="6" md="4" lg="2">
+                  <Input
+                    type="select"
+                    id="applicationType"
+                    className="py-1"
+                    onChange={(e) =>
+                      handleFilterChange("applicant_type", e.target.value)
+                    }
+                  >
+                    <option value="">Select Types</option>
+                    <option value="SINGLE">Single</option>
+                    <option value="JOINT">Joint</option>
+                  </Input>
+                </Col>
+
+                {/* Case Status Filter */}
+                <Col xs="12" sm="6" md="4" lg="2">
+                  <Input
+                    type="select"
+                    id="caseStatus"
+                    className="py-1"
+                    onChange={(e) =>
+                      handleFilterChange("case_status", e.target.value)
+                    }
+                  >
+                    <option value="">Select Status</option>
+                    <option value="NEW_LEAD">New Lead</option>
+                    <option value="CALL_BACK">Call Back</option>
+                    <option value="MEETING">Meeting</option>
+                  </Input>
+                </Col>
+
+                {/* Case Stage Filter */}
+                <Col xs="12" sm="6" md="4" lg="2">
+                  <Input
+                    type="select"
+                    id="caseStage"
+                    className="py-1"
+                    onChange={(e) =>
+                      handleFilterChange("case_stage", e.target.value)
+                    }
+                  >
+                    <option value="">Select Stages</option>
+                    <option value="INQUIRY">Inquiry</option>
+                    <option value="FACT_FIND">Fact Find</option>
+                    <option value="RESEARCH_COMPLIANCE_CHECK">
+                      Research and Compliance Check
+                    </option>
+                    <option value="DECISION_IN_PRINCIPLE">
+                      Decision in Principle
+                    </option>
+                    <option value="FULL_MORTGAGE_APPLICATION">
+                      Full Mortgage Application
+                    </option>
+                    <option value="OFFER_FROM_BANK">Offer From Bank</option>
+                    <option value="LEGAL">Legal</option>
+                    <option value="COMPLETION">Completion</option>
+                    <option value="FUTURE_OPPORTUNITY">
+                      Future Opportunity
+                    </option>
+                    <option value="NOT_PROCEED">Not Proceed</option>
+                  </Input>
+                </Col>
+                {/* Clear All Filters Button */}
+                <Col xs="12" sm="6" md="4" lg="2">
+                  <Button
+                    className="btn btn-secondary w-100"
+                    onClick={clearFilters}
+                  >
+                    Clear All Filters
+                  </Button>
+                </Col>
+              </Row>
+            </Card>
+          )}
+        </Row>
         <Row>
           <Table bordered hover responsive>
             <thead className="thead-light text-center">
