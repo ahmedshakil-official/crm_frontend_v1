@@ -19,6 +19,7 @@ import "./LeadList.css";
 import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
+import { toast } from "react-toastify";
 
 const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
@@ -89,13 +90,14 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
   //delete lead
   const deleteLead = async (alias: string) => {
     if (!alias) return;
-
     try {
       setIsDeleting(true);
       await apiClient.delete(`/director/leads/${alias}/`);
       fetchLeads(); // Refresh the leads after deletion
+      toast.success("Lead deleted successfully.");
     } catch (error) {
-      console.error("Error deleting Lead:", error);
+      console.error("Error deleting lead:", error);
+      toast.error("Failed to delete the lead. Please try again.");
     } finally {
       setIsDeleting(false);
     }

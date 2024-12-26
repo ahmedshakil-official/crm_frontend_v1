@@ -5,6 +5,7 @@ import {
 } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -49,24 +50,26 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
     }
   };
 
+  useEffect(() => {
+    fetchCaseFiles();
+  }, []);
+
   const deleteFile = async (alias: string) => {
     setIsDeleting(true);
     setIsLoading(true);
     try {
       await apiClient.delete(`/cases/${casealias}/files/${alias}/`);
       fetchCaseFiles();
+      toast.success("File deleted successfully.");
     } catch (error) {
       console.error("Error Deleting File", error);
+      toast.error("Failed to delete the file. Please try again.");
     } finally {
       setIsLoading(false);
       setIsDeleting(false);
       toggleDeleteModal();
     }
   };
-
-  useEffect(() => {
-    fetchCaseFiles();
-  }, []);
 
   //filter icon toggle
   const toggleFilterIcon = () => setFilterIcon(!filterIcon);

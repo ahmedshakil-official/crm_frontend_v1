@@ -14,6 +14,7 @@ import {
 import AddJointUserModal from "../Modals/AddJointUserModal";
 import JointUserDeleteModal from "../Modals/JointUserDeleteModal"; // Import the delete modal
 import UpdateJointUserModal from "../Modals/UpdateJointUserModal";
+import { toast } from "react-toastify";
 
 const JointUsers: React.FC<JointUserProps> = ({
   jointUserInfo,
@@ -51,8 +52,10 @@ const JointUsers: React.FC<JointUserProps> = ({
       );
       toggleDeleteModal();
       fetchJointUserInfo(); // Refresh the joint user list
+      toast.success("User deleted successfully.");
     } catch (error) {
       console.error("Error deleting joint user:", error);
+      toast.error("Failed to delete the user. Please try again.");
     } finally {
       setIsDeleting(false);
     }

@@ -19,6 +19,7 @@ import "./AdvisorList.css";
 import AddAdvisorModal from "./Modals/AddAdvisorModal";
 import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
 import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
+import { toast } from "react-toastify";
 
 const AdvisorListBody: React.FC = () => {
   const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
@@ -97,8 +98,10 @@ const AdvisorListBody: React.FC = () => {
       setIsDeleting(true);
       await apiClient.delete(`/director/advisors/${alias}/`);
       fetchAdvisors();
+      toast.success("Advisor deleted successfully.");
     } catch (error) {
-      console.error("Error deleting Advisor", error);
+      console.error("Error deleting advisor", error);
+      toast.error("Failed to delete the advisor. Please try again.");
     } finally {
       setIsDeleting(false);
     }

@@ -13,7 +13,7 @@ const FileDeleteModal: React.FC<FileDeleteModalProps> = ({
     <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>Confirm Delete</ModalHeader>
       <ModalBody>
-        Are you sure you want to delete the file <strong>{file.name}</strong>?
+        Are you sure you want to delete the file <strong>{file?.name}</strong>?
       </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={onDelete} disabled={isDeleting}>

@@ -19,6 +19,7 @@ import "./IntroducerList.css";
 import AddIntroducerModal from "./Modals/AddIntroducerModal";
 import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
 import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
+import { toast } from "react-toastify";
 
 const IntroducerListBody: React.FC = () => {
   const [introducers, setIntroducers] = useState<IntroducerInfoProps[]>([]);
@@ -92,13 +93,14 @@ const IntroducerListBody: React.FC = () => {
   //delete introduce
   const deleteIntoducer = async (alias: string) => {
     if (!alias) return;
-
     try {
       setIsDeleting(true);
       await apiClient.delete(`/director/introducers/${alias}/`);
       fetchIntroducers();
+      toast.success("Introducer deleted successfully.");
     } catch (error) {
-      console.error("Error deleting Lead:", error);
+      console.error("Error deleting introducer:", error);
+      toast.error("Failed to delete the introducer. Please try again.");
     } finally {
       setIsDeleting(false);
     }

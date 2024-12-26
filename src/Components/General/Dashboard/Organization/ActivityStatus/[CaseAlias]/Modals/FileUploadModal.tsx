@@ -24,6 +24,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   onSave,
 }) => {
   const [files, setFiles] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const params = useParams();
   const { casealias } = params;
 
@@ -68,7 +69,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   };
 
   const handleUpload = async () => {
-    if (!files || !formData.fileName) {
+    if (!files) {
       toast.error("Please fill in all required fields.");
       return;
     }
@@ -83,11 +84,10 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     };
 
     try {
-      const response = await apiClient.post(
-        `/cases/${casealias}/files/`,
-        payload,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      setIsUploading(true);
+      await apiClient.post(`/cases/${casealias}/files/`, payload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       toast.success("File uploaded successfully!");
       onSave(); // Callback to refresh data
@@ -95,6 +95,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     } catch (error) {
       console.error("Error uploading file:", error);
       toast.error("Failed to upload file.");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -105,7 +107,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
         <Form>
           <FormGroup>
             <Label for="fileUpload" className="form-label">
-              Select Files
+              Select Files<span className="text-danger">*</span>
             </Label>
             <Input
               type="file"
@@ -117,7 +119,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
           <FormGroup>
             <Label for="fileType" className="form-label">
-              Select File Type
+              Select File Type<span className="text-danger">*</span>
             </Label>
             <Input
               type="select"
@@ -159,7 +161,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
           <FormGroup>
             <Label for="fileOwner" className="form-label">
-              File Owner
+              File Owner<span className="text-danger">*</span>
             </Label>
             <Input
               type="select"
@@ -239,7 +241,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleUpload}>
-          Upload
+          {isUploading ? "Uploading..." : "Upload"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel
