@@ -23,6 +23,9 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
   const [formData, setFormData] = useState<CaseInfo>(caseData);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Compare current data with the original data
+  const hasChanges = JSON.stringify(formData) !== JSON.stringify(caseData);
+
   useEffect(() => {
     setFormData(caseData);
   }, [caseData]);
@@ -135,7 +138,11 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={handleSubmit}>
+        <Button
+          color="primary"
+          onClick={handleSubmit}
+          disabled={!hasChanges || isLoading}
+        >
           {isLoading ? "Saving..." : "Save Changes"}
         </Button>
         <Button color="secondary" onClick={toggle}>
