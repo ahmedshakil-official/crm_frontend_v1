@@ -21,6 +21,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
   toggle,
   onSave,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -47,7 +48,12 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
 
   const handleSaveAdvisor = async () => {
     // Validate required fields
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.password
+    ) {
       toast.error("Please fill in all required fields.");
       return;
     }
@@ -71,10 +77,10 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     };
 
     try {
+      setIsLoading(true);
       const result = await apiClient.post("/director/advisors/", payload);
       if (result.status >= 200 && result.status < 300) {
         toast.success("Advisor added successfully.");
-
         // Reset form and close modal
         setFormData({
           firstName: "",
@@ -99,6 +105,8 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Error adding advisor:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -171,7 +179,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                   onChange={handleInputChange}
                   required
                 >
-                  <option value="">Select Gender</option>
+                  <option value="">--Select Gender--</option>
                   <option value="MALE">MALE</option>
                   <option value="FEMALE">FEMALE</option>
                   <option value="OTHER">OTHER</option>
@@ -270,7 +278,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleSaveAdvisor}>
-          Save
+          {isLoading ? "Saving..." : "Save"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

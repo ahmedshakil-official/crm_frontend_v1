@@ -28,7 +28,11 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
 }) => {
   const [introducerData, setIntroducerData] =
     useState<Partial<IntroducerInfoProps>>(selectedIntroducer);
-  const [isupdating, setIsupdating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Compare current data with the original data
+  const hasChanges =
+    JSON.stringify(introducerData) !== JSON.stringify(selectedIntroducer);
 
   useEffect(() => {
     setIntroducerData(selectedIntroducer);
@@ -53,7 +57,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
     introducerData: Partial<IntroducerInfoProps>
   ) => {
     try {
-      setIsupdating(true);
+      setIsLoading(true);
       if (introducerData.alias) {
         const result = await apiClient.put(
           `/director/introducers/${introducerData.alias}/`,
@@ -69,7 +73,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
     } catch (error) {
       console.error("Error saving introducer:", error);
     } finally {
-      setIsupdating(false);
+      setIsLoading(false);
     }
   };
 
@@ -234,7 +238,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
-                  <option value="">Select Type</option>
+                  <option value="">--Select Type--</option>
                   <option value="LEAD">LEAD</option>
                   <option value="CLIENT">CLIENT</option>
                   <option value="ADVISOR">ADVISOR</option>
@@ -252,7 +256,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
-                  <option value="">Select Type</option>
+                  <option value="">--Select Role--</option>
                   <option value="LEAD">LEAD</option>
                   <option value="CLIENT">CLIENT</option>
                   <option value="ADVISOR">ADVISOR</option>
@@ -335,8 +339,12 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
           </Row>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" color="primary">
-            {isupdating ? "Updating.." : "Update"}
+          <Button
+            type="submit"
+            color="primary"
+            disabled={!hasChanges || isLoading}
+          >
+            {isLoading ? "Saving..." : "Save Changes"}
           </Button>
           <Button type="button" color="secondary" onClick={toggle}>
             Cancel

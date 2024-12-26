@@ -1,6 +1,7 @@
 import apiClient from "@/services/api-client";
 import { CaseInfo, UpdateCaseModalProps } from "@/Types/Organization/CaseTypes";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Form,
@@ -20,6 +21,7 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
   onSave,
 }) => {
   const [formData, setFormData] = useState<CaseInfo>(caseData);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setFormData(caseData);
@@ -37,11 +39,16 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
 
   const handleSubmit = async () => {
     try {
+      setIsLoading(true);
       await apiClient.put(`/cases/${caseData.alias}/`, formData);
       onSave();
       toggle();
+      toast.success("Case update successfully.");
     } catch (error) {
       console.error("Error updating case:", error);
+      toast.error("Failed to update the case. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,7 +66,7 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
               value={formData?.case_category}
               onChange={handleInputChange}
             >
-              <option value="">Select Category</option>
+              <option value="">--Select Category--</option>
               <option value="MORTGAGE">Mortgage</option>
               <option value="PROTECTION">Protection</option>
               <option value="GENERAL_INSURANCE">General Insurance</option>
@@ -75,7 +82,7 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
               value={formData?.applicant_type}
               onChange={handleInputChange}
             >
-              <option value="">Select Type</option>
+              <option value="">--Select Type--</option>
               <option value="SINGLE">Single</option>
               <option value="JOINT">Joint</option>
             </Input>
@@ -90,7 +97,7 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
               value={formData?.case_status}
               onChange={handleInputChange}
             >
-              <option value="">Select Status</option>
+              <option value="">--Select Status--</option>
               <option value="NEW_LEAD">New Lead</option>
               <option value="CALL_BACK">Call Back</option>
               <option value="MEETING">Meeting</option>
@@ -106,7 +113,7 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
               value={formData?.case_stage}
               onChange={handleInputChange}
             >
-              <option value="">Select Stage</option>
+              <option value="">--Select Stage--</option>
               <option value="INQUIRY">Inquiry</option>
               <option value="FACT_FIND">Fact Find</option>
               <option value="RESEARCH_COMPLIANCE_CHECK">
@@ -129,7 +136,7 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleSubmit}>
-          Save Changes
+          {isLoading ? "Saving..." : "Save Changes"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

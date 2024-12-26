@@ -28,7 +28,11 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
 }) => {
   const [clientData, setClientData] =
     useState<Partial<ClientInfoProps>>(selectedClient);
-  const [isupdating, setIsupdating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Compare current data with the original data
+  const hasChanges =
+    JSON.stringify(clientData) !== JSON.stringify(selectedClient);
 
   useEffect(() => {
     setClientData(selectedClient);
@@ -51,7 +55,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
 
   const handleUpdateClient = async (clientData: Partial<ClientInfoProps>) => {
     try {
-      setIsupdating(true);
+      setIsLoading(true);
       if (clientData.alias) {
         const result = await apiClient.put(
           `/director/clients/${clientData.alias}/`,
@@ -67,7 +71,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
     } catch (error) {
       console.error("Error saving client:", error);
     } finally {
-      setIsupdating(false);
+      setIsLoading(false);
     }
   };
 
@@ -232,7 +236,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
-                  <option value="">Select Type</option>
+                  <option value="">--Select Type--</option>
                   <option value="LEAD">LEAD</option>
                   <option value="CLIENT">CLIENT</option>
                   <option value="ADVISOR">ADVISOR</option>
@@ -250,7 +254,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                   onChange={handleChange}
                   className="mb-2 pointer-event"
                 >
-                  <option value="">Select Type</option>
+                  <option value="">--Select Role--</option>
                   <option value="LEAD">LEAD</option>
                   <option value="CLIENT">CLIENT</option>
                   <option value="ADVISOR">ADVISOR</option>
@@ -333,8 +337,12 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
           </Row>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" color="primary">
-            {isupdating ? "Updating.." : "Update"}
+          <Button
+            type="submit"
+            color="primary"
+            disabled={!hasChanges || isLoading}
+          >
+            {isLoading ? "Saving..." : "Save Changes"}
           </Button>
           <Button type="button" color="secondary" onClick={toggle}>
             Cancel

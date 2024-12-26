@@ -39,7 +39,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     phone: "",
     relationship: "",
   });
-  const [isUpdating, setisUpdating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Populate formData when user changes
   useEffect(() => {
@@ -61,7 +61,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
 
   const handleSave = async () => {
     try {
-      setisUpdating(true);
+      setIsLoading(true);
       const result = await apiClient.patch(
         `/cases/${casealias}/joint/users/${user.alias}/`,
         formData
@@ -73,7 +73,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
       console.error("Error updating joint user info:", error);
       toast.error("Failed to update user information.");
     } finally {
-      setisUpdating(false);
+      setIsLoading(false);
     }
   };
 
@@ -133,7 +133,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleSave}>
-          {isUpdating ? "Updating..." : "Update"}
+          {isLoading ? "Saving..." : "Save Changes"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

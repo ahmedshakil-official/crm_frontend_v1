@@ -7,7 +7,7 @@ const DeleteAdvisorModal: React.FC<DeleteAdvisorModalProps> = ({
   toggle,
   onDelete,
   advisorName,
-  isDeleting,
+  isLoading,
 }) => {
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
@@ -18,7 +18,7 @@ const DeleteAdvisorModal: React.FC<DeleteAdvisorModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={onDelete}>
-          {isDeleting ? "Deleting..." : "Delete"}
+          {isLoading ? "Deleting..." : "Delete"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

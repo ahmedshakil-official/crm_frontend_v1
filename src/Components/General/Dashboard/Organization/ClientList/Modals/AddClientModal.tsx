@@ -16,13 +16,12 @@ import {
   Row,
 } from "reactstrap";
 
-
-
 const AddClientModal: React.FC<AddClientModalProps> = ({
   isOpen,
   toggle,
   onSave,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -79,10 +78,10 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
     };
 
     try {
+      setIsLoading(true);
       const result = await apiClient.post("/director/clients/", payload);
       if (result.status >= 200 && result.status < 300) {
         toast.success("Client added successfully.");
-
         // Reset form and close modal
         setFormData({
           firstName: "",
@@ -107,6 +106,8 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Error creating client:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -178,7 +179,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
                   value={formData.gender}
                   onChange={(e) => handleInputChange(e, "gender")}
                 >
-                  <option value="">Select Gender</option>
+                  <option value="">--Select Gender--</option>
                   <option value="MALE">MALE</option>
                   <option value="FEMALE">FEMALE</option>
                   <option value="OTHER">OTHER</option>
@@ -278,7 +279,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleSaveClient}>
-          Save
+          {isLoading ? "Saving..." : "Save"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

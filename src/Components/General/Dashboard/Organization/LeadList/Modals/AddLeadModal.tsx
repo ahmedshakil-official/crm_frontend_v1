@@ -1,5 +1,8 @@
 import apiClient from "@/services/api-client";
-import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
+import {
+  AddLeadModalProps,
+  FetchLeadsProps,
+} from "@/Types/Organization/LeadTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -16,18 +19,13 @@ import {
   Row,
 } from "reactstrap";
 
-interface AddLeadModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: () => void;
-}
-
 const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
   isOpen,
   toggle,
   onSave,
   setIsFetchedLead,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -85,6 +83,7 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
     };
 
     try {
+      setIsLoading(true);
       const result = await apiClient.post("/director/leads/", payload);
 
       if (result.status >= 200 && result.status < 300) {
@@ -115,6 +114,8 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Error creating lead:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -188,7 +189,7 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
                   onChange={(e) => handleInputChange(e, "gender")}
                   required
                 >
-                  <option value="">Select Gender</option>
+                  <option value="">--Select Gender--</option>
                   <option value="MALE">MALE</option>
                   <option value="FEMALE">FEMALE</option>
                   <option value="OTHER">OTHER</option>
@@ -288,7 +289,7 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleSaveLead}>
-          Save
+          {isLoading ? "Saving..." : "Save"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

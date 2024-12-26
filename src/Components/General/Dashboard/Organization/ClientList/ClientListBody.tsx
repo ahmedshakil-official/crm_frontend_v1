@@ -63,7 +63,6 @@ const ClientListBody: React.FC = () => {
   const [clientToDelete, setClientToDelete] = useState<ClientInfoProps | null>(
     null
   );
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
@@ -96,7 +95,7 @@ const ClientListBody: React.FC = () => {
   const deleteClient = async (alias: string) => {
     if (!alias) return;
     try {
-      setIsDeleting(true);
+      setIsLoading(true);
       await apiClient.delete(`/director/clients/${alias}/`);
       fetchClients();
       toast.success("Client deleted successfully.");
@@ -104,7 +103,7 @@ const ClientListBody: React.FC = () => {
       console.error("Error deleting client:", error);
       toast.error("Failed to delete the client. Please try again.");
     } finally {
-      setIsDeleting(false);
+      setIsLoading(false);
     }
   };
 
@@ -335,7 +334,7 @@ const ClientListBody: React.FC = () => {
           if (clientToDelete) deleteClient(clientToDelete.alias);
           toggleDeleteModal();
         }}
-        isDeleting={isDeleting}
+        isLoading={isLoading}
         clientName={`${clientToDelete?.user?.first_name} ${clientToDelete?.user?.last_name}`}
       />
       {/* modals end */}
