@@ -69,14 +69,12 @@ const ActivityStatusHeader: React.FC<FetchLeadsProps & CaseSearchProps> = ({
         </Col>
 
         {/* Right Side: Buttons */}
-        <Col lg={3} sm={12}  className="mt-1 d-flex justify-content-end gap-2">
+        <Col lg={3} sm={12} className="mt-1 d-flex justify-content-end gap-2">
           <Button color="primary" onClick={openAddNewCaseModal}>
             Add New Case
           </Button>
           <Link href="/dashboard/organization/allcase" passHref>
-            <Button color="success" className="text-white">
-              View All Case
-            </Button>
+            <Button color="success">View All Case</Button>
           </Link>
         </Col>
       </Row>
