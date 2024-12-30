@@ -112,147 +112,177 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Add Client</ModalHeader>
       <ModalBody>
         <Form>
           <Row>
             {/* First Column */}
-            <Col md={6}>
-              <FormGroup>
-                <Label for="firstName">
-                  First Name<span className="text-danger">*</span>
-                </Label>
-                <Input
-                  id="firstName"
-                  name="firstName"
-                  type="text"
-                  value={formData.firstName}
-                  onChange={(e) => handleInputChange(e, "firstName")}
-                  required
-                />
-              </FormGroup>
-
-              <FormGroup>
-                <Label for="email">
-                  Email<span className="text-danger">*</span>
-                </Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange(e, "email")}
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="password">
-                  Password<span className="text-danger">*</span>
-                </Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={(e) => handleInputChange(e, "password")}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="phone">Phone</Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="text"
-                  value={formData.phone}
-                  onChange={(e) => handleInputChange(e, "phone")}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="gender">
-                  Gender<span className="text-danger">*</span>
-                </Label>
-                <Input
-                  id="gender"
-                  name="gender"
-                  type="select"
-                  value={formData.gender}
-                  onChange={(e) => handleInputChange(e, "gender")}
-                >
-                  <option value="">--Select Gender--</option>
-                  <option value="MALE">MALE</option>
-                  <option value="FEMALE">FEMALE</option>
-                  <option value="OTHER">OTHER</option>
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <Label for="permanent_address">Permanent Address</Label>
-                <Input
-                  id="permanent_address"
-                  name="permanent_address"
-                  type="text"
-                  value={formData.permanent_address}
-                  onChange={(e) => handleInputChange(e, "permanent_address")}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="degree">Degree</Label>
-                <Input
-                  id="degree"
-                  name="degree"
-                  type="text"
-                  value={formData.degree}
-                  onChange={(e) => handleInputChange(e, "degree")}
-                />
-              </FormGroup>
+            <Col md="6" xs="12">
+              <Row>
+                {" "}
+                <FormGroup>
+                  <Label for="firstName">
+                    First Name<span className="text-danger">*</span>
+                  </Label>
+                  <Input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    value={formData.firstName}
+                    onChange={(e) => handleInputChange(e, "firstName")}
+                    required
+                  />
+                </FormGroup>
+              </Row>
+              <Row>
+                <FormGroup>
+                  <Label for="email">
+                    Email<span className="text-danger">*</span>
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange(e, "email")}
+                    required
+                  />
+                </FormGroup>
+              </Row>
+              <Row>
+                <FormGroup>
+                  <Label for="password">
+                    Password<span className="text-danger">*</span>
+                  </Label>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={(e) => handleInputChange(e, "password")}
+                  />
+                </FormGroup>
+              </Row>
+              <Row>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="phone">Phone</Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="text"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange(e, "phone")}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="gender">
+                      Gender<span className="text-danger">*</span>
+                    </Label>
+                    <Input
+                      id="gender"
+                      name="gender"
+                      type="select"
+                      value={formData.gender}
+                      onChange={(e) => handleInputChange(e, "gender")}
+                    >
+                      <option value="">--Select Gender--</option>
+                      <option value="MALE">MALE</option>
+                      <option value="FEMALE">FEMALE</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+              </Row>
             </Col>
 
             {/* Second Column */}
-            <Col md={6}>
-              <FormGroup>
-                <Label for="lastName">
-                  Last Name<span className="text-danger">*</span>
-                </Label>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  value={formData.lastName}
-                  onChange={(e) => handleInputChange(e, "lastName")}
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="designation">Designation</Label>
-                <Input
-                  id="designation"
-                  name="designation"
-                  type="text"
-                  value={formData.designation}
-                  onChange={(e) => handleInputChange(e, "designation")}
-                />
-              </FormGroup>
-
-              <FormGroup>
-                <Label for="dob">Date of Birth</Label>
-                <Input
-                  id="dob"
-                  name="dob"
-                  type="date"
-                  value={formData.dob}
-                  onChange={(e) => handleInputChange(e, "dob")}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="joining_date">Joining Date</Label>
-                <Input
-                  id="joining_date"
-                  name="joining_date"
-                  type="date"
-                  value={formData.joining_date}
-                  onChange={(e) => handleInputChange(e, "joining_date")}
-                />
-              </FormGroup>
+            <Col md="6" xs="12">
+              <Row>
+                <FormGroup>
+                  <Label for="lastName">
+                    Last Name<span className="text-danger">*</span>
+                  </Label>
+                  <Input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    value={formData.lastName}
+                    onChange={(e) => handleInputChange(e, "lastName")}
+                    required
+                  />
+                </FormGroup>
+              </Row>
+              <Row>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="dob">Date of Birth</Label>
+                    <Input
+                      id="dob"
+                      name="dob"
+                      type="date"
+                      value={formData.dob}
+                      onChange={(e) => handleInputChange(e, "dob")}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="joining_date">Joining Date</Label>
+                    <Input
+                      id="joining_date"
+                      name="joining_date"
+                      type="date"
+                      value={formData.joining_date}
+                      onChange={(e) => handleInputChange(e, "joining_date")}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="degree">Degree</Label>
+                    <Input
+                      id="degree"
+                      name="degree"
+                      type="text"
+                      value={formData.degree}
+                      onChange={(e) => handleInputChange(e, "degree")}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="designation">Designation</Label>
+                    <Input
+                      id="designation"
+                      name="designation"
+                      type="text"
+                      value={formData.designation}
+                      onChange={(e) => handleInputChange(e, "designation")}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <FormGroup>
+                  <Label for="registration_number">Registration Number</Label>
+                  <Input
+                    id="registration_number"
+                    name="registration_number"
+                    type="text"
+                    value={formData.registration_number}
+                    onChange={(e) =>
+                      handleInputChange(e, "registration_number")
+                    }
+                  />
+                </FormGroup>
+              </Row>
+            </Col>
+            <Row>
               <FormGroup>
                 <Label for="present_address">Present Address</Label>
                 <Input
@@ -263,17 +293,19 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
                   onChange={(e) => handleInputChange(e, "present_address")}
                 />
               </FormGroup>
+            </Row>
+            <Row>
               <FormGroup>
-                <Label for="registration_number">Registration Number</Label>
+                <Label for="permanent_address">Permanent Address</Label>
                 <Input
-                  id="registration_number"
-                  name="registration_number"
+                  id="permanent_address"
+                  name="permanent_address"
                   type="text"
-                  value={formData.registration_number}
-                  onChange={(e) => handleInputChange(e, "registration_number")}
+                  value={formData.permanent_address}
+                  onChange={(e) => handleInputChange(e, "permanent_address")}
                 />
               </FormGroup>
-            </Col>
+            </Row>
           </Row>
         </Form>
       </ModalBody>
