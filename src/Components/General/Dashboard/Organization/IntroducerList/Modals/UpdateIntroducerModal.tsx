@@ -85,7 +85,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Update Introducer</ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>

@@ -83,7 +83,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Update Client</ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
+  Col,
   Form,
   FormGroup,
   Input,
@@ -13,6 +14,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  Row,
 } from "reactstrap";
 
 const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
@@ -56,7 +58,6 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
   };
 
   const handleSubmit = async () => {
-    // Construct payload as per original format
     const payload = {
       joint_user: {
         first_name: formData.firstName,
@@ -64,7 +65,7 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
         email: formData.email,
         phone: formData.phone,
         password: formData.password,
-        profileImage: profileImage, // Include file as is
+        profileImage: profileImage,
       },
       relationship: formData.relationship,
       notes: formData.notes,
@@ -72,16 +73,15 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
 
     try {
       setIsLoading(true);
-      // Make the API request
       const response = await apiClient.post(
         `/cases/${casealias}/joint/users/`,
         payload,
-        { headers: { "Content-Type": "application/json" } } // Use JSON headers
+        { headers: { "Content-Type": "application/json" } }
       );
 
       toast.success("Joint user added successfully!");
-      onSave(); // Callback to refresh data
-      toggle(); // Close modal
+      onSave();
+      toggle();
     } catch (error) {
       console.error("Error adding joint user:", error);
       toast.error("Failed to add joint user.");
@@ -91,134 +91,148 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Add Joint User</ModalHeader>
       <ModalBody>
         <Form>
-          {/* First Name */}
-          <FormGroup>
-            <Label for="first_name" className="form-label">
-              First Name
-            </Label>
-            <Input
-              type="text"
-              id="first_name"
-              name="firstName"
-              placeholder="Enter first name"
-              value={formData.firstName}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-
-          {/* Last Name */}
-          <FormGroup>
-            <Label for="last_name" className="form-label">
-              Last Name
-            </Label>
-            <Input
-              type="text"
-              id="last_name"
-              name="lastName"
-              placeholder="Enter last name"
-              value={formData.lastName}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-
-          {/* Phone */}
-          <FormGroup>
-            <Label for="phone" className="form-label">
-              Phone
-            </Label>
-            <Input
-              type="text"
-              id="phone"
-              name="phone"
-              placeholder="Enter phone number"
-              value={formData.phone}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-
-          {/* Email */}
-          <FormGroup>
-            <Label for="email" className="form-label">
-              Email
-            </Label>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter email"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-
-          {/* Password */}
-          <FormGroup>
-            <Label for="password" className="form-label">
-              Password
-            </Label>
-            <Input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-
-          {/* Relationship */}
-          <FormGroup>
-            <Label for="relationship" className="form-label">
-              Relationship
-            </Label>
-            <Input
-              type="text"
-              id="relationship"
-              name="relationship"
-              placeholder="Enter relationship"
-              value={formData.relationship}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-
-          {/* Profile Image */}
-          <FormGroup>
-            <Label for="profile_image" className="form-label">
-              Profile Image
-            </Label>
-            <Input
-              type="file"
-              id="profile_image"
-              name="profileImage"
-              onChange={handleFileChange}
-            />
-          </FormGroup>
-
-          {/* Notes */}
-          <FormGroup>
-            <Label for="notes" className="form-label">
-              Notes
-            </Label>
-            <Input
-              type="textarea"
-              id="notes"
-              name="notes"
-              placeholder="Enter notes"
-              value={formData.notes}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
+          <Row>
+            <Col xs={12} md={6}>
+              <FormGroup>
+                <Label for="first_name" className="form-label">
+                  First Name<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="text"
+                  id="first_name"
+                  name="firstName"
+                  required
+                  placeholder="Enter first name"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col xs={12} md={6}>
+              <FormGroup>
+                <Label for="last_name" className="form-label">
+                  Last Name<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="text"
+                  id="last_name"
+                  name="lastName"
+                  required
+                  placeholder="Enter last name"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={6}>
+              <FormGroup>
+                <Label for="email" className="form-label">
+                  Email<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="Enter email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col xs={12} md={6}>
+              <FormGroup>
+                <Label for="phone" className="form-label">
+                  Phone<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  required
+                  placeholder="Enter phone number"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={6}>
+              <FormGroup>
+                <Label for="password" className="form-label">
+                  Password<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  placeholder="Enter password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col xs={12} md={6}>
+              <FormGroup>
+                <Label for="relationship" className="form-label">
+                  Relationship
+                </Label>
+                <Input
+                  type="text"
+                  id="relationship"
+                  name="relationship"
+                  placeholder="Enter relationship"
+                  value={formData.relationship}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <FormGroup>
+                <Label for="profile_image" className="form-label">
+                  Profile Image
+                </Label>
+                <Input
+                  type="file"
+                  id="profile_image"
+                  name="profileImage"
+                  onChange={handleFileChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col xs={12}>
+              <FormGroup>
+                <Label for="notes" className="form-label">
+                  Notes
+                </Label>
+                <Input
+                  type="textarea"
+                  id="notes"
+                  name="notes"
+                  placeholder="Enter notes"
+                  value={formData.notes}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={handleSubmit}>
+        <Button color="primary" onClick={handleSubmit} block={isLoading}>
           {isLoading ? "Saving..." : "Save"}
         </Button>
-        <Button color="secondary" onClick={toggle}>
+        <Button color="secondary" onClick={toggle} block>
           Cancel
         </Button>
       </ModalFooter>

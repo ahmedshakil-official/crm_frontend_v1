@@ -10,7 +10,7 @@ const DeleteCaseModal: React.FC<DeleteCaseModalProps> = ({
   isDeleting,
 }) => {
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered>
+    <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>Confirm Case Deletion</ModalHeader>
       <ModalBody>
         {caseData ? (

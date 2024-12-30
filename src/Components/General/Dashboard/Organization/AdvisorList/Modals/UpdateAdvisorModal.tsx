@@ -86,7 +86,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Update Advisor</ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
