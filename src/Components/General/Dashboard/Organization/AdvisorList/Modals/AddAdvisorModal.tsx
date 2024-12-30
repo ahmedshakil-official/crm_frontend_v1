@@ -218,32 +218,6 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
               <Row>
                 <Col md="6" xs="12">
                   <FormGroup>
-                    <Label for="designation">Designation</Label>
-                    <Input
-                      id="designation"
-                      name="designation"
-                      type="text"
-                      value={formData.designation}
-                      onChange={handleInputChange}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="6" xs="12">
-                  <FormGroup>
-                    <Label for="degree">Degree</Label>
-                    <Input
-                      id="degree"
-                      name="degree"
-                      type="text"
-                      value={formData.degree}
-                      onChange={handleInputChange}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md="6" xs="12">
-                  <FormGroup>
                     <Label for="dob">Date of Birth</Label>
                     <Input
                       id="dob"
@@ -262,6 +236,32 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                       name="joining_date"
                       type="date"
                       value={formData.joining_date}
+                      onChange={handleInputChange}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="designation">Designation</Label>
+                    <Input
+                      id="designation"
+                      name="designation"
+                      type="text"
+                      value={formData.designation}
+                      onChange={handleInputChange}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="degree">Degree</Label>
+                    <Input
+                      id="degree"
+                      name="degree"
+                      type="text"
+                      value={formData.degree}
                       onChange={handleInputChange}
                     />
                   </FormGroup>

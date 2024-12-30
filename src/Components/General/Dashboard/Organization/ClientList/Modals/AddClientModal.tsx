@@ -200,44 +200,20 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
 
             {/* Second Column */}
             <Col md="6" xs="12">
-              <FormGroup>
-                <Label for="lastName">
-                  Last Name<span className="text-danger">*</span>
-                </Label>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  value={formData.lastName}
-                  onChange={(e) => handleInputChange(e, "lastName")}
-                  required
-                />
-              </FormGroup>
               <Row>
-                <Col md="6" xs="12">
-                  <FormGroup>
-                    <Label for="degree">Degree</Label>
-                    <Input
-                      id="degree"
-                      name="degree"
-                      type="text"
-                      value={formData.degree}
-                      onChange={(e) => handleInputChange(e, "degree")}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="6" xs="12">
-                  <FormGroup>
-                    <Label for="designation">Designation</Label>
-                    <Input
-                      id="designation"
-                      name="designation"
-                      type="text"
-                      value={formData.designation}
-                      onChange={(e) => handleInputChange(e, "designation")}
-                    />
-                  </FormGroup>
-                </Col>
+                <FormGroup>
+                  <Label for="lastName">
+                    Last Name<span className="text-danger">*</span>
+                  </Label>
+                  <Input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    value={formData.lastName}
+                    onChange={(e) => handleInputChange(e, "lastName")}
+                    required
+                  />
+                </FormGroup>
               </Row>
               <Row>
                 <Col md="6" xs="12">
@@ -261,6 +237,32 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
                       type="date"
                       value={formData.joining_date}
                       onChange={(e) => handleInputChange(e, "joining_date")}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="degree">Degree</Label>
+                    <Input
+                      id="degree"
+                      name="degree"
+                      type="text"
+                      value={formData.degree}
+                      onChange={(e) => handleInputChange(e, "degree")}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="designation">Designation</Label>
+                    <Input
+                      id="designation"
+                      name="designation"
+                      type="text"
+                      value={formData.designation}
+                      onChange={(e) => handleInputChange(e, "designation")}
                     />
                   </FormGroup>
                 </Col>

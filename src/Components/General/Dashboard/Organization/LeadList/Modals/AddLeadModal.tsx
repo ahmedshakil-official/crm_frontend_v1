@@ -226,32 +226,6 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
               </Row>
               <Row>
                 <Col md="6" xs="12">
-                  <FormGroup>
-                    <Label for="designation">Designation</Label>
-                    <Input
-                      id="designation"
-                      name="designation"
-                      type="text"
-                      value={formData.designation}
-                      onChange={(e) => handleInputChange(e, "designation")}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="6" xs="12">
-                  <FormGroup>
-                    <Label for="degree">Degree</Label>
-                    <Input
-                      id="degree"
-                      name="degree"
-                      type="text"
-                      value={formData.degree}
-                      onChange={(e) => handleInputChange(e, "degree")}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md="6" xs="12">
                   {/* dob  */}
                   <FormGroup>
                     <Label for="dob">Date of Birth</Label>
@@ -274,6 +248,32 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
                       type="date"
                       value={formData.joining_date}
                       onChange={(e) => handleInputChange(e, "joining_date")}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="designation">Designation</Label>
+                    <Input
+                      id="designation"
+                      name="designation"
+                      type="text"
+                      value={formData.designation}
+                      onChange={(e) => handleInputChange(e, "designation")}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6" xs="12">
+                  <FormGroup>
+                    <Label for="degree">Degree</Label>
+                    <Input
+                      id="degree"
+                      name="degree"
+                      type="text"
+                      value={formData.degree}
+                      onChange={(e) => handleInputChange(e, "degree")}
                     />
                   </FormGroup>
                 </Col>
