@@ -12,6 +12,7 @@ import {
   InputGroupText,
   Row,
 } from "reactstrap";
+import "./ActivityStatus.css";
 import AddNewCaseModal from "./Modals/AddNewCaseModal";
 
 const ActivityStatusHeader: React.FC<FetchLeadsProps & CaseSearchProps> = ({
@@ -41,7 +42,7 @@ const ActivityStatusHeader: React.FC<FetchLeadsProps & CaseSearchProps> = ({
       <Row className="header-top d-flex justify-content-between align-items-center">
         {/* Left Side: Title and Date */}
         <Col lg={3} sm={12} className="mt-1">
-          <div className="d-flex align-items-center gap-2">
+          <div className="d-flex align-items-center">
             <h3 className="mb-1">Activity Status</h3>
             <FaClock className="fs-6 text-success rotate-animation" />
           </div>
