@@ -1,3 +1,5 @@
+import { ImagePath } from "@/Constant";
+import Image from "next/image";
 import { useState } from "react";
 import {
   Collapse,
@@ -18,7 +20,20 @@ const NavBar = () => {
     <>
       <Navbar color="primary" dark expand="md">
         <NavbarBrand className="fs-3" href="/">
-          CRM
+          <Image
+            width={91}
+            height={27}
+            className="img-fluid for-light"
+            src={`${ImagePath}/logo/logo1.png`}
+            alt="looginpage"
+          />
+          <Image
+            width={91}
+            height={27}
+            className="img-fluid for-dark d-none"
+            src={`${ImagePath}/logo/logo-dark.png`}
+            alt="looginpage"
+          />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -44,7 +59,7 @@ const NavBar = () => {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/dashboard/default" className="text-white">
+              <NavLink href="/dashboard/organization" className="text-white">
                 Dashboard
               </NavLink>
             </NavItem>
