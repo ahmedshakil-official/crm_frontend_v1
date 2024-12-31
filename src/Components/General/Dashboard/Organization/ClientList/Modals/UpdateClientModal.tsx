@@ -28,14 +28,12 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
 }) => {
   const [clientData, setClientData] =
     useState<Partial<ClientInfoProps>>(selectedClient);
+  const [isModified, setIsModified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Compare current data with the original data
-  const hasChanges =
-    JSON.stringify(clientData) !== JSON.stringify(selectedClient);
 
   useEffect(() => {
     setClientData(selectedClient);
+    setIsModified(false);
   }, [selectedClient]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +49,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
       current[keys[keys.length - 1]] = value;
       return updatedData as Partial<ClientInfoProps>;
     });
+    setIsModified(true); // Set the form as modified
   };
 
   const handleUpdateClient = async (clientData: Partial<ClientInfoProps>) => {
@@ -393,7 +392,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
           <Button
             type="submit"
             color="primary"
-            disabled={!hasChanges || isLoading}
+            disabled={!isModified || isLoading}
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>

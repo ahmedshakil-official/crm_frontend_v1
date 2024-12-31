@@ -28,14 +28,12 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
 }) => {
   const [introducerData, setIntroducerData] =
     useState<Partial<IntroducerInfoProps>>(selectedIntroducer);
+  const [isModified, setIsModified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Compare current data with the original data
-  const hasChanges =
-    JSON.stringify(introducerData) !== JSON.stringify(selectedIntroducer);
 
   useEffect(() => {
     setIntroducerData(selectedIntroducer);
+    setIsModified(false); // Reset modification flag when modal opens or lead changes
   }, [selectedIntroducer]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +49,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
       current[keys[keys.length - 1]] = value;
       return updatedData as Partial<IntroducerInfoProps>;
     });
+    setIsModified(true); // Set the form as modified
   };
 
   const handleUpdateIntroducer = async (
@@ -392,7 +391,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
           <Button
             type="submit"
             color="primary"
-            disabled={!hasChanges || isLoading}
+            disabled={!isModified || isLoading}
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>
