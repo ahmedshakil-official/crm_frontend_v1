@@ -29,13 +29,12 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
   setIsFetchedLead,
 }) => {
   const [leadData, setLeadData] = useState<Partial<LeadsInfo>>(selectedLead);
+  const [isModified, setIsModified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Compare current data with the original data
-  const hasChanges = JSON.stringify(leadData) !== JSON.stringify(selectedLead);
 
   useEffect(() => {
     setLeadData(selectedLead);
+    setIsModified(false); // Reset modification flag when modal opens or lead changes
   }, [selectedLead]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +50,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
       current[keys[keys.length - 1]] = value;
       return updatedData as Partial<LeadsInfo>;
     });
+    setIsModified(true); // Set the form as modified
   };
 
   const handleUpdateLead = async (leadData: Partial<LeadsInfo>) => {
@@ -391,7 +391,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
           <Button
             type="submit"
             color="primary"
-            disabled={!hasChanges || isLoading}
+            disabled={!isModified || isLoading}
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>

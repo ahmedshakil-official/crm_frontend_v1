@@ -28,14 +28,12 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
 }) => {
   const [advisorData, setAdvisorData] =
     useState<Partial<AdvisorInfoProps>>(selectedAdvisor);
+  const [isModified, setIsModified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Compare current data with the original data
-  const hasChanges =
-    JSON.stringify(advisorData) !== JSON.stringify(selectedAdvisor);
 
   useEffect(() => {
     setAdvisorData(selectedAdvisor);
+    setIsModified(false);
   }, [selectedAdvisor]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +49,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
       current[keys[keys.length - 1]] = value;
       return updatedData as Partial<AdvisorInfoProps>;
     });
+    setIsModified(true); // Set the form as modified
   };
 
   const handleUpdateAdvisor = async (
@@ -395,7 +394,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
           <Button
             type="submit"
             color="primary"
-            disabled={!hasChanges || isLoading}
+            disabled={!isModified || isLoading}
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>
