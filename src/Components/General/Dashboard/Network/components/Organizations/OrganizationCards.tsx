@@ -14,11 +14,18 @@ import {
   InputGroupText,
   Row,
 } from "reactstrap";
+import AddOrganizationModal from "./Modals/AddOrganizationModal";
 
 const OrganizationCards = () => {
   const [organizations, setOrganizations] = useState<OrganizationsProps[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Toggle modal visibility
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   // Fetch organizations from the API
   const fetchOrganizations = async () => {
@@ -61,7 +68,9 @@ const OrganizationCards = () => {
           </InputGroup>
         </Col>
         <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
-          <Button color="primary">Add Organization</Button>
+          <Button color="primary" onClick={toggleModal}>
+            Add Organization
+          </Button>
         </Col>
       </Row>
       <Row>
@@ -86,7 +95,7 @@ const OrganizationCards = () => {
                       <img
                         width="68"
                         height="68"
-                        className="img-fluid"
+                        className="img-fluid object-fit-cover"
                         src={item.logo || "https://via.placeholder.com/68"}
                         alt="Organization"
                       />
@@ -132,6 +141,12 @@ const OrganizationCards = () => {
           </Row>
         )}
       </Row>
+      {/* Add Organization Modal */}
+      <AddOrganizationModal
+        isOpen={isModalOpen}
+        toggleModal={toggleModal}
+        refreshOrganizations={fetchOrganizations}
+      />
     </Card>
   );
 };
