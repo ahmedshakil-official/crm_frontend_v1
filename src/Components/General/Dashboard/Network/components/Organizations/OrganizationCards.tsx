@@ -1,7 +1,8 @@
 import SvgIcon from "@/CommonComponent/SVG/IconSvg";
-import { Followers, Following, Posts } from "@/Constant";
-import { SocialUserCardData } from "@/Data/Applications/SocialApp";
+import apiClient from "@/services/api-client";
+import { OrganizationsProps } from "@/Types/Network/OrganizationsTypes";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
   Button,
@@ -15,6 +16,31 @@ import {
 } from "reactstrap";
 
 const OrganizationCards = () => {
+  const [organizations, setOrganizations] = useState<OrganizationsProps[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch organizations from the API
+  const fetchOrganizations = async () => {
+    setIsLoading(true);
+    try {
+      const response = await apiClient.get("/organization/list/", {
+        params: { search: searchQuery },
+      });
+      setOrganizations(response.data || []);
+    } catch (error) {
+      console.error("Error fetching organizations:", error);
+      setOrganizations([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch organizations when the search query changes
+  useEffect(() => {
+    fetchOrganizations();
+  }, [searchQuery]);
+
   return (
     <Card>
       <Row className="flex justify-content-between py-4">
@@ -23,7 +49,12 @@ const OrganizationCards = () => {
         </Col>
         <Col>
           <InputGroup>
-            <Input type="text" placeholder="Search Organization..." />
+            <Input
+              type="text"
+              placeholder="Search Organization..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <InputGroupText className="bg-success rounded-start-0 border-start-0">
               <FaSearch />
             </InputGroupText>
@@ -34,84 +65,75 @@ const OrganizationCards = () => {
         </Col>
       </Row>
       <Row>
-        {SocialUserCardData.map((item) => (
-          <Col
-            sm="6"
-            xxl="3"
-            lg="4"
-            xl="4"
-            className="col-ed-4 box-col-4"
-            key={item.id}
-          >
-            <Card className="text-center bg-light">
-              <CardBody>
-                <div className="social-img-wrap">
-                  <div className="social-img">
-                    <img
-                      width="68"
-                      height="68"
-                      className="img-fluid"
-                      src="https://media.fridaypulse.com/cms_images/504/FRIDAY_-Hero-Article-AUG-12-2020-scaled.jpg"
-                      alt="Organization"
-                    />
+        {isLoading ? (
+          <Row className="text-center">
+            <p>Loading...</p>
+          </Row>
+        ) : organizations.length > 0 ? (
+          organizations.map((item) => (
+            <Col
+              sm="6"
+              xxl="3"
+              lg="4"
+              xl="4"
+              className="col-ed-4 box-col-4"
+              key={item.slug}
+            >
+              <Card className="text-center bg-light">
+                <CardBody>
+                  <div className="social-img-wrap">
+                    <div className="social-img">
+                      <img
+                        width="68"
+                        height="68"
+                        className="img-fluid"
+                        src={item.logo || "https://via.placeholder.com/68"}
+                        alt="Organization"
+                      />
+                    </div>
+                    <div className="edit-icon">
+                      <SvgIcon iconId="profile-check" />
+                    </div>
                   </div>
-                  <div className="edit-icon">
-                    <SvgIcon iconId="profile-check" />
+                  <div className="social-details">
+                    <h5 className="mb-1">
+                      <Link href={`/app/social_app`}>{item.name}</Link>
+                    </h5>
+                    <span className="f-light">{item.email}</span>
+                    <ul className="card-social">
+                      <li>
+                        <Link href={item?.website || "#"} target="_blank">
+                          <i className="fa-solid fa-earth-americas"></i>
+                        </Link>
+                      </li>
+                    </ul>
+                    <ul className="social-follow">
+                      <li>
+                        <h5 className="mb-0 text-secondary">15</h5>
+                        <span className="f-light">Cases</span>
+                      </li>
+                      <li>
+                        <h5 className="mb-0 text-secondary">10</h5>
+                        <span className="f-light">Employees</span>
+                      </li>
+                      <li>
+                        <h5 className="mb-0 text-secondary">14</h5>
+                        <span className="f-light">Clients</span>
+                      </li>
+                    </ul>
                   </div>
-                </div>
-                <div className="social-details">
-                  <h5 className="mb-1">
-                    <Link href={`/app/social_app`}>{item.name}</Link>
-                  </h5>
-                  <span className="f-light">{item.email}</span>
-                  <ul className="card-social">
-                    <li>
-                      <Link href="" target="_blank">
-                        <i className="fa-brands fa-facebook-f"></i>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="" target="_blank">
-                        <i className="fa-brands fa-google-plus-g"></i>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="" target="_blank">
-                        <i className="fa-brands fa-twitter"></i>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="" target="_blank">
-                        <i className="fa-brands fa-instagram"></i>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="" target="_blank">
-                        <i className="fa-brands fa-whatsapp"></i>
-                      </Link>
-                    </li>
-                  </ul>
-                  <ul className="social-follow">
-                    <li>
-                      <h5 className="mb-0 text-secondary">{item.totalPost}</h5>
-                      <span className="f-light">{Posts}</span>
-                    </li>
-                    <li>
-                      <h5 className="mb-0 text-secondary">{item.follower}</h5>
-                      <span className="f-light">{Followers}</span>
-                    </li>
-                    <li>
-                      <h5 className="mb-0 text-secondary">{item.following}</h5>
-                      <span className="f-light">{Following}</span>
-                    </li>
-                  </ul>
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-        ))}
+                </CardBody>
+              </Card>
+            </Col>
+          ))
+        ) : (
+          <Row className="text-center">
+            <p>Organization not found!</p>
+          </Row>
+        )}
       </Row>
     </Card>
   );
 };
+
 export default OrganizationCards;
