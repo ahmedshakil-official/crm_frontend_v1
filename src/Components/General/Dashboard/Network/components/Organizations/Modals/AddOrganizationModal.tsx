@@ -1,4 +1,8 @@
 import apiClient from "@/services/api-client";
+import {
+  AddOrganizationModalProps,
+  AddOrganizationProps,
+} from "@/Types/Network/OrganizationsTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -15,30 +19,12 @@ import {
   Row,
 } from "reactstrap";
 
-// Define an interface for the form data with an index signature
-interface OrganizationFormData {
-  [key: string]: string | File | null | boolean; // Allow any string key, with values being string, File, or null
-  name: string;
-  email: string;
-  logo: File | null;
-  profile_image: File | null;
-  hero_image: File | null;
-  primary_mobile: string;
-  other_contact: string;
-  contact_person: string;
-  contact_person_designation: string;
-  website: string;
-  license_no: string;
-  license_image: File | null;
-  is_removed: boolean;
-}
-
-const AddOrganizationModal = ({
+const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
   isOpen,
   toggleModal,
   refreshOrganizations,
-}: any) => {
-  const [formData, setFormData] = useState<OrganizationFormData>({
+}) => {
+  const [formData, setFormData] = useState<AddOrganizationProps>({
     name: "",
     email: "",
     logo: null,
@@ -67,7 +53,7 @@ const AddOrganizationModal = ({
   // Handle file input changes (for images)
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    fieldName: keyof OrganizationFormData
+    fieldName: keyof AddOrganizationProps
   ) => {
     const file = e.target.files?.[0];
     if (file) {

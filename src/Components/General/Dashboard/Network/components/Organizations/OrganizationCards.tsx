@@ -13,6 +13,7 @@ import {
   InputGroup,
   InputGroupText,
   Row,
+  Spinner,
 } from "reactstrap";
 import AddOrganizationModal from "./Modals/AddOrganizationModal";
 
@@ -75,8 +76,8 @@ const OrganizationCards = () => {
       </Row>
       <Row>
         {isLoading ? (
-          <Row className="text-center">
-            <p>Loading...</p>
+          <Row className="pb-4 d-flex justify-content-center">
+            <Spinner color="primary"  />
           </Row>
         ) : organizations.length > 0 ? (
           organizations.map((item) => (
