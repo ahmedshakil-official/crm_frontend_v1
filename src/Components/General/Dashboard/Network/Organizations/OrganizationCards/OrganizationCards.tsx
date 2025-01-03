@@ -15,7 +15,7 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import AddOrganizationModal from "./Modals/AddOrganizationModal";
+import AddOrganizationModal from "../Modals/AddOrganizationModal";
 
 const OrganizationCards = () => {
   const [organizations, setOrganizations] = useState<OrganizationsProps[]>([]);
@@ -77,7 +77,7 @@ const OrganizationCards = () => {
       <Row>
         {isLoading ? (
           <Row className="pb-4 d-flex justify-content-center">
-            <Spinner color="primary"  />
+            <Spinner color="primary" />
           </Row>
         ) : organizations.length > 0 ? (
           organizations.map((item) => (

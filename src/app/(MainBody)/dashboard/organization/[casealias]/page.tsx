@@ -6,7 +6,7 @@ const SingleCaseAlias = () => {
   useEffect(() => {
     (async () => {
       if (typeof window !== "undefined") {
-        const newClient = (await import("../../../../../Components/General/Dashboard/Organization/ActivityStatus/[CaseAlias]")).default;
+        const newClient = (await import("@/Components/General/Dashboard/Organization/ActivityStatus/[CaseAlias]")).default;
         setClient(() => newClient);
       }
     })();
