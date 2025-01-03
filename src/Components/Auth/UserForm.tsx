@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, Form, FormGroup, Input, Label, Spinner } from "reactstrap";
 import imageTwo from "../../../public/assets/images/logo/logo-dark.png";
 import imageOne from "../../../public/assets/images/logo/logo1.png";
 
@@ -20,17 +20,19 @@ export const UserForm = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const formSubmitHandle = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
     const result = await signIn("credentials", {
       email,
       password,
       redirect: false,
       callbackUrl: "/dashboard/default",
     });
-
+    setIsLoading(false);
     if (result?.ok) {
       toast.success("successfully Logged in Rediract......");
       router.push(result.url || "/dashboard/default");
@@ -99,8 +101,8 @@ export const UserForm = () => {
               {ForgotPassword}
             </Link>
             <div className="text-end mt-3">
-              <Button type="submit" color="primary" block>
-                {SignIn}
+              <Button type="submit" color="primary" block disabled={isLoading}>
+                {isLoading ? <Spinner size="sm" /> : `${SignIn}`}
               </Button>
             </div>
           </FormGroup>
