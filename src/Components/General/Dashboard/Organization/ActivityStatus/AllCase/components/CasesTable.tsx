@@ -374,10 +374,11 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                 filteredCases.map((caseItem) => (
                   <tr key={caseItem.alias}>
                     <td>
-                      <Link href={`/dashboard/organization/${caseItem.alias}`}>
-                        <span className="text-black custom-hover">
-                          {caseItem.name}
-                        </span>
+                      <Link
+                        className="custom-hover"
+                        href={`/dashboard/organization/${caseItem.alias}`}
+                      >
+                        {caseItem.name}
                       </Link>
                     </td>
                     <td>

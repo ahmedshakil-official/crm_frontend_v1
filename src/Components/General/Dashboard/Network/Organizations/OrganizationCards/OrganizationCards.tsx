@@ -16,6 +16,7 @@ import {
   Spinner,
 } from "reactstrap";
 import AddOrganizationModal from "../Modals/AddOrganizationModal";
+import "../Organization.css";
 
 const OrganizationCards = () => {
   const [organizations, setOrganizations] = useState<OrganizationsProps[]>([]);
@@ -106,8 +107,13 @@ const OrganizationCards = () => {
                     </div>
                   </div>
                   <div className="social-details">
-                    <h5 className="mb-1">
-                      <Link href={`/app/social_app`}>{item.name}</Link>
+                    <h5 className="mb-1 ">
+                      <Link
+                        className="custom-hover"
+                        href={`/dashboard/network/organization/${item.slug}`}
+                      >
+                        {item.name}
+                      </Link>
                     </h5>
                     <span className="f-light">{item.email}</span>
                     <ul className="card-social">
