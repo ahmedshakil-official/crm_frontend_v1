@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Row, Table } from "reactstrap";
+import "./ActivityStatus.css";
 import ActivityStatusHeader from "./ActivityStatusHeader";
 import DeleteCaseModal from "./Modals/DeleteCaseModal";
 
@@ -109,10 +110,11 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
               caseInfo.slice(0, 5).map((caseItem, index) => (
                 <tr key={index}>
                   <td>
-                    <Link href={`/dashboard/organization/${caseItem.alias}`}>
-                      <span className="text-black custom-hover">
-                        {caseItem.name}
-                      </span>
+                    <Link
+                      className="custom-hover"
+                      href={`/dashboard/organization/${caseItem.alias}`}
+                    >
+                      {caseItem.name}
                     </Link>
                   </td>
                   <td>
