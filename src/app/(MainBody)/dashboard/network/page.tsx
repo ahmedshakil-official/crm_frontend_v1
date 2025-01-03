@@ -6,7 +6,7 @@ const Network = () => {
   useEffect(() => {
     (async () => {
       if (typeof window !== "undefined") {
-        const newClient = (await import("../../../../Components/General/Dashboard/Network/index")).default;
+        const newClient = (await import("@/Components/General/Dashboard/Network/index")).default;
         setClient(() => newClient);
       }
     })();

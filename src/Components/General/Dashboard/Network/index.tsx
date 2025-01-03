@@ -1,13 +1,12 @@
-import { Container, Row } from "reactstrap";
-import NetworkBreadcrumbs from "./components/Breadcrumbs";
-import OrganizationCards from "./components/Organizations/OrganizationCards";
 import { useState } from "react";
+import { Container, Row } from "reactstrap";
 import ActivityStatus from "../Organization/ActivityStatus/ActivityStatus";
-import LeadList from "../Organization/LeadList/LeadList";
-import ClientList from "../Organization/ClientList/ClientList";
 import AdvisorList from "../Organization/AdvisorList/AdvisorList";
+import ClientList from "../Organization/ClientList/ClientList";
 import IntroducerList from "../Organization/IntroducerList/IntroducerList";
-
+import LeadList from "../Organization/LeadList/LeadList";
+import NetworkBreadcrumbs from "./Organizations/NetworkBreadcrumbs/Breadcrumbs";
+import OrganizationCards from "./Organizations/OrganizationCards/OrganizationCards";
 
 
 const ContainerNetwork = () => {
@@ -21,7 +20,10 @@ const ContainerNetwork = () => {
         </Row>
         {/* load Organization dashboard data  */}
         <Row>
-          <ActivityStatus isFetchedLead={isFetchedLead}  setIsFetchedLead={setIsFetchedLead}/>
+          <ActivityStatus
+            isFetchedLead={isFetchedLead}
+            setIsFetchedLead={setIsFetchedLead}
+          />
         </Row>
         <Row>
           <LeadList setIsFetchedLead={setIsFetchedLead} />
