@@ -148,7 +148,12 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="website">Website</Label>
+                <Label for="website">
+                  Website{" "}
+                  <span style={{ fontSize: "0.7rem", color: "#f39c12" }}>
+                    (Example: https://yourdomain.com)
+                  </span>
+                </Label>
                 <Input
                   type="url"
                   id="website"
