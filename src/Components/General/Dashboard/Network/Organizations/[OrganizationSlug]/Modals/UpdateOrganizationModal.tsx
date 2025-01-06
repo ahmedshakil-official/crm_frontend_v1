@@ -40,6 +40,7 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [logo, setLogo] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [oldName, setOldName] = useState("");
 
   // Set initial form values when modal opens
@@ -182,14 +183,20 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
                   accept="image/*"
                   onChange={handleFileChange}
                 />
-                {organizationData?.logo && (
-                  <Image
-                    src={organizationData.logo}
-                    alt="Logo"
-                    className="mt-2 rounded-3"
-                    width={100}
-                    height={80}
-                  />
+                {organizationData?.logo ? (
+                  <div className="d-flex justify-content-center  mt-2">
+                    <Image
+                      src={organizationData.logo}
+                      alt="Profile"
+                      className="rounded-3 border-1 border-success"
+                      width={100}
+                      height={80}
+                    />
+                  </div>
+                ) : (
+                  <div className="text-center mt-2 fw-medium opacity-50">
+                    <h6>Image not avaiable</h6>
+                  </div>
                 )}
               </FormGroup>
             </Col>
@@ -247,14 +254,20 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
                   accept="image/*"
                   onChange={handleFileChange}
                 />
-                {organizationData?.profile_image && (
-                  <Image
-                    src={organizationData.profile_image}
-                    alt="Profile"
-                    className="mt-2"
-                    width={100}
-                    height={80}
-                  />
+                {organizationData?.profile_image ? (
+                  <div className="d-flex justify-content-center mt-2">
+                    <Image
+                      src={organizationData.profile_image}
+                      alt="Profile"
+                      className="rounded-3 border border-success"
+                      width={100}
+                      height={80}
+                    />
+                  </div>
+                ) : (
+                  <div className="text-center mt-2 fw-medium opacity-50">
+                    <h6>Image not available</h6>
+                  </div>
                 )}
               </FormGroup>
             </Col>
