@@ -16,7 +16,6 @@ import "../../Organization.css"; // Import external CSS for styling
 
 const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
   organizationInfo,
-  fetchsetOrganizationInfo,
   isLoading,
 }) => {
   return (

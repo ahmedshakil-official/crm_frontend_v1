@@ -1,5 +1,6 @@
 export interface OrganizationsProps {
   slug?: string;
+  organizationSlug?: string | undefined;
   network: {
     slug?: string;
     name?: string;
@@ -46,8 +47,17 @@ export interface AddOrganizationProps {
   license_image: File | null;
   is_removed: boolean;
 }
+
+// Add OrganizationModal Props
 export interface AddOrganizationModalProps {
   isOpen?: any;
   toggleModal?: any;
   refreshOrganizations?: any;
+}
+// delete organization modal props
+export interface DeleteOrganizationModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  slug?: string;
+  onDeleteSuccess: () => void;
 }
