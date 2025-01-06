@@ -1,6 +1,7 @@
 import { FetchSingleOrganizationProps } from "@/Types/Network/OrganizationsTypes";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import {
   Button,
   Card,
@@ -13,11 +14,19 @@ import {
   Spinner,
 } from "reactstrap";
 import "../../Organization.css"; // Import external CSS for styling
+import UpdateOrganizationModal from "../Modals/UpdateOrganizationModal";
 
 const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
   organizationInfo,
+  fetchsetOrganizationInfo,
   isLoading,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleUpdateModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <Container fluid className="p-4">
       {isLoading ? (
@@ -50,7 +59,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
               className="profile-pic object-fit-cover"
             />
             <div className="edit-icon">
-              <Button>
+              <Button onClick={toggleUpdateModal}>
                 <i className="fa fa-pencil"></i>
               </Button>
             </div>
@@ -142,6 +151,14 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
           </CardBody>
         </Card>
       )}
+      {/* update modal  */}
+      <UpdateOrganizationModal
+        isOpen={isModalOpen}
+        toggle={toggleUpdateModal}
+        slug={organizationInfo?.slug}
+        organizationData={organizationInfo} // Pass existing organization data
+        onUpdateSuccess={() => fetchsetOrganizationInfo(null)}
+      />
     </Container>
   );
 };
