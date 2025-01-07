@@ -205,7 +205,7 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
                 <Label for="website">
                   Website{" "}
                   <span style={{ fontSize: "0.7rem", color: "#f39c12" }}>
-                    (Example: https://yourdomain.com/)
+                    (Example: https://yourdomain.com)
                   </span>
                 </Label>
                 <Input
