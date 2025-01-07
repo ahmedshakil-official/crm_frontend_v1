@@ -9,7 +9,6 @@ import {
   CardText,
   CardTitle,
   Col,
-  Container,
   Row,
   Spinner,
 } from "reactstrap";
@@ -28,7 +27,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
   };
 
   return (
-    <Container fluid className="p-4">
+    <>
       {isLoading ? (
         <Card
           className="d-flex justify-content-center align-items-center w-100"
@@ -37,37 +36,41 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
           <Spinner color="primary" />
         </Card>
       ) : (
-        <Card className="shadow-lg position-relative">
-          {/* Banner Image inside the Card */}
-          <Image
-            width={1595}
-            height={300}
-            className="rounded-top-4 w-100 object-fit-cover"
-            src={
-              organizationInfo?.profile_image ||
-              "/assets/images/other-images/bg-profile.png"
-            }
-            alt="Banner"
-          />
-          {/* Profile Image Positioned Over Banner */}
-          <div className="profile-container">
-            <Image
-              width={120}
-              height={120}
-              src={organizationInfo?.logo || "/assets/images/user/2.png"}
-              alt="Profile"
-              className="profile-pic object-fit-cover"
-            />
-            <div className="edit-icon">
-              <Button onClick={toggleUpdateModal}>
-                <i className="fa fa-pencil"></i>
-              </Button>
-            </div>
-          </div>
-
+        <Card className="shadow-lg position-relative mt-0 mx-0 pt-0 px-0">
           {/* Card Body with User Details */}
-          <CardBody className="text-center mt-4">
-            <CardTitle tag="h3">{organizationInfo?.name}</CardTitle>
+          <CardBody className="text-center mt-0 mx-0 pt-0 px-0">
+            {/* Banner Image inside the Card */}
+            <div>
+              <Image
+                width={1595}
+                height={300}
+                className="rounded-top-4 w-100 object-fit-cover"
+                src={
+                  organizationInfo?.profile_image ||
+                  "/assets/images/other-images/bg-profile.png"
+                }
+                alt="Banner"
+              />
+            </div>
+
+            {/* Profile Image Positioned Over Banner */}
+            <div className="profile-container">
+              <Image
+                width={120}
+                height={120}
+                src={organizationInfo?.logo || "/assets/images/user/2.png"}
+                alt="Profile"
+                className="profile-pic object-fit-cover"
+              />
+              <div className="edit-icon">
+                <Button onClick={toggleUpdateModal}>
+                  <i className="fa fa-pencil"></i>
+                </Button>
+              </div>
+            </div>
+            <CardTitle tag="h3" className="mt-5">
+              {organizationInfo?.name}
+            </CardTitle>
             <CardText className="text-muted">
               <strong>Network: </strong>{" "}
               {organizationInfo?.network?.name || "Not Avaiable"}
@@ -159,7 +162,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
         organizationData={organizationInfo} // Pass existing organization data
         onUpdateSuccess={() => fetchsetOrganizationInfo(null)}
       />
-    </Container>
+    </>
   );
 };
 
