@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
 import DangerZone from "./DangerZone/DangerZone";
+import OrganizationBreadcrumbs from "./OrganizationBreadcrumbs/OrganizationBreadcrumbs";
 import OrganizationBanner from "./OrganizationProfile/OrganizationBanner";
 
 const OrganizationContainer: React.FC = () => {
@@ -35,6 +36,9 @@ const OrganizationContainer: React.FC = () => {
   return (
     <>
       <Container fluid className="default-dashboard">
+        <Row>
+          <OrganizationBreadcrumbs />
+        </Row>
         <Row>
           <OrganizationBanner
             organizationInfo={organizationInfo}
