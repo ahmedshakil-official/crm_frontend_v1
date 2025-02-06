@@ -7,6 +7,7 @@ import { Container, Row } from "reactstrap";
 
 import { JointUserProps } from "@/Types/Organization/JointUserTypes";
 import CalenderContainer from "./components/Calender/CalenderContainer";
+import CaseDetails from "./components/CaseDetails/CaseDetails";
 import FileManager from "./components/FileManager";
 import JointUsers from "./components/JointUsers";
 import MeetingHistory from "./components/MeetingHistory";
@@ -69,6 +70,9 @@ const CaseContainer: React.FC = () => {
             isLoading={isLoading}
             fetchCaseInfo={fetchCaseInfo}
           />
+        </Row>
+        <Row>
+          <CaseDetails />
         </Row>
         <Row>
           <FileManager />
