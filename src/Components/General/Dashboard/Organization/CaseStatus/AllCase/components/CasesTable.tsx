@@ -23,7 +23,7 @@ import {
 
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import { toast } from "react-toastify";
-import "../../ActivityStatus.css";
+import "../../CaseStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 import DeleteCaseModal from "../../Modals/DeleteCaseModal";
 import UpdateCaseModal from "../../Modals/UpdateCaseModal";
