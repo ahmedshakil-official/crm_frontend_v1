@@ -1,15 +1,15 @@
 import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import { Card, Col } from "reactstrap";
-import ActivityStatusBody from "./ActivityStatusBody";
+import CaseStatusBody from "./CaseStatusBody";
 
-const ActivityStatus: React.FC<FetchLeadsProps> = ({
+const CaseStatus: React.FC<FetchLeadsProps> = ({
   isFetchedLead,
   setIsFetchedLead,
 }) => {
   return (
     <Col>
       <Card className="job-card">
-        <ActivityStatusBody
+        <CaseStatusBody
           isFetchedLead={isFetchedLead}
           setIsFetchedLead={setIsFetchedLead}
         />
@@ -18,4 +18,4 @@ const ActivityStatus: React.FC<FetchLeadsProps> = ({
   );
 };
 
-export default ActivityStatus;
+export default CaseStatus;

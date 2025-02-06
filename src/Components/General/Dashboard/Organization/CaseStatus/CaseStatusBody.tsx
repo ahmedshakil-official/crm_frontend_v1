@@ -5,11 +5,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Row, Table } from "reactstrap";
-import "./ActivityStatus.css";
-import ActivityStatusHeader from "./ActivityStatusHeader";
+import "./CaseStatus.css";
+import CaseStatusHeader from "./CaseStatusHeader";
 import DeleteCaseModal from "./Modals/DeleteCaseModal";
 
-const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
+const CaseStatusBody: React.FC<FetchLeadsProps> = ({
   isFetchedLead,
   setIsFetchedLead,
 }) => {
@@ -74,7 +74,7 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
   return (
     <div className="container pb-3">
       <Row className="mb-3">
-        <ActivityStatusHeader
+        <CaseStatusHeader
           setIsFetchedLead={setIsFetchedLead}
           isFetchedLead={isFetchedLead}
           fetchCaseInfo={fetchCaseInfo}
@@ -202,4 +202,4 @@ const ActivityStatusBody: React.FC<FetchLeadsProps> = ({
   );
 };
 
-export default ActivityStatusBody;
+export default CaseStatusBody;
