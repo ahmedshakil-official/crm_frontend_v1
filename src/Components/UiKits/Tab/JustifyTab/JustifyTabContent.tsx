@@ -8,6 +8,7 @@ import { TabContent, TabPane } from "reactstrap";
 export const JustifyTabContent: React.FC<SimpleTabContentProp> = ({ tabId }) => {
   return (
     <TabContent activeTab={tabId}>
+      <h3>hello</h3>
       {JustifyTabData &&
         JustifyTabData.map((item, index) => (
           <TabPane tabId={item.id} key={index}>

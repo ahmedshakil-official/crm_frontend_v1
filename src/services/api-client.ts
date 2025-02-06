@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 // Create a reusable Axios instance
 const apiClient = axios.create({
   // http://217.196.49.184:8000   api development base URL
-  baseURL: "http://217.196.49.184:8000", // Replace with your actual api base URL
+  baseURL: "http://80.65.208.86:5000", // Replace with your actual api base URL
   headers: {
     "Content-Type": "application/json",
   },
