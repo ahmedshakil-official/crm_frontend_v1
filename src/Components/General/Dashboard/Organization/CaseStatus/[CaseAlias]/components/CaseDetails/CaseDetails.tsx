@@ -34,7 +34,7 @@ const CaseDetails: React.FC = () => {
                     style={{ width: "16rem" }}
                     className={`${
                       basicTab === item.id ? "active" : ""
-                    } m-2 border border-success rounded p-3`}
+                    } m-2 border border-success rounded p-3 text-center`}
                     onClick={() => setBasicTab(item.id)}
                   >
                     {item.nav}
