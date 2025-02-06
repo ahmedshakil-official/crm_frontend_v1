@@ -1,10 +1,11 @@
 import React from "react";
 import { TabContent, TabPane } from "reactstrap";
+import { CaseDetailsFormTab } from "./CaseDetailsFormTab";
 
 export const CaseDetailsTabContent: React.FC = () => {
   return (
     <TabContent>
-      <h3>hello</h3>
+      <CaseDetailsFormTab/>
     </TabContent>
   );
 };
