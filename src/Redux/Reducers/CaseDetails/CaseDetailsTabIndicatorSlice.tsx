@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  basicTabId: null,
+  basicTabId: "1",
 };
 
 const CaseDetailsTabIndicatorSlice = createSlice({
