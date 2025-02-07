@@ -1,21 +1,27 @@
 import React from "react";
-import { TabContent, TabPane } from "reactstrap";
+import { TabContent, TabPane, Row, Col } from "reactstrap";
 import { SimpleTabContentProp } from "@/Types/UiKitsType";
-import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/Step1Data"; // Ensure correct import
-import FormField from "./LoanDetails/LoanDetailsFormFields"; // Ensure correct import
+import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/Step1Data";
+import FormField from "./LoanDetails/LoanDetailsFormFields";
 
 export const CaseDetailsFormTabContent: React.FC<SimpleTabContentProp> = ({
   tabId,
 }) => {
+  const fields =
+    LoanDetailsFormFields[tabId as keyof typeof LoanDetailsFormFields];
+
   return (
-    <TabContent activeTab={tabId} className=" my-5">
+    <TabContent activeTab={tabId} className="my-5">
       <TabPane tabId={tabId}>
-        {/* Ensure tabId is a valid key */}
-        {LoanDetailsFormFields[
-          tabId as keyof typeof LoanDetailsFormFields
-        ]?.map((field) => (
-          <FormField key={field.name} {...field} />
-        ))}
+        <Row className="gx-5 gy-3">
+          {fields?.map((field, idx) => (
+            <Col key={field.name} md={6}>
+              {" "}
+              {/* Each column will take up 50% of the width */}
+              <FormField {...field} />
+            </Col>
+          ))}
+        </Row>
       </TabPane>
     </TabContent>
   );

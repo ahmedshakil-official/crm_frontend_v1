@@ -1,7 +1,14 @@
 import { FormGroup, Input, Label } from "reactstrap";
 
 // In FormField.tsx or wherever you define the FormFieldProps interface
-export type InputType = "text" | "email" | "number" | "select" | "date" ;
+export type InputType =
+  | "text"
+  | "email"
+  | "number"
+  | "select"
+  | "date"
+  | "textarea"
+  | "radio";
 
 interface FormFieldProps {
   name: string;
@@ -17,7 +24,7 @@ const FormField: React.FC<FormFieldProps> = ({
   options,
 }) => {
   return (
-    <FormGroup className=" text-start">
+    <FormGroup className=" text-start grid g-3 col">
       <Label for={name}>{label}</Label>
       {type === "select" ? (
         <Input type="select" name={name} id={name}>
@@ -30,7 +37,7 @@ const FormField: React.FC<FormFieldProps> = ({
         </Input>
       ) : (
         <Input
-          type={type as InputType}
+          type={type}
           name={name}
           id={name}
           placeholder={`Enter ${label}`}
