@@ -324,6 +324,16 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       type: "text" as InputType, // Explicitly cast to InputType
     },
     {
+      name: "TermYear",
+      label: "Term in Year",
+      type: "number" as InputType, // Explicitly cast to InputType
+    },
+    {
+      name: "TermMonth",
+      label: "Term in Month",
+      type: "number" as InputType, // Explicitly cast to InputType
+    },
+    {
       name: "OutstandingBalance",
       label: "Outstanding Balance",
       type: "text" as InputType, // Explicitly cast to InputType
