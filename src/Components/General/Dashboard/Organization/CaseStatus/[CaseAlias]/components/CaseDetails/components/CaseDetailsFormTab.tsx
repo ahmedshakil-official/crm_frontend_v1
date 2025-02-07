@@ -12,7 +12,7 @@ export const CaseDetailsFormTab = () => {
       <Card>
         <CardBody className="text-center">
           <Nav tabs className="border-tab mb-0 d-flex justify-content-center">
-            {CaseDetailsFormTabTitleData.map((item) => (
+            {CaseDetailsFormTabTitleData[0].map((item) => (
               <NavItem key={item.id}>
                 <NavLink
                   href={Href}
