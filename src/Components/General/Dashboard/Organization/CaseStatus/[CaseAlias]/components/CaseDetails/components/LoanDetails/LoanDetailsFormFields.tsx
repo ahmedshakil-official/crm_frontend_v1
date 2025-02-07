@@ -10,11 +10,12 @@ export type InputType =
   | "textarea"
   | "radio";
 
-interface FormFieldProps {
+export interface FormFieldProps {
   name: string ;
   label: string;
   type: InputType;
   options?: string[];
+  required?:boolean;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -22,6 +23,7 @@ const FormField: React.FC<FormFieldProps> = ({
   label,
   type,
   options,
+  required
 }) => {
   return (
     <FormGroup className=" text-start grid g-3 col">
@@ -40,6 +42,7 @@ const FormField: React.FC<FormFieldProps> = ({
           type={type}
           name={name}
           id={name}
+          required={required}
           placeholder={`Enter ${label}`}
         />
       )}
