@@ -18,7 +18,6 @@ export const CaseDetailsFormTabContent: React.FC<SimpleTabContentProp> = ({
         <Row className="gx-5 gy-3">
           {fields?.map((field, idx) => (
             <Col key={field.name} md={6}>
-              {" "}
               {/* Each column will take up 50% of the width */}
               <FormField {...field} />
             </Col>

@@ -9,7 +9,7 @@ export type InputType =
   | "textarea"
   | "radio";
 
-interface FormFieldProps {
+export interface FormFieldProps {
   name: string;
   label: string;
   type: InputType;

@@ -1,7 +1,7 @@
-import { InputType } from "@/Components/General/Dashboard/Organization/CaseStatus/[CaseAlias]/components/CaseDetails/components/LoanDetails/LoanDetailsFormFields";
+import { FormFieldProps, InputType } from "@/Components/General/Dashboard/Organization/CaseStatus/[CaseAlias]/components/CaseDetails/components/LoanDetails/LoanDetailsFormFields";
 
 // Ensure LoanDetailsFormFields data is properly typed with InputType for `type`
-export const LoanDetailsFormFields = {
+export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
   "1": [
     {
       name: "ApplicationType",
