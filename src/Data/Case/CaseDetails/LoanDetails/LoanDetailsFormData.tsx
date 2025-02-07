@@ -1,4 +1,7 @@
-import { FormFieldProps, InputType } from "@/Components/General/Dashboard/Organization/CaseStatus/[CaseAlias]/components/CaseDetails/components/LoanDetails/LoanDetailsFormFields";
+import {
+  FormFieldProps,
+  InputType,
+} from "@/Components/General/Dashboard/Organization/CaseStatus/[CaseAlias]/components/CaseDetails/components/LoanDetails/LoanDetailsFormFields";
 
 // Ensure LoanDetailsFormFields data is properly typed with InputType for `type`
 export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
@@ -301,16 +304,19 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       name: "PurchasePrice",
       label: "Property Valuation",
       type: "text" as InputType,
+      required: true,
     },
     {
       name: "LoanAmount",
       label: "Loan Amount",
       type: "text" as InputType,
+      required: true,
     },
     {
       name: "EstimatedValue",
       label: "Estimated Value",
       type: "text" as InputType,
+      required: true,
     },
     {
       name: "LTV",
