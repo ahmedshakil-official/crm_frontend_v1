@@ -11,7 +11,6 @@ export type InputType =
 
 export interface FormFieldProps {
   name: string;
-
   label: string;
   type: InputType;
   options?: string[];
