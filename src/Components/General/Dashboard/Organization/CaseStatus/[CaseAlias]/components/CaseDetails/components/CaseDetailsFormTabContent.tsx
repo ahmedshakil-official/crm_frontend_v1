@@ -4,6 +4,8 @@ import { SimpleTabContentProp } from "@/Types/UiKitsType";
 import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/Step1Data";
 import FormField from "./LoanDetails/LoanDetailsFormFields";
 
+
+
 export const CaseDetailsFormTabContent: React.FC<SimpleTabContentProp> = ({
   tabId,
 }) => {
@@ -16,9 +18,10 @@ export const CaseDetailsFormTabContent: React.FC<SimpleTabContentProp> = ({
         <Row className="gx-5 gy-3">
           {fields?.map((field, idx) => (
             <Col key={field.name} md={6}>
-              {" "}
+             
               {/* Each column will take up 50% of the width */}
               <FormField {...field} />
+              
             </Col>
           ))}
         </Row>
@@ -26,3 +29,4 @@ export const CaseDetailsFormTabContent: React.FC<SimpleTabContentProp> = ({
     </TabContent>
   );
 };
+
