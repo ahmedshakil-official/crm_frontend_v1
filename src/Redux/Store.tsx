@@ -16,6 +16,7 @@ import BookmarkTabSlice from "./Reducers/BookmarkTabSlice";
 import ToDoSlice from "./Reducers/ToDoSlice";
 import ChatSlice from "./Reducers/ChatSlice";
 import ThemeCustomizerReducer from "./Reducers/ThemeCustomizerReducer";
+import CaseDetailsTabIndicatorReducer from "./Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const Store = configureStore({
   reducer: {
@@ -25,17 +26,18 @@ const Store = configureStore({
     filterData: FilterSlice,
     product: ProductSlice,
     cartData: CartSlice,
-    letterBox:LetterBoxSlice,
+    letterBox: LetterBoxSlice,
     project: ProjectSlice,
     contact: ContactReducer,
     task: TaskSlice,
-    bookmarkTab:BookmarkTabSlice,
-    todo:ToDoSlice,
-    chat:ChatSlice,
+    bookmarkTab: BookmarkTabSlice,
+    todo: ToDoSlice,
+    chat: ChatSlice,
     twoFactor: TwoFactorSlice,
     formWizardTwo: FormWizardTwoSlice,
     formWizardOne: FormWizardOne,
     themeCustomizer: ThemeCustomizerReducer,
+    caseDetails: CaseDetailsTabIndicatorReducer,
   },
 });
 

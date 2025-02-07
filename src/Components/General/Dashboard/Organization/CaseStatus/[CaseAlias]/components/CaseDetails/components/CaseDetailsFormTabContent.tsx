@@ -1,15 +1,17 @@
 import React from "react";
 import { TabContent, TabPane, Row, Col } from "reactstrap";
 import { SimpleTabContentProp } from "@/Types/UiKitsType";
-import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/Step1Data";
+import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/LoanDetailsFormData";
 import FormField from "./LoanDetails/LoanDetailsFormFields";
+import { useAppSelector } from "@/Redux/Hooks";
 
 export const CaseDetailsFormTabContent: React.FC<SimpleTabContentProp> = ({
   tabId,
 }) => {
+    const value = useAppSelector((state) => state.caseDetails.basicTabId);
+    
   const fields =
     LoanDetailsFormFields[tabId as keyof typeof LoanDetailsFormFields];
-
   return (
     <TabContent activeTab={tabId} className="my-5">
       <TabPane tabId={tabId}>
