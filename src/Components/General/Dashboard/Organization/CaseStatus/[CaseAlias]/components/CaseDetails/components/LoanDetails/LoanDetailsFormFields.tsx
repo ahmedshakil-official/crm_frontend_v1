@@ -11,7 +11,7 @@ export type InputType =
   | "radio";
 
 interface FormFieldProps {
-  name: string;
+  name: string ;
   label: string;
   type: InputType;
   options?: string[];
