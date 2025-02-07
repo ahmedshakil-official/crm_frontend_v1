@@ -8,15 +8,14 @@ import {
   NavLink,
 } from "reactstrap";
 import { Href } from "@/Constant";
-import { useState } from "react";
 import { CaseDetailsTabTitleData } from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
 import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { basicTabIndicator } from "@/Redux/Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const CaseDetails: React.FC = () => {
-  const [basicTab, setBasicTab] = useState("1");
-  const dispatch=useAppDispatch();
+  const basicTab = useAppSelector((state) => state.caseDetails.basicTabId);
+  const dispatch = useAppDispatch();
 
   return (
     <Col sm="12" className="box-col-12">
@@ -40,7 +39,6 @@ const CaseDetails: React.FC = () => {
                       basicTab === item.id ? "active" : ""
                     } m-2 border border-success rounded p-3 text-center`}
                     onClick={() => {
-                      setBasicTab(item.id); // ✅ Sets the tab
                       dispatch(basicTabIndicator(item.id)); // ✅ Dispatches the action with correct payload
                     }}
                   >
