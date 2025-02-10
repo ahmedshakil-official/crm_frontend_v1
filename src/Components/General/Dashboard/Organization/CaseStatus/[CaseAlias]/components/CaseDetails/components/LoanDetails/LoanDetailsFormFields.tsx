@@ -1,4 +1,4 @@
-import { FormGroup, Input, Label } from "reactstrap";
+import { FormGroup, Input, Label, FormFeedback } from "reactstrap";
 
 export type InputType =
   | "text"
@@ -15,6 +15,9 @@ export interface FormFieldProps {
   type: InputType;
   options?: string[];
   required?: boolean;
+  value: string;
+  onChange: (value: string) => void;
+  error?: string; // Added error prop
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -23,14 +26,24 @@ const FormField: React.FC<FormFieldProps> = ({
   type,
   options,
   required,
+  value,
+  onChange,
+  error,
 }) => {
   return (
     <FormGroup className="text-start grid g-3 col">
-      <Label for={name}>{label}</Label>
-
-      {/* Render Select Dropdown */}
+      <Label for={name}>
+        {label} {required && <span className="text-danger">*</span>}
+      </Label>
       {type === "select" ? (
-        <Input type="select" name={name} id={name}>
+        <Input
+          type="select"
+          name={name}
+          id={name}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          invalid={!!error} // Apply Bootstrap error styling
+        >
           <option value="">Select {label}</option>
           {options?.map((option, idx) => (
             <option key={idx} value={option}>
@@ -39,26 +52,36 @@ const FormField: React.FC<FormFieldProps> = ({
           ))}
         </Input>
       ) : type === "radio" ? (
-        // Render Radio Buttons
         <div>
           {["Yes", "No"].map((option) => (
             <FormGroup check key={option}>
               <Label check>
-                <Input type="radio" name={name} value={option} /> {option}
+                <Input
+                  type="radio"
+                  name={name}
+                  value={option}
+                  checked={value === option}
+                  onChange={(e) => onChange(e.target.value)}
+                />{" "}
+                {option}
               </Label>
             </FormGroup>
           ))}
         </div>
       ) : (
-        // Render Other Input Types (text, number, email, etc.)
         <Input
           type={type}
           name={name}
           id={name}
+          value={value}
           required={required}
           placeholder={`Enter ${label}`}
+          onChange={(e) => onChange(e.target.value)}
+          invalid={!!error} // Apply Bootstrap error styling
         />
       )}
+      {error && <FormFeedback>{error}</FormFeedback>}{" "}
+      {/* Show validation message */}
     </FormGroup>
   );
 };
