@@ -16,9 +16,9 @@ export interface FormFieldProps {
   options?: string[];
   required?: boolean;
   values?: string[];
-  value: string,
-  onChange: (value: string) => void;
-  error?: string; // Added error prop
+  value: string | boolean; // Allow both string and boolean
+  onChange: (value: string | boolean) => void; // onChange will handle both
+  error?: string;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -42,13 +42,13 @@ const FormField: React.FC<FormFieldProps> = ({
           type="select"
           name={name}
           id={name}
-          value={values}
+          value={value}
           onChange={(e) => onChange(e.target.value)}
-          invalid={!!error} // Apply Bootstrap error styling
+          invalid={!!error}
         >
           <option value="">~~Select {label}~~</option>
           {options?.map((option, idx) => (
-            <option key={idx} value={values?.[idx] || option}>
+            <option key={idx} value={values?.[idx]}>
               {option}
             </option>
           ))}
@@ -61,9 +61,9 @@ const FormField: React.FC<FormFieldProps> = ({
                 <Input
                   type="radio"
                   name={name}
-                  value={option}
-                  checked={value === option}
-                  onChange={(e) => onChange(e.target.value)}
+                  value={option === "Yes" ? "true" : "false"}
+                  checked={value === (option === "Yes")}
+                  onChange={() => onChange(option === "Yes")}
                 />{" "}
                 {option}
               </Label>
@@ -79,11 +79,10 @@ const FormField: React.FC<FormFieldProps> = ({
           required={required}
           placeholder={`Enter ${label}`}
           onChange={(e) => onChange(e.target.value)}
-          invalid={!!error} // Apply Bootstrap error styling
+          invalid={!!error}
         />
       )}
-      {error && <FormFeedback>{error}</FormFeedback>}{" "}
-      {/* Show validation message */}
+      {error && <FormFeedback>{error}</FormFeedback>}
     </FormGroup>
   );
 };
