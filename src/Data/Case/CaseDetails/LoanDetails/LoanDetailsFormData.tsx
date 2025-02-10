@@ -26,9 +26,10 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "RESIDENTIAL_MORTGAGE",
         "SECOND_CHARGE_MORTGAGE",
       ],
+      value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "ApplicationSubType",
@@ -38,7 +39,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "LendersReference",
@@ -47,7 +48,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "MortgageType",
@@ -75,9 +76,10 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "INVOICE_DISCOUNTING",
         "ASSET_FINANCE",
       ],
+      value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "LoanPurpose",
@@ -109,9 +111,10 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "RATE_SWITCH",
         "TAX_BILL",
       ],
+      value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "BorrowerType",
@@ -154,7 +157,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "InterestRateType",
@@ -181,7 +184,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "ProductTerm",
@@ -207,7 +210,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "LenderId",
@@ -445,9 +448,10 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "WEST_BROMWICH_BUILDING_SOCIETY",
         "WEST_ONE_LOANS",
       ],
+      value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "RepaymentType",
@@ -458,7 +462,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "RepaymentVehicle",
@@ -491,7 +495,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "RepaymentVehicleOther",
@@ -500,7 +504,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
   ],
   "2": [
@@ -512,7 +516,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "LoanAmount",
@@ -522,7 +526,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "EstimatedValue",
@@ -532,7 +536,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "LTV",
@@ -541,7 +545,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "TermYear",
@@ -550,7 +554,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "TermMonth",
@@ -559,7 +563,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "OutstandingBalance",
@@ -568,7 +572,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "CurrentMonthlyPayment",
@@ -577,7 +581,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "CurrentLenderId",
@@ -738,7 +742,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "OriginalPurchasePrice",
@@ -747,7 +751,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "DateOfPurchase",
@@ -756,7 +760,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "AdviceLevel",
@@ -766,7 +770,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
   ],
   "3": [
@@ -777,7 +781,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "DIPExpiryDate",
@@ -786,7 +790,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "expectedCompletionDate",
@@ -795,7 +799,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "productExpiryDate",
@@ -804,7 +808,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
   ],
   "4": [
@@ -817,7 +821,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "BrokerSearch",
@@ -826,7 +830,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "NetworkMembersSearch",
@@ -835,7 +839,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "LeadSourceValue",
@@ -862,7 +866,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "IntroducerPaymentTerms",
@@ -878,7 +882,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "BrokerFee",
@@ -887,7 +891,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "CapitalRaisingReason",
@@ -896,7 +900,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "PreviousApplication",
@@ -906,7 +910,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
     {
       name: "CaseSummary",
@@ -915,7 +919,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
-      }
+      },
     },
   ],
 };

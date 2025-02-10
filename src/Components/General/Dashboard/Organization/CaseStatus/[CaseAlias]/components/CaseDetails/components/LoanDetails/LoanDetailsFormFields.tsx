@@ -15,7 +15,8 @@ export interface FormFieldProps {
   type: InputType;
   options?: string[];
   required?: boolean;
-  value: string;
+  values?: string[];
+  value: string,
   onChange: (value: string) => void;
   error?: string; // Added error prop
 }
@@ -26,6 +27,7 @@ const FormField: React.FC<FormFieldProps> = ({
   type,
   options,
   required,
+  values,
   value,
   onChange,
   error,
@@ -40,13 +42,13 @@ const FormField: React.FC<FormFieldProps> = ({
           type="select"
           name={name}
           id={name}
-          value={value}
+          value={values}
           onChange={(e) => onChange(e.target.value)}
           invalid={!!error} // Apply Bootstrap error styling
         >
-          <option value="">Select {label}</option>
+          <option value="">~~Select {label}~~</option>
           {options?.map((option, idx) => (
-            <option key={idx} value={option}>
+            <option key={idx} value={values?.[idx] || option}>
               {option}
             </option>
           ))}
