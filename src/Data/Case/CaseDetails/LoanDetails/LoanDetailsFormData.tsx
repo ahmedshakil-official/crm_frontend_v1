@@ -26,17 +26,28 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "RESIDENTIAL_MORTGAGE",
         "SECOND_CHARGE_MORTGAGE",
       ],
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "ApplicationSubType",
       label: "Application Sub Type",
       type: "select" as InputType, // Explicitly cast to InputType
       options: ["Regulated", "Non Regulated", "Unregulated"],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "LendersReference",
       label: "Lenders Reference",
-      type: "text" as InputType, // Explicitly cast to InputType
+      type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "MortgageType",
@@ -64,6 +75,9 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "INVOICE_DISCOUNTING",
         "ASSET_FINANCE",
       ],
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "LoanPurpose",
@@ -95,6 +109,9 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "RATE_SWITCH",
         "TAX_BILL",
       ],
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "BorrowerType",
@@ -134,6 +151,10 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "SHARED_EQUITY",
         "ISLAMIC_MORTGAGE",
       ],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "InterestRateType",
@@ -157,6 +178,10 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "CAPPED",
         "ALL",
       ],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "ProductTerm",
@@ -179,6 +204,10 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "FIVE_PLUS_YEARS",
         "FULL_TERM",
       ],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "LenderId",
@@ -416,6 +445,9 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "WEST_BROMWICH_BUILDING_SOCIETY",
         "WEST_ONE_LOANS",
       ],
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "RepaymentType",
@@ -423,6 +455,10 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       type: "select" as InputType,
       options: ["Capital and Interest", "Interest Only", "Part And Part"],
       values: ["CAPITAL_AND_INTEREST", "INTEREST_ONLY", "PART_AND_PART"],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "RepaymentVehicle",
@@ -452,11 +488,19 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "SALE_OF_NON_PROPERTY_ASSETS",
         "OTHER",
       ],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "RepaymentVehicleOther",
       label: "Repayment Vehicle Other",
       type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
   ],
   "2": [
@@ -465,43 +509,75 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Property Valuation",
       type: "text" as InputType,
       required: true,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "LoanAmount",
       label: "Loan Amount",
       type: "text" as InputType,
       required: true,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "EstimatedValue",
       label: "Estimated Value",
       type: "text" as InputType,
       required: true,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "LTV",
       label: "LTV",
-      type: "text" as InputType, // Explicitly cast to InputType
+      type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "TermYear",
       label: "Term in Year",
-      type: "number" as InputType, // Explicitly cast to InputType
+      type: "number" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "TermMonth",
       label: "Term in Month",
-      type: "number" as InputType, // Explicitly cast to InputType
+      type: "number" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "OutstandingBalance",
       label: "Outstanding Balance",
-      type: "text" as InputType, // Explicitly cast to InputType
+      type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "CurrentMonthlyPayment",
       label: "Current Monthly Payment",
-      type: "text" as InputType, // Explicitly cast to InputType
+      type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "CurrentLenderId",
@@ -659,22 +735,38 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "West Bromwich Building Society",
         "West One Loans",
       ],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "OriginalPurchasePrice",
       label: "Original Purchase Price",
-      type: "text" as InputType, // Explicitly cast to InputType
+      type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "DateOfPurchase",
       label: "Date Of Purchase",
-      type: "text" as InputType, // Explicitly cast to InputType
+      type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "AdviceLevel",
       label: "Advice Level",
       type: "select",
       options: ["Advising", "Execution Only"],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
   ],
   "3": [
@@ -682,21 +774,37 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       name: "DIPAcceptDate",
       label: "DIP Accept Date",
       type: "date" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "DIPExpiryDate",
       label: "DIP Expiry Date",
       type: "date" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "expectedCompletionDate",
       label: "Expected Completion Date",
       type: "date" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "productExpiryDate",
       label: "Product Expiry Date",
       type: "date" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
   ],
   "4": [
@@ -706,16 +814,28 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       type: "select" as InputType,
 
       options: ["Direct", "RDI"],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "BrokerSearch",
       label: "Introducer",
       type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "NetworkMembersSearch",
       label: "Introducer",
       type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "LeadSourceValue",
@@ -739,6 +859,10 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "REFERRALS",
         "WEBSITE",
       ],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "IntroducerPaymentTerms",
@@ -751,27 +875,47 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "On Completion",
       ],
       values: ["NOT_APPLICABLE", "ON_APPLICATION", "ON_OFFER", "ON_COMPLETION"],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "BrokerFee",
       label: "Introducer Fee",
       type: "text" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "CapitalRaisingReason",
       label: "Reasons for capital raising",
       type: "textarea" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "PreviousApplication",
       label: "Has this been accepted or declined with any lender already?",
       type: "radio" as InputType,
       options: ["Yes", "No"],
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
     {
       name: "CaseSummary",
       label: "Case Summary",
       type: "textarea" as InputType,
+      value: "",
+      onChange: function (value: string): void {
+        throw new Error("Function not implemented.");
+      }
     },
   ],
 };
