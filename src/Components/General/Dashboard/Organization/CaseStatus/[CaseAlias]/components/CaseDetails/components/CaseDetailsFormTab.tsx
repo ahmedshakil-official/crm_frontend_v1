@@ -1,5 +1,7 @@
+"use client";
+
 import { Href } from "@/Constant";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardBody, Col, Nav, NavItem, NavLink, Button } from "reactstrap";
 import { CaseDetailsFormTabContent } from "./CaseDetailsFormTabContent";
 import { CaseDetailsFormTabTitleData } from "@/Data/Case/CaseDetails/CaseDetailsFormTabTitleData";
@@ -13,7 +15,76 @@ export const CaseDetailsFormTab = () => {
   const dispatch = useAppDispatch();
   const fields = LoanDetailsFormFields;
 
-  // Function to go to the next tab
+  const [formData, setFormData] = useState<
+    Record<string, Record<string, string>>
+  >({});
+  const [errors, setErrors] = useState<Record<string, Record<string, string>>>(
+    {}
+  );
+
+  // Initialize formData and errors
+  useEffect(() => {
+    const initialFormData: Record<string, Record<string, string>> = {};
+    const initialErrors: Record<string, Record<string, string>> = {};
+
+    Object.entries(fields).forEach(([tabId, fieldList]) => {
+      initialFormData[tabId] = {};
+      initialErrors[tabId] = {};
+
+      fieldList.forEach((field) => {
+        initialFormData[tabId][field.name] = "";
+        if (field.required) {
+          initialErrors[tabId][field.name] = "This field is required";
+        }
+      });
+    });
+
+    setFormData(initialFormData);
+    setErrors(initialErrors);
+  }, []);
+
+  // Handle input change
+  const handleInputChange = (
+    tabId: string,
+    fieldName: string,
+    value: string
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [tabId]: {
+        ...prev[tabId],
+        [fieldName]: value,
+      },
+    }));
+
+    // Remove error if the user provides input
+    setErrors((prev) => ({
+      ...prev,
+      [tabId]: {
+        ...prev[tabId],
+        [fieldName]: value.trim() ? "" : "This field is required",
+      },
+    }));
+  };
+
+  // Check if form is valid (no empty required fields)
+  const isFormValid = () => {
+    return Object.values(errors).every((tab) =>
+      Object.values(tab).every((err) => err === "")
+    );
+  };
+
+  // Handle save form all tab data into one object
+  const handleSave = () => {
+    const mergedData = Object.values(formData).reduce((acc, tabData) => {
+      return { ...acc, ...tabData };
+    }, {});
+
+    console.log("Form submitted with data:", mergedData);
+    dispatch(basicTabIndicator((parseInt(value) + 1).toString()));
+  };
+
+  // Function to navigate tabs
   const nextTab = () => {
     const tabIds = Object.keys(fields);
     const currentIndex = tabIds.indexOf(basicTab);
@@ -22,20 +93,12 @@ export const CaseDetailsFormTab = () => {
     }
   };
 
-  // Function to go to the previous tab
   const prevTab = () => {
     const tabIds = Object.keys(fields);
     const currentIndex = tabIds.indexOf(basicTab);
     if (currentIndex > 0) {
       setBasicTab(tabIds[currentIndex - 1]);
     }
-  };
-
-  // Function to handle the "Save" action
-  const handleSave = () => {
-    // Replace this with your save logic
-    console.log("Form saved!");
-    dispatch(basicTabIndicator((parseInt(value) + 1).toString()));
   };
 
   // Check if current tab is the last one
@@ -69,9 +132,16 @@ export const CaseDetailsFormTab = () => {
                   </NavItem>
                 ))}
               </Nav>
+
               <div className="w-75 mx-auto">
-                {/* Pass the fields for the current active tab */}
-                <CaseDetailsFormTabContent tabId={basicTab} fields={fields} />
+                {/* Pass fields and error messages to the content component */}
+                <CaseDetailsFormTabContent
+                  tabId={basicTab}
+                  fields={fields}
+                  onInputChange={handleInputChange}
+                  formData={formData}
+                  errors={errors} // Pass errors to display validation messages
+                />
               </div>
 
               {/* Buttons to navigate between tabs */}
@@ -84,10 +154,16 @@ export const CaseDetailsFormTab = () => {
                 </Button>
                 <Button
                   onClick={isLastTab ? handleSave : nextTab}
-                  disabled={isLastTab && false} // Disable if "Save" should not be disabled
+                  disabled={isLastTab && !isFormValid()}
                 >
                   {isLastTab ? "Save" : "Next"}
                 </Button>
+              </div>
+              {/* Show error message if the form is invalid */}
+              <div className="text-danger mt-2">
+                {isLastTab &&
+                  !isFormValid() &&
+                  "Please fill in all required fields before saving."}
               </div>
             </>
           ) : (
