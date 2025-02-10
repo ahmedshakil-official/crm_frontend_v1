@@ -1,13 +1,17 @@
 import { TabContent, TabPane, Row, Col } from "reactstrap";
-import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/LoanDetailsFormData";
-import FormField from "./LoanDetails/LoanDetailsFormFields";
+import FormField, { FormFieldProps } from "./LoanDetails/LoanDetailsFormFields";
+import { JSX } from "react";
 
 export const CaseDetailsFormTabContent: React.FC<{
   tabId: string;
-  fields: typeof LoanDetailsFormFields;
-  onInputChange: (tabId: string, fieldName: string, value: string) => void;
-  formData: Record<string, Record<string, string>>;
-  errors: Record<string, Record<string, string>>; // Added errors prop
+  fields: any;
+  onInputChange: (
+    tabId: string,
+    fieldName: string,
+    value: string | boolean
+  ) => void;
+  formData: Record<string, Record<string, string | boolean>>;
+  errors: Record<string, Record<string, string>>;
 }> = ({ tabId, fields, onInputChange, formData, errors }) => {
   const currentFields = fields[tabId];
 
@@ -15,13 +19,16 @@ export const CaseDetailsFormTabContent: React.FC<{
     <TabContent activeTab={tabId} className="my-5">
       <TabPane tabId={tabId}>
         <Row className="gx-5 gy-3">
-          {currentFields?.map((field) => (
+          {currentFields?.map((field: JSX.IntrinsicAttributes & FormFieldProps) => (
             <Col key={field.name} md={6}>
               <FormField
                 {...field}
-                value={formData[tabId]?.[field.name] || ""}
+                value={
+                  formData[tabId]?.[field.name] ||
+                  (field.type === "radio" ? false : "")
+                }
                 onChange={(value) => onInputChange(tabId, field.name, value)}
-                error={errors[tabId]?.[field.name]} // Pass error message
+                error={errors[tabId]?.[field.name]}
               />
             </Col>
           ))}

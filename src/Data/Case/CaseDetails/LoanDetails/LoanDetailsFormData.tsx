@@ -27,7 +27,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "SECOND_CHARGE_MORTGAGE",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -37,7 +37,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       type: "select" as InputType, // Explicitly cast to InputType
       options: ["Regulated", "Non Regulated", "Unregulated"],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -46,7 +46,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Lenders Reference",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -77,7 +77,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "ASSET_FINANCE",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -112,7 +112,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "TAX_BILL",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -155,7 +155,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "ISLAMIC_MORTGAGE",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -182,7 +182,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "ALL",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -208,7 +208,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "FULL_TERM",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -449,7 +449,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "WEST_ONE_LOANS",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -460,7 +460,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       options: ["Capital and Interest", "Interest Only", "Part And Part"],
       values: ["CAPITAL_AND_INTEREST", "INTEREST_ONLY", "PART_AND_PART"],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -493,7 +493,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "OTHER",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -502,7 +502,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Repayment Vehicle Other",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -514,7 +514,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       type: "text" as InputType,
       required: true,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -524,7 +524,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       type: "text" as InputType,
       required: true,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -534,7 +534,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       type: "text" as InputType,
       required: true,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -543,7 +543,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "LTV",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -552,7 +552,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Term in Year",
       type: "number" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -561,7 +561,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Term in Month",
       type: "number" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -570,7 +570,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Outstanding Balance",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -579,7 +579,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Current Monthly Payment",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -740,7 +740,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "West One Loans",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -749,7 +749,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Original Purchase Price",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -758,7 +758,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Date Of Purchase",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -768,7 +768,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       type: "select",
       options: ["Advising", "Execution Only"],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -779,7 +779,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "DIP Accept Date",
       type: "date" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -788,7 +788,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "DIP Expiry Date",
       type: "date" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -797,7 +797,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Expected Completion Date",
       type: "date" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -806,7 +806,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Product Expiry Date",
       type: "date" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -819,7 +819,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
 
       options: ["Direct", "RDI"],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -828,7 +828,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Introducer",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -837,7 +837,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Introducer",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -864,7 +864,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "WEBSITE",
       ],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -880,7 +880,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       ],
       values: ["NOT_APPLICABLE", "ON_APPLICATION", "ON_OFFER", "ON_COMPLETION"],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -889,7 +889,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Introducer Fee",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -898,7 +898,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Reasons for capital raising",
       type: "textarea" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -908,7 +908,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       type: "radio" as InputType,
       options: ["Yes", "No"],
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -917,7 +917,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Case Summary",
       type: "textarea" as InputType,
       value: "",
-      onChange: function (value: string): void {
+      onChange: function (value: string |boolean): void {
         throw new Error("Function not implemented.");
       },
     },
