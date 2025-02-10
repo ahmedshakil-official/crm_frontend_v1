@@ -11,7 +11,6 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Application Type",
       type: "select" as InputType, // Explicitly cast to InputType
       options: [
-        "Select application type...",
         "Business Loan",
         "Buy to Let Mortgage",
         "Commercial Mortgage",
@@ -19,7 +18,14 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "Residential Mortgage",
         "Second Charge Mortgage",
       ],
-      value: "",
+      values: [
+        "BUSINESS_LOAN",
+        "BUY_TO_LET",
+        "COMMERCIAL_MORTGAGE",
+        "HMO_MORTGAGE",
+        "RESIDENTIAL_MORTGAGE",
+        "SECOND_CHARGE_MORTGAGE",
+      ],
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
       }
@@ -58,7 +64,17 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "Invoice Discounting",
         "Asset Finance",
       ],
-      value: "",
+      values: [
+        "PURCHASE",
+        "REMORTGAGE",
+        "SECURED_LOAN",
+        "FURTHER_ADVANCE",
+        "PRODUCT_TRANSFER",
+        "OTHER",
+        "UNSECURED",
+        "INVOICE_DISCOUNTING",
+        "ASSET_FINANCE",
+      ],
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
       }
@@ -68,7 +84,6 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Loan Purpose",
       type: "select" as InputType, // Explicitly cast to InputType
       options: [
-        "Select...",
         "Purchase",
         "Like for Like Remortgage",
         "Business Purposes",
@@ -81,7 +96,19 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "Rate Switch (switch to better rate)",
         "Tax Bill",
       ],
-      value: "",
+      values: [
+        "PURCHASE",
+        "LIKE_FOR_LIKE_REMORTGAGE",
+        "BUSINESS_PURPOSES",
+        "DEBT_CONSOLIDATION",
+        "DIVORCE_SETTLEMENT",
+        "HOLIDAYS_CARS",
+        "HOME_IMPROVEMENTS",
+        "OTHER_PROPERTY_PURCHASE",
+        "SCHOOL_FEES",
+        "RATE_SWITCH",
+        "TAX_BILL",
+      ],
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
       }
@@ -91,7 +118,6 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Borrower Type",
       type: "select" as InputType, // Explicitly cast to InputType
       options: [
-        "Select...",
         "Homemover",
         "First Time Buyer",
         "Re-Mortgage",
@@ -107,6 +133,23 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "Portfolio Landlord",
         "Shared Equity",
         "Islamic Mortgage",
+      ],
+      values: [
+        "HOMEMOVER",
+        "FIRST_TIME_BUYER",
+        "RE_MORTGAGE",
+        "CAPITAL_RAISE",
+        "HELP_TO_BUY",
+        "SHARED_OWNERSHIP",
+        "RIGHT_TO_BUY",
+        "LATER_LIFE_LENDING",
+        "EQUITY_RELEASE",
+        "BUY_TO_LET",
+        "LET_TO_BUY",
+        "FIRST_TIME_LANDLORD",
+        "PORTFOLIO_LANDLORD",
+        "SHARED_EQUITY",
+        "ISLAMIC_MORTGAGE",
       ],
       value: "",
       onChange: function (value: string): void {
@@ -126,6 +169,15 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "Capped",
         "All",
       ],
+      values: [
+        "FIXED",
+        "VARIABLE",
+        "TRACKER",
+        "LIBOR_LINKED",
+        "DISCOUNT",
+        "CAPPED",
+        "ALL",
+      ],
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
@@ -144,6 +196,14 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "5+ Years",
         "Full Term",
       ],
+      values: [
+        "ONE_YEAR",
+        "TWO_YEARS",
+        "THREE_YEARS",
+        "FOUR_YEARS",
+        "FIVE_PLUS_YEARS",
+        "FULL_TERM",
+      ],
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
@@ -154,7 +214,6 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Lender",
       type: "select" as InputType, // Explicitly cast to InputType
       options: [
-        "Please Select...",
         "Accord Mortgages",
         "Ahli United Bank",
         "Al Rayan Bank",
@@ -300,7 +359,92 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "West Bromwich Building Society",
         "West One Loans",
       ],
-      value: "",
+      values: [
+        "ACCORD_MORTGAGES",
+        "AHLI_UNITED_BANK",
+        "AL_RAYAN_BANK",
+        "ALDERMORE_MORTGAGES",
+        "AMICUS_PLC",
+        "ASSETZ_CAPITAL",
+        "ATOM_BANK",
+        "AVIVA_EQUITY_RELEASE",
+        "AXIS_BANK",
+        "BANK_AND_CLIENTS_PLC",
+        "BANK_OF_CHINA",
+        "BANK_OF_CYPRUS_UK",
+        "BANK_OF_IRELAND",
+        "BARCLAYS",
+        "BARCLAYS_COMMERCIAL",
+        "BATH_BUILDING_SOCIETY",
+        "BEVERLEY_BUILDING_SOCIETY",
+        "BLUESTONE_MORTGAGES",
+        "BLUEZEST",
+        "BM_SOLUTIONS",
+        "BOOST_CAPITAL",
+        "BRIDGEWATER_EQUITY_RELEASE",
+        "BUCKINGHAMSHIRE_BUILDING_SOCIETY",
+        "CAMBRIDGE_AND_COUNTIES_BANK",
+        "CAMBRIDGE_BUILDING_SOCIETY",
+        "CENTRAL_TRUST",
+        "CHARTERBANK",
+        "CHL_MORTGAGES",
+        "CHORLEY_DISTRICT_BUILDING_SOCIETY",
+        "CLEARLY_LOANS",
+        "COUTTS",
+        "COVENTRY_BUILDING_SOCIETY",
+        "CROWN_EQUITY_RELEASE",
+        "CUMBERLAND_BUILDING_SOCIETY",
+        "DANSKE_BANK",
+        "DARLINGTON_BUILDING_SOCIETY",
+        "DIGITAL_MORTGAGES",
+        "DUDLEY_BUILDING_SOCIETY",
+        "EARL_SHILTON_BUILDING_SOCIETY",
+        "ECOLOGY_BUILDING_SOCIETY",
+        "EQUIFINANCE",
+        "FAMILY_BUILDING_SOCIETY",
+        "FINSEC",
+        "FIRST_TRUST_BANK",
+        "FLEET_MORTGAGES",
+        "FOUNDATION_HOME_LOANS",
+        "FURNESS_BUILDING_SOCIETY",
+        "GATEHOUSE_BANK",
+        "GENERATION_HOME",
+        "GODIVA_MORTGAGES",
+        "HALIFAX",
+        "HAMPSHIRE_TRUST_BANK",
+        "HANDELSBANKEN",
+        "HANLEY_ECONOMIC_BUILDING_SOCIETY",
+        "HARPDEN_BUILDING_SOCIETY",
+        "HSBC",
+        "ICICI_BANK",
+        "INTERBAY_COMMERCIAL",
+        "INVESTEC",
+        "IPSWICH_BUILDING_SOCIETY",
+        "JUST_RETIREMENT_SOLUTIONS",
+        "KENSINGTON_MORTGAGES",
+        "KENT_RELIANCE",
+        "KEYSTONE_PROPERTY_FINANCE",
+        "LEEDS_BUILDING_SOCIETY",
+        "LEEK_UNITED_BUILDING_SOCIETY",
+        "METRO_BANK",
+        "MONMOUTHSHIRE_BUILDING_SOCIETY",
+        "NATIONWIDE",
+        "NATWEST",
+        "NOTTINGHAM_BUILDING_SOCIETY",
+        "PARAGON_MORTGAGES",
+        "PEPPER_MONEY",
+        "POST_OFFICE_MORTGAGES",
+        "PRINCIPALITY_BUILDING_SOCIETY",
+        "SANTANDER",
+        "SKIPTON_BUILDING_SOCIETY",
+        "TSB",
+        "ULSTER_BANK",
+        "UNKNOWN",
+        "UNKNOWN_DEFAULT",
+        "VIDA_HOMELOANS",
+        "WEST_BROMWICH_BUILDING_SOCIETY",
+        "WEST_ONE_LOANS",
+      ],
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
       }
@@ -310,6 +454,7 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Repayment Method",
       type: "select" as InputType,
       options: ["Capital and Interest", "Interest Only", "Part And Part"],
+      values: ["CAPITAL_AND_INTEREST", "INTEREST_ONLY", "PART_AND_PART"],
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
@@ -320,7 +465,6 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Repayment Vehicle",
       type: "select" as InputType,
       options: [
-        "Select...",
         "Endowment",
         "Individual Savings Account",
         "Pension",
@@ -331,6 +475,18 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "Revert to Capital Repayment",
         "Sale of non-Property Assets",
         "Other",
+      ],
+      values: [
+        "ENDOWMENT",
+        "INDIVIDUAL_SAVINGS_ACCOUNT",
+        "PENSION",
+        "SALE_OF_MORTGAGED_PROPERTY",
+        "SALE_OF_OTHER_PROPERTY",
+        "INHERITANCE",
+        "MORTGAGE_LINKED_INVESTMENT",
+        "REVERT_TO_CAPITAL_REPAYMENT",
+        "SALE_OF_NON_PROPERTY_ASSETS",
+        "OTHER",
       ],
       value: "",
       onChange: function (value: string): void {
@@ -686,7 +842,6 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       label: "Lead Source",
       type: "select" as InputType,
       options: [
-        "Select lead source..",
         "Facebook",
         "Estate Agents",
         "TV3",
@@ -695,22 +850,31 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
         "Referrals",
         "Website",
       ],
+      values: [
+        "FACEBOOK",
+        "ESTATE_AGENTS",
+        "TV3",
+        "FAMILY",
+        "FRIENDS",
+        "REFERRALS",
+        "WEBSITE",
+      ],
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
       }
     },
     {
-      name: "BrokerPaymentTerms",
+      name: "IntroducerPaymentTerms",
       label: "Introducer Payment Terms",
       type: "select" as InputType,
-
       options: [
         "Not Applicable",
         "On Application",
         "On Offer",
         "On Completion",
       ],
+      values: ["NOT_APPLICABLE", "ON_APPLICATION", "ON_OFFER", "ON_COMPLETION"],
       value: "",
       onChange: function (value: string): void {
         throw new Error("Function not implemented.");
