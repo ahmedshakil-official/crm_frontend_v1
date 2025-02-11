@@ -16,8 +16,8 @@ export interface FormFieldProps {
   options?: string[];
   required?: boolean;
   values?: string[];
-  value: string | boolean | number | Date; // Allow both string and boolean
-  onChange: (value: string | boolean | number) => void; // onChange will handle both
+  value: string | boolean | number | Date | null; // Allow both string and boolean
+  onChange: (value: string | boolean | number | null) => void; // onChange will handle both
   error?: string;
 }
 
@@ -75,10 +75,14 @@ const FormField: React.FC<FormFieldProps> = ({
           type={type}
           name={name}
           id={name}
-          value={value}
+          value={type === "date" && !value ? "" : value} // Ensure empty date field shows as ""
           required={required}
           placeholder={`Enter ${label}`}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) =>
+            onChange(
+              type === "date" && e.target.value === "" ? null : e.target.value
+            )
+          }
           invalid={!!error}
         />
       )}
