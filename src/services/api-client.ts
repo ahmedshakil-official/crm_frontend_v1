@@ -3,13 +3,10 @@ import { getSession } from "next-auth/react";
 
 // Create a reusable Axios instance
 const apiClient = axios.create({
-  // http://217.196.49.184:8000   api development base URL
-  baseURL: "http://80.65.208.86:5000", // Replace with your actual api base URL
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
-
-  // Replace with your actual api base URL
 });
 
 console.log("inside intercepto r  filessss", {

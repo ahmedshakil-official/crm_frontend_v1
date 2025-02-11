@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getSession } from "next-auth/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://80.65.208.86:5000",
+  baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
   // credentials: "include",
   prepareHeaders: async (headers) => {
     const session = await getSession();
