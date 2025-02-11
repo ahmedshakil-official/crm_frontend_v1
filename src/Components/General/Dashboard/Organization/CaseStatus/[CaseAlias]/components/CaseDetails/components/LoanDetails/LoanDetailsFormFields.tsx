@@ -16,8 +16,8 @@ export interface FormFieldProps {
   options?: string[];
   required?: boolean;
   values?: string[];
-  value: string | boolean; // Allow both string and boolean
-  onChange: (value: string | boolean) => void; // onChange will handle both
+  value: string | boolean | number | Date; // Allow both string and boolean
+  onChange: (value: string | boolean | number) => void; // onChange will handle both
   error?: string;
 }
 

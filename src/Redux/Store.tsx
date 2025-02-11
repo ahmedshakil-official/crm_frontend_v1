@@ -17,9 +17,11 @@ import ToDoSlice from "./Reducers/ToDoSlice";
 import ChatSlice from "./Reducers/ChatSlice";
 import ThemeCustomizerReducer from "./Reducers/ThemeCustomizerReducer";
 import CaseDetailsTabIndicatorReducer from "./Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { baseApi } from "./Api/BaseApi";
 
 const Store = configureStore({
   reducer: {
+    [baseApi.reducerPath]: baseApi.reducer,
     layout: LayoutSlice,
     bookmarkHeader: BookmarkHeaderSlice,
     addProduct: AddProductSlice,
@@ -39,6 +41,8 @@ const Store = configureStore({
     themeCustomizer: ThemeCustomizerReducer,
     caseDetails: CaseDetailsTabIndicatorReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
 export default Store;
