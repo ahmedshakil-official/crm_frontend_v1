@@ -83,14 +83,31 @@ export const CaseDetailsFormTab = () => {
       },
     }));
 
-    setErrors((prev) => ({
-      ...prev,
-      [tabId]: {
-        ...prev[tabId],
-        [fieldName]: value ? "" : "This field is required",
-      },
-    }));
+    setErrors((prev) => {
+      // Check if the field is a date type and if its value is empty
+      const isDateField = fields[tabId]?.some(
+        (field: FormFieldProps) =>
+          field.name === fieldName && field.type === "date"
+      );
+
+      // If it's a date field and empty, don't mark as required
+      const errorMessage =
+        isDateField && (value === "" || value === null)
+          ? ""
+          : value
+          ? ""
+          : "This field is required";
+
+      return {
+        ...prev,
+        [tabId]: {
+          ...prev[tabId],
+          [fieldName]: errorMessage,
+        },
+      };
+    });
   };
+
 
   // Check if form is valid
   const isFormValid = () => {
