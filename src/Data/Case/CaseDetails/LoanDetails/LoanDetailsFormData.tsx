@@ -547,6 +547,24 @@ export const LoanDetailsFormFields: Record<string, Array<FormFieldProps>> = {
       },
     },
     {
+      name: "deposit_amount",
+      label: "Deposit Amount",
+      type: "number" as InputType,
+      value: 0,
+      onChange: function (value: string | boolean | number | null): void {
+        throw new Error("Function not implemented.");
+      },
+    },
+    {
+      name: "deposit_source",
+      label: "Deposit Source",
+      type: "text" as InputType,
+      value: "",
+      onChange: function (value: string | boolean | number | null): void {
+        throw new Error("Function not implemented.");
+      },
+    },
+    {
       name: "interest_only_amount",
       label: "Interest Only Amount",
       type: "number" as InputType,

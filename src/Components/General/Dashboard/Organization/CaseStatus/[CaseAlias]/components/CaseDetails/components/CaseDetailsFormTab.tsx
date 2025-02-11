@@ -1,23 +1,24 @@
-import { useState, useEffect } from "react";
-import {
-  Card,
-  CardBody,
-  Col,
-  Nav,
-  NavItem,
-  NavLink,
-  Button,
-  Row,
-} from "reactstrap";
-import FormField, { FormFieldProps } from "./LoanDetails/LoanDetailsFormFields";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/LoanDetailsFormData";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import {
   useGetCaseLoanDetailsQuery,
   useGetLoanDetailsQuery,
   useUpdateLoanDetailsMutation,
 } from "@/Redux/Reducers/CaseDetails/LoanDetails/LoanDetailsApi";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  Button,
+  Card,
+  CardBody,
+  Col,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+} from "reactstrap";
+import FormField, { FormFieldProps } from "./LoanDetails/LoanDetailsFormFields";
 
 export const CaseDetailsFormTab = () => {
   // State for controlling tabs and fetching data
@@ -174,10 +175,9 @@ export const CaseDetailsFormTab = () => {
         loanDetails_alias: casedata?.[0]?.alias || "", // Handle alias properly
         mergedData,
       }).unwrap();
-
-      alert("Data saved successfully!");
+      toast.success("Data saved successfully!");
     } catch (error) {
-      alert("Failed to save data.");
+      toast.error("Failed to save data!");
     }
   };
 
@@ -208,7 +208,10 @@ export const CaseDetailsFormTab = () => {
     return <div>Loading...</div>;
 
   // Display error message if there's an error fetching the data
-  if (isError) return <div>Error fetching data!</div>;
+  if (isError)
+    return (
+      <div className="text-center text-danger fs-3">Error fetching data!</div>
+    );
 
   return (
     <Col xxl="12">
@@ -286,8 +289,10 @@ export const CaseDetailsFormTab = () => {
               )}
             </>
           ) : (
-            <div className="text-center p-4">
-              <p>No form available for this selection.</p>
+            <div className="text-center p-2">
+              <p className="fs-3 text-warning">
+                No form available for this selection.
+              </p>
             </div>
           )}
         </CardBody>
