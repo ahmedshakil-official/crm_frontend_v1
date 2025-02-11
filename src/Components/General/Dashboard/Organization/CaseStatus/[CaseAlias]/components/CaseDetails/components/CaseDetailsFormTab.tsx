@@ -13,26 +13,44 @@ import FormField, { FormFieldProps } from "./LoanDetails/LoanDetailsFormFields";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/LoanDetailsFormData";
 import {
+  useGetCaseLoanDetailsQuery,
   useGetLoanDetailsQuery,
   useUpdateLoanDetailsMutation,
 } from "@/Redux/Reducers/CaseDetails/LoanDetails/LoanDetailsApi";
+import { useParams } from "next/navigation";
 
 export const CaseDetailsFormTab = () => {
+  // State for controlling tabs and fetching data
   const [basicTab, setBasicTab] = useState("1");
   const value = useAppSelector((state) => state.caseDetails.basicTabId);
   const dispatch = useAppDispatch();
   const fields = LoanDetailsFormFields;
+  const params = useParams();
+  const { casealias } = params;
 
-  // Fetch data from server
+  // Fetch case loan details based on the case alias
+  const { data: casedata, isLoading: isCaseLoanDetilsLoading } =
+    useGetCaseLoanDetailsQuery(casealias);
+
+  // Fetch loan details only when casedata alias is available
   const {
     data: serverData,
     isLoading,
     isError,
-  } = useGetLoanDetailsQuery(undefined);
+  } = useGetLoanDetailsQuery(
+    casedata?.[0]?.alias
+      ? {
+          case_alias: casealias,
+          loanDetails_alias: casedata?.[0]?.alias,
+        }
+      : null // Avoid triggering the query if there's no alias
+  );
+
+  // Mutation hook to update loan details
   const [updateLoanDetails, { isLoading: isSaving }] =
     useUpdateLoanDetailsMutation();
 
-  // State for form fields
+  // State for form data and error tracking
   const [formData, setFormData] = useState<
     Record<string, Record<string, string | boolean | number | null>>
   >({});
@@ -49,13 +67,17 @@ export const CaseDetailsFormTab = () => {
       > = {};
       const initialErrors: Record<string, Record<string, string>> = {};
 
+      // Populate initialFormData and initialErrors based on the fetched data
       Object.entries(fields).forEach(([tabId, fieldList]) => {
         initialFormData[tabId] = {};
         initialErrors[tabId] = {};
 
         fieldList.forEach((field) => {
+          // Set initial values or defaults for each form field
           initialFormData[tabId][field.name] =
             serverData[field.name] ?? (field.type === "radio" ? false : "");
+
+          // Set initial validation errors for required fields
           if (field.required) {
             initialErrors[tabId][field.name] = serverData[field.name]
               ? ""
@@ -64,12 +86,13 @@ export const CaseDetailsFormTab = () => {
         });
       });
 
+      // Update state with initialized data
       setFormData(initialFormData);
       setErrors(initialErrors);
     }
   }, [serverData, fields]);
 
-  // Handle input changes
+  // Handle input change for form fields
   const handleInputChange = (
     tabId: string,
     fieldName: string,
@@ -83,6 +106,7 @@ export const CaseDetailsFormTab = () => {
       },
     }));
 
+    // Update validation errors based on the new value
     setErrors((prev) => {
       // Check if the field is a date type and if its value is empty
       const isDateField = fields[tabId]?.some(
@@ -108,15 +132,14 @@ export const CaseDetailsFormTab = () => {
     });
   };
 
-
-  // Check if form is valid
+  // Check if the form is valid by verifying all error messages
   const isFormValid = () => {
     return Object.values(errors).every((tab) =>
       Object.values(tab).every((err) => err === "")
     );
   };
 
-  // Save form data to server
+  // Save the form data to the server after transforming it as needed
   const handleSave = async () => {
     try {
       // Transform date fields with empty strings into null
@@ -139,23 +162,26 @@ export const CaseDetailsFormTab = () => {
               return tabAcc;
             },
             {}
-          ); // Empty object for each tab
+          );
           return { ...acc, ...updatedTabData };
         },
         {}
-      ); // Empty object for all tabs
+      );
 
-      console.log("before send", mergedData); // Log the transformed data
+      // Call the mutation to save the merged data
+      const res = await updateLoanDetails({
+        case_alias: casealias,
+        loanDetails_alias: casedata?.[0]?.alias || "", // Handle alias properly
+        mergedData,
+      }).unwrap();
 
-      const res = await updateLoanDetails(mergedData).unwrap();
-      console.log("updatedData", res);
       alert("Data saved successfully!");
     } catch (error) {
       alert("Failed to save data.");
     }
   };
 
-  // Navigation for tabs
+  // Navigation function to move to the next tab
   const nextTab = () => {
     const tabIds = Object.keys(fields);
     const currentIndex = tabIds.indexOf(basicTab);
@@ -164,6 +190,7 @@ export const CaseDetailsFormTab = () => {
     }
   };
 
+  // Navigation function to move to the previous tab
   const prevTab = () => {
     const tabIds = Object.keys(fields);
     const currentIndex = tabIds.indexOf(basicTab);
@@ -172,10 +199,15 @@ export const CaseDetailsFormTab = () => {
     }
   };
 
+  // Determine if the current tab is the last tab
   const isLastTab =
     Object.keys(fields).indexOf(basicTab) === Object.keys(fields).length - 1;
 
-  if (isLoading || isSaving) return <div>Loading...</div>;
+  // Display loading indicators if data is still being fetched or saved
+  if (isLoading || isSaving || isCaseLoanDetilsLoading)
+    return <div>Loading...</div>;
+
+  // Display error message if there's an error fetching the data
   if (isError) return <div>Error fetching data!</div>;
 
   return (
