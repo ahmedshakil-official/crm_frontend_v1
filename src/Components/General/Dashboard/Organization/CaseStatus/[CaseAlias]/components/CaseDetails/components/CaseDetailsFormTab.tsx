@@ -12,7 +12,6 @@ import {
 import FormField, { FormFieldProps } from "./LoanDetails/LoanDetailsFormFields";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/LoanDetailsFormData";
-import { basicTabIndicator } from "@/Redux/Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   useGetLoanDetailsQuery,
   useUpdateLoanDetailsMutation,
@@ -35,7 +34,7 @@ export const CaseDetailsFormTab = () => {
 
   // State for form fields
   const [formData, setFormData] = useState<
-    Record<string, Record<string, string | boolean | number>>
+    Record<string, Record<string, string | boolean | number | null>>
   >({});
   const [errors, setErrors] = useState<Record<string, Record<string, string>>>(
     {}
@@ -74,7 +73,7 @@ export const CaseDetailsFormTab = () => {
   const handleInputChange = (
     tabId: string,
     fieldName: string,
-    value: string | boolean | number
+    value: string | boolean | number | null
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -103,13 +102,36 @@ export const CaseDetailsFormTab = () => {
   // Save form data to server
   const handleSave = async () => {
     try {
-      const mergedData = Object.values(formData).reduce(
-        (acc, tabData) => ({ ...acc, ...tabData }),
+      // Transform date fields with empty strings into null
+      const mergedData = Object.entries(formData).reduce(
+        (acc, [tabId, tabData]) => {
+          const updatedTabData = Object.entries(tabData).reduce(
+            (tabAcc: Record<string, any>, [fieldName, value]) => {
+              // Check if the field is a date and value is an empty string
+              if (
+                fields[tabId].find(
+                  (field: FormFieldProps) =>
+                    field.name === fieldName && field.type === "date"
+                ) &&
+                value === ""
+              ) {
+                tabAcc[fieldName] = null; // Set to null if it's an empty string
+              } else {
+                tabAcc[fieldName] = value; // Keep the value as is
+              }
+              return tabAcc;
+            },
+            {}
+          ); // Empty object for each tab
+          return { ...acc, ...updatedTabData };
+        },
         {}
-      );
-      console.log("updatedData", mergedData);
+      ); // Empty object for all tabs
+
+      console.log("before send", mergedData); // Log the transformed data
+
       const res = await updateLoanDetails(mergedData).unwrap();
-      console.log("updatedData",res);
+      console.log("updatedData", res);
       alert("Data saved successfully!");
     } catch (error) {
       alert("Failed to save data.");
@@ -138,8 +160,6 @@ export const CaseDetailsFormTab = () => {
 
   if (isLoading || isSaving) return <div>Loading...</div>;
   if (isError) return <div>Error fetching data!</div>;
-
-  // console.log("getdata",serverData);
 
   return (
     <Col xxl="12">
@@ -177,9 +197,17 @@ export const CaseDetailsFormTab = () => {
                     <Col key={field.name} md={6}>
                       <FormField
                         {...field}
-                        value={formData[basicTab]?.[field.name] ?? ""}
+                        value={
+                          field.type === "date"
+                            ? formData[basicTab]?.[field.name] ?? ""
+                            : formData[basicTab]?.[field.name] ?? ""
+                        }
                         onChange={(value) =>
-                          handleInputChange(basicTab, field.name, value)
+                          handleInputChange(
+                            basicTab,
+                            field.name,
+                            field.type === "date" && value === "" ? null : value
+                          )
                         }
                         error={errors[basicTab]?.[field.name]}
                       />
