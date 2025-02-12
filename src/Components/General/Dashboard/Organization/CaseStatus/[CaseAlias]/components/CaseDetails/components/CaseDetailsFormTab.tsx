@@ -1,5 +1,5 @@
 import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/LoanDetailsFormData";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useAppSelector } from "@/Redux/Hooks";
 import {
   useGetCaseLoanDetailsQuery,
   useGetLoanDetailsQuery,
@@ -24,7 +24,6 @@ export const CaseDetailsFormTab = () => {
   // State for controlling tabs and fetching data
   const [basicTab, setBasicTab] = useState("1");
   const value = useAppSelector((state) => state.caseDetails.basicTabId);
-  const dispatch = useAppDispatch();
   const fields = LoanDetailsFormFields;
   const params = useParams();
   const { casealias } = params;
@@ -222,7 +221,7 @@ export const CaseDetailsFormTab = () => {
               {/* Tabs Navigation */}
               <Nav
                 tabs
-                className="border-tab mb-0 d-flex justify-content-center"
+                className="border-tab nav-primary nav-border mb-0 d-flex justify-content-center"
               >
                 {Object.keys(fields).map((item) => (
                   <NavItem key={item}>
