@@ -3,7 +3,7 @@ import {
   InputType,
 } from "@/Components/General/Dashboard/Organization/CaseStatus/[CaseAlias]/components/CaseDetails/components/LoanDetails/LoanDetailsFormFields";
 
-export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
+export const ApplicantsDetailsFormFields: Record<string, FormFieldProps[]> = {
   "1": [
     {
       name: "firstName",
@@ -11,7 +11,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "text" as InputType,
       required: true,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -21,7 +21,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "text" as InputType,
       required: true,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -31,7 +31,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "date" as InputType,
       required: true,
       value: null,
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -41,7 +41,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "number" as InputType,
       required: true,
       value: null,
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -50,7 +50,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "State Retirement Age",
       type: "number" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -60,7 +60,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "radio" as InputType,
       options: ["Yes", "No"],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -70,7 +70,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "radio" as InputType,
       options: ["Male", "Female"],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -569,7 +569,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
         "ZIMBABWEAN",
       ],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -579,7 +579,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "radio" as InputType,
       options: ["Yes", "No"],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -588,7 +588,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Date of Arrival",
       type: "date" as InputType,
       value: null,
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -598,7 +598,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "radio" as InputType,
       options: ["Yes", "No"],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -607,7 +607,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Visa Details",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -616,7 +616,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Visa Expiry Date",
       type: "date" as InputType,
       value: null,
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -647,7 +647,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
         "RELIGIOUSLY_MARRIED",
       ],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -656,7 +656,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "NI Number",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -665,7 +665,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Country of Birth",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -674,7 +674,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Who do you bank with?",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -683,7 +683,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Home Telephone",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -692,7 +692,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Mobile Number*",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -701,7 +701,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Work Number",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -710,7 +710,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Email Address",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -721,7 +721,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       options: ["Email", "Telephone", "SMS", "Post", "No Communication"],
       values: ["EMAIL", "TELEPHONE", "SMS", "POST", "NO_COMMUNICATION"],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -731,7 +731,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "radio" as InputType,
       options: ["Yes", "No"],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -740,7 +740,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Postcode*",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -749,7 +749,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "House Name or Number*",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -758,7 +758,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Address Line 1*",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -767,7 +767,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "City*",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -776,7 +776,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "County",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -785,7 +785,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Country*",
       type: "text" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -794,7 +794,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Effective From*",
       type: "date" as InputType,
       value: null,
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -803,7 +803,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Time at this Address - Years",
       type: "number" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -812,7 +812,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Time at this Address - Months",
       type: "number" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -837,7 +837,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
         "LIVING_WITH_FRIENDS_FAMILY",
       ],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -848,7 +848,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       type: "radio" as InputType,
       options: ["Yes", "No"],
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
@@ -857,7 +857,7 @@ export const PersonalDetailsFormFields: Record<string, FormFieldProps[]> = {
       label: "Notes",
       type: "textarea" as InputType,
       value: "",
-      onChange: function (value: string | boolean | number | null): void {
+      onChange: function (value: string | boolean | number | Date | string[] | null): void {
         throw new Error("Function not implemented.");
       },
     },
