@@ -1,5 +1,5 @@
 import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/LoanDetailsFormData";
-import { ApplicantsDetailsFormFields } from "@/Data/Case/CaseDetails/ApplicantsDetails/ApplicantsDetailsFormDate";
+import { ApplicantsDetailsFormFields } from "@/Data/Case/CaseDetails/ApplicantsDetails/ApplicantsDetailsFormData";
 import { useAppSelector } from "@/Redux/Hooks";
 import {
   useGetCaseLoanDetailsQuery,
@@ -7,7 +7,7 @@ import {
   useUpdateLoanDetailsMutation,
 } from "@/Redux/Reducers/CaseDetails/LoanDetails/LoanDetailsApi";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -25,13 +25,18 @@ export const CaseDetailsFormTab = () => {
   // Get the Redux value to decide which form to show.
   const value = useAppSelector((state) => state.caseDetails.basicTabId);
 
-  // Mapping of form field sets based on Redux value.
-  // Keys "1" and "2" correspond to multi-tab field definitions.
-  const formFieldsMapping: Record<string, Record<string, FormFieldProps[]>> = {
-    "1": LoanDetailsFormFields,
-    "2": ApplicantsDetailsFormFields,
-  };
+  // Memoize the mapping so it doesn't change on every render.
+  const formFieldsMapping: Record<
+    string,
+    Record<string, FormFieldProps[]>
+  > = useMemo(() => {
+    return {
+      "1": LoanDetailsFormFields,
+      "2": ApplicantsDetailsFormFields,
+    };
+  }, []);
 
+  // Reusable custom hook to set dynamic form fields and active tab.
   const useDynamicFormFields = (
     value: string,
     mapping: Record<string, Record<string, FormFieldProps[]>>
@@ -167,7 +172,7 @@ export const CaseDetailsFormTab = () => {
   };
 
   // Merge form data across tabs and transform empty date fields to null.
-  const handleSave = async () => {
+  const handleSave = async (value: string) => {
     try {
       const mergedData = Object.entries(formData).reduce(
         (acc, [tabId, tabData]) => {
@@ -193,12 +198,16 @@ export const CaseDetailsFormTab = () => {
         {}
       );
 
-      await updateLoanDetails({
-        case_alias: casealias,
-        loanDetails_alias: casedata?.[0]?.alias || "",
-        mergedData,
-      }).unwrap();
-      toast.success("Data saved successfully!");
+      if (value === "1") {
+        await updateLoanDetails({
+          case_alias: casealias,
+          loanDetails_alias: casedata?.[0]?.alias || "",
+          mergedData,
+        }).unwrap();
+        toast.success("Data saved successfully!");
+      }else{
+        console.log(mergedData);
+      }
     } catch (error) {
       toast.error("Failed to save data!");
     }
@@ -235,7 +244,7 @@ export const CaseDetailsFormTab = () => {
     <Col xxl="12">
       <Card>
         <CardBody className="text-center">
-          {value === "1" || value === "2" ? (
+          {value !== "" ? (
             <>
               {/* Tabs Navigation */}
               <Nav
@@ -254,7 +263,7 @@ export const CaseDetailsFormTab = () => {
                         setActiveTab(tabId);
                       }}
                     >
-                      Tab {tabId}
+                      {value === "2" ? `User ${tabId}` : `Tab ${tabId}`}
                     </NavLink>
                   </NavItem>
                 ))}
@@ -276,7 +285,9 @@ export const CaseDetailsFormTab = () => {
                           handleInputChange(
                             activeTab,
                             field.name,
-                            field.type === "date" && value === "" ? null : value
+                            field.type === "date" && value === ""
+                              ? null
+                              : (value as string | number | boolean | null)
                           )
                         }
                         error={errors[activeTab]?.[field.name]}
@@ -295,7 +306,7 @@ export const CaseDetailsFormTab = () => {
                   Previous
                 </Button>
                 <Button
-                  onClick={isLastTab ? handleSave : nextTab}
+                  onClick={isLastTab ? () => handleSave(value) : nextTab}
                   disabled={isLastTab && !isFormValid()}
                 >
                   {isLastTab ? "Save" : "Next"}
@@ -310,7 +321,7 @@ export const CaseDetailsFormTab = () => {
               )}
             </>
           ) : (
-            // If value is neither "1" nor "2" (e.g., "3"), show a message.
+            // If value is not "1" or "2", show a message.
             <div className="text-center p-2">
               <p className="fs-3 text-warning">
                 No form data available for this selection.

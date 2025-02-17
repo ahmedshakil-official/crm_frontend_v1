@@ -7,7 +7,8 @@ export type InputType =
   | "select"
   | "date"
   | "textarea"
-  | "radio";
+  | "radio"
+  | "checkbox"; // Added checkbox
 
 export interface FormFieldProps {
   name: string;
@@ -16,8 +17,9 @@ export interface FormFieldProps {
   options?: string[];
   required?: boolean;
   values?: string[];
-  value: string | boolean | number | Date | null; // Allow both string and boolean
-  onChange: (value: string | boolean | number | null) => void; // onChange will handle both
+  // For checkboxes, value will be a string array.
+  value: string | boolean | number | Date | string[] | null;
+  onChange: (value: string | boolean | number | Date | string[] | null) => void;
   error?: string;
 }
 
@@ -37,12 +39,13 @@ const FormField: React.FC<FormFieldProps> = ({
       <Label for={name}>
         {label} {required && <span className="text-danger">*</span>}
       </Label>
+
       {type === "select" ? (
         <Input
           type="select"
           name={name}
           id={name}
-          value={value}
+          value={value as string}
           onChange={(e) => onChange(e.target.value)}
           invalid={!!error}
         >
@@ -53,6 +56,40 @@ const FormField: React.FC<FormFieldProps> = ({
             </option>
           ))}
         </Input>
+      ) : type === "checkbox" ? (
+        <div>
+          {options?.map((option, idx) => {
+            const optionValue = values ? values[idx] : option;
+            // Ensure that value is treated as a string array.
+            const selectedValues = Array.isArray(value) ? value : [];
+            return (
+              <FormGroup check key={optionValue}>
+                <Label check>
+                  <Input
+                  
+                    type="checkbox"
+                    name={name}
+                    value={optionValue}
+                    checked={selectedValues.includes(optionValue)}
+                    onChange={(e) => {
+                      let newValues = [...selectedValues];
+                      if (e.target.checked) {
+                        newValues.push(optionValue);
+                      } else {
+                        newValues = newValues.filter(
+                          (val) => val !== optionValue
+                        );
+                      }
+                      onChange(newValues);
+                    }}
+                    invalid={!!error}
+                  />{" "}
+                  {option}
+                </Label>
+              </FormGroup>
+            );
+          })}
+        </div>
       ) : type === "radio" ? (
         <div>
           {["Yes", "No"].map((option) => (
@@ -75,7 +112,7 @@ const FormField: React.FC<FormFieldProps> = ({
           type={type}
           name={name}
           id={name}
-          value={type === "date" && !value ? "" : value} // Ensure empty date field shows as ""
+          value={type === "date" && !value ? "" : (value as string)}
           required={required}
           placeholder={`Enter ${label}`}
           onChange={(e) =>
