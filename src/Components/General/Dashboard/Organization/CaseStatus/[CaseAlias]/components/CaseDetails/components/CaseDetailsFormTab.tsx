@@ -1,4 +1,5 @@
 import { LoanDetailsFormFields } from "@/Data/Case/CaseDetails/LoanDetails/LoanDetailsFormData";
+import { ApplicantsDetailsFormFields } from "@/Data/Case/CaseDetails/ApplicantsDetails/ApplicantsDetailsFormDate";
 import { useAppSelector } from "@/Redux/Hooks";
 import {
   useGetCaseLoanDetailsQuery,
@@ -21,18 +22,55 @@ import {
 import FormField, { FormFieldProps } from "./LoanDetails/LoanDetailsFormFields";
 
 export const CaseDetailsFormTab = () => {
-  // State for controlling tabs and fetching data
-  const [basicTab, setBasicTab] = useState("1");
+  // Get the Redux value to decide which form to show.
   const value = useAppSelector((state) => state.caseDetails.basicTabId);
-  const fields = LoanDetailsFormFields;
+
+  // Mapping of form field sets based on Redux value.
+  // Keys "1" and "2" correspond to multi-tab field definitions.
+  const formFieldsMapping: Record<string, Record<string, FormFieldProps[]>> = {
+    "1": LoanDetailsFormFields,
+    "2": ApplicantsDetailsFormFields,
+  };
+
+  const useDynamicFormFields = (
+    value: string,
+    mapping: Record<string, Record<string, FormFieldProps[]>>
+  ) => {
+    const [fields, setFields] = useState<Record<string, FormFieldProps[]>>({});
+    const [activeTab, setActiveTab] = useState<string>("");
+
+    useEffect(() => {
+      if (mapping[value]) {
+        setFields(mapping[value]);
+        const tabs = Object.keys(mapping[value]);
+        if (tabs.length > 0) {
+          setActiveTab(tabs[0]);
+        } else {
+          setActiveTab("");
+        }
+      } else {
+        setFields({});
+        setActiveTab("");
+      }
+    }, [value, mapping]);
+
+    return { fields, activeTab, setActiveTab };
+  };
+
+  // Use the custom hook to get fields and activeTab based on the current value.
+  const { fields, activeTab, setActiveTab } = useDynamicFormFields(
+    value,
+    formFieldsMapping
+  );
+
   const params = useParams();
   const { casealias } = params;
 
-  // Fetch case loan details based on the case alias
+  // Fetch case loan details
   const { data: casedata, isLoading: isCaseLoanDetilsLoading } =
     useGetCaseLoanDetailsQuery(casealias);
 
-  // Fetch loan details only when casedata alias is available
+  // Fetch server data only if we have a valid case alias
   const {
     data: serverData,
     isLoading,
@@ -43,14 +81,14 @@ export const CaseDetailsFormTab = () => {
           case_alias: casealias,
           loanDetails_alias: casedata?.[0]?.alias,
         }
-      : null // Avoid triggering the query if there's no alias
+      : null
   );
 
-  // Mutation hook to update loan details
+  // Mutation hook to update details
   const [updateLoanDetails, { isLoading: isSaving }] =
     useUpdateLoanDetailsMutation();
 
-  // State for form data and error tracking
+  // State for form data (grouped by tab) and validation errors
   const [formData, setFormData] = useState<
     Record<string, Record<string, string | boolean | number | null>>
   >({});
@@ -58,26 +96,22 @@ export const CaseDetailsFormTab = () => {
     {}
   );
 
-  // Initialize formData and errors when server data is available
+  // Initialize form data and errors when serverData and fields are ready.
   useEffect(() => {
-    if (serverData) {
+    if (serverData && Object.keys(fields).length > 0) {
       const initialFormData: Record<
         string,
         Record<string, string | boolean>
       > = {};
       const initialErrors: Record<string, Record<string, string>> = {};
 
-      // Populate initialFormData and initialErrors based on the fetched data
       Object.entries(fields).forEach(([tabId, fieldList]) => {
         initialFormData[tabId] = {};
         initialErrors[tabId] = {};
 
         fieldList.forEach((field) => {
-          // Set initial values or defaults for each form field
           initialFormData[tabId][field.name] =
             serverData[field.name] ?? (field.type === "radio" ? false : "");
-
-          // Set initial validation errors for required fields
           if (field.required) {
             initialErrors[tabId][field.name] = serverData[field.name]
               ? ""
@@ -85,14 +119,12 @@ export const CaseDetailsFormTab = () => {
           }
         });
       });
-
-      // Update state with initialized data
       setFormData(initialFormData);
       setErrors(initialErrors);
     }
   }, [serverData, fields]);
 
-  // Handle input change for form fields
+  // Handle input changes for fields.
   const handleInputChange = (
     tabId: string,
     fieldName: string,
@@ -106,22 +138,17 @@ export const CaseDetailsFormTab = () => {
       },
     }));
 
-    // Update validation errors based on the new value
     setErrors((prev) => {
-      // Check if the field is a date type and if its value is empty
       const isDateField = fields[tabId]?.some(
         (field: FormFieldProps) =>
           field.name === fieldName && field.type === "date"
       );
-
-      // If it's a date field and empty, don't mark as required
       const errorMessage =
         isDateField && (value === "" || value === null)
           ? ""
           : value
           ? ""
           : "This field is required";
-
       return {
         ...prev,
         [tabId]: {
@@ -132,22 +159,20 @@ export const CaseDetailsFormTab = () => {
     });
   };
 
-  // Check if the form is valid by verifying all error messages
+  // Validate that all tabs have no errors.
   const isFormValid = () => {
     return Object.values(errors).every((tab) =>
       Object.values(tab).every((err) => err === "")
     );
   };
 
-  // Save the form data to the server after transforming it as needed
+  // Merge form data across tabs and transform empty date fields to null.
   const handleSave = async () => {
     try {
-      // Transform date fields with empty strings into null
       const mergedData = Object.entries(formData).reduce(
         (acc, [tabId, tabData]) => {
           const updatedTabData = Object.entries(tabData).reduce(
             (tabAcc: Record<string, any>, [fieldName, value]) => {
-              // Check if the field is a date and value is an empty string
               if (
                 fields[tabId].find(
                   (field: FormFieldProps) =>
@@ -155,9 +180,9 @@ export const CaseDetailsFormTab = () => {
                 ) &&
                 value === ""
               ) {
-                tabAcc[fieldName] = null; // Set to null if it's an empty string
+                tabAcc[fieldName] = null;
               } else {
-                tabAcc[fieldName] = value; // Keep the value as is
+                tabAcc[fieldName] = value;
               }
               return tabAcc;
             },
@@ -168,10 +193,9 @@ export const CaseDetailsFormTab = () => {
         {}
       );
 
-      // Call the mutation to save the merged data
-      const res = await updateLoanDetails({
+      await updateLoanDetails({
         case_alias: casealias,
-        loanDetails_alias: casedata?.[0]?.alias || "", // Handle alias properly
+        loanDetails_alias: casedata?.[0]?.alias || "",
         mergedData,
       }).unwrap();
       toast.success("Data saved successfully!");
@@ -180,33 +204,28 @@ export const CaseDetailsFormTab = () => {
     }
   };
 
-  // Navigation function to move to the next tab
+  // Navigation functions to switch between tabs.
   const nextTab = () => {
     const tabIds = Object.keys(fields);
-    const currentIndex = tabIds.indexOf(basicTab);
+    const currentIndex = tabIds.indexOf(activeTab);
     if (currentIndex < tabIds.length - 1) {
-      setBasicTab(tabIds[currentIndex + 1]);
+      setActiveTab(tabIds[currentIndex + 1]);
     }
   };
 
-  // Navigation function to move to the previous tab
   const prevTab = () => {
     const tabIds = Object.keys(fields);
-    const currentIndex = tabIds.indexOf(basicTab);
+    const currentIndex = tabIds.indexOf(activeTab);
     if (currentIndex > 0) {
-      setBasicTab(tabIds[currentIndex - 1]);
+      setActiveTab(tabIds[currentIndex - 1]);
     }
   };
 
-  // Determine if the current tab is the last tab
   const isLastTab =
-    Object.keys(fields).indexOf(basicTab) === Object.keys(fields).length - 1;
+    Object.keys(fields).indexOf(activeTab) === Object.keys(fields).length - 1;
 
-  // Display loading indicators if data is still being fetched or saved
   if (isLoading || isSaving || isCaseLoanDetilsLoading)
     return <div>Loading...</div>;
-
-  // Display error message if there's an error fetching the data
   if (isError)
     return (
       <div className="text-center text-danger fs-3">Error fetching data!</div>
@@ -216,51 +235,51 @@ export const CaseDetailsFormTab = () => {
     <Col xxl="12">
       <Card>
         <CardBody className="text-center">
-          {value === "1" ? (
+          {value === "1" || value === "2" ? (
             <>
               {/* Tabs Navigation */}
               <Nav
                 tabs
                 className="border-tab nav-primary nav-border mb-0 d-flex justify-content-center"
               >
-                {Object.keys(fields).map((item) => (
-                  <NavItem key={item}>
+                {Object.keys(fields).map((tabId) => (
+                  <NavItem key={tabId}>
                     <NavLink
                       href="#"
                       className={`nav-border text-info ${
-                        basicTab === item ? "active" : ""
+                        activeTab === tabId ? "active" : ""
                       }`}
                       onClick={(e) => {
                         e.preventDefault();
-                        setBasicTab(item);
+                        setActiveTab(tabId);
                       }}
                     >
-                      Tab {item}
+                      Tab {tabId}
                     </NavLink>
                   </NavItem>
                 ))}
               </Nav>
 
-              {/* Form Fields */}
+              {/* Render Form Fields for the Active Tab */}
               <div className="w-75 mx-auto">
                 <Row className="gx-5 gy-3 my-5">
-                  {fields[basicTab]?.map((field: FormFieldProps) => (
+                  {fields[activeTab]?.map((field: FormFieldProps) => (
                     <Col key={field.name} md={6}>
                       <FormField
                         {...field}
                         value={
                           field.type === "date"
-                            ? formData[basicTab]?.[field.name] ?? ""
-                            : formData[basicTab]?.[field.name] ?? ""
+                            ? formData[activeTab]?.[field.name] ?? ""
+                            : formData[activeTab]?.[field.name] ?? ""
                         }
                         onChange={(value) =>
                           handleInputChange(
-                            basicTab,
+                            activeTab,
                             field.name,
                             field.type === "date" && value === "" ? null : value
                           )
                         }
-                        error={errors[basicTab]?.[field.name]}
+                        error={errors[activeTab]?.[field.name]}
                       />
                     </Col>
                   ))}
@@ -269,7 +288,10 @@ export const CaseDetailsFormTab = () => {
 
               {/* Navigation Buttons */}
               <div className="d-flex justify-content-between mt-4 w-75 mx-auto">
-                <Button onClick={prevTab} disabled={basicTab === "1"}>
+                <Button
+                  onClick={prevTab}
+                  disabled={activeTab === Object.keys(fields)[0]}
+                >
                   Previous
                 </Button>
                 <Button
@@ -288,9 +310,10 @@ export const CaseDetailsFormTab = () => {
               )}
             </>
           ) : (
+            // If value is neither "1" nor "2" (e.g., "3"), show a message.
             <div className="text-center p-2">
               <p className="fs-3 text-warning">
-                No form available for this selection.
+                No form data available for this selection.
               </p>
             </div>
           )}
