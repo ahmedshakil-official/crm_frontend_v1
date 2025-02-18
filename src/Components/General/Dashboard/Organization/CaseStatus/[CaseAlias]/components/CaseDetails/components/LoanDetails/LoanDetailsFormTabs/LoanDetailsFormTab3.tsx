@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
+import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 interface LoanDetailsFormTab3Props {
   formData: {
@@ -28,9 +28,6 @@ const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
-        </Col>
-
-        <Col md={6}>
           <FormGroup>
             <Label for="dip_expiry_date">DIP Expiry Date</Label>
             <Input
@@ -40,7 +37,8 @@ const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
-
+        </Col>
+        <Col md={6}>
           <FormGroup>
             <Label for="expected_completion_date">
               Expected Completion Date
