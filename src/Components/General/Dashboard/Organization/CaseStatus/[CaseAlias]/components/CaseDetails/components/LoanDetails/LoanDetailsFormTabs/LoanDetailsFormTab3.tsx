@@ -1,29 +1,22 @@
-import React, { useState } from "react";
-import { Form, FormGroup, Label, Input, Button, Row, Col } from "reactstrap";
+import React from "react";
+import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
 
-const LoanDetailsFormTab3 = () => {
-  const [formData, setFormData] = useState({
-    dip_accept_date: "",
-    dip_expiry_date: "",
-    expected_completion_date: "",
-    product_expiry_date: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+interface LoanDetailsFormTab3Props {
+  formData: {
+    dip_accept_date: string;
+    dip_expiry_date: string;
+    expected_completion_date: string;
+    product_expiry_date: string;
   };
+  handleFormChange: (name: string, value: string) => void;
+}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Submitted:", formData);
-  };
-
+const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
+  formData,
+  handleFormChange,
+}) => {
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <Row>
         <Col md={6}>
           <FormGroup>
@@ -32,7 +25,7 @@ const LoanDetailsFormTab3 = () => {
               type="date"
               name="dip_accept_date"
               value={formData.dip_accept_date}
-              onChange={handleChange}
+              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
         </Col>
@@ -44,12 +37,10 @@ const LoanDetailsFormTab3 = () => {
               type="date"
               name="dip_expiry_date"
               value={formData.dip_expiry_date}
-              onChange={handleChange}
+              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
-        </Col>
 
-        <Col md={6}>
           <FormGroup>
             <Label for="expected_completion_date">
               Expected Completion Date
@@ -58,27 +49,21 @@ const LoanDetailsFormTab3 = () => {
               type="date"
               name="expected_completion_date"
               value={formData.expected_completion_date}
-              onChange={handleChange}
+              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
-        </Col>
 
-        <Col md={6}>
           <FormGroup>
             <Label for="product_expiry_date">Product Expiry Date</Label>
             <Input
               type="date"
               name="product_expiry_date"
               value={formData.product_expiry_date}
-              onChange={handleChange}
+              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
         </Col>
       </Row>
-
-      <Button type="submit" color="primary">
-        Submit
-      </Button>
     </Form>
   );
 };

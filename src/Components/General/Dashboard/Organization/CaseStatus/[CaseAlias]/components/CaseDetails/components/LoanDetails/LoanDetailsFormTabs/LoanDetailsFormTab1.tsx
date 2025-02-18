@@ -1,41 +1,29 @@
-import React, { useState } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-} from "reactstrap";
+import React from "react";
+import { Container, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
 
-const LoanDetailsFormTab1 = () => {
-  const [formData, setFormData] = useState({
-    application_type: "",
-    lenders_reference: "",
-    mortgage_type: "",
-    loan_purpose: "",
-    borrower_type: "",
-    interest_rate_type: "",
-    product_term: "",
-    lender: "",
-    repayment_method: "",
-    repayment_vehicle: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+interface LoanDetailsFormTab1Props {
+  formData: {
+    application_type: string;
+    lenders_reference: string;
+    mortgage_type: string;
+    loan_purpose: string;
+    borrower_type: string;
+    interest_rate_type: string;
+    product_term: string;
+    lender: string;
+    repayment_method: string;
+    repayment_vehicle: string;
   };
+  handleFormChange: (name: string, value: string) => void;
+}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Submitted", formData);
-  };
-
+const LoanDetailsFormTab1: React.FC<LoanDetailsFormTab1Props> = ({
+  formData,
+  handleFormChange,
+}) => {
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <Row>
           {/* First Column */}
           <Col md={6}>
@@ -44,7 +32,10 @@ const LoanDetailsFormTab1 = () => {
               <Input
                 type="select"
                 name="application_type"
-                onChange={handleChange}
+                value={formData.application_type}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
               >
                 <option value="">Select</option>
                 <option value="BUSINESS_LOAN">Business Loan</option>
@@ -55,7 +46,14 @@ const LoanDetailsFormTab1 = () => {
 
             <FormGroup>
               <Label>Mortgage Type</Label>
-              <Input type="select" name="mortgage_type" onChange={handleChange}>
+              <Input
+                type="select"
+                name="mortgage_type"
+                value={formData.mortgage_type}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              >
                 <option value="">Select</option>
                 <option value="PURCHASE">Purchase</option>
                 <option value="REMORTGAGE">Remortgage</option>
@@ -64,7 +62,14 @@ const LoanDetailsFormTab1 = () => {
 
             <FormGroup>
               <Label>Loan Purpose</Label>
-              <Input type="select" name="loan_purpose" onChange={handleChange}>
+              <Input
+                type="select"
+                name="loan_purpose"
+                value={formData.loan_purpose}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              >
                 <option value="">Select</option>
                 <option value="PURCHASE">Purchase</option>
                 <option value="DEBT_CONSOLIDATION">Debt Consolidation</option>
@@ -73,7 +78,14 @@ const LoanDetailsFormTab1 = () => {
 
             <FormGroup>
               <Label>Borrower Type</Label>
-              <Input type="select" name="borrower_type" onChange={handleChange}>
+              <Input
+                type="select"
+                name="borrower_type"
+                value={formData.borrower_type}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              >
                 <option value="">Select</option>
                 <option value="HOMEMOVER">Homemover</option>
                 <option value="FIRST_TIME_BUYER">First Time Buyer</option>
@@ -85,7 +97,10 @@ const LoanDetailsFormTab1 = () => {
               <Input
                 type="select"
                 name="interest_rate_type"
-                onChange={handleChange}
+                value={formData.interest_rate_type}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
               >
                 <option value="">Select</option>
                 <option value="FIXED">Fixed</option>
@@ -98,7 +113,14 @@ const LoanDetailsFormTab1 = () => {
           <Col md={6}>
             <FormGroup>
               <Label>Product Term</Label>
-              <Input type="select" name="product_term" onChange={handleChange}>
+              <Input
+                type="select"
+                name="product_term"
+                value={formData.product_term}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              >
                 <option value="">Select</option>
                 <option value="ONE_YEAR">1 Year</option>
                 <option value="TWO_YEARS">2 Years</option>
@@ -107,7 +129,14 @@ const LoanDetailsFormTab1 = () => {
 
             <FormGroup>
               <Label>Lender</Label>
-              <Input type="select" name="lender" onChange={handleChange}>
+              <Input
+                type="select"
+                name="lender"
+                value={formData.lender}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              >
                 <option value="">Select</option>
                 <option value="BARCLAYS">Barclays</option>
                 <option value="HSBC">HSBC</option>
@@ -119,7 +148,10 @@ const LoanDetailsFormTab1 = () => {
               <Input
                 type="select"
                 name="repayment_method"
-                onChange={handleChange}
+                value={formData.repayment_method}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
               >
                 <option value="">Select</option>
                 <option value="CAPITAL_AND_INTEREST">
@@ -134,7 +166,10 @@ const LoanDetailsFormTab1 = () => {
               <Input
                 type="select"
                 name="repayment_vehicle"
-                onChange={handleChange}
+                value={formData.repayment_vehicle}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
               >
                 <option value="">Select</option>
                 <option value="ENDOWMENT">Endowment</option>
@@ -143,18 +178,18 @@ const LoanDetailsFormTab1 = () => {
             </FormGroup>
 
             <FormGroup>
-              <Label>Lenders Reference</Label>
+              <Label>Lender's Reference</Label>
               <Input
                 type="text"
                 name="lenders_reference"
-                onChange={handleChange}
+                value={formData.lenders_reference}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
               />
             </FormGroup>
           </Col>
         </Row>
-        <Button color="primary" type="submit">
-          Submit
-        </Button>
       </Form>
     </Container>
   );

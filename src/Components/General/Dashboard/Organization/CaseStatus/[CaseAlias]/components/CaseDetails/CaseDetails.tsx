@@ -25,7 +25,6 @@ import {
   FOPTabTitleData,
   NPDTabTitleData,
 } from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
-import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
 
 const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
   const basicTab = useAppSelector((state) => state.caseDetails.basicTabId);
