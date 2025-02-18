@@ -54,13 +54,6 @@ export const JustifyTabNav = [
   { id: "1", nav: "Web designer" },
   { id: "2", nav: "UX designer" },
   { id: "3", nav: "IOT developer" },
-  { id: "4", nav: "IOT developer" },
-  { id: "5", nav: "IOT developer" },
-  { id: "6", nav: "IOT developer" },
-  { id: "7", nav: "IOT developer" },
-  { id: "8", nav: "IOT developer" },
-  { id: "9", nav: "IOT developer" },
-  { id: "10", nav: "IOT developer" },
 ];
 
 export const JustifyTabData = [
