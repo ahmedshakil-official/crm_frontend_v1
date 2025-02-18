@@ -14,7 +14,6 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   tabId,
   setTabId,
 }) => {
-  // State for form data in all tabs
   const [formDataTab1, setFormDataTab1] = useState({
     application_type: "",
     lenders_reference: "",
@@ -28,27 +27,29 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     repayment_vehicle: "",
   });
 
+
   const [formDataTab2, setFormDataTab2] = useState({
-    property_valuation: "",
-    loan_amount: "",
-    estimated_value: "",
-    ltv: "",
-    term_years: "",
-    term_months: "",
-    interest_only_amount: "",
-    outstanding_balance: "",
-    current_monthly_payment: "",
+    property_valuation: 0,
+    loan_amount: 0,
+    estimated_value: 0,
+    ltv: null as string | null,
+    term_years: 0,
+    term_months: 0,
+    interest_only_amount: null as string | null,
+    outstanding_balance: null as string | null,
+    current_monthly_payment: null as string | null,
     current_lender: "",
     original_purchase_price: "",
-    date_of_purchase: "",
+    date_of_purchase: null as string | null,
     advice_level: "",
   });
 
+  // Ensure dates are always in "YYYY-MM-DD" format or null
   const [formDataTab3, setFormDataTab3] = useState({
-    dip_accept_date: "",
-    dip_expiry_date: "",
-    expected_completion_date: "",
-    product_expiry_date: "",
+    dip_accept_date: null as string | null,
+    dip_expiry_date: null as string | null,
+    expected_completion_date: null as string | null,
+    product_expiry_date: null as string | null,
   });
 
   const [formDataTab4, setFormDataTab4] = useState({
@@ -56,51 +57,34 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     introduction_type: "",
     lead_source: "",
     introducer_payment_terms: "",
-    introducer_fee: "",
+    introducer_fee: null as string | null,
     reasons_for_capital_raising: "",
     accepted_or_declined_by_lender: false,
     case_summary: "",
   });
 
-  // Handle form changes for Tab 1
-  const handleFormChangeTab1 = (name: string, value: string) => {
-    setFormDataTab1((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handleFormChangeTab1 = (name: string, value: any) => {
+    setFormDataTab1((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Handle form changes for Tab 2
-  const handleFormChangeTab2 = (name: string, value: string) => {
-    setFormDataTab2((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handleFormChangeTab2 = (name: string, value: any) => {
+    setFormDataTab2((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Handle form changes for Tab 3
+  // Ensure date is always "YYYY-MM-DD" or null
   const handleFormChangeTab3 = (name: string, value: string) => {
-    setFormDataTab3((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormDataTab3((prevData) => ({ ...prevData, [name]: value || null }));
   };
 
-  // Handle form changes for Tab 4
   const handleFormChangeTab4 = (name: string, value: string) => {
-    setFormDataTab4((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormDataTab4((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Validation for Tab 2 required fields
   const isTab2Valid = () => {
     const { property_valuation, loan_amount, estimated_value } = formDataTab2;
     return property_valuation && loan_amount && estimated_value;
   };
 
-  // Handle navigation to next tab
   const handleNext = () => {
     const nextTabId = (parseInt(tabId) + 1).toString();
     if (nextTabId <= "4") {
@@ -108,7 +92,6 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     }
   };
 
-  // Handle Save action (just logging the data)
   const handleSave = () => {
     console.log("Form data saved!", {
       ...formDataTab1,

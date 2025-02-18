@@ -3,21 +3,21 @@ import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
 
 interface LoanDetailsFormTab2Props {
   formData: {
-    property_valuation: string;
-    loan_amount: string;
-    estimated_value: string;
-    ltv: string;
-    term_years: string;
-    term_months: string;
-    interest_only_amount: string;
-    outstanding_balance: string;
-    current_monthly_payment: string;
+    property_valuation: number;
+    loan_amount: number;
+    estimated_value: number;
+    ltv: string | null;
+    term_years: number;
+    term_months: number;
+    interest_only_amount: null | string;
+    outstanding_balance: null | string;
+    current_monthly_payment: null | string;
     current_lender: string;
     original_purchase_price: string;
-    date_of_purchase: string;
+    date_of_purchase: string | null;
     advice_level: string;
   };
-  handleFormChange: (name: string, value: string) => void;
+  handleFormChange: (name: string, value: any) => void;
 }
 
 const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
@@ -27,11 +27,11 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
   return (
     <Form>
       <Row>
-        <Col >
+        <Col>
           <FormGroup>
             <Label for="property_valuation">Property Valuation*</Label>
             <Input
-              type="text"
+              type="number"
               name="property_valuation"
               required
               value={formData.property_valuation}
@@ -42,7 +42,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
           <FormGroup>
             <Label for="loan_amount">Loan Amount*</Label>
             <Input
-              type="text"
+              type="number"
               name="loan_amount"
               required
               value={formData.loan_amount}
@@ -53,7 +53,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
           <FormGroup>
             <Label for="estimated_value">Estimated Value*</Label>
             <Input
-              type="text"
+              type="number"
               name="estimated_value"
               required
               value={formData.estimated_value}
@@ -76,7 +76,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
           <FormGroup>
             <Label for="term_years">Term (Years)</Label>
             <Input
-              type="text"
+              type="number"
               name="term_years"
               value={formData.term_years}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
@@ -86,7 +86,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
           <FormGroup>
             <Label for="term_months">Term (Months)</Label>
             <Input
-              type="text"
+              type="number"
               name="term_months"
               value={formData.term_months}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
