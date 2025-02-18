@@ -15,7 +15,7 @@ export const LoanDetailsTab = () => {
   const [basicTab, setBasicTab] = useState("1");
 
   return (
-    <Col xxl="6">
+    <Col xxl="12" className="px-5">
       <Card>
         <CardBody>
           <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-2 pb-2 p-0">
