@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardBody,
@@ -9,21 +10,21 @@ import {
 } from "reactstrap";
 
 import { Href } from "@/Constant";
-import {
-  CompletionTabTitleData,
-  DIPTabTitleData,
-  FFDTabTitleData,
-  FMATabTitleData,
-  FOPTabTitleData,
-  InqueryTabTitleData,
-  LegalTabTitleData,
-  NPDTabTitleData,
-  OFBTabTitleData,
-  RCCTabTitleData,
-} from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
+import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { basicTabIndicator } from "@/Redux/Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
+import {
+  InqueryTabTitleData,
+  FFDTabTitleData,
+  RCCTabTitleData,
+  DIPTabTitleData,
+  FMATabTitleData,
+  OFBTabTitleData,
+  LegalTabTitleData,
+  CompletionTabTitleData,
+  FOPTabTitleData,
+  NPDTabTitleData,
+} from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
 
 const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
   const basicTab = useAppSelector((state) => state.caseDetails.basicTabId);
@@ -59,6 +60,7 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
           <CardHeader className="d-flex align-items-center flex-wrap gap-2 pb-2 p-0">
             <Nav className="nav-success justify-content-center" pills>
               {currentTabData.map((item, index) => (
+
                 <NavItem key={index}>
                   <NavLink
                     href={Href}
@@ -78,7 +80,7 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
             </Nav>
           </CardHeader>
           {/* Case Details Tab Content */}
-          <CardBody className="px-0 pb-0">
+          <CardBody className="px-0 pb-0  ">
             <CaseDetailsTabContent />
           </CardBody>
         </CardBody>

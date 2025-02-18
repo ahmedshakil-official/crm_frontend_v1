@@ -28,7 +28,7 @@ export const LoanDetailsTab = () => {
               ].map((item, index) => (
                 <NavItem key={index}>
                   <NavLink
-                    href={Href}
+                    href={Href} // You can remove this if you are not using it
                     className={`${basicTab === item.id ? "active" : ""}`}
                     onClick={() => setBasicTab(item.id)}
                   >
@@ -39,7 +39,7 @@ export const LoanDetailsTab = () => {
             </Nav>
           </CardHeader>
           <CardBody className="px-0 pb-0">
-            <LoanDetailsTabContent tabId={basicTab} />
+            <LoanDetailsTabContent tabId={basicTab} setTabId={setBasicTab} />
           </CardBody>
         </CardBody>
       </Card>
