@@ -72,7 +72,7 @@ const CaseContainer: React.FC = () => {
           />
         </Row>
         <Row>
-          <CaseDetails />
+          <CaseDetails caseStage={caseInfo?.case_stage || ""} />
         </Row>
         <Row>
           <FileManager />

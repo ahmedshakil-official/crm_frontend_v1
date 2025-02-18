@@ -1,10 +1,10 @@
-import React from "react";
-import { TabContent, TabPane } from "reactstrap";
+import { TabContent } from "reactstrap";
+import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 
 export const CaseDetailsTabContent: React.FC = () => {
   return (
     <TabContent>
-      {/* <CaseDetailsFormTab/> */}
+      <LoanDetailsTab/>
     </TabContent>
   );
 };
