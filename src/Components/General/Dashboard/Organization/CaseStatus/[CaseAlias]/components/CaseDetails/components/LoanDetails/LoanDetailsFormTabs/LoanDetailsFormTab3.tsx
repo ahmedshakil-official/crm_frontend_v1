@@ -3,10 +3,10 @@ import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 interface LoanDetailsFormTab3Props {
   formData: {
-    dip_accept_date: string;
-    dip_expiry_date: string;
-    expected_completion_date: string;
-    product_expiry_date: string;
+    dip_accept_date: string | null;
+    dip_expiry_date: string | null;
+    expected_completion_date: string | null;
+    product_expiry_date: string | null;
   };
   handleFormChange: (name: string, value: string) => void;
 }
@@ -24,7 +24,7 @@ const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
             <Input
               type="date"
               name="dip_accept_date"
-              value={formData.dip_accept_date}
+              value={formData.dip_accept_date || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
@@ -33,7 +33,7 @@ const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
             <Input
               type="date"
               name="dip_expiry_date"
-              value={formData.dip_expiry_date}
+              value={formData.dip_expiry_date || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
@@ -46,17 +46,16 @@ const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
             <Input
               type="date"
               name="expected_completion_date"
-              value={formData.expected_completion_date}
+              value={formData.expected_completion_date || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
-
           <FormGroup>
             <Label for="product_expiry_date">Product Expiry Date</Label>
             <Input
               type="date"
               name="product_expiry_date"
-              value={formData.product_expiry_date}
+              value={formData.product_expiry_date || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>

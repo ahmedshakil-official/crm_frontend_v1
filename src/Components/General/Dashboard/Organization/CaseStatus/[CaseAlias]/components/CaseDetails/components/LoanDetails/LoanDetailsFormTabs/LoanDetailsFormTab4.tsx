@@ -7,7 +7,7 @@ interface LoanDetailsFormTab4Props {
     introduction_type: string;
     lead_source: string;
     introducer_payment_terms: string;
-    introducer_fee: string;
+    introducer_fee: string | null;
     reasons_for_capital_raising: string;
     accepted_or_declined_by_lender: boolean;
     case_summary: string;
