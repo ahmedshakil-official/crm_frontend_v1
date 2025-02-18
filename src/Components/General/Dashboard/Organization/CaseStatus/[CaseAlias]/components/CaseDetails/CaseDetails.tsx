@@ -1,3 +1,7 @@
+import { Href } from "@/Constant";
+import { DIPTabTitleData } from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { basicTabIndicator } from "@/Redux/Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   Card,
   CardBody,
@@ -7,11 +11,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import { Href } from "@/Constant";
-import { CaseDetailsTabTitleData } from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
 import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { basicTabIndicator } from "@/Redux/Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const CaseDetails: React.FC = () => {
   const basicTab = useAppSelector((state) => state.caseDetails.basicTabId);
@@ -29,7 +29,7 @@ const CaseDetails: React.FC = () => {
         <CardBody>
           <CardHeader className="d-flex align-items-center flex-wrap gap-2 pb-2 p-0">
             <Nav className="nav-success justify-content-center" pills>
-              {CaseDetailsTabTitleData.map((item, index) => (
+              {DIPTabTitleData.map((item, index) => (
                 <NavItem key={index}>
                   <NavLink
                     href={Href}
