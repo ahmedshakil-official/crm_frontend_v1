@@ -4,7 +4,7 @@ import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 export const CaseDetailsTabContent: React.FC = () => {
   return (
     <TabContent>
-      <LoanDetailsTab/>
+      <LoanDetailsTab />
     </TabContent>
   );
 };
