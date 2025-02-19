@@ -12,7 +12,7 @@ interface LoanDetailsFormTab4Props {
     accepted_or_declined_by_lender: boolean;
     case_summary: string;
   };
-  handleFormChange: (name: string, value: string) => void;
+  handleFormChange: (name: string, value: string|number|boolean|null) => void;
 }
 
 const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
@@ -139,20 +139,20 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
               <Input
                 type="radio"
                 name="accepted_or_declined_by_lender"
-                value={true}
+                value="true"
                 checked={formData.accepted_or_declined_by_lender === true}
                 onChange={(e) =>
-                  handleFormChange(e.target.name, e.target.value)
+                  handleFormChange(e.target.name, e.target.value === "true")
                 }
               />{" "}
               Yes
               <Input
                 type="radio"
                 name="accepted_or_declined_by_lender"
-                value={false}
+                value="false"
                 checked={formData.accepted_or_declined_by_lender === false}
                 onChange={(e) =>
-                  handleFormChange(e.target.name, e.target.value)
+                  handleFormChange(e.target.name, e.target.value === "true")
                 }
                 className="ms-2"
               />{" "}

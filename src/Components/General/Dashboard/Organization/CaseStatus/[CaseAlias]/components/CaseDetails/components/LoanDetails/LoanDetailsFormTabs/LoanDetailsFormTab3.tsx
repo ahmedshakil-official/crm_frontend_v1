@@ -8,7 +8,10 @@ interface LoanDetailsFormTab3Props {
     expected_completion_date: string | null;
     product_expiry_date: string | null;
   };
-  handleFormChange: (name: string, value: string) => void;
+  handleFormChange: (
+    name: string,
+    value: string | number | boolean | null
+  ) => void;
 }
 
 const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
@@ -24,7 +27,7 @@ const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
             <Input
               type="date"
               name="dip_accept_date"
-              value={formData.dip_accept_date || ""}
+              value={formData.dip_accept_date}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>

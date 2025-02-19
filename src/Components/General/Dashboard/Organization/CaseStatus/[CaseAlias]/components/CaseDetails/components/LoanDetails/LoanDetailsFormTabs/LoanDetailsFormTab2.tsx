@@ -35,7 +35,9 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
               name="property_valuation"
               required
               value={formData.property_valuation}
-              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFormChange(e.target.name, Number(e.target.value))
+              }
             />
           </FormGroup>
 
@@ -46,7 +48,9 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
               name="loan_amount"
               required
               value={formData.loan_amount}
-              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFormChange(e.target.name, Number(e.target.value))
+              }
             />
           </FormGroup>
 
@@ -57,7 +61,9 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
               name="estimated_value"
               required
               value={formData.estimated_value}
-              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFormChange(e.target.name, Number(e.target.value))
+              }
             />
           </FormGroup>
 
@@ -79,7 +85,9 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
               type="number"
               name="term_years"
               value={formData.term_years}
-              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFormChange(e.target.name, Number(e.target.value))
+              }
             />
           </FormGroup>
 
@@ -89,7 +97,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
               type="number"
               name="term_months"
               value={formData.term_months}
-              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+              onChange={(e) => handleFormChange(e.target.name, Number(e.target.value))}
             />
           </FormGroup>
 
