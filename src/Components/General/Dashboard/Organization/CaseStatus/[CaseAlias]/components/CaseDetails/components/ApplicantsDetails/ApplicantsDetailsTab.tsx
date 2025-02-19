@@ -10,6 +10,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import ApplicantsDetailsTabContent from "./ApplicantsDetailsTabContent";
 
 export interface ApplicantsUsersProps {
   alias: string;
@@ -62,6 +63,7 @@ export const ApplicantsDetailsTab = () => {
           </CardHeader>
           <CardBody className="px-0 pb-0">
             {basicTab && <div>Selected Applicant: {basicTab}</div>}
+            <ApplicantsDetailsTabContent />
           </CardBody>
         </CardBody>
       </Card>
