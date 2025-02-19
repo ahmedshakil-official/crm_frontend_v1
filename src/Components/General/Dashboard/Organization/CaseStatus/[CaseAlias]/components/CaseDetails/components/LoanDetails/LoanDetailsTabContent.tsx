@@ -169,12 +169,6 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   const handleNext = () => setTabId((parseInt(tabId) + 1).toString());
 
   const handleSave = async () => {
-    console.log("Form data saved!", {
-      ...formDataTab1,
-      ...formDataTab2,
-      ...formDataTab3,
-      ...formDataTab4,
-    });
     const updatedLoanDetailsData = {
       ...formDataTab1,
       ...formDataTab2,
@@ -190,7 +184,6 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
 
   if (isLoading || isLoandetailsDataLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading data</div>;
-  // console.log(loandetailsData);
   return (
     <div>
       <TabContent activeTab={tabId} className="w-full">

@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardBody,
@@ -12,7 +11,10 @@ import {
 import { Href } from "@/Constant";
 import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { basicTabIndicator } from "@/Redux/Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
+import {
+  basicTabIndicator,
+  resetBasicTab,
+} from "@/Redux/Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   InqueryTabTitleData,
   FFDTabTitleData,
@@ -25,10 +27,16 @@ import {
   FOPTabTitleData,
   NPDTabTitleData,
 } from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
+import { useEffect } from "react";
 
 const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
   const basicTab = useAppSelector((state) => state.caseDetails.basicTabId);
   const dispatch = useAppDispatch();
+
+  // Reset the tab when caseStage changes
+  useEffect(() => {
+    dispatch(resetBasicTab()); // ✅ Resets tab when caseStage updates
+  }, [caseStage, dispatch]);
 
   // Map case stages to corresponding tab title data
   const tabDataMap: Record<string, any[]> = {
@@ -60,17 +68,16 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
           <CardHeader className="d-flex align-items-center flex-wrap gap-2 pb-2 p-0">
             <Nav className="nav-success justify-content-center" pills>
               {currentTabData.map((item, index) => (
-
                 <NavItem key={index}>
                   <NavLink
                     href={Href}
                     outline
                     style={{ width: "16rem" }}
                     className={`${
-                      basicTab === item.id ? "active" : ""
+                      basicTab === item.nav ? "active" : ""
                     } m-2 border border-success rounded p-3 text-center`}
                     onClick={() => {
-                      dispatch(basicTabIndicator(item.id)); // ✅ Dispatch the tab change action
+                      dispatch(basicTabIndicator(item.nav)); // ✅ Dispatch the tab change action
                     }}
                   >
                     {item.nav}

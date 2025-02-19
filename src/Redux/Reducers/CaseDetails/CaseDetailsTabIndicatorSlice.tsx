@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  basicTabId: "1",
+  basicTabId: null,
 };
 
 const CaseDetailsTabIndicatorSlice = createSlice({
@@ -11,11 +11,16 @@ const CaseDetailsTabIndicatorSlice = createSlice({
     basicTabIndicator: (state, action) => {
       state.basicTabId = action.payload;
     },
+
+    resetBasicTab: (state) => {
+      state.basicTabId = null; //
+    },
   },
 });
 
 // ✅ Correctly export action creator
-export const { basicTabIndicator } = CaseDetailsTabIndicatorSlice.actions;
+export const { basicTabIndicator, resetBasicTab } =
+  CaseDetailsTabIndicatorSlice.actions;
 
 // ✅ Correctly export reducer
 export default CaseDetailsTabIndicatorSlice.reducer;

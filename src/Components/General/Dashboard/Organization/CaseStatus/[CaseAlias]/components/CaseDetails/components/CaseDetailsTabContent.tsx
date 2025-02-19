@@ -3,20 +3,19 @@ import { TabContent } from "reactstrap";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 
-// Define a mapping of tab numbers to components
-const tabComponents: Record<number, React.FC> = {
-  1: LoanDetailsTab,
-  2: ApplicantsDetailsTab,
-  // 3: AnotherTab,
+// Define a mapping of tab names to components
+const tabComponents: Record<string, React.FC> = {
+  "Loan Details": LoanDetailsTab,
+  "Applicant(s) Details": ApplicantsDetailsTab,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
-  const basicTab: string = useAppSelector(
+  const basicTab: string|null = useAppSelector(
     (state) => state.caseDetails.basicTabId
   );
+  console.log("Active Tab:", basicTab);
 
-  // Convert string to number
-  const ActiveTabComponent = tabComponents[Number(basicTab)];
+  const ActiveTabComponent = basicTab ? tabComponents[basicTab] : null; // Fix: Ensure basicTab is not null
 
   return (
     <TabContent>
