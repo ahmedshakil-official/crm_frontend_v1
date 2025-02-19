@@ -14,7 +14,10 @@ interface LoanDetailsFormTab1Props {
     repayment_method: string;
     repayment_vehicle: string;
   };
-  handleFormChange: (name: string, value: string) => void;
+  handleFormChange: (
+    name: string,
+    value: string | null | number | boolean
+  ) => void;
 }
 
 const LoanDetailsFormTab1: React.FC<LoanDetailsFormTab1Props> = ({

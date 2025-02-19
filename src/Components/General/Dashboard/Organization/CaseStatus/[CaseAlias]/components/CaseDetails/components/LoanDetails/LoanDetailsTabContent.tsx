@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TabContent, TabPane, Button } from "reactstrap";
 import LoanDetailsFormTab1 from "./LoanDetailsFormTabs/LoanDetailsFormTab1";
 import LoanDetailsFormTab2 from "./LoanDetailsFormTabs/LoanDetailsFormTab2";
 import LoanDetailsFormTab3 from "./LoanDetailsFormTabs/LoanDetailsFormTab3";
 import LoanDetailsFormTab4 from "./LoanDetailsFormTabs/LoanDetailsFormTab4";
+import { useParams } from "next/navigation";
+import {
+  useGetCaseLoanDetailsQuery,
+  useGetLoanDetailsQuery,
+  useUpdateLoanDetailsMutation,
+} from "@/Redux/Reducers/CaseDetails/LoanDetails/LoanDetailsApi";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 interface LoanDetailsTabContentProps {
   tabId: string;
@@ -14,6 +21,23 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   tabId,
   setTabId,
 }) => {
+  const { casealias } = useParams();
+  const { data, isLoading, isError } = useGetCaseLoanDetailsQuery(casealias);
+
+  // Ensure `data` exists and has elements before accessing `[0]`
+  const loandetailsAlias =
+    Array.isArray(data) && data.length > 0 ? data[0].alias : null;
+
+  const { data: loandetailsData, isLoading: isLoandetailsDataLoading } =
+    useGetLoanDetailsQuery(
+      loandetailsAlias
+        ? { case_alias: casealias, loanDetails_alias: loandetailsAlias }
+        : skipToken
+    );
+  const [updateLoanDetails, { isLoading: isUpdating }] =
+    useUpdateLoanDetailsMutation();
+
+  // Initialize form states with default values
   const [formDataTab1, setFormDataTab1] = useState({
     application_type: "",
     lenders_reference: "",
@@ -26,7 +50,6 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     repayment_method: "",
     repayment_vehicle: "",
   });
-
 
   const [formDataTab2, setFormDataTab2] = useState({
     property_valuation: 0,
@@ -44,7 +67,6 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     advice_level: "",
   });
 
-  // Ensure dates are always in "YYYY-MM-DD" format or null
   const [formDataTab3, setFormDataTab3] = useState({
     dip_accept_date: null as string | null,
     dip_expiry_date: null as string | null,
@@ -63,51 +85,119 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     case_summary: "",
   });
 
-  const handleFormChangeTab1 = (name: string, value: any) => {
-    setFormDataTab1((prevData) => ({ ...prevData, [name]: value }));
-  };
+  // Update form data when `loandetailsData` is loaded
+  useEffect(() => {
+    if (loandetailsData) {
+      setFormDataTab1({
+        application_type: loandetailsData.application_type || "",
+        lenders_reference: loandetailsData.lenders_reference || "",
+        mortgage_type: loandetailsData.mortgage_type || "",
+        loan_purpose: loandetailsData.loan_purpose || "",
+        borrower_type: loandetailsData.borrower_type || "",
+        interest_rate_type: loandetailsData.interest_rate_type || "",
+        product_term: loandetailsData.product_term || "",
+        lender: loandetailsData.lender || "",
+        repayment_method: loandetailsData.repayment_method || "",
+        repayment_vehicle: loandetailsData.repayment_vehicle || "",
+      });
 
-  const handleFormChangeTab2 = (name: string, value: any) => {
-    setFormDataTab2((prevData) => ({ ...prevData, [name]: value }));
-  };
+      setFormDataTab2({
+        property_valuation: loandetailsData.property_valuation || 0,
+        loan_amount: loandetailsData.loan_amount || 0,
+        estimated_value: loandetailsData.estimated_value || 0,
+        ltv: loandetailsData.ltv || null,
+        term_years: loandetailsData.term_years || 0,
+        term_months: loandetailsData.term_months || 0,
+        interest_only_amount: loandetailsData.interest_only_amount || "0.00",
+        outstanding_balance: loandetailsData.outstanding_balance || null,
+        current_monthly_payment:
+          loandetailsData.current_monthly_payment || null,
+        current_lender: loandetailsData.current_lender || "",
+        original_purchase_price:
+          loandetailsData.original_purchase_price || "0.00",
+        date_of_purchase: loandetailsData.date_of_purchase || null,
+        advice_level: loandetailsData.advice_level || "",
+      });
 
-  // Ensure date is always "YYYY-MM-DD" or null
-  const handleFormChangeTab3 = (name: string, value: string) => {
-    setFormDataTab3((prevData) => ({ ...prevData, [name]: value || null }));
-  };
+      setFormDataTab3({
+        dip_accept_date: loandetailsData.dip_accept_date || null,
+        dip_expiry_date: loandetailsData.dip_expiry_date || null,
+        expected_completion_date:
+          loandetailsData.expected_completion_date || null,
+        product_expiry_date: loandetailsData.product_expiry_date || null,
+      });
 
-  const handleFormChangeTab4 = (name: string, value: string) => {
-    setFormDataTab4((prevData) => ({ ...prevData, [name]: value }));
-  };
+      setFormDataTab4({
+        sale_type: loandetailsData.sale_type || "",
+        introduction_type: loandetailsData.introduction_type || "",
+        lead_source: loandetailsData.lead_source || "",
+        introducer_payment_terms:
+          loandetailsData.introducer_payment_terms || "",
+        introducer_fee: loandetailsData.introducer_fee || null,
+        reasons_for_capital_raising:
+          loandetailsData.reasons_for_capital_raising || "",
+        accepted_or_declined_by_lender:
+          loandetailsData.accepted_or_declined_by_lender || false,
+        case_summary: loandetailsData.case_summary || "",
+      });
+    }
+  }, [loandetailsData]); // Only run effect when `loandetailsData` changes
 
-  const isTab2Valid = () => {
-    const { property_valuation, loan_amount, estimated_value } = formDataTab2;
-    return property_valuation && loan_amount && estimated_value;
-  };
-
-  const handleNext = () => {
-    const nextTabId = (parseInt(tabId) + 1).toString();
-    if (nextTabId <= "4") {
-      setTabId(nextTabId);
+  // Handle form changes
+  const handleFormChange = (tab: number, name: string, value: any) => {
+    switch (tab) {
+      case 1:
+        setFormDataTab1((prev) => ({ ...prev, [name]: value }));
+        break;
+      case 2:
+        setFormDataTab2((prev) => ({ ...prev, [name]: value }));
+        break;
+      case 3:
+        setFormDataTab3((prev) => ({ ...prev, [name]: value || null }));
+        break;
+      case 4:
+        setFormDataTab4((prev) => ({ ...prev, [name]: value }));
+        break;
     }
   };
 
-  const handleSave = () => {
+  const isTab2Valid = () =>
+    formDataTab2.property_valuation &&
+    formDataTab2.loan_amount &&
+    formDataTab2.estimated_value;
+
+  const handleNext = () => setTabId((parseInt(tabId) + 1).toString());
+
+  const handleSave = async () => {
     console.log("Form data saved!", {
       ...formDataTab1,
       ...formDataTab2,
       ...formDataTab3,
       ...formDataTab4,
     });
+    const updatedLoanDetailsData = {
+      ...formDataTab1,
+      ...formDataTab2,
+      ...formDataTab3,
+      ...formDataTab4,
+    };
+    await updateLoanDetails({
+      case_alias: casealias,
+      loanDetails_alias: loandetailsAlias,
+      mergedData: updatedLoanDetailsData,
+    });
   };
 
+  if (isLoading || isLoandetailsDataLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading data</div>;
+  // console.log(loandetailsData);
   return (
     <div>
       <TabContent activeTab={tabId} className="w-full">
         <TabPane tabId="1">
           <LoanDetailsFormTab1
             formData={formDataTab1}
-            handleFormChange={handleFormChangeTab1}
+            handleFormChange={(name, value) => handleFormChange(1, name, value)}
           />
           <Button color="primary" onClick={handleNext} className="float-end">
             Next
@@ -116,7 +206,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
         <TabPane tabId="2">
           <LoanDetailsFormTab2
             formData={formDataTab2}
-            handleFormChange={handleFormChangeTab2}
+            handleFormChange={(name, value) => handleFormChange(2, name, value)}
           />
           <Button
             color="primary"
@@ -130,7 +220,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
         <TabPane tabId="3">
           <LoanDetailsFormTab3
             formData={formDataTab3}
-            handleFormChange={handleFormChangeTab3}
+            handleFormChange={(name, value) => handleFormChange(3, name, value)}
           />
           <Button color="primary" onClick={handleNext} className="float-end">
             Next
@@ -139,15 +229,10 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
         <TabPane tabId="4">
           <LoanDetailsFormTab4
             formData={formDataTab4}
-            handleFormChange={handleFormChangeTab4}
+            handleFormChange={(name, value) => handleFormChange(4, name, value)}
           />
-          <Button
-            color="primary"
-            onClick={handleSave}
-            disabled={!isTab2Valid()}
-            className="float-end"
-          >
-            Save
+          <Button color="primary" onClick={handleSave} className="float-end">
+            {isUpdating ? "Saving..." : "Save"}
           </Button>
         </TabPane>
       </TabContent>
