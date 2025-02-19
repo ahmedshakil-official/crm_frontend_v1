@@ -1,11 +1,13 @@
-import { TabContent } from "reactstrap";
-import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 import { useAppSelector } from "@/Redux/Hooks";
+import { TabContent } from "reactstrap";
+import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
+import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 
 // Define a mapping of tab numbers to components
 const tabComponents: Record<number, React.FC> = {
   1: LoanDetailsTab,
-  // 2: AnotherTab,
+  2: ApplicantsDetailsTab,
+  // 3: AnotherTab,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
@@ -21,7 +23,9 @@ export const CaseDetailsTabContent: React.FC = () => {
       {ActiveTabComponent ? (
         <ActiveTabComponent />
       ) : (
-        <div className=" text-center text-warning ">No Content Available</div>
+        <div className=" text-center text-warning fs-3">
+          No Content Available
+        </div>
       )}
     </TabContent>
   );
