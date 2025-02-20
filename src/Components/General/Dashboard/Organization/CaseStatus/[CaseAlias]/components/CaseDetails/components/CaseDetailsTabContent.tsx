@@ -10,10 +10,9 @@ const tabComponents: Record<string, React.FC> = {
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
-  const basicTab: string|null = useAppSelector(
+  const basicTab: string | null = useAppSelector(
     (state) => state.caseDetails.basicTabId
   );
-  console.log("Active Tab:", basicTab);
 
   const ActiveTabComponent = basicTab ? tabComponents[basicTab] : null; // Fix: Ensure basicTab is not null
 

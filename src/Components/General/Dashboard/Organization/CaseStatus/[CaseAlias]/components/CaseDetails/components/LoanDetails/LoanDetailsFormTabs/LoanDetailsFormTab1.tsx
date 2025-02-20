@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
 
 interface LoanDetailsFormTab1Props {
