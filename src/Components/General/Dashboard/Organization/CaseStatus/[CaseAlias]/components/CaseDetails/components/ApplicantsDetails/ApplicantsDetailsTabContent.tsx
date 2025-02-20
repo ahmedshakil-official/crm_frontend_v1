@@ -36,7 +36,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     state_retirement_age: 0,
     is_smoker: false,
     gender: "",
-    nationality: "BRITISH",
+    nationality: "GB",
     dual_nationality: false,
     marital_status: "",
     ni_number: "",
@@ -50,7 +50,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     has_dependants: false,
     number_of_dependants: 0,
     date_of_arrival_uk: "",
-    indefinite_right_to_reside: false,
+    indefinite_right_to_reside: true,
     visa_details: "",
     visa_expiry_date: "",
     postcode: "",
@@ -121,7 +121,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       [name]: value,
     }));
   };
-  console.log("Show: ", formValues.title);
+  console.log("Show: ", formValues);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -175,6 +175,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   <option value="MR">Mr</option>
                   <option value="MRS">Mrs</option>
                   <option value="MS">Ms</option>
+                  <option value="MISS">Miss</option>
                 </Input>
               </FormGroup>
             </Col>
@@ -220,15 +221,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     handleInputChange("nationality", e.target.value)
                   }
                 >
-                  <option value="BRITISH">British</option>
-                  <option value="OTHER">Other</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="BD">Bangladesh</option>
+                  <option value="PK">Pakistan</option>
                 </Input>
               </FormGroup>
             </Col>
           </Row>
 
           {/* Conditional Fields */}
-          {formValues.nationality !== "BRITISH" && (
+          {formValues.nationality !== "GB" && (
             <Row>
               <Col md={6}>
                 <FormGroup>
@@ -264,12 +266,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                           value={option}
                           checked={
                             formValues.indefinite_right_to_reside ===
-                            (option === "yes")
+                            (option === "no")
                           }
                           onChange={(e) =>
                             handleInputChange(
                               "indefinite_right_to_reside",
-                              e.target.value === "yes"
+                              e.target.value === "no"
                             )
                           }
                         />
@@ -283,42 +285,43 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           )}
 
           {/* Visa Details - Hidden if Indefinite Right to Reside is "yes" */}
-          {!formValues.indefinite_right_to_reside && (
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="visa_details" className="text-info">
-                    Visa Details
-                  </Label>
-                  <Input
-                    id="visa_details"
-                    type="text"
-                    value={formValues.visa_details || ""}
-                    onChange={(e) =>
-                      handleInputChange("visa_details", e.target.value)
-                    }
-                    className="border-info"
-                  />
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="visa_expiry_date" className="text-info">
-                    Visa Expiry Date
-                  </Label>
-                  <Input
-                    id="visa_expiry_date"
-                    type="date"
-                    value={formValues.visa_expiry_date || ""}
-                    onChange={(e) =>
-                      handleInputChange("visa_expiry_date", e.target.value)
-                    }
-                    className="border-info"
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-          )}
+          {formValues.nationality !== "GB" &&
+            !formValues.indefinite_right_to_reside && (
+              <Row>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="visa_details" className="text-info">
+                      Visa Details
+                    </Label>
+                    <Input
+                      id="visa_details"
+                      type="text"
+                      className="border-info"
+                      value={formValues.visa_details || ""}
+                      onChange={(e) =>
+                        handleInputChange("visa_details", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="visa_expiry_date" className="text-info">
+                      Visa Expiry Date
+                    </Label>
+                    <Input
+                      id="visa_expiry_date"
+                      className="border-info"
+                      type="date"
+                      value={formValues.visa_expiry_date || ""}
+                      onChange={(e) =>
+                        handleInputChange("visa_expiry_date", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+            )}
 
           {/* Identification and Contact Information */}
           <Row>
@@ -624,16 +627,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   required
                 >
                   <option value="">Select an option</option>
-                  <option value="Owner">Owner</option>
-                  <option value="Renting - Private">Renting - Private</option>
-                  <option value="Renting - Local Authority">
+                  <option value="OWNER">Owner</option>
+                  <option value="RENTING_PRIVATE">Renting - Private</option>
+                  <option value="RENTING_LOCAL_AUTHORITY">
                     Renting - Local Authority
                   </option>
-                  <option value="Tied Accommodation">Tied Accommodation</option>
-                  <option value="Living with Parents">
+                  <option value="TIED_ACCOMMODATION">Tied Accommodation</option>
+                  <option value="LIVING_WITH_PARENTS">
                     Living with Parents
                   </option>
-                  <option value="Living with Friends/Family">
+                  <option value="LIVING_WITH_FRIENDS_FAMILY">
                     Living with Friends/Family
                   </option>
                 </Input>
