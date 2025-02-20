@@ -70,7 +70,6 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
               {currentTabData.map((item, index) => (
                 <NavItem key={index}>
                   <NavLink
-                    href={Href}
                     outline
                     style={{ width: "16rem" }}
                     className={`${

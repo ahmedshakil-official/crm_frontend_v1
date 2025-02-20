@@ -11,6 +11,7 @@ import {
   useUpdateLoanDetailsMutation,
 } from "@/Redux/Reducers/CaseDetails/LoanDetails/LoanDetailsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
+import { toast } from "react-toastify";
 
 interface LoanDetailsTabContentProps {
   tabId: string;
@@ -175,11 +176,16 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
       ...formDataTab3,
       ...formDataTab4,
     };
-    await updateLoanDetails({
+    const response = await updateLoanDetails({
       case_alias: casealias,
       loanDetails_alias: loandetailsAlias,
       mergedData: updatedLoanDetailsData,
     });
+    if (response.data) {
+      toast.success("Loan details updated successfully");
+    } else {
+      toast.error("Failed to update loan details");
+    }
   };
 
   if (isLoading || isLoandetailsDataLoading) return <div>Loading...</div>;

@@ -1,4 +1,3 @@
-import { Href } from "@/Constant";
 import { useState } from "react";
 import {
   Card,
@@ -28,8 +27,8 @@ export const LoanDetailsTab = () => {
               ].map((item, index) => (
                 <NavItem key={index}>
                   <NavLink
-                    href={Href} // You can remove this if you are not using it
                     className={`${basicTab === item.id ? "active" : ""}`}
+                    style={{ cursor: "pointer" }}
                     onClick={() => setBasicTab(item.id)}
                   >
                     {item.nav}
