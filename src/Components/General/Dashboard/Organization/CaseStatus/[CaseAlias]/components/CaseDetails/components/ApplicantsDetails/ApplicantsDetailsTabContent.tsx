@@ -27,6 +27,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   fetchApplicants,
 }) => {
   const [companyApplicant, setCompanyApplicant] = useState("no");
+  const [isLoading, setIsLoading] = useState(false);
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
@@ -129,12 +130,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // console.log("Form submitted:", formValues);
-
+    setIsLoading(true);
     try {
       // Make the API call to update the applicant details
       const response = await apiClient.put(
         `/cases/${casealias}/applicant/details/${formValues.alias}/`,
-        formValues 
+        formValues
       );
       // Optionally, show a success message or handle the response
       toast.success("Applicant details updated successfully!");
@@ -142,6 +143,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     } catch (error) {
       console.error("Error updating applicant details:", error);
       toast.error("Error updating applicant details!");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -675,9 +678,11 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           </Row>
 
           {/* Submit Button */}
-          <Button type="submit" color="success">
-            Update
-          </Button>
+          <div className="d-flex justify-content-end">
+            <Button type="submit" color="success" disabled={isLoading}>
+              {isLoading ? "Updating..." : "Update"}
+            </Button>
+          </div>
         </Form>
       </Row>
     </Container>
