@@ -84,7 +84,6 @@ export interface Applicant {
   year_built: number;
   notes: string;
   marketing_preferences?: string;
-  fetchApplicants?: () => void;
 }
 
 export const ApplicantsDetailsTab = () => {
