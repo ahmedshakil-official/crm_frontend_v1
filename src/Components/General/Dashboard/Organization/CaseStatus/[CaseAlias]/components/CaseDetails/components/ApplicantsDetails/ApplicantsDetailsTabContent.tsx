@@ -2,6 +2,7 @@
 import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -13,16 +14,17 @@ import {
   Row,
 } from "reactstrap";
 import { Applicant } from "./ApplicantsDetailsTab";
-import { toast } from "react-toastify";
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
   basicTab: string | null;
+  fetchApplicants: () => void;
 }
 
 const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   applicantsData,
   basicTab,
+  fetchApplicants,
 }) => {
   const [companyApplicant, setCompanyApplicant] = useState("no");
   // UseParams with type assertion
@@ -131,17 +133,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     try {
       // Make the API call to update the applicant details
       const response = await apiClient.put(
-        `/cases/${casealias}/applicant/details/${formValues.alias}/`, // Replace `casealias` with the actual alias value
-        formValues // Send the updated form values as the request body
+        `/cases/${casealias}/applicant/details/${formValues.alias}/`,
+        formValues 
       );
       // Optionally, show a success message or handle the response
       toast.success("Applicant details updated successfully!");
+      fetchApplicants();
     } catch (error) {
       console.error("Error updating applicant details:", error);
       toast.error("Error updating applicant details!");
-
-      // Optionally, show an error message to the user
-      alert("Failed to update applicant details. Please try again.");
     }
   };
 

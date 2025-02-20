@@ -84,6 +84,7 @@ export interface Applicant {
   year_built: number;
   notes: string;
   marketing_preferences?: string;
+  fetchApplicants?: () => void;
 }
 
 export const ApplicantsDetailsTab = () => {
@@ -141,6 +142,7 @@ export const ApplicantsDetailsTab = () => {
             <ApplicantsDetailsTabContent
               applicantsData={applicantsData}
               basicTab={basicTab}
+              fetchApplicants={fetchApplicants}
             />
           </CardBody>
         </CardBody>
