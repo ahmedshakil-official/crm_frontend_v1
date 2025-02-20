@@ -136,7 +136,6 @@ export const ApplicantsDetailsTab = () => {
             </Nav>
           </CardHeader>
           <CardBody className="px-0 pb-0">
-            {basicTab && <div>Selected Applicant: {basicTab}</div>}
             <ApplicantsDetailsTabContent
               applicantsData={applicantsData}
               basicTab={basicTab}
