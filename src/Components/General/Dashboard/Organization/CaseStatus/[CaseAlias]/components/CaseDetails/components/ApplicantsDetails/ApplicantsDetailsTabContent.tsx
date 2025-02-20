@@ -1,4 +1,6 @@
 "use client";
+import apiClient from "@/services/api-client";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -11,6 +13,7 @@ import {
   Row,
 } from "reactstrap";
 import { Applicant } from "./ApplicantsDetailsTab";
+import { toast } from "react-toastify";
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
@@ -22,13 +25,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   basicTab,
 }) => {
   const [companyApplicant, setCompanyApplicant] = useState("no");
+  // UseParams with type assertion
+  const params = useParams();
+  const { casealias } = params;
+
   const [formValues, setFormValues] = useState<Applicant>({
-    alias: "",
     is_company_application: false,
-    applicant: {
-      first_name: "",
-      last_name: "",
-    },
     title: "",
     maiden_name: "",
     date_of_birth: "",
@@ -46,7 +48,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     mobile_phone: "",
     work_phone: "",
     email: "",
-    marketing_preferences: [],
+    // marketing_preferences: [],
     has_dependants: false,
     number_of_dependants: 0,
     date_of_arrival_uk: "",
@@ -88,8 +90,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     tenure: "",
     year_built: 0,
     notes: "",
-    updated_at: "",
-    updated_by: 0,
   });
 
   // Find the selected applicant based on the `basicTab` value
@@ -100,7 +100,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   // Initialize form values with selected applicant's data
   useEffect(() => {
     if (selectedApplicant) {
-      setFormValues(selectedApplicant);
+      const { marketing_preferences, ...newValue } = selectedApplicant; // Destructure to exclude marketing_preferences
+      setFormValues(newValue);
     }
   }, [selectedApplicant]);
 
@@ -121,12 +122,27 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       [name]: value,
     }));
   };
-  console.log("Show: ", formValues);
+  // console.log("Show: ", formValues);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formValues);
-    // Add logic to save or process the form data here
+    // console.log("Form submitted:", formValues);
+
+    try {
+      // Make the API call to update the applicant details
+      const response = await apiClient.put(
+        `/cases/${casealias}/applicant/details/${formValues.alias}/`, // Replace `casealias` with the actual alias value
+        formValues // Send the updated form values as the request body
+      );
+      // Optionally, show a success message or handle the response
+      toast.success("Applicant details updated successfully!");
+    } catch (error) {
+      console.error("Error updating applicant details:", error);
+      toast.error("Error updating applicant details!");
+
+      // Optionally, show an error message to the user
+      alert("Failed to update applicant details. Please try again.");
+    }
   };
 
   return (
@@ -411,7 +427,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           </Row>
 
           {/* Marketing Preferences */}
-          <Row>
+          {/* <Row>
             <Col md={12}>
               <FormGroup>
                 <Label for="marketing_preferences">
@@ -445,7 +461,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 )}
               </FormGroup>
             </Col>
-          </Row>
+          </Row> */}
 
           {/* Dependents */}
           <Row>

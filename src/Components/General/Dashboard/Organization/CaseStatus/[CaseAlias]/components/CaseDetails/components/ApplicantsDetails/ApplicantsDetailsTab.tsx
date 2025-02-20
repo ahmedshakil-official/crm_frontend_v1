@@ -19,9 +19,9 @@ interface Params {
 
 // Type for applicants data array
 export interface Applicant {
-  alias: string;
+  alias?: string;
   is_company_application: boolean;
-  applicant: {
+  applicant?: {
     first_name: string;
     last_name: string;
   };
@@ -42,7 +42,6 @@ export interface Applicant {
   mobile_phone: string;
   work_phone: string;
   email: string;
-  marketing_preferences: string[];
   has_dependants: boolean;
   number_of_dependants: number;
   date_of_arrival_uk: string;
@@ -84,11 +83,11 @@ export interface Applicant {
   tenure: string;
   year_built: number;
   notes: string;
-  updated_at: string;
-  updated_by: number;
+  marketing_preferences?: string;
 }
 
 export const ApplicantsDetailsTab = () => {
+  // Initialize basicTab as null instead of undefined
   const [basicTab, setBasicTab] = useState<string | null>(null);
   const [applicantsData, setApplicantsData] = useState<Applicant[]>([]);
 
@@ -103,7 +102,8 @@ export const ApplicantsDetailsTab = () => {
       );
       setApplicantsData(response.data);
       if (response.data.length > 0) {
-        setBasicTab(response?.data[0]?.alias); // Set the first applicant as default
+        // Set the first applicant's alias as the default tab
+        setBasicTab(response.data[0]?.alias || null); // Ensure null is used if alias is undefined
       }
     } catch (error) {
       console.error("Error fetching applicants:", error);
@@ -126,7 +126,9 @@ export const ApplicantsDetailsTab = () => {
                     className={`${
                       basicTab === applicantData.alias ? "active" : ""
                     }`}
-                    onClick={() => setBasicTab(applicantData.alias)}
+                    onClick={() =>
+                      setBasicTab(applicantData.alias || null) // Ensure null is used if alias is undefined
+                    }
                     style={{ cursor: "pointer" }}
                   >
                     {`${applicantData?.applicant?.first_name} ${applicantData?.applicant?.last_name}`}
