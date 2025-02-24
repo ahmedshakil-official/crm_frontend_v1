@@ -71,7 +71,7 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
                 <NavItem key={index}>
                   <NavLink
                     outline
-                    style={{ width: "16rem" }}
+                    style={{ width: "16rem", cursor: "pointer" }}
                     className={`${
                       basicTab === item.nav ? "active" : ""
                     } m-2 border border-success rounded p-3 text-center`}

@@ -2,7 +2,7 @@
 import { countries } from "@/Data/Countries/Countries";
 import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -13,9 +13,14 @@ import {
   FormGroup,
   Input,
   Label,
+  Modal,
+  ModalBody,
+  ModalHeader,
   Row,
 } from "reactstrap";
 import { Applicant } from "./ApplicantsDetailsTab";
+import CompanyForm from "./ApplicantDetailsModals/ApplicantCompanyInfoModal";
+import DependantForm from "./ApplicantDetailsModals/ApplicantDependantsModal";
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
@@ -31,9 +36,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [companyApplicant, setCompanyApplicant] = useState<
     string | number | boolean | null | string[]
   >("no");
-
-
   const [isLoading, setIsLoading] = useState(false);
+  const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
+  const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
@@ -173,7 +178,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </div>
           ))}
           {companyApplicant === "yes" && (
-            <Button color="primary">Continue with Company Application</Button>
+            <Button onClick={() => setIsCompanyModalOpen(true)} color="primary">
+              Continue with Company Application
+            </Button>
           )}
         </FormGroup>
       </Row>
@@ -700,7 +707,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
             {formValues.has_dependants && (
               <Col md={6}>
-                <Button onClick={() => alert("Add Dependants")}>
+                <Button onClick={() => setIsDependantsModalOpen(true)}>
                   Add Dependants
                 </Button>
               </Col>
@@ -910,6 +917,32 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           </div>
         </Form>
       </Row>
+
+      {/* Company Applicant Modal */}
+      <Modal isOpen={isCompanyModalOpen} size="xl">
+        <ModalHeader
+          toggle={() => setIsCompanyModalOpen(false)}
+          className=" p-3"
+        >
+          <p className=" fs-2 text-primary fw-bold">Company Applicant</p>
+        </ModalHeader>
+        <ModalBody>
+          <CompanyForm />
+        </ModalBody>
+      </Modal>
+
+      {/* Dependants of Applicant Modal */}
+      <Modal isOpen={isDependantsModalOpen} size="lg">
+        <ModalHeader
+          toggle={() => setIsDependantsModalOpen(false)}
+          className=" p-3"
+        >
+          <p className=" fs-2 text-primary fw-bold">Add Dependants</p>
+        </ModalHeader>
+        <ModalBody>
+          <DependantForm />
+        </ModalBody>
+      </Modal>
     </Container>
   );
 };
