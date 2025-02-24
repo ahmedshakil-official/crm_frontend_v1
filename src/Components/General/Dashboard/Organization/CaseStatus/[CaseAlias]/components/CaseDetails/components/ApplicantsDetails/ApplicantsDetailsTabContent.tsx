@@ -39,6 +39,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
+
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
@@ -940,7 +941,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <p className=" fs-2 text-primary fw-bold">Add Dependants</p>
         </ModalHeader>
         <ModalBody>
-          <DependantForm />
+          <DependantForm
+            case_alias={casealias as string}
+            applicantDetails_alias={formValues.alias as string}
+          />
         </ModalBody>
       </Modal>
     </Container>
