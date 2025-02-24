@@ -141,6 +141,7 @@ export const ApplicantsDetailsTab = () => {
             <ApplicantsDetailsTabContent
               applicantsData={applicantsData}
               basicTab={basicTab}
+              fetchApplicants={fetchApplicants}
             />
           </CardBody>
         </CardBody>
