@@ -1,4 +1,5 @@
 "use client";
+import { countries } from "@/Data/Countries/Countries";
 import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -15,7 +16,6 @@ import {
   Row,
 } from "reactstrap";
 import { Applicant } from "./ApplicantsDetailsTab";
-
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
@@ -194,7 +194,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   <option value="MS">Ms</option>
                   <option value="MISS">Miss</option>
                 </Input>
-                <FormFeedback className="text-warning d-block">This field is required</FormFeedback>
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -225,7 +227,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-warning d-block">This field is required</FormFeedback>
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -306,15 +310,21 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     handleInputChange("nationality", e.target.value)
                   }
                 >
-                  <option value="GB">United Kingdom</option>
-                  <option value="BD">Bangladesh</option>
-                  <option value="PK">Pakistan</option>
+                  <option value="">Select a country</option>
+                  {/* Map through the list of countries */}
+                  {countries.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {country.name}
+                    </option>
+                  ))}
                 </Input>
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="dual_nationality">Does the applicant have a dual nationality?</Label>
+                <Label for="dual_nationality">
+                  Does the applicant have a dual nationality?
+                </Label>
                 {["yes", "no"].map((value) => (
                   <div key={value}>
                     <Label className="me-2">
@@ -344,20 +354,26 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             {formValues.dual_nationality && (
               <Col md={6}>
                 <FormGroup>
-                  <Label for="dual_nationality" className="text-info">Dual Nationality</Label>
+                  <Label for="dual_nationality" className="text-info">
+                    Dual Nationality
+                  </Label>
                   <Input
-                  id="dual_nationality"
-                  type="select"
-                  className="border-info"
-                  value={formValues.dual_nationality}
-                  // onChange={(e) =>
-                  //   handleInputChange("dual_nationality", e.target.value)
-                  // }
-                >
-                  <option value="GB">United Kingdom</option>
-                  <option value="BD">Bangladesh</option>
-                  <option value="PK">Pakistan</option>
-                </Input>
+                    id="dual_nationality"
+                    type="select"
+                    className="border-info"
+                    value={formValues.dual_nationality}
+                    // onChange={(e) =>
+                    //   handleInputChange("dual_nationality", e.target.value)
+                    // }
+                  >
+                    <option value="">Select a country</option>
+                    {/* Map through the list of countries */}
+                    {countries.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.name}
+                      </option>
+                    ))}
+                  </Input>
                 </FormGroup>
               </Col>
             )}
@@ -513,7 +529,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-warning d-block">This field is required</FormFeedback>
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -775,7 +793,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     Living with Friends/Family
                   </option>
                 </Input>
-                <FormFeedback className="text-warning d-block">This field is required</FormFeedback>
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
