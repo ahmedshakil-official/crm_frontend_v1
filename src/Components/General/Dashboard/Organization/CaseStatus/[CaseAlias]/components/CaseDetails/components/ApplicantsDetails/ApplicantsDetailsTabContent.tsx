@@ -18,10 +18,10 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
+import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/AddApplicantCompanyInfoModal";
+import AddDependantFormModal from "./ApplicantDetailsModals/AddApplicantDependantsModal";
 import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
 import { Applicant } from "./ApplicantsDetailsTab";
-import AddDependantFormModal from "./ApplicantDetailsModals/ApplicantDependantsModal";
-import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/ApplicantCompanyInfoModal";
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
@@ -934,10 +934,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
 
       {/* Company Applicant Modal */}
       <Modal isOpen={isCompanyModalOpen} size="xl">
-        <ModalHeader
-          toggle={() => setIsCompanyModalOpen(false)}
-          className=" p-3"
-        >
+        <ModalHeader toggle={() => setIsCompanyModalOpen(false)}>
           <p className=" fs-2 text-primary fw-bold">Company Applicant</p>
         </ModalHeader>
         <ModalBody>
@@ -946,12 +943,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       </Modal>
 
       {/* Dependants of Applicant Modal */}
-      <Modal isOpen={isDependantsModalOpen} size="lg">
-        <ModalHeader
-          toggle={() => setIsDependantsModalOpen(false)}
-          className=" p-3"
-        >
-          <p className=" fs-2 text-primary fw-bold">Add Dependants</p>
+      <Modal isOpen={isDependantsModalOpen}>
+        <ModalHeader toggle={() => setIsDependantsModalOpen(false)}>
+          <p className=" fs-3 text-primary fw-bold">Add Dependants</p>
         </ModalHeader>
         <ModalBody>
           <AddDependantFormModal
