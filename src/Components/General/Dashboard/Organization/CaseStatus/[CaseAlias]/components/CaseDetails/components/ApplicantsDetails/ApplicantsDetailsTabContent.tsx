@@ -213,9 +213,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
           </Row>
 
-          {/* Additional Fields */}
           <Row>
-            <Col md={6}>
+          <Col md={6}>
               <FormGroup>
                 <Label for="date_of_birth">Date of Birth*</Label>
                 <Input
@@ -229,6 +228,38 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 />
               </FormGroup>
             </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="is_smoker">Are you a smoker?</Label>
+                {["yes", "no"].map((value) => (
+                  <div key={value}>
+                    <Label className="me-2">
+                      <Input
+                        type="radio"
+                        name="is_smoker"
+                        className="me-1"
+                        value={value}
+                        checked={
+                          formValues.is_smoker === (value === "yes")
+                        }
+                        onChange={(e) =>
+                          handleInputChange(
+                            "is_smoker",
+                            e.target.value === "yes"
+                          )
+                        }
+                      />
+                      {value.charAt(0).toUpperCase() + value.slice(1)}
+                    </Label>
+                  </div>
+                ))}
+              </FormGroup>
+            </Col>
+          </Row>
+
+          {/* Additional Fields */}
+          <Row>
+           
             <Col md={6}>
               <FormGroup>
                 <Label for="nationality">Nationality</Label>
