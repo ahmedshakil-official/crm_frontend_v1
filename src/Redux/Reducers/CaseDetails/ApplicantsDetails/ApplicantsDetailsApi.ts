@@ -15,10 +15,17 @@ export const ApplicantsDetailsApi = baseApi.injectEndpoints({
         method: "POST",
         body: dependantsInfo,
       }),
-      invalidatesTags: ["ApplicantsDetails"],
+      invalidatesTags: ["ApplicantsDetails", "Dependants"],
+    }),
+    getDependants: builder.query({
+      query: ({ case_alias, applicantDetails_alias }) => ({
+        url: `/cases/${case_alias}/applicant/details/${applicantDetails_alias}/dependants/`,
+        method: "GET",
+      }),
+      providesTags: ["ApplicantsDetails", "Dependants"],
     }),
   }),
 });
 
-export const { useGetCaseUsersQuery, useAddDependantsMutation } =
+export const { useGetCaseUsersQuery, useAddDependantsMutation,useGetDependantsQuery } =
   ApplicantsDetailsApi;

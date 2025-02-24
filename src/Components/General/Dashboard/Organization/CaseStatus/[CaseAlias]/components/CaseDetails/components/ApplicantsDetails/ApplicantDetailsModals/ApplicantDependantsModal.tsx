@@ -12,7 +12,7 @@ import {
   Col,
 } from "reactstrap";
 
-const DependantForm: React.FC<{
+const AddDependantFormModal: React.FC<{
   case_alias: string;
   applicantDetails_alias: string;
 }> = ({ case_alias, applicantDetails_alias }) => {
@@ -87,4 +87,4 @@ const DependantForm: React.FC<{
   );
 };
 
-export default DependantForm;
+export default AddDependantFormModal;

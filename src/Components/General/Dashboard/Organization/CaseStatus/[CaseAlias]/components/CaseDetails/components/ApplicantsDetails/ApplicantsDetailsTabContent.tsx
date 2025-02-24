@@ -18,10 +18,10 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import CompanyForm from "./ApplicantDetailsModals/ApplicantCompanyInfoModal";
-import DependantForm from "./ApplicantDetailsModals/ApplicantDependantsModal";
 import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
 import { Applicant } from "./ApplicantsDetailsTab";
+import AddDependantFormModal from "./ApplicantDetailsModals/ApplicantDependantsModal";
+import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/ApplicantCompanyInfoModal";
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
@@ -45,7 +45,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
 
   const toggleViewModal = () =>
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
-    
+
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
@@ -940,7 +940,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <p className=" fs-2 text-primary fw-bold">Company Applicant</p>
         </ModalHeader>
         <ModalBody>
-          <CompanyForm />
+          <AddCompanyDetailsFormModal />
         </ModalBody>
       </Modal>
 
@@ -953,7 +953,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <p className=" fs-2 text-primary fw-bold">Add Dependants</p>
         </ModalHeader>
         <ModalBody>
-          <DependantForm
+          <AddDependantFormModal
             case_alias={casealias as string}
             applicantDetails_alias={formValues.alias as string}
           />
