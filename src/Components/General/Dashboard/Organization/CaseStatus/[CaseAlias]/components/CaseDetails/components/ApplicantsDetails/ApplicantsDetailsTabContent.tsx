@@ -24,7 +24,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   applicantsData,
   basicTab,
 }) => {
-  const [companyApplicant, setCompanyApplicant] = useState("no");
+  const [companyApplicant, setCompanyApplicant] = useState<
+    string | number | boolean | null | string[]
+  >("no");
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
@@ -115,7 +117,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
 
   const handleInputChange = (
     name: keyof Applicant,
-    value: string | number | boolean | string[]
+    value: string | number | boolean | string[] | null
   ) => {
     setFormValues((prevValues) => ({
       ...prevValues,
