@@ -1,4 +1,5 @@
 "use client";
+import { countries } from "@/Data/Countries/Countries";
 import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ import {
   Col,
   Container,
   Form,
+  FormFeedback,
   FormGroup,
   Input,
   Label,
@@ -134,19 +136,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       [name]: value,
     }));
   };
-  // console.log("Show: ", formValues);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log("Form submitted:", formValues);
     setIsLoading(true);
     try {
-      // Make the API call to update the applicant details
       const response = await apiClient.put(
         `/cases/${casealias}/applicant/details/${formValues.alias}/`,
         formValues
       );
-      // Optionally, show a success message or handle the response
       toast.success("Applicant details updated successfully!");
       fetchApplicants();
     } catch (error) {
@@ -207,6 +205,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   <option value="MS">Ms</option>
                   <option value="MISS">Miss</option>
                 </Input>
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -224,7 +225,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
           </Row>
 
-          {/* Additional Fields */}
           <Row>
             <Col md={6}>
               <FormGroup>
@@ -238,8 +238,78 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="is_smoker">Are you a smoker?</Label>
+                {["yes", "no"].map((value) => (
+                  <div key={value}>
+                    <Label className="me-2">
+                      <Input
+                        type="radio"
+                        name="is_smoker"
+                        className="me-1"
+                        value={value}
+                        checked={formValues.is_smoker === (value === "yes")}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "is_smoker",
+                            e.target.value === "yes"
+                          )
+                        }
+                      />
+                      {value.charAt(0).toUpperCase() + value.slice(1)}
+                    </Label>
+                  </div>
+                ))}
+              </FormGroup>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="anticipated_retirement_age">
+                  Anticipated Retirement Age*
+                </Label>
+                <Input
+                  id="anticipated_retirement_age"
+                  type="number"
+                  value={formValues.anticipated_retirement_age || ""}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "anticipated_retirement_age",
+                      e.target.value
+                    )
+                  }
+                  required
+                />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="state_retirement_age">State Retirement Age</Label>
+                <Input
+                  id="state_retirement_age"
+                  type="number"
+                  value={formValues.state_retirement_age || ""}
+                  onChange={(e) =>
+                    handleInputChange("state_retirement_age", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+
+          {/* Additional Fields */}
+          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="nationality">Nationality</Label>
@@ -251,12 +321,99 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     handleInputChange("nationality", e.target.value)
                   }
                 >
-                  <option value="GB">United Kingdom</option>
-                  <option value="BD">Bangladesh</option>
-                  <option value="PK">Pakistan</option>
+                  <option value="">Select a country</option>
+                  {/* Map through the list of countries */}
+                  {countries.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {country.name}
+                    </option>
+                  ))}
                 </Input>
               </FormGroup>
             </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="dual_nationality">
+                  Does the applicant have a dual nationality?
+                </Label>
+                {["yes", "no"].map((value) => (
+                  <div key={value}>
+                    <Label className="me-2">
+                      <Input
+                        type="radio"
+                        name="dual_nationality"
+                        className="me-1"
+                        value={value}
+                        checked={
+                          formValues.dual_nationality === (value === "yes")
+                        }
+                        onChange={(e) =>
+                          handleInputChange(
+                            "dual_nationality",
+                            e.target.value === "yes"
+                          )
+                        }
+                      />
+                      {value.charAt(0).toUpperCase() + value.slice(1)}
+                    </Label>
+                  </div>
+                ))}
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="marital_status">Marital Status</Label>
+                <Input
+                  id="marital_status"
+                  type="select"
+                  value={formValues.marital_status}
+                  onChange={(e) =>
+                    handleInputChange("marital_status", e.target.value)
+                  }
+                >
+                  <option value="">Select an option</option>
+                  <option value="SINGLE">Single</option>
+                  <option value="MARRIED">Married</option>
+                  <option value="DIVORCED">Divorced</option>
+                  <option value="SEPARATED">Separated</option>
+                  <option value="WIDOW">Widow</option>
+                  <option value="WIDOWER">Widower</option>
+                  <option value="CO_HABITING">Co-Habiting</option>
+                  <option value="CIVIL_PARTNER">Civil Partner</option>
+                  <option value="RELIGIOUSLY_MARRIED">
+                    Religiously Married
+                  </option>
+                </Input>
+              </FormGroup>
+            </Col>
+            {formValues.dual_nationality && (
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="dual_nationality" className="text-info">
+                    Dual Nationality
+                  </Label>
+                  <Input
+                    id="dual_nationality"
+                    type="select"
+                    className="border-info"
+                    value={formValues.dual_nationality}
+                    // onChange={(e) =>
+                    //   handleInputChange("dual_nationality", e.target.value)
+                    // }
+                  >
+                    <option value="">Select a country</option>
+                    {/* Map through the list of countries */}
+                    {countries.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.name}
+                      </option>
+                    ))}
+                  </Input>
+                </FormGroup>
+              </Col>
+            )}
           </Row>
 
           {/* Conditional Fields */}
@@ -370,6 +527,21 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
             <Col md={6}>
               <FormGroup>
+                <Label for="country_of_birth">Country of Birth</Label>
+                <Input
+                  id="country_of_birth"
+                  type="text"
+                  value={formValues.country_of_birth || ""}
+                  onChange={(e) =>
+                    handleInputChange("country_of_birth", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
                 <Label for="bank_name">Who do you bank with?</Label>
                 <Input
                   id="bank_name"
@@ -381,8 +553,32 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 />
               </FormGroup>
             </Col>
+            <Col md={6}>
+              <Label for="how_long_banked">
+                How long have you banked with them?
+              </Label>
+              <FormGroup className="d-flex justify-content-center align-items-center gap-3">
+                <Input
+                  id="how_long_banked"
+                  type="number"
+                  placeholder="Years"
+                  // value={formValues.how_long_banked || ""}
+                  // onChange={(e) =>
+                  //   handleInputChange("how_long_banked", e.target.value)
+                  // }
+                />
+                <Input
+                  id="how_long_banked"
+                  type="number"
+                  placeholder="Months"
+                  // value={formValues.how_long_banked || ""}
+                  // onChange={(e) =>
+                  //   handleInputChange("how_long_banked", e.target.value)
+                  // }
+                />
+              </FormGroup>
+            </Col>
           </Row>
-
           <Row>
             <Col md={6}>
               <FormGroup>
@@ -409,6 +605,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -514,12 +713,14 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </Col>
             )}
           </Row>
-
+          <Row>
+            <h3 className="text-info my-3">Current Address</h3>
+          </Row>
           {/* Current Address */}
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="postcode">Postcode</Label>
+                <Label for="postcode">Postcode*</Label>
                 <Input
                   id="postcode"
                   type="text"
@@ -527,12 +728,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) =>
                     handleInputChange("postcode", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="house_number_or_name">House Name or Number</Label>
+                <Label for="house_number_or_name">House Name or Number*</Label>
                 <Input
                   id="house_number_or_name"
                   type="text"
@@ -540,7 +745,11 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) =>
                     handleInputChange("house_number_or_name", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -548,7 +757,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="address_line1">Address Line 1</Label>
+                <Label for="address_line1">Address Line 1*</Label>
                 <Input
                   id="address_line1"
                   type="text"
@@ -556,18 +765,26 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) =>
                     handleInputChange("address_line1", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="city">City</Label>
+                <Label for="city">City*</Label>
                 <Input
                   id="city"
                   type="text"
                   value={formValues.city || ""}
                   onChange={(e) => handleInputChange("city", e.target.value)}
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -586,13 +803,17 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="country">Country</Label>
+                <Label for="country">Country*</Label>
                 <Input
                   id="country"
                   type="text"
                   value={formValues.country || ""}
                   onChange={(e) => handleInputChange("country", e.target.value)}
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -600,7 +821,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="effective_from">Effective From</Label>
+                <Label for="effective_from">Effective From*</Label>
                 <Input
                   id="effective_from"
                   type="date"
@@ -608,35 +829,29 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) =>
                     handleInputChange("effective_from", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
-              <FormGroup>
-                <Label for="time_at_address_years">
-                  Time at this Address - Years
-                </Label>
+              <Label for="time_at_address">Time at this Address</Label>
+              <FormGroup className="d-flex justify-content-center align-items-center gap-3">
                 <Input
                   id="time_at_address_years"
                   type="number"
+                  placeholder="Years"
                   value={formValues.time_at_address_years || ""}
                   onChange={(e) =>
                     handleInputChange("time_at_address_years", e.target.value)
                   }
                 />
-              </FormGroup>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="time_at_address_months">
-                  Time at this Address - Months
-                </Label>
                 <Input
-                  id="time_at_address_months"
+                  id="time_at_address"
                   type="number"
+                  placeholder="Months"
                   value={formValues.time_at_address_months || ""}
                   onChange={(e) =>
                     handleInputChange("time_at_address_months", e.target.value)
@@ -644,6 +859,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 />
               </FormGroup>
             </Col>
+          </Row>
+
+          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="residential_status">Residential Status*</Label>
@@ -670,6 +888,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     Living with Friends/Family
                   </option>
                 </Input>
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
