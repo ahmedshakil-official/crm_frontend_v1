@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
 
-const CompanyForm = () => {
+const AddCompanyDetailsFormModal = () => {
   interface FormData {
     company_name: string;
     company_registration_number: string;
@@ -225,4 +225,4 @@ const CompanyForm = () => {
   );
 };
 
-export default CompanyForm;
+export default AddCompanyDetailsFormModal;
