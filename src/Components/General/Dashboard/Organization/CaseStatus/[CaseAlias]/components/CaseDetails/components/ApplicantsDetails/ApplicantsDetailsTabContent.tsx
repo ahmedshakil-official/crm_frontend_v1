@@ -351,6 +351,32 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
           </Row>
           <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="marital_status">Marital Status</Label>
+                <Input
+                  id="marital_status"
+                  type="select"
+                  value={formValues.marital_status}
+                  onChange={(e) =>
+                    handleInputChange("marital_status", e.target.value)
+                  }
+                >
+                  <option value="">Select an option</option>
+                  <option value="SINGLE">Single</option>
+                  <option value="MARRIED">Married</option>
+                  <option value="DIVORCED">Divorced</option>
+                  <option value="SEPARATED">Separated</option>
+                  <option value="WIDOW">Widow</option>
+                  <option value="WIDOWER">Widower</option>
+                  <option value="CO_HABITING">Co-Habiting</option>
+                  <option value="CIVIL_PARTNER">Civil Partner</option>
+                  <option value="RELIGIOUSLY_MARRIED">
+                    Religiously Married
+                  </option>
+                </Input>
+              </FormGroup>
+            </Col>
             {formValues.dual_nationality && (
               <Col md={6}>
                 <FormGroup>
