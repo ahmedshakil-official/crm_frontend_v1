@@ -702,12 +702,14 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </Col>
             )}
           </Row>
-
+          <Row>
+            <h3 className="text-info my-3">Current Address</h3>
+          </Row>
           {/* Current Address */}
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="postcode">Postcode</Label>
+                <Label for="postcode">Postcode*</Label>
                 <Input
                   id="postcode"
                   type="text"
@@ -715,12 +717,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) =>
                     handleInputChange("postcode", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="house_number_or_name">House Name or Number</Label>
+                <Label for="house_number_or_name">House Name or Number*</Label>
                 <Input
                   id="house_number_or_name"
                   type="text"
@@ -728,7 +734,11 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) =>
                     handleInputChange("house_number_or_name", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -736,7 +746,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="address_line1">Address Line 1</Label>
+                <Label for="address_line1">Address Line 1*</Label>
                 <Input
                   id="address_line1"
                   type="text"
@@ -744,18 +754,26 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) =>
                     handleInputChange("address_line1", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="city">City</Label>
+                <Label for="city">City*</Label>
                 <Input
                   id="city"
                   type="text"
                   value={formValues.city || ""}
                   onChange={(e) => handleInputChange("city", e.target.value)}
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -774,13 +792,17 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="country">Country</Label>
+                <Label for="country">Country*</Label>
                 <Input
                   id="country"
                   type="text"
                   value={formValues.country || ""}
                   onChange={(e) => handleInputChange("country", e.target.value)}
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -788,7 +810,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="effective_from">Effective From</Label>
+                <Label for="effective_from">Effective From*</Label>
                 <Input
                   id="effective_from"
                   type="date"
@@ -796,35 +818,29 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) =>
                     handleInputChange("effective_from", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
-              <FormGroup>
-                <Label for="time_at_address_years">
-                  Time at this Address - Years
-                </Label>
+              <Label for="time_at_address">Time at this Address</Label>
+              <FormGroup className="d-flex justify-content-center align-items-center gap-3">
                 <Input
                   id="time_at_address_years"
                   type="number"
+                  placeholder="Years"
                   value={formValues.time_at_address_years || ""}
                   onChange={(e) =>
                     handleInputChange("time_at_address_years", e.target.value)
                   }
                 />
-              </FormGroup>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="time_at_address_months">
-                  Time at this Address - Months
-                </Label>
                 <Input
-                  id="time_at_address_months"
+                  id="time_at_address"
                   type="number"
+                  placeholder="Months"
                   value={formValues.time_at_address_months || ""}
                   onChange={(e) =>
                     handleInputChange("time_at_address_months", e.target.value)
@@ -832,6 +848,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 />
               </FormGroup>
             </Col>
+          </Row>
+
+          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="residential_status">Residential Status*</Label>
