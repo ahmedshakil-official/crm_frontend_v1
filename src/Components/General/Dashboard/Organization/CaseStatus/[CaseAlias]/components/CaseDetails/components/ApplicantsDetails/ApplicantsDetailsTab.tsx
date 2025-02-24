@@ -33,7 +33,8 @@ export interface Applicant {
   is_smoker: boolean;
   gender: string;
   nationality: string;
-  dual_nationality: boolean;
+  is_dual_nationality: boolean;
+  dual_nationality: string;
   marital_status: string;
   ni_number: string;
   country_of_birth: string;

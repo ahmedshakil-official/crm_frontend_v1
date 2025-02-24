@@ -1,3 +1,4 @@
+import Loading from "@/app/loading";
 import { useGetDependantsQuery } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { ApplicantDependantsViewModalProps } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
@@ -13,7 +14,12 @@ const ApplicantDependantsViewModal: React.FC<
     applicantDetails_alias: applicantAlias,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered>
@@ -34,7 +40,7 @@ const ApplicantDependantsViewModal: React.FC<
               </tr>
             </thead>
             <tbody>
-              {applicantDependantsData.length > 0 ? (
+              {applicantDependantsData?.length > 0 ? (
                 applicantDependantsData.map(
                   (
                     dependant: { name: any; date_of_birth: any },
