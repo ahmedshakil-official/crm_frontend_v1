@@ -60,7 +60,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     is_smoker: false,
     gender: "",
     nationality: "GB",
-    dual_nationality: false,
+    is_dual_nationality: false,
+    dual_nationality: "",
     marital_status: "",
     ni_number: "",
     country_of_birth: "",
@@ -340,7 +341,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="dual_nationality">
+                <Label for="is_dual_nationality">
                   Does the applicant have a dual nationality?
                 </Label>
                 {["yes", "no"].map((value) => (
@@ -348,15 +349,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     <Label className="me-2">
                       <Input
                         type="radio"
-                        name="dual_nationality"
+                        name="is_dual_nationality"
                         className="me-1"
                         value={value}
                         checked={
-                          formValues.dual_nationality === (value === "yes")
+                          formValues.is_dual_nationality === (value === "yes")
                         }
                         onChange={(e) =>
                           handleInputChange(
-                            "dual_nationality",
+                            "is_dual_nationality",
                             e.target.value === "yes"
                           )
                         }
@@ -395,7 +396,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Input>
               </FormGroup>
             </Col>
-            {formValues.dual_nationality && (
+            {formValues.is_dual_nationality && (
               <Col md={6}>
                 <FormGroup>
                   <Label for="dual_nationality" className="text-info">
@@ -406,9 +407,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     type="select"
                     className="border-info"
                     value={formValues.dual_nationality}
-                    // onChange={(e) =>
-                    //   handleInputChange("dual_nationality", e.target.value)
-                    // }
+                    onChange={(e) =>
+                      handleInputChange("dual_nationality", e.target.value)
+                    }
                   >
                     <option value="">Select a country</option>
                     {/* Map through the list of countries */}
