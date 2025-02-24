@@ -8,12 +8,14 @@ import {
   Col,
   Container,
   Form,
+  FormFeedback,
   FormGroup,
   Input,
   Label,
   Row,
 } from "reactstrap";
 import { Applicant } from "./ApplicantsDetailsTab";
+
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
@@ -125,19 +127,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       [name]: value,
     }));
   };
-  // console.log("Show: ", formValues);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log("Form submitted:", formValues);
     setIsLoading(true);
     try {
-      // Make the API call to update the applicant details
       const response = await apiClient.put(
         `/cases/${casealias}/applicant/details/${formValues.alias}/`,
         formValues
       );
-      // Optionally, show a success message or handle the response
       toast.success("Applicant details updated successfully!");
       fetchApplicants();
     } catch (error) {
@@ -196,6 +194,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   <option value="MS">Ms</option>
                   <option value="MISS">Miss</option>
                 </Input>
+                <FormFeedback className="text-warning d-block">This field is required</FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -214,7 +213,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           </Row>
 
           <Row>
-          <Col md={6}>
+            <Col md={6}>
               <FormGroup>
                 <Label for="date_of_birth">Date of Birth*</Label>
                 <Input
@@ -226,6 +225,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
+                <FormFeedback className="text-warning d-block">This field is required</FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -239,9 +239,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                         name="is_smoker"
                         className="me-1"
                         value={value}
-                        checked={
-                          formValues.is_smoker === (value === "yes")
-                        }
+                        checked={formValues.is_smoker === (value === "yes")}
                         onChange={(e) =>
                           handleInputChange(
                             "is_smoker",
@@ -257,9 +255,46 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
           </Row>
 
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="anticipated_retirement_age">
+                  Anticipated Retirement Age*
+                </Label>
+                <Input
+                  id="anticipated_retirement_age"
+                  type="number"
+                  value={formValues.anticipated_retirement_age || ""}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "anticipated_retirement_age",
+                      e.target.value
+                    )
+                  }
+                  required
+                />
+                <FormFeedback className="text-warning d-block">
+                  This field is required
+                </FormFeedback>
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="state_retirement_age">State Retirement Age</Label>
+                <Input
+                  id="state_retirement_age"
+                  type="number"
+                  value={formValues.state_retirement_age || ""}
+                  onChange={(e) =>
+                    handleInputChange("state_retirement_age", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+
           {/* Additional Fields */}
           <Row>
-           
             <Col md={6}>
               <FormGroup>
                 <Label for="nationality">Nationality</Label>
@@ -277,6 +312,55 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Input>
               </FormGroup>
             </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="dual_nationality">Does the applicant have a dual nationality?</Label>
+                {["yes", "no"].map((value) => (
+                  <div key={value}>
+                    <Label className="me-2">
+                      <Input
+                        type="radio"
+                        name="dual_nationality"
+                        className="me-1"
+                        value={value}
+                        checked={
+                          formValues.dual_nationality === (value === "yes")
+                        }
+                        onChange={(e) =>
+                          handleInputChange(
+                            "dual_nationality",
+                            e.target.value === "yes"
+                          )
+                        }
+                      />
+                      {value.charAt(0).toUpperCase() + value.slice(1)}
+                    </Label>
+                  </div>
+                ))}
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            {formValues.dual_nationality && (
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="dual_nationality" className="text-info">Dual Nationality</Label>
+                  <Input
+                  id="dual_nationality"
+                  type="select"
+                  className="border-info"
+                  value={formValues.dual_nationality}
+                  // onChange={(e) =>
+                  //   handleInputChange("dual_nationality", e.target.value)
+                  // }
+                >
+                  <option value="GB">United Kingdom</option>
+                  <option value="BD">Bangladesh</option>
+                  <option value="PK">Pakistan</option>
+                </Input>
+                </FormGroup>
+              </Col>
+            )}
           </Row>
 
           {/* Conditional Fields */}
@@ -429,6 +513,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
+                <FormFeedback className="text-warning d-block">This field is required</FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -690,6 +775,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     Living with Friends/Family
                   </option>
                 </Input>
+                <FormFeedback className="text-warning d-block">This field is required</FormFeedback>
               </FormGroup>
             </Col>
           </Row>
