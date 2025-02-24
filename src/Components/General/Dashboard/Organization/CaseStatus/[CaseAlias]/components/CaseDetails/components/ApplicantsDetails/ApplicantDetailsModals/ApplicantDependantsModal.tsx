@@ -1,4 +1,6 @@
+import { useAddDependantsMutation } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Form,
   FormGroup,
@@ -10,7 +12,12 @@ import {
   Col,
 } from "reactstrap";
 
-const DependantForm = () => {
+const DependantForm: React.FC<{
+  case_alias: string;
+  applicantDetails_alias: string;
+}> = ({ case_alias, applicantDetails_alias }) => {
+  const [addDependants, { isLoading: isDependantsLoading }] =
+    useAddDependantsMutation();
   const [formData, setFormData] = useState({
     name: "",
     date_of_birth: "",
@@ -25,9 +32,17 @@ const DependantForm = () => {
     date_of_birth: string;
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted", formData);
+    const response = await addDependants({
+      case_alias,
+      applicantDetails_alias,
+      dependantsInfo: formData,
+    });
+    if (response.data) {
+      toast.success("Dependant added successfully");
+    }
   };
 
   return (
@@ -63,7 +78,7 @@ const DependantForm = () => {
         <Row className="justify-content-end">
           <Col xs="auto">
             <Button color="primary" type="submit">
-              Submit
+              {isDependantsLoading ? "Loading..." : "Submit"}
             </Button>
           </Col>
         </Row>

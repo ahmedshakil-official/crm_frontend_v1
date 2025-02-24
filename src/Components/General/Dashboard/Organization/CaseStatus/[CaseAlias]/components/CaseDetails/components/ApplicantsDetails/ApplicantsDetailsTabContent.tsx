@@ -45,6 +45,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
 
   const toggleViewModal = () =>
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
+    
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
@@ -952,7 +953,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <p className=" fs-2 text-primary fw-bold">Add Dependants</p>
         </ModalHeader>
         <ModalBody>
-          <DependantForm />
+          <DependantForm
+            case_alias={casealias as string}
+            applicantDetails_alias={formValues.alias as string}
+          />
         </ModalBody>
       </Modal>
       {/* Modal Component */}
