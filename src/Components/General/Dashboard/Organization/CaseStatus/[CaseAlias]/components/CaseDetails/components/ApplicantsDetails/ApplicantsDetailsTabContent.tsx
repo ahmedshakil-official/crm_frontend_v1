@@ -18,9 +18,10 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import { Applicant } from "./ApplicantsDetailsTab";
 import CompanyForm from "./ApplicantDetailsModals/ApplicantCompanyInfoModal";
 import DependantForm from "./ApplicantDetailsModals/ApplicantDependantsModal";
+import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
+import { Applicant } from "./ApplicantsDetailsTab";
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
@@ -39,6 +40,11 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
+  const [isDependantsViewModalOpen, setIsDependantsViewModalOpen] =
+    useState(false);
+
+  const toggleViewModal = () =>
+    setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
@@ -706,9 +712,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </FormGroup>
             </Col>
             {formValues.has_dependants && (
-              <Col md={6}>
+              <Col
+                md={6}
+                className="d-flex align-items-center justify-content-center gap-3"
+              >
                 <Button onClick={() => setIsDependantsModalOpen(true)}>
                   Add Dependants
+                </Button>
+                <Button color="success" onClick={toggleViewModal}>
+                  View Dependants
                 </Button>
               </Col>
             )}
@@ -943,6 +955,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <DependantForm />
         </ModalBody>
       </Modal>
+      {/* Modal Component */}
+      <ApplicantDependantsViewModal
+        isOpen={isDependantsViewModalOpen}
+        toggle={toggleViewModal}
+        applicantAlias={formValues?.alias}
+      />
     </Container>
   );
 };
