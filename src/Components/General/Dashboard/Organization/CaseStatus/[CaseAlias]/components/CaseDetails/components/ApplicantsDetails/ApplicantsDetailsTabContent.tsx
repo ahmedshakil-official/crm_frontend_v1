@@ -516,6 +516,21 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
             <Col md={6}>
               <FormGroup>
+                <Label for="country_of_birth">Country of Birth</Label>
+                <Input
+                  id="country_of_birth"
+                  type="text"
+                  value={formValues.country_of_birth || ""}
+                  onChange={(e) =>
+                    handleInputChange("country_of_birth", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
                 <Label for="bank_name">Who do you bank with?</Label>
                 <Input
                   id="bank_name"
@@ -527,8 +542,32 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 />
               </FormGroup>
             </Col>
+            <Col md={6}>
+              <Label for="how_long_banked">
+                How long have you banked with them?
+              </Label>
+              <FormGroup className="d-flex justify-content-center align-items-center gap-3">
+                <Input
+                  id="how_long_banked"
+                  type="number"
+                  placeholder="Years"
+                  // value={formValues.how_long_banked || ""}
+                  // onChange={(e) =>
+                  //   handleInputChange("how_long_banked", e.target.value)
+                  // }
+                />
+                <Input
+                  id="how_long_banked"
+                  type="number"
+                  placeholder="Months"
+                  // value={formValues.how_long_banked || ""}
+                  // onChange={(e) =>
+                  //   handleInputChange("how_long_banked", e.target.value)
+                  // }
+                />
+              </FormGroup>
+            </Col>
           </Row>
-
           <Row>
             <Col md={6}>
               <FormGroup>
