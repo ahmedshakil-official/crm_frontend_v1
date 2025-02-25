@@ -1,19 +1,7 @@
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Nav,
-  NavItem,
-  NavLink,
-} from "reactstrap";
-
-import { Href } from "@/Constant";
-import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import {
   basicTabIndicator,
-  resetBasicTab,
 } from "@/Redux/Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   InqueryTabTitleData,
@@ -27,16 +15,20 @@ import {
   FOPTabTitleData,
   NPDTabTitleData,
 } from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
-import { useEffect } from "react";
+import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Nav,
+  NavItem,
+  NavLink,
+} from "reactstrap";
 
 const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
   const basicTab = useAppSelector((state) => state.caseDetails.basicTabId);
   const dispatch = useAppDispatch();
-
-  // Reset the tab when caseStage changes
-  useEffect(() => {
-    dispatch(resetBasicTab()); // ✅ Resets tab when caseStage updates
-  }, [caseStage, dispatch]);
 
   // Map case stages to corresponding tab title data
   const tabDataMap: Record<string, any[]> = {
@@ -54,6 +46,13 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
 
   // Get the current tab data based on caseStage
   const currentTabData = tabDataMap[caseStage] || [];
+
+  // Set the first tab as the default when caseStage changes
+  useEffect(() => {
+    if (currentTabData.length > 0) {
+      dispatch(basicTabIndicator(currentTabData[0].nav)); // Set the first tab as default
+    }
+  }, [caseStage, dispatch, currentTabData]);
 
   return (
     <Col sm="12" className="box-col-12">
@@ -76,7 +75,7 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
                       basicTab === item.nav ? "active" : ""
                     } m-2 border border-success rounded p-3 text-center`}
                     onClick={() => {
-                      dispatch(basicTabIndicator(item.nav)); // ✅ Dispatch the tab change action
+                      dispatch(basicTabIndicator(item.nav)); // Dispatch the tab change action
                     }}
                   >
                     {item.nav}
@@ -86,7 +85,7 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
             </Nav>
           </CardHeader>
           {/* Case Details Tab Content */}
-          <CardBody className="px-0 pb-0  ">
+          <CardBody className="px-0 pb-0">
             <CaseDetailsTabContent />
           </CardBody>
         </CardBody>

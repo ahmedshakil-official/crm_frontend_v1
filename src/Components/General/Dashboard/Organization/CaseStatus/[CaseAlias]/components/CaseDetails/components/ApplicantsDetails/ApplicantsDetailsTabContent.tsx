@@ -969,7 +969,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       <ApplicantDependantsViewModal
         isOpen={isDependantsViewModalOpen}
         toggle={toggleViewModal}
-        applicantAlias={formValues?.alias}
+        applicantAlias={formValues.alias as string}
       />
     </Container>
   );

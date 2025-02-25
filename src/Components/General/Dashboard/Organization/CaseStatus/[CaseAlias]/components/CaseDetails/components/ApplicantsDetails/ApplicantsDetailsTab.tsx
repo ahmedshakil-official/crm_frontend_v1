@@ -122,7 +122,7 @@ export const ApplicantsDetailsTab = () => {
                       basicTab === applicantData.alias ? "active" : ""
                     }`}
                     onClick={
-                      () => setBasicTab(applicantData.alias || null) // Ensure null is used if alias is undefined
+                      () => setBasicTab(applicantData.alias || null)
                     }
                     style={{ cursor: "pointer" }}
                   >
