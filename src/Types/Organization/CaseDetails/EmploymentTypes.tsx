@@ -38,6 +38,4 @@ export interface EmploymentDetailsProps {
     allowance: number | null;
     is_allowance_guaranteed: boolean;
     allowance_frequency: string | null;
-    created_at: string;
-    updated_at: string;
   }

@@ -118,6 +118,7 @@ export const EmploymentTab = () => {
             activeTab={activeTab}
             activeUser={activeUser}
             groupedData={groupedData}
+            casealias="casealias"
           />
         </CardBody>
       </Card>
