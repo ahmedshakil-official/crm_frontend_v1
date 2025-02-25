@@ -131,14 +131,3 @@ export interface DeleteCaseModalProps {
   onDelete: () => void; // Callback to handle deletion
   isDeleting?: any;
 }
-
-
-export interface ApplicantDependantsViewModalProps {
-  isOpen?: boolean;
-  toggle?: () => void;
-  slNo?: number;
-  name?: string;
-  dateOfBirth?: string;
-  applicantAlias?: any;
-}
-

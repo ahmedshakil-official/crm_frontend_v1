@@ -2,17 +2,18 @@ import {
   useAddCompanyDetailsMutation,
   useGetCompanyDetailsQuery,
 } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
-import { useState, useEffect } from "react";
+import { ApplicantCompanyProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  Form,
-  FormGroup,
-  Label,
-  Input,
   Button,
   Col,
-  Row,
+  Form,
   FormFeedback,
+  FormGroup,
+  Input,
+  Label,
+  Row,
 } from "reactstrap";
 
 const AddCompanyDetailsFormModal: React.FC<{
@@ -20,22 +21,6 @@ const AddCompanyDetailsFormModal: React.FC<{
   applicantDetails_alias: string;
   setIsCompanyModalOpen: (isOpen: boolean) => void;
 }> = ({ case_alias, applicantDetails_alias, setIsCompanyModalOpen }) => {
-  interface FormData {
-    company_name: string;
-    company_registration_number: string;
-    date_of_incorporation: string | null;
-    company_type: string;
-    trade_business_type: string;
-    sic_code: string;
-    is_spv: boolean;
-    postcode: string;
-    house_number_or_name: string;
-    address_line1: string;
-    city: string;
-    county: string;
-    country: string;
-  }
-
   const { data, isLoading, isError } = useGetCompanyDetailsQuery({
     case_alias,
     applicantDetails_alias,
@@ -43,7 +28,7 @@ const AddCompanyDetailsFormModal: React.FC<{
   const [addCompanyDetails, { isLoading: isCompanyDetailsAdding }] =
     useAddCompanyDetailsMutation();
 
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ApplicantCompanyProps>({
     company_name: "",
     company_registration_number: "",
     date_of_incorporation: null,

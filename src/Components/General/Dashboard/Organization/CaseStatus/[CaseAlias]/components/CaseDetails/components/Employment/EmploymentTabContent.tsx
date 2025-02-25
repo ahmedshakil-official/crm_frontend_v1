@@ -1,4 +1,7 @@
-import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
+import {
+  EmploymentDetailsProps,
+  EmploymentTabContentProps,
+} from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -13,12 +16,6 @@ import {
   Label,
   Row,
 } from "reactstrap";
-
-interface EmploymentTabContentProps {
-  activeTab: string | null;
-  activeUser: number | null;
-  groupedData: Record<number, EmploymentDetailsProps[]>;
-}
 
 export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   activeTab,
@@ -86,7 +83,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
 
   return (
     <CardBody className="px-0 pb-0">
-      <h4 className="mb-4 mt-2">Employment Details</h4>
+      <h4 className="text-primary pb-2 fs-4 mb-4 mt-2">Employment Details</h4>
       <Row>
         <Col md={6}>
           <FormGroup>
@@ -99,6 +96,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 handleInputChange("employment_status", e.target.value)
               }
             >
+              <option value="">Select...</option>
               <option value="EMPLOYED">Employed</option>
               <option value="SELF_EMPLOYED">Self Employed</option>
               <option value="RETIRED">Retired</option>
@@ -302,6 +300,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 handleInputChange("employment_type", e.target.value)
               }
             >
+              <option value="">Select...</option>
               <option value="PERMANENT">Permanent</option>
               <option value="CONTRACT">Contract</option>
               <option value="TEMPORARY">Temporary</option>
@@ -433,7 +432,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
         </Col>
       </Row>
       <Row>
-        <Col className="d-flex justify-content-end">
+        <Col className="d-flex justify-content-between">
+          <Button color="secondary" onClick={() => alert("Add New Button")}>
+            Add New
+          </Button>
           <Button color="primary" onClick={handleSaveClick}>
             {isLoading ? "Updating..." : "Update"}
           </Button>
