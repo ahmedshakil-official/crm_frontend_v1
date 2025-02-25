@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
 import apiClient from "@/services/api-client";
+import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardBody,
@@ -11,21 +12,17 @@ import {
   NavLink,
 } from "reactstrap";
 import { EmploymentTabContent } from "./EmploymentTabContent"; // Import the new component
-import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
-
-// Type for URL params
-interface Params {
-  casealias: string;
-}
 
 export const EmploymentTab = () => {
   // State for active user, active tab, and employment data
   const [activeUser, setActiveUser] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<string | null>(null);
-  const [employmentData, setEmploymentData] = useState<EmploymentDetailsProps[]>([]);
+  const [employmentData, setEmploymentData] = useState<
+    EmploymentDetailsProps[]
+  >([]);
 
   // UseParams with type assertion
-  const params = useParams() as unknown as Params;
+  const params = useParams();
   const { casealias } = params;
 
   // Helper function to group employment data by user ID
@@ -101,11 +98,14 @@ export const EmploymentTab = () => {
                 {groupedData[activeUser].map((employment) => (
                   <NavItem key={employment.alias}>
                     <NavLink
-                      className={`${activeTab === employment.alias ? "active" : ""}`}
+                      className={`${
+                        activeTab === employment.alias ? "active" : ""
+                      }`}
                       onClick={() => setActiveTab(employment.alias || null)}
                       style={{ cursor: "pointer" }}
                     >
-                      {employment.employment_status}({employment.alias.slice(0, 8)})
+                      {employment.employment_status}(
+                      {employment.alias.slice(0, 8)})
                     </NavLink>
                   </NavItem>
                 ))}
@@ -118,7 +118,6 @@ export const EmploymentTab = () => {
             activeTab={activeTab}
             activeUser={activeUser}
             groupedData={groupedData}
-            
           />
         </CardBody>
       </Card>

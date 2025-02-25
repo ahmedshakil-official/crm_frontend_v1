@@ -1,3 +1,4 @@
+import { useGetApplicantsQuery } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -10,12 +11,6 @@ import {
   NavLink,
 } from "reactstrap";
 import ApplicantsDetailsTabContent from "./ApplicantsDetailsTabContent";
-import { useGetApplicantsQuery } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
-
-// Type for URL params
-interface Params {
-  casealias: string;
-}
 
 // Type for applicants data array
 export interface Applicant {
@@ -91,7 +86,7 @@ export const ApplicantsDetailsTab = () => {
   const [basicTab, setBasicTab] = useState<string | null>(null);
 
   // Get case alias from URL params
-  const params = useParams() as unknown as Params;
+  const params = useParams();
   const { casealias } = params;
 
   // Fetch applicants data
@@ -121,9 +116,7 @@ export const ApplicantsDetailsTab = () => {
                     className={`${
                       basicTab === applicantData.alias ? "active" : ""
                     }`}
-                    onClick={
-                      () => setBasicTab(applicantData.alias || null)
-                    }
+                    onClick={() => setBasicTab(applicantData.alias || null)}
                     style={{ cursor: "pointer" }}
                   >
                     {`${applicantData?.applicant?.first_name} ${applicantData?.applicant?.last_name}`}
