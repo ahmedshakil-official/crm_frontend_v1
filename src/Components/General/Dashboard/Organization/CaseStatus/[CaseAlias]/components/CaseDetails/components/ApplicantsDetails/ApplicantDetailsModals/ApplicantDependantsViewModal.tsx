@@ -1,6 +1,6 @@
 import Loading from "@/app/loading";
 import { useGetDependantsQuery } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
-import { ApplicantDependantsViewModalProps } from "@/Types/Organization/CaseTypes";
+import { ApplicantDependantsViewModalProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
 import { useParams } from "next/navigation";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 

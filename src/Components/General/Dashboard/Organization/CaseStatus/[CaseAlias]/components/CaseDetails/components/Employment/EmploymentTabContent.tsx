@@ -1,4 +1,7 @@
-import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
+import {
+  EmploymentDetailsProps,
+  EmploymentTabContentProps,
+} from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -13,12 +16,6 @@ import {
   Label,
   Row,
 } from "reactstrap";
-
-interface EmploymentTabContentProps {
-  activeTab: string | null;
-  activeUser: number | null;
-  groupedData: Record<number, EmploymentDetailsProps[]>;
-}
 
 export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   activeTab,

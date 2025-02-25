@@ -1,41 +1,47 @@
 export interface EmploymentDetailsProps {
+  alias: string;
+  user: {
+    id: number;
     alias: string;
-    user: {
-      id: number;
-      alias: string;
-      email: string;
-      phone: string;
-      first_name: string;
-      last_name: string;
-      profile_image: string | null;
-      user_type: string;
-    };
-    employment_status: string;
-    employment_type: string | null;
-    occupation: string | null;
-    industry: string | null;
-    employer_name: string | null;
-    employer_telephone: string | null;
-    employer_email_for_reference: string | null;
-    employer_postcode: string | null;
-    employer_house_name_or_number: string | null;
-    employer_address_line_1: string | null;
-    employer_city: string | null;
-    employer_county: string | null;
-    employer_country: string | null;
-    employment_commenced: string | null;
-    employment_ended: string | null;
-    gross_annual_income: number | null;
-    net_annual_income: number | null;
-    is_probationary_period: boolean;
-    is_income_in_foreign_currency: boolean;
-    bonus: number | null;
-    is_bonus_guaranteed: boolean;
-    bonus_frequency: string | null;
-    overtime: number | null;
-    is_overtime_guaranteed: boolean;
-    overtime_frequency: string | null;
-    allowance: number | null;
-    is_allowance_guaranteed: boolean;
-    allowance_frequency: string | null;
-  }
+    email: string;
+    phone: string;
+    first_name: string;
+    last_name: string;
+    profile_image: string | null;
+    user_type: string;
+  };
+  employment_status: string;
+  employment_type: string | null;
+  occupation: string | null;
+  industry: string | null;
+  employer_name: string | null;
+  employer_telephone: string | null;
+  employer_email_for_reference: string | null;
+  employer_postcode: string | null;
+  employer_house_name_or_number: string | null;
+  employer_address_line_1: string | null;
+  employer_city: string | null;
+  employer_county: string | null;
+  employer_country: string | null;
+  employment_commenced: string | null;
+  employment_ended: string | null;
+  gross_annual_income: number | null;
+  net_annual_income: number | null;
+  is_probationary_period: boolean;
+  is_income_in_foreign_currency: boolean;
+  bonus: number | null;
+  is_bonus_guaranteed: boolean;
+  bonus_frequency: string | null;
+  overtime: number | null;
+  is_overtime_guaranteed: boolean;
+  overtime_frequency: string | null;
+  allowance: number | null;
+  is_allowance_guaranteed: boolean;
+  allowance_frequency: string | null;
+}
+
+export interface EmploymentTabContentProps {
+  activeTab: string | null;
+  activeUser: number | null;
+  groupedData: Record<number, EmploymentDetailsProps[]>;
+}
