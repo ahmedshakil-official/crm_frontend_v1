@@ -57,14 +57,15 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
     return <div>No matching employment record found.</div>;
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
+  const handleInputChange = (
+    name: keyof EmploymentDetailsProps, // Use your type instead of `Applicant`
+    value: string | number | boolean | string[] | null
+  ) => {
     setFormValues((prevValues) => ({
       ...prevValues!,
-      [id]: value,
+      [name]: value,
     }));
   };
-
   const handleSaveClick = async () => {
     if (formValues) {
       try {
@@ -94,7 +95,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="select"
               id="employmentStatus"
               value={formValues?.employment_status || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employment_status', e.target.value)}
             >
               <option value="EMPLOYED">Employed</option>
               <option value="SELF_EMPLOYED">Self Employed</option>
@@ -111,7 +112,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="occupation"
               value={formValues?.occupation || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('occupation', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -120,7 +121,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="industry"
               value={formValues?.industry || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('industry', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -129,7 +130,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="employerName"
               value={formValues?.employer_name || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_name', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -138,7 +139,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="employerTelephone"
               value={formValues?.employer_telephone || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_telephone', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -147,7 +148,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="email"
               id="employerEmail"
               value={formValues?.employer_email_for_reference || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_email_for_reference', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -156,7 +157,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="employerPostcode"
               value={formValues?.employer_postcode || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_postcode', e.target.value)}
             />
             <FormText color="muted">Lookup</FormText>
           </FormGroup>
@@ -166,7 +167,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="employerAddressLine1"
               value={formValues?.employer_address_line_1 || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_address_line_1', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -175,7 +176,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="employerCity"
               value={formValues?.employer_city || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_city', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -184,7 +185,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="employerCountry"
               value={formValues?.employer_country || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_country', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -193,7 +194,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="date"
               id="employmentCommenced"
               value={formValues?.employment_commenced || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employment_commenced', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -202,7 +203,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="number"
               id="grossAnnualIncome"
               value={formValues?.gross_annual_income || 0}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('gross_annual_income', e.target.value)}
             />
           </FormGroup>
           <FormGroup check>
@@ -243,7 +244,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="number"
               id="bonus"
               value={formValues?.bonus || 0}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('bonus', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -252,7 +253,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="number"
               id="overtime"
               value={formValues?.overtime || 0}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('overtime', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -261,7 +262,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="number"
               id="allowance"
               value={formValues?.allowance || 0}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('allowance', e.target.value)}
             />
           </FormGroup>
         </Col>
@@ -272,7 +273,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="select"
               id="employmentType"
               value={formValues?.employment_type || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employment_type', e.target.value)}
             >
               <option value="PERMANENT">Permanent</option>
               <option value="CONTRACT">Contract</option>
@@ -287,7 +288,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="employerHouseNumber"
               value={formValues?.employer_house_name_or_number || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_house_name_or_number', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -296,7 +297,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="employerAddressLine2"
               value={formValues?.employer_address_line_1 || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_address_line_1', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -305,7 +306,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="text"
               id="employerCounty"
               value={formValues?.employer_county || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employer_county', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -314,7 +315,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="date"
               id="employmentEnded"
               value={formValues?.employment_ended || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('employment_ended', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -323,7 +324,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="number"
               id="netAnnualIncome"
               value={formValues?.net_annual_income || 0}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('net_annual_income', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -332,7 +333,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="select"
               id="bonusFrequency"
               value={formValues?.bonus_frequency || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('bonus_frequency', e.target.value)}
             >
               <option value="">Select...</option>
               <option value="DAILY">Daily</option>
@@ -351,7 +352,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="select"
               id="overtimeFrequency"
               value={formValues?.overtime_frequency || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('overtime_frequency', e.target.value)}
             >
               <option value="">Select...</option>
               <option value="DAILY">Daily</option>
@@ -370,7 +371,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               type="select"
               id="allowanceFrequency"
               value={formValues?.allowance_frequency || ""}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange('allowance_frequency', e.target.value)}
             >
               <option value="">Select...</option>
               <option value="DAILY">Daily</option>
