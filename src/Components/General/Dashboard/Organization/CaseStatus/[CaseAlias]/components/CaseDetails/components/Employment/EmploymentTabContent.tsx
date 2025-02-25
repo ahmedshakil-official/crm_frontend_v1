@@ -83,7 +83,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
 
   return (
     <CardBody className="px-0 pb-0">
-      <h4 className="text-primary pb-2 fs-4">Employment Details</h4>
+      <h4 className="text-primary pb-2 fs-4 mb-4 mt-2">Employment Details</h4>
       <Row>
         <Col md={6}>
           <FormGroup>
@@ -230,7 +230,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
           <FormGroup check>
             <Label check>
               <Input
-                type="radio"
+                type="checkbox"
                 name="probationaryPeriod"
                 checked={formValues?.is_probationary_period || false}
                 onChange={(e) =>
@@ -243,10 +243,11 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               Are you on a probationary period?
             </Label>
           </FormGroup>
+
           <FormGroup check>
             <Label check>
               <Input
-                type="radio"
+                type="checkbox"
                 name="foreignCurrency"
                 checked={formValues?.is_income_in_foreign_currency || false}
                 onChange={(e) =>
@@ -259,6 +260,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               Is any income paid in a foreign currency?
             </Label>
           </FormGroup>
+
           <FormGroup>
             <Label for="bonus">Bonus*</Label>
             <Input
