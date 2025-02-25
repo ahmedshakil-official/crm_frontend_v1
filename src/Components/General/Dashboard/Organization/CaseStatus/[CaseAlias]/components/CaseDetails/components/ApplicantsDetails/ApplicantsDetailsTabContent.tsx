@@ -22,23 +22,25 @@ import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/AddApplicantCom
 import AddDependantFormModal from "./ApplicantDetailsModals/AddApplicantDependantsModal";
 import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
 import { Applicant } from "./ApplicantsDetailsTab";
+import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
   basicTab: string | null;
-  fetchApplicants: () => void;
+  // fetchApplicants: () => void;
 }
 
 const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   applicantsData,
   basicTab,
-  fetchApplicants,
+  // fetchApplicants,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
   const [isDependantsViewModalOpen, setIsDependantsViewModalOpen] =
     useState(false);
+    console.log({basicTab})
 
   const toggleViewModal = () =>
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
@@ -46,6 +48,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
+  const [updateApplicantDetails, { isLoading: isUpdatingApplicant }] =
+    useUpdateApplicantDetailsMutation();
 
   const [formValues, setFormValues] = useState<Applicant>({
     is_company_application: false,
@@ -115,6 +119,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const selectedApplicant = applicantsData?.find(
     (applicant) => applicant.alias === basicTab
   );
+  console.log("selectedApplicant", selectedApplicant);
 
   // Initialize form values with selected applicant's data
   useEffect(() => {
@@ -142,12 +147,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await apiClient.put(
-        `/cases/${casealias}/applicant/details/${formValues.alias}/`,
-        formValues
-      );
+      const response = await updateApplicantDetails({
+        case_alias: casealias as string,
+        applicantDetails_alias: formValues.alias as string,
+        applicantDetails: formValues,
+      }).unwrap();
       toast.success("Applicant details updated successfully!");
-      fetchApplicants();
     } catch (error) {
       console.error("Error updating applicant details:", error);
       toast.error("Error updating applicant details!");
@@ -929,7 +934,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           {/* Submit Button */}
           <div className="d-flex justify-content-end">
             <Button type="submit" color="success" disabled={isLoading}>
-              {isLoading ? "Updating..." : "Update"}
+              {isLoading || isUpdatingApplicant ? "Updating..." : "Update"}
             </Button>
           </div>
         </Form>

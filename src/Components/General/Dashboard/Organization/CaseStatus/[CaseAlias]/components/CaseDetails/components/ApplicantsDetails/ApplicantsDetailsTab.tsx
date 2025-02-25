@@ -1,4 +1,3 @@
-import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -11,6 +10,7 @@ import {
   NavLink,
 } from "reactstrap";
 import ApplicantsDetailsTabContent from "./ApplicantsDetailsTabContent";
+import { useGetApplicantsQuery } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 
 // Type for URL params
 interface Params {
@@ -88,47 +88,41 @@ export interface Applicant {
 }
 
 export const ApplicantsDetailsTab = () => {
-  // Initialize basicTab as null instead of undefined
   const [basicTab, setBasicTab] = useState<string | null>(null);
-  const [applicantsData, setApplicantsData] = useState<Applicant[]>([]);
 
-  // UseParams with type assertion
+  // Get case alias from URL params
   const params = useParams() as unknown as Params;
   const { casealias } = params;
 
-  const fetchApplicants = async () => {
-    try {
-      const response = await apiClient.get<Applicant[]>(
-        `/cases/${casealias}/applicant/details/`
-      );
-      setApplicantsData(response.data);
-      if (response.data.length > 0) {
-        // Set the first applicant's alias as the default tab
-        setBasicTab(response.data[0]?.alias || null); // Ensure null is used if alias is undefined
-      }
-    } catch (error) {
-      console.error("Error fetching applicants:", error);
-    }
-  };
+  // Fetch applicants data
+  const { data: applicantsData, isLoading } = useGetApplicantsQuery({
+    case_alias: casealias,
+  });
 
+  // Set the first applicant's alias as default when data is available
   useEffect(() => {
-    fetchApplicants();
-  }, []);
+    if (applicantsData?.length > 0 && !basicTab) {
+      setBasicTab(applicantsData[0]?.alias || null);
+    }
+  }, [applicantsData, basicTab]);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <Col xxl="12" className="px-5">
       <Card>
         <CardBody>
           <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-2 pb-2 p-0">
             <Nav className="nav-warning" pills>
-              {applicantsData.map((applicantData) => (
+              {applicantsData?.map((applicantData: Applicant) => (
                 <NavItem key={applicantData.alias}>
                   <NavLink
                     className={`${
                       basicTab === applicantData.alias ? "active" : ""
                     }`}
-                    onClick={() =>
-                      setBasicTab(applicantData.alias || null) // Ensure null is used if alias is undefined
+                    onClick={
+                      () => setBasicTab(applicantData.alias || null) // Ensure null is used if alias is undefined
                     }
                     style={{ cursor: "pointer" }}
                   >
@@ -142,7 +136,6 @@ export const ApplicantsDetailsTab = () => {
             <ApplicantsDetailsTabContent
               applicantsData={applicantsData}
               basicTab={basicTab}
-              fetchApplicants={fetchApplicants}
             />
           </CardBody>
         </CardBody>
