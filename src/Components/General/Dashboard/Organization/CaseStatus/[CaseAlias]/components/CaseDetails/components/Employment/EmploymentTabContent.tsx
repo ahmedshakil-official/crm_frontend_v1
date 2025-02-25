@@ -1,6 +1,9 @@
 import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
-import React from "react";
+import apiClient from "@/services/api-client";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import {
+  Button,
   CardBody,
   Col,
   FormGroup,
@@ -14,15 +17,32 @@ interface EmploymentTabContentProps {
   activeTab: string | null;
   activeUser: number | null;
   groupedData: Record<number, EmploymentDetailsProps[]>;
-  casealias: string;
 }
 
 export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   activeTab,
   activeUser,
   groupedData,
-  casealias,
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [formValues, setFormValues] = useState<EmploymentDetailsProps | null>(
+    null
+  );
+  // UseParams with type assertion
+  const params = useParams();
+  const { casealias } = params;
+
+  // `useEffect` to reset `formValues` when `activeTab` or `activeUser` changes
+  useEffect(() => {
+    if (activeTab && activeUser !== null) {
+      const userEmploymentRecords = groupedData[activeUser];
+      const activeEmploymentRecord = userEmploymentRecords?.find(
+        (employment) => employment.alias === activeTab
+      );
+      setFormValues(activeEmploymentRecord || null);
+    }
+  }, [activeTab, activeUser, groupedData]);
+
   if (!activeTab || activeUser === null) {
     return <div>No employment data available.</div>;
   }
@@ -36,6 +56,32 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
     return <div>No matching employment record found.</div>;
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues!,
+      [id]: value,
+    }));
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = async () => {
+    if (formValues) {
+      try {
+        await apiClient.put(
+          `/cases/${casealias}/employment/details/${formValues.alias}/`,
+          formValues
+        );
+        setIsEditing(false);
+      } catch (error) {
+        console.error("Failed to update employment details:", error);
+      }
+    }
+  };
+
   return (
     <CardBody className="px-0 pb-0">
       <h4>Employment Details</h4>
@@ -46,8 +92,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="select"
               id="employmentStatus"
-              value={activeEmploymentRecord.employment_status}
-              disabled
+              value={formValues?.employment_status || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             >
               <option value="EMPLOYED">Employed</option>
               <option value="SELF_EMPLOYED">Self Employed</option>
@@ -63,8 +110,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="occupation"
-              value={activeEmploymentRecord.occupation || ""}
-              disabled
+              value={formValues?.occupation || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -72,8 +120,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="industry"
-              value={activeEmploymentRecord.industry || ""}
-              disabled
+              value={formValues?.industry || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -81,8 +130,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="employerName"
-              value={activeEmploymentRecord.employer_name || ""}
-              disabled
+              value={formValues?.employer_name || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -90,8 +140,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="employerTelephone"
-              value={activeEmploymentRecord.employer_telephone || ""}
-              disabled
+              value={formValues?.employer_telephone || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -99,8 +150,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="email"
               id="employerEmail"
-              value={activeEmploymentRecord.employer_email_for_reference || ""}
-              disabled
+              value={formValues?.employer_email_for_reference || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -108,8 +160,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="employerPostcode"
-              value={activeEmploymentRecord.employer_postcode || ""}
-              disabled
+              value={formValues?.employer_postcode || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
             <FormText color="muted">Lookup</FormText>
           </FormGroup>
@@ -118,8 +171,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="employerAddressLine1"
-              value={activeEmploymentRecord.employer_address_line_1 || ""}
-              disabled
+              value={formValues?.employer_address_line_1 || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -127,8 +181,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="employerCity"
-              value={activeEmploymentRecord.employer_city || ""}
-              disabled
+              value={formValues?.employer_city || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -136,8 +191,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="employerCountry"
-              value={activeEmploymentRecord.employer_country || ""}
-              disabled
+              value={formValues?.employer_country || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -145,8 +201,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="date"
               id="employmentCommenced"
-              value={activeEmploymentRecord.employment_commenced || ""}
-              disabled
+              value={formValues?.employment_commenced || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -154,8 +211,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="number"
               id="grossAnnualIncome"
-              value={activeEmploymentRecord.gross_annual_income || 0}
-              disabled
+              value={formValues?.gross_annual_income || 0}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup check>
@@ -163,8 +221,14 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               <Input
                 type="radio"
                 name="probationaryPeriod"
-                checked={activeEmploymentRecord.is_probationary_period}
-                disabled
+                checked={formValues?.is_probationary_period || false}
+                onChange={(e) =>
+                  setFormValues((prevValues) => ({
+                    ...prevValues!,
+                    is_probationary_period: e.target.checked,
+                  }))
+                }
+                disabled={!isEditing}
               />{" "}
               Are you on a probationary period?
             </Label>
@@ -174,8 +238,14 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               <Input
                 type="radio"
                 name="foreignCurrency"
-                checked={activeEmploymentRecord.is_income_in_foreign_currency}
-                disabled
+                checked={formValues?.is_income_in_foreign_currency || false}
+                onChange={(e) =>
+                  setFormValues((prevValues) => ({
+                    ...prevValues!,
+                    is_income_in_foreign_currency: e.target.checked,
+                  }))
+                }
+                disabled={!isEditing}
               />{" "}
               Is any income paid in a foreign currency?
             </Label>
@@ -185,8 +255,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="number"
               id="bonus"
-              value={activeEmploymentRecord.bonus || 0}
-              disabled
+              value={formValues?.bonus || 0}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -194,8 +265,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="number"
               id="overtime"
-              value={activeEmploymentRecord.overtime || 0}
-              disabled
+              value={formValues?.overtime || 0}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -203,8 +275,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="number"
               id="allowance"
-              value={activeEmploymentRecord.allowance || 0}
-              disabled
+              value={formValues?.allowance || 0}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
         </Col>
@@ -214,8 +287,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="select"
               id="employmentType"
-              value={activeEmploymentRecord.employment_type || ""}
-              disabled
+              value={formValues?.employment_type || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             >
               <option value="PERMANENT">Permanent</option>
               <option value="CONTRACT">Contract</option>
@@ -229,8 +303,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="employerHouseNumber"
-              value={activeEmploymentRecord.employer_house_name_or_number || ""}
-              disabled
+              value={formValues?.employer_house_name_or_number || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -238,8 +313,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="employerAddressLine2"
-              value={activeEmploymentRecord.employer_address_line_1 || ""}
-              disabled
+              value={formValues?.employer_address_line_1 || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -247,8 +323,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="text"
               id="employerCounty"
-              value={activeEmploymentRecord.employer_county || ""}
-              disabled
+              value={formValues?.employer_county || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -256,8 +333,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="date"
               id="employmentEnded"
-              value={activeEmploymentRecord.employment_ended || ""}
-              disabled
+              value={formValues?.employment_ended || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -265,8 +343,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="number"
               id="netAnnualIncome"
-              value={activeEmploymentRecord.net_annual_income || 0}
-              disabled
+              value={formValues?.net_annual_income || 0}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             />
           </FormGroup>
           <FormGroup>
@@ -274,8 +353,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="select"
               id="bonusFrequency"
-              value={activeEmploymentRecord.bonus_frequency || ""}
-              disabled
+              value={formValues?.bonus_frequency || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             >
               <option value="">Select...</option>
               <option value="DAILY">Daily</option>
@@ -293,8 +373,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="select"
               id="overtimeFrequency"
-              value={activeEmploymentRecord.overtime_frequency || ""}
-              disabled
+              value={formValues?.overtime_frequency || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             >
               <option value="">Select...</option>
               <option value="DAILY">Daily</option>
@@ -312,8 +393,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Input
               type="select"
               id="allowanceFrequency"
-              value={activeEmploymentRecord.allowance_frequency || ""}
-              disabled
+              value={formValues?.allowance_frequency || ""}
+              onChange={handleInputChange}
+              disabled={!isEditing}
             >
               <option value="">Select...</option>
               <option value="DAILY">Daily</option>
@@ -328,6 +410,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
           </FormGroup>
         </Col>
       </Row>
+      <Button
+        color="primary"
+        onClick={isEditing ? handleSaveClick : handleEditClick}
+      >
+        {isEditing ? "Save" : "Edit"}
+      </Button>
     </CardBody>
   );
 };
