@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import {
   Card,
   CardBody,
@@ -10,70 +10,27 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import { EmploymentTabContent } from "./EmploymentTabContent"; // Import the new component
+import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
 
 // Type for URL params
 interface Params {
   casealias: string;
 }
 
-// Type for Employment Details
-export interface EmploymentDetails {
-  alias: string;
-  user: {
-    id: number;
-    alias: string;
-    email: string;
-    phone: string;
-    first_name: string;
-    last_name: string;
-    profile_image: string | null;
-    user_type: string;
-  };
-  employment_status: string;
-  employment_type: string | null;
-  occupation: string | null;
-  industry: string | null;
-  employer_name: string | null;
-  employer_telephone: string | null;
-  employer_email_for_reference: string | null;
-  employer_postcode: string | null;
-  employer_house_name_or_number: string | null;
-  employer_address_line_1: string | null;
-  employer_city: string | null;
-  employer_county: string | null;
-  employer_country: string | null;
-  employment_commenced: string | null;
-  employment_ended: string | null;
-  gross_annual_income: number | null;
-  net_annual_income: number | null;
-  is_probationary_period: boolean;
-  is_income_in_foreign_currency: boolean;
-  bonus: number | null;
-  is_bonus_guaranteed: boolean;
-  bonus_frequency: string | null;
-  overtime: number | null;
-  is_overtime_guaranteed: boolean;
-  overtime_frequency: string | null;
-  allowance: number | null;
-  is_allowance_guaranteed: boolean;
-  allowance_frequency: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
 export const EmploymentTab = () => {
   // State for active user, active tab, and employment data
   const [activeUser, setActiveUser] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<string | null>(null);
-  const [employmentData, setEmploymentData] = useState<EmploymentDetails[]>([]);
+  const [employmentData, setEmploymentData] = useState<EmploymentDetailsProps[]>([]);
 
   // UseParams with type assertion
   const params = useParams() as unknown as Params;
   const { casealias } = params;
 
   // Helper function to group employment data by user ID
-  const groupByUserId = (data: EmploymentDetails[]) => {
-    const grouped: Record<number, EmploymentDetails[]> = {};
+  const groupByUserId = (data: EmploymentDetailsProps[]) => {
+    const grouped: Record<number, EmploymentDetailsProps[]> = {};
     data.forEach((record) => {
       if (!grouped[record.user.id]) {
         grouped[record.user.id] = [];
@@ -86,7 +43,7 @@ export const EmploymentTab = () => {
   // Fetch employment details
   const fetchEmploymentDetails = async () => {
     try {
-      const response = await apiClient.get<EmploymentDetails[]>(
+      const response = await apiClient.get<EmploymentDetailsProps[]>(
         `/cases/${casealias}/employment/details/`
       );
       setEmploymentData(response.data);
@@ -144,14 +101,11 @@ export const EmploymentTab = () => {
                 {groupedData[activeUser].map((employment) => (
                   <NavItem key={employment.alias}>
                     <NavLink
-                      className={`${
-                        activeTab === employment.alias ? "active" : ""
-                      }`}
+                      className={`${activeTab === employment.alias ? "active" : ""}`}
                       onClick={() => setActiveTab(employment.alias || null)}
                       style={{ cursor: "pointer" }}
                     >
-                      {employment.employment_status}(
-                      {employment.alias.slice(0, 8)})
+                      {employment.employment_status}({employment.alias.slice(0, 8)})
                     </NavLink>
                   </NavItem>
                 ))}
@@ -160,55 +114,11 @@ export const EmploymentTab = () => {
           )}
 
           {/* Tab Content */}
-          <CardBody className="px-0 pb-0">
-            {activeTab &&
-              activeUser !== null && // Ensure activeUser is not null
-              groupedData[activeUser] // Safe to access groupedData[activeUser]
-                ?.filter((employment: any) => employment.alias === activeTab)
-                .map((employment: any) => (
-                  <div key={employment.alias}>
-                    <h4>Employment Details</h4>
-                    <p>
-                      <strong>Name:</strong> {employment.user.first_name}{" "}
-                      {employment.user.last_name}
-                    </p>
-                    <p>
-                      <strong>ID:</strong> {employment.user.id}
-                    </p>
-                    <p>
-                      <strong>Email:</strong> {employment.user.email}
-                    </p>
-                    <p>
-                      <strong>Phone:</strong> {employment.user.phone}
-                    </p>
-                    <p>
-                      <strong>Employment Status:</strong>{" "}
-                      {employment.employment_status}
-                    </p>
-                    <p>
-                      <strong>Employer Name:</strong>{" "}
-                      {employment.employer_name || "N/A"}
-                    </p>
-                    <p>
-                      <strong>Gross Annual Income:</strong>{" "}
-                      {employment.gross_annual_income
-                        ? `£${employment.gross_annual_income}`
-                        : "N/A"}
-                    </p>
-                    <p>
-                      <strong>Net Annual Income:</strong>{" "}
-                      {employment.net_annual_income
-                        ? `£${employment.net_annual_income}`
-                        : "N/A"}
-                    </p>
-                    <p>
-                      <strong>Bonus:</strong>{" "}
-                      {employment.bonus ? `£${employment.bonus}` : "N/A"}{" "}
-                      {employment.is_bonus_guaranteed ? "(Guaranteed)" : ""}
-                    </p>
-                  </div>
-                ))}
-          </CardBody>
+          <EmploymentTabContent
+            activeTab={activeTab}
+            activeUser={activeUser}
+            groupedData={groupedData}
+          />
         </CardBody>
       </Card>
     </Col>
