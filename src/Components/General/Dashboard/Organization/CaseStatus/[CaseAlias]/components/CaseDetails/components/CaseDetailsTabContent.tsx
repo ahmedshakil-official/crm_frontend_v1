@@ -1,12 +1,14 @@
 import { useAppSelector } from "@/Redux/Hooks";
 import { TabContent } from "reactstrap";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
+import { EmploymentTab } from "./Employment/EmploymentTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 
 // Define a mapping of tab names to components
 const tabComponents: Record<string, React.FC> = {
   "Loan Details": LoanDetailsTab,
   "Applicant(s) Details": ApplicantsDetailsTab,
+  "Employment/Income": EmploymentTab,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
