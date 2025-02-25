@@ -34,9 +34,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   basicTab,
   fetchApplicants,
 }) => {
-  const [companyApplicant, setCompanyApplicant] = useState<
-    string | number | boolean | null | string[]
-  >("no");
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
@@ -131,10 +128,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     return <div>No applicant data available.</div>;
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCompanyApplicant(e.target.value);
-  };
-
   const handleInputChange = (
     name: keyof Applicant,
     value: string | number | boolean | string[] | null
@@ -165,35 +158,45 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
 
   return (
     <Container>
-      <Row className="mb-3 border-primary rounded-2 p-3">
-        <h3 className="text-info fs-4 mb-2">Company Applicant</h3>
-        {/* Company Applicant Section */}
-        <FormGroup>
-          <Label>Is this application being made in a company name?</Label>
-          {["yes", "no"].map((option) => (
-            <div key={option}>
-              <Label>
-                <Input
-                  type="radio"
-                  name="is_company_application"
-                  value={option}
-                  checked={companyApplicant === option}
-                  onChange={handleChange}
-                  className="me-1"
-                />
-                {option.charAt(0).toUpperCase() + option.slice(1)}
-              </Label>
-            </div>
-          ))}
-          {companyApplicant === "yes" && (
-            <Button onClick={() => setIsCompanyModalOpen(true)} color="primary">
-              Continue with Company Application
-            </Button>
-          )}
-        </FormGroup>
-      </Row>
       <Row>
         <Form onSubmit={handleSubmit}>
+          <Row className="mb-3 border-primary rounded-2 p-3">
+            <h3 className="text-info fs-4 mb-2">Company Applicant</h3>
+            {/* Company Applicant Section */}
+            <FormGroup>
+              <Label>Is this application being made in a company name?</Label>
+              {["yes", "no"].map((option) => (
+                <div key={option}>
+                  <Label>
+                    <Input
+                      type="radio"
+                      name="is_company_application"
+                      value={option}
+                      checked={
+                        formValues.is_company_application === (option === "yes")
+                      }
+                      onChange={(e) =>
+                        handleInputChange(
+                          "is_company_application",
+                          e.target.value === "yes"
+                        )
+                      }
+                      className="me-1"
+                    />
+                    {option.charAt(0).toUpperCase() + option.slice(1)}
+                  </Label>
+                </div>
+              ))}
+              {formValues?.is_company_application && (
+                <Button
+                  onClick={() => setIsCompanyModalOpen(true)}
+                  color="primary"
+                >
+                  Continue with Company Application
+                </Button>
+              )}
+            </FormGroup>
+          </Row>
           <h3 className="text-primary fs-4 mb-2"> Applicant</h3>
           {/* Personal Details Section */}
           <Row>
