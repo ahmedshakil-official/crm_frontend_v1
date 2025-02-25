@@ -18,11 +18,12 @@ import {
 const AddCompanyDetailsFormModal: React.FC<{
   case_alias: string;
   applicantDetails_alias: string;
-}> = ({ case_alias, applicantDetails_alias }) => {
+  setIsCompanyModalOpen: (isOpen: boolean) => void;
+}> = ({ case_alias, applicantDetails_alias, setIsCompanyModalOpen }) => {
   interface FormData {
     company_name: string;
     company_registration_number: string;
-    date_of_incorporation: string|null;
+    date_of_incorporation: string | null;
     company_type: string;
     trade_business_type: string;
     sic_code: string;
@@ -98,6 +99,7 @@ const AddCompanyDetailsFormModal: React.FC<{
         CompanyDetails: formData,
       }).unwrap();
       toast.success("Company details added successfully");
+      setIsCompanyModalOpen(false);
     } catch (error) {
       toast.error("Failed to add company details");
     }
@@ -283,7 +285,7 @@ const AddCompanyDetailsFormModal: React.FC<{
       <div className="d-flex justify-content-end mt-4">
         <div title={data?.[0] ? "Data already added" : ""}>
           <Button color="primary" type="submit" disabled={!!data?.[0]}>
-            Submit
+            {isCompanyDetailsAdding ? "Adding..." : "Submit"}
           </Button>
         </div>
       </div>

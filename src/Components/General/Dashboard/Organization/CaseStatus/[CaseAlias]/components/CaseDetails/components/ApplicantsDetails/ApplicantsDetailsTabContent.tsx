@@ -23,6 +23,7 @@ import AddDependantFormModal from "./ApplicantDetailsModals/AddApplicantDependan
 import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
 import { Applicant } from "./ApplicantsDetailsTab";
 import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import LoadingSpinner from "@/app/loading";
 
 export interface ApplicantsUsersProps {
   applicantsData?: Applicant[];
@@ -40,7 +41,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
   const [isDependantsViewModalOpen, setIsDependantsViewModalOpen] =
     useState(false);
-    console.log({basicTab})
+  console.log({ basicTab });
 
   const toggleViewModal = () =>
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
@@ -160,7 +161,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       setIsLoading(false);
     }
   };
-
+  if (isLoading)
+    return (
+      <div className=" d-flex justify-content-center">
+        <LoadingSpinner />{" "}
+      </div>
+    );
   return (
     <Container>
       <Row>
@@ -934,7 +940,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           {/* Submit Button */}
           <div className="d-flex justify-content-end">
             <Button type="submit" color="success" disabled={isLoading}>
-              {isLoading || isUpdatingApplicant ? "Updating..." : "Update"}
+              {isUpdatingApplicant ? "Updating..." : "Update"}
             </Button>
           </div>
         </Form>
@@ -949,6 +955,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <AddCompanyDetailsFormModal
             case_alias={casealias as string}
             applicantDetails_alias={formValues.alias as string}
+            setIsCompanyModalOpen={setIsCompanyModalOpen}
           />
         </ModalBody>
       </Modal>
@@ -962,6 +969,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <AddDependantFormModal
             case_alias={casealias as string}
             applicantDetails_alias={formValues.alias as string}
+            setIsDependantsModalOpen={setIsDependantsModalOpen}
           />
         </ModalBody>
       </Modal>
@@ -969,7 +977,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       <ApplicantDependantsViewModal
         isOpen={isDependantsViewModalOpen}
         toggle={toggleViewModal}
-        applicantAlias={formValues?.alias}
+        applicantAlias={formValues.alias as string}
       />
     </Container>
   );

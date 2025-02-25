@@ -15,7 +15,8 @@ import {
 const AddDependantFormModal: React.FC<{
   case_alias: string;
   applicantDetails_alias: string;
-}> = ({ case_alias, applicantDetails_alias }) => {
+  setIsDependantsModalOpen: (isOpen: boolean) => void;
+}> = ({ case_alias, applicantDetails_alias,setIsDependantsModalOpen }) => {
   const [addDependants, { isLoading: isDependantsLoading }] =
     useAddDependantsMutation();
   const [formData, setFormData] = useState({
@@ -42,6 +43,7 @@ const AddDependantFormModal: React.FC<{
     });
     if (response.data) {
       toast.success("Dependant added successfully");
+       setIsDependantsModalOpen(false);
     }
   };
 

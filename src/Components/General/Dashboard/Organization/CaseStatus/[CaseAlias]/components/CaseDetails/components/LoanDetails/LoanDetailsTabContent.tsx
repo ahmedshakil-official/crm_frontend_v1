@@ -12,6 +12,7 @@ import {
 } from "@/Redux/Reducers/CaseDetails/LoanDetails/LoanDetailsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { toast } from "react-toastify";
+import LoadingSpinner from "@/app/loading";
 
 interface LoanDetailsTabContentProps {
   tabId: string;
@@ -188,7 +189,12 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     }
   };
 
-  if (isLoading || isLoandetailsDataLoading) return <div>Loading...</div>;
+  if (isLoading || isLoandetailsDataLoading)
+    return (
+      <div className=" d-flex justify-content-center">
+        <LoadingSpinner />{" "}
+      </div>
+    );
   if (isError) return <div>Error loading data</div>;
   return (
     <div>
