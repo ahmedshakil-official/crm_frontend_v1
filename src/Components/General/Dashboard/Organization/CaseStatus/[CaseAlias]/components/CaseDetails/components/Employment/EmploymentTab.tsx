@@ -93,12 +93,12 @@ export const EmploymentTab = () => {
 
           {/* Inner Navigation Tabs (Employment Records) */}
           {activeUser && (
-            <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-3 py-2 p-0">
-              <Nav className="nav-info" pills>
+            <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-3 pt-3 pb-0">
+              <Nav tabs className="border-tab mb-0">
                 {groupedData[activeUser].map((employment) => (
                   <NavItem key={employment.alias}>
                     <NavLink
-                      className={`${
+                      className={`nav-border text-info tab-info ${
                         activeTab === employment.alias ? "active" : ""
                       }`}
                       onClick={() => setActiveTab(employment.alias || null)}
