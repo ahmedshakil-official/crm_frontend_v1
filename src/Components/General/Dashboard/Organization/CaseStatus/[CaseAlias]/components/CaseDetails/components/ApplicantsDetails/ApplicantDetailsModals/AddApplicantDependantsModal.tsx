@@ -2,21 +2,21 @@ import { useAddDependantsMutation } from "@/Redux/Reducers/CaseDetails/Applicant
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
+  Button,
+  Col,
+  Container,
   Form,
   FormGroup,
-  Label,
   Input,
-  Button,
-  Container,
+  Label,
   Row,
-  Col,
 } from "reactstrap";
 
 const AddDependantFormModal: React.FC<{
   case_alias: string;
   applicantDetails_alias: string;
   setIsDependantsModalOpen: (isOpen: boolean) => void;
-}> = ({ case_alias, applicantDetails_alias,setIsDependantsModalOpen }) => {
+}> = ({ case_alias, applicantDetails_alias, setIsDependantsModalOpen }) => {
   const [addDependants, { isLoading: isDependantsLoading }] =
     useAddDependantsMutation();
   const [formData, setFormData] = useState({
@@ -28,11 +28,6 @@ const AddDependantFormModal: React.FC<{
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  interface FormData {
-    name: string;
-    date_of_birth: string;
-  }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted", formData);
@@ -43,7 +38,7 @@ const AddDependantFormModal: React.FC<{
     });
     if (response.data) {
       toast.success("Dependant added successfully");
-       setIsDependantsModalOpen(false);
+      setIsDependantsModalOpen(false);
     }
   };
 

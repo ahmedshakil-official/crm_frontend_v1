@@ -1,6 +1,8 @@
 "use client";
+import LoadingSpinner from "@/app/loading";
 import { countries } from "@/Data/Countries/Countries";
-import apiClient from "@/services/api-client";
+import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -21,12 +23,9 @@ import {
 import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/AddApplicantCompanyInfoModal";
 import AddDependantFormModal from "./ApplicantDetailsModals/AddApplicantDependantsModal";
 import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
-import { Applicant } from "./ApplicantsDetailsTab";
-import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
-import LoadingSpinner from "@/app/loading";
 
 export interface ApplicantsUsersProps {
-  applicantsData?: Applicant[];
+  applicantsData?: ApplicantProps[];
   basicTab: string | null;
   // fetchApplicants: () => void;
 }
@@ -52,7 +51,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [updateApplicantDetails, { isLoading: isUpdatingApplicant }] =
     useUpdateApplicantDetailsMutation();
 
-  const [formValues, setFormValues] = useState<Applicant>({
+  const [formValues, setFormValues] = useState<ApplicantProps>({
     is_company_application: false,
     title: "",
     maiden_name: "",
@@ -135,7 +134,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   }
 
   const handleInputChange = (
-    name: keyof Applicant,
+    name: keyof ApplicantProps,
     value: string | number | boolean | string[] | null
   ) => {
     setFormValues((prevValues) => ({
