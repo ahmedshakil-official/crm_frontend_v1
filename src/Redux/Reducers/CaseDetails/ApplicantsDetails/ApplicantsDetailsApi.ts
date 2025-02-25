@@ -24,8 +24,28 @@ export const ApplicantsDetailsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["ApplicantsDetails", "Dependants"],
     }),
+    getCompanyDetails: builder.query({
+      query: ({ case_alias, applicantDetails_alias }) => ({
+        url: `/cases/${case_alias}/applicant/details/${applicantDetails_alias}/company/`,
+        method: "GET",
+      }),
+      providesTags: ["ApplicantsDetails", "CompanyDetails"],
+    }),
+    addCompanyDetails: builder.mutation({
+      query: ({ case_alias, applicantDetails_alias,CompanyDetails }) => ({
+        url: `/cases/${case_alias}/applicant/details/${applicantDetails_alias}/company/`,
+        method: "POST",
+        body: CompanyDetails,
+      }),
+      invalidatesTags: ["ApplicantsDetails", "CompanyDetails"],
+    })
   }),
 });
 
-export const { useGetCaseUsersQuery, useAddDependantsMutation,useGetDependantsQuery } =
-  ApplicantsDetailsApi;
+export const {
+  useGetCaseUsersQuery,
+  useAddDependantsMutation,
+  useGetDependantsQuery,
+  useGetCompanyDetailsQuery,
+  useAddCompanyDetailsMutation,
+} = ApplicantsDetailsApi;

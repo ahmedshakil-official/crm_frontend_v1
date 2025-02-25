@@ -941,7 +941,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <p className=" fs-2 text-primary fw-bold">Company Applicant</p>
         </ModalHeader>
         <ModalBody>
-          <AddCompanyDetailsFormModal />
+          <AddCompanyDetailsFormModal
+            case_alias={casealias as string}
+            applicantDetails_alias={formValues.alias as string}
+          />
         </ModalBody>
       </Modal>
 

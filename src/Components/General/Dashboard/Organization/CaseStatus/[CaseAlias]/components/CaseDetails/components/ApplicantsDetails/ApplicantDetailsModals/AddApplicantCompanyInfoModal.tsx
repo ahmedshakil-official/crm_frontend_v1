@@ -1,11 +1,28 @@
-import { useState } from "react";
-import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
+import {
+  useAddCompanyDetailsMutation,
+  useGetCompanyDetailsQuery,
+} from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import {
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Col,
+  Row,
+  FormFeedback,
+} from "reactstrap";
 
-const AddCompanyDetailsFormModal = () => {
+const AddCompanyDetailsFormModal: React.FC<{
+  case_alias: string;
+  applicantDetails_alias: string;
+}> = ({ case_alias, applicantDetails_alias }) => {
   interface FormData {
     company_name: string;
     company_registration_number: string;
-    date_of_incorporation: string;
+    date_of_incorporation: string|null;
     company_type: string;
     trade_business_type: string;
     sic_code: string;
@@ -18,10 +35,17 @@ const AddCompanyDetailsFormModal = () => {
     country: string;
   }
 
+  const { data, isLoading, isError } = useGetCompanyDetailsQuery({
+    case_alias,
+    applicantDetails_alias,
+  });
+  const [addCompanyDetails, { isLoading: isCompanyDetailsAdding }] =
+    useAddCompanyDetailsMutation();
+
   const [formData, setFormData] = useState<FormData>({
     company_name: "",
     company_registration_number: "",
-    date_of_incorporation: "",
+    date_of_incorporation: null,
     company_type: "PRIVATE_LIMITED",
     trade_business_type: "",
     sic_code: "",
@@ -34,6 +58,26 @@ const AddCompanyDetailsFormModal = () => {
     country: "",
   });
 
+  useEffect(() => {
+    if (data && data[0]) {
+      setFormData({
+        company_name: data[0].company_name || "",
+        company_registration_number: data[0].company_registration_number || "",
+        date_of_incorporation: data[0].date_of_incorporation || null,
+        company_type: data[0].company_type || "PRIVATE_LIMITED",
+        trade_business_type: data[0].trade_business_type || "",
+        sic_code: data[0].sic_code || "",
+        is_spv: data[0].is_spv || false,
+        postcode: data[0].postcode || "",
+        house_number_or_name: data[0].house_number_or_name || "",
+        address_line1: data[0].address_line1 || "",
+        city: data[0].city || "",
+        county: data[0].county || "",
+        country: data[0].country || "",
+      });
+    }
+  }, [data]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -45,11 +89,23 @@ const AddCompanyDetailsFormModal = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const response = await addCompanyDetails({
+        case_alias,
+        applicantDetails_alias,
+        CompanyDetails: formData,
+      }).unwrap();
+      toast.success("Company details added successfully");
+    } catch (error) {
+      toast.error("Failed to add company details");
+    }
   };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching data</div>;
+  console.log(!!data[0]);
   return (
     <Form onSubmit={handleSubmit} className="p-4 border rounded">
       <Row>
@@ -61,7 +117,11 @@ const AddCompanyDetailsFormModal = () => {
               name="company_name"
               value={formData.company_name}
               onChange={handleChange}
+              required
             />
+            <FormFeedback className="text-warning d-block">
+              This field is required
+            </FormFeedback>
           </FormGroup>
         </Col>
         <Col md={6}>
@@ -72,7 +132,11 @@ const AddCompanyDetailsFormModal = () => {
               name="company_registration_number"
               value={formData.company_registration_number}
               onChange={handleChange}
+              required
             />
+            <FormFeedback className="text-warning d-block">
+              This field is required
+            </FormFeedback>
           </FormGroup>
         </Col>
       </Row>
@@ -217,9 +281,11 @@ const AddCompanyDetailsFormModal = () => {
         </Col>
       </Row>
       <div className="d-flex justify-content-end mt-4">
-        <Button color="primary" type="submit">
-          Submit
-        </Button>
+        <div title={data?.[0] ? "Data already added" : ""}>
+          <Button color="primary" type="submit" disabled={!!data?.[0]}>
+            Submit
+          </Button>
+        </div>
       </div>
     </Form>
   );
