@@ -62,6 +62,12 @@ export interface EmploymentDetailsProps {
   other_income: string | null;
   other_income_source: string | null;
   other_income_start_date: Date | null;
+  contractor_industry: string | null;
+  current_contract_start: Date | null;
+  current_contract_end: Date | null;
+  time_contracting: string | null;
+  day_rate: number | null;
+  hourly_rate: number | null;
 }
 
 export interface EmploymentTabContentProps {
