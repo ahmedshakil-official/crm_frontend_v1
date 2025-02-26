@@ -20,6 +20,7 @@ export interface EmploymentDetailsProps {
   employer_postcode: string | null;
   employer_house_name_or_number: string | null;
   employer_address_line_1: string | null;
+  employer_address_line_2: string | null;
   employer_city: string | null;
   employer_county: string | null;
   employer_country: string | null;
@@ -29,6 +30,7 @@ export interface EmploymentDetailsProps {
   net_annual_income: number | null;
   is_probationary_period: boolean;
   is_income_in_foreign_currency: boolean;
+  further_details: number | null;
   bonus: number | null;
   is_bonus_guaranteed: boolean;
   bonus_frequency: string | null;
@@ -38,6 +40,28 @@ export interface EmploymentDetailsProps {
   allowance: number | null;
   is_allowance_guaranteed: boolean;
   allowance_frequency: string | null;
+  employment_time_year: number | null;
+  employment_time_month: number | null;
+  business_telephone: string | null;
+  business_address_line_1: string | null;
+  business_address_line_2: string | null;
+  business_city: string | null;
+  business_county: string | null;
+  business_country: string | null;
+  job_title: string | null;
+  business_name: string | null;
+  company_type: string | null;
+  percentage_of_business_owned: string | null;
+  is_accounts_available: boolean;
+  accountant_name: string | null;
+  accountant_qualifications: string | null;
+  salary: number | null;
+  dividends: number | null;
+  turnover: number | null;
+  income_source: string | null;
+  other_income: string | null;
+  other_income_source: string | null;
+  other_income_start_date: Date | null;
 }
 
 export interface EmploymentTabContentProps {
