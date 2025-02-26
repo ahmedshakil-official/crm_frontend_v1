@@ -57,6 +57,7 @@ export interface EmploymentDetailsProps {
   salary: number | null;
   dividends: number | null;
   turnover: number | null;
+  income_source: string | null;
 }
 
 export interface EmploymentTabContentProps {

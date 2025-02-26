@@ -98,20 +98,20 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             }
             className={
               formValues?.employment_status === "EMPLOYED"
-                ? "text-info"
+                ? "text-info border-info"
                 : formValues?.employment_status === "SELF_EMPLOYED"
-                ? "text-warning"
+                ? "text-warning border-warning"
                 : formValues?.employment_status === "RETIRED"
-                ? "text-primary"
+                ? "text-primary border-primary"
                 : formValues?.employment_status === "OTHER"
-                ? "text-secondary"
+                ? "text-secondary border-secondary"
                 : formValues?.employment_status === "UNEMPLOYED"
-                ? "text-dark"
+                ? "text-dark border-dark"
                 : formValues?.employment_status === "HOUSEPERSON"
-                ? "text-secondary"
+                ? "text-secondary border-secondary"
                 : formValues?.employment_status === "CONTRACTOR"
-                ? "text-danger"
-                : "text-secondary" // Default fallback
+                ? "text-danger border-danger"
+                : "text-dark border-dark" // Default fallback
             }
           >
             <option value="">Select...</option>
@@ -431,7 +431,11 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   onChange={(e) =>
                     handleInputChange("gross_annual_income", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-danger d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -1124,6 +1128,110 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
         </>
       )}
       {/* IF active employment_status is SELF_EMPLOYED, show the following fields: End */}
+      {/* IF active employment_status is RETIRED, show the following fields: START */}
+      {formValues?.employment_status === "RETIRED" && (
+        <>
+          <Row>
+            <Col md={6}>
+              <FormGroup check>
+                <Label check>
+                  <Input
+                    type="checkbox"
+                    name="foreignCurrency"
+                    className={
+                      formValues?.is_income_in_foreign_currency
+                        ? "bg-primary border-primary"
+                        : "border-primary"
+                    }
+                    checked={formValues?.is_income_in_foreign_currency || false}
+                    onChange={(e) =>
+                      setFormValues((prevValues) => ({
+                        ...prevValues!,
+                        is_income_in_foreign_currency: e.target.checked,
+                      }))
+                    }
+                  />
+                  Is any income paid in a foreign currency?
+                </Label>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="grossAnnualIncome" className="text-primary">
+                  Gross Annual Income*
+                </Label>
+                <Input
+                  type="number"
+                  id="grossAnnualIncome"
+                  className="border-primary"
+                  value={formValues?.gross_annual_income || 0}
+                  onChange={(e) =>
+                    handleInputChange("gross_annual_income", e.target.value)
+                  }
+                  required
+                />
+                <FormFeedback className="text-danger d-block">
+                  This field is required
+                </FormFeedback>
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="income_source" className="text-primary">
+                  Income Source
+                </Label>
+                <Input
+                  type="text"
+                  id="income_source"
+                  className="border-primary"
+                  value={formValues?.income_source || ""}
+                  onChange={(e) =>
+                    handleInputChange("income_source", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        </>
+      )}
+      {/* IF active employment_status is RETIRED, show the following fields: END */}
+      {/* IF active employment_status is OTHER, show the following fields: START */}
+      {formValues?.employment_status === "OTHER" && (
+        <>
+          <Row>
+            <Col md={6}>
+            <FormGroup check>
+                <Label check>
+                  <Input
+                    type="checkbox"
+                    name="foreignCurrency"
+                    className={
+                      formValues?.is_income_in_foreign_currency
+                        ? "bg-primary border-primary"
+                        : "border-primary"
+                    }
+                    checked={formValues?.is_income_in_foreign_currency || false}
+                    onChange={(e) =>
+                      setFormValues((prevValues) => ({
+                        ...prevValues!,
+                        is_income_in_foreign_currency: e.target.checked,
+                      }))
+                    }
+                  />
+                  Is any income paid in a foreign currency?
+                </Label>
+              </FormGroup></Col>
+            <Col md={6}></Col>
+          </Row>
+          <Row>
+            <Col md={6}></Col>
+            <Col md={6}></Col>
+          </Row>
+        </>
+      )}
+      {/* IF active employment_status is OTHER, show the following fields: END */}
 
       <Row>
         <Col className="d-flex justify-content-between">
