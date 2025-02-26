@@ -16,6 +16,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import AddEmploymentDetailsModal from "./EmploymentModals/AddEmploymentDetailsModal";
 
 export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   activeTab,
@@ -29,6 +30,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
+  const [isAddEmploymentModalOpen, setAddEmploymentModalOpen] = useState(false);
 
   // `useEffect` to reset `formValues` when `activeTab` or `activeUser` changes
   useEffect(() => {
@@ -433,7 +435,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
       </Row>
       <Row>
         <Col className="d-flex justify-content-between">
-          <Button color="secondary" onClick={() => alert("Add New Button")}>
+          <Button color="secondary" onClick={() => setAddEmploymentModalOpen(true)}>
             Add New
           </Button>
           <Button color="primary" onClick={handleSaveClick}>
@@ -441,6 +443,13 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
           </Button>
         </Col>
       </Row>
+
+      {/* Add new employment details */}
+      <AddEmploymentDetailsModal
+        isOpen={isAddEmploymentModalOpen}
+        toggle={() => setAddEmploymentModalOpen(!isAddEmploymentModalOpen)}
+        employmentData={formValues}
+      />
     </CardBody>
   );
 };
