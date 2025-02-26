@@ -86,7 +86,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
       <h4 className="text-primary pb-2 fs-4 mb-4 mt-2">Employment Details</h4>
       <Row>
         <FormGroup>
-          <Label for="employmentStatus">Employment Status</Label>
+          <Label for="employmentStatus" className="fs-5">Employment Status</Label>
           <Input
             type="select"
             id="employmentStatus"
@@ -1365,7 +1365,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
       {/* IF active employment_status is OTHER, show the following fields: END */}
 
       <Row>
-        <Col className="d-flex justify-content-between">
+        <Col className="d-flex justify-content-between pt-3">
           <Button
             color="secondary"
             onClick={() => setAddEmploymentModalOpen(true)}
