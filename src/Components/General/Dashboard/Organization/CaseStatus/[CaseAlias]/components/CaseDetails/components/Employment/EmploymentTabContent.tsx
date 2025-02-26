@@ -2,7 +2,6 @@ import {
   EmploymentDetailsProps,
   EmploymentTabContentProps,
 } from "@/Types/Organization/CaseDetails/EmploymentTypes";
-import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -17,13 +16,13 @@ import {
   Row,
 } from "reactstrap";
 import AddEmploymentDetailsModal from "./EmploymentModals/AddEmploymentDetailsModal";
+import { useUpdateEmploymentDetailsMutation } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 
 export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   activeTab,
   activeUser,
   groupedData,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [formValues, setFormValues] = useState<EmploymentDetailsProps | null>(
     null
   );
@@ -31,6 +30,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   const params = useParams();
   const { casealias } = params;
   const [isAddEmploymentModalOpen, setAddEmploymentModalOpen] = useState(false);
+  const [
+    updateEmploymentDetails,
+    { isLoading: isUpdateEmploymentDetailsLoading },
+  ] = useUpdateEmploymentDetailsMutation();
 
   // `useEffect` to reset `formValues` when `activeTab` or `activeUser` changes
   useEffect(() => {
@@ -66,20 +69,15 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
     }));
   };
   const handleSaveClick = async () => {
-    if (formValues) {
-      try {
-        setIsLoading(true);
-        await apiClient.put(
-          `/cases/${casealias}/employment/details/${formValues.alias}/`,
-          formValues
-        );
-        toast.success("Employment details updated successfully.");
-      } catch (error) {
-        console.error("Failed to update employment details:", error);
-        toast.error("Failed to update employment details.");
-      } finally {
-        setIsLoading(false);
-      }
+    const res = await updateEmploymentDetails({
+      case_alias: casealias,
+      employmentDetails_alias: formValues?.alias,
+      employmentDetails: formValues,
+    });
+    if (res.data) {
+      toast.success("Employment details updated successfully.");
+    } else {
+      toast.error("Failed to update employment details.");
     }
   };
 
@@ -435,11 +433,14 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
       </Row>
       <Row>
         <Col className="d-flex justify-content-between">
-          <Button color="secondary" onClick={() => setAddEmploymentModalOpen(true)}>
+          <Button
+            color="secondary"
+            onClick={() => setAddEmploymentModalOpen(true)}
+          >
             Add New
           </Button>
           <Button color="primary" onClick={handleSaveClick}>
-            {isLoading ? "Updating..." : "Update"}
+            {isUpdateEmploymentDetailsLoading ? "Updating..." : "Update"}
           </Button>
         </Col>
       </Row>

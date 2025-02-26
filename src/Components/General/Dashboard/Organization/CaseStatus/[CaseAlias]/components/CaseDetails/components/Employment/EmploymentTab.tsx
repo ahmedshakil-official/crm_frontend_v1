@@ -12,23 +12,35 @@ import {
   NavLink,
 } from "reactstrap";
 import { EmploymentTabContent } from "./EmploymentTabContent"; // Import the new component
+import { useGetEmploymentDetailsQuery } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
+import LoadingSpinner from "@/app/loading";
 
 export const EmploymentTab = () => {
   // State for active user, active tab, and employment data
   const [activeUser, setActiveUser] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<string | null>(null);
-  const [employmentData, setEmploymentData] = useState<
-    EmploymentDetailsProps[]
-  >([]);
 
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
 
+  // Fetch employment details
+  const { data: employmentData, isLoading: isEmploymentDetailLoading } =
+    useGetEmploymentDetailsQuery({ case_alias: casealias });
+
+  // Set the first user and their first employment record as default when data is fetched
+  useEffect(() => {
+    if (employmentData && employmentData.length > 0) {
+      const firstUserId = employmentData[0]?.user.id;
+      setActiveUser(firstUserId);
+      setActiveTab(employmentData[0]?.alias || null);
+    }
+  }, [employmentData]);
+
   // Helper function to group employment data by user ID
   const groupByUserId = (data: EmploymentDetailsProps[]) => {
     const grouped: Record<number, EmploymentDetailsProps[]> = {};
-    data.forEach((record) => {
+    data?.forEach((record) => {
       if (!grouped[record.user.id]) {
         grouped[record.user.id] = [];
       }
@@ -37,32 +49,9 @@ export const EmploymentTab = () => {
     return grouped;
   };
 
-  // Fetch employment details
-  const fetchEmploymentDetails = async () => {
-    try {
-      const response = await apiClient.get<EmploymentDetailsProps[]>(
-        `/cases/${casealias}/employment/details/`
-      );
-      setEmploymentData(response.data);
-
-      // Set the first user and their first employment record as default
-      if (response.data.length > 0) {
-        const firstUserId = response.data[0].user.id;
-        setActiveUser(firstUserId);
-        setActiveTab(response.data[0]?.alias || null);
-      }
-    } catch (error) {
-      console.error("Error fetching employment details:", error);
-    }
-  };
-
-  // Fetch data on component mount
-  useEffect(() => {
-    fetchEmploymentDetails();
-  }, []);
-
   // Group employment data by user ID
-  const groupedData = groupByUserId(employmentData);
+  const groupedData = groupByUserId(employmentData || []);
+  if (isEmploymentDetailLoading) return <LoadingSpinner />;
 
   return (
     <Col xxl="12" className="px-5">
@@ -92,7 +81,7 @@ export const EmploymentTab = () => {
           </CardHeader>
 
           {/* Inner Navigation Tabs (Employment Records) */}
-          {activeUser && (
+          {activeUser && groupedData[activeUser] && (
             <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-3 pt-3 pb-0">
               <Nav tabs className="border-tab mb-0">
                 {groupedData[activeUser].map((employment) => (
@@ -114,11 +103,13 @@ export const EmploymentTab = () => {
           )}
 
           {/* Tab Content */}
-          <EmploymentTabContent
-            activeTab={activeTab}
-            activeUser={activeUser}
-            groupedData={groupedData}
-          />
+          {activeTab && activeUser && (
+            <EmploymentTabContent
+              activeTab={activeTab}
+              activeUser={activeUser}
+              groupedData={groupedData}
+            />
+          )}
         </CardBody>
       </Card>
     </Col>
