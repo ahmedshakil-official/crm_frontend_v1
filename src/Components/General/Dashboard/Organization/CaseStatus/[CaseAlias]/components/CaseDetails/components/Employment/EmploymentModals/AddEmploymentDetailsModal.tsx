@@ -105,19 +105,50 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
               <Input
                 type="select"
                 id="employmentStatus"
-                value={formValues.employment_status}
+                value={formValues?.employment_status || ""}
                 onChange={(e) =>
                   handleInputChange("employment_status", e.target.value)
                 }
+                className={
+                  formValues?.employment_status === "EMPLOYED"
+                    ? "text-info"
+                    : formValues?.employment_status === "SELF_EMPLOYED"
+                    ? "text-warning"
+                    : formValues?.employment_status === "RETIRED"
+                    ? "text-primary"
+                    : formValues?.employment_status === "OTHER"
+                    ? "text-secondary"
+                    : formValues?.employment_status === "UNEMPLOYED"
+                    ? "text-dark"
+                    : formValues?.employment_status === "HOUSEPERSON"
+                    ? "text-secondary"
+                    : formValues?.employment_status === "CONTRACTOR"
+                    ? "text-danger"
+                    : "text-secondary" // Default fallback
+                }
               >
                 <option value="">Select...</option>
-                <option value="EMPLOYED">Employed</option>
-                <option value="SELF_EMPLOYED">Self Employed</option>
-                <option value="RETIRED">Retired</option>
-                <option value="OTHER">Other</option>
-                <option value="UNEMPLOYED">Unemployed</option>
-                <option value="HOUSEPERSON">Houseperson</option>
-                <option value="CONTRACTOR">Contractor</option>
+                <option className="text-info" value="EMPLOYED">
+                  Employed
+                </option>
+                <option className="text-warning" value="SELF_EMPLOYED">
+                  Self Employed
+                </option>
+                <option className="text-primary" value="RETIRED">
+                  Retired
+                </option>
+                <option className="text-secondary" value="OTHER">
+                  Other
+                </option>
+                <option className="text-dark" value="UNEMPLOYED">
+                  Unemployed
+                </option>
+                <option className="text-secondary" value="HOUSEPERSON">
+                  Houseperson
+                </option>
+                <option className="text-danger" value="CONTRACTOR">
+                  Contractor
+                </option>
               </Input>
             </FormGroup>
             <FormGroup>

@@ -2,12 +2,9 @@ import { Spinner } from "reactstrap";
 
 const LoadingSpinner = () => {
   return (
-    <Spinner
-      className="d-flex justify-content-center align-items-center"
-      color="primary"
-    >
-      Loading...
-    </Spinner>
+    <div className="d-flex h-100 justify-content-center align-items-center">
+      <Spinner color="primary">Loading...</Spinner>
+    </div>
   );
 };
 
