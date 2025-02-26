@@ -23,6 +23,7 @@ export const baseApi = createApi({
     "ApplicantsDetails",
     "Dependants",
     "CompanyDetails",
+    "EmploymentDetails",
   ],
   endpoints: () => ({}),
 });
