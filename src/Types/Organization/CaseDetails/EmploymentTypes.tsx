@@ -30,6 +30,7 @@ export interface EmploymentDetailsProps {
   net_annual_income: number | null;
   is_probationary_period: boolean;
   is_income_in_foreign_currency: boolean;
+  further_details: number | null;
   bonus: number | null;
   is_bonus_guaranteed: boolean;
   bonus_frequency: string | null;
@@ -58,6 +59,9 @@ export interface EmploymentDetailsProps {
   dividends: number | null;
   turnover: number | null;
   income_source: string | null;
+  other_income: string | null;
+  other_income_source: string | null;
+  other_income_start_date: Date | null;
 }
 
 export interface EmploymentTabContentProps {

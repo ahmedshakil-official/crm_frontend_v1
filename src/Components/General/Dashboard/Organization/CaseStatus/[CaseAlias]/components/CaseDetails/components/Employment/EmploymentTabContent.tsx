@@ -501,6 +501,28 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 </Label>
               </FormGroup>
             </Col>
+            <Col md={6}>
+              {formValues?.is_income_in_foreign_currency && (
+                <FormGroup>
+                  <Label for="further_details" className="text-info">
+                    Further Details*
+                  </Label>
+                  <Input
+                    type="textarea"
+                    id="further_details"
+                    className="border-info"
+                    value={formValues?.further_details || ""}
+                    onChange={(e) =>
+                      handleInputChange("further_details", e.target.value)
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-danger d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              )}
+            </Col>
           </Row>
           <Row className="d-flex justify-content-between">
             <Col md={4}>
@@ -880,7 +902,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </FormGroup>
             </Col>
           </Row>
-          <Row className="d-flex justify-content-between">
+          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="business_country" className="text-warning">
@@ -897,12 +919,11 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 />
               </FormGroup>
             </Col>
+          </Row>
+          <Row>
             <Col md={6}>
-              <FormGroup
-                check
-                className="d-flex justify-content-center align-content-center"
-              >
-                <Label check className="text-warning">
+              <FormGroup check>
+                <Label check>
                   <Input
                     type="checkbox"
                     name="is_income_in_foreign_currency"
@@ -922,6 +943,28 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   Is any income paid in a foreign currency?
                 </Label>
               </FormGroup>
+            </Col>
+            <Col md={6}>
+              {formValues?.is_income_in_foreign_currency && (
+                <FormGroup>
+                  <Label for="further_details" className="text-warning">
+                    Further Details*
+                  </Label>
+                  <Input
+                    type="textarea"
+                    id="further_details"
+                    className="border-warning"
+                    value={formValues?.further_details || ""}
+                    onChange={(e) =>
+                      handleInputChange("further_details", e.target.value)
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-danger d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              )}
             </Col>
           </Row>
           <Row>
@@ -1155,6 +1198,28 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 </Label>
               </FormGroup>
             </Col>
+            <Col md={6}>
+              {formValues?.is_income_in_foreign_currency && (
+                <FormGroup>
+                  <Label for="further_details" className="text-primary">
+                    Further Details*
+                  </Label>
+                  <Input
+                    type="textarea"
+                    id="further_details"
+                    className="border-primary"
+                    value={formValues?.further_details || ""}
+                    onChange={(e) =>
+                      handleInputChange("further_details", e.target.value)
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-danger d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              )}
+            </Col>
           </Row>
           <Row>
             <Col md={6}>
@@ -1202,15 +1267,15 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
         <>
           <Row>
             <Col md={6}>
-            <FormGroup check>
+              <FormGroup check>
                 <Label check>
                   <Input
                     type="checkbox"
                     name="foreignCurrency"
                     className={
                       formValues?.is_income_in_foreign_currency
-                        ? "bg-primary border-primary"
-                        : "border-primary"
+                        ? "bg-secondary border-secondary"
+                        : "border-secondary"
                     }
                     checked={formValues?.is_income_in_foreign_currency || false}
                     onChange={(e) =>
@@ -1222,12 +1287,80 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   />
                   Is any income paid in a foreign currency?
                 </Label>
-              </FormGroup></Col>
-            <Col md={6}></Col>
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              {formValues?.is_income_in_foreign_currency && (
+                <FormGroup>
+                  <Label for="further_details" className="text-secondary">
+                    Further Details*
+                  </Label>
+                  <Input
+                    type="textarea"
+                    id="further_details"
+                    className="border-secondary"
+                    value={formValues?.further_details || ""}
+                    onChange={(e) =>
+                      handleInputChange("further_details", e.target.value)
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-info d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              )}
+            </Col>
           </Row>
           <Row>
-            <Col md={6}></Col>
-            <Col md={6}></Col>
+            <Col md={4}>
+              <FormGroup>
+                <Label for="other_income" className="text-secondary">
+                  Other Income
+                </Label>
+                <Input
+                  type="text"
+                  id="other_income"
+                  className="border-secondary"
+                  value={formValues?.other_income || ""}
+                  onChange={(e) =>
+                    handleInputChange("other_income", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Label for="other_income_source" className="text-secondary">
+                  Other Income
+                </Label>
+                <Input
+                  type="text"
+                  id="other_income_source"
+                  className="border-secondary"
+                  value={formValues?.other_income_source || ""}
+                  onChange={(e) =>
+                    handleInputChange("other_income_source", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Label for="other_income_start_date" className="text-secondary">
+                  Other income start date
+                </Label>
+                <Input
+                  type="date"
+                  id="other_income_start_date"
+                  className="border-secondary"
+                  value={formValues?.other_income_start_date || 0}
+                  onChange={(e) =>
+                    handleInputChange("other_income_start_date", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
           </Row>
         </>
       )}
