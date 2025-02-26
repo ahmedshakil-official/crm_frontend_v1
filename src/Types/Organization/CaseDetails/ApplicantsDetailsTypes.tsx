@@ -76,6 +76,19 @@ export interface ApplicantDependantsViewModalProps {
   dateOfBirth?: string;
   applicantAlias?: any;
 }
+export interface AddDependantFormModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  case_alias: string;
+  applicantDetails_alias: string;
+}
+
+export interface AddCompanyDetailsFormModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  case_alias: string;
+  applicantDetails_alias: string;
+}
 
 export interface ApplicantCompanyProps {
   company_name: string;
