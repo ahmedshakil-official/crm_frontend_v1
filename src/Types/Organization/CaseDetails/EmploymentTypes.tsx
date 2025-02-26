@@ -20,6 +20,7 @@ export interface EmploymentDetailsProps {
   employer_postcode: string | null;
   employer_house_name_or_number: string | null;
   employer_address_line_1: string | null;
+  employer_address_line_2: string | null;
   employer_city: string | null;
   employer_county: string | null;
   employer_country: string | null;
