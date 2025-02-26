@@ -10,6 +10,7 @@ import {
   Button,
   CardBody,
   Col,
+  FormFeedback,
   FormGroup,
   Input,
   Label,
@@ -176,7 +177,11 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   onChange={(e) =>
                     handleInputChange("occupation", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-danger d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -720,7 +725,11 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   onChange={(e) =>
                     handleInputChange("occupation", e.target.value)
                   }
+                  required
                 />
+                <FormFeedback className="text-danger d-block">
+                  This field is required
+                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -740,31 +749,381 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </FormGroup>
             </Col>
           </Row>
-          <Row></Row>
+          <Row>
+            <Col md={6}>
+              <Label for="employmentTime" className="text-warning">
+                Employment Time
+              </Label>
+              <Row>
+                <Col md={6}>
+                  <FormGroup>
+                    <Input
+                      type="number"
+                      id="employment_time_year"
+                      className="border-warning"
+                      placeholder="Years"
+                      value={formValues?.employment_time_year || 0}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "employment_time_year",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Input
+                      type="number"
+                      id="employment_time_month"
+                      className="border-warning"
+                      placeholder="Months"
+                      value={formValues?.employment_time_month || 0}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "employment_time_month",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="business_telephone" className="text-warning">
+                  Business Telephone
+                </Label>
+                <Input
+                  type="text"
+                  id="business_telephone"
+                  className="border-warning"
+                  value={formValues?.business_telephone || ""}
+                  onChange={(e) =>
+                    handleInputChange("business_telephone", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="business_address_line_1" className="text-warning">
+                  Business Address Line 1
+                </Label>
+                <Input
+                  type="text"
+                  id="business_address_line_1"
+                  className="border-warning"
+                  value={formValues?.business_address_line_1 || ""}
+                  onChange={(e) =>
+                    handleInputChange("business_address_line_1", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="business_address_line_2" className="text-warning">
+                  Business Address Line 2
+                </Label>
+                <Input
+                  type="text"
+                  id="business_address_line_2"
+                  className="border-warning"
+                  value={formValues?.business_address_line_2 || ""}
+                  onChange={(e) =>
+                    handleInputChange("business_address_line_2", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="business_city" className="text-warning">
+                  Business City
+                </Label>
+                <Input
+                  type="text"
+                  id="business_city"
+                  className="border-warning"
+                  value={formValues?.business_city || ""}
+                  onChange={(e) =>
+                    handleInputChange("business_city", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="business_county" className="text-warning">
+                  Business County
+                </Label>
+                <Input
+                  type="text"
+                  id="business_county"
+                  className="border-warning"
+                  value={formValues?.business_county || ""}
+                  onChange={(e) =>
+                    handleInputChange("business_county", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row className="d-flex justify-content-between">
+            <Col md={6}>
+              <FormGroup>
+                <Label for="business_country" className="text-warning">
+                  Business Country
+                </Label>
+                <Input
+                  type="text"
+                  id="business_country"
+                  className="border-warning"
+                  value={formValues?.business_country || ""}
+                  onChange={(e) =>
+                    handleInputChange("business_country", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup
+                check
+                className="d-flex justify-content-center align-content-center"
+              >
+                <Label check className="text-warning">
+                  <Input
+                    type="checkbox"
+                    name="is_income_in_foreign_currency"
+                    className={
+                      formValues?.is_income_in_foreign_currency
+                        ? "bg-warning border-warning"
+                        : "border-warning"
+                    }
+                    checked={formValues?.is_income_in_foreign_currency || false}
+                    onChange={(e) =>
+                      setFormValues((prevValues) => ({
+                        ...prevValues!,
+                        is_income_in_foreign_currency: e.target.checked,
+                      }))
+                    }
+                  />
+                  Is any income paid in a foreign currency?
+                </Label>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="job_title" className="text-warning">
+                  Job Title
+                </Label>
+                <Input
+                  type="text"
+                  id="job_title"
+                  className="border-warning"
+                  value={formValues?.job_title || ""}
+                  onChange={(e) =>
+                    handleInputChange("job_title", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="business_name" className="text-warning">
+                  Business Name
+                </Label>
+                <Input
+                  type="text"
+                  id="business_name"
+                  className="border-warning"
+                  value={formValues?.business_name || ""}
+                  onChange={(e) =>
+                    handleInputChange("business_name", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="company_type" className="text-warning">
+                  Company Type
+                </Label>
+                <Input
+                  type="select"
+                  id="company_type"
+                  className="border-warning"
+                  value={formValues?.company_type || ""}
+                  onChange={(e) =>
+                    handleInputChange("company_type", e.target.value)
+                  }
+                >
+                  <option value="">Select...</option>
+                  <option value="SOLE_TRADER">Sole Trader</option>
+                  <option value="LIMITED_COMPANY">Limited Company</option>
+                  <option value="PARTNERSHIP">Partnership</option>
+                  <option value="LLP">LLP</option>
+                  <option value="INDIVIDUAL">Individual</option>
+                </Input>
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label
+                  for="percentage_of_business_owned"
+                  className="text-warning"
+                >
+                  Percentage Of Business Owned(%)
+                </Label>
+                <Input
+                  type="text"
+                  id="percentage_of_business_owned"
+                  className="border-warning"
+                  value={formValues?.percentage_of_business_owned || ""}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "percentage_of_business_owned",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup check>
+                <Label check className="text-warning">
+                  <Input
+                    type="checkbox"
+                    name="is_accounts_available"
+                    className={
+                      formValues?.is_accounts_available
+                        ? "bg-warning border-warning"
+                        : "border-warning"
+                    }
+                    checked={formValues?.is_accounts_available || false}
+                    onChange={(e) =>
+                      setFormValues((prevValues) => ({
+                        ...prevValues!,
+                        is_accounts_available: e.target.checked,
+                      }))
+                    }
+                  />
+                  Accounts Available?
+                </Label>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="accountant_name" className="text-warning">
+                  Accountant Name
+                </Label>
+                <Input
+                  type="text"
+                  id="accountant_name"
+                  className="border-warning"
+                  value={formValues?.accountant_name || ""}
+                  onChange={(e) =>
+                    handleInputChange("accountant_name", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="accountant_qualifications" className="text-warning">
+                  Accountant Qualifications
+                </Label>
+                <Input
+                  type="text"
+                  id="accountant_qualifications"
+                  className="border-warning"
+                  value={formValues?.accountant_qualifications || ""}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "accountant_qualifications",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="salary" className="text-warning">
+                  Salary*
+                </Label>
+                <Input
+                  type="number"
+                  id="salary"
+                  className="border-warning"
+                  value={formValues?.salary || 0}
+                  onChange={(e) => handleInputChange("salary", e.target.value)}
+                  required
+                />
+                <FormFeedback className="text-danger d-block">
+                  This field is required
+                </FormFeedback>
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="dividends" className="text-warning">
+                  Dividends*
+                </Label>
+                <Input
+                  type="number"
+                  id="dividends"
+                  className="border-warning"
+                  value={formValues?.dividends || 0}
+                  onChange={(e) =>
+                    handleInputChange("dividends", e.target.value)
+                  }
+                  required
+                />
+                <FormFeedback className="text-danger d-block">
+                  This field is required
+                </FormFeedback>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="turnover" className="text-warning">
+                  turnover
+                </Label>
+                <Input
+                  type="number"
+                  id="turnover"
+                  className="border-warning"
+                  value={formValues?.turnover || 0}
+                  onChange={(e) =>
+                    handleInputChange("turnover", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          </Row>
         </>
       )}
-
-      {/* 
-      <FormGroup>
-        <Label for="employerAddressLine2">Employer's Address Line 1</Label>
-        <Input
-          type="text"
-          id="employerAddressLine2"
-          value={formValues?.employer_address_line_1 || ""}
-          onChange={(e) =>
-            handleInputChange("employer_address_line_1", e.target.value)
-          }
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="employerCounty">Employer's County</Label>
-        <Input
-          type="text"
-          id="employerCounty"
-          value={formValues?.employer_county || ""}
-          onChange={(e) => handleInputChange("employer_county", e.target.value)}
-        />
-      </FormGroup> */}
+      {/* IF active employment_status is SELF_EMPLOYED, show the following fields: End */}
 
       <Row>
         <Col className="d-flex justify-content-between">

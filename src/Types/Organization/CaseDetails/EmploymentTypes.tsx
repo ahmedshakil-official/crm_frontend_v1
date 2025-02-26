@@ -39,6 +39,24 @@ export interface EmploymentDetailsProps {
   allowance: number | null;
   is_allowance_guaranteed: boolean;
   allowance_frequency: string | null;
+  employment_time_year: number | null;
+  employment_time_month: number | null;
+  business_telephone: string | null;
+  business_address_line_1: string | null;
+  business_address_line_2: string | null;
+  business_city: string | null;
+  business_county: string | null;
+  business_country: string | null;
+  job_title: string | null;
+  business_name: string | null;
+  company_type: string | null;
+  percentage_of_business_owned: string | null;
+  is_accounts_available: boolean;
+  accountant_name: string | null;
+  accountant_qualifications: string | null;
+  salary: number | null;
+  dividends: number | null;
+  turnover: number | null;
 }
 
 export interface EmploymentTabContentProps {
