@@ -91,7 +91,7 @@ export const EmploymentTab = () => {
                         activeTab === employment.alias ? "active" : ""
                       }`}
                       onClick={() => setActiveTab(employment.alias || null)}
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", fontSize: "0.7rem" }}
                     >
                       {employment.employment_status}(
                       {employment.alias.slice(0, 8)})
