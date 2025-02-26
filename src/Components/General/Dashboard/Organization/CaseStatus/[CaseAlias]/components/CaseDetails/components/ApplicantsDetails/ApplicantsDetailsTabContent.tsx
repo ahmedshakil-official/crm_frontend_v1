@@ -15,9 +15,6 @@ import {
   FormGroup,
   Input,
   Label,
-  Modal,
-  ModalBody,
-  ModalHeader,
   Row,
 } from "reactstrap";
 import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/AddApplicantCompanyInfoModal";
@@ -946,32 +943,20 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       </Row>
 
       {/* Company Applicant Modal */}
-      <Modal isOpen={isCompanyModalOpen} size="xl">
-        <ModalHeader toggle={() => setIsCompanyModalOpen(false)}>
-          <p className=" fs-2 text-primary fw-bold">Company Applicant</p>
-        </ModalHeader>
-        <ModalBody>
-          <AddCompanyDetailsFormModal
-            case_alias={casealias as string}
-            applicantDetails_alias={formValues.alias as string}
-            setIsCompanyModalOpen={setIsCompanyModalOpen}
-          />
-        </ModalBody>
-      </Modal>
+      <AddCompanyDetailsFormModal
+        isOpen={isCompanyModalOpen}
+        toggle={() => setIsCompanyModalOpen(false)}
+        case_alias={casealias as string}
+        applicantDetails_alias={formValues.alias as string}
+      />
 
       {/* Dependants of Applicant Modal */}
-      <Modal isOpen={isDependantsModalOpen}>
-        <ModalHeader toggle={() => setIsDependantsModalOpen(false)}>
-          <p className=" fs-3 text-primary fw-bold">Add Dependants</p>
-        </ModalHeader>
-        <ModalBody>
-          <AddDependantFormModal
-            case_alias={casealias as string}
-            applicantDetails_alias={formValues.alias as string}
-            setIsDependantsModalOpen={setIsDependantsModalOpen}
-          />
-        </ModalBody>
-      </Modal>
+      <AddDependantFormModal
+        isOpen={isDependantsModalOpen}
+        toggle={() => setIsDependantsModalOpen(false)}
+        case_alias={casealias as string}
+        applicantDetails_alias={formValues.alias as string}
+      />
       {/* Modal Component */}
       <ApplicantDependantsViewModal
         isOpen={isDependantsViewModalOpen}
