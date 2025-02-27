@@ -13,7 +13,7 @@ import {
   FormText,
   FormFeedback,
 } from "reactstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 import { toast } from "react-toastify";
@@ -39,6 +39,8 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
     null
   );
 
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const handleInputChange = (
     name: string,
     value: string | number | boolean | string[] | null
@@ -56,7 +58,49 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
     }
   };
 
+  const validateForm = (): boolean => {
+      if (!formValues) return false;
+  
+      switch (formValues.employment_status) {
+        case "EMPLOYED":
+          return !!(
+            formValues.employment_type &&
+            formValues.occupation &&
+            formValues.employer_name &&
+            formValues.employment_commenced &&
+            formValues.gross_annual_income !== undefined
+          );
+        case "SELF_EMPLOYED":
+          return !!(
+            formValues.occupation &&
+            formValues.salary !== undefined &&
+            formValues.dividends !== undefined
+          );
+        case "RETIRED":
+          return formValues.gross_annual_income !== undefined;
+        case "OTHER":
+          return formValues.other_income !== undefined;
+        case "CONTRACTOR":
+          return !!(
+            formValues.occupation &&
+            formValues.employer_name &&
+            formValues.current_contract_start &&
+            formValues.current_contract_end &&
+            formValues.time_contracting &&
+            formValues.day_rate !== undefined
+          );
+        default:
+          return false;
+      }
+    };
+
+  useEffect(() => {
+    setIsFormValid(validateForm());
+  }, [formValues]);
+
   const handleSubmit = async () => {
+    if (!isFormValid) return;
+
     const res = await addEmploymentDetails({
       case_alias: casealias,
       employer_id: employmentData?.user?.id,
@@ -1387,6 +1431,371 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
           </>
         )}
         {/* IF active employment_status is OTHER, show the following fields: END */}
+        {/* IF active employment_status is CONTRACTOR, show the following fields: START */}
+        {formValues?.employment_status === "CONTRACTOR" && (
+          <>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="employerPostcode" className="text-danger">
+                    Employer's Postcode
+                  </Label>
+                  <Input
+                    type="text"
+                    id="employerPostcode"
+                    className="border-danger"
+                    value={formValues?.employer_postcode || ""}
+                    onChange={(e) =>
+                      handleInputChange("employer_postcode", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="employerHouseNumber" className="text-danger">
+                    Employer's House Name or Number
+                  </Label>
+                  <Input
+                    type="text"
+                    id="employerHouseNumber"
+                    className="border-danger"
+                    value={formValues?.employer_house_name_or_number || ""}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "employer_house_name_or_number",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="employerAddressLine1" className="text-danger">
+                    Employer's Address Line 1
+                  </Label>
+                  <Input
+                    type="text"
+                    id="employerAddressLine1"
+                    className="border-danger"
+                    value={formValues?.employer_address_line_1 || ""}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "employer_address_line_1",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="employerAddressLine2" className="text-danger">
+                    Employer's Address Line 2
+                  </Label>
+                  <Input
+                    type="text"
+                    id="employerAddressLine2"
+                    className="border-danger"
+                    value={formValues?.employer_address_line_2 || ""}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "employer_address_line_2",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="employerCity" className="text-danger">
+                    Employer's City
+                  </Label>
+                  <Input
+                    type="text"
+                    id="employerCity"
+                    className="border-danger"
+                    value={formValues?.employer_city || ""}
+                    onChange={(e) =>
+                      handleInputChange("employer_city", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="employerCounty" className="text-danger">
+                    Employer's County
+                  </Label>
+                  <Input
+                    type="text"
+                    id="employerCounty"
+                    className="border-danger"
+                    value={formValues?.employer_county || ""}
+                    onChange={(e) =>
+                      handleInputChange("employer_county", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="employerCountry" className="text-danger">
+                    Employer's Country
+                  </Label>
+                  <Input
+                    type="text"
+                    id="employerCountry"
+                    className="border-danger"
+                    value={formValues?.employer_country || ""}
+                    onChange={(e) =>
+                      handleInputChange("employer_country", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup check>
+                  <Label check>
+                    <Input
+                      type="checkbox"
+                      name="is_income_in_foreign_currency"
+                      className={
+                        formValues?.is_income_in_foreign_currency
+                          ? "bg-danger border-danger"
+                          : "border-danger"
+                      }
+                      checked={
+                        formValues?.is_income_in_foreign_currency || false
+                      }
+                      onChange={(e) =>
+                        setFormValues((prevValues) => ({
+                          ...prevValues!,
+                          is_income_in_foreign_currency: e.target.checked,
+                        }))
+                      }
+                    />
+                    Is any income paid in a foreign currency?
+                  </Label>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                {formValues?.is_income_in_foreign_currency && (
+                  <FormGroup>
+                    <Label for="further_details" className="text-danger">
+                      Further Details*
+                    </Label>
+                    <Input
+                      type="textarea"
+                      id="further_details"
+                      className="border-danger"
+                      value={formValues?.further_details || ""}
+                      onChange={(e) =>
+                        handleInputChange("further_details", e.target.value)
+                      }
+                      required
+                    />
+                    <FormFeedback className="text-info d-block">
+                      This field is required
+                    </FormFeedback>
+                  </FormGroup>
+                )}
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="occupation" className="text-danger">
+                    Occupation*
+                  </Label>
+                  <Input
+                    type="text"
+                    id="occupation"
+                    className="border-danger"
+                    value={formValues?.occupation || ""}
+                    onChange={(e) =>
+                      handleInputChange("occupation", e.target.value)
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-info d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="contractor_industry" className="text-danger">
+                    Contractor Industry
+                  </Label>
+                  <Input
+                    type="text"
+                    id="contractor_industry"
+                    className="border-danger"
+                    value={formValues?.contractor_industry || ""}
+                    onChange={(e) =>
+                      handleInputChange("contractor_industry", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="employerName" className="text-danger">
+                    Employer Name*
+                  </Label>
+                  <Input
+                    type="text"
+                    id="employerName"
+                    className="border-danger"
+                    value={formValues?.employer_name || ""}
+                    onChange={(e) =>
+                      handleInputChange("employer_name", e.target.value)
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-info d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="employerTelephone" className="text-danger">
+                    Employer's Telephone
+                  </Label>
+                  <Input
+                    type="text"
+                    id="employerTelephone"
+                    className="border-danger"
+                    value={formValues?.employer_telephone || ""}
+                    onChange={(e) =>
+                      handleInputChange("employer_telephone", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="current_contract_start" className="text-danger">
+                    Current Contract Start*
+                  </Label>
+                  <Input
+                    type="date"
+                    id="current_contract_start"
+                    className="border-danger"
+                    value={formValues?.current_contract_start || 0}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "current_contract_start",
+                        e.target.value
+                      )
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-info d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="current_contract_end" className="text-danger">
+                    Current Contract End*
+                  </Label>
+                  <Input
+                    type="date"
+                    id="current_contract_end"
+                    className="border-danger"
+                    value={formValues?.current_contract_end || 0}
+                    onChange={(e) =>
+                      handleInputChange("current_contract_end", e.target.value)
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-info d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="time_contracting" className="text-danger">
+                    Time contracting*
+                  </Label>
+                  <Input
+                    type="text"
+                    id="time_contracting"
+                    className="border-danger"
+                    value={formValues?.time_contracting || ""}
+                    onChange={(e) =>
+                      handleInputChange("time_contracting", e.target.value)
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-info d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="day_rate" className="text-danger">
+                    Day Rate*
+                  </Label>
+                  <Input
+                    type="number"
+                    id="day_rate"
+                    className="border-danger"
+                    value={formValues?.day_rate || 0}
+                    onChange={(e) =>
+                      handleInputChange("day_rate", e.target.value)
+                    }
+                    required
+                  />
+                  <FormFeedback className="text-info d-block">
+                    This field is required
+                  </FormFeedback>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="hourly_rate" className="text-danger">
+                    Hourly Rate
+                  </Label>
+                  <Input
+                    type="number"
+                    id="hourly_rate"
+                    className="border-danger"
+                    value={formValues?.hourly_rate || 0}
+                    onChange={(e) =>
+                      handleInputChange("hourly_rate", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+          </>
+        )}
+        {/* IF active employment_status is CONTRACTOR, show the following fields: END */}
       </ModalBody>
 
       {/* Modal Footer */}
@@ -1394,7 +1803,11 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
         <Button color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button color="primary" onClick={handleSubmit}>
+        <Button
+          color="primary"
+          onClick={handleSubmit}
+          disabled={!isFormValid || isLoading}
+        >
           {isLoading ? "Submitting..." : "Submit"}
         </Button>
       </ModalFooter>
