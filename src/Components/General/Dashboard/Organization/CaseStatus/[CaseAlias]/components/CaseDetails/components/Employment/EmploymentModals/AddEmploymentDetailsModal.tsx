@@ -59,40 +59,40 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
   };
 
   const validateForm = (): boolean => {
-      if (!formValues) return false;
-  
-      switch (formValues.employment_status) {
-        case "EMPLOYED":
-          return !!(
-            formValues.employment_type &&
-            formValues.occupation &&
-            formValues.employer_name &&
-            formValues.employment_commenced &&
-            formValues.gross_annual_income !== undefined
-          );
-        case "SELF_EMPLOYED":
-          return !!(
-            formValues.occupation &&
-            formValues.salary !== undefined &&
-            formValues.dividends !== undefined
-          );
-        case "RETIRED":
-          return formValues.gross_annual_income !== undefined;
-        case "OTHER":
-          return formValues.other_income !== undefined;
-        case "CONTRACTOR":
-          return !!(
-            formValues.occupation &&
-            formValues.employer_name &&
-            formValues.current_contract_start &&
-            formValues.current_contract_end &&
-            formValues.time_contracting &&
-            formValues.day_rate !== undefined
-          );
-        default:
-          return false;
-      }
-    };
+    if (!formValues) return false;
+
+    switch (formValues.employment_status) {
+      case "EMPLOYED":
+        return !!(
+          formValues.employment_type &&
+          formValues.occupation &&
+          formValues.employer_name &&
+          formValues.employment_commenced &&
+          formValues.gross_annual_income !== undefined
+        );
+      case "SELF_EMPLOYED":
+        return !!(
+          formValues.occupation &&
+          formValues.salary !== undefined &&
+          formValues.dividends !== undefined
+        );
+      case "RETIRED":
+        return formValues.gross_annual_income !== undefined;
+      case "OTHER":
+        return formValues.other_income !== undefined;
+      case "CONTRACTOR":
+        return !!(
+          formValues.occupation &&
+          formValues.employer_name &&
+          formValues.current_contract_start &&
+          formValues.current_contract_end &&
+          formValues.time_contracting &&
+          formValues.day_rate !== undefined
+        );
+      default:
+        return false;
+    }
+  };
 
   useEffect(() => {
     setIsFormValid(validateForm());
@@ -108,6 +108,24 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
     });
     toggle(); // Close the modal
     toast.success("Employment details added successfully!");
+  };
+
+  // Helper function to determine the color based on employment status
+  const getStatusColor = (status: any) => {
+    switch (status) {
+      case "EMPLOYED":
+        return "info";
+      case "SELF_EMPLOYED":
+        return "warning";
+      case "RETIRED":
+        return "primary";
+      case "OTHER":
+        return "secondary";
+      case "CONTRACTOR":
+        return "dark";
+      default:
+        return "info";
+    }
   };
 
   return (
@@ -141,11 +159,11 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   : formValues?.employment_status === "OTHER"
                   ? "text-secondary border-secondary"
                   : formValues?.employment_status === "UNEMPLOYED"
-                  ? "text-dark border-dark"
+                  ? "text-danger border-danger"
                   : formValues?.employment_status === "HOUSEPERSON"
                   ? "text-secondary border-secondary"
                   : formValues?.employment_status === "CONTRACTOR"
-                  ? "text-danger border-danger"
+                  ? "text-dark border-dark"
                   : "text-dark border-dark" // Default fallback
               }
             >
@@ -162,145 +180,238 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
               <option className="text-secondary" value="OTHER">
                 Other
               </option>
-              <option className="text-dark" value="UNEMPLOYED">
+              <option className="text-danger" value="UNEMPLOYED">
                 Unemployed
               </option>
               <option className="text-secondary" value="HOUSEPERSON">
                 Houseperson
               </option>
-              <option className="text-danger" value="CONTRACTOR">
+              <option className="text-dark" value="CONTRACTOR">
                 Contractor
               </option>
             </Input>
           </FormGroup>
         </Row>
-        {/* IF active employment_status is EMPLOYED, show the following fields: start */}
-        {formValues?.employment_status === "EMPLOYED" && (
-          <>
-            <Row>
+        <Row>
+          {formValues?.employment_status === "EMPLOYED" && (
+            <Col md={6}>
+              <FormGroup>
+                <Label for="employmentType" className="text-info">
+                  Employment Type
+                </Label>
+                <Input
+                  type="select"
+                  id="employmentType"
+                  className="border-info"
+                  value={formValues?.employment_type || ""}
+                  onChange={(e) =>
+                    handleInputChange("employment_type", e.target.value)
+                  }
+                >
+                  <option value="">Select...</option>
+                  <option value="PERMANENT">Permanent</option>
+                  <option value="CONTRACT">Contract</option>
+                  <option value="TEMPORARY">Temporary</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          )}
+        </Row>
+        <Row>
+          {(formValues?.employment_status === "EMPLOYED" ||
+            formValues?.employment_status === "SELF_EMPLOYED" ||
+            formValues?.employment_status === "CONTRACTOR") && (
+            <Col md={6}>
+              <FormGroup>
+                <Label
+                  for="occupation"
+                  className={`text-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                >
+                  Occupation*
+                </Label>
+                <Input
+                  type="text"
+                  id="occupation"
+                  className={`border-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                  value={formValues?.occupation || ""}
+                  onChange={(e) =>
+                    handleInputChange("occupation", e.target.value)
+                  }
+                  required
+                />
+                <FormFeedback className="text-danger d-block">
+                  This field is required
+                </FormFeedback>
+              </FormGroup>
+            </Col>
+          )}
+          {(formValues?.employment_status === "EMPLOYED" ||
+            formValues?.employment_status === "SELF_EMPLOYED") && (
+            <Col md={6}>
+              <FormGroup>
+                <Label
+                  for="industry"
+                  className={`text-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                >
+                  Industry
+                </Label>
+                <Input
+                  type="text"
+                  id="industry"
+                  className={`border-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                  value={formValues?.industry || ""}
+                  onChange={(e) =>
+                    handleInputChange("industry", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          )}
+        </Row>
+        <Row>
+          {(formValues?.employment_status === "EMPLOYED" ||
+            formValues?.employment_status === "CONTRACTOR") && (
+            <Col md={6}>
+              <FormGroup>
+                <Label
+                  for="employerName"
+                  className={`text-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                >
+                  Employer Name*
+                </Label>
+                <Input
+                  type="text"
+                  id="employerName"
+                  className={`border-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                  value={formValues?.employer_name || ""}
+                  onChange={(e) =>
+                    handleInputChange("employer_name", e.target.value)
+                  }
+                  required
+                />
+                <FormFeedback className="text-danger d-block">
+                  This field is required
+                </FormFeedback>
+              </FormGroup>
+            </Col>
+          )}
+          {(formValues?.employment_status === "EMPLOYED" ||
+            formValues?.employment_status === "CONTRACTOR") && (
+            <Col md={6}>
+              <FormGroup>
+                <Label
+                  for="employerTelephone"
+                  className={`text-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                >
+                  Employer's Telephone
+                </Label>
+                <Input
+                  type="text"
+                  id="employerTelephone"
+                  className={`border-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                  value={formValues?.employer_telephone || ""}
+                  onChange={(e) =>
+                    handleInputChange("employer_telephone", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          )}
+        </Row>
+        <Row>
+          {formValues?.employment_status === "EMPLOYED" && (
+            <Col md={6}>
+              <FormGroup>
+                <Label
+                  for="employers_name_for_reference"
+                  className={`text-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                >
+                  Employer's Name for Reference
+                </Label>
+                <Input
+                  type="text"
+                  id="employers_name_for_reference"
+                  className={`border-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                  value={formValues?.employers_name_for_reference || ""}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "employers_name_for_reference",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </Col>
+          )}
+          {formValues?.employment_status === "EMPLOYED" && (
+            <Col md={6}>
+              <FormGroup>
+                <Label
+                  for="employerEmail"
+                  className={`text-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                >
+                  Employer's Email for Reference
+                </Label>
+                <Input
+                  type="email"
+                  id="employerEmail"
+                  className={`border-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                  value={formValues?.employer_email_for_reference || ""}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "employer_email_for_reference",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </Col>
+          )}
+        </Row>
+        <Row>
+          {(formValues?.employment_status === "EMPLOYED" ||
+            formValues?.employment_status === "CONTRACTOR") && (
+            <>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="employmentType" className="text-info">
-                    Employment Type
-                  </Label>
-                  <Input
-                    type="select"
-                    id="employmentType"
-                    className="border-info"
-                    value={formValues?.employment_type || ""}
-                    onChange={(e) =>
-                      handleInputChange("employment_type", e.target.value)
-                    }
+                  <Label
+                    for="employerPostcode"
+                    className={`text-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
                   >
-                    <option value="">Select...</option>
-                    <option value="PERMANENT">Permanent</option>
-                    <option value="CONTRACT">Contract</option>
-                    <option value="TEMPORARY">Temporary</option>
-                  </Input>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="occupation" className="text-info">
-                    Occupation*
-                  </Label>
-                  <Input
-                    type="text"
-                    id="occupation"
-                    className="border-info"
-                    value={formValues?.occupation || ""}
-                    onChange={(e) =>
-                      handleInputChange("occupation", e.target.value)
-                    }
-                    required
-                  />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerName" className="text-info">
-                    Employer Name*
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerName"
-                    className="border-info"
-                    value={formValues?.employer_name || ""}
-                    onChange={(e) =>
-                      handleInputChange("employer_name", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="industry" className="text-info">
-                    Industry
-                  </Label>
-                  <Input
-                    type="text"
-                    id="industry"
-                    className="border-info"
-                    value={formValues?.industry || ""}
-                    onChange={(e) =>
-                      handleInputChange("industry", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerTelephone" className="text-info">
-                    Employer's Telephone
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerTelephone"
-                    className="border-info"
-                    value={formValues?.employer_telephone || ""}
-                    onChange={(e) =>
-                      handleInputChange("employer_telephone", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerEmail" className="text-info">
-                    Employer's Email for Reference
-                  </Label>
-                  <Input
-                    type="email"
-                    id="employerEmail"
-                    className="border-info"
-                    value={formValues?.employer_email_for_reference || ""}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "employer_email_for_reference",
-                        e.target.value
-                      )
-                    }
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerPostcode" className="text-info">
                     Employer's Postcode
                   </Label>
                   <Input
                     type="text"
                     id="employerPostcode"
-                    className="border-info"
+                    className={`border-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
                     value={formValues?.employer_postcode || ""}
                     onChange={(e) =>
                       handleInputChange("employer_postcode", e.target.value)
@@ -310,13 +421,20 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="employerHouseNumber" className="text-info">
+                  <Label
+                    for="employerHouseNumber"
+                    className={`text-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
+                  >
                     Employer's House Name or Number
                   </Label>
                   <Input
                     type="text"
                     id="employerHouseNumber"
-                    className="border-info"
+                    className={`border-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
                     value={formValues?.employer_house_name_or_number || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -327,17 +445,29 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
+            </>
+          )}
+        </Row>
+        <Row>
+          {(formValues?.employment_status === "EMPLOYED" ||
+            formValues?.employment_status === "CONTRACTOR") && (
+            <>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="employerAddressLine1" className="text-info">
+                  <Label
+                    for="employerAddressLine1"
+                    className={`text-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
+                  >
                     Employer's Address Line 1
                   </Label>
                   <Input
                     type="text"
                     id="employerAddressLine1"
-                    className="border-info"
+                    className={`border-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
                     value={formValues?.employer_address_line_1 || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -350,13 +480,20 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="employerAddressLine1" className="text-info">
+                  <Label
+                    for="employerAddressLine2"
+                    className={`text-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
+                  >
                     Employer's Address Line 2
                   </Label>
                   <Input
                     type="text"
-                    id="employerAddressLine1"
-                    className="border-info"
+                    id="employerAddressLine2"
+                    className={`border-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
                     value={formValues?.employer_address_line_2 || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -367,17 +504,29 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
+            </>
+          )}
+        </Row>
+        <Row>
+          {(formValues?.employment_status === "EMPLOYED" ||
+            formValues?.employment_status === "CONTRACTOR") && (
+            <>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="employerCity" className="text-info">
+                  <Label
+                    for="employerCity"
+                    className={`text-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
+                  >
                     Employer's City
                   </Label>
                   <Input
                     type="text"
                     id="employerCity"
-                    className="border-info"
+                    className={`border-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
                     value={formValues?.employer_city || ""}
                     onChange={(e) =>
                       handleInputChange("employer_city", e.target.value)
@@ -385,15 +534,22 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="employerCounty" className="text-info">
+                  <Label
+                    for="employerCounty"
+                    className={`text-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
+                  >
                     Employer's County
                   </Label>
                   <Input
                     type="text"
                     id="employerCounty"
-                    className="border-info"
+                    className={`border-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
                     value={formValues?.employer_county || ""}
                     onChange={(e) =>
                       handleInputChange("employer_county", e.target.value)
@@ -401,17 +557,22 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="employerCountry" className="text-info">
+                  <Label
+                    for="employerCountry"
+                    className={`text-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
+                  >
                     Employer's Country
                   </Label>
                   <Input
                     type="text"
                     id="employerCountry"
-                    className="border-info"
+                    className={`border-${getStatusColor(
+                      formValues?.employment_status
+                    )}`}
                     value={formValues?.employer_country || ""}
                     onChange={(e) =>
                       handleInputChange("employer_country", e.target.value)
@@ -419,9 +580,12 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-              <Col md={6}></Col>
-            </Row>
-            <Row>
+            </>
+          )}
+        </Row>
+        <Row>
+          {formValues?.employment_status === "EMPLOYED" && (
+            <>
               <Col md={6}>
                 <FormGroup>
                   <Label for="employmentCommenced" className="text-info">
@@ -435,7 +599,11 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     onChange={(e) =>
                       handleInputChange("employment_commenced", e.target.value)
                     }
+                    required
                   />
+                  <FormFeedback className="text-danger d-block">
+                    This field is required
+                  </FormFeedback>
                 </FormGroup>
               </Col>
               <Col md={6}>
@@ -454,72 +622,117 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <p>Please enter previous employment details where applicable.</p>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="grossAnnualIncome" className="text-info">
-                    Gross Annual Income*
-                  </Label>
+            </>
+          )}
+        </Row>
+        {formValues?.employment_status === "EMPLOYED" && (
+          <Row>
+            <p>Please enter previous employment details where applicable.</p>
+          </Row>
+        )}
+        <Row>
+          {(formValues?.employment_status === "EMPLOYED" ||
+            formValues?.employment_status === "RETIRED") && (
+            <Col md={6}>
+              <FormGroup>
+                <Label
+                  for="grossAnnualIncome"
+                  className={`text-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                >
+                  Gross Annual Income*
+                </Label>
+                <Input
+                  type="number"
+                  id="grossAnnualIncome"
+                  className={`border-${getStatusColor(
+                    formValues?.employment_status
+                  )}`}
+                  value={formValues?.gross_annual_income || 0}
+                  onChange={(e) =>
+                    handleInputChange("gross_annual_income", e.target.value)
+                  }
+                  required
+                />
+                <FormFeedback className="text-danger d-block">
+                  This field is required
+                </FormFeedback>
+              </FormGroup>
+            </Col>
+          )}
+          {formValues?.employment_status === "EMPLOYED" && (
+            <Col md={6}>
+              <FormGroup>
+                <Label for="netAnnualIncome" className="text-info">
+                  Net Annual Income
+                </Label>
+                <Input
+                  type="number"
+                  id="netAnnualIncome"
+                  className="border-info"
+                  value={formValues?.net_annual_income || 0}
+                  onChange={(e) =>
+                    handleInputChange("net_annual_income", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          )}
+          {formValues?.employment_status === "RETIRED" && (
+            <Col md={6}>
+              <FormGroup>
+                <Label for="income_source" className="text-primary">
+                  Income Source
+                </Label>
+                <Input
+                  type="text"
+                  id="income_source"
+                  className="border-primary"
+                  value={formValues?.income_source || ""}
+                  onChange={(e) =>
+                    handleInputChange("income_source", e.target.value)
+                  }
+                />
+              </FormGroup>
+            </Col>
+          )}
+        </Row>
+        <Row>
+          {formValues?.employment_status === "EMPLOYED" && (
+            <Col md={6}>
+              <FormGroup check>
+                <Label check>
                   <Input
-                    type="number"
-                    id="grossAnnualIncome"
-                    className="border-info"
-                    value={formValues?.gross_annual_income || 0}
-                    onChange={(e) =>
-                      handleInputChange("gross_annual_income", e.target.value)
+                    type="checkbox"
+                    name="probationaryPeriod"
+                    className={
+                      formValues.is_probationary_period
+                        ? "bg-info border-info"
+                        : "border-info"
                     }
-                    required
-                  />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="netAnnualIncome" className="text-info">
-                    Net Annual Income
-                  </Label>
-                  <Input
-                    type="number"
-                    id="netAnnualIncome"
-                    className="border-info"
-                    value={formValues?.net_annual_income || 0}
+                    checked={formValues?.is_probationary_period || false}
                     onChange={(e) =>
-                      handleInputChange("net_annual_income", e.target.value)
+                      setFormValues((prevValues) => ({
+                        ...prevValues!,
+                        is_probationary_period: e.target.checked,
+                      }))
                     }
                   />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
+                  Are you on a probationary period?
+                </Label>
+              </FormGroup>
+            </Col>
+          )}
+        </Row>
+        <Row>
+          {(formValues?.employment_status === "EMPLOYED" ||
+            formValues?.employment_status === "SELF_EMPLOYED" ||
+            formValues?.employment_status === "RETIRED" ||
+            formValues?.employment_status === "OTHER" ||
+            formValues?.employment_status === "CONTRACTOR") && (
+            <>
               <Col md={6}>
-                {" "}
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      name="probationaryPeriod"
-                      className={
-                        formValues.is_probationary_period
-                          ? "bg-info border-info"
-                          : "border-info"
-                      }
-                      checked={formValues?.is_probationary_period || false}
-                      onChange={(e) =>
-                        setFormValues((prevValues) => ({
-                          ...prevValues!,
-                          is_probationary_period: e.target.checked,
-                        }))
-                      }
-                    />
-                    Are you on a probationary period?
-                  </Label>
-                </FormGroup>
                 <FormGroup check>
                   <Label check>
                     <Input
@@ -527,8 +740,14 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                       name="foreignCurrency"
                       className={
                         formValues?.is_income_in_foreign_currency
-                          ? "bg-info border-info"
-                          : "border-info"
+                          ? `bg-${getStatusColor(
+                              formValues?.employment_status
+                            )} border-${getStatusColor(
+                              formValues?.employment_status
+                            )}`
+                          : `border-${getStatusColor(
+                              formValues?.employment_status
+                            )}`
                       }
                       checked={
                         formValues?.is_income_in_foreign_currency || false
@@ -547,13 +766,20 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
               <Col md={6}>
                 {formValues?.is_income_in_foreign_currency && (
                   <FormGroup>
-                    <Label for="further_details" className="text-info">
+                    <Label
+                      for="further_details"
+                      className={`text-${getStatusColor(
+                        formValues?.employment_status
+                      )}`}
+                    >
                       Further Details*
                     </Label>
                     <Input
                       type="textarea"
                       id="further_details"
-                      className="border-info"
+                      className={`border-${getStatusColor(
+                        formValues?.employment_status
+                      )}`}
                       value={formValues?.further_details || ""}
                       onChange={(e) =>
                         handleInputChange("further_details", e.target.value)
@@ -566,7 +792,11 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   </FormGroup>
                 )}
               </Col>
-            </Row>
+            </>
+          )}
+        </Row>
+        {formValues?.employment_status === "EMPLOYED" && (
+          <>
             <Row className="d-flex justify-content-between">
               <Col md={4}>
                 <FormGroup>
@@ -776,49 +1006,9 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
             </Row>
           </>
         )}
-        {/* IF active employment_status is EMPLOYED, show the following fields: end */}
-        {/* IF active employment_status is SELF_EMPLOYED, show the following fields: start */}
-        {formValues?.employment_status === "SELF_EMPLOYED" && (
-          <>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="occupation" className="text-warning">
-                    Occupation*
-                  </Label>
-                  <Input
-                    type="text"
-                    id="occupation"
-                    className="border-warning"
-                    value={formValues?.occupation || ""}
-                    onChange={(e) =>
-                      handleInputChange("occupation", e.target.value)
-                    }
-                    required
-                  />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="industry" className="text-warning">
-                    Industry
-                  </Label>
-                  <Input
-                    type="text"
-                    id="industry"
-                    className="border-warning"
-                    value={formValues?.industry || ""}
-                    onChange={(e) =>
-                      handleInputChange("industry", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
+        <Row>
+          {formValues?.employment_status === "SELF_EMPLOYED" && (
+            <>
               <Col md={6}>
                 <Label for="employmentTime" className="text-warning">
                   Employment Time
@@ -876,8 +1066,12 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
+            </>
+          )}
+        </Row>
+        <Row>
+          {formValues?.employment_status === "SELF_EMPLOYED" && (
+            <>
               <Col md={6}>
                 <FormGroup>
                   <Label for="business_address_line_1" className="text-warning">
@@ -916,9 +1110,13 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
+            </>
+          )}
+        </Row>
+        <Row>
+          {formValues?.employment_status === "SELF_EMPLOYED" && (
+            <>
+              <Col md={4}>
                 <FormGroup>
                   <Label for="business_city" className="text-warning">
                     Business City
@@ -934,7 +1132,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
                   <Label for="business_county" className="text-warning">
                     Business County
@@ -950,9 +1148,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
                   <Label for="business_country" className="text-warning">
                     Business Country
@@ -968,57 +1164,13 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      name="is_income_in_foreign_currency"
-                      className={
-                        formValues?.is_income_in_foreign_currency
-                          ? "bg-warning border-warning"
-                          : "border-warning"
-                      }
-                      checked={
-                        formValues?.is_income_in_foreign_currency || false
-                      }
-                      onChange={(e) =>
-                        setFormValues((prevValues) => ({
-                          ...prevValues!,
-                          is_income_in_foreign_currency: e.target.checked,
-                        }))
-                      }
-                    />
-                    Is any income paid in a foreign currency?
-                  </Label>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                {formValues?.is_income_in_foreign_currency && (
-                  <FormGroup>
-                    <Label for="further_details" className="text-warning">
-                      Further Details*
-                    </Label>
-                    <Input
-                      type="textarea"
-                      id="further_details"
-                      className="border-warning"
-                      value={formValues?.further_details || ""}
-                      onChange={(e) =>
-                        handleInputChange("further_details", e.target.value)
-                      }
-                      required
-                    />
-                    <FormFeedback className="text-danger d-block">
-                      This field is required
-                    </FormFeedback>
-                  </FormGroup>
-                )}
-              </Col>
-            </Row>
-            <Row>
+            </>
+          )}
+        </Row>
+
+        <Row>
+          {formValues?.employment_status === "SELF_EMPLOYED" && (
+            <>
               <Col md={6}>
                 <FormGroup>
                   <Label for="job_title" className="text-warning">
@@ -1051,8 +1203,12 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
+            </>
+          )}
+        </Row>
+        <Row>
+          {formValues?.employment_status === "SELF_EMPLOYED" && (
+            <>
               <Col md={6}>
                 <FormGroup>
                   <Label for="company_type" className="text-warning">
@@ -1098,33 +1254,39 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup check>
-                  <Label check className="text-warning">
-                    <Input
-                      type="checkbox"
-                      name="is_accounts_available"
-                      className={
-                        formValues?.is_accounts_available
-                          ? "bg-warning border-warning"
-                          : "border-warning"
-                      }
-                      checked={formValues?.is_accounts_available || false}
-                      onChange={(e) =>
-                        setFormValues((prevValues) => ({
-                          ...prevValues!,
-                          is_accounts_available: e.target.checked,
-                        }))
-                      }
-                    />
-                    Accounts Available?
-                  </Label>
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
+            </>
+          )}
+        </Row>
+        <Row>
+          {formValues?.employment_status === "SELF_EMPLOYED" && (
+            <Col md={6}>
+              <FormGroup check>
+                <Label check>
+                  <Input
+                    type="checkbox"
+                    name="is_accounts_available"
+                    className={
+                      formValues?.is_accounts_available
+                        ? "bg-warning border-warning"
+                        : "border-warning"
+                    }
+                    checked={formValues?.is_accounts_available || false}
+                    onChange={(e) =>
+                      setFormValues((prevValues) => ({
+                        ...prevValues!,
+                        is_accounts_available: e.target.checked,
+                      }))
+                    }
+                  />
+                  Accounts Available?
+                </Label>
+              </FormGroup>
+            </Col>
+          )}
+        </Row>
+        <Row>
+          {formValues?.employment_status === "SELF_EMPLOYED" && (
+            <>
               <Col md={6}>
                 <FormGroup>
                   <Label for="accountant_name" className="text-warning">
@@ -1163,9 +1325,13 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
+            </>
+          )}
+        </Row>
+        <Row>
+          {formValues?.employment_status === "SELF_EMPLOYED" && (
+            <>
+              <Col md={4}>
                 <FormGroup>
                   <Label for="salary" className="text-warning">
                     Salary*
@@ -1185,7 +1351,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   </FormFeedback>
                 </FormGroup>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
                   <Label for="dividends" className="text-warning">
                     Dividends*
@@ -1205,9 +1371,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   </FormFeedback>
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
                   <Label for="turnover" className="text-warning">
                     turnover
@@ -1223,155 +1387,11 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-          </>
-        )}
-        {/* IF active employment_status is SELF_EMPLOYED, show the following fields: End */}
-        {/* IF active employment_status is RETIRED, show the following fields: START */}
-        {formValues?.employment_status === "RETIRED" && (
-          <>
-            <Row>
-              <Col md={6}>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      name="foreignCurrency"
-                      className={
-                        formValues?.is_income_in_foreign_currency
-                          ? "bg-primary border-primary"
-                          : "border-primary"
-                      }
-                      checked={
-                        formValues?.is_income_in_foreign_currency || false
-                      }
-                      onChange={(e) =>
-                        setFormValues((prevValues) => ({
-                          ...prevValues!,
-                          is_income_in_foreign_currency: e.target.checked,
-                        }))
-                      }
-                    />
-                    Is any income paid in a foreign currency?
-                  </Label>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                {formValues?.is_income_in_foreign_currency && (
-                  <FormGroup>
-                    <Label for="further_details" className="text-primary">
-                      Further Details*
-                    </Label>
-                    <Input
-                      type="textarea"
-                      id="further_details"
-                      className="border-primary"
-                      value={formValues?.further_details || ""}
-                      onChange={(e) =>
-                        handleInputChange("further_details", e.target.value)
-                      }
-                      required
-                    />
-                    <FormFeedback className="text-danger d-block">
-                      This field is required
-                    </FormFeedback>
-                  </FormGroup>
-                )}
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="grossAnnualIncome" className="text-primary">
-                    Gross Annual Income*
-                  </Label>
-                  <Input
-                    type="number"
-                    id="grossAnnualIncome"
-                    className="border-primary"
-                    value={formValues?.gross_annual_income || 0}
-                    onChange={(e) =>
-                      handleInputChange("gross_annual_income", e.target.value)
-                    }
-                    required
-                  />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="income_source" className="text-primary">
-                    Income Source
-                  </Label>
-                  <Input
-                    type="text"
-                    id="income_source"
-                    className="border-primary"
-                    value={formValues?.income_source || ""}
-                    onChange={(e) =>
-                      handleInputChange("income_source", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-          </>
-        )}
-        {/* IF active employment_status is RETIRED, show the following fields: END */}
-        {/* IF active employment_status is OTHER, show the following fields: START */}
+            </>
+          )}
+        </Row>
         {formValues?.employment_status === "OTHER" && (
           <>
-            <Row>
-              <Col md={6}>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      name="foreignCurrency"
-                      className={
-                        formValues?.is_income_in_foreign_currency
-                          ? "bg-secondary border-secondary"
-                          : "border-secondary"
-                      }
-                      checked={
-                        formValues?.is_income_in_foreign_currency || false
-                      }
-                      onChange={(e) =>
-                        setFormValues((prevValues) => ({
-                          ...prevValues!,
-                          is_income_in_foreign_currency: e.target.checked,
-                        }))
-                      }
-                    />
-                    Is any income paid in a foreign currency?
-                  </Label>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                {formValues?.is_income_in_foreign_currency && (
-                  <FormGroup>
-                    <Label for="further_details" className="text-secondary">
-                      Further Details*
-                    </Label>
-                    <Input
-                      type="textarea"
-                      id="further_details"
-                      className="border-secondary"
-                      value={formValues?.further_details || ""}
-                      onChange={(e) =>
-                        handleInputChange("further_details", e.target.value)
-                      }
-                      required
-                    />
-                    <FormFeedback className="text-info d-block">
-                      This field is required
-                    </FormFeedback>
-                  </FormGroup>
-                )}
-              </Col>
-            </Row>
             <Row>
               <Col md={4}>
                 <FormGroup>
@@ -1430,218 +1450,18 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
             </Row>
           </>
         )}
-        {/* IF active employment_status is OTHER, show the following fields: END */}
-        {/* IF active employment_status is CONTRACTOR, show the following fields: START */}
         {formValues?.employment_status === "CONTRACTOR" && (
           <>
             <Row>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="employerPostcode" className="text-danger">
-                    Employer's Postcode
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerPostcode"
-                    className="border-danger"
-                    value={formValues?.employer_postcode || ""}
-                    onChange={(e) =>
-                      handleInputChange("employer_postcode", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerHouseNumber" className="text-danger">
-                    Employer's House Name or Number
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerHouseNumber"
-                    className="border-danger"
-                    value={formValues?.employer_house_name_or_number || ""}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "employer_house_name_or_number",
-                        e.target.value
-                      )
-                    }
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerAddressLine1" className="text-danger">
-                    Employer's Address Line 1
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerAddressLine1"
-                    className="border-danger"
-                    value={formValues?.employer_address_line_1 || ""}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "employer_address_line_1",
-                        e.target.value
-                      )
-                    }
-                  />
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerAddressLine2" className="text-danger">
-                    Employer's Address Line 2
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerAddressLine2"
-                    className="border-danger"
-                    value={formValues?.employer_address_line_2 || ""}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "employer_address_line_2",
-                        e.target.value
-                      )
-                    }
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerCity" className="text-danger">
-                    Employer's City
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerCity"
-                    className="border-danger"
-                    value={formValues?.employer_city || ""}
-                    onChange={(e) =>
-                      handleInputChange("employer_city", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerCounty" className="text-danger">
-                    Employer's County
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerCounty"
-                    className="border-danger"
-                    value={formValues?.employer_county || ""}
-                    onChange={(e) =>
-                      handleInputChange("employer_county", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerCountry" className="text-danger">
-                    Employer's Country
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerCountry"
-                    className="border-danger"
-                    value={formValues?.employer_country || ""}
-                    onChange={(e) =>
-                      handleInputChange("employer_country", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      name="is_income_in_foreign_currency"
-                      className={
-                        formValues?.is_income_in_foreign_currency
-                          ? "bg-danger border-danger"
-                          : "border-danger"
-                      }
-                      checked={
-                        formValues?.is_income_in_foreign_currency || false
-                      }
-                      onChange={(e) =>
-                        setFormValues((prevValues) => ({
-                          ...prevValues!,
-                          is_income_in_foreign_currency: e.target.checked,
-                        }))
-                      }
-                    />
-                    Is any income paid in a foreign currency?
-                  </Label>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                {formValues?.is_income_in_foreign_currency && (
-                  <FormGroup>
-                    <Label for="further_details" className="text-danger">
-                      Further Details*
-                    </Label>
-                    <Input
-                      type="textarea"
-                      id="further_details"
-                      className="border-danger"
-                      value={formValues?.further_details || ""}
-                      onChange={(e) =>
-                        handleInputChange("further_details", e.target.value)
-                      }
-                      required
-                    />
-                    <FormFeedback className="text-info d-block">
-                      This field is required
-                    </FormFeedback>
-                  </FormGroup>
-                )}
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="occupation" className="text-danger">
-                    Occupation*
-                  </Label>
-                  <Input
-                    type="text"
-                    id="occupation"
-                    className="border-danger"
-                    value={formValues?.occupation || ""}
-                    onChange={(e) =>
-                      handleInputChange("occupation", e.target.value)
-                    }
-                    required
-                  />
-                  <FormFeedback className="text-info d-block">
-                    This field is required
-                  </FormFeedback>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="contractor_industry" className="text-danger">
+                  <Label for="contractor_industry" className="text-dark">
                     Contractor Industry
                   </Label>
                   <Input
                     type="text"
                     id="contractor_industry"
-                    className="border-danger"
+                    className="border-dark"
                     value={formValues?.contractor_industry || ""}
                     onChange={(e) =>
                       handleInputChange("contractor_industry", e.target.value)
@@ -1649,55 +1469,15 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="employerName" className="text-danger">
-                    Employer Name*
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerName"
-                    className="border-danger"
-                    value={formValues?.employer_name || ""}
-                    onChange={(e) =>
-                      handleInputChange("employer_name", e.target.value)
-                    }
-                    required
-                  />
-                  <FormFeedback className="text-info d-block">
-                    This field is required
-                  </FormFeedback>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="employerTelephone" className="text-danger">
-                    Employer's Telephone
-                  </Label>
-                  <Input
-                    type="text"
-                    id="employerTelephone"
-                    className="border-danger"
-                    value={formValues?.employer_telephone || ""}
-                    onChange={(e) =>
-                      handleInputChange("employer_telephone", e.target.value)
-                    }
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="current_contract_start" className="text-danger">
+                  <Label for="current_contract_start" className="text-dark">
                     Current Contract Start*
                   </Label>
                   <Input
                     type="date"
                     id="current_contract_start"
-                    className="border-danger"
+                    className="border-dark"
                     value={formValues?.current_contract_start || 0}
                     onChange={(e) =>
                       handleInputChange(
@@ -1707,84 +1487,82 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-info d-block">
+                  <FormFeedback className="text-danger d-block">
                     This field is required
                   </FormFeedback>
                 </FormGroup>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="current_contract_end" className="text-danger">
+                  <Label for="current_contract_end" className="text-dark">
                     Current Contract End*
                   </Label>
                   <Input
                     type="date"
                     id="current_contract_end"
-                    className="border-danger"
+                    className="border-dark"
                     value={formValues?.current_contract_end || 0}
                     onChange={(e) =>
                       handleInputChange("current_contract_end", e.target.value)
                     }
                     required
                   />
-                  <FormFeedback className="text-info d-block">
+                  <FormFeedback className="text-danger d-block">
                     This field is required
                   </FormFeedback>
                 </FormGroup>
               </Col>
             </Row>
             <Row>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="time_contracting" className="text-danger">
+                  <Label for="time_contracting" className="text-dark">
                     Time contracting*
                   </Label>
                   <Input
                     type="text"
                     id="time_contracting"
-                    className="border-danger"
+                    className="border-dark"
                     value={formValues?.time_contracting || ""}
                     onChange={(e) =>
                       handleInputChange("time_contracting", e.target.value)
                     }
                     required
                   />
-                  <FormFeedback className="text-info d-block">
+                  <FormFeedback className="text-danger d-block">
                     This field is required
                   </FormFeedback>
                 </FormGroup>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="day_rate" className="text-danger">
+                  <Label for="day_rate" className="text-dark">
                     Day Rate*
                   </Label>
                   <Input
                     type="number"
                     id="day_rate"
-                    className="border-danger"
+                    className="border-dark"
                     value={formValues?.day_rate || 0}
                     onChange={(e) =>
                       handleInputChange("day_rate", e.target.value)
                     }
                     required
                   />
-                  <FormFeedback className="text-info d-block">
+                  <FormFeedback className="text-danger d-block">
                     This field is required
                   </FormFeedback>
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="hourly_rate" className="text-danger">
+                  <Label for="hourly_rate" className="text-dark">
                     Hourly Rate
                   </Label>
                   <Input
                     type="number"
                     id="hourly_rate"
-                    className="border-danger"
+                    className="border-dark"
                     value={formValues?.hourly_rate || 0}
                     onChange={(e) =>
                       handleInputChange("hourly_rate", e.target.value)
@@ -1795,7 +1573,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
             </Row>
           </>
         )}
-        {/* IF active employment_status is CONTRACTOR, show the following fields: END */}
       </ModalBody>
 
       {/* Modal Footer */}
