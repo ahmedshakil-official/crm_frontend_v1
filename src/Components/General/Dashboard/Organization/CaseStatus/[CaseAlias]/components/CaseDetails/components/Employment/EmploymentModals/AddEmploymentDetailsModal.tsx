@@ -1,20 +1,20 @@
-import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
-import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import {
   Button,
-  Col,
-  FormGroup,
-  Input,
-  Label,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
+  FormGroup,
+  Label,
+  Input,
   Row,
+  Col,
 } from "reactstrap";
+import { useState } from "react";
+import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
+import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
+import { toast } from "react-toastify";
 
 interface AddEmploymentDetailsModalProps {
   isOpen: boolean;
@@ -37,8 +37,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
     null
   );
 
-  const [isFormValid, setIsFormValid] = useState(false);
-
   const handleInputChange = (
     name: string,
     value: string | number | boolean | string[] | null
@@ -56,49 +54,8 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
     }
   };
 
-  const validateForm = (): boolean => {
-    if (!formValues) return false;
-
-    switch (formValues.employment_status) {
-      case "EMPLOYED":
-        return !!(
-          formValues.employment_type &&
-          formValues.occupation &&
-          formValues.employer_name &&
-          formValues.employment_commenced &&
-          formValues.gross_annual_income !== undefined
-        );
-      case "SELF_EMPLOYED":
-        return !!(
-          formValues.occupation &&
-          formValues.salary !== undefined &&
-          formValues.dividends !== undefined
-        );
-      case "RETIRED":
-        return formValues.gross_annual_income !== undefined;
-      case "OTHER":
-        return formValues.other_income !== undefined;
-      case "CONTRACTOR":
-        return !!(
-          formValues.occupation &&
-          formValues.employer_name &&
-          formValues.current_contract_start &&
-          formValues.current_contract_end &&
-          formValues.time_contracting &&
-          formValues.day_rate !== undefined
-        );
-      default:
-        return false;
-    }
-  };
-
-  useEffect(() => {
-    setIsFormValid(validateForm());
-  }, [formValues]);
 
   const handleSubmit = async () => {
-    if (!isFormValid) return;
-
     const res = await addEmploymentDetails({
       case_alias: casealias,
       employer_id: employmentData?.user?.id,
@@ -241,6 +198,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   }
                   required
                 />
+               
               </FormGroup>
             </Col>
           )}
@@ -296,6 +254,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   }
                   required
                 />
+               
               </FormGroup>
             </Col>
           )}
@@ -593,6 +552,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
+                  
                 </FormGroup>
               </Col>
               <Col md={6}>
@@ -644,6 +604,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   }
                   required
                 />
+               
               </FormGroup>
             </Col>
           )}
@@ -772,6 +733,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                       }
                       required
                     />
+                    
                   </FormGroup>
                 )}
               </Col>
@@ -1329,6 +1291,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1346,6 +1309,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1389,7 +1353,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
               <Col md={4}>
                 <FormGroup>
                   <Label for="other_income_source" className="text-secondary">
-                    Other Income Source
+                    Other Income
                   </Label>
                   <Input
                     type="text"
@@ -1464,6 +1428,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1481,6 +1446,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
+                  
                 </FormGroup>
               </Col>
             </Row>
@@ -1500,6 +1466,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1517,6 +1484,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1548,7 +1516,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
         <Button
           color="primary"
           onClick={handleSubmit}
-          disabled={!isFormValid || isLoading}
         >
           {isLoading ? "Submitting..." : "Submit"}
         </Button>
