@@ -90,8 +90,6 @@ const CaseStatusBody: React.FC<FetchLeadsProps> = ({
               <th>Lead User</th>
               <th>Phone</th>
               <th>Case Category</th>
-              <th>Applicant Type</th>
-              <th>Case Status</th>
               <th>Case Stage</th>
               <th>Created By</th>
               <th>Action</th>
@@ -124,8 +122,6 @@ const CaseStatusBody: React.FC<FetchLeadsProps> = ({
                   </td>
                   <td>{caseItem.lead_user.phone}</td>
                   <td>{caseItem.case_category}</td>
-                  <td>{caseItem.applicant_type}</td>
-                  <td>{caseItem.case_status}</td>
                   <td>
                     <span
                       className={`rounded-4 px-2 text-white ${

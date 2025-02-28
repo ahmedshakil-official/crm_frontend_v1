@@ -147,41 +147,6 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label for="applicant_type">
-              Applicant Type<span className="text-danger">*</span>
-            </Label>
-            <Input
-              id="applicant_type"
-              name="applicant_type"
-              type="select"
-              required
-              value={formData.applicant_type}
-              onChange={handleChange}
-            >
-              <option value="">--Applicant Type--</option>
-              <option value="SINGLE">Single</option>
-              <option value="JOINT">Joint</option>
-            </Input>
-          </FormGroup>
-          <FormGroup>
-            <Label for="case_status">
-              Case Status<span className="text-danger">*</span>
-            </Label>
-            <Input
-              id="case_status"
-              name="case_status"
-              type="select"
-              required
-              value={formData.case_status}
-              onChange={handleChange}
-            >
-              <option value="">--Case Status--</option>
-              <option value="NEW_LEAD">New Lead</option>
-              <option value="CALL_BACK">Call Back</option>
-              <option value="MEETING">Meeting</option>
-            </Input>
-          </FormGroup>
-          <FormGroup>
             <Label for="case_stage">
               Case Stage<span className="text-danger">*</span>
             </Label>

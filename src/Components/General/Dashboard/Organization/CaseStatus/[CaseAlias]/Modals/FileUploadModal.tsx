@@ -78,7 +78,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
       file: files, // Use 'files' here instead of formData.file
       file_type: formData.fileType,
       file_owner: formData.fileOwner,
-      name: formData.fileName,
+      name: formData.fileName || "N/A",
       description: formData.description,
       special_notes: formData.specialNotes,
     };

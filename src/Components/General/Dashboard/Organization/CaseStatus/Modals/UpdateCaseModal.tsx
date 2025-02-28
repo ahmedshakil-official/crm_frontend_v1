@@ -75,38 +75,6 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
               <option value="GENERAL_INSURANCE">General Insurance</option>
             </Input>
           </FormGroup>
-
-          <FormGroup>
-            <Label for="applicant_type">Applicant Type</Label>
-            <Input
-              type="select"
-              name="applicant_type"
-              id="applicant_type"
-              value={formData?.applicant_type}
-              onChange={handleInputChange}
-            >
-              <option value="">--Select Type--</option>
-              <option value="SINGLE">Single</option>
-              <option value="JOINT">Joint</option>
-            </Input>
-          </FormGroup>
-
-          <FormGroup>
-            <Label for="case_status">Case Status</Label>
-            <Input
-              type="select"
-              name="case_status"
-              id="case_status"
-              value={formData?.case_status}
-              onChange={handleInputChange}
-            >
-              <option value="">--Select Status--</option>
-              <option value="NEW_LEAD">New Lead</option>
-              <option value="CALL_BACK">Call Back</option>
-              <option value="MEETING">Meeting</option>
-            </Input>
-          </FormGroup>
-
           <FormGroup>
             <Label for="case_stage">Case Stage</Label>
             <Input
@@ -134,6 +102,16 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
               <option value="FUTURE_OPPORTUNITY">Future Opportunity</option>
               <option value="NOT_PROCEED">Not Proceed</option>
             </Input>
+          </FormGroup>
+          <FormGroup>
+            <Label for="notes">Notes</Label>
+            <Input
+              type="textarea"
+              name="notes"
+              id="notes"
+              value={formData?.notes}
+              onChange={handleInputChange}
+            />
           </FormGroup>
         </Form>
       </ModalBody>
