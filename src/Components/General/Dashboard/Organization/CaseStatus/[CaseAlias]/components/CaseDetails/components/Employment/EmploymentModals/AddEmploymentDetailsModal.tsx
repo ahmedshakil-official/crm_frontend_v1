@@ -1,22 +1,20 @@
+import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
+import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
+  Col,
+  FormGroup,
+  Input,
+  Label,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
-  FormGroup,
-  Label,
-  Input,
   Row,
-  Col,
-  FormText,
-  FormFeedback,
 } from "reactstrap";
-import { useState, useEffect } from "react";
-import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
-import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
-import { toast } from "react-toastify";
 
 interface AddEmploymentDetailsModalProps {
   isOpen: boolean;
@@ -243,9 +241,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           )}
@@ -301,9 +296,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           )}
@@ -601,9 +593,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
                 </FormGroup>
               </Col>
               <Col md={6}>
@@ -655,9 +644,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           )}
@@ -786,9 +772,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                       }
                       required
                     />
-                    <FormFeedback className="text-danger d-block">
-                      This field is required
-                    </FormFeedback>
                   </FormGroup>
                 )}
               </Col>
@@ -1346,9 +1329,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1366,9 +1346,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1412,7 +1389,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
               <Col md={4}>
                 <FormGroup>
                   <Label for="other_income_source" className="text-secondary">
-                    Other Income
+                    Other Income Source
                   </Label>
                   <Input
                     type="text"
@@ -1487,9 +1464,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1507,9 +1481,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
                 </FormGroup>
               </Col>
             </Row>
@@ -1529,9 +1500,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1549,9 +1517,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
                 </FormGroup>
               </Col>
               <Col md={4}>
