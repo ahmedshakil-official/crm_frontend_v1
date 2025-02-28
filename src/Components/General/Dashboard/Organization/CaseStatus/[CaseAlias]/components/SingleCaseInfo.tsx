@@ -116,12 +116,6 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
                         <strong>Case Category:</strong>{" "}
                         {caseInfo?.case_category}
                       </h6>
-                      <h6 className="pt-1">
-                        <strong>Applicent Type:</strong>{" "}
-                        <span className="bg-success px-2 py-1 rounded-5">
-                          {caseInfo?.applicant_type}
-                        </span>
-                      </h6>
                     </Col>
                   </Row>
                 )}
@@ -148,9 +142,6 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
                 ) : (
                   <Row className="pt-2">
                     <Col xs="12">
-                      <h6 className="pt-1">
-                        <strong>Case Status:</strong> {caseInfo?.case_status}
-                      </h6>
                       <h6 className="pt-1">
                         <strong>Active Status:</strong>{" "}
                         <span

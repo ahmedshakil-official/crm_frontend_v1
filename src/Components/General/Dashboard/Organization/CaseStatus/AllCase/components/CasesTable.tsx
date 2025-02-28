@@ -233,7 +233,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
             <Card className="shadow-lg rounded-1 p-3">
               <Row className="justify-content-center text-center g-3">
                 {/* Employee Filter */}
-                <Col xs="12" sm="6" md="4" lg="2">
+                <Col xs="12" sm="6" md="3">
                   <Input
                     type="select"
                     id="employeeFilter"
@@ -253,7 +253,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                 </Col>
 
                 {/* Case Category Filter */}
-                <Col xs="12" sm="6" md="4" lg="2">
+                <Col xs="12" sm="6" md="3">
                   <Input
                     type="select"
                     id="caseCategory"
@@ -269,41 +269,8 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                   </Input>
                 </Col>
 
-                {/* Application Type Filter */}
-                <Col xs="12" sm="6" md="4" lg="2">
-                  <Input
-                    type="select"
-                    id="applicationType"
-                    className="py-1"
-                    onChange={(e) =>
-                      handleFilterChange("applicant_type", e.target.value)
-                    }
-                  >
-                    <option value="">Select Types</option>
-                    <option value="SINGLE">Single</option>
-                    <option value="JOINT">Joint</option>
-                  </Input>
-                </Col>
-
-                {/* Case Status Filter */}
-                <Col xs="12" sm="6" md="4" lg="2">
-                  <Input
-                    type="select"
-                    id="caseStatus"
-                    className="py-1"
-                    onChange={(e) =>
-                      handleFilterChange("case_status", e.target.value)
-                    }
-                  >
-                    <option value="">Select Status</option>
-                    <option value="NEW_LEAD">New Lead</option>
-                    <option value="CALL_BACK">Call Back</option>
-                    <option value="MEETING">Meeting</option>
-                  </Input>
-                </Col>
-
                 {/* Case Stage Filter */}
-                <Col xs="12" sm="6" md="4" lg="2">
+                <Col xs="12" sm="6" md="3">
                   <Input
                     type="select"
                     id="caseStage"
@@ -334,7 +301,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                   </Input>
                 </Col>
                 {/* Clear All Filters Button */}
-                <Col xs="12" sm="6" md="4" lg="2">
+                <Col xs="12" sm="6" md="3">
                   <Button
                     className="btn btn-secondary w-100"
                     onClick={clearFilters}
@@ -354,8 +321,6 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                 <th>Lead User</th>
                 <th>Phone</th>
                 <th>Case Category</th>
-                <th>Applicant Type</th>
-                <th>Case Status</th>
                 <th>Case Stage</th>
                 <th>Created By</th>
                 <th>Action</th>
@@ -388,8 +353,6 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                     </td>
                     <td>{caseItem.lead_user.phone}</td>
                     <td>{caseItem.case_category}</td>
-                    <td>{caseItem.applicant_type}</td>
-                    <td>{caseItem.case_status}</td>
                     <td>
                       <span
                         className={`rounded-4 px-2 text-white ${
