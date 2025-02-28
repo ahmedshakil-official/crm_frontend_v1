@@ -10,10 +10,8 @@ import {
   Input,
   Row,
   Col,
-  FormText,
-  FormFeedback,
 } from "reactstrap";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 import { toast } from "react-toastify";
@@ -39,8 +37,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
     null
   );
 
-  const [isFormValid, setIsFormValid] = useState(false);
-
   const handleInputChange = (
     name: string,
     value: string | number | boolean | string[] | null
@@ -58,49 +54,8 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
     }
   };
 
-  const validateForm = (): boolean => {
-    if (!formValues) return false;
-
-    switch (formValues.employment_status) {
-      case "EMPLOYED":
-        return !!(
-          formValues.employment_type &&
-          formValues.occupation &&
-          formValues.employer_name &&
-          formValues.employment_commenced &&
-          formValues.gross_annual_income !== undefined
-        );
-      case "SELF_EMPLOYED":
-        return !!(
-          formValues.occupation &&
-          formValues.salary !== undefined &&
-          formValues.dividends !== undefined
-        );
-      case "RETIRED":
-        return formValues.gross_annual_income !== undefined;
-      case "OTHER":
-        return formValues.other_income !== undefined;
-      case "CONTRACTOR":
-        return !!(
-          formValues.occupation &&
-          formValues.employer_name &&
-          formValues.current_contract_start &&
-          formValues.current_contract_end &&
-          formValues.time_contracting &&
-          formValues.day_rate !== undefined
-        );
-      default:
-        return false;
-    }
-  };
-
-  useEffect(() => {
-    setIsFormValid(validateForm());
-  }, [formValues]);
 
   const handleSubmit = async () => {
-    if (!isFormValid) return;
-
     const res = await addEmploymentDetails({
       case_alias: casealias,
       employer_id: employmentData?.user?.id,
@@ -243,9 +198,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
+               
               </FormGroup>
             </Col>
           )}
@@ -301,9 +254,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
+               
               </FormGroup>
             </Col>
           )}
@@ -601,9 +552,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
+                  
                 </FormGroup>
               </Col>
               <Col md={6}>
@@ -655,9 +604,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
+               
               </FormGroup>
             </Col>
           )}
@@ -786,9 +733,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                       }
                       required
                     />
-                    <FormFeedback className="text-danger d-block">
-                      This field is required
-                    </FormFeedback>
+                    
                   </FormGroup>
                 )}
               </Col>
@@ -1346,9 +1291,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1366,9 +1309,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1487,9 +1428,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1507,9 +1446,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
+                  
                 </FormGroup>
               </Col>
             </Row>
@@ -1529,9 +1466,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1549,9 +1484,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
+                  
                 </FormGroup>
               </Col>
               <Col md={4}>
@@ -1583,7 +1516,6 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
         <Button
           color="primary"
           onClick={handleSubmit}
-          disabled={!isFormValid || isLoading}
         >
           {isLoading ? "Submitting..." : "Submit"}
         </Button>
