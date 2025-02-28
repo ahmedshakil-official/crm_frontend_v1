@@ -32,7 +32,6 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
     lastName: "",
     phone: "",
     email: "",
-    password: "",
     relationship: "",
     profileImage: "",
     notes: "",
@@ -64,8 +63,6 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
         last_name: formData.lastName,
         email: formData.email,
         phone: formData.phone,
-        password: formData.password,
-        profileImage: profileImage,
       },
       relationship: formData.relationship,
       notes: formData.notes,
@@ -158,22 +155,6 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
           <Row>
             <Col xs={12} md={6}>
               <FormGroup>
-                <Label for="password" className="form-label">
-                  Password<span className="text-danger">*</span>
-                </Label>
-                <Input
-                  type="password"
-                  id="password"
-                  name="password"
-                  required
-                  placeholder="Enter password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col xs={12} md={6}>
-              <FormGroup>
                 <Label for="relationship" className="form-label">
                   Relationship
                 </Label>
@@ -187,22 +168,7 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <FormGroup>
-                <Label for="profile_image" className="form-label">
-                  Profile Image
-                </Label>
-                <Input
-                  type="file"
-                  id="profile_image"
-                  name="profileImage"
-                  onChange={handleFileChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col xs={12}>
+            <Col xs={12} md={6}>
               <FormGroup>
                 <Label for="notes" className="form-label">
                   Notes
