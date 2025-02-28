@@ -24,6 +24,7 @@ export const baseApi = createApi({
     "Dependants",
     "CompanyDetails",
     "EmploymentDetails",
+    "JointUserDetails",
   ],
   endpoints: () => ({}),
 });

@@ -16,20 +16,15 @@ export interface JointUserProps {
 export interface AddJointUserModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
   handleFileUpload?: any;
 }
 export interface UpdateJointUserModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
-  // alias?: any;
   user: any;
 }
 export interface JointUserDeleteModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onConfirm: () => void;
-  isLoading?: boolean;
   selectedUser?: any;
 }

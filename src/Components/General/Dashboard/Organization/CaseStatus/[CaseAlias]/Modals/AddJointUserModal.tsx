@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useAddJointUserInfoMutation } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
 import { AddJointUserModalProps } from "@/Types/Organization/JointUserTypes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -20,12 +20,12 @@ import {
 const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
   isOpen,
   toggle,
-  onSave,
 }) => {
   const [profileImage, setProfileImage] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const { casealias } = params;
+  const [addJointUserInfo, { isLoading: isAddingJointUser }] =
+    useAddJointUserInfoMutation(undefined);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -70,23 +70,15 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
       relationship: formData.relationship,
       notes: formData.notes,
     };
-
-    try {
-      setIsLoading(true);
-      const response = await apiClient.post(
-        `/cases/${casealias}/joint/users/`,
-        payload,
-        { headers: { "Content-Type": "application/json" } }
-      );
-
+    const res = await addJointUserInfo({
+      case_alias: casealias,
+      jointuserInfo: payload,
+    });
+    if (res.data) {
       toast.success("Joint user added successfully!");
-      onSave();
       toggle();
-    } catch (error) {
-      console.error("Error adding joint user:", error);
+    } else {
       toast.error("Failed to add joint user.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -229,8 +221,12 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={handleSubmit} block={isLoading}>
-          {isLoading ? "Saving..." : "Save"}
+        <Button
+          color="primary"
+          onClick={handleSubmit}
+          block={isAddingJointUser}
+        >
+          {isAddingJointUser ? "Saving..." : "Save"}
         </Button>
         <Button color="secondary" onClick={toggle} block>
           Cancel

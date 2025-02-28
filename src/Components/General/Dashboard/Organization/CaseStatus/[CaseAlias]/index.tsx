@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
 
+import { useGetJointUserInfoQuery } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
 import { JointUserProps } from "@/Types/Organization/JointUserTypes";
 import CalenderContainer from "./components/Calender/CalenderContainer";
 import CaseDetails from "./components/CaseDetails/CaseDetails";
@@ -17,9 +18,13 @@ import SingleCaseInfo from "./components/SingleCaseInfo";
 const CaseContainer: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
   const [isLoading, setIsLoading] = useState(false);
-  const [jointUserInfo, setJointUserInfo] = useState<JointUserProps[]>([]);
+  // const [jointUserInfo, setJointUserInfo] = useState<JointUserProps[]>([]);
   const params = useParams();
   const { casealias } = params;
+  const { data: jointUserInfo, isLoading: isJointUserFetcing } =
+    useGetJointUserInfoQuery({
+      case_alias: casealias,
+    });
 
   const fetchCaseInfo = async () => {
     setIsLoading(true);
@@ -35,23 +40,6 @@ const CaseContainer: React.FC = () => {
 
   useEffect(() => {
     fetchCaseInfo();
-  }, []);
-
-  // fetch joint users info
-  const fetchJointUserInfo = async () => {
-    setIsLoading(true);
-    try {
-      const result = await apiClient.get(`/cases/${casealias}/joint/users/`);
-      setJointUserInfo(result.data || {});
-      console.log(result.data);
-    } catch (error) {
-      console.error("Error Fetching Joint user Info", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchJointUserInfo();
   }, []);
 
   return (
@@ -81,7 +69,6 @@ const CaseContainer: React.FC = () => {
           <JointUsers
             jointUserInfo={jointUserInfo}
             isLoading={isLoading}
-            fetchJointUserInfo={fetchJointUserInfo}
           />
         </Row>
         <Row>
