@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
+  Col,
   Form,
   FormGroup,
   Input,
@@ -14,6 +15,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  Row,
 } from "reactstrap";
 
 const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
@@ -31,6 +33,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     email: "",
     phone: "",
     relationship: "",
+    notes: "",
   });
 
   // Populate formData when user changes
@@ -42,6 +45,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
         email: user?.joint_user_details?.email || "",
         phone: user?.joint_user_details?.phone || "",
         relationship: user?.relationship || "",
+        notes: user?.notes || "",
       });
     }
   }, [user]);
@@ -66,6 +70,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
           last_name: formData.last_name,
           phone: formData.phone,
           relationship: formData.relationship,
+          notes: formData.notes,
           ...(hasEmailChanged && { email: formData.email }), // Only include email if it has changed
         },
       },
@@ -89,6 +94,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     email: user?.joint_user_details?.email || "",
     phone: user?.joint_user_details?.phone || "",
     relationship: user?.relationship || "",
+    notes: user?.notes || "",
   });
 
   return (
@@ -96,53 +102,82 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
       <ModalHeader toggle={toggle}>Update Joint User</ModalHeader>
       <ModalBody>
         <Form>
-          <FormGroup>
-            <Label for="firstName">First Name</Label>
-            <Input
-              id="firstName"
-              name="first_name"
-              value={formData.first_name}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="lastName">Last Name</Label>
-            <Input
-              id="lastName"
-              name="last_name"
-              value={formData.last_name}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="email">Email</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="phone">Phone</Label>
-            <Input
-              id="phone"
-              name="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="relationship">Relationship</Label>
-            <Input
-              id="relationship"
-              name="relationship"
-              value={formData.relationship}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
+          <Row>
+            <Col xl={6} md={12}>
+              <FormGroup>
+                <Label for="firstName">First Name</Label>
+                <Input
+                  id="firstName"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col xl={6} md={12}>
+              <FormGroup>
+                <Label for="lastName">Last Name</Label>
+                <Input
+                  id="lastName"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col xl={6} md={12}>
+              <FormGroup>
+                <Label for="email">Email</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col xl={6} md={12}>
+              <FormGroup>
+                <Label for="phone">Phone</Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col xl={6} md={12}>
+              <FormGroup>
+                <Label for="relationship">Relationship</Label>
+                <Input
+                  type="text"
+                  id="relationship"
+                  name="relationship"
+                  value={formData.relationship}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col xl={6} md={12}>
+              <FormGroup>
+                <Label for="notes">Note</Label>
+                <Input
+                  type="textarea"
+                  id="notes"
+                  name="notes"
+                  value={formData.notes}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
         </Form>
       </ModalBody>
       <ModalFooter>
