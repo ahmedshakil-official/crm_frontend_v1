@@ -1,7 +1,8 @@
+import { useDeleteJointUserInfoMutation } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
 import { JointUserProps } from "@/Types/Organization/JointUserTypes";
-import apiClient from "@/services/api-client"; // Import your API client
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -14,20 +15,13 @@ import {
 import AddJointUserModal from "../Modals/AddJointUserModal";
 import JointUserDeleteModal from "../Modals/JointUserDeleteModal"; // Import the delete modal
 import UpdateJointUserModal from "../Modals/UpdateJointUserModal";
-import { toast } from "react-toastify";
 
-const JointUsers: React.FC<JointUserProps> = ({
-  jointUserInfo,
-  fetchJointUserInfo,
-  isLoading,
-}) => {
+const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const params = useParams();
-  const { casealias } = params;
+
 
   const toggleAddModal = () => setAddModalOpen(!addModalOpen);
   const toggleUpdateModal = () => setUpdateModalOpen(!updateModalOpen);
@@ -43,23 +37,19 @@ const JointUsers: React.FC<JointUserProps> = ({
     toggleDeleteModal();
   };
 
-  const deleteUser = async () => {
-    if (!selectedUser) return;
-    setIsDeleting(true);
-    try {
-      await apiClient.delete(
-        `/cases/${casealias}/joint/users/${selectedUser.alias}/`
-      );
-      toggleDeleteModal();
-      fetchJointUserInfo(); // Refresh the joint user list
-      toast.success("User deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting joint user:", error);
-      toast.error("Failed to delete the user. Please try again.");
-    } finally {
-      setIsDeleting(false);
-    }
-  };
+  // const deleteUser = async () => {
+  //   const res = await deleteJointUserInfo({
+  //     case_alias: casealias,
+  //     userAlias: selectedUser.alias,
+  //   });
+  //   if (res.data === null) {
+  //     toast.success("User deleted successfully!");
+  //     toggleDeleteModal();
+  //   } else {
+  //     console.error("Error deleting joint user:", res.error);
+  //     toast.error("Failed to delete the user. Please try again.");
+  //   }
+  // };
 
   return (
     <Col sm="12" className="box-col-12">
@@ -95,14 +85,14 @@ const JointUsers: React.FC<JointUserProps> = ({
                       <Spinner color="primary" />
                     </td>
                   </tr>
-                ) : jointUserInfo.length === 0 ? (
+                ) : jointUserInfo?.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="text-center">
                       <p>No joint users available</p>
                     </td>
                   </tr>
                 ) : (
-                  jointUserInfo.map((userInfo: any, index: number) => (
+                  jointUserInfo?.map((userInfo: any, index: number) => (
                     <tr key={index}>
                       <td>
                         <div className="d-flex align-items-center gap-3">
@@ -178,22 +168,15 @@ const JointUsers: React.FC<JointUserProps> = ({
             </Table>
           </div>
         </CardBody>
-        <AddJointUserModal
-          isOpen={addModalOpen}
-          toggle={toggleAddModal}
-          onSave={fetchJointUserInfo}
-        />
+        <AddJointUserModal isOpen={addModalOpen} toggle={toggleAddModal} />
         <UpdateJointUserModal
           isOpen={updateModalOpen}
           toggle={toggleUpdateModal}
           user={selectedUser}
-          onSave={fetchJointUserInfo}
         />
         <JointUserDeleteModal
           isOpen={deleteModalOpen}
           toggle={toggleDeleteModal}
-          onConfirm={deleteUser}
-          isLoading={isDeleting}
           selectedUser={selectedUser}
         />
       </Card>

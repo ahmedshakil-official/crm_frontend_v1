@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useUpdateJointUserInfoMutation } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
 import { UpdateJointUserModalProps } from "@/Types/Organization/JointUserTypes";
 import { isEqual } from "lodash";
 import { useParams } from "next/navigation";
@@ -20,10 +20,10 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
   isOpen,
   toggle,
   user,
-  onSave,
 }) => {
   const params = useParams();
   const { casealias } = params;
+  const [updateJointUserInfo, { isLoading }] = useUpdateJointUserInfoMutation();
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -32,7 +32,6 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     phone: "",
     relationship: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   // Populate formData when user changes
   useEffect(() => {
@@ -53,20 +52,17 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
   };
 
   const handleSave = async () => {
-    try {
-      setIsLoading(true);
-      await apiClient.patch(
-        `/cases/${casealias}/joint/users/${user.alias}/`,
-        formData
-      );
+    const res = await updateJointUserInfo({
+      case_alias: casealias,
+      userAlias: user.alias,
+      jointuserInfo: formData,
+    });
+    if (res.data) {
       toast.success("User updated successfully!");
-      onSave(); // Refresh the user info after update
-      toggle(); // Close the modal after save
-    } catch (error) {
-      console.error("Error updating joint user info:", error);
+      toggle();
+    } else {
+      console.error("Error updating joint user info:", res.error);
       toast.error("Failed to update user information.");
-    } finally {
-      setIsLoading(false);
     }
   };
 

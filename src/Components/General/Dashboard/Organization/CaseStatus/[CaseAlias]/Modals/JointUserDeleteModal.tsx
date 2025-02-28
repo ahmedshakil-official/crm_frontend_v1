@@ -1,14 +1,33 @@
+import { useDeleteJointUserInfoMutation } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
 import { JointUserDeleteModalProps } from "@/Types/Organization/JointUserTypes";
+import { useParams } from "next/navigation";
 import React from "react";
+import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const JointUserDeleteModal: React.FC<JointUserDeleteModalProps> = ({
   isOpen,
   toggle,
-  onConfirm,
-  isLoading = false,
   selectedUser,
 }) => {
+  const params = useParams();
+  const { casealias } = params;
+  const [deleteJointUserInfo, { isLoading: isDeleting }] =
+    useDeleteJointUserInfoMutation();
+
+  const deleteUser = async () => {
+    const res = await deleteJointUserInfo({
+      case_alias: casealias,
+      userAlias: selectedUser.alias,
+    });
+    if (res.data === null) {
+      toast.success("User deleted successfully!");
+      toggle();
+    } else {
+      console.error("Error deleting joint user:", res.error);
+      toast.error("Failed to delete the user. Please try again.");
+    }
+  };
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>Delete Joint User</ModalHeader>
@@ -21,10 +40,10 @@ const JointUserDeleteModal: React.FC<JointUserDeleteModalProps> = ({
         ?
       </ModalBody>
       <ModalFooter>
-        <Button color="danger" onClick={onConfirm} disabled={isLoading}>
-          {isLoading ? "Deleting..." : "Delete"}
+        <Button color="danger" onClick={deleteUser} disabled={isDeleting}>
+          {isDeleting ? "Deleting..." : "Delete"}
         </Button>
-        <Button color="secondary" onClick={toggle} disabled={isLoading}>
+        <Button color="secondary" onClick={toggle} disabled={isDeleting}>
           Cancel
         </Button>
       </ModalFooter>
