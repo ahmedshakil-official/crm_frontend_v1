@@ -13,7 +13,6 @@ import {
   Button,
   Col,
   Form,
-  FormFeedback,
   FormGroup,
   Input,
   Label,
@@ -116,7 +115,7 @@ const AddCompanyDetailsFormModal: React.FC<AddCompanyDetailsFormModalProps> = ({
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label className="small">Company Name</Label>
+                <Label className="small">Company Name*</Label>
                 <Input
                   type="text"
                   name="company_name"
@@ -124,14 +123,11 @@ const AddCompanyDetailsFormModal: React.FC<AddCompanyDetailsFormModalProps> = ({
                   onChange={handleChange}
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label className="small">Company Registration Number</Label>
+                <Label className="small">Company Registration Number*</Label>
                 <Input
                   type="text"
                   name="company_registration_number"
@@ -139,9 +135,6 @@ const AddCompanyDetailsFormModal: React.FC<AddCompanyDetailsFormModalProps> = ({
                   onChange={handleChange}
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
