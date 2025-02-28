@@ -1,8 +1,5 @@
-import { useDeleteJointUserInfoMutation } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
 import { JointUserProps } from "@/Types/Organization/JointUserTypes";
-import { useParams } from "next/navigation";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -22,7 +19,6 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
 
-
   const toggleAddModal = () => setAddModalOpen(!addModalOpen);
   const toggleUpdateModal = () => setUpdateModalOpen(!updateModalOpen);
   const toggleDeleteModal = () => setDeleteModalOpen(!deleteModalOpen);
@@ -36,20 +32,6 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
     setSelectedUser(user);
     toggleDeleteModal();
   };
-
-  // const deleteUser = async () => {
-  //   const res = await deleteJointUserInfo({
-  //     case_alias: casealias,
-  //     userAlias: selectedUser.alias,
-  //   });
-  //   if (res.data === null) {
-  //     toast.success("User deleted successfully!");
-  //     toggleDeleteModal();
-  //   } else {
-  //     console.error("Error deleting joint user:", res.error);
-  //     toast.error("Failed to delete the user. Please try again.");
-  //   }
-  // };
 
   return (
     <Col sm="12" className="box-col-12">
@@ -96,33 +78,6 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
                     <tr key={index}>
                       <td>
                         <div className="d-flex align-items-center gap-3">
-                          <div className="flex-shrink-0 comman-round">
-                            {userInfo?.joint_user_details?.profile_image ? (
-                              <img
-                                src={
-                                  userInfo?.joint_user_details?.profile_image
-                                }
-                                alt="User"
-                                className="rounded-circle object-fit-cover"
-                                width={40}
-                                height={40}
-                              />
-                            ) : (
-                              <h3
-                                className="bg-success rounded-circle d-flex align-items-center justify-content-center text-white"
-                                style={{
-                                  width: "40px",
-                                  height: "40px",
-                                  margin: 0,
-                                }}
-                              >
-                                {userInfo?.joint_user_details?.first_name?.[0]?.toUpperCase() ||
-                                  ""}
-                                {userInfo?.joint_user_details?.last_name?.[0]?.toUpperCase() ||
-                                  ""}
-                              </h3>
-                            )}
-                          </div>
                           <div className="flex-grow-1">
                             <h6>
                               {userInfo.joint_user_details?.first_name}{" "}

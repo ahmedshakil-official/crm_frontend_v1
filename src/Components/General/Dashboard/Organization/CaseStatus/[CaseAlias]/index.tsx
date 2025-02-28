@@ -1,12 +1,10 @@
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
+import { useGetJointUserInfoQuery } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
 import apiClient from "@/services/api-client";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
-
-import { useGetJointUserInfoQuery } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
-import { JointUserProps } from "@/Types/Organization/JointUserTypes";
 import CalenderContainer from "./components/Calender/CalenderContainer";
 import CaseDetails from "./components/CaseDetails/CaseDetails";
 import FileManager from "./components/FileManager";
@@ -18,7 +16,6 @@ import SingleCaseInfo from "./components/SingleCaseInfo";
 const CaseContainer: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
   const [isLoading, setIsLoading] = useState(false);
-  // const [jointUserInfo, setJointUserInfo] = useState<JointUserProps[]>([]);
   const params = useParams();
   const { casealias } = params;
   const { data: jointUserInfo, isLoading: isJointUserFetcing } =
@@ -66,10 +63,7 @@ const CaseContainer: React.FC = () => {
           <FileManager />
         </Row>
         <Row>
-          <JointUsers
-            jointUserInfo={jointUserInfo}
-            isLoading={isLoading}
-          />
+          <JointUsers jointUserInfo={jointUserInfo} isLoading={isLoading} />
         </Row>
         <Row>
           <MeetingHistory />
