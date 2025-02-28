@@ -52,11 +52,27 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
   };
 
   const handleSave = async () => {
-    const res = await updateJointUserInfo({
+    // Determine if the email has changed
+    const originalEmail = user?.joint_user_details?.email || "";
+    const hasEmailChanged = formData.email !== originalEmail;
+
+    // Prepare the payload, conditionally including the email field
+    const payload = {
       case_alias: casealias,
       userAlias: user.alias,
-      jointuserInfo: formData,
-    });
+      updatedJointuserInfo: {
+        joint_user: {
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          phone: formData.phone,
+          relationship: formData.relationship,
+          ...(hasEmailChanged && { email: formData.email }), // Only include email if it has changed
+        },
+      },
+    };
+
+    const res = await updateJointUserInfo(payload);
+
     if (res.data) {
       toast.success("User updated successfully!");
       toggle();

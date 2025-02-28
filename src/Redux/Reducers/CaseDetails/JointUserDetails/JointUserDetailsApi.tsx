@@ -26,10 +26,10 @@ export const JointUserDetailsApi = baseApi.injectEndpoints({
       ],
     }),
     updateJointUserInfo: builder.mutation({
-      query: ({ case_alias, userAlias, jointuserInfo }) => ({
+      query: ({ case_alias, userAlias, updatedJointuserInfo }) => ({
         url: `/cases/${case_alias}/joint/users/${userAlias}/`,
         method: "PUT",
-        body: jointuserInfo,
+        body: updatedJointuserInfo,
       }),
       invalidatesTags: [
         "ApplicantsDetails",
