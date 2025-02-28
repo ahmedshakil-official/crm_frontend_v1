@@ -11,7 +11,6 @@ import {
   Col,
   Container,
   Form,
-  FormFeedback,
   FormGroup,
   Input,
   Label,
@@ -223,9 +222,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   <option value="MS">Ms</option>
                   <option value="MISS">Miss</option>
                 </Input>
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -256,9 +252,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -306,9 +299,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -623,9 +613,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -754,9 +741,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -771,9 +755,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -791,9 +772,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -806,9 +784,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) => handleInputChange("city", e.target.value)}
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -835,9 +810,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   onChange={(e) => handleInputChange("country", e.target.value)}
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -855,9 +827,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -912,9 +881,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     Living with Friends/Family
                   </option>
                 </Input>
-                <FormFeedback className="text-warning d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>

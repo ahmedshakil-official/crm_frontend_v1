@@ -10,7 +10,6 @@ import {
   Button,
   CardBody,
   Col,
-  FormFeedback,
   FormGroup,
   Input,
   Label,
@@ -208,9 +207,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 }
                 required
               />
-              <FormFeedback className="text-danger d-block">
-                This field is required
-              </FormFeedback>
             </FormGroup>
           </Col>
         )}
@@ -264,9 +260,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 }
                 required
               />
-              <FormFeedback className="text-danger d-block">
-                This field is required
-              </FormFeedback>
             </FormGroup>
           </Col>
         )}
@@ -558,9 +551,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -612,9 +602,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 }
                 required
               />
-              <FormFeedback className="text-danger d-block">
-                This field is required
-              </FormFeedback>
             </FormGroup>
           </Col>
         )}
@@ -741,9 +728,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                     }
                     required
                   />
-                  <FormFeedback className="text-danger d-block">
-                    This field is required
-                  </FormFeedback>
                 </FormGroup>
               )}
             </Col>
@@ -1290,9 +1274,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   onChange={(e) => handleInputChange("salary", e.target.value)}
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={4}>
@@ -1310,9 +1291,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={4}>
@@ -1356,7 +1334,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Col md={4}>
               <FormGroup>
                 <Label for="other_income_source" className="text-secondary">
-                  Other Income
+                  Other Income Source
                 </Label>
                 <Input
                   type="text"
@@ -1422,9 +1400,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={4}>
@@ -1442,9 +1417,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
           </Row>
@@ -1464,9 +1436,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={4}>
@@ -1484,9 +1453,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   }
                   required
                 />
-                <FormFeedback className="text-danger d-block">
-                  This field is required
-                </FormFeedback>
               </FormGroup>
             </Col>
             <Col md={4}>
@@ -1508,7 +1474,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
           </Row>
         </>
       )}
-      
+
       <Row>
         <Col className="d-flex justify-content-between pt-3">
           <Button
