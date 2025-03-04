@@ -4,6 +4,7 @@ import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
 import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
 import { EmploymentTab } from "./Employment/EmploymentTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
+import { AdverseTab } from "./Adverse/AdverseTab";
 
 // Define a mapping of tab names to components
 const tabComponents: Record<string, React.FC> = {
@@ -11,6 +12,7 @@ const tabComponents: Record<string, React.FC> = {
   "Applicant(s) Details": ApplicantsDetailsTab,
   "Employment/Income": EmploymentTab,
   "Credit Commitments": CreditCommitmentsContent,
+  "Adverse": AdverseTab,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {

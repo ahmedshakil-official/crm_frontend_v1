@@ -36,7 +36,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
   const [isDependantsViewModalOpen, setIsDependantsViewModalOpen] =
     useState(false);
-  console.log({ basicTab });
 
   const toggleViewModal = () =>
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
