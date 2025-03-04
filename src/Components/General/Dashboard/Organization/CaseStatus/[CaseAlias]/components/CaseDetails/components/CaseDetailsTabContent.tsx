@@ -1,6 +1,7 @@
 import { useAppSelector } from "@/Redux/Hooks";
 import { TabContent } from "reactstrap";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
+import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
 import { EmploymentTab } from "./Employment/EmploymentTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 
@@ -9,6 +10,7 @@ const tabComponents: Record<string, React.FC> = {
   "Loan Details": LoanDetailsTab,
   "Applicant(s) Details": ApplicantsDetailsTab,
   "Employment/Income": EmploymentTab,
+  "Credit Commitments": CreditCommitmentsContent,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
