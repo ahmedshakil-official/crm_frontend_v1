@@ -73,7 +73,15 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
                         <strong>Email:</strong> {caseInfo?.lead_user?.email}
                       </h6>
                       <h6 className="pt-1">
-                        <strong>Phone:</strong> {caseInfo?.lead_user?.phone}
+                        {caseInfo?.lead_user?.phone ? (
+                          <>
+                            <strong>Phone:</strong> {caseInfo?.lead_user?.phone}
+                          </>
+                        ) : (
+                          <>
+                            <strong>Phone:</strong> N/A
+                          </>
+                        )}
                       </h6>
                     </Col>
                   </Row>
@@ -114,7 +122,9 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
                       </h6>
                       <h6 className="pt-1">
                         <strong>Case Category:</strong>{" "}
-                        {caseInfo?.case_category}
+                        <span className="fw-light" style={{ fontSize: "13px" }}>
+                          {caseInfo?.case_category}
+                        </span>
                       </h6>
                     </Col>
                   </Row>
@@ -145,7 +155,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
                       <h6 className="pt-1">
                         <strong>Active Status:</strong>{" "}
                         <span
-                          className={`px-2 py-1 rounded-5 ${
+                          className={`p-1 rounded-1 ${
                             caseInfo?.is_removed ? "bg-danger" : "bg-success"
                           }`}
                         >
@@ -154,7 +164,10 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
                       </h6>
                       <h6 className="pt-1">
                         <strong>Case Stage:</strong>{" "}
-                        <span className="bg-info px-2 py-1 rounded-5">
+                        <span
+                          className="fw-light bg-info p-1 rounded-1"
+                          style={{ fontSize: "12px" }}
+                        >
                           {caseInfo?.case_stage}
                         </span>
                       </h6>
@@ -190,7 +203,9 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
                       </h6>
                       <h6 className="pt-1">
                         <strong>User Type:</strong>{" "}
-                        {caseInfo?.created_by?.user_type}
+                        <span className="fw-light" style={{ fontSize: "13px" }}>
+                          {caseInfo?.created_by?.user_type}
+                        </span>
                       </h6>
                     </Col>
                   </Row>
@@ -201,8 +216,12 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
         </Row>
         <Row className="px-3">
           <div>
-            <h4>Notes:</h4>
-            <p>{caseInfo?.notes ? caseInfo.notes : "Notes not available"}</p>
+            <h4 className="pb-2">Notes:</h4>
+            <div className="px-3">
+              <p className="border border-primary p-2 rounded-1">
+                {caseInfo?.notes ? caseInfo.notes : "Notes not available"}
+              </p>
+            </div>
           </div>
         </Row>
       </Card>
