@@ -12,7 +12,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import { EmploymentTabContentT } from "./Temp";
+import { EmploymentTabContent } from "./EmploymentTabContent";
 
 export const EmploymentTab = () => {
   // State for active user, active tab, and employment data
@@ -109,7 +109,7 @@ export const EmploymentTab = () => {
 
           {/* Tab Content */}
           {activeTab && activeUser && (
-            <EmploymentTabContentT
+            <EmploymentTabContent
               activeTab={activeTab}
               activeUser={activeUser}
               groupedData={groupedData}
