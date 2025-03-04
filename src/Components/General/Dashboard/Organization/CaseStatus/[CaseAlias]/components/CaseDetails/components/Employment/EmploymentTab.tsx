@@ -1,4 +1,5 @@
-import apiClient from "@/services/api-client";
+import LoadingSpinner from "@/app/loading";
+import { useGetEmploymentDetailsQuery } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,9 +12,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import { EmploymentTabContent } from "./EmploymentTabContent"; // Import the new component
-import { useGetEmploymentDetailsQuery } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
-import LoadingSpinner from "@/app/loading";
+import { EmploymentTabContent } from "./EmploymentTabContent";
 
 export const EmploymentTab = () => {
   // State for active user, active tab, and employment data
@@ -59,7 +58,10 @@ export const EmploymentTab = () => {
         <CardBody>
           {/* Outer Navigation Tabs (Users) */}
           <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-2 pb-2 p-0">
-            <Nav className="nav-warning d-flex flex-wrap gap-2 justify-content-center" pills>
+            <Nav
+              className="nav-warning d-flex flex-wrap gap-2 justify-content-center"
+              pills
+            >
               {Object.keys(groupedData).map((userId) => {
                 const user = groupedData[Number(userId)][0].user; // Get the first record's user info
                 return (
@@ -83,7 +85,10 @@ export const EmploymentTab = () => {
           {/* Inner Navigation Tabs (Employment Records) */}
           {activeUser && groupedData[activeUser] && (
             <CardHeader className=" d-flex justify-content-center align-items-center flex-wrap gap-3 pt-3 pb-0">
-              <Nav tabs className="border-tab mb-0 d-flex flex-wrap gap-2 justify-content-center">
+              <Nav
+                tabs
+                className="border-tab mb-0 d-flex flex-wrap gap-2 justify-content-center"
+              >
                 {groupedData[activeUser].map((employment) => (
                   <NavItem key={employment.alias}>
                     <NavLink
