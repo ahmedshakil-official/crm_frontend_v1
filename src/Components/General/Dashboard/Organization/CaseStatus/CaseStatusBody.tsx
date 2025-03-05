@@ -1,6 +1,7 @@
 import apiClient from "@/services/api-client";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
+import formatDateToDMY from "@/utils/dateFormatter";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button, Row, Table } from "reactstrap";
@@ -61,6 +62,7 @@ const CaseStatusBody: React.FC<FetchLeadsProps> = ({
               <th>Phone</th>
               <th>Case Category</th>
               <th>Case Stage</th>
+              <th>Created At</th>
               <th>Created By</th>
               <th>View</th>
             </tr>
@@ -121,6 +123,7 @@ const CaseStatusBody: React.FC<FetchLeadsProps> = ({
                       {caseItem.case_stage}
                     </span>
                   </td>
+                  <td>{formatDateToDMY(caseItem.created_at)}</td>
                   <td>
                     {caseItem.created_by.first_name}{" "}
                     {caseItem.created_by.last_name}
