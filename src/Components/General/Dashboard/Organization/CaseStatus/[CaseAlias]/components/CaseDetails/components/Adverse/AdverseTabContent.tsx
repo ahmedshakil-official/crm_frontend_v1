@@ -21,8 +21,12 @@ import AddNewBankruptciesModal from "./AdverseModals/AddNewBankruptciesModal";
 import AddNewIVAsModal from "./AdverseModals/AddNewIVAsModal";
 import AddNewDMPsModal from "./AdverseModals/AddNewDMPsModal";
 import AddNewPayDayLoansModal from "./AdverseModals/AddNewPayDayLoansModal";
-import { useGetSingleAdverseDetailsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import {
+  useGetSingleAdverseDetailsQuery,
+  useUpdateAdverseDetailsMutation,
+} from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 export interface ApplicantsUsersProps {
   basicTab: string;
@@ -35,6 +39,8 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
     case_alias: casealias,
     adverse_alias: basicTab,
   });
+  const [updateAdverseDetails, { isLoading: isAdverseUpdating }] =
+    useUpdateAdverseDetailsMutation();
 
   const [formData, setFormData] = useState({
     alias: "",
@@ -117,6 +123,41 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         break;
       default:
         break;
+    }
+  };
+
+  // Add this function before the return statement
+  const handleSubmit = async () => {
+    const updatedFields = {
+      has_any_defaults_registered_in_the_last_six_years:
+        formData.has_any_defaults_registered_in_the_last_six_years,
+      has_any_ccj_registered_in_the_last_six_years:
+        formData.has_any_ccj_registered_in_the_last_six_years,
+      missed_any_payments_on_commitments_in_the_last_five_years:
+        formData.missed_any_payments_on_commitments_in_the_last_five_years,
+      is_a_property_repossessed: formData.is_a_property_repossessed,
+      has_ever_been_made_bankrupt: formData.has_ever_been_made_bankrupt,
+      is_ever_enter_into_a_debt_management_plan_or_debt_relief_order:
+        formData.is_ever_enter_into_a_debt_management_plan_or_debt_relief_order,
+      is_ever_taken_out_a_pay_day_loan:
+        formData.is_ever_taken_out_a_pay_day_loan,
+      is_exceeded_your_overdraft_in_the_last_three_months:
+        formData.is_exceeded_your_overdraft_in_the_last_three_months,
+      is_direct_debit_returned_in_the_last_three_months:
+        formData.is_direct_debit_returned_in_the_last_three_months,
+      why_did_the_adverse_occur: formData.why_did_the_adverse_occur,
+    };
+    console.log("Updated Fields:", updatedFields);
+    const res = await updateAdverseDetails({
+      case_alias: casealias,
+      adverse_alias: basicTab,
+      adverse_details: updatedFields,
+    });
+    console.log("Response:", res);
+    if (res.data) {
+      toast.success("Adverse updated successfully");
+    } else {
+      toast.error("Something went wrong");
     }
   };
 
@@ -250,7 +291,9 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
 
                 {/* Submit Button */}
                 <div className="d-flex justify-content-end mt-4">
-                  <Button color="primary">Submit</Button>
+                  <Button color="primary" onClick={handleSubmit}>
+                    Submit
+                  </Button>
                 </div>
               </Form>
             </CardBody>
