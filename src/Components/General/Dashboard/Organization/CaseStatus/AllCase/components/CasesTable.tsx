@@ -22,6 +22,7 @@ import {
 } from "reactstrap";
 
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
+import formatDateToDMY from "@/utils/dateFormatter";
 import { toast } from "react-toastify";
 import "../../CaseStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
@@ -322,6 +323,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                 <th>Phone</th>
                 <th>Case Category</th>
                 <th>Case Stage</th>
+                <th>Created At</th>
                 <th>Created By</th>
                 <th>Action</th>
               </tr>
@@ -384,7 +386,7 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
                         {caseItem.case_stage}
                       </span>
                     </td>
-
+                    <td>{formatDateToDMY(caseItem.created_at)}</td>
                     <td>
                       {caseItem.created_by?.first_name}{" "}
                       {caseItem.created_by?.last_name}
