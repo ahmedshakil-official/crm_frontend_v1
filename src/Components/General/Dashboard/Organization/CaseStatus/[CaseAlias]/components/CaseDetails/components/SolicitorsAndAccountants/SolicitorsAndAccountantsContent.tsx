@@ -1,9 +1,24 @@
-const SolicitorsAndAccountantsContent: React.FC = () => {
+import { Container, Row } from "reactstrap";
+import Accountant from "./Accountant/Accountant";
+import Solicitor from "./Solicitor/Solicitor";
+
+interface SolicitorsAndAccountantsContentProps {
+  activeTab: string;
+}
+
+const SolicitorsAndAccountantsContent: React.FC<
+  SolicitorsAndAccountantsContentProps
+> = ({ activeTab }) => {
   return (
-    <div>
-      {/* JSX here */}
-      SolicitorsAndAccountantsContent
-    </div>
+    // Your content here
+    <>
+      <Container>
+        <Row>
+          <Solicitor />
+          <Accountant />
+        </Row>
+      </Container>
+    </>
   );
 };
 
