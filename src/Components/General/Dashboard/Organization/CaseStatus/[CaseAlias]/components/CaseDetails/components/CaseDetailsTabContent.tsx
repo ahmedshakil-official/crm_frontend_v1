@@ -1,18 +1,25 @@
 import { useAppSelector } from "@/Redux/Hooks";
 import { TabContent } from "reactstrap";
+import { AdverseTab } from "./Adverse/AdverseTab";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
 import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
 import { EmploymentTab } from "./Employment/EmploymentTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
-import { AdverseTab } from "./Adverse/AdverseTab";
+import PortfolioContent from "./Portfolio/PortfolioContent";
+import PropertyDetailsContent from "./PropertyDetails/PropertyDetailsContent";
+import SolicitorsAndAccountantsContent from "./SolicitorsAndAccountants/SolicitorsAndAccountantsContent";
 
 // Define a mapping of tab names to components
 const tabComponents: Record<string, React.FC> = {
+  // DIP
   "Loan Details": LoanDetailsTab,
   "Applicant(s) Details": ApplicantsDetailsTab,
   "Employment/Income": EmploymentTab,
   "Credit Commitments": CreditCommitmentsContent,
-  "Adverse": AdverseTab,
+  Adverse: AdverseTab,
+  Portfolio: PortfolioContent,
+  "Property Details": PropertyDetailsContent,
+  "Solicitors & Accountants": SolicitorsAndAccountantsContent,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
