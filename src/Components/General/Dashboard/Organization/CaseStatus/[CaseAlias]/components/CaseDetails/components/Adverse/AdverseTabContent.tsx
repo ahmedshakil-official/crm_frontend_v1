@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -13,7 +13,6 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { AdverseData } from "./AdverseTab";
 import AddNewDefaultsModal from "./AdverseModals/AddNewDefaultsModal";
 import AddNewRegisteredCCJsModal from "./AdverseModals/AddNewRegisteredccjsModal";
 import AddNewCommitmentPaymentsMissedModal from "./AdverseModals/AddNewCommitmentPaymentsMissedModal";
@@ -22,43 +21,61 @@ import AddNewBankruptciesModal from "./AdverseModals/AddNewBankruptciesModal";
 import AddNewIVAsModal from "./AdverseModals/AddNewIVAsModal";
 import AddNewDMPsModal from "./AdverseModals/AddNewDMPsModal";
 import AddNewPayDayLoansModal from "./AdverseModals/AddNewPayDayLoansModal";
+import { useGetSingleAdverseDetailsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useParams } from "next/navigation";
 
 export interface ApplicantsUsersProps {
-  adverseData: AdverseData;
-  basicTab: string | null;
+  basicTab: string;
 }
 
-const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
-  adverseData,
-  basicTab,
-}) => {
-  const [formData, setFormData] = useState<{
-    hasRegisteredDefaults: boolean;
-    hasRegisteredCCJs: boolean;
-    hasCommitmentPaymentsMissed: boolean;
-    hasPropertiesRepossessed: boolean;
-    hasBankruptcies: boolean;
-    hasIVAs: boolean;
-    hasDMPs: boolean;
-    hasPayDayLoans: boolean;
-    hasExceededOverdraft: boolean;
-    hasReturnedDirectDebits: boolean;
-    reasonForAdverse: string;
-  }>({
-    hasRegisteredDefaults: false,
-    hasRegisteredCCJs: false,
-    hasCommitmentPaymentsMissed: false,
-    hasPropertiesRepossessed: false,
-    hasBankruptcies: false,
-    hasIVAs: false,
-    hasDMPs: false,
-    hasPayDayLoans: false,
-    hasExceededOverdraft: false,
-    hasReturnedDirectDebits: false,
-    reasonForAdverse: "",
+const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
+  const params = useParams();
+  const { casealias } = params;
+  const { data, isLoading } = useGetSingleAdverseDetailsQuery({
+    case_alias: casealias,
+    adverse_alias: basicTab,
   });
 
-  // modals state
+  const [formData, setFormData] = useState({
+    alias: "",
+    has_any_defaults_registered_in_the_last_six_years: false,
+    has_any_ccj_registered_in_the_last_six_years: false,
+    missed_any_payments_on_commitments_in_the_last_five_years: false,
+    is_a_property_repossessed: false,
+    has_ever_been_made_bankrupt: false,
+    is_ever_enter_into_a_debt_management_plan_or_debt_relief_order: false,
+    is_ever_taken_out_a_pay_day_loan: false,
+    is_exceeded_your_overdraft_in_the_last_three_months: false,
+    is_direct_debit_returned_in_the_last_three_months: false,
+    why_did_the_adverse_occur: "",
+    user: {
+      id: 0,
+      alias: "",
+      email: "",
+      phone: "",
+      first_name: "",
+      last_name: "",
+      profile_image: null,
+      user_type: "",
+    },
+  });
+
+  // Log data to debug
+  useEffect(() => {
+    if (data) {
+      setFormData(data);
+    }
+  }, [data]);
+
+  // Handle radio button changes
+  const handleRadioChange = (key: keyof typeof formData, value: boolean) => {
+    setFormData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  // Modals state
   const [addNewDefaultsModal, setAddNewDefaultsModal] = useState(false);
   const [addNewCCJsModal, setAddNewCCJsModal] = useState(false);
   const [
@@ -76,30 +93,26 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
 
   // Handle Add New button click
   const handleAddNewClick = (key: keyof typeof formData) => {
-    console.log(`Add New clicked for: ${key}`);
     switch (key) {
-      case "hasRegisteredDefaults":
+      case "has_any_defaults_registered_in_the_last_six_years":
         setAddNewDefaultsModal(true);
         break;
-      case "hasRegisteredCCJs":
+      case "has_any_ccj_registered_in_the_last_six_years":
         setAddNewCCJsModal(true);
         break;
-      case "hasCommitmentPaymentsMissed":
+      case "missed_any_payments_on_commitments_in_the_last_five_years":
         setAddNewCommitmentPaymentsMissedModal(true);
         break;
-      case "hasPropertiesRepossessed":
+      case "is_a_property_repossessed":
         setAddNewPropertiesRepossessedModal(true);
         break;
-      case "hasBankruptcies":
+      case "has_ever_been_made_bankrupt":
         setAddNewBankruptciesModal(true);
         break;
-      case "hasIVAs":
-        setAddNewIVAsModal(true);
-        break;
-      case "hasDMPs":
+      case "is_ever_enter_into_a_debt_management_plan_or_debt_relief_order":
         setAddNewDMPsModal(true);
         break;
-      case "hasPayDayLoans":
+      case "is_ever_taken_out_a_pay_day_loan":
         setAddNewPayDayLoansModal(true);
         break;
       default:
@@ -107,16 +120,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
     }
   };
 
-  // Handle radio button change
-  const handleRadioChange = (key: keyof typeof formData, value: boolean) => {
-    setFormData((prev) => ({ ...prev, [key]: value }));
-  };
-
-  // Handle form submission
-  const handleSubmit = () => {
-    console.log("Form Data:", formData);
-    alert("Form submitted! Check the console for details.");
-  };
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <Container>
@@ -128,44 +132,39 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
                 <Row>
                   {[
                     {
-                      key: "hasRegisteredDefaults",
+                      key: "has_any_defaults_registered_in_the_last_six_years",
                       label: "Defaults registered in the last 6 years?",
                     },
                     {
-                      key: "hasRegisteredCCJs",
+                      key: "has_any_ccj_registered_in_the_last_six_years",
                       label: "CCJ's registered in the last 6 years?",
                     },
                     {
-                      key: "hasCommitmentPaymentsMissed",
+                      key: "missed_any_payments_on_commitments_in_the_last_five_years",
                       label: "Missed commitment payments in the last 5 years?",
                     },
                     {
-                      key: "hasPropertiesRepossessed",
+                      key: "is_a_property_repossessed",
                       label: "Property repossessed?",
                     },
                     {
-                      key: "hasBankruptcies",
+                      key: "has_ever_been_made_bankrupt",
                       label: "Ever been made bankrupt?",
                     },
                     {
-                      key: "hasIVAs",
-                      label:
-                        "Entered into an Individual Voluntary Arrangement (IVA)?",
-                    },
-                    {
-                      key: "hasDMPs",
+                      key: "is_ever_enter_into_a_debt_management_plan_or_debt_relief_order",
                       label: "Entered into a Debt Management Plan (DMP)?",
                     },
                     {
-                      key: "hasPayDayLoans",
+                      key: "is_ever_taken_out_a_pay_day_loan",
                       label: "Taken out a payday loan?",
                     },
                     {
-                      key: "hasExceededOverdraft",
+                      key: "is_exceeded_your_overdraft_in_the_last_three_months",
                       label: "Exceeded overdraft in the last 3 months?",
                     },
                     {
-                      key: "hasReturnedDirectDebits",
+                      key: "is_direct_debit_returned_in_the_last_three_months",
                       label:
                         "Had a direct debit returned in the last 3 months?",
                     },
@@ -206,17 +205,21 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
                             No
                           </div>
                         </div>
-                        {formData[key as keyof typeof formData] === true && (
-                          <Button
-                            color="success"
-                            className="mt-2"
-                            onClick={() =>
-                              handleAddNewClick(key as keyof typeof formData)
-                            }
-                          >
-                            Add New
-                          </Button>
-                        )}
+                        {formData[key as keyof typeof formData] === true &&
+                          key !==
+                            "is_exceeded_your_overdraft_in_the_last_three_months" &&
+                          key !==
+                            "is_direct_debit_returned_in_the_last_three_months" && (
+                            <Button
+                              color="success"
+                              className="mt-2"
+                              onClick={() =>
+                                handleAddNewClick(key as keyof typeof formData)
+                              }
+                            >
+                              Add New
+                            </Button>
+                          )}
                       </FormGroup>
                     </Col>
                   ))}
@@ -228,26 +231,26 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
                   </Label>
                   <Input
                     type="textarea"
-                    name="reasonForAdverse"
-                    id="reasonForAdverse"
-                    value={formData.reasonForAdverse}
+                    name="why_did_the_adverse_occur"
+                    id="why_did_the_adverse_occur"
+                    value={formData.why_did_the_adverse_occur || ""}
                     onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
-                        reasonForAdverse: e.target.value as string,
+                        why_did_the_adverse_occur: e.target.value,
                       }))
                     }
                     disabled={
-                      !Object.values(formData).some((val) => val === true)
+                      !Object.entries(formData)
+                        .filter(([key, value]) => typeof value === "boolean")
+                        .some(([_, value]) => value === true)
                     }
                   />
                 </FormGroup>
 
                 {/* Submit Button */}
                 <div className="d-flex justify-content-end mt-4">
-                  <Button color="primary" onClick={handleSubmit}>
-                    Submit
-                  </Button>
+                  <Button color="primary">Submit</Button>
                 </div>
               </Form>
             </CardBody>

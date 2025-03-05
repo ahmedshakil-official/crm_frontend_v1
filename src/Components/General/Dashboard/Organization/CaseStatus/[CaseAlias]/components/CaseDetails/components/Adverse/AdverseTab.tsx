@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -9,82 +9,53 @@ import {
   NavLink,
 } from "reactstrap";
 import AdverseTabContent from "./AdverseTabContent";
+import { useParams } from "next/navigation";
+import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
+import { useGetAdverseDetailsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
 
-// Define the type for the applicant object
-interface Applicant {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  address: string;
-}
-
-// Define the type for the adverse data object
-interface AdverseDataItem {
+export interface AdverseUser {
   alias: string;
-  applicant: Applicant;
-  status: "Pending" | "Approved" | "Rejected"; // Union type for specific status values
-  date: string; // ISO date format (e.g., "2023-10-01")
+  email: string;
+  first_name: string;
+  id: number;
+  last_name: string;
+  phone: string;
+  profile_image: null | string; // Assuming profile_image can be a string URL if not null
+  user_type: string; // You might want to use a union type if user_type has specific values, e.g., "JOINT_USER" | "INDIVIDUAL_USER"
 }
 
-// Define the type for the adverseData array
-export type AdverseData = AdverseDataItem[];
-
-const adverseData: AdverseData = [
-  {
-    alias: "applicant1",
-    applicant: {
-      first_name: "John",
-      last_name: "Doe",
-      email: "john.doe@example.com",
-      phone: "123-456-7890",
-      address: "123 Main St, Anytown, USA",
-    },
-    status: "Pending",
-    date: "2023-10-01",
-  },
-  {
-    alias: "applicant2",
-    applicant: {
-      first_name: "Jane",
-      last_name: "Smith",
-      email: "jane.smith@example.com",
-      phone: "987-654-3210",
-      address: "456 Elm St, Othertown, USA",
-    },
-    status: "Approved",
-    date: "2023-09-25",
-  },
-  {
-    alias: "applicant3",
-    applicant: {
-      first_name: "Alice",
-      last_name: "Johnson",
-      email: "alice.johnson@example.com",
-      phone: "555-123-4567",
-      address: "789 Oak St, Somewhere, USA",
-    },
-    status: "Rejected",
-    date: "2023-09-30",
-  },
-  {
-    alias: "applicant4",
-    applicant: {
-      first_name: "Bob",
-      last_name: "Brown",
-      email: "bob.brown@example.com",
-      phone: "444-555-6666",
-      address: "321 Pine St, Nowhere, USA",
-    },
-    status: "Pending",
-    date: "2023-10-05",
-  },
-];
+export interface AdverseProps {
+  alias: string;
+  has_any_ccj_registered_in_the_last_six_years: boolean;
+  has_any_defaults_registered_in_the_last_six_years: boolean;
+  has_ever_been_made_bankrupt: boolean;
+  is_a_property_repossessed: boolean;
+  is_direct_debit_returned_in_the_last_three_months: boolean;
+  is_ever_enter_into_a_debt_management_plan_or_debt_relief_order: boolean;
+  is_ever_taken_out_a_pay_day_loan: boolean;
+  is_exceeded_your_overdraft_in_the_last_three_months: boolean;
+  missed_any_payments_on_commitments_in_the_last_five_years: boolean;
+  user: AdverseUser;
+  why_did_the_adverse_occur: null | string; // Assuming this can be a string if not null
+}
 
 export const AdverseTab = () => {
-  const [basicTab, setBasicTab] = useState<string | null>(
-    adverseData[0]?.alias || null
-  );
+  // Get case alias from URL params
+  const params = useParams();
+  const { casealias } = params;
+
+  // Fetch applicants data
+  const { data: adverseData, isLoading } = useGetAdverseDetailsQuery({
+    case_alias: casealias,
+  });
+  const [basicTab, setBasicTab] = useState<string | null>(null);
+  useEffect(() => {
+    if (adverseData?.length > 0) {
+      setBasicTab(adverseData[0].alias);
+    }
+  }, [adverseData]);
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <Col xxl="12" className="px-5">
@@ -92,23 +63,21 @@ export const AdverseTab = () => {
         <CardBody>
           <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-2 pb-2 p-0">
             <Nav className="nav-warning" pills>
-              {adverseData?.map((applicant) => (
-                <NavItem key={applicant.alias}>
+              {adverseData?.map((Adverse: AdverseProps) => (
+                <NavItem key={Adverse.alias}>
                   <NavLink
-                    className={`${
-                      basicTab === applicant.alias ? "active" : ""
-                    }`}
-                    onClick={() => setBasicTab(applicant.alias || null)}
+                    className={`${basicTab === Adverse.alias ? "active" : ""}`}
+                    onClick={() => setBasicTab(Adverse.alias || null)}
                     style={{ cursor: "pointer" }}
                   >
-                    {`${applicant?.applicant?.first_name} ${applicant?.applicant?.last_name}`}
+                    {`${Adverse?.user?.first_name} ${Adverse?.user?.last_name}`}
                   </NavLink>
                 </NavItem>
               ))}
             </Nav>
           </CardHeader>
           <CardBody className="px-0 pb-0">
-            <AdverseTabContent adverseData={adverseData} basicTab={basicTab} />
+            {basicTab && <AdverseTabContent basicTab={basicTab} />}
           </CardBody>
         </CardBody>
       </Card>
