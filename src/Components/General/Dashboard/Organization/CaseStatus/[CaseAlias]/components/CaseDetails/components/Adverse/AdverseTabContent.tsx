@@ -16,6 +16,12 @@ import {
 import { AdverseData } from "./AdverseTab";
 import AddNewDefaultsModal from "./AdverseModals/AddNewDefaultsModal";
 import AddNewRegisteredCCJsModal from "./AdverseModals/AddNewRegisteredccjsModal";
+import AddNewCommitmentPaymentsMissedModal from "./AdverseModals/AddNewCommitmentPaymentsMissedModal";
+import AddNewPropertiesRepossessedModal from "./AdverseModals/AddNewPropertiesRepossessedModal";
+import AddNewBankruptciesModal from "./AdverseModals/AddNewBankruptciesModal";
+import AddNewIVAsModal from "./AdverseModals/AddNewIVAsModal";
+import AddNewDMPsModal from "./AdverseModals/AddNewDMPsModal";
+import AddNewPayDayLoansModal from "./AdverseModals/AddNewPayDayLoansModal";
 
 export interface ApplicantsUsersProps {
   adverseData: AdverseData;
@@ -55,11 +61,20 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
   // modals state
   const [addNewDefaultsModal, setAddNewDefaultsModal] = useState(false);
   const [addNewCCJsModal, setAddNewCCJsModal] = useState(false);
+  const [
+    addNewCommitmentPaymentsMissedModal,
+    setAddNewCommitmentPaymentsMissedModal,
+  ] = useState(false);
+  const [
+    addNewPropertiesRepossessedModal,
+    setAddNewPropertiesRepossessedModal,
+  ] = useState(false);
+  const [addNewBankruptciesModal, setAddNewBankruptciesModal] = useState(false);
+  const [addNewIVAsModal, setAddNewIVAsModal] = useState(false);
+  const [addNewDMPsModal, setAddNewDMPsModal] = useState(false);
+  const [addNewPayDayLoansModal, setAddNewPayDayLoansModal] = useState(false);
 
-  const handleRadioChange = (key: keyof typeof formData, value: boolean) => {
-    setFormData((prev) => ({ ...prev, [key]: value }));
-  };
-
+  // Handle Add New button click
   const handleAddNewClick = (key: keyof typeof formData) => {
     console.log(`Add New clicked for: ${key}`);
     switch (key) {
@@ -68,9 +83,39 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
         break;
       case "hasRegisteredCCJs":
         setAddNewCCJsModal(true);
+        break;
+      case "hasCommitmentPaymentsMissed":
+        setAddNewCommitmentPaymentsMissedModal(true);
+        break;
+      case "hasPropertiesRepossessed":
+        setAddNewPropertiesRepossessedModal(true);
+        break;
+      case "hasBankruptcies":
+        setAddNewBankruptciesModal(true);
+        break;
+      case "hasIVAs":
+        setAddNewIVAsModal(true);
+        break;
+      case "hasDMPs":
+        setAddNewDMPsModal(true);
+        break;
+      case "hasPayDayLoans":
+        setAddNewPayDayLoansModal(true);
+        break;
       default:
         break;
     }
+  };
+
+  // Handle radio button change
+  const handleRadioChange = (key: keyof typeof formData, value: boolean) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  };
+
+  // Handle form submission
+  const handleSubmit = () => {
+    console.log("Form Data:", formData);
+    alert("Form submitted! Check the console for details.");
   };
 
   return (
@@ -197,13 +242,20 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
                     }
                   />
                 </FormGroup>
+
+                {/* Submit Button */}
+                <div className="d-flex justify-content-end mt-4">
+                  <Button color="primary" onClick={handleSubmit}>
+                    Submit
+                  </Button>
+                </div>
               </Form>
             </CardBody>
           </Card>
         </Col>
       </Row>
 
-      {/* modals */}
+      {/* Modals */}
       {addNewDefaultsModal && (
         <AddNewDefaultsModal
           isOpen={addNewDefaultsModal}
@@ -215,6 +267,48 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({
         <AddNewRegisteredCCJsModal
           isOpen={addNewCCJsModal}
           toggle={() => setAddNewCCJsModal((prev) => !prev)}
+        />
+      )}
+
+      {addNewCommitmentPaymentsMissedModal && (
+        <AddNewCommitmentPaymentsMissedModal
+          isOpen={addNewCommitmentPaymentsMissedModal}
+          toggle={() => setAddNewCommitmentPaymentsMissedModal((prev) => !prev)}
+        />
+      )}
+
+      {addNewPropertiesRepossessedModal && (
+        <AddNewPropertiesRepossessedModal
+          isOpen={addNewPropertiesRepossessedModal}
+          toggle={() => setAddNewPropertiesRepossessedModal((prev) => !prev)}
+        />
+      )}
+
+      {addNewBankruptciesModal && (
+        <AddNewBankruptciesModal
+          isOpen={addNewBankruptciesModal}
+          toggle={() => setAddNewBankruptciesModal((prev) => !prev)}
+        />
+      )}
+
+      {addNewIVAsModal && (
+        <AddNewIVAsModal
+          isOpen={addNewIVAsModal}
+          toggle={() => setAddNewIVAsModal((prev) => !prev)}
+        />
+      )}
+
+      {addNewDMPsModal && (
+        <AddNewDMPsModal
+          isOpen={addNewDMPsModal}
+          toggle={() => setAddNewDMPsModal((prev) => !prev)}
+        />
+      )}
+
+      {addNewPayDayLoansModal && (
+        <AddNewPayDayLoansModal
+          isOpen={addNewPayDayLoansModal}
+          toggle={() => setAddNewPayDayLoansModal((prev) => !prev)}
         />
       )}
     </Container>
