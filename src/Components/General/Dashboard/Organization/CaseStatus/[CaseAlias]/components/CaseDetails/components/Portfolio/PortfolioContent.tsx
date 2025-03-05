@@ -13,14 +13,17 @@ import {
   Row,
   Table,
 } from "reactstrap";
+import AddPortfolioContentModal from "./Modals/AddPortfolioContentModal";
 
 const PortfolioContent: React.FC = () => {
   const [hasProperties, setHasProperties] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   return (
     <>
       <Container fluid className="p-4">
-        {/* First row with Property Information and Additional Properties remains the same */}
         <Form>
           <Row className="mb-4">
             <Col md={12}>
@@ -68,8 +71,8 @@ const PortfolioContent: React.FC = () => {
                     <div className="mt-3">
                       <div className="table-responsive">
                         <div className="d-flex justify-content-end mb-2">
-                          <Button color="success" size="sm">
-                            Add Property
+                          <Button color="success" size="sm" onClick={toggleModal}>
+                            Add Portfolio
                           </Button>
                         </div>
                         <Table
@@ -155,6 +158,11 @@ const PortfolioContent: React.FC = () => {
           </Row>{" "}
         </Form>
       </Container>
+      
+      <AddPortfolioContentModal 
+        isOpen={isModalOpen}
+        toggle={toggleModal}
+      />
     </>
   );
 };
