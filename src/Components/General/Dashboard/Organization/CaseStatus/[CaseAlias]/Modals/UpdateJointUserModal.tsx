@@ -69,14 +69,16 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
           first_name: formData.first_name,
           last_name: formData.last_name,
           phone: formData.phone,
-          relationship: formData.relationship,
-          notes: formData.notes,
+
           ...(hasEmailChanged && { email: formData.email }), // Only include email if it has changed
         },
+        relationship: formData.relationship,
+        notes: formData.notes,
       },
     };
 
     const res = await updateJointUserInfo(payload);
+    console.log(res);
 
     if (res.data) {
       toast.success("User updated successfully!");
