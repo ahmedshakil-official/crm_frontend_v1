@@ -1,4 +1,7 @@
+import { useAddCommitmentPaymentsMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Modal,
@@ -15,36 +18,74 @@ import {
 interface AddNewCommitmentPaymentsMissedModalProps {
   isOpen: boolean;
   toggle: () => void;
+  adverseAlias: string;
 }
 
 const AddNewCommitmentPaymentsMissedModal: React.FC<
   AddNewCommitmentPaymentsMissedModalProps
-> = ({ isOpen, toggle }) => {
-  const [commitmentType, setCommitmentType] = useState<string>("CreditCard");
-  const [loanCompanyName, setLoanCompanyName] = useState<string>("");
+> = ({ isOpen, toggle, adverseAlias }) => {
+  const [commitment_type, setCommitmentType] = useState<string>("credit_card");
+  const [loan_company_name, setLoanCompanyName] = useState<string>("");
   const [cleared, setCleared] = useState<boolean>(false);
-  const [dateCleared, setDateCleared] = useState<string>("");
-  const [threeMonths, setThreeMonths] = useState<string>("0");
-  const [twelveMonths, setTwelveMonths] = useState<string>("0");
-  const [twentyFourMonths, setTwentyFourMonths] = useState<string>("0");
-  const [thirtySixMonths, setThirtySixMonths] = useState<string>("0");
-  const [sixtyMonths, setSixtyMonths] = useState<string>("0");
+  const [date_cleared, setDateCleared] = useState<string>("");
+  const [
+    missed_payments_in_the_last_three_months,
+    setMissedPaymentsThreeMonths,
+  ] = useState<string>("0");
+  const [
+    missed_payments_in_the_last_twelve_months,
+    setMissedPaymentsTwelveMonths,
+  ] = useState<string>("0");
+  const [
+    missed_payments_in_the_last_twenty_four_months,
+    setMissedPaymentsTwentyFourMonths,
+  ] = useState<string>("0");
+  const [
+    missed_payments_in_the_last_thirty_six_months,
+    setMissedPaymentsThirtySixMonths,
+  ] = useState<string>("0");
+  const [
+    missed_payments_in_the_last_sixty_months,
+    setMissedPaymentsSixtyMonths,
+  ] = useState<string>("0");
 
-  const handleSubmit = () => {
-    console.log({
-      commitmentType,
-      loanCompanyName,
-      cleared,
-      dateCleared,
-      threeMonths,
-      twelveMonths,
-      twentyFourMonths,
-      thirtySixMonths,
-      sixtyMonths,
+  const params = useParams();
+  const { casealias } = params;
+
+  const [addCommitmentPayments, { isLoading }] =
+    useAddCommitmentPaymentsMutation();
+
+  const handleSubmit = async () => {
+    const value = {
+      commitment_type,
+      loan_company_name,
+      date_cleared: date_cleared || null,
+      missed_payments_in_the_last_three_months:
+        missed_payments_in_the_last_three_months || null,
+      missed_payments_in_the_last_twelve_months:
+        missed_payments_in_the_last_twelve_months || null,
+      missed_payments_in_the_last_twenty_four_months:
+        missed_payments_in_the_last_twenty_four_months || null,
+      missed_payments_in_the_last_thirty_six_months:
+        missed_payments_in_the_last_thirty_six_months || null,
+      missed_payments_in_the_last_sixty_months:
+        missed_payments_in_the_last_sixty_months || null,
+    };
+
+    const res = await addCommitmentPayments({
+      case_alias: casealias,
+      adverse_alias: adverseAlias,
+      value,
     });
-    toggle(); // Close modal after submit
-  };
 
+    if (res.data) {
+      toast.success("Successfully added new commitment payments missed");
+      toggle();
+    } else {
+      toast.error("Failed to add new commitment payments missed");
+    }
+  };
+  // Update the select options values
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
       {/* Modal Header */}
@@ -55,54 +96,54 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
       {/* Modal Body */}
       <ModalBody className="p-5">
         <Row>
-          {/* Commitment Type Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="CommitmentType">Commitment Type</Label>
+              <Label for="commitment_type">Commitment Type</Label>
               <Input
-                id="CommitmentType"
-                name="CommitmentType"
+                id="commitment_type"
+                name="commitment_type"
                 type="select"
-                value={commitmentType}
-                onChange={(e) => setCommitmentType(e.target.value as string)}
+                value={commitment_type}
+                onChange={(e) => setCommitmentType(e.target.value)}
                 className="form-control"
               >
-                <option value="CreditCard">Credit Card</option>
-                <option value="StoreCard">Store Card</option>
-                <option value="Loan">Loan</option>
-                <option value="HP">HP</option>
-                <option value="Overdraft">Overdraft</option>
-                <option value="StudentLoan">Student Loan</option>
-                <option value="Maintenance">Maintenance</option>
-                <option value="Lease">Lease</option>
-                <option value="Unsecured">Unsecured</option>
-                <option value="MortgageOrRent">Mortgage / Rent</option>
-                <option value="PublicUtility">Public Utility</option>
-                <option value="Communications">Communications</option>
-                <option value="Insurance">Insurance</option>
-                <option value="Secured">Secured</option>
-                <option value="PCP">PCP</option>
-                <option value="MailOrder">Mail Order</option>
-                <option value="Childcare">Childcare</option>
-                <option value="CarFinance">Car Finance</option>
-                <option value="BuyNowPayLater">Buy Now Pay Later (BNPL)</option>
-                <option value="CreditCommitment">Credit Commitment</option>
-                <option value="DebtManagementPlan">DMP</option>
-                <option value="Unknown">Unknown</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="store_card">Store Card</option>
+                <option value="loan">Loan</option>
+                <option value="hp">HP</option>
+                <option value="overdraft">Overdraft</option>
+                <option value="student_loan">Student Loan</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="lease">Lease</option>
+                <option value="unsecured">Unsecured</option>
+                <option value="mortgage_or_rent">Mortgage / Rent</option>
+                <option value="public_utility">Public Utility</option>
+                <option value="communications">Communications</option>
+                <option value="insurance">Insurance</option>
+                <option value="secured">Secured</option>
+                <option value="pcp">PCP</option>
+                <option value="mail_order">Mail Order</option>
+                <option value="childcare">Childcare</option>
+                <option value="car_finance">Car Finance</option>
+                <option value="buy_now_pay_later">
+                  Buy Now Pay Later (BNPL)
+                </option>
+                <option value="credit_commitment">Credit Commitment</option>
+                <option value="debt_management_plan">DMP</option>
+                <option value="unknown">Unknown</option>
               </Input>
             </FormGroup>
           </Col>
 
-          {/* Loan Company Name Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="LoanCompanyName">Loan Company Name</Label>
+              <Label for="loan_company_name">Loan Company Name</Label>
               <Input
-                id="LoanCompanyName"
-                name="LoanCompanyName"
+                id="loan_company_name"
+                name="loan_company_name"
                 type="text"
-                value={loanCompanyName}
-                onChange={(e) => setLoanCompanyName(e.target.value as string)}
+                value={loan_company_name}
+                onChange={(e) => setLoanCompanyName(e.target.value)}
                 className="form-control"
                 placeholder="Enter loan company name"
               />
@@ -111,13 +152,14 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
         </Row>
 
         <Row>
-          {/* Cleared Field */}
           <Col sm={6}>
             <FormGroup className="d-flex align-items-center">
-              <Label for="Cleared" className="mb-0 me-2">Cleared?</Label>
+              <Label for="cleared" className="mb-0 me-2">
+                Cleared?
+              </Label>
               <Input
-                id="Cleared"
-                name="Cleared"
+                id="cleared"
+                name="cleared"
                 type="checkbox"
                 checked={cleared}
                 onChange={(e) => setCleared(e.target.checked)}
@@ -126,17 +168,16 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
             </FormGroup>
           </Col>
 
-          {/* Date Cleared Field (Conditional) */}
           {cleared && (
             <Col sm={6}>
               <FormGroup>
-                <Label for="DateCleared">Date Cleared</Label>
+                <Label for="date_cleared">Date Cleared</Label>
                 <Input
-                  id="DateCleared"
-                  name="DateCleared"
+                  id="date_cleared"
+                  name="date_cleared"
                   type="date"
-                  value={dateCleared}
-                  onChange={(e) => setDateCleared(e.target.value as string)}
+                  value={date_cleared}
+                  onChange={(e) => setDateCleared(e.target.value)}
                   className="form-control"
                 />
               </FormGroup>
@@ -145,91 +186,95 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
         </Row>
 
         <Row>
-          {/* Missed Payments in the Last 3 Months Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="Three_Months">
+              <Label for="missed_payments_in_the_last_three_months">
                 Missed payments in the last 3 months
               </Label>
               <Input
-                id="Three_Months"
-                name="Three_Months"
-                type="text"
-                value={threeMonths}
-                onChange={(e) => setThreeMonths(e.target.value as string)}
-                className="numeric form-control"
+                id="missed_payments_in_the_last_three_months"
+                name="missed_payments_in_the_last_three_months"
+                type="number"
+                min="0"
+                value={missed_payments_in_the_last_three_months}
+                onChange={(e) => setMissedPaymentsThreeMonths(e.target.value)}
+                className="form-control"
               />
             </FormGroup>
           </Col>
 
-          {/* Missed Payments in the Last 12 Months Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="Twelve_Months">
+              <Label for="missed_payments_in_the_last_twelve_months">
                 Missed payments in the last 12 months
               </Label>
               <Input
-                id="Twelve_Months"
-                name="Twelve_Months"
-                type="text"
-                value={twelveMonths}
-                onChange={(e) => setTwelveMonths(e.target.value as string)}
-                className="numeric form-control"
+                id="missed_payments_in_the_last_twelve_months"
+                name="missed_payments_in_the_last_twelve_months"
+                type="number"
+                min="0"
+                value={missed_payments_in_the_last_twelve_months}
+                onChange={(e) => setMissedPaymentsTwelveMonths(e.target.value)}
+                className="form-control"
               />
             </FormGroup>
           </Col>
         </Row>
 
         <Row>
-          {/* Missed Payments in the Last 24 Months Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="TwentyFour_Months">
+              <Label for="missed_payments_in_the_last_twenty_four_months">
                 Missed payments in the last 24 months
               </Label>
               <Input
-                id="TwentyFour_Months"
-                name="TwentyFour_Months"
-                type="text"
-                value={twentyFourMonths}
-                onChange={(e) => setTwentyFourMonths(e.target.value as string)}
-                className="numeric form-control"
+                id="missed_payments_in_the_last_twenty_four_months"
+                name="missed_payments_in_the_last_twenty_four_months"
+                type="number"
+                min="0"
+                value={missed_payments_in_the_last_twenty_four_months}
+                onChange={(e) =>
+                  setMissedPaymentsTwentyFourMonths(e.target.value)
+                }
+                className="form-control"
               />
             </FormGroup>
           </Col>
 
-          {/* Missed Payments in the Last 36 Months Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="ThirtySix_Months">
+              <Label for="missed_payments_in_the_last_thirty_six_months">
                 Missed payments in the last 36 months
               </Label>
               <Input
-                id="ThirtySix_Months"
-                name="ThirtySix_Months"
-                type="text"
-                value={thirtySixMonths}
-                onChange={(e) => setThirtySixMonths(e.target.value as string)}
-                className="numeric form-control"
+                id="missed_payments_in_the_last_thirty_six_months"
+                name="missed_payments_in_the_last_thirty_six_months"
+                type="number"
+                min="0"
+                value={missed_payments_in_the_last_thirty_six_months}
+                onChange={(e) =>
+                  setMissedPaymentsThirtySixMonths(e.target.value)
+                }
+                className="form-control"
               />
             </FormGroup>
           </Col>
         </Row>
 
         <Row>
-          {/* Missed Payments in the Last 60 Months Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="Sixty_Months">
+              <Label for="missed_payments_in_the_last_sixty_months">
                 Missed payments in the last 60 months
               </Label>
               <Input
-                id="Sixty_Months"
-                name="Sixty_Months"
-                type="text"
-                value={sixtyMonths}
-                onChange={(e) => setSixtyMonths(e.target.value as string as string)}
-                className="numeric form-control"
+                id="missed_payments_in_the_last_sixty_months"
+                name="missed_payments_in_the_last_sixty_months"
+                type="number"
+                min="0"
+                value={missed_payments_in_the_last_sixty_months}
+                onChange={(e) => setMissedPaymentsSixtyMonths(e.target.value)}
+                className="form-control"
               />
             </FormGroup>
           </Col>

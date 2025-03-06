@@ -28,6 +28,9 @@ import {
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 import ViewPropertiesRepossessedModal from "./AdverseModals/ViewModals/ViewPropertiesRepossessedModal";
+import ViewCommitmentPaymentsMissedModal from "./AdverseModals/ViewModals/ViewCommitmentPaymentsMissedModal";
+import ViewDefaultsModal from "./AdverseModals/ViewModals/ViewDefaultsModal";
+import ViewBankruptciesModal from "./AdverseModals/ViewModals/ViewBankruptciesModal";
 
 export interface ApplicantsUsersProps {
   basicTab: string;
@@ -360,6 +363,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <AddNewDefaultsModal
           isOpen={addNewDefaultsModal}
           toggle={() => setAddNewDefaultsModal((prev) => !prev)}
+          adverseAlias={basicTab}
         />
       )}
 
@@ -374,6 +378,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <AddNewCommitmentPaymentsMissedModal
           isOpen={addNewCommitmentPaymentsMissedModal}
           toggle={() => setAddNewCommitmentPaymentsMissedModal((prev) => !prev)}
+          adverseAlias={basicTab}
         />
       )}
 
@@ -389,6 +394,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <AddNewBankruptciesModal
           isOpen={addNewBankruptciesModal}
           toggle={() => setAddNewBankruptciesModal((prev) => !prev)}
+          adverseAlias={basicTab}
         />
       )}
 
@@ -418,6 +424,27 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <ViewPropertiesRepossessedModal
           isOpen={viewPropertiesRepossessedModal}
           toggle={() => setViewPropertiesRepossessedModal((prev) => !prev)}
+          adverseAlias={basicTab}
+        />
+      )}
+      {viewCommitmentPaymentsMissedModal && (
+        <ViewCommitmentPaymentsMissedModal
+          isOpen={viewCommitmentPaymentsMissedModal}
+          toggle={() => setViewCommitmentPaymentsMissedModal((prev) => !prev)}
+          adverseAlias={basicTab}
+        />
+      )}
+      {viewDefaultsModal && (
+        <ViewDefaultsModal
+          isOpen={viewDefaultsModal}
+          toggle={() => setViewDefaultsModal((prev) => !prev)}
+          adverseAlias={basicTab}
+        />
+      )}
+      {viewBankruptciesModal && (
+        <ViewBankruptciesModal
+          isOpen={viewBankruptciesModal}
+          toggle={() => setViewBankruptciesModal((prev) => !prev)}
           adverseAlias={basicTab}
         />
       )}
