@@ -26,7 +26,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Property</span>
       </ModalHeader>
-      <ModalBody>
+      <ModalBody className="px-5 py-4">
         <Form>
           <Row>
             <Col md="4">

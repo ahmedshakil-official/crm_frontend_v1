@@ -1,4 +1,3 @@
-import { Container, Row } from "reactstrap";
 import Accountant from "./Accountant/Accountant";
 import Solicitor from "./Solicitor/Solicitor";
 
@@ -10,15 +9,10 @@ const SolicitorsAndAccountantsContent: React.FC<
   SolicitorsAndAccountantsContentProps
 > = ({ activeTab }) => {
   return (
-    // Your content here
-    <>
-      <Container>
-        <Row>
-          <Solicitor />
-          <Accountant />
-        </Row>
-      </Container>
-    </>
+    <div>
+      {activeTab === "solicitor" && <Solicitor />}
+      {activeTab === "accountant" && <Accountant />}
+    </div>
   );
 };
 
