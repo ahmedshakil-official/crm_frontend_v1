@@ -188,7 +188,7 @@ const Solicitor: React.FC = () => {
         {/* Second Solicitor Toggle */}
         {activeTab === "first" && (
           <Card className="m-0 p-0">
-            <CardBody>
+            <CardBody className="my-0 py-0">
               <Label className="mb-2">Second Solicitor</Label>
               <div className="d-flex flex-column">
                 {["yes", "no"].map((value) => (
@@ -213,7 +213,6 @@ const Solicitor: React.FC = () => {
           </Card>
         )}
         <div className="d-flex justify-content-end gap-2 mt-3">
-          <Button color="secondary">Back</Button>
           <Button color="primary">Save Solicitor</Button>
         </div>
       </Form>
