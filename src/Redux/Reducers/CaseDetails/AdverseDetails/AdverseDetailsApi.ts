@@ -25,6 +25,21 @@ export const AdverseDetailsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["AdverseDetails", "JointUserDetails"],
     }),
+    addPropertyRepossessed: builder.mutation({
+      query: ({ case_alias, adverse_alias, value }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/property/repossessed/`,
+        method: "POST",
+        body: value,
+      }),
+      invalidatesTags: ["AdverseDetails"],
+    }),
+    getPropertyRepossessed: builder.query({
+      query: ({ case_alias, adverse_alias }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/property/repossessed/`,
+        method: "GET",
+      }),
+      providesTags: ["AdverseDetails"],
+    }),
   }),
 });
 
@@ -32,4 +47,6 @@ export const {
   useGetAdverseDetailsQuery,
   useGetSingleAdverseDetailsQuery,
   useUpdateAdverseDetailsMutation,
+  useAddPropertyRepossessedMutation,
+  useGetPropertyRepossessedQuery,
 } = AdverseDetailsApi;
