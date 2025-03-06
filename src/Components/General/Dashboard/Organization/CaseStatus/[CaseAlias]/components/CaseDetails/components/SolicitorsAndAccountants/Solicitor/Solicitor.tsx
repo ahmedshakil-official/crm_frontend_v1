@@ -211,7 +211,9 @@ const Solicitor: React.FC = () => {
                       />
                       {value.charAt(0).toUpperCase() + value.slice(1)}
                       {value === "yes" && hasSecondSolicitor && (
-                        <span className="ms-1 text-muted text-warning">(View on tab)</span>
+                        <span className="ms-1 text-muted text-warning">
+                          (View on tab)
+                        </span>
                       )}
                     </Label>
                   </FormGroup>
