@@ -46,7 +46,7 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered size="xl">
+    <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
       {/* Modal Header */}
       <ModalHeader toggle={toggle}>
         <h2>Add New Commitment Payments Missed</h2>
@@ -113,14 +113,15 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
         <Row>
           {/* Cleared Field */}
           <Col sm={6}>
-            <FormGroup>
-              <Label for="Cleared">Cleared?</Label>
+            <FormGroup className="d-flex align-items-center">
+              <Label for="Cleared" className="mb-0 me-2">Cleared?</Label>
               <Input
                 id="Cleared"
                 name="Cleared"
                 type="checkbox"
                 checked={cleared}
                 onChange={(e) => setCleared(e.target.checked)}
+                className="me-2"
               />
             </FormGroup>
           </Col>

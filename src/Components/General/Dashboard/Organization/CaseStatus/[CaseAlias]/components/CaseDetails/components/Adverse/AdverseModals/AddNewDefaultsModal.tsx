@@ -46,7 +46,7 @@ const AddNewDefaultsModal: React.FC<AddNewDefaultsModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered size="xl">
+    <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
       {/* Modal Header */}
       <ModalHeader toggle={toggle}>
         <h2>Add New Defaults</h2>
@@ -117,6 +117,7 @@ const AddNewDefaultsModal: React.FC<AddNewDefaultsModalProps> = ({
                     name="Satisfied"
                     type="radio"
                     value="true"
+                    className=" me-2"
                     onChange={() => handleRadioChange(true)}
                     checked={satisfied === true}
                     required
@@ -129,6 +130,7 @@ const AddNewDefaultsModal: React.FC<AddNewDefaultsModalProps> = ({
                     name="Satisfied"
                     type="radio"
                     value="false"
+                    className=" me-2"
                     onChange={() => handleRadioChange(false)}
                     checked={satisfied === false}
                   />

@@ -10,7 +10,6 @@ import {
 } from "reactstrap";
 import AdverseTabContent from "./AdverseTabContent";
 import { useParams } from "next/navigation";
-import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
 import { useGetAdverseDetailsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
 
 export interface AdverseUser {
@@ -20,8 +19,8 @@ export interface AdverseUser {
   id: number;
   last_name: string;
   phone: string;
-  profile_image: null | string; // Assuming profile_image can be a string URL if not null
-  user_type: string; // You might want to use a union type if user_type has specific values, e.g., "JOINT_USER" | "INDIVIDUAL_USER"
+  profile_image: null | string;
+  user_type: string;
 }
 
 export interface AdverseProps {

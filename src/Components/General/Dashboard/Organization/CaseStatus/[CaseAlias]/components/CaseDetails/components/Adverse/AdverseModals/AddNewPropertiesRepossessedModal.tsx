@@ -34,7 +34,7 @@ const AddNewPropertiesRepossessedModal: React.FC<
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered size="xl">
+    <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
       {/* Modal Header */}
       <ModalHeader toggle={toggle}>
         <h2>Add New Properties Repossessed</h2>

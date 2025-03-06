@@ -32,8 +32,6 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
     setSelectedUser(user);
     toggleDeleteModal();
   };
-  console.log(jointUserInfo);
-
   return (
     <Col sm="12" className="box-col-12">
       <Card>
