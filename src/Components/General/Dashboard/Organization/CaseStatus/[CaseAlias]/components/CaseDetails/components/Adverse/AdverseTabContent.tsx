@@ -251,15 +251,24 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
                             "is_exceeded_your_overdraft_in_the_last_three_months" &&
                           key !==
                             "is_direct_debit_returned_in_the_last_three_months" && (
-                            <Button
-                              color="success"
-                              className="mt-2"
-                              onClick={() =>
-                                handleAddNewClick(key as keyof typeof formData)
-                              }
-                            >
-                              Add New
-                            </Button>
+                            <div className="d-flex gap-2 mt-2">
+                              <Button
+                                color="success"
+                                onClick={() =>
+                                  handleAddNewClick(key as keyof typeof formData)
+                                }
+                              >
+                                Add New
+                              </Button>
+                              <Button
+                                color="primary"
+                                // onClick={() =>
+                                //   handleAddNewClick(key as keyof typeof formData)
+                                // }
+                              >
+                                View
+                              </Button>
+                            </div>
                           )}
                       </FormGroup>
                     </Col>
