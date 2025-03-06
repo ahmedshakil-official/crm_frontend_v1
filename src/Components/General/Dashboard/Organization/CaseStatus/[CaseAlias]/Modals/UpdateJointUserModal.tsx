@@ -78,7 +78,6 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     };
 
     const res = await updateJointUserInfo(payload);
-    console.log(res);
 
     if (res.data) {
       toast.success("User updated successfully!");

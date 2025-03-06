@@ -39,7 +39,7 @@ const AddNewPayDayLoansModal: React.FC<AddNewPayDayLoansModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered size="xl">
+    <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
       {/* Modal Header */}
       <ModalHeader toggle={toggle}>
         <h2>Add New Pay Day Loans</h2>

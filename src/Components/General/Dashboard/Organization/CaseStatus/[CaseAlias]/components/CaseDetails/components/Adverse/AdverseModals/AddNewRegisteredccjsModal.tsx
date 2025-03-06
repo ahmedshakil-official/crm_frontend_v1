@@ -46,7 +46,7 @@ const AddNewRegisteredCCJsModal: React.FC<AddNewRegisteredCCJsModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered size="xl">
+    <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
       {/* Modal Header */}
       <ModalHeader toggle={toggle}>
         <h2>Add New Registered CCJs</h2>
@@ -120,6 +120,7 @@ const AddNewRegisteredCCJsModal: React.FC<AddNewRegisteredCCJsModalProps> = ({
                     onChange={() => handleRadioChange(true)}
                     checked={satisfied === true}
                     required
+                    className="me-2"
                   />
                   Yes
                 </div>
@@ -131,6 +132,7 @@ const AddNewRegisteredCCJsModal: React.FC<AddNewRegisteredCCJsModalProps> = ({
                     value="false"
                     onChange={() => handleRadioChange(false)}
                     checked={satisfied === false}
+                    className="me-2"
                   />
                   No
                 </div>
