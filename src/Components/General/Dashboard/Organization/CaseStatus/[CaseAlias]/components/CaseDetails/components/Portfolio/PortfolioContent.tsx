@@ -41,7 +41,7 @@ const PortfolioContent: React.FC = () => {
                     {["yes", "no"].map((value) => (
                       <div
                         key={value}
-                        className="me-3 d-flex align-items-center"
+                        className="me-2 d-flex align-items-center"
                       >
                         <Input
                           name="hasProperties"
