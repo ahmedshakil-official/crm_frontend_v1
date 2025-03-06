@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Solicitor.css";
 import {
   Button,
   Card,
@@ -212,7 +213,7 @@ const Solicitor: React.FC = () => {
                       {value.charAt(0).toUpperCase() + value.slice(1)}
                       {value === "yes" && hasSecondSolicitor && (
                         <span className="ms-1 text-muted text-warning">
-                          (View on tab)
+                          (View on tab) <i className="fa-solid fa-arrow-turn-up text-primary animate-blink"></i>
                         </span>
                       )}
                     </Label>
