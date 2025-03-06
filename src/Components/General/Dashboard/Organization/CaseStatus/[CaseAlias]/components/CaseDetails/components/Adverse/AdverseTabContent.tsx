@@ -13,20 +13,21 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import AddNewDefaultsModal from "./AdverseModals/AddNewDefaultsModal";
-import AddNewRegisteredCCJsModal from "./AdverseModals/AddNewRegisteredccjsModal";
-import AddNewCommitmentPaymentsMissedModal from "./AdverseModals/AddNewCommitmentPaymentsMissedModal";
-import AddNewPropertiesRepossessedModal from "./AdverseModals/AddNewPropertiesRepossessedModal";
-import AddNewBankruptciesModal from "./AdverseModals/AddNewBankruptciesModal";
-import AddNewIVAsModal from "./AdverseModals/AddNewIVAsModal";
-import AddNewDMPsModal from "./AdverseModals/AddNewDMPsModal";
-import AddNewPayDayLoansModal from "./AdverseModals/AddNewPayDayLoansModal";
+import AddNewDefaultsModal from "./AdverseModals/AddModals/AddNewDefaultsModal";
+import AddNewRegisteredCCJsModal from "./AdverseModals/AddModals/AddNewRegisteredccjsModal";
+import AddNewCommitmentPaymentsMissedModal from "./AdverseModals/AddModals/AddNewCommitmentPaymentsMissedModal";
+import AddNewPropertiesRepossessedModal from "./AdverseModals/AddModals/AddNewPropertiesRepossessedModal";
+import AddNewBankruptciesModal from "./AdverseModals/AddModals/AddNewBankruptciesModal";
+import AddNewIVAsModal from "./AdverseModals/AddModals/AddNewIVAsModal";
+import AddNewDMPsModal from "./AdverseModals/AddModals/AddNewDMPsModal";
+import AddNewPayDayLoansModal from "./AdverseModals/AddModals/AddNewPayDayLoansModal";
 import {
   useGetSingleAdverseDetailsQuery,
   useUpdateAdverseDetailsMutation,
 } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
+import ViewPropertiesRepossessedModal from "./AdverseModals/ViewModals/ViewPropertiesRepossessedModal";
 
 export interface ApplicantsUsersProps {
   basicTab: string;
@@ -81,7 +82,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
     }));
   };
 
-  // Modals state
+  // Modals state for add
   const [addNewDefaultsModal, setAddNewDefaultsModal] = useState(false);
   const [addNewCCJsModal, setAddNewCCJsModal] = useState(false);
   const [
@@ -126,6 +127,48 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
     }
   };
 
+  // Add view modal states
+  const [viewDefaultsModal, setViewDefaultsModal] = useState(false);
+  const [viewCCJsModal, setViewCCJsModal] = useState(false);
+  const [
+    viewCommitmentPaymentsMissedModal,
+    setViewCommitmentPaymentsMissedModal,
+  ] = useState(false);
+  const [viewPropertiesRepossessedModal, setViewPropertiesRepossessedModal] =
+    useState(false);
+  const [viewBankruptciesModal, setViewBankruptciesModal] = useState(false);
+  const [viewIVAsModal, setViewIVAsModal] = useState(false);
+  const [viewDMPsModal, setViewDMPsModal] = useState(false);
+  const [viewPayDayLoansModal, setViewPayDayLoansModal] = useState(false);
+
+  // Add handle view button click
+  const handleViewClick = (key: keyof typeof formData) => {
+    switch (key) {
+      case "has_any_defaults_registered_in_the_last_six_years":
+        setViewDefaultsModal(true);
+        break;
+      case "has_any_ccj_registered_in_the_last_six_years":
+        setViewCCJsModal(true);
+        break;
+      case "missed_any_payments_on_commitments_in_the_last_five_years":
+        setViewCommitmentPaymentsMissedModal(true);
+        break;
+      case "is_a_property_repossessed":
+        setViewPropertiesRepossessedModal(true);
+        break;
+      case "has_ever_been_made_bankrupt":
+        setViewBankruptciesModal(true);
+        break;
+      case "is_ever_enter_into_a_debt_management_plan_or_debt_relief_order":
+        setViewDMPsModal(true);
+        break;
+      case "is_ever_taken_out_a_pay_day_loan":
+        setViewPayDayLoansModal(true);
+        break;
+      default:
+        break;
+    }
+  };
   // Add this function before the return statement
   const handleSubmit = async () => {
     const updatedFields = {
@@ -255,16 +298,18 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
                               <Button
                                 color="success"
                                 onClick={() =>
-                                  handleAddNewClick(key as keyof typeof formData)
+                                  handleAddNewClick(
+                                    key as keyof typeof formData
+                                  )
                                 }
                               >
                                 Add New
                               </Button>
                               <Button
                                 color="primary"
-                                // onClick={() =>
-                                //   handleAddNewClick(key as keyof typeof formData)
-                                // }
+                                onClick={() =>
+                                  handleViewClick(key as keyof typeof formData)
+                                }
                               >
                                 View
                               </Button>
@@ -336,6 +381,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <AddNewPropertiesRepossessedModal
           isOpen={addNewPropertiesRepossessedModal}
           toggle={() => setAddNewPropertiesRepossessedModal((prev) => !prev)}
+          adverseAlias={basicTab}
         />
       )}
 
@@ -364,6 +410,15 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <AddNewPayDayLoansModal
           isOpen={addNewPayDayLoansModal}
           toggle={() => setAddNewPayDayLoansModal((prev) => !prev)}
+        />
+      )}
+
+      {/* View modals  */}
+      {viewPropertiesRepossessedModal && (
+        <ViewPropertiesRepossessedModal
+          isOpen={viewPropertiesRepossessedModal}
+          toggle={() => setViewPropertiesRepossessedModal((prev) => !prev)}
+          adverseAlias={basicTab}
         />
       )}
     </Container>

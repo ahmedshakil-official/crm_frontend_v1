@@ -1,4 +1,7 @@
+import { useAddPropertyRepossessedMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Modal,
@@ -15,22 +18,39 @@ import {
 interface AddNewPropertiesRepossessedModalProps {
   isOpen: boolean;
   toggle: () => void;
+  adverseAlias: string;
 }
 
 const AddNewPropertiesRepossessedModal: React.FC<
   AddNewPropertiesRepossessedModalProps
-> = ({ isOpen, toggle }) => {
-  const [lenderName, setLenderName] = useState<string>("");
-  const [registeredDate, setRegisteredDate] = useState<string>("");
-  const [satisfiedDate, setSatisfiedDate] = useState<string>("");
+> = ({ isOpen, toggle, adverseAlias }) => {
+  const [lender, setLender] = useState<string>("");
+  const [date_of_registration, setDateOfRegistration] = useState<string>("");
+  const [date_of_satisfaction, setDateOfSatisfaction] = useState<string>("");
+  const params = useParams();
+  const { casealias } = params;
 
-  const handleSubmit = () => {
-    console.log({
-      lenderName,
-      registeredDate,
-      satisfiedDate,
+  const [addPropertyRepossessed, { isLoading }] =
+    useAddPropertyRepossessedMutation();
+
+  const handleSubmit = async () => {
+    const value = {
+      lender,
+      date_of_registration: date_of_registration || null,
+      date_of_satisfaction: date_of_satisfaction || null,
+    };
+
+    const res = await addPropertyRepossessed({
+      case_alias: casealias,
+      adverse_alias: adverseAlias,
+      value,
     });
-    toggle(); // Close modal after submit
+    if (res.data) {
+      toast.success("Property Repossessed Added Successfully ");
+      toggle();
+    } else {
+      toast.error("Property Repossessed Adding Failed ");
+    }
   };
 
   return (
@@ -51,8 +71,8 @@ const AddNewPropertiesRepossessedModal: React.FC<
                 id="LenderName"
                 name="LenderName"
                 type="text"
-                value={lenderName}
-                onChange={(e) => setLenderName(e.target.value as string)}
+                value={lender}
+                onChange={(e) => setLender(e.target.value as string)}
                 className="form-control"
                 placeholder="Enter lender name"
               />
@@ -67,8 +87,10 @@ const AddNewPropertiesRepossessedModal: React.FC<
                 id="RegisteredDate"
                 name="RegisteredDate"
                 type="date"
-                value={registeredDate}
-                onChange={(e) => setRegisteredDate(e.target.value as string)}
+                value={date_of_registration}
+                onChange={(e) =>
+                  setDateOfRegistration(e.target.value as string)
+                }
                 className="form-control"
               />
             </FormGroup>
@@ -84,8 +106,10 @@ const AddNewPropertiesRepossessedModal: React.FC<
                 id="SatisfiedDate"
                 name="SatisfiedDate"
                 type="date"
-                value={satisfiedDate}
-                onChange={(e) => setSatisfiedDate(e.target.value as string)}
+                value={date_of_satisfaction}
+                onChange={(e) =>
+                  setDateOfSatisfaction(e.target.value as string)
+                }
                 className="form-control"
               />
             </FormGroup>
@@ -99,7 +123,7 @@ const AddNewPropertiesRepossessedModal: React.FC<
           Cancel
         </Button>
         <Button color="primary" onClick={handleSubmit}>
-          Submit
+          {isLoading ? "Submitting.." : "Submit"}
         </Button>
       </ModalFooter>
     </Modal>
