@@ -192,7 +192,12 @@ const Solicitor: React.FC = () => {
               <Label className="mb-2">Second Solicitor</Label>
               <div className="d-flex flex-column">
                 {["yes", "no"].map((value) => (
-                  <FormGroup key={value} check inline>
+                  <FormGroup
+                    key={value}
+                    check
+                    inline
+                    className="d-flex align-items-center"
+                  >
                     <Label check>
                       <Input
                         type="radio"
@@ -205,6 +210,9 @@ const Solicitor: React.FC = () => {
                         onChange={() => setHasSecondSolicitor(value === "yes")}
                       />
                       {value.charAt(0).toUpperCase() + value.slice(1)}
+                      {value === "yes" && hasSecondSolicitor && (
+                        <span className="ms-1 text-muted text-warning">(View on tab)</span>
+                      )}
                     </Label>
                   </FormGroup>
                 ))}
