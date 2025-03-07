@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./Solicitor.css";
 import {
   Button,
   Card,
@@ -14,6 +13,7 @@ import {
   NavLink,
   Row,
 } from "reactstrap";
+import "./Solicitor.css";
 
 const Solicitor: React.FC = () => {
   const [hasSecondSolicitor, setHasSecondSolicitor] = useState<boolean>(false);
@@ -190,42 +190,51 @@ const Solicitor: React.FC = () => {
         {activeTab === "first" && (
           <Card className="m-0 p-0">
             <CardBody className="my-0 py-0">
-              <Label className="mb-2">Second Solicitor</Label>
-              <div className="d-flex flex-column">
-                {["yes", "no"].map((value) => (
-                  <FormGroup
-                    key={value}
-                    check
-                    inline
-                    className="d-flex align-items-center"
-                  >
-                    <Label check>
-                      <Input
-                        type="radio"
-                        name="secondSolicitor"
-                        checked={
-                          value === "yes"
-                            ? hasSecondSolicitor
-                            : !hasSecondSolicitor
-                        }
-                        onChange={() => setHasSecondSolicitor(value === "yes")}
-                      />
-                      {value.charAt(0).toUpperCase() + value.slice(1)}
-                      {value === "yes" && hasSecondSolicitor && (
-                        <span className="ms-1 text-muted text-warning">
-                          (View on tab) <i className="fa-solid fa-arrow-turn-up text-primary animate-blink"></i>
-                        </span>
-                      )}
-                    </Label>
-                  </FormGroup>
-                ))}
-              </div>
+              <Row>
+                <Col md={6}>
+                  <Label className="mb-2">Second Solicitor</Label>
+                  <div className="d-flex flex-column">
+                    {["yes", "no"].map((value) => (
+                      <FormGroup
+                        key={value}
+                        check
+                        inline
+                        className="d-flex align-items-center"
+                      >
+                        <Label check>
+                          <Input
+                            type="radio"
+                            name="secondSolicitor"
+                            checked={
+                              value === "yes"
+                                ? hasSecondSolicitor
+                                : !hasSecondSolicitor
+                            }
+                            onChange={() =>
+                              setHasSecondSolicitor(value === "yes")
+                            }
+                          />
+                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                          {value === "yes" && hasSecondSolicitor && (
+                            <span className="ms-1 text-muted text-warning">
+                              (View on tab)
+                              <i className="fa-solid fa-arrow-turn-up text-primary animate-blink"></i>
+                            </span>
+                          )}
+                        </Label>
+                      </FormGroup>
+                    ))}
+                  </div>
+                </Col>
+                <Col md={6}>
+                  <div className="d-flex justify-content-end ">
+                    <Button color="primary">Save Solicitor</Button>
+                  </div>
+                </Col>
+              </Row>
             </CardBody>
           </Card>
         )}
-        <div className="d-flex justify-content-end gap-2 mt-3">
-          <Button color="primary">Save Solicitor</Button>
-        </div>
       </Form>
     </Col>
   );

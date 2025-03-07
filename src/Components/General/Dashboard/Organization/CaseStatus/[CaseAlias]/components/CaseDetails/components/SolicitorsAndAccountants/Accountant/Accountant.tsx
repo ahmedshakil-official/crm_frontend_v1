@@ -111,12 +111,15 @@ const Accountant: React.FC = () => {
                 </FormGroup>
               </Col>
             </Row>
+            <Row>
+              <Col md={12} className="d-flex justify-content-end">
+                <FormGroup>
+                  <Button color="primary">Save Accountant</Button>
+                </FormGroup>
+              </Col>
+            </Row>
           </CardBody>
         </Card>
-
-        <div className="d-flex justify-content-end gap-2 mt-3">
-          <Button color="primary">Save Accountant</Button>
-        </div>
       </Form>
     </Col>
   );
