@@ -1,4 +1,5 @@
 import { baseApi } from "@/Redux/Api/BaseApi";
+import { get } from "http";
 
 export const AdverseDetailsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -85,9 +86,70 @@ export const AdverseDetailsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["AdverseDetails"],
     }),
+    addIVAs: builder.mutation({
+      query: ({ case_alias, adverse_alias, value }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/individual/voluntary/`,
+        method: "POST",
+        body: value,
+      }),
+      invalidatesTags: ["AdverseDetails"],
+    }),
+    getIVAs: builder.query({
+      query: ({ case_alias, adverse_alias }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/individual/voluntary/`,
+        method: "GET",
+      }),
+      providesTags: ["AdverseDetails"],
+    }),
+    addDMPs: builder.mutation({
+      query: ({ case_alias, adverse_alias, value }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/debt/management/`,
+        method: "POST",
+        body: value,
+      }),
+      invalidatesTags: ["AdverseDetails"],
+    }),
+    getDMPs: builder.query({
+      query: ({ case_alias, adverse_alias }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/debt/management/`,
+        method: "GET",
+      }),
+      providesTags: ["AdverseDetails"],
+    }),
+    addPayDayLoans: builder.mutation({
+      query: ({ case_alias, adverse_alias, value }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/pay/day/loan/`,
+        method: "POST",
+        body: value,
+      }),
+      invalidatesTags: ["AdverseDetails"],
+    }),
+    getPayDayLoans: builder.query({
+      query: ({ case_alias, adverse_alias }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/pay/day/loan/`,
+        method: "GET",
+      }),
+      providesTags: ["AdverseDetails"],
+    }),
+    addCCJs: builder.mutation({
+      query: ({ case_alias, adverse_alias, value }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/ccj`,
+        method: "POST",
+        body: value,
+      }),
+      invalidatesTags: ["AdverseDetails"],
+    }),
+    getCCJs: builder.query({
+      query: ({ case_alias, adverse_alias }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/ccj`,
+        method: "GET",
+      }),
+      providesTags: ["AdverseDetails"],
+    }),
   }),
 });
 
+// Update exports to include the new query
 export const {
   useGetAdverseDetailsQuery,
   useGetSingleAdverseDetailsQuery,
@@ -99,5 +161,13 @@ export const {
   useAddDefaultsMutation,
   useGetDefaultsQuery,
   useAddBankruptsMutation,
-  useGetBankruptsQuery
+  useGetBankruptsQuery,
+  useAddIVAsMutation,
+  useGetIVAsQuery,
+  useAddDMPsMutation,
+  useGetDMPsQuery,
+  useAddPayDayLoansMutation,
+  useGetPayDayLoansQuery,
+  useAddCCJsMutation,
+  useGetCCJsQuery,
 } = AdverseDetailsApi;

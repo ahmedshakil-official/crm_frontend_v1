@@ -10,79 +10,94 @@ import {
   Input,
   Row,
   Col,
+  InputGroup,
+  InputGroupText,
 } from "reactstrap";
+import { useAddCCJsMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface AddNewRegisteredCCJsModalProps {
   isOpen: boolean;
   toggle: () => void;
+  adverseAlias: string;
 }
 
 const AddNewRegisteredCCJsModal: React.FC<AddNewRegisteredCCJsModalProps> = ({
   isOpen,
   toggle,
+  adverseAlias,
 }) => {
+  const params = useParams();
+  const { casealias } = params;
+  const [addCCJs, { isLoading }] = useAddCCJsMutation();
+
   const [amount, setAmount] = useState<string>("");
-  const [loanCompanyName, setLoanCompanyName] = useState<string>("");
-  const [dateRegistered, setDateRegistered] = useState<string>("");
-  const [satisfied, setSatisfied] = useState<boolean | null>(null);
-  const [dateSatisfied, setDateSatisfied] = useState<string>("");
+  const [loan_company_name, setLoanCompanyName] = useState<string>("");
+  const [date_registered, setDateRegistered] = useState<string>("");
+  const [has_satisfied, setHasSatisfied] = useState<boolean>(false);
+  const [date_satisfied, setDateSatisfied] = useState<string>("");
 
-  const handleRadioChange = (value: boolean) => {
-    setSatisfied(value);
-    if (value === true) {
-      setDateSatisfied(""); // Clear DateSatisfied when "Yes" is selected
-    }
-  };
+  const handleSubmit = async () => {
+    const value = {
+      amount: amount || null,
+      loan_company_name,
+      date_registered: date_registered || null,
+      has_satisfied,
+      date_satisfied: date_satisfied || null,
+    };
 
-  const handleSubmit = () => {
-    console.log({
-      amount,
-      loanCompanyName,
-      dateRegistered,
-      satisfied,
-      dateSatisfied,
+    const res = await addCCJs({
+      case_alias: casealias,
+      adverse_alias: adverseAlias,
+      value,
     });
-    toggle(); // Close modal after submit
+
+    if (res.data) {
+      toast.success("CCJ Added Successfully");
+      toggle();
+    } else {
+      toast.error("Failed to add CCJ");
+    }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
-      {/* Modal Header */}
       <ModalHeader toggle={toggle}>
         <h2>Add New Registered CCJs</h2>
       </ModalHeader>
 
-      {/* Modal Body */}
       <ModalBody className="p-5">
         <Row>
-          {/* Amount Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="Amount">Amount</Label>
-              <div className="input-group">
+              <Label for="amount">Amount</Label>
+              <InputGroup>
+                <InputGroupText>£</InputGroupText>
                 <Input
-                  id="Amount"
-                  name="Amount"
-                  type="text"
+                  id="amount"
+                  name="amount"
+                  type="number"
+                  min="0"
+                  step="0.01"
                   value={amount}
-                  onChange={(e) => setAmount(e.target.value as string)}
-                  className="numeric form-control"
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="form-control"
                   placeholder="Enter amount"
                 />
-              </div>
+              </InputGroup>
             </FormGroup>
           </Col>
 
-          {/* Loan Company Name Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="LoanCompanyName">Loan Company Name</Label>
+              <Label for="loan_company_name">Loan Company Name</Label>
               <Input
-                id="LoanCompanyName"
-                name="LoanCompanyName"
+                id="loan_company_name"
+                name="loan_company_name"
                 type="text"
-                value={loanCompanyName}
-                onChange={(e) => setLoanCompanyName(e.target.value as string)}
+                value={loan_company_name}
+                onChange={(e) => setLoanCompanyName(e.target.value)}
                 className="form-control"
                 placeholder="Enter loan company name"
               />
@@ -91,68 +106,58 @@ const AddNewRegisteredCCJsModal: React.FC<AddNewRegisteredCCJsModalProps> = ({
         </Row>
 
         <Row>
-          {/* Date Registered Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="DateRegistered">Date Registered</Label>
+              <Label for="date_registered">Date Registered</Label>
               <Input
-                id="DateRegistered"
-                name="DateRegistered"
+                id="date_registered"
+                name="date_registered"
                 type="date"
-                value={dateRegistered}
-                onChange={(e) => setDateRegistered(e.target.value as string)}
+                value={date_registered}
+                onChange={(e) => setDateRegistered(e.target.value)}
                 className="form-control"
               />
             </FormGroup>
           </Col>
 
-          {/* Satisfied Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="Satisfied">Has the CCJs been satisfied?*</Label>
-              <div className="d-flex align-items-center">
-                <div>
+              <Label for="has_satisfied">Has the CCJ been satisfied?</Label>
+              <div>
+                <FormGroup check inline>
                   <Input
-                    id="Satisfied"
-                    name="Satisfied"
                     type="radio"
-                    value="true"
-                    onChange={() => handleRadioChange(true)}
-                    checked={satisfied === true}
-                    required
-                    className="me-2"
+                    name="has_satisfied"
+                    checked={has_satisfied === true}
+                    onChange={() => setHasSatisfied(true)}
                   />
-                  Yes
-                </div>
-                <div className="ms-3">
+                  <Label check>Yes</Label>
+                </FormGroup>
+                <FormGroup check inline>
                   <Input
-                    id="Satisfied"
-                    name="Satisfied"
                     type="radio"
-                    value="false"
-                    onChange={() => handleRadioChange(false)}
-                    checked={satisfied === false}
-                    className="me-2"
+                    name="has_satisfied"
+                    checked={has_satisfied === false}
+                    onChange={() => setHasSatisfied(false)}
                   />
-                  No
-                </div>
+                  <Label check>No</Label>
+                </FormGroup>
               </div>
             </FormGroup>
           </Col>
         </Row>
 
-        {/* Date Satisfied Field (Conditional) */}
-        {satisfied === true && (
+        {has_satisfied && (
           <Row>
             <Col sm={6}>
               <FormGroup>
-                <Label for="DateSatisfied">Date Satisfied</Label>
+                <Label for="date_satisfied">Date Satisfied</Label>
                 <Input
-                  id="DateSatisfied"
-                  name="DateSatisfied"
+                  id="date_satisfied"
+                  name="date_satisfied"
                   type="date"
-                  value={dateSatisfied}
-                  onChange={(e) => setDateSatisfied(e.target.value as string)}
+                  value={date_satisfied}
+                  onChange={(e) => setDateSatisfied(e.target.value)}
                   className="form-control"
                 />
               </FormGroup>
@@ -161,13 +166,12 @@ const AddNewRegisteredCCJsModal: React.FC<AddNewRegisteredCCJsModalProps> = ({
         )}
       </ModalBody>
 
-      {/* Modal Footer */}
       <ModalFooter>
         <Button color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button color="primary" onClick={handleSubmit}>
-          Submit
+        <Button color="primary" onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Submitting..." : "Submit"}
         </Button>
       </ModalFooter>
     </Modal>
