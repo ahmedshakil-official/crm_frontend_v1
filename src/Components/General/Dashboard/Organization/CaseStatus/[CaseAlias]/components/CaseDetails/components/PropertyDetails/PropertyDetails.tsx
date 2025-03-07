@@ -1,7 +1,13 @@
+import FoundProperty from "./Components/FoundProperty";
+import NoteForProperty from "./Components/NoteForProperty";
+import PropertyValuationCard from "./Components/PropertyValuationCard";
+
 const PropertyDetails: React.FC = () => {
   return (
     <div>
-      <h1>Property Details</h1>
+      <PropertyValuationCard />
+      <FoundProperty />
+      <NoteForProperty />
     </div>
   );
 };
