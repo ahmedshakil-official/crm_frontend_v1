@@ -8,8 +8,8 @@ import { EmploymentTab } from "./Employment/EmploymentTab";
 import ExistingProtectionTab from "./ExistingProtection/ExistingProtectionTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 import PortfolioContent from "./Portfolio/PortfolioContent";
-import PropertyDetailsContent from "./PropertyDetails/PropertyDetailsContent";
 import SolicitorsAndAccountantsTab from "./SolicitorsAndAccountants/SolicitorsAndAccountantsTab";
+import PropertyDetails from "./PropertyDetails/PropertyDetails";
 
 // Define a mapping of tab names to components
 const tabComponents: Record<string, React.FC> = {
@@ -18,9 +18,9 @@ const tabComponents: Record<string, React.FC> = {
   "Applicant(s) Details": ApplicantsDetailsTab,
   "Employment/Income": EmploymentTab,
   "Credit Commitments": CreditCommitmentsContent,
-  Adverse: AdverseTab,
-  Portfolio: PortfolioContent,
-  "Property Details": PropertyDetailsContent,
+  "Adverse": AdverseTab,
+  "Portfolio": PortfolioContent,
+  "Property Details": PropertyDetails,
   "Solicitors & Accountants": SolicitorsAndAccountantsTab,
   "Budget Planner": BudgetPlannerContent,
   "Existing Protection": ExistingProtectionTab,
