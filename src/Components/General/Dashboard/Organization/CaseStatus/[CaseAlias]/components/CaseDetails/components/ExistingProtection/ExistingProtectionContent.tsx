@@ -32,7 +32,7 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
       {basicTab && applicantsData && applicantsData.length > 0 && (
         <>
           <Form>
-            <Card className="mb-3">
+            <Card className="mb-3 border-primary">
               <CardBody>
                 <div className="px-3">
                   <Label className="mb-3">
