@@ -23,10 +23,13 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
   basicTab,
 }) => {
   const [hasProtection, setHasProtection] = useState<boolean>(false);
+  const [hasNonStandardTerms, setHasNonStandardTerms] =
+    useState<boolean>(false);
   const currentApplicant = applicantsData?.find(
     (app) => app.alias === basicTab
   );
-
+  // Add new state at the top of component
+  const [willBeCancelled, setWillBeCancelled] = useState<boolean>(false);
   return (
     <div>
       {basicTab && applicantsData && applicantsData.length > 0 && (
@@ -249,13 +252,19 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                     </Row>
 
                     <Row>
-                      <Col md={12}>
+                      <Col md={6}>
                         <FormGroup>
                           <Label>Have non-standard terms been issued?</Label>
                           <div className="d-flex gap-4">
                             {["yes", "no"].map((option) => (
                               <FormGroup key={option} check inline>
-                                <Input type="radio" name="nonStandardTerms" />
+                                <Input
+                                  type="radio"
+                                  name="nonStandardTerms"
+                                  onChange={(e) =>
+                                    setHasNonStandardTerms(option === "yes")
+                                  }
+                                />
                                 <Label check>
                                   {option.charAt(0).toUpperCase() +
                                     option.slice(1)}
@@ -265,27 +274,63 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                           </div>
                         </FormGroup>
                       </Col>
+                      <Col md={6}>
+                        {hasNonStandardTerms && (
+                          <FormGroup>
+                            <Label>
+                              Copy and paste Non-standard terms from lender
+                            </Label>
+                            <Input
+                              type="textarea"
+                              placeholder="Copy and paste Non-standard terms from lender"
+                              rows={3}
+                            />
+                          </FormGroup>
+                        )}
+                      </Col>
                     </Row>
-
                     <Row>
-                      <Col md={12}>
+                      <Col md={6}>
                         <FormGroup>
                           <Label>Will this policy be cancelled?</Label>
                           <div className="d-flex gap-4">
                             {["yes", "no"].map((option) => (
                               <FormGroup key={option} check inline>
-                                <Input type="radio" name="willBeCancelled" />
+                                <Input 
+                                  type="radio" 
+                                  name="willBeCancelled"
+                                  onChange={(e) => setWillBeCancelled(option === "yes")}
+                                />
                                 <Label check>
-                                  {option.charAt(0).toUpperCase() +
-                                    option.slice(1)}
+                                  {option.charAt(0).toUpperCase() + option.slice(1)}
                                 </Label>
                               </FormGroup>
                             ))}
                           </div>
                         </FormGroup>
                       </Col>
+                      <Col md={6}>
+                        {willBeCancelled && (
+                          <FormGroup>
+                            <Label>Reason For Policy Cancellation</Label>
+                            <Input type="select" defaultValue="">
+                              <option value="">Not Values Yet</option>
+                            </Input>
+                          </FormGroup>
+                        )}
+                      </Col>
                     </Row>
 
+                    {willBeCancelled && (
+                      <Row>
+                        <Col md={12}>
+                          <FormGroup>
+                            <Label>Policy Cancellation Notes</Label>
+                            <Input type="textarea" rows={4} />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    )}
                     <Row>
                       <Col md={12}>
                         <FormGroup>
