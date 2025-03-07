@@ -2,8 +2,10 @@ import { useAppSelector } from "@/Redux/Hooks";
 import { TabContent } from "reactstrap";
 import { AdverseTab } from "./Adverse/AdverseTab";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
+import BudgetPlannerContent from "./BudgetPlanner/BudgetPlannerContent";
 import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
 import { EmploymentTab } from "./Employment/EmploymentTab";
+import ExistingProtectionTab from "./ExistingProtection/ExistingProtectionTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 import PortfolioContent from "./Portfolio/PortfolioContent";
 import PropertyDetailsContent from "./PropertyDetails/PropertyDetailsContent";
@@ -20,6 +22,8 @@ const tabComponents: Record<string, React.FC> = {
   Portfolio: PortfolioContent,
   "Property Details": PropertyDetailsContent,
   "Solicitors & Accountants": SolicitorsAndAccountantsTab,
+  "Budget Planner": BudgetPlannerContent,
+  "Existing Protection": ExistingProtectionTab,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
