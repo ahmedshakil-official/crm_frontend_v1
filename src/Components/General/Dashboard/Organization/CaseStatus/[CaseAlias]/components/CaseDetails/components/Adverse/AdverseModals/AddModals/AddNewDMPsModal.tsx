@@ -13,33 +13,54 @@ import {
   InputGroup,
   InputGroupText,
 } from "reactstrap";
+import { useAddDMPsMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface AddNewDMPsModalProps {
   isOpen: boolean;
   toggle: () => void;
+  adverseAlias: string;
 }
 
 const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
   isOpen,
   toggle,
+  adverseAlias,
 }) => {
-  const [managedBy, setManagedBy] = useState<string>("");
-  const [dateRegistered, setDateRegistered] = useState<string>("");
-  const [loanCompanyName, setLoanCompanyName] = useState<string>("");
-  const [amount, setAmount] = useState<string>("");
-  const [satisfied, setSatisfied] = useState<boolean>(false);
-  const [dateSatisfied, setDateSatisfied] = useState<string>("");
+  const params = useParams();
+  const { casealias } = params;
+  const [addDMPs, { isLoading }] = useAddDMPsMutation();
 
-  const handleSubmit = () => {
-    console.log({
-      managedBy,
-      dateRegistered,
-      loanCompanyName,
-      amount,
+  const [plan, setPlan] = useState<"DIRECT" | "THIRD_PARTY">("DIRECT");
+  const [loan_company_name, setLoanCompanyName] = useState<string>("");
+  const [date_registered, setDateRegistered] = useState<string>("");
+  const [outstanding_balance, setOutstandingBalance] = useState<string>("");
+  const [satisfied, setSatisfied] = useState<boolean>(false);
+  const [date_satisfied, setDateSatisfied] = useState<string>("");
+
+  const handleSubmit = async () => {
+    const value = {
+      plan,
+      loan_company_name,
+      date_registered: date_registered || null,
+      outstanding_balance: outstanding_balance || null,
       satisfied,
-      dateSatisfied,
+      date_satisfied: date_satisfied || null,
+    };
+
+    const res = await addDMPs({
+      case_alias: casealias,
+      adverse_alias: adverseAlias,
+      value,
     });
-    toggle();
+
+    if (res.data) {
+      toast.success("DMP Added Successfully");
+      toggle();
+    } else {
+      toast.error("Failed to add DMP");
+    }
   };
 
   return (
@@ -57,20 +78,20 @@ const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
                 <FormGroup check inline>
                   <Input
                     type="radio"
-                    name="managedBy"
-                    value="Directly"
-                    checked={managedBy === "Directly"}
-                    onChange={(e) => setManagedBy(e.target.value)}
+                    name="plan"
+                    value="DIRECT"
+                    checked={plan === "DIRECT"}
+                    onChange={(e) => setPlan(e.target.value as "DIRECT")}
                   />
                   <Label check>Directly</Label>
                 </FormGroup>
                 <FormGroup check inline>
                   <Input
                     type="radio"
-                    name="managedBy"
-                    value="ThirdParty"
-                    checked={managedBy === "ThirdParty"}
-                    onChange={(e) => setManagedBy(e.target.value)}
+                    name="plan"
+                    value="THIRD_PARTY"
+                    checked={plan === "THIRD_PARTY"}
+                    onChange={(e) => setPlan(e.target.value as "THIRD_PARTY")}
                   />
                   <Label check>3rd Party</Label>
                 </FormGroup>
@@ -80,12 +101,12 @@ const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
 
           <Col sm={6} className="mb-3">
             <FormGroup>
-              <Label for="DateRegistered">Date Registered</Label>
+              <Label for="date_registered">Date Registered</Label>
               <Input
-                id="DateRegistered"
-                name="DateRegistered"
+                id="date_registered"
+                name="date_registered"
                 type="date"
-                value={dateRegistered}
+                value={date_registered}
                 onChange={(e) => setDateRegistered(e.target.value)}
                 className="form-control w-100"
               />
@@ -94,12 +115,12 @@ const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
 
           <Col sm={6} className="mb-3">
             <FormGroup>
-              <Label for="LoanCompanyName">Loan Company Name</Label>
+              <Label for="loan_company_name">Loan Company Name</Label>
               <Input
-                id="LoanCompanyName"
-                name="LoanCompanyName"
+                id="loan_company_name"
+                name="loan_company_name"
                 type="text"
-                value={loanCompanyName}
+                value={loan_company_name}
                 onChange={(e) => setLoanCompanyName(e.target.value)}
                 className="form-control w-100"
               />
@@ -108,17 +129,17 @@ const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
 
           <Col sm={6} className="mb-3">
             <FormGroup>
-              <Label for="Amount">Outstanding Balance</Label>
+              <Label for="outstanding_balance">Outstanding Balance</Label>
               <InputGroup>
                 <InputGroupText>£</InputGroupText>
                 <Input
-                  id="Amount"
-                  name="Amount"
+                  id="outstanding_balance"
+                  name="outstanding_balance"
                   type="number"
                   min="0"
-                  max="9999999999999999"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
+                  step="0.01"
+                  value={outstanding_balance}
+                  onChange={(e) => setOutstandingBalance(e.target.value)}
                   className="form-control"
                 />
               </InputGroup>
@@ -141,12 +162,12 @@ const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
           {satisfied && (
             <Col sm={6}>
               <FormGroup>
-                <Label for="DateSatisfied">Date Satisfied</Label>
+                <Label for="date_satisfied">Date Satisfied</Label>
                 <Input
-                  id="DateSatisfied"
-                  name="DateSatisfied"
+                  id="date_satisfied"
+                  name="date_satisfied"
                   type="date"
-                  value={dateSatisfied}
+                  value={date_satisfied}
                   onChange={(e) => setDateSatisfied(e.target.value)}
                   className="form-control w-100"
                 />
@@ -160,8 +181,8 @@ const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
         <Button color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button color="primary" onClick={handleSubmit}>
-          Submit
+        <Button color="primary" onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Submitting..." : "Submit"}
         </Button>
       </ModalFooter>
     </Modal>

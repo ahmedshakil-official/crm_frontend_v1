@@ -10,71 +10,93 @@ import {
   Input,
   Row,
   Col,
+  InputGroup,
+  InputGroupText,
 } from "reactstrap";
+import { useAddPayDayLoansMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface AddNewPayDayLoansModalProps {
   isOpen: boolean;
   toggle: () => void;
+  adverseAlias: string;
 }
 
 const AddNewPayDayLoansModal: React.FC<AddNewPayDayLoansModalProps> = ({
   isOpen,
   toggle,
+  adverseAlias,
 }) => {
-  const [loanAmount, setLoanAmount] = useState<string>("");
-  const [loanDate, setLoanDate] = useState<string>("");
-  const [hasPayDayLoans, setHasPayDayLoans] = useState<boolean>(false);
-  const [dateSatisfied, setDateSatisfied] = useState<string>("");
-  const [lenderName, setLenderName] = useState<string>("");
+  const params = useParams();
+  const { casealias } = params;
+  const [addPayDayLoans, { isLoading }] = useAddPayDayLoansMutation();
 
-  const handleSubmit = () => {
-    console.log({
-      loanAmount,
-      loanDate,
-      hasPayDayLoans,
-      dateSatisfied,
-      lenderName,
+  const [loan_amount, setLoanAmount] = useState<string>("");
+  const [loan_date, setLoanDate] = useState<string>("");
+  const [has_the_pay_day_loan_been_repaid, setHasPayDayLoanBeenRepaid] = useState<boolean>(false);
+  const [date_repaid, setDateRepaid] = useState<string>("");
+  const [lender_name, setLenderName] = useState<string>("");
+
+  const handleSubmit = async () => {
+    const value = {
+      loan_amount: loan_amount || null,
+      loan_date: loan_date || null,
+      has_the_pay_day_loan_been_repaid,
+      date_repaid: date_repaid || null,
+      lender_name,
+    };
+
+    const res = await addPayDayLoans({
+      case_alias: casealias,
+      adverse_alias: adverseAlias,
+      value,
     });
-    toggle(); // Close modal after submit
+
+    if (res.data) {
+      toast.success("Pay Day Loan Added Successfully");
+      toggle();
+    } else {
+      toast.error("Failed to add Pay Day Loan");
+    }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
-      {/* Modal Header */}
       <ModalHeader toggle={toggle}>
         <h2>Add New Pay Day Loans</h2>
       </ModalHeader>
 
-      {/* Modal Body */}
       <ModalBody className="p-5">
         <Row>
-          {/* Loan Amount Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="LoanAmount">Loan Amount</Label>
-              <div className="input-group">
+              <Label for="loan_amount">Loan Amount</Label>
+              <InputGroup>
+                <InputGroupText>£</InputGroupText>
                 <Input
-                  id="LoanAmount"
-                  name="LoanAmount"
-                  type="text"
-                  value={loanAmount}
+                  id="loan_amount"
+                  name="loan_amount"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={loan_amount}
                   onChange={(e) => setLoanAmount(e.target.value)}
-                  className="numeric form-control"
+                  className="form-control"
                   placeholder="Enter loan amount"
                 />
-              </div>
+              </InputGroup>
             </FormGroup>
           </Col>
 
-          {/* Loan Date Field */}
           <Col sm={6}>
             <FormGroup>
-              <Label for="LoanDate">Loan Date</Label>
+              <Label for="loan_date">Loan Date</Label>
               <Input
-                id="LoanDate"
-                name="LoanDate"
+                id="loan_date"
+                name="loan_date"
                 type="date"
-                value={loanDate}
+                value={loan_date}
                 onChange={(e) => setLoanDate(e.target.value)}
                 className="form-control"
               />
@@ -82,46 +104,45 @@ const AddNewPayDayLoansModal: React.FC<AddNewPayDayLoansModalProps> = ({
           </Col>
         </Row>
 
-        {/* Has Pay Day Loans Been Repaid? Field */}
         <Row>
           <Col sm={6}>
             <FormGroup>
-              <Label for="Satisfied">Has the Pay Day Loan Been Repaid?</Label>
+              <Label for="has_the_pay_day_loan_been_repaid">Has the Pay Day Loan Been Repaid?</Label>
               <div>
-                <Input
-                  id="SatisfiedYes"
-                  name="Satisfied"
-                  type="radio"
-                  value="true"
-                  checked={hasPayDayLoans === true}
-                  onChange={() => setHasPayDayLoans(true)}
-                />{" "}
-                Yes
-                <Input
-                  id="SatisfiedNo"
-                  name="Satisfied"
-                  type="radio"
-                  value="false"
-                  checked={hasPayDayLoans === false}
-                  onChange={() => setHasPayDayLoans(false)}
-                  className="ms-3"
-                />{" "}
-                No
+                <FormGroup check inline>
+                  <Input
+                    type="radio"
+                    id="repaid_yes"
+                    name="has_the_pay_day_loan_been_repaid"
+                    checked={has_the_pay_day_loan_been_repaid === true}
+                    onChange={() => setHasPayDayLoanBeenRepaid(true)}
+                  />
+                  <Label check>Yes</Label>
+                </FormGroup>
+                <FormGroup check inline>
+                  <Input
+                    type="radio"
+                    id="repaid_no"
+                    name="has_the_pay_day_loan_been_repaid"
+                    checked={has_the_pay_day_loan_been_repaid === false}
+                    onChange={() => setHasPayDayLoanBeenRepaid(false)}
+                  />
+                  <Label check>No</Label>
+                </FormGroup>
               </div>
             </FormGroup>
           </Col>
 
-          {/* Date Satisfied Field (Conditional) */}
-          {hasPayDayLoans && (
+          {has_the_pay_day_loan_been_repaid && (
             <Col sm={6}>
               <FormGroup>
-                <Label for="DateSatisfied">Date Repaid</Label>
+                <Label for="date_repaid">Date Repaid</Label>
                 <Input
-                  id="DateSatisfied"
-                  name="DateSatisfied"
+                  id="date_repaid"
+                  name="date_repaid"
                   type="date"
-                  value={dateSatisfied}
-                  onChange={(e) => setDateSatisfied(e.target.value)}
+                  value={date_repaid}
+                  onChange={(e) => setDateRepaid(e.target.value)}
                   className="form-control"
                 />
               </FormGroup>
@@ -129,16 +150,15 @@ const AddNewPayDayLoansModal: React.FC<AddNewPayDayLoansModalProps> = ({
           )}
         </Row>
 
-        {/* Lender Name Field */}
         <Row>
           <Col sm={6}>
             <FormGroup>
-              <Label for="LenderName">Lender Name</Label>
+              <Label for="lender_name">Lender Name</Label>
               <Input
-                id="LenderName"
-                name="LenderName"
+                id="lender_name"
+                name="lender_name"
                 type="text"
-                value={lenderName}
+                value={lender_name}
                 onChange={(e) => setLenderName(e.target.value)}
                 className="form-control"
                 placeholder="Enter lender name"
@@ -148,13 +168,12 @@ const AddNewPayDayLoansModal: React.FC<AddNewPayDayLoansModalProps> = ({
         </Row>
       </ModalBody>
 
-      {/* Modal Footer */}
       <ModalFooter>
         <Button color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button color="primary" onClick={handleSubmit}>
-          Submit
+        <Button color="primary" onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Submitting..." : "Submit"}
         </Button>
       </ModalFooter>
     </Modal>

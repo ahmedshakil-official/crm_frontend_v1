@@ -13,29 +13,51 @@ import {
   InputGroup,
   InputGroupText,
 } from "reactstrap";
+import { useAddIVAsMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface AddNewIVAsModalProps {
   isOpen: boolean;
   toggle: () => void;
+  adverseAlias:string;
 }
 
 const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
   isOpen,
   toggle,
+  adverseAlias,
 }) => {
-  const [dateRegistered, setDateRegistered] = useState<string>("");
-  const [amount, setAmount] = useState<string>("");
-  const [satisfied, setSatisfied] = useState<boolean>(false);
-  const [dateSatisfied, setDateSatisfied] = useState<string>("");
+  const params = useParams();
+  const { casealias } = params;
+  const [addIVAs, { isLoading }] = useAddIVAsMutation();
 
-  const handleSubmit = () => {
-    console.log({
-      dateRegistered,
-      amount,
+  const [date_registered, setDateRegistered] = useState<string>("");
+  const [outstanding_balance, setOutstandingBalance] = useState<string>("");
+  const [satisfied, setSatisfied] = useState<boolean>(false);
+  const [date_satisfied, setDateSatisfied] = useState<string>("");
+
+  const handleSubmit = async () => {
+    const value = {
+      date_registered: date_registered || null,
+      outstanding_balance: outstanding_balance || null,
       satisfied,
-      dateSatisfied,
+      date_satisfied: date_satisfied || null,
+    };
+
+    const res = await addIVAs({
+      case_alias: casealias,
+      adverse_alias: adverseAlias,
+      value,
     });
-    toggle();
+    console.log({res})
+
+    if (res.data) {
+      toast.success("IVA Added Successfully");
+      toggle();
+    } else {
+      toast.error("Failed to add IVA");
+    }
   };
 
   return (
@@ -48,12 +70,12 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
         <Row>
           <Col sm={12} className="mb-3">
             <FormGroup>
-              <Label for="DateRegistered">Date Registered</Label>
+              <Label for="date_registered">Date Registered</Label>
               <Input
-                id="DateRegistered"
-                name="DateRegistered"
+                id="date_registered"
+                name="date_registered"
                 type="date"
-                value={dateRegistered}
+                value={date_registered}
                 onChange={(e) => setDateRegistered(e.target.value)}
                 className="form-control w-100"
               />
@@ -62,17 +84,17 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
 
           <Col sm={12} className="mb-3">
             <FormGroup>
-              <Label for="Amount">Outstanding Balance</Label>
+              <Label for="outstanding_balance">Outstanding Balance</Label>
               <InputGroup>
                 <InputGroupText>£</InputGroupText>
                 <Input
-                  id="Amount"
-                  name="Amount"
+                  id="outstanding_balance"
+                  name="outstanding_balance"
                   type="number"
                   min="0"
-                  max="9999999999999999"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
+                  step="0.01"
+                  value={outstanding_balance}
+                  onChange={(e) => setOutstandingBalance(e.target.value)}
                   className="form-control"
                 />
               </InputGroup>
@@ -86,7 +108,7 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
                   type="checkbox"
                   checked={satisfied}
                   onChange={(e) => setSatisfied(e.target.checked)}
-                />{' '}
+                />{" "}
                 Satisfied?
               </Label>
             </FormGroup>
@@ -95,12 +117,12 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
           {satisfied && (
             <Col xs={12}>
               <FormGroup>
-                <Label for="DateSatisfied">Date Satisfied</Label>
+                <Label for="date_satisfied">Date Satisfied</Label>
                 <Input
-                  id="DateSatisfied"
-                  name="DateSatisfied"
+                  id="date_satisfied"
+                  name="date_satisfied"
                   type="date"
-                  value={dateSatisfied}
+                  value={date_satisfied}
                   onChange={(e) => setDateSatisfied(e.target.value)}
                   className="form-control w-100"
                 />
@@ -114,8 +136,8 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
         <Button color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button color="primary" onClick={handleSubmit}>
-          Submit
+        <Button color="primary" onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Submitting..." : "Submit"}
         </Button>
       </ModalFooter>
     </Modal>

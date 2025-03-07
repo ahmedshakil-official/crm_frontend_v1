@@ -31,6 +31,10 @@ import ViewPropertiesRepossessedModal from "./AdverseModals/ViewModals/ViewPrope
 import ViewCommitmentPaymentsMissedModal from "./AdverseModals/ViewModals/ViewCommitmentPaymentsMissedModal";
 import ViewDefaultsModal from "./AdverseModals/ViewModals/ViewDefaultsModal";
 import ViewBankruptciesModal from "./AdverseModals/ViewModals/ViewBankruptciesModal";
+import ViewIVAsModal from "./AdverseModals/ViewModals/ViewIVAsModal";
+import ViewDMPsModal from "./AdverseModals/ViewModals/ViewDMPsModal";
+import ViewPayDayLoansModal from "./AdverseModals/ViewModals/ViewPayDayLoansModal";
+import ViewCCJsModal from "./AdverseModals/ViewModals/ViewCCJsModal";
 
 export interface ApplicantsUsersProps {
   basicTab: string;
@@ -53,6 +57,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
     missed_any_payments_on_commitments_in_the_last_five_years: false,
     is_a_property_repossessed: false,
     has_ever_been_made_bankrupt: false,
+    have_you_ever_entered_into_an_individual_voluntary_arrangement: false, // Add new field
     is_ever_enter_into_a_debt_management_plan_or_debt_relief_order: false,
     is_ever_taken_out_a_pay_day_loan: false,
     is_exceeded_your_overdraft_in_the_last_three_months: false,
@@ -119,6 +124,9 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
       case "has_ever_been_made_bankrupt":
         setAddNewBankruptciesModal(true);
         break;
+      case "have_you_ever_entered_into_an_individual_voluntary_arrangement":
+        setAddNewIVAsModal(true);
+        break;
       case "is_ever_enter_into_a_debt_management_plan_or_debt_relief_order":
         setAddNewDMPsModal(true);
         break;
@@ -162,6 +170,9 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
       case "has_ever_been_made_bankrupt":
         setViewBankruptciesModal(true);
         break;
+      case "have_you_ever_entered_into_an_individual_voluntary_arrangement":
+        setViewIVAsModal(true);
+        break;
       case "is_ever_enter_into_a_debt_management_plan_or_debt_relief_order":
         setViewDMPsModal(true);
         break;
@@ -183,6 +194,8 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         formData.missed_any_payments_on_commitments_in_the_last_five_years,
       is_a_property_repossessed: formData.is_a_property_repossessed,
       has_ever_been_made_bankrupt: formData.has_ever_been_made_bankrupt,
+      have_you_ever_entered_into_an_individual_voluntary_arrangement:
+        formData.have_you_ever_entered_into_an_individual_voluntary_arrangement,
       is_ever_enter_into_a_debt_management_plan_or_debt_relief_order:
         formData.is_ever_enter_into_a_debt_management_plan_or_debt_relief_order,
       is_ever_taken_out_a_pay_day_loan:
@@ -237,6 +250,11 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
                     {
                       key: "has_ever_been_made_bankrupt",
                       label: "Ever been made bankrupt?",
+                    },
+                    {
+                      key: "have_you_ever_entered_into_an_individual_voluntary_arrangement",
+                      label:
+                        "Ever entered into an Individual Voluntary Arrangement (IVA)?",
                     },
                     {
                       key: "is_ever_enter_into_a_debt_management_plan_or_debt_relief_order",
@@ -371,6 +389,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <AddNewRegisteredCCJsModal
           isOpen={addNewCCJsModal}
           toggle={() => setAddNewCCJsModal((prev) => !prev)}
+          adverseAlias={basicTab}
         />
       )}
 
@@ -402,6 +421,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <AddNewIVAsModal
           isOpen={addNewIVAsModal}
           toggle={() => setAddNewIVAsModal((prev) => !prev)}
+          adverseAlias={basicTab}
         />
       )}
 
@@ -409,6 +429,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <AddNewDMPsModal
           isOpen={addNewDMPsModal}
           toggle={() => setAddNewDMPsModal((prev) => !prev)}
+          adverseAlias={basicTab}
         />
       )}
 
@@ -416,6 +437,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <AddNewPayDayLoansModal
           isOpen={addNewPayDayLoansModal}
           toggle={() => setAddNewPayDayLoansModal((prev) => !prev)}
+          adverseAlias={basicTab}
         />
       )}
 
@@ -445,6 +467,35 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
         <ViewBankruptciesModal
           isOpen={viewBankruptciesModal}
           toggle={() => setViewBankruptciesModal((prev) => !prev)}
+          adverseAlias={basicTab}
+        />
+      )}
+
+      {viewIVAsModal && (
+        <ViewIVAsModal
+          isOpen={viewIVAsModal}
+          toggle={() => setViewIVAsModal((prev) => !prev)}
+          adverseAlias={basicTab}
+        />
+      )}
+      {viewDMPsModal && (
+        <ViewDMPsModal
+          isOpen={viewDMPsModal}
+          toggle={() => setViewDMPsModal((prev) => !prev)}
+          adverseAlias={basicTab}
+        />
+      )}
+      {viewPayDayLoansModal && (
+        <ViewPayDayLoansModal
+          isOpen={viewPayDayLoansModal}
+          toggle={() => setViewPayDayLoansModal((prev) => !prev)}
+          adverseAlias={basicTab}
+        />
+      )}
+      {viewCCJsModal && (
+        <ViewCCJsModal
+          isOpen={viewCCJsModal}
+          toggle={() => setViewCCJsModal((prev) => !prev)}
           adverseAlias={basicTab}
         />
       )}
