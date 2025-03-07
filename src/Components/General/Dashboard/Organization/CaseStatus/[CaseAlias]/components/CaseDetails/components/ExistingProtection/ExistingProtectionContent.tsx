@@ -67,6 +67,31 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                           <Label>Policy Type</Label>
                           <Input type="select" defaultValue="">
                             <option value="">Select...</option>
+                            <option value="LIFE_ASSURANCE_LEVEL">
+                              Life Assurance (Level)
+                            </option>
+                            <option value="LIFE_ASSURANCE_DECREASING">
+                              Life Assurance (Decreasing)
+                            </option>
+                            <option value="CRITICAL_ILLNESS_COVER_LEVEL">
+                              Critical Illness Cover (Level)
+                            </option>
+                            <option value="CRITICAL_ILLNESS_COVER_DECREASING">
+                              Critical Illness Cover (Decreasing)
+                            </option>
+                            <option value="MORTGAGE_PAYMENT_PROTECTION">
+                              Mortgage Payment Protection
+                            </option>
+                            <option value="BUILDINGS_AND_CONTENTS">
+                              Buildings and Contents
+                            </option>
+                            <option value="PRIVATE_PENSION">
+                              Private Pension
+                            </option>
+                            <option value="DEATH_IN_SERVICE_BENEFIT">
+                              Death in Service Benefit
+                            </option>
+                            <option value="OTHER">Other</option>
                           </Input>
                         </FormGroup>
                       </Col>
@@ -106,6 +131,8 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                           <Label>Premium Payment Type</Label>
                           <Input type="select" defaultValue="">
                             <option value="">Select...</option>
+                            <option value="MONTHLY">Monthly</option>
+                            <option value="ANNUALLY">Annually</option>
                           </Input>
                         </FormGroup>
                       </Col>
@@ -123,6 +150,12 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                           <Label>In Trust?</Label>
                           <Input type="select" defaultValue="">
                             <option value="">Select...</option>
+                            <option value="NA">N/A</option>
+                            <option value="YES">Yes</option>
+                            <option value="NO">No</option>
+                            <option value="CLIENT_TO_ASCERTAIN">
+                              Client to Ascertain
+                            </option>
                           </Input>
                         </FormGroup>
                       </Col>
@@ -131,6 +164,13 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                           <Label>Guaranteed / Reviewable</Label>
                           <Input type="select" defaultValue="">
                             <option value="">Select...</option>
+                            <option value="NA">N/A</option>
+                            <option value="GUARANTEED">Guaranteed</option>
+                            <option value="REVIEWABLE">Reviewable</option>
+                            <option value="CLIENT_TO_ASCERTAIN">
+                              Client to Ascertain
+                            </option>
+                            <option value="AGE_COSTED">Age Costed</option>
                           </Input>
                         </FormGroup>
                       </Col>
@@ -166,7 +206,8 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                               <FormGroup key={option} check inline>
                                 <Input type="radio" name="waiver" />
                                 <Label check>
-                                  {option.charAt(0).toUpperCase() + option.slice(1)}
+                                  {option.charAt(0).toUpperCase() +
+                                    option.slice(1)}
                                 </Label>
                               </FormGroup>
                             ))}
@@ -181,7 +222,8 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                               <FormGroup key={option} check inline>
                                 <Input type="radio" name="indexation" />
                                 <Label check>
-                                  {option.charAt(0).toUpperCase() + option.slice(1)}
+                                  {option.charAt(0).toUpperCase() +
+                                    option.slice(1)}
                                 </Label>
                               </FormGroup>
                             ))}
@@ -196,7 +238,8 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                               <FormGroup key={option} check inline>
                                 <Input type="radio" name="deathInService" />
                                 <Label check>
-                                  {option.charAt(0).toUpperCase() + option.slice(1)}
+                                  {option.charAt(0).toUpperCase() +
+                                    option.slice(1)}
                                 </Label>
                               </FormGroup>
                             ))}
@@ -214,7 +257,8 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                               <FormGroup key={option} check inline>
                                 <Input type="radio" name="nonStandardTerms" />
                                 <Label check>
-                                  {option.charAt(0).toUpperCase() + option.slice(1)}
+                                  {option.charAt(0).toUpperCase() +
+                                    option.slice(1)}
                                 </Label>
                               </FormGroup>
                             ))}
@@ -232,7 +276,8 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                               <FormGroup key={option} check inline>
                                 <Input type="radio" name="willBeCancelled" />
                                 <Label check>
-                                  {option.charAt(0).toUpperCase() + option.slice(1)}
+                                  {option.charAt(0).toUpperCase() +
+                                    option.slice(1)}
                                 </Label>
                               </FormGroup>
                             ))}
