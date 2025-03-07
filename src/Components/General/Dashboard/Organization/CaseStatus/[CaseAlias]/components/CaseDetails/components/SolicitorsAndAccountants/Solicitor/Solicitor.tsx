@@ -25,27 +25,29 @@ const Solicitor: React.FC = () => {
         {/* First Solicitor Form */}
         <div className={hasSecondSolicitor ? "mb-4" : ""}>
           {hasSecondSolicitor && (
-            <Nav tabs className="mb-3">
+            <Nav tabs className="mb-3 d-flex justify-content-center">
               <NavItem>
                 <NavLink
-                  className={`cursor-pointer ${
+                  className={` ${
                     activeTab === "first"
                       ? "active text-primary"
                       : "text-secondary"
                   }`}
                   onClick={() => setActiveTab("first")}
+                  style={{ cursor: "pointer" }}
                 >
                   First Solicitor
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
-                  className={`cursor-pointer ${
+                  className={` ${
                     activeTab === "second"
                       ? "active text-primary"
                       : "text-secondary"
                   }`}
                   onClick={() => setActiveTab("second")}
+                  style={{ cursor: "pointer" }}
                 >
                   Second Solicitor
                 </NavLink>
