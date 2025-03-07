@@ -1,4 +1,7 @@
+import { useAddBankruptsMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Modal,
@@ -15,40 +18,56 @@ import {
 interface AddNewBankruptciesModalProps {
   isOpen: boolean;
   toggle: () => void;
+  adverseAlias: string;
 }
 
 const AddNewBankruptciesModal: React.FC<AddNewBankruptciesModalProps> = ({
   isOpen,
   toggle,
+  adverseAlias,
 }) => {
-  const [dateDischarged, setDateDischarged] = useState<string>("");
+  const params = useParams();
+  const { casealias } = params;
+  const [addBankruptcies, { isLoading }] = useAddBankruptsMutation();
 
-  const handleSubmit = () => {
-    console.log({
-      dateDischarged,
+  const [date_discharged, setDateDischarged] = useState<string>("");
+
+  const handleSubmit = async () => {
+    const value = {
+      date_discharged: date_discharged || null,
+    };
+
+    const res = await addBankruptcies({
+      case_alias: casealias,
+      adverse_alias: adverseAlias,
+      value,
     });
-    toggle(); // Close modal after submit
+
+    if (res.data) {
+      toast.success("Bankruptcy Added Successfully");
+      toggle();
+    } else {
+      toast.error("Failed to add bankruptcy");
+    }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered size="md">
-      {/* Modal Header */}
       <ModalHeader toggle={toggle}>
         <h2>Add New Bankruptcies</h2>
       </ModalHeader>
 
-      {/* Modal Body */}
       <ModalBody className="p-5">
         <Row className="justify-content-center">
           <Col sm={12}>
             <FormGroup>
-              <Label for="DateDischarged">Date Discharged</Label>
+              <Label for="date_discharged">Date Discharged</Label>
               <Input
-                id="DateDischarged"
-                name="DateDischarged"
+                id="date_discharged"
+                name="date_discharged"
                 type="date"
-                value={dateDischarged}
-                onChange={(e) => setDateDischarged(e.target.value as string)}
+                value={date_discharged}
+                onChange={(e) => setDateDischarged(e.target.value)}
                 className="form-control w-100"
               />
             </FormGroup>
@@ -56,13 +75,12 @@ const AddNewBankruptciesModal: React.FC<AddNewBankruptciesModalProps> = ({
         </Row>
       </ModalBody>
 
-      {/* Modal Footer */}
       <ModalFooter>
         <Button color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button color="primary" onClick={handleSubmit}>
-          Submit
+        <Button color="primary" onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Submitting..." : "Submit"}
         </Button>
       </ModalFooter>
     </Modal>

@@ -40,6 +40,51 @@ export const AdverseDetailsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["AdverseDetails"],
     }),
+    addCommitmentPayments: builder.mutation({
+      query: ({ case_alias, adverse_alias, value }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/payment/commitments/`,
+        method: "POST",
+        body: value,
+      }),
+      invalidatesTags: ["AdverseDetails"],
+    }),
+    getCommitmentPayments: builder.query({
+      query: ({ case_alias, adverse_alias }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/payment/commitments/`,
+        method: "GET",
+      }),
+      providesTags: ["AdverseDetails"],
+    }),
+    addDefaults: builder.mutation({
+      query: ({ case_alias, adverse_alias, value }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/register/loans/`,
+        method: "POST",
+        body: value,
+      }),
+      invalidatesTags: ["AdverseDetails"],
+    }),
+    getDefaults: builder.query({
+      query: ({ case_alias, adverse_alias }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/register/loans/`,
+        method: "GET",
+      }),
+      providesTags: ["AdverseDetails"],
+    }),
+    addBankrupts: builder.mutation({
+      query: ({ case_alias, adverse_alias, value }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/bankrupts/`,
+        method: "POST",
+        body: value,
+      }),
+      invalidatesTags: ["AdverseDetails"],
+    }),
+    getBankrupts: builder.query({
+      query: ({ case_alias, adverse_alias }) => ({
+        url: `/cases/${case_alias}/adverse/${adverse_alias}/bankrupts/`,
+        method: "GET",
+      }),
+      providesTags: ["AdverseDetails"],
+    }),
   }),
 });
 
@@ -49,4 +94,10 @@ export const {
   useUpdateAdverseDetailsMutation,
   useAddPropertyRepossessedMutation,
   useGetPropertyRepossessedQuery,
+  useAddCommitmentPaymentsMutation,
+  useGetCommitmentPaymentsQuery,
+  useAddDefaultsMutation,
+  useGetDefaultsQuery,
+  useAddBankruptsMutation,
+  useGetBankruptsQuery
 } = AdverseDetailsApi;
