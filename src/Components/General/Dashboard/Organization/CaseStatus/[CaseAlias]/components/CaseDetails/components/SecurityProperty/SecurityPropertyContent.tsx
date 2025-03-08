@@ -366,8 +366,22 @@ const SecurityPropertyContent: React.FC<SecurityPropertyContentProps> = ({
               </CardFooter>
             </Card>
             <div className="d-flex justify-content-between">
-              <Button color="secondary">Add new</Button>
-              <Button color="primary">Save</Button>
+              <Button
+                color="secondary"
+                onClick={() => {
+                  alert("Add New Button Clicked");
+                }}
+              >
+                Add new
+              </Button>
+              <Button
+                color="primary"
+                onClick={() => {
+                  alert("Save button clicked");
+                }}
+              >
+                Save Security
+              </Button>
             </div>
           </Form>
         </>
