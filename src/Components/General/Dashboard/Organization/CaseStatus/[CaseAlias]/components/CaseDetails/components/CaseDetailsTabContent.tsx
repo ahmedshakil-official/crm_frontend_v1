@@ -6,6 +6,7 @@ import BudgetPlannerContent from "./BudgetPlanner/BudgetPlannerContent";
 import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
 import { EmploymentTab } from "./Employment/EmploymentTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
+import MortgageYourNeedsContent from "./MortgageYourNeeds/MortgageYourNeedsContent";
 import PortfolioContent from "./Portfolio/PortfolioContent";
 import PropertyDetails from "./PropertyDetails/PropertyDetails";
 import SecurityPropertyTab from "./SecurityProperty/SecurityPropertyTab";
@@ -18,12 +19,13 @@ const tabComponents: Record<string, React.FC> = {
   "Applicant(s) Details": ApplicantsDetailsTab,
   "Employment/Income": EmploymentTab,
   "Credit Commitments": CreditCommitmentsContent,
-  Adverse: AdverseTab,
-  Portfolio: PortfolioContent,
+  "Adverse": AdverseTab,
+  "Portfolio": PortfolioContent,
   "Property Details": PropertyDetails,
   "Solicitors & Accountants": SolicitorsAndAccountantsTab,
   "Budget Planner": BudgetPlannerContent,
   "Security Property": SecurityPropertyTab,
+  "Mortgage Your Needs": MortgageYourNeedsContent,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
