@@ -10,31 +10,37 @@ import {
   Col,
 } from "reactstrap";
 
-const FoundProperty: React.FC = () => {
+interface FoundPropertyProps {
+  onPropertyFound: (value: boolean) => void;
+}
+
+const FoundProperty: React.FC<FoundPropertyProps> = ({ onPropertyFound }) => {
   const [foundProperty, setFoundProperty] = useState<boolean>(false);
 
   const handlePropertyFound = (value: boolean) => {
     setFoundProperty(value);
+    onPropertyFound(value);
   };
 
   return (
     <Card className="mb-2">
-      <CardHeader>
+      <CardHeader className="py-3">
         <Row className="align-items-center">
-          <Col lg={5}>
-            <FormGroup className="mb-0 d-flex align-items-center">
+          <Col lg={9}>
+            <div className="d-flex align-items-center">
               <Label
-                className="mb-0 fw-semibold"
+                className="mb-0 fw-semibold me-4"
                 style={{ fontSize: "15px", color: "#495057" }}
                 for="FoundPrimaryProperty"
               >
-                Have you found a property yet?{" "}
+                Is a property being insured? If so, do you know which property
+                is covered by this policy?
                 <span className="text-danger" style={{ visibility: "hidden" }}>
                   *
                 </span>
               </Label>
-              <div className="ms-3">
-                <FormGroup check inline className="me-3">
+              <div className="d-flex align-items-center gap-3">
+                <FormGroup check className="mb-0">
                   <Input
                     type="radio"
                     id="FoundPrimaryPropertyYes"
@@ -42,13 +48,13 @@ const FoundProperty: React.FC = () => {
                     value="true"
                     checked={foundProperty === true}
                     onChange={() => handlePropertyFound(true)}
-                    className="cursor-pointer"
+                    className="cursor-pointer me-2"
                   />
-                  <Label check className="cursor-pointer">
+                  <Label check className="cursor-pointer mb-0">
                     Yes
                   </Label>
                 </FormGroup>
-                <FormGroup check inline>
+                <FormGroup check className="mb-0">
                   <Input
                     type="radio"
                     id="FoundPrimaryPropertyNo"
@@ -56,19 +62,34 @@ const FoundProperty: React.FC = () => {
                     value="false"
                     checked={foundProperty === false}
                     onChange={() => handlePropertyFound(false)}
-                    className="cursor-pointer"
+                    className="cursor-pointer me-2"
                   />
-                  <Label check className="cursor-pointer">
+                  <Label check className="cursor-pointer mb-0">
                     No
                   </Label>
                 </FormGroup>
               </div>
-            </FormGroup>
+            </div>
           </Col>
+          {foundProperty && (
+            <Col lg={3} className="text-end">
+              <Button
+                color="primary"
+                size="md"
+                className="rounded"
+                onClick={() => {
+                  console.log("Add new property clicked");
+                }}
+              >
+                <i className="bi bi-plus-circle me-1"></i>
+                Add New Property
+              </Button>
+            </Col>
+          )}
         </Row>
       </CardHeader>
     </Card>
-  );
+);
 };
 
 export default FoundProperty;
