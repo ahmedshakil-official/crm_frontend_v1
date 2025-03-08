@@ -12,6 +12,8 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import AddSecurityPropertyModal from "./Modals/AddSecurityPropertyModal";
+
 
 interface SecurityPropertyContentProps {
   applicantsData: ApplicantProps[];
@@ -30,6 +32,17 @@ const SecurityPropertyContent: React.FC<SecurityPropertyContentProps> = ({
   );
   // Add new state at the top of component
   const [willBeCancelled, setWillBeCancelled] = useState<boolean>(false);
+  // Add this state for modal
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  
+  // Add toggle function
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  
+  // Add save handler
+  const handleSave = (data: any) => {
+    console.log("Security property data:", data);
+    // Handle saving the data
+  };
   return (
     <div>
       {basicTab && applicantsData && applicantsData.length > 0 && (
@@ -366,23 +379,24 @@ const SecurityPropertyContent: React.FC<SecurityPropertyContentProps> = ({
               </CardFooter>
             </Card>
             <div className="d-flex justify-content-between">
-              <Button
-                color="secondary"
-                onClick={() => {
-                  alert("Add New Button Clicked");
-                }}
-              >
-                Add new
-              </Button>
-              <Button
-                color="primary"
-                onClick={() => {
-                  alert("Save button clicked");
-                }}
-              >
+              {hasSecurity && (
+                <Button
+                  color="secondary"
+                  onClick={toggleModal}  
+                >
+                  Add new
+                </Button>
+              )}
+              <Button color="primary">
                 Save Security
               </Button>
             </div>
+            {/* Add modal component */}
+            <AddSecurityPropertyModal 
+              isOpen={isModalOpen}
+              toggle={toggleModal}
+              onSave={handleSave}
+            />
           </Form>
         </>
       )}
