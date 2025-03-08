@@ -13,16 +13,16 @@ import {
   Row,
 } from "reactstrap";
 
-interface ExistingProtectionContentProps {
+interface SecurityPropertyContentProps {
   applicantsData: ApplicantProps[];
   basicTab: string | null;
 }
 
-const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
+const SecurityPropertyContent: React.FC<SecurityPropertyContentProps> = ({
   applicantsData,
   basicTab,
 }) => {
-  const [hasProtection, setHasProtection] = useState<boolean>(false);
+  const [hasSecurity, setHasSecurity] = useState<boolean>(false);
   const [hasNonStandardTerms, setHasNonStandardTerms] =
     useState<boolean>(false);
   const currentApplicant = applicantsData?.find(
@@ -39,22 +39,22 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
               <CardBody>
                 <div className="px-3">
                   <Label className="mb-3">
-                    Do you have any existing "Protection" policies in place?
-                    (such as income protection, life assurance etc.)
+                    Do you have any existing "Security" policies in place? (such
+                    as income security, life assurance etc.)
                   </Label>
                   <div className="d-flex gap-2 mb-4">
                     {["yes", "no"].map((option) => (
                       <FormGroup key={option} check inline>
                         <Input
                           type="radio"
-                          id={`protection-${option}`}
-                          name={`protection-${currentApplicant?.alias}`}
+                          id={`security-${option}`}
+                          name={`security-${currentApplicant?.alias}`}
                           checked={
-                            option === "yes" ? hasProtection : !hasProtection
+                            option === "yes" ? hasSecurity : !hasSecurity
                           }
-                          onChange={() => setHasProtection(option === "yes")}
+                          onChange={() => setHasSecurity(option === "yes")}
                         />
-                        <Label check for={`protection-${option}`}>
+                        <Label check for={`security-${option}`}>
                           {option.charAt(0).toUpperCase() + option.slice(1)}
                         </Label>
                       </FormGroup>
@@ -62,7 +62,7 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                   </div>
                 </div>
 
-                {hasProtection && (
+                {hasSecurity && (
                   <div className="p-3">
                     <Row>
                       <Col md={4}>
@@ -83,7 +83,7 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                               Critical Illness Cover (Decreasing)
                             </option>
                             <option value="MORTGAGE_PAYMENT_PROTECTION">
-                              Mortgage Payment Protection
+                              Mortgage Payment Security
                             </option>
                             <option value="BUILDINGS_AND_CONTENTS">
                               Buildings and Contents
@@ -361,7 +361,7 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
               </CardBody>
               <CardFooter className="bg-primary">
                 <div className="d-flex justify-content-end">
-                  <span>Total Protection : £0.00</span>
+                  <span>Total Security : £0.00</span>
                 </div>
               </CardFooter>
             </Card>
@@ -376,4 +376,4 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
   );
 };
 
-export default ExistingProtectionContent;
+export default SecurityPropertyContent;

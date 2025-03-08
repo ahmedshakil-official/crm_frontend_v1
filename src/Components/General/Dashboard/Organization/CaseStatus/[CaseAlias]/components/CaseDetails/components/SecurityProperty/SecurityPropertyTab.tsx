@@ -1,4 +1,5 @@
 import { useGetApplicantsQuery } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -10,10 +11,9 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import ExistingProtectionContent from "./ExistingProtectionContent";
-import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
+import SecurityPropertyContent from "./SecurityPropertyContent";
 
-const ExistingProtectionTab: React.FC = () => {
+const SecurityPropertyTab: React.FC = () => {
   const [basicTab, setBasicTab] = useState<string | null>(null);
 
   // Get case alias from URL params
@@ -57,7 +57,7 @@ const ExistingProtectionTab: React.FC = () => {
             </Nav>
           </CardHeader>
           <CardBody className="px-0 pb-0">
-            <ExistingProtectionContent
+            <SecurityPropertyContent
               applicantsData={applicantsData}
               basicTab={basicTab}
             />
@@ -68,4 +68,4 @@ const ExistingProtectionTab: React.FC = () => {
   );
 };
 
-export default ExistingProtectionTab;
+export default SecurityPropertyTab;
