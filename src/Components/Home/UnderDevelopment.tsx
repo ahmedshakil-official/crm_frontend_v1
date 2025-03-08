@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import Link from "next/link";
+import { Button, Col, Container, Row } from "reactstrap";
 
 const UnderDevelopment = () => {
   return (
@@ -11,9 +11,41 @@ const UnderDevelopment = () => {
             className="fa-solid fa-circle-exclamation"
           ></i>
           <h1 className="text-danger mt-3">Sorry!</h1>
-          <h5 className="text-primary mt-2">
-            This page is Under Development.
-          </h5>
+          <h5 className="text-primary mt-2">This page is Under Development.</h5>
+          <Link href={"/dashboard/organization/"}>
+            <Button
+              className="mt-2"
+              style={{
+                animation: "pulseEffect 2s infinite",
+                background: "linear-gradient(45deg, #007bff, #00bfff)",
+                border: "none",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              <style>
+                {`
+      @keyframes pulseEffect {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+        }
+        
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+        }
+        
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+        }
+      }
+    `}
+              </style>
+              Go To Dashboard
+            </Button>
+          </Link>
         </Col>
       </Row>
     </Container>
