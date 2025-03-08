@@ -182,9 +182,9 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                       <Input
                         type="radio"
                         name="waiver"
-                        id={`waiver-${option}`}
+                        id={`M_waiver-${option}`}
                       />
-                      <Label check for={`waiver-${option}`}>
+                      <Label check for={`M_waiver-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
@@ -201,9 +201,9 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                       <Input
                         type="radio"
                         name="indexation"
-                        id={`indexation-${option}`}
+                        id={`M_indexation-${option}`}
                       />
-                      <Label check for={`indexation-${option}`}>
+                      <Label check for={`M_indexation-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
@@ -220,9 +220,9 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                       <Input
                         type="radio"
                         name="deathInService"
-                        id={`deathInService-${option}`}
+                        id={`M_deathInService-${option}`}
                       />
-                      <Label check for={`deathInService-${option}`}>
+                      <Label check for={`M_deathInService-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
@@ -242,12 +242,12 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                       <Input
                         type="radio"
                         name="nonStandardTerms"
-                        id={`nonStandardTerms-${option}`}
+                        id={`M_nonStandardTerms-${option}`}
                         onChange={(e) =>
                           setHasNonStandardTerms(option === "yes")
                         }
                       />
-                      <Label check for={`nonStandardTerms-${option}`}>
+                      <Label check for={`M_nonStandardTerms-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
@@ -279,10 +279,10 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                       <Input
                         type="radio"
                         name="willBeCancelled"
-                        id={`willBeCancelled-${option}`}
+                        id={`M_willBeCancelled-${option}`}
                         onChange={(e) => setWillBeCancelled(option === "yes")}
                       />
-                      <Label check for={`willBeCancelled-${option}`}>
+                      <Label check for={`M_willBeCancelled-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
