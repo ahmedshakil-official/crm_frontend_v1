@@ -207,8 +207,12 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                           <div className="d-flex gap-4">
                             {["yes", "no"].map((option) => (
                               <FormGroup key={option} check inline>
-                                <Input type="radio" name="waiver" />
-                                <Label check>
+                                <Input
+                                  type="radio"
+                                  name="waiver"
+                                  id={`waiver-${option}`}
+                                />
+                                <Label check for={`waiver-${option}`}>
                                   {option.charAt(0).toUpperCase() +
                                     option.slice(1)}
                                 </Label>
@@ -223,8 +227,12 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                           <div className="d-flex gap-4">
                             {["yes", "no"].map((option) => (
                               <FormGroup key={option} check inline>
-                                <Input type="radio" name="indexation" />
-                                <Label check>
+                                <Input
+                                  type="radio"
+                                  name="indexation"
+                                  id={`indexation-${option}`}
+                                />
+                                <Label check for={`indexation-${option}`}>
                                   {option.charAt(0).toUpperCase() +
                                     option.slice(1)}
                                 </Label>
@@ -239,8 +247,12 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                           <div className="d-flex gap-4">
                             {["yes", "no"].map((option) => (
                               <FormGroup key={option} check inline>
-                                <Input type="radio" name="deathInService" />
-                                <Label check>
+                                <Input
+                                  type="radio"
+                                  name="deathInService"
+                                  id={`deathInService-${option}`}
+                                />
+                                <Label check for={`deathInService-${option}`}>
                                   {option.charAt(0).toUpperCase() +
                                     option.slice(1)}
                                 </Label>
@@ -261,11 +273,12 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                                 <Input
                                   type="radio"
                                   name="nonStandardTerms"
+                                  id={`nonStandardTerms-${option}`}
                                   onChange={(e) =>
                                     setHasNonStandardTerms(option === "yes")
                                   }
                                 />
-                                <Label check>
+                                <Label check for={`nonStandardTerms-${option}`}>
                                   {option.charAt(0).toUpperCase() +
                                     option.slice(1)}
                                 </Label>
@@ -296,13 +309,17 @@ const ExistingProtectionContent: React.FC<ExistingProtectionContentProps> = ({
                           <div className="d-flex gap-4">
                             {["yes", "no"].map((option) => (
                               <FormGroup key={option} check inline>
-                                <Input 
-                                  type="radio" 
+                                <Input
+                                  type="radio"
                                   name="willBeCancelled"
-                                  onChange={(e) => setWillBeCancelled(option === "yes")}
+                                  id={`willBeCancelled-${option}`}
+                                  onChange={(e) =>
+                                    setWillBeCancelled(option === "yes")
+                                  }
                                 />
-                                <Label check>
-                                  {option.charAt(0).toUpperCase() + option.slice(1)}
+                                <Label check for={`willBeCancelled-${option}`}>
+                                  {option.charAt(0).toUpperCase() +
+                                    option.slice(1)}
                                 </Label>
                               </FormGroup>
                             ))}
