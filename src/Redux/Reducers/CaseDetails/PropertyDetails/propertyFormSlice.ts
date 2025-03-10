@@ -1,62 +1,8 @@
+import { PropertyFormState } from "@/Types/Organization/CaseDetails/PropertyDetails";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface PropertyFormState {
-  Properties: [{
-    // Address
-    postcode: string;
-    houseNameOrNumber: string;
-    address1: string;
-    address2?: string;
-    city: string;
-    county?: string;
-
-    // Property Type
-    propertyType: string;
-    houseType?: string;
-    flatType?: string;
-    constructionType: string;
-    roofType: string;
-    numberOfFloors: number;
-    propertyAge?: number;
-    epcRating?: string;
-    tenure: string;
-    leaseYears?: number;
-    serviceCharge?: number;
-    groundRent?: number;
-    reinstatementCost?: number;
-    bedrooms?: number;
-    bathrooms?: number;
-    receptionRooms?: number;
-    kitchens?: number;
-    garages?: number;
-    parkingSpaces?: number;
-    floor?: number;
-    flats?: number;
-    numberOfUnits?: number;
-
-    // Additional Info
-    isListedBuilding: boolean;
-    listedBuildingStatus?: string;
-    listedBuildingNotes?: string;
-    ownFreehold: boolean;
-    hasHMOLicense: boolean;
-    isOwnerOccupied: boolean;
-    isPropertyRentedOut: boolean;
-    isStandardConstruction: boolean;
-    hasCladding: boolean;
-    isFloodRisk: boolean;
-    hasFlooded: boolean;
-    hasSubsidence: boolean;
-    isInTrust: boolean;
-    isNearCommercial: boolean;
-    hasSolarPanels: boolean;
-    ownsSolarPanels: boolean;
-    hasAnnexe: boolean;
-  }];
-}
-
 const initialState: PropertyFormState = {
-  Properties: [{
+  Properties: {
     // Address
     postcode: "",
     houseNameOrNumber: "",
@@ -88,15 +34,18 @@ const initialState: PropertyFormState = {
     hasSolarPanels: false,
     ownsSolarPanels: false,
     hasAnnexe: false,
-  }]
+  },
 };
 
 const propertyFormSlice = createSlice({
   name: "propertyForm",
   initialState,
   reducers: {
-    updateProperty: (state, action: PayloadAction<Partial<PropertyFormState['Properties'][0]>>) => {
-      state.Properties[0] = { ...state.Properties[0], ...action.payload };
+    updateProperty: (
+      state,
+      action: PayloadAction<Partial<PropertyFormState["Properties"]>>
+    ) => {
+      state.Properties = { ...state.Properties, ...action.payload };
     },
     resetForm: () => initialState,
   },

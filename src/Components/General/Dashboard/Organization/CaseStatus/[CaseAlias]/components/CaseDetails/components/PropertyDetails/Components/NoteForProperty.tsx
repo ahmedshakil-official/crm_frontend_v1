@@ -15,7 +15,7 @@ import {
 const NoteForProperty: React.FC = () => {
   const [notes, setNotes] = useState<string>("");
   const formData = useSelector(
-    (state: RootState) => state.propertyForm.Properties[0]
+    (state: RootState) => state.propertyForm.Properties
   );
 
   const handleSubmit = () => {
