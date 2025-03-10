@@ -1,6 +1,5 @@
 // PropertyDetails.tsx
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, FormGroup, Label, Input, InputGroup, Button } from "reactstrap";
 
 const PropertyDetails: React.FC = () => {

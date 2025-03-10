@@ -47,6 +47,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     useUpdateApplicantDetailsMutation();
 
   const [formValues, setFormValues] = useState<ApplicantProps>({
+    alias: basicTab || '', // Add this line to initialize alias
     is_company_application: false,
     title: "",
     maiden_name: "",
@@ -114,7 +115,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const selectedApplicant = applicantsData?.find(
     (applicant) => applicant.alias === basicTab
   );
-  console.log("selectedApplicant", selectedApplicant);
 
   // Initialize form values with selected applicant's data
   useEffect(() => {
