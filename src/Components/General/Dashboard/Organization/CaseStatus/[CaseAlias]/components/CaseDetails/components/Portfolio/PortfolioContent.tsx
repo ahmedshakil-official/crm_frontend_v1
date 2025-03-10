@@ -1,3 +1,6 @@
+import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/CaseDetails/Portfolio/PortfolioApi";
+import LoadingSpinner from "@/app/loading";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import {
   Button,
@@ -6,119 +9,98 @@ import {
   CardHeader,
   Col,
   Container,
-  Form,
-  FormGroup,
-  Input,
-  Label,
   Row,
   Table,
 } from "reactstrap";
 import AddPortfolioContentModal from "./Modals/AddPortfolioContentModal";
-import { useParams } from "next/navigation";
-import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/CaseDetails/Portfolio/PortfolioApi";
 
 const PortfolioContent: React.FC = () => {
-  const [hasProperties, setHasProperties] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const prams=useParams()
-  const {casealias} = prams;
-  console.log(casealias)
+  const prams = useParams();
+  const { casealias } = prams;
 
-  const {data, isLoading} = useGetPortfolioDetailsQuery({case_alias:casealias});
+  const { data, isLoading } = useGetPortfolioDetailsQuery({
+    case_alias: casealias,
+  });
 
-  if(isLoading){
-    return <div>Loading...</div>
+  if (isLoading) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
   console.log(data);
-
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   return (
     <>
       <Container fluid className="p-4">
-        <Form>
-          <Row className="mb-4">
-            <Col md={12}>
-              <Card>
-                <CardHeader>
+        <Row className="mb-4">
+          <Col md={12}>
+            <Card>
+              <CardHeader>
+                <div className="d-flex justify-content-between mb-2">
                   <h5 className="mb-0 fs-3 text-primary">
                     Additional Properties
                   </h5>
-                </CardHeader>
-                <CardBody>
-                  <FormGroup>
-                    <Label className="mb-0 me-3">
-                      Do the applicants own any other properties?
-                    </Label>
-                    {["yes", "no"].map((value) => (
-                      <div
-                        key={value}
-                        className="me-2 d-flex align-items-center"
-                      >
-                        <Input
-                          name="hasProperties"
-                          type="radio"
-                          id={`hasProperties${
-                            value.charAt(0).toUpperCase() + value.slice(1)
-                          }`}
-                          value={value}
-                          onChange={(e) => setHasProperties(e.target.value)}
-                          checked={hasProperties === value}
-                          className="me-1"
-                          style={{ marginTop: 0 }}
-                        />
-                        <Label
-                          check
-                          for={`hasProperties${
-                            value.charAt(0).toUpperCase() + value.slice(1)
-                          }`}
-                          className="mb-0"
-                        >
-                          {value.charAt(0).toUpperCase() + value.slice(1)}
-                        </Label>
-                      </div>
-                    ))}
-                  </FormGroup>
-                  {hasProperties === "yes" && (
-                    <div className="mt-3">
-                      <div className="table-responsive">
-                        <div className="d-flex justify-content-end mb-2">
-                          <Button color="success" size="sm" onClick={toggleModal}>
-                            Add Portfolio
-                          </Button>
-                        </div>
-                        <Table
-                          className="table table-bordered table-hover table-striped"
-                          style={{ fontSize: "0.9rem" }}
-                        >
-                          <thead className="table-light">
-                            <tr>
-                              <th
-                                className="text-center"
-                                style={{ width: "100px" }}
-                              >
-                                <i className="bi bi-pencil-square me-1"></i>
-                                Edit / Delete
-                              </th>
-                              <th>Applicant/s</th>
-                              <th>Full Address</th>
-                              <th>Property Value</th>
-                              <th>Monthly Rental</th>
-                              <th>Lender</th>
-                              <th>Balance</th>
-                              <th>Value At Purchase</th>
-                              <th>Date Purchased</th>
-                              <th>Monthly Payment</th>
-                              <th>Loan To Value</th>
-                              <th>ICR</th>
-                              <th>Is HMO</th>
-                              <th>Is MUFB</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td className="text-center d-flex justify-content-center align-items-center">
+                  <Button color="success" onClick={toggleModal}>
+                    Add Portfolio
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardBody>
+                <div className="mt-3">
+                  <div className="table-responsive">
+                    <Table
+                      className="table table-bordered table-hover"
+                      style={{ fontSize: "0.9rem" }}
+                    >
+                      <thead className="table-light">
+                        <tr>
+                          <th
+                            className="text-center"
+                            style={{ width: "100px" }}
+                          >
+                            <i className="bi bi-pencil-square me-1"></i>
+                            Edit / Delete
+                          </th>
+                          <th>Applicant/s</th>
+                          <th>Full Address</th>
+                          <th>Property Value</th>
+                          <th>Monthly Rental</th>
+                          <th>Lender</th>
+                          <th>Balance</th>
+                          <th>Value At Purchase</th>
+                          <th>Date Purchased</th>
+                          <th>Monthly Payment</th>
+                          <th>Loan To Value</th>
+                          <th>ICR</th>
+                          <th>Is HMO</th>
+                          <th>Is MUFB</th>
+                          <th>EPC Rating</th>
+                          <th>Repayment Type</th>
+                          <th>To Be Repaid</th>
+                          <th>Current Rate</th>
+                          <th>Rate Type</th>
+                          <th>Current Rate End Date</th>
+                          <th>ERC End Date</th>
+                          <th>Account Number</th>
+                          <th>Ownership</th>
+                          <th>Is Ltd Co</th>
+                          <th>Remaining Mortgage Term</th>
+                          <th>Bedrooms</th>
+                          <th>Year Built</th>
+                          <th>Leasehold</th>
+                          <th>Property Type</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data?.map((item: any) => (
+                          <tr key={item.alias}>
+                            <td>
+                              <div className="text-center d-flex justify-content-center align-items-center">
                                 <Button
                                   color="primary"
                                   size="sm"
@@ -129,53 +111,91 @@ const PortfolioContent: React.FC = () => {
                                 <Button color="danger" size="sm">
                                   <i className="fa-solid fa-trash"></i>
                                 </Button>
-                              </td>
-                              <td>Sample Data</td>
-                              <td>123 Main St</td>
-                              <td>£250,000</td>
-                              <td>£1,200</td>
-                              <td>Bank ABC</td>
-                              <td>£180,000</td>
-                              <td>£230,000</td>
-                              <td>01/01/2022</td>
-                              <td>£800</td>
-                              <td>72%</td>
-                              <td>1.5</td>
-                              <td>No</td>
-                              <td>No</td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </div>
-                    </div>
-                  )}
-
-                  <FormGroup className="mt-3">
-                    <Input
-                      type="textarea"
-                      rows={3}
-                      placeholder="Add notes about additional properties..."
-                    />
-                  </FormGroup>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="text-end">
-              <Button color="secondary" className="me-2">
-                Back
-              </Button>
-              <Button color="primary">Save / Next</Button>
-            </Col>
-          </Row>{" "}
-        </Form>
+                              </div>
+                            </td>
+                            <td>
+                              {item.applicant
+                                .map(
+                                  (app: any) =>
+                                    `${app.first_name} ${app.last_name}`
+                                )
+                                .join(", ")}
+                            </td>
+                            <td>{`${item.house_name_or_number}, ${item.address_1}, ${item.city}, ${item.postcode}`}</td>
+                            <td>
+                              £{Number(item.property_value).toLocaleString()}
+                            </td>
+                            <td>
+                              £
+                              {Number(
+                                item.monthly_rental_income
+                              ).toLocaleString()}
+                            </td>
+                            <td>{item.mortgage_lender || "-"}</td>
+                            <td>
+                              £
+                              {Number(
+                                item.current_mortgage_balance
+                              ).toLocaleString()}
+                            </td>
+                            <td>
+                              £{Number(item.value_at_purchase).toLocaleString()}
+                            </td>
+                            <td>
+                              {new Date(
+                                item.date_purchased
+                              ).toLocaleDateString()}
+                            </td>
+                            <td>
+                              £
+                              {Number(
+                                item.monthly_mortgage_payment
+                              ).toLocaleString()}
+                            </td>
+                            <td>
+                              {(
+                                (Number(item.current_mortgage_balance) /
+                                  Number(item.property_value)) *
+                                100
+                              ).toFixed(2)}
+                              %
+                            </td>
+                            <td>
+                              {(
+                                Number(item.monthly_rental_income) /
+                                Number(item.monthly_mortgage_payment)
+                              ).toFixed(2)}
+                            </td>
+                            <td>{item?.is_hmo ? "Yes" : "No"}</td>
+                            <td>{item?.is_mufb ? "Yes" : "No"}</td>
+                            <td>{item?.epc_rating || "-"}</td>
+                            <td>{item?.repayment_type || "-"}</td>
+                            <td>{item?.to_be_repaid || "-"}</td>
+                            <td>{item?.current_rate || "-"}</td>
+                            <td>{item?.rate_type || "-"}</td>
+                            <td>{item?.current_rate_end_date || "-"}</td>
+                            <td>{item?.erc_end_date || "-"}</td>
+                            <td>{item?.account_number || "-"}</td>
+                            <td>{item?.ownership || "-"}</td>
+                            <td>{item?.is_limited_company ? "Yes" : "No"}</td>
+                            <td>{item?.remaining_mortgage_term || "-"}</td>
+                            <td>{item?.number_of_bedrooms || "-"}</td>
+                            <td>{item?.year_built || "-"}</td>
+                            <td>{item?.leasehold || "-"}</td>
+                            <td>{item?.property_type || "-"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  </div>
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
       </Container>
-      
-      <AddPortfolioContentModal 
-        isOpen={isModalOpen}
-        toggle={toggleModal}
-      />
+
+      <AddPortfolioContentModal isOpen={isModalOpen} toggle={toggleModal} />
     </>
   );
 };
