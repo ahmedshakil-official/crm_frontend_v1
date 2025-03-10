@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/Store";
 import {
   Card,
   CardFooter,
@@ -12,10 +14,17 @@ import {
 
 const NoteForProperty: React.FC = () => {
   const [notes, setNotes] = useState<string>("");
+  const formData = useSelector(
+    (state: RootState) => state.propertyForm.Properties[0]
+  );
 
   const handleSubmit = () => {
-    // Add your save/next logic here
-    console.log("Notes:", notes);
+    const finalData = {
+      ...formData,
+      notes,
+    };
+    console.log("Complete Form Data:", finalData);
+    // Here you can handle the submission
   };
 
   return (
@@ -54,19 +63,7 @@ const NoteForProperty: React.FC = () => {
           </Col>
         </Row>
 
-        <div className="d-flex justify-content-between align-items-center">
-          <Button
-            color="secondary"
-            outline
-            name="back"
-            className="px-4"
-            onClick={() => {
-              // Add your back logic here
-            }}
-          >
-            Back
-          </Button>
-
+        <div className="d-flex justify-content-end align-items-center">
           <Button
             color="primary"
             id="submit"
@@ -74,7 +71,7 @@ const NoteForProperty: React.FC = () => {
             className="px-4"
             onClick={handleSubmit}
           >
-            Save / Next
+            Submit
           </Button>
         </div>
       </CardFooter>
