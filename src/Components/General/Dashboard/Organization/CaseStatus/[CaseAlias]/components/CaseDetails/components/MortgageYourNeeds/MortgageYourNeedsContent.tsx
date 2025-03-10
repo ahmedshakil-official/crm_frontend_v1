@@ -843,10 +843,156 @@ const MortgageYourNeedsContent: React.FC = () => {
                 </Col>
               </Row>
             </FormGroup>
+            <FormGroup className="border-primary rounded-2 p-2">
+              <Label className="text-primary">
+                We will provide you with a quotation for buildings and or
+                contents insurance Which of the following do you wish to be
+                included within this quotation?
+              </Label>
+              <Row>
+                <Col md={4}>
+                  <FormGroup className="mb-2">
+                    <Label className="d-block">Buildings</Label>
+                    <div className="d-flex gap-4">
+                      {yesNoOptions.map((option) => (
+                        <FormGroup key={`buildings-${option}`} check inline>
+                          <Input 
+                            type="radio" 
+                            name="buildings" 
+                            id={`buildings-${option}`}
+                          />
+                          <Label check for={`buildings-${option}`}>
+                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                          </Label>
+                        </FormGroup>
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md={4}>
+                  <FormGroup className="mb-2">
+                    <Label className="d-block">+ Contents</Label>
+                    <div className="d-flex gap-4">
+                      {yesNoOptions.map((option) => (
+                        <FormGroup key={`contents-${option}`} check inline>
+                          <Input 
+                            type="radio" 
+                            name="contents" 
+                            id={`contents-${option}`}
+                          />
+                          <Label check for={`contents-${option}`}>
+                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                          </Label>
+                        </FormGroup>
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md={4}>
+                  <FormGroup className="mb-2">
+                    <Label className="d-block">Accidental Damage</Label>
+                    <div className="d-flex gap-4">
+                      {yesNoOptions.map((option) => (
+                        <FormGroup key={`accidentalDamage-${option}`} check inline>
+                          <Input 
+                            type="radio" 
+                            name="accidentalDamage" 
+                            id={`accidentalDamage-${option}`}
+                          />
+                          <Label check for={`accidentalDamage-${option}`}>
+                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                          </Label>
+                        </FormGroup>
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={4}>
+                  <FormGroup className="mb-2">
+                    <Label className="d-block">Landlords cover</Label>
+                    <div className="d-flex gap-4">
+                      {yesNoOptions.map((option) => (
+                        <FormGroup key={`landlordsCover-${option}`} check inline>
+                          <Input 
+                            type="radio" 
+                            name="landlordsCover" 
+                            id={`landlordsCover-${option}`}
+                          />
+                          <Label check for={`landlordsCover-${option}`}>
+                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                          </Label>
+                        </FormGroup>
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md={4}>
+                  <FormGroup className="mb-2">
+                    <Label className="d-block">Home Emergency Cover</Label>
+                    <div className="d-flex gap-4">
+                      {yesNoOptions.map((option) => (
+                        <FormGroup key={`homeEmergency-${option}`} check inline>
+                          <Input 
+                            type="radio" 
+                            name="homeEmergency" 
+                            id={`homeEmergency-${option}`}
+                          />
+                          <Label check for={`homeEmergency-${option}`}>
+                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                          </Label>
+                        </FormGroup>
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md={4}>
+                  <FormGroup className="mb-2">
+                    <Label className="d-block">Personal Possessions Cover</Label>
+                    <div className="d-flex gap-4">
+                      {yesNoOptions.map((option) => (
+                        <FormGroup key={`personalPossessions-${option}`} check inline>
+                          <Input 
+                            type="radio" 
+                            name="personalPossessions" 
+                            id={`personalPossessions-${option}`}
+                          />
+                          <Label check for={`personalPossessions-${option}`}>
+                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                          </Label>
+                        </FormGroup>
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={12}>
+                  <FormGroup className="mb-2">
+                    <Label className="d-block">If Personal possessions, confirm items and amount of cover</Label>
+                    <div className="d-flex gap-4">
+                      {yesNoOptions.map((option) => (
+                        <FormGroup key={`confirmPersonalPossessions-${option}`} check inline>
+                          <Input 
+                            type="radio" 
+                            name="confirmPersonalPossessions" 
+                            id={`confirmPersonalPossessions-${option}`}
+                          />
+                          <Label check for={`confirmPersonalPossessions-${option}`}>
+                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                          </Label>
+                        </FormGroup>
+                      ))}
+                    </div>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </FormGroup>
             <FormGroup>
               <Label>Do you have a will in place?</Label>
               <div className="d-flex gap-4 mb-2">
-                {["yes", "no"].map((option) => (
+                {yesNoOptions.map((option) => (
                   <FormGroup key={option} check inline>
                     <Input type="radio" name="hasWill" />
                     <Label check>
