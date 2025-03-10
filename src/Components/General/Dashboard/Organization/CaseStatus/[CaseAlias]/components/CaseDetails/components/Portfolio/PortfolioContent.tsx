@@ -14,10 +14,23 @@ import {
   Table,
 } from "reactstrap";
 import AddPortfolioContentModal from "./Modals/AddPortfolioContentModal";
+import { useParams } from "next/navigation";
+import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/CaseDetails/Portfolio/PortfolioApi";
 
 const PortfolioContent: React.FC = () => {
   const [hasProperties, setHasProperties] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const prams=useParams()
+  const {casealias} = prams;
+  console.log(casealias)
+
+  const {data, isLoading} = useGetPortfolioDetailsQuery({case_alias:casealias});
+
+  if(isLoading){
+    return <div>Loading...</div>
+  }
+  console.log(data);
+
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
