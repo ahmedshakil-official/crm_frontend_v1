@@ -30,7 +30,7 @@ const PortfolioContent: React.FC = () => {
       </div>
     );
   }
-  console.log(data);
+  // console.log(data);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 

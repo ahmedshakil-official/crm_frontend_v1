@@ -1,3 +1,8 @@
+import {
+  useAddPropertyDetailsMutation,
+  useGetPortfolioApplicantsQuery,
+} from "@/Redux/Reducers/CaseDetails/Portfolio/PortfolioApi";
+import { useParams } from "next/navigation";
 import React from "react";
 import {
   Button,
@@ -21,18 +26,88 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
   isOpen,
   toggle,
 }) => {
+  const params = useParams();
+  const { casealias } = params;
+  const [addPropertyDetails, { isLoading: isAddPropertiesLoading }] =
+    useAddPropertyDetailsMutation();
+  const { data, isLoading: isGetApplicantsLoading } =
+    useGetPortfolioApplicantsQuery({
+      case_alias: casealias,
+    });
+  // console.log("A: ",data);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const payload = {
+        applicant_ids: [formData.get("applicants")],
+        postcode: formData.get("postcode"),
+        house_name_or_number: formData.get("houseNumber"),
+        address_1: formData.get("address1"),
+        address_2: formData.get("address2"),
+        city: formData.get("city"),
+        county: formData.get("county"),
+        country: formData.get("country"),
+        property_value: formData.get("propertyValue"),
+        current_mortgage_balance: formData.get("currentMortgageBalance"),
+        monthly_rental_income: formData.get("monthlyRental"),
+        monthly_mortgage_payment: formData.get("monthlyPayment"),
+        value_at_purchase: formData.get("valueAtPurchase"),
+        date_purchased: formData.get("datePurchased") || null,
+        is_hmo: formData.get("isHMO") === "on",
+        is_mufb: formData.get("isMUFB") === "on",
+        mortgage_lender: formData.get("mortgageLender"),
+        repayment_type: formData.get("repaymentType"),
+        current_rate: formData.get("currentRate"),
+        rate_type: formData.get("rateType"),
+        current_rate_end_date: formData.get("currentRateEndDate") || null,
+        erc_end_date: formData.get("ercEndDate"),
+        account_number: formData.get("accountNumber"),
+        property_type: formData.get("propertyType"),
+        ownership: formData.get("ownership"),
+        leasehold: formData.get("leasehold"),
+        year_built: formData.get("yearBuilt"),
+        number_of_bedrooms: formData.get("numberOfBedrooms"),
+        remaining_mortgage_term: formData.get("remainingMortgageTerm"),
+        is_limited_company: formData.get("isLimitedCompany") === "on",
+        epc_rating: formData.get("epcRating"),
+      };
+      console.log(payload);
+      await addPropertyDetails({
+        case_alias: casealias,
+        propertyDetails: payload,
+      });
+      toggle();
+    } catch (error) {
+      console.error("Failed to add property:", error);
+    }
+  };
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="xl">
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Property</span>
       </ModalHeader>
       <ModalBody className="px-5 py-4">
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Row>
             <Col md="4">
               <FormGroup>
                 <Label for="applicants">Applicant/s*</Label>
-                <Input id="applicants" name="applicants" type="text" required />
+                <Input id="applicants" name="applicants" type="select" required>
+                  <option value="">Select...</option>
+                  {data?.map((applicant: any) => (
+                    <option
+                      className="text-primary"
+                      key={applicant.id}
+                      value={applicant.id}
+                    >
+                      {applicant.first_name} {applicant.last_name}
+                      {applicant.id}
+                    </option>
+                  ))}
+                </Input>
               </FormGroup>
             </Col>
             <Col md="4">
@@ -336,7 +411,13 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
               <Button color="secondary" onClick={toggle}>
                 Cancel
               </Button>
-              <Button color="primary">Add Property</Button>
+              <Button
+                color="primary"
+                type="submit"
+                disabled={isAddPropertiesLoading}
+              >
+                {isAddPropertiesLoading ? "Adding..." : "Add Property"}
+              </Button>
             </Col>
           </Row>
         </Form>
