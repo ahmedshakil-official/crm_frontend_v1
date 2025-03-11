@@ -1,0 +1,147 @@
+import { PropertiesTypeProps } from "@/Types/Organization/CaseDetails/PortfilioTypes";
+import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
+
+const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
+  data,
+}) => {
+  // Calculate totals
+  const totalPropertyValue = data?.reduce((sum, item) => {
+    return sum + Number(item.property_value);
+  }, 0);
+  const totalMortgageBalance = data?.reduce(
+    (sum, item) => sum + Number(item.current_mortgage_balance),
+    0
+  );
+  const totalMonthlyRental = data?.reduce(
+    (sum, item) => sum + Number(item.monthly_rental_income),
+    0
+  );
+  const totalMonthlyPayment = data?.reduce(
+    (sum, item) => sum + (Number(item.monthly_mortgage_payment) || 0),
+    0
+  );
+
+  // Calculate averages
+  const averageLTV =
+    totalMortgageBalance && totalPropertyValue
+      ? (totalMortgageBalance / totalPropertyValue) * 100
+      : 0;
+
+  const averageICR = totalMonthlyPayment
+    ? (totalMonthlyRental / totalMonthlyPayment) * 100
+    : 0;
+
+  return (
+    <Container>
+      <Row>
+        <Col lg="4" md="12">
+          <Card className="ecommerce-widget rounded-4">
+            <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-primary">
+              <CardHeader className="pt-0 pb-1 m-0 text-center">
+                <h4 className="fw-bold fs-6">Total Value of Properties</h4>
+              </CardHeader>
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <span className="text-primary h1">
+                  <i className="fa-solid fa-sterling-sign"></i>
+                </span>
+                <span className="h5 text-primary font-weight-bold">
+                  £{totalPropertyValue?.toLocaleString()}
+                </span>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col lg="4" md="12">
+          <Card className="ecommerce-widget rounded-4">
+            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-secondary">
+              <CardHeader className="pt-0 pb-1 m-0 text-center">
+                <h4 className="fw-bold fs-6">Total Current Mortgage Balance</h4>
+              </CardHeader>
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <span className="text-secondary h1">
+                  <i className="fa-solid fa-sterling-sign"></i>
+                </span>
+                <span className="h5 text-secondary font-weight-bold">
+                  £{totalMortgageBalance?.toLocaleString()}
+                </span>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col lg="4" md="12">
+          <Card className="ecommerce-widget rounded-4">
+            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-info">
+              <CardHeader className="pt-0 pb-1 m-0 text-center">
+                <h4 className="fw-bold fs-6">LTV %</h4>
+              </CardHeader>
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <span className="text-info h1">
+                  <i className="fa-solid fa-sterling-sign"></i>
+                </span>
+                <span className="h5 text-info font-weight-bold">
+                  {averageLTV?.toFixed(2)}%
+                </span>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+      {/* 2nd row  */}
+      <Row>
+        <Col lg="4" md="12">
+          <Card className="ecommerce-widget rounded-4">
+            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-primary">
+              <CardHeader className="pt-0 pb-1 m-0 text-center">
+                <h4 className="fw-bold fs-6">Total Monthly Rental Income</h4>
+              </CardHeader>
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <span className="text-primary h1">
+                  <i className="fa-solid fa-calendar-days"></i>
+                </span>
+                <span className="h5 text-primary font-weight-bold">
+                  £{totalMonthlyRental?.toLocaleString()}
+                </span>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col lg="4" md="12">
+          <Card className="ecommerce-widget rounded-4">
+            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-secondary">
+              <CardHeader className="pt-0 pb-1 m-0 text-center">
+                <h4 className="fw-bold fs-6">Total Monthly Mortgage Payment</h4>
+              </CardHeader>
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <span className="text-secondary h1">
+                  <i className="fa-solid fa-calendar-days"></i>
+                </span>
+                <span className="h5 text-secondary font-weight-bold">
+                  £{totalMonthlyPayment?.toLocaleString()}
+                </span>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col lg="4" md="12">
+          <Card className="ecommerce-widget rounded-4">
+            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-info">
+              <CardHeader className="pt-0 pb-1 m-0 text-center">
+                <h4 className="fw-bold fs-6">ICR %</h4>
+              </CardHeader>
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <span className="text-info h1">
+                  <i className="fa-solid fa-calendar-days"></i>
+                </span>
+                <span className="h5 text-info font-weight-bold">
+                  {averageICR?.toFixed(2)}%
+                </span>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+
+export default PortfolioSummary;

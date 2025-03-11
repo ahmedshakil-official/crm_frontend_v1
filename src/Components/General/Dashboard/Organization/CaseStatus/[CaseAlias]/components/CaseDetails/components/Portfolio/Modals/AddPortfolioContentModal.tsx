@@ -131,7 +131,6 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                   <div
                     className="form-control d-flex flex-wrap align-items-center position-relative custom_input_field"
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    style={{ minHeight: "38px", cursor: "pointer" }}
                   >
                     {selectedApplicants.length === 0 && (
                       <span className="text-muted">Select applicants...</span>

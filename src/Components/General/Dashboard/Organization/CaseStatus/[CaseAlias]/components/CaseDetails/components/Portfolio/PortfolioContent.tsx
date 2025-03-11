@@ -13,6 +13,7 @@ import {
   Table,
 } from "reactstrap";
 import AddPortfolioContentModal from "./Modals/AddPortfolioContentModal";
+import PortfolioSummary from "./PortfolioSummary";
 
 const PortfolioContent: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,6 +38,16 @@ const PortfolioContent: React.FC = () => {
   return (
     <>
       <Container fluid className="p-4">
+        <Row>
+          <Card>
+            <CardHeader className="bg-primary">
+              <span className="fs-5">Summary of client declared values</span>
+            </CardHeader>
+            <CardBody>
+              <PortfolioSummary data={data} />
+            </CardBody>
+          </Card>
+        </Row>
         <Row className="mb-4">
           <Col md={12}>
             <Card>
@@ -139,7 +150,8 @@ const PortfolioContent: React.FC = () => {
                               ).toLocaleString()}
                             </td>
                             <td>
-                              £{Number(item?.value_at_purchase).toLocaleString()}
+                              £
+                              {Number(item?.value_at_purchase).toLocaleString()}
                             </td>
                             <td>
                               {new Date(
