@@ -18,6 +18,7 @@ import ChatSlice from "./Reducers/ChatSlice";
 import ThemeCustomizerReducer from "./Reducers/ThemeCustomizerReducer";
 import CaseDetailsTabIndicatorReducer from "./Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { baseApi } from "./Api/BaseApi";
+import propertyFormReducer from "./Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
 
 const Store = configureStore({
   reducer: {
@@ -40,6 +41,7 @@ const Store = configureStore({
     formWizardOne: FormWizardOne,
     themeCustomizer: ThemeCustomizerReducer,
     caseDetails: CaseDetailsTabIndicatorReducer,
+    propertyForm: propertyFormReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),

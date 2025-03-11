@@ -1,15 +1,21 @@
 import { FC } from "react";
 import { Button, TabContent, TabPane } from "reactstrap";
+import { useSelector } from "react-redux";
 import AddressDetails from "./Components/PropertyDetailsTabs/PropertyAddress";
 import PropertyDetails from "./Components/PropertyDetailsTabs/PropertyType";
 import AdditionalInfo from "./Components/PropertyDetailsTabs/PropertyAdditionalInfo";
+import { RootState } from "@/Redux/Store";
+
 interface PropertyDetailsTabContentProps {
   tabId: string;
   setTabId: (id: string) => void;
 }
-const PropertyDetailsTabContent: FC<PropertyDetailsTabContentProps> = ({ tabId, setTabId }) => {
+
+const PropertyDetailsTabContent: FC<PropertyDetailsTabContentProps> = ({
+  tabId,
+  setTabId,
+}) => {
   const handleNext = () => setTabId((parseInt(tabId) + 1).toString());
-  const isLastTab = tabId === "3"; // Since we have 3 tabs
 
   return (
     <div>
@@ -27,10 +33,7 @@ const PropertyDetailsTabContent: FC<PropertyDetailsTabContentProps> = ({ tabId, 
           </Button>
         </TabPane>
         <TabPane tabId="3">
-          <AdditionalInfo/>
-          <Button color="primary" onClick={handleNext} className="float-end" hidden={isLastTab}>
-            Next
-          </Button>
+          <AdditionalInfo />
         </TabPane>
       </TabContent>
     </div>

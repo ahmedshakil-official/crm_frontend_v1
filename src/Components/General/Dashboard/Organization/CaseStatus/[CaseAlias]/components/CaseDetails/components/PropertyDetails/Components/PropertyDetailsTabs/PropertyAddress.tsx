@@ -1,5 +1,7 @@
 // AddressDetails.tsx
 import React from "react";
+import { useDispatch } from "react-redux";
+import { updateProperty } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
 import {
   Row,
   Col,
@@ -11,6 +13,13 @@ import {
 } from "reactstrap";
 
 const AddressDetails: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+   dispatch(updateProperty({ [name]: value }));
+  };
+
   return (
     <Row>
       <Col sm={12}>
@@ -22,10 +31,9 @@ const AddressDetails: React.FC = () => {
               </Label>
               <InputGroup>
                 <Input
-                  id="Properties[0].Address.postcode"
-                  name="Properties[0].Address.postcode"
+                  name="postcode"
                   className="form-control"
-                  defaultValue=""
+                  onChange={handleChange}
                   maxLength={10}
                   required
                 />
