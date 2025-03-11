@@ -1,4 +1,10 @@
-import React from "react";
+import {
+  useAddPropertyDetailsMutation,
+  useGetPortfolioApplicantsQuery,
+} from "@/Redux/Reducers/CaseDetails/Portfolio/PortfolioApi";
+import { useParams } from "next/navigation";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -11,6 +17,7 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
+import "../PortfolioContent.css";
 
 interface AddPortfolioContentModalProps {
   isOpen: boolean;
@@ -21,29 +28,168 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
   isOpen,
   toggle,
 }) => {
+  const params = useParams();
+  const { casealias } = params;
+  const [selectedApplicants, setSelectedApplicants] = useState<string[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [addPropertyDetails, { isLoading: isAddPropertiesLoading }] =
+    useAddPropertyDetailsMutation();
+  const { data, isLoading: isGetApplicantsLoading } =
+    useGetPortfolioApplicantsQuery({
+      case_alias: casealias,
+    });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Add validation for applicants
+    if (selectedApplicants.length === 0) {
+      toast.error("Please select at least one applicant!");
+      return;
+    }
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const payload = {
+        applicant_ids: selectedApplicants.map((id) => Number(id)),
+        postcode: formData.get("postcode"),
+        house_name_or_number: formData.get("houseNumber"),
+        address_1: formData.get("address1"),
+        address_2: formData.get("address2") || null,
+        city: formData.get("city"),
+        county: formData.get("county") || null,
+        country: formData.get("country"),
+        property_value: formData.get("propertyValue"),
+        current_mortgage_balance: formData.get("currentMortgageBalance"),
+        monthly_rental_income: formData.get("monthlyRental"),
+        monthly_mortgage_payment: formData.get("monthlyPayment"),
+        value_at_purchase: formData.get("valueAtPurchase"),
+        date_purchased: formData.get("datePurchased") || null,
+        is_hmo: formData.get("isHMO") === "on",
+        is_mufb: formData.get("isMUFB") === "on",
+        mortgage_lender: formData.get("mortgageLender") || null,
+        repayment_type: formData.get("repaymentType") || null,
+        to_be_repaid: formData.get("toBeRepaid") || null,
+        current_rate: formData.get("currentRate") || null,
+        rate_type: formData.get("rateType") || null,
+        current_rate_end_date: formData.get("currentRateEndDate") || null,
+        erc_end_date: formData.get("ercEndDate") || null,
+        account_number: formData.get("accountNumber"),
+        property_type: formData.get("propertyType"),
+        ownership: formData.get("ownership") || null,
+        leasehold: formData.get("leasehold") || null,
+        year_built: formData.get("yearBuilt") || null,
+        number_of_bedrooms: formData.get("numberOfBedrooms") || null,
+        remaining_mortgage_term: formData.get("remainingMortgageTerm") || null,
+        is_limited_company: true,
+        epc_rating: formData.get("epcRating") || null,
+      };
+      const response = await addPropertyDetails({
+        case_alias: casealias,
+        propertyDetails: payload,
+      });
+
+      if (response) {
+        toast.success("Property added successfully!");
+        toggle();
+      }
+    } catch (error) {
+      console.error("Failed to add property:", error);
+      toast.error("Failed to add property. Please try again!");
+    }
+  };
+
+  const handleSelect = (id: string) => {
+    if (!selectedApplicants.includes(id)) {
+      setSelectedApplicants([...selectedApplicants, id]);
+    }
+  };
+
+  const removeApplicant = (id: string) => {
+    setSelectedApplicants(selectedApplicants.filter((appId) => appId !== id));
+  };
+
+  // Filter out selected applicants from the dropdown options
+  const filteredData = data?.filter(
+    (applicant: any) => !selectedApplicants.includes(applicant.id.toString())
+  );
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="xl">
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Property</span>
       </ModalHeader>
       <ModalBody className="px-5 py-4">
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Row>
-            <Col md="4">
+            <Col md={6}>
               <FormGroup>
                 <Label for="applicants">Applicant/s*</Label>
-                <Input id="applicants" name="applicants" type="text" required />
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <Label for="postcode">Postcode*</Label>
-                <div className="d-flex gap-2">
-                  <Input id="postcode" name="postcode" type="text" required />
+                <div className="position-relative">
+                  {/* Custom Input Field */}
+                  <div
+                    className="form-control d-flex flex-wrap align-items-center position-relative custom_input_field"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    style={{ minHeight: "38px", cursor: "pointer" }}
+                  >
+                    {selectedApplicants.length === 0 && (
+                      <span className="text-muted">Select applicants...</span>
+                    )}
+                    {selectedApplicants.map((id) => {
+                      const applicant = data.find(
+                        (a: any) => a.id === Number(id)
+                      );
+                      return (
+                        <span
+                          key={id}
+                          className="badge bg-primary me-1 mb-1 d-flex align-items-center"
+                          style={{ cursor: "pointer" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeApplicant(id);
+                          }}
+                        >
+                          {applicant?.first_name} {applicant?.last_name} ×
+                        </span>
+                      );
+                    })}
+                    <i
+                      className="fa-solid fa-angle-down position-absolute"
+                      style={{
+                        right: "10px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                      }}
+                    ></i>
+                  </div>
+
+                  {/* Dropdown */}
+                  {isDropdownOpen && (
+                    <div className="position-absolute w-100 bg-white border mt-1 rounded-2 dropdown_style">
+                      {/* Close Button - Moved to top */}
+                      <div
+                        className="text-end p-1 bg-primary sticky-top border-bottom dropdown_close"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        <span className="fw-bold fs-5">×</span>
+                      </div>
+                      {/* Dropdown Options */}
+                      {filteredData?.map((applicant: any) => (
+                        <div
+                          key={applicant.id}
+                          className="px-2 py-1 dropdown_item"
+                          onClick={() => handleSelect(applicant.id)}
+                        >
+                          {applicant.first_name} {applicant.last_name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={6}>
               <FormGroup>
                 <Label for="postcode">Postcode*</Label>
                 <div className="d-flex gap-2">
@@ -53,7 +199,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="houseNumber">House Name Or Number*</Label>
                 <Input
@@ -64,13 +210,13 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="address1">Address 1*</Label>
                 <Input id="address1" name="address1" type="text" required />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="address2">Address 2</Label>
                 <Input id="address2" name="address2" type="text" />
@@ -78,21 +224,19 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="city">City*</Label>
                 <Input id="city" name="city" type="text" required />
               </FormGroup>
             </Col>
-            <Col md="4">
-              {" "}
+            <Col md={4}>
               <FormGroup>
                 <Label for="county">County</Label>
                 <Input id="county" name="county" type="text" />
               </FormGroup>
             </Col>
-            <Col md="4">
-              {" "}
+            <Col md={4}>
               <FormGroup>
                 <Label for="country">Country*</Label>
                 <Input id="country" name="country" type="text" required />
@@ -101,7 +245,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
           </Row>
           <hr className="border-secondary" />
           <Row>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="propertyValue">Property Value*</Label>
                 <Input
@@ -112,7 +256,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="currentMortgageBalance">
                   Current Mortgage Balance*
@@ -125,7 +269,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="monthlyRental">Monthly Rental Income*</Label>
                 <Input
@@ -138,7 +282,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="monthlyPayment">Monthly Mortgage Payment</Label>
                 <Input
@@ -148,8 +292,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md="4">
-              {" "}
+            <Col md={4}>
               <FormGroup>
                 <Label for="valueAtPurchase">Value At Purchase</Label>
                 <Input
@@ -159,7 +302,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="datePurchased">Date Purchased</Label>
                 <Input id="datePurchased" name="datePurchased" type="date" />
@@ -167,10 +310,10 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup check>
                 <Label check>
-                  <Input type="checkbox" name="isHMO" />
+                  <Input type="checkbox" name="isHMO" required />
                   Is the property an HMO*
                 </Label>
               </FormGroup>
@@ -181,13 +324,13 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 </Label>
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="mortgageLender">Mortgage Lender</Label>
                 <Input id="mortgageLender" name="mortgageLender" type="text" />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="repaymentType">Repayment Type</Label>
                 <Input id="repaymentType" name="repaymentType" type="text" />
@@ -195,7 +338,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="currentRate">Current Rate (%)</Label>
                 <Input
@@ -206,7 +349,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="rateType">Rate Type</Label>
                 <Input id="rateType" name="rateType" type="select">
@@ -226,7 +369,15 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 </Input>
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
+              <FormGroup>
+                <Label for="toBeRepaid">To Be Repaid</Label>
+                <Input id="toBeRepaid" name="toBeRepaid" type="text" />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={4}>
               <FormGroup>
                 <Label for="currentRateEndDate">Current Rate End Date</Label>
                 <Input
@@ -236,13 +387,13 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="ercEndDate">ERC End Date</Label>
                 <Input id="ercEndDate" name="ercEndDate" type="date" />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="accountNumber">Account Number</Label>
                 <Input id="accountNumber" name="accountNumber" type="text" />
@@ -250,19 +401,24 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
-                <Label for="propertyType">Property Type</Label>
-                <Input id="propertyType" name="propertyType" type="text" />
+                <Label for="propertyType">Property Type*</Label>
+                <Input
+                  id="propertyType"
+                  name="propertyType"
+                  type="text"
+                  required
+                />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
-                <Label for="ownership">Ownership</Label>
-                <Input id="ownership" name="ownership" type="text" />
+                <Label for="ownership">Ownership*</Label>
+                <Input id="ownership" name="ownership" type="text" required />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="leasehold">Leasehold</Label>
                 <Input
@@ -275,23 +431,24 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="yearBuilt">Year Built</Label>
                 <Input id="yearBuilt" name="yearBuilt" type="number" />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
-                <Label for="numberOfBedrooms">Number of Bedrooms</Label>
+                <Label for="numberOfBedrooms">Number of Bedrooms*</Label>
                 <Input
                   id="numberOfBedrooms"
                   name="numberOfBedrooms"
                   type="number"
+                  required
                 />
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="remainingMortgageTerm">
                   Remaining Mortgage Term
@@ -306,7 +463,7 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup check>
                 <Label check>
                   <Input type="checkbox" name="isLimitedCompany" />
@@ -314,29 +471,36 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
                 </Label>
               </FormGroup>
             </Col>
-            <Col md="4">
+            <Col md={4}>
               <FormGroup>
                 <Label for="epcRating">EPC Rating</Label>
                 <Input id="epcRating" name="epcRating" type="select">
-                  <option>Unknown</option>
-                  <option>A</option>
-                  <option>B</option>
-                  <option>C</option>
-                  <option>D</option>
-                  <option>E</option>
-                  <option>F</option>
-                  <option>G</option>
+                  <option value="">Select...</option>
+                  <option value="UNKNOWN">Unknown</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
                 </Input>
               </FormGroup>
             </Col>
-            <Col md="4"></Col>
+            <Col md={4}></Col>
           </Row>
           <Row>
             <Col className="d-flex justify-content-end gap-2">
               <Button color="secondary" onClick={toggle}>
                 Cancel
               </Button>
-              <Button color="primary">Add Property</Button>
+              <Button
+                color="primary"
+                type="submit"
+                disabled={isAddPropertiesLoading}
+              >
+                {isAddPropertiesLoading ? "Adding..." : "Add Property"}
+              </Button>
             </Col>
           </Row>
         </Form>
