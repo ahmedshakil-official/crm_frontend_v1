@@ -98,7 +98,7 @@ const PortfolioContent: React.FC = () => {
                       </thead>
                       <tbody>
                         {data?.map((item: any) => (
-                          <tr key={item.alias}>
+                          <tr key={item?.alias}>
                             <td>
                               <div className="text-center d-flex justify-content-center align-items-center">
                                 <Button
@@ -114,56 +114,56 @@ const PortfolioContent: React.FC = () => {
                               </div>
                             </td>
                             <td>
-                              {item.applicant
+                              {item?.applicant
                                 .map(
                                   (app: any) =>
-                                    `${app.first_name} ${app.last_name}`
+                                    `${app?.first_name} ${app?.last_name}`
                                 )
                                 .join(", ")}
                             </td>
-                            <td>{`${item.house_name_or_number}, ${item.address_1}, ${item.city}, ${item.postcode}`}</td>
+                            <td>{`${item?.house_name_or_number}, ${item?.address_1}, ${item?.city}, ${item?.postcode}`}</td>
                             <td>
-                              £{Number(item.property_value).toLocaleString()}
+                              £{Number(item?.property_value).toLocaleString()}
                             </td>
                             <td>
                               £
                               {Number(
-                                item.monthly_rental_income
+                                item?.monthly_rental_income
                               ).toLocaleString()}
                             </td>
-                            <td>{item.mortgage_lender || "-"}</td>
+                            <td>{item?.mortgage_lender || "-"}</td>
                             <td>
                               £
                               {Number(
-                                item.current_mortgage_balance
+                                item?.current_mortgage_balance
                               ).toLocaleString()}
                             </td>
                             <td>
-                              £{Number(item.value_at_purchase).toLocaleString()}
+                              £{Number(item?.value_at_purchase).toLocaleString()}
                             </td>
                             <td>
                               {new Date(
-                                item.date_purchased
+                                item?.date_purchased
                               ).toLocaleDateString()}
                             </td>
                             <td>
                               £
                               {Number(
-                                item.monthly_mortgage_payment
+                                item?.monthly_mortgage_payment
                               ).toLocaleString()}
                             </td>
                             <td>
                               {(
-                                (Number(item.current_mortgage_balance) /
-                                  Number(item.property_value)) *
+                                (Number(item?.current_mortgage_balance) /
+                                  Number(item?.property_value)) *
                                 100
                               ).toFixed(2)}
                               %
                             </td>
                             <td>
                               {(
-                                Number(item.monthly_rental_income) /
-                                Number(item.monthly_mortgage_payment)
+                                Number(item?.monthly_rental_income) /
+                                Number(item?.monthly_mortgage_payment)
                               ).toFixed(2)}
                             </td>
                             <td>{item?.is_hmo ? "Yes" : "No"}</td>
