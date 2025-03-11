@@ -2,7 +2,6 @@ import { useAppSelector } from "@/Redux/Hooks";
 import { TabContent } from "reactstrap";
 import { AdverseTab } from "./Adverse/AdverseTab";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
-import BudgetPlannerContent from "./BudgetPlanner/BudgetPlannerContent";
 import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
 import { EmploymentTab } from "./Employment/EmploymentTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
@@ -11,6 +10,7 @@ import PortfolioContent from "./Portfolio/PortfolioContent";
 import PropertyDetails from "./PropertyDetails/PropertyDetails";
 import SecurityPropertyTab from "./SecurityProperty/SecurityPropertyTab";
 import SolicitorsAndAccountantsTab from "./SolicitorsAndAccountants/SolicitorsAndAccountantsTab";
+import BudgetPlanner from "./BudgetPlanner/BudgetPlanner";
 
 // Define a mapping of tab names to components
 const tabComponents: Record<string, React.FC> = {
@@ -23,7 +23,7 @@ const tabComponents: Record<string, React.FC> = {
   "Portfolio": PortfolioContent,
   "Property Details": PropertyDetails,
   "Solicitors & Accountants": SolicitorsAndAccountantsTab,
-  "Budget Planner": BudgetPlannerContent,
+  "Budget Planner": BudgetPlanner,
   "Security Property": SecurityPropertyTab,
   "Mortgage Your Needs": MortgageYourNeedsContent,
 };
