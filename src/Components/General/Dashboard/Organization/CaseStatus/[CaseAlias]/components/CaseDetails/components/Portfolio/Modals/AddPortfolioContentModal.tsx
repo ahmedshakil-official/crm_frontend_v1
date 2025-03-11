@@ -17,6 +17,7 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
+import "../PortfolioContent.css";
 
 interface AddPortfolioContentModalProps {
   isOpen: boolean;
@@ -30,21 +31,28 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
   const params = useParams();
   const { casealias } = params;
   const [selectedApplicants, setSelectedApplicants] = useState<string[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [addPropertyDetails, { isLoading: isAddPropertiesLoading }] =
     useAddPropertyDetailsMutation();
   const { data, isLoading: isGetApplicantsLoading } =
     useGetPortfolioApplicantsQuery({
       case_alias: casealias,
     });
-  // console.log("A: ",data);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Add validation for applicants
+    if (selectedApplicants.length === 0) {
+      toast.error("Please select at least one applicant!");
+      return;
+    }
+
     const formData = new FormData(e.currentTarget);
 
     try {
       const payload = {
-        applicant_ids: selectedApplicants.map(id => Number(id)),
+        applicant_ids: selectedApplicants.map((id) => Number(id)),
         postcode: formData.get("postcode"),
         house_name_or_number: formData.get("houseNumber"),
         address_1: formData.get("address1"),
@@ -91,6 +99,22 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
       toast.error("Failed to add property. Please try again!");
     }
   };
+
+  const handleSelect = (id: string) => {
+    if (!selectedApplicants.includes(id)) {
+      setSelectedApplicants([...selectedApplicants, id]);
+    }
+  };
+
+  const removeApplicant = (id: string) => {
+    setSelectedApplicants(selectedApplicants.filter((appId) => appId !== id));
+  };
+
+  // Filter out selected applicants from the dropdown options
+  const filteredData = data?.filter(
+    (applicant: any) => !selectedApplicants.includes(applicant.id.toString())
+  );
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="xl">
       <ModalHeader toggle={toggle}>
@@ -102,59 +126,67 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
             <Col md={6}>
               <FormGroup>
                 <Label for="applicants">Applicant/s*</Label>
-                <Input
-                  id="applicants"
-                  name="applicants"
-                  type="select"
-                  multiple
-                  required
-                  className="form-select"
-                  value={selectedApplicants}
-                  onChange={(e) => {
-                    const options = e.target.options;
-                    const selectedValues = [];
-                    for (let i = 0; i < options.length; i++) {
-                      if (options[i].selected) {
-                        selectedValues.push(options[i].value);
-                      }
-                    }
-                    setSelectedApplicants(selectedValues);
-                  }}
-                >
-                  {data?.map((applicant: any) => (
-                    <option
-                      className="text-primary"
-                      key={applicant.id}
-                      value={applicant.id}
-                    >
-                      {applicant.first_name} {applicant.last_name}
-                    </option>
-                  ))}
-                </Input>
-                {selectedApplicants.length > 0 && (
-                  <div className="mt-2">
-                    <p className="mb-1">Selected Applicants:</p>
-                    <div className="d-flex flex-wrap gap-2">
-                      {selectedApplicants.map((id) => {
-                        const applicant = data?.find((a: any) => a.id === Number(id));
-                        return (
-                          <span
-                            key={id}
-                            className="badge bg-primary"
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => {
-                              setSelectedApplicants(
-                                selectedApplicants.filter((appId) => appId !== id)
-                              );
-                            }}
-                          >
-                            {applicant?.first_name} {applicant?.last_name} ×
-                          </span>
-                        );
-                      })}
-                    </div>
+                <div className="position-relative">
+                  {/* Custom Input Field */}
+                  <div
+                    className="form-control d-flex flex-wrap align-items-center position-relative custom_input_field"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    style={{ minHeight: "38px", cursor: "pointer" }}
+                  >
+                    {selectedApplicants.length === 0 && (
+                      <span className="text-muted">Select applicants...</span>
+                    )}
+                    {selectedApplicants.map((id) => {
+                      const applicant = data.find(
+                        (a: any) => a.id === Number(id)
+                      );
+                      return (
+                        <span
+                          key={id}
+                          className="badge bg-primary me-1 mb-1 d-flex align-items-center"
+                          style={{ cursor: "pointer" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeApplicant(id);
+                          }}
+                        >
+                          {applicant?.first_name} {applicant?.last_name} ×
+                        </span>
+                      );
+                    })}
+                    <i
+                      className="fa-solid fa-angle-down position-absolute"
+                      style={{
+                        right: "10px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                      }}
+                    ></i>
                   </div>
-                )}
+
+                  {/* Dropdown */}
+                  {isDropdownOpen && (
+                    <div className="position-absolute w-100 bg-white border mt-1 rounded-2 dropdown_style">
+                      {/* Close Button - Moved to top */}
+                      <div
+                        className="text-end p-1 bg-primary sticky-top border-bottom dropdown_close"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        <span className="fw-bold fs-5">×</span>
+                      </div>
+                      {/* Dropdown Options */}
+                      {filteredData?.map((applicant: any) => (
+                        <div
+                          key={applicant.id}
+                          className="px-2 py-1 dropdown_item"
+                          onClick={() => handleSelect(applicant.id)}
+                        >
+                          {applicant.first_name} {applicant.last_name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </FormGroup>
             </Col>
             <Col md={6}>
