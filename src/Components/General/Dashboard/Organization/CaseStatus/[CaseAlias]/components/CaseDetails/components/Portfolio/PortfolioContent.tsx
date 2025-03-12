@@ -48,6 +48,7 @@ const PortfolioContent: React.FC = () => {
             </CardBody>
           </Card>
         </Row>
+        <hr />
         <Row className="mb-4">
           <Col md={12}>
             <Card>
