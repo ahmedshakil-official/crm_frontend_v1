@@ -44,7 +44,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
                 <span className="text-primary h1">
                   <i className="fa-solid fa-building"></i>
                 </span>
-                <span className="h5 text-primary font-weight-bold">
+                <span className="h2 text-primary font-weight-bold">
                   £{totalPropertyValue?.toLocaleString()}
                 </span>
               </div>
@@ -61,7 +61,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
                 <span className="text-secondary h1">
                   <i className="fa-solid fa-circle-info"></i>
                 </span>
-                <span className="h5 text-secondary font-weight-bold">
+                <span className="h2 text-secondary font-weight-bold">
                   £{totalMortgageBalance?.toLocaleString()}
                 </span>
               </div>
@@ -70,15 +70,15 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
         </Col>
         <Col lg="4" md="12">
           <Card className="ecommerce-widget rounded-4">
-            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-info">
+            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-success">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
                 <h4 className="fw-bold fs-6">LTV %</h4>
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
-                <span className="text-info h1">
+                <span className="text-success h1">
                   <i className="fa-solid fa-chart-line"></i>
                 </span>
-                <span className="h5 text-info font-weight-bold">
+                <span className="h2 text-success font-weight-bold">
                   {averageLTV?.toFixed(2)}%
                 </span>
               </div>
@@ -98,7 +98,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
                 <span className="text-primary h1">
                   <i className="fa-solid fa-users"></i>
                 </span>
-                <span className="h5 text-primary font-weight-bold">
+                <span className="h2 text-primary font-weight-bold">
                   £{totalMonthlyRental?.toLocaleString()}
                 </span>
               </div>
@@ -115,7 +115,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
                 <span className="text-secondary h1">
                   <i className="fa-solid fa-arrow-right"></i>
                 </span>
-                <span className="h5 text-secondary font-weight-bold">
+                <span className="h2 text-secondary font-weight-bold">
                   £{totalMonthlyPayment?.toLocaleString()}
                 </span>
               </div>
@@ -124,15 +124,15 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
         </Col>
         <Col lg="4" md="12">
           <Card className="ecommerce-widget rounded-4">
-            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-info">
+            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-success">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
                 <h4 className="fw-bold fs-6">ICR %</h4>
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
-                <span className="text-info h1">
+                <span className="text-success h1">
                   <i className="fa-solid fa-arrow-right-arrow-left"></i>
                 </span>
-                <span className="h5 text-info font-weight-bold">
+                <span className="h2 text-success font-weight-bold">
                   {averageICR?.toFixed(2)}%
                 </span>
               </div>
