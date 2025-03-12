@@ -24,7 +24,7 @@ interface AddPortfolioContentModalProps {
   toggle: () => void;
 }
 
-const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
+const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
   isOpen,
   toggle,
 }) => {
@@ -508,4 +508,4 @@ const AddPortfolioContentModal: React.FC<AddPortfolioContentModalProps> = ({
   );
 };
 
-export default AddPortfolioContentModal;
+export default AddPropertyModal;
