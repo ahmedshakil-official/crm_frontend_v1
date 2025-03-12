@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Button, Col, Container, Row } from "reactstrap";
+import { Button, Col, Container, NavLink, Row } from "reactstrap";
 
 const UnderDevelopment = () => {
   return (
@@ -12,7 +11,7 @@ const UnderDevelopment = () => {
           ></i>
           <h1 className="text-danger mt-3">Sorry!</h1>
           <h5 className="text-primary mt-2">This page is Under Development.</h5>
-          <Link href={"/dashboard/organization/"}>
+          <NavLink href={"/dashboard/organization/"}>
             <Button
               className="mt-2"
               style={{
@@ -45,7 +44,7 @@ const UnderDevelopment = () => {
               </style>
               Go To Dashboard
             </Button>
-          </Link>
+          </NavLink>
         </Col>
       </Row>
     </Container>
