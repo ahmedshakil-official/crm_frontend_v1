@@ -42,7 +42,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-primary h1">
-                  <i className="fa-solid fa-sterling-sign"></i>
+                  <i className="fa-solid fa-building"></i>
                 </span>
                 <span className="h5 text-primary font-weight-bold">
                   £{totalPropertyValue?.toLocaleString()}
@@ -59,7 +59,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-secondary h1">
-                  <i className="fa-solid fa-sterling-sign"></i>
+                  <i className="fa-solid fa-circle-info"></i>
                 </span>
                 <span className="h5 text-secondary font-weight-bold">
                   £{totalMortgageBalance?.toLocaleString()}
@@ -76,7 +76,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-info h1">
-                  <i className="fa-solid fa-sterling-sign"></i>
+                  <i className="fa-solid fa-chart-line"></i>
                 </span>
                 <span className="h5 text-info font-weight-bold">
                   {averageLTV?.toFixed(2)}%
@@ -96,7 +96,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-primary h1">
-                  <i className="fa-solid fa-calendar-days"></i>
+                  <i className="fa-solid fa-users"></i>
                 </span>
                 <span className="h5 text-primary font-weight-bold">
                   £{totalMonthlyRental?.toLocaleString()}
@@ -113,7 +113,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-secondary h1">
-                  <i className="fa-solid fa-calendar-days"></i>
+                  <i className="fa-solid fa-arrow-right"></i>
                 </span>
                 <span className="h5 text-secondary font-weight-bold">
                   £{totalMonthlyPayment?.toLocaleString()}
@@ -130,7 +130,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-info h1">
-                  <i className="fa-solid fa-calendar-days"></i>
+                <i className="fa-solid fa-arrow-right-arrow-left"></i>
                 </span>
                 <span className="h5 text-info font-weight-bold">
                   {averageICR?.toFixed(2)}%
