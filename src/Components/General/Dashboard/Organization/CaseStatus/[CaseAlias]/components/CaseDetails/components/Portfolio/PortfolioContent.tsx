@@ -73,8 +73,7 @@ const PortfolioContent: React.FC = () => {
                             className="text-center"
                             style={{ width: "100px" }}
                           >
-                            <i className="bi bi-pencil-square me-1"></i>
-                            Edit / Delete
+                            Actions
                           </th>
                           <th>Applicant/s</th>
                           <th>Full Address</th>
@@ -115,13 +114,15 @@ const PortfolioContent: React.FC = () => {
                                   color="primary"
                                   size="sm"
                                   className="me-1"
+                                  disabled
                                 >
                                   <i className="fa-solid fa-pen-to-square"></i>
                                 </Button>
                                 <Button
                                   color="danger"
                                   size="sm"
-                                  onClick={()=>(alert("Clicked"))}
+                                  disabled
+                                  onClick={() => alert("Clicked")}
                                 >
                                   <i className="fa-solid fa-trash"></i>
                                 </Button>
