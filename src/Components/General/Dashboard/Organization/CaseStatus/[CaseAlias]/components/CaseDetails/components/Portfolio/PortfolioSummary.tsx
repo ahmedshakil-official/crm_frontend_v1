@@ -130,7 +130,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-info h1">
-                <i className="fa-solid fa-arrow-right-arrow-left"></i>
+                  <i className="fa-solid fa-arrow-right-arrow-left"></i>
                 </span>
                 <span className="h5 text-info font-weight-bold">
                   {averageICR?.toFixed(2)}%

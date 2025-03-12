@@ -12,7 +12,7 @@ import {
   Row,
   Table,
 } from "reactstrap";
-import AddPortfolioContentModal from "./Modals/AddPortfolioContentModal";
+import AddPropertyModal from "./Modals/AddPropertyModal";
 import PortfolioSummary from "./PortfolioSummary";
 
 const PortfolioContent: React.FC = () => {
@@ -31,8 +31,6 @@ const PortfolioContent: React.FC = () => {
       </div>
     );
   }
-  // console.log(data);
-
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   return (
@@ -120,7 +118,11 @@ const PortfolioContent: React.FC = () => {
                                 >
                                   <i className="fa-solid fa-pen-to-square"></i>
                                 </Button>
-                                <Button color="danger" size="sm">
+                                <Button
+                                  color="danger"
+                                  size="sm"
+                                  onClick={()=>(alert("Clicked"))}
+                                >
                                   <i className="fa-solid fa-trash"></i>
                                 </Button>
                               </div>
@@ -208,7 +210,7 @@ const PortfolioContent: React.FC = () => {
         </Row>
       </Container>
 
-      <AddPortfolioContentModal isOpen={isModalOpen} toggle={toggleModal} />
+      <AddPropertyModal isOpen={isModalOpen} toggle={toggleModal} />
     </>
   );
 };
