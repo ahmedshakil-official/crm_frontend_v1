@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FormGroup, Input, InputGroup, InputGroupText } from "reactstrap";
+import { FormGroup, Input } from "reactstrap";
 
 const DisclaimerTabContents: FC = () => {
   const disclaimerText = `

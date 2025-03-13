@@ -13,642 +13,278 @@ import {
 } from "reactstrap";
 
 const LivingExpensesTabContents: FC = () => {
-  // State to manage visibility of notes sections
   const [visibleNotes, setVisibleNotes] = useState<{ [key: string]: boolean }>(
     {}
   );
 
-  // Function to toggle notes visibility
   const toggleNotes = (event: React.MouseEvent, noteId: string) => {
     event.preventDefault();
-    setVisibleNotes((prev) => ({
-      ...prev,
-      [noteId]: !prev[noteId],
-    }));
+    setVisibleNotes((prev) => ({ ...prev, [noteId]: !prev[noteId] }));
   };
 
-  // List of fields for reusability
   const livingCostFields = [
-    { label: "Electricity", id: "Electricity" },
-    { label: "Gas", id: "Gas" },
-    { label: "Water", id: "Water" },
-    { label: "Landline/Mobile Phones", id: "Phone" },
-    { label: "TV Licence", id: "TVLicence" },
-    { label: "Council Tax", id: "CouncilTax" },
-    {
-      label: "Ground Rent & Service Charges",
-      id: "GroundRentServiceCharges",
-      hasCalculate: true,
-    },
-    { label: "Buildings & Contents", id: "BuildingsContentsInsurance" },
-    { label: "Mortgage Payment Protection", id: "MortgagePaymentProtection" },
-    { label: "Endowment", id: "Endowment" },
-    { label: "Pension Contribution", id: "PensionContribution" },
-    { label: "Childcare", id: "Childcare" },
-    { label: "Maintenance", id: "OutgoingMaintenance" },
-    { label: "Food", id: "Food" },
-    { label: "Car Maintenance", id: "CarMaintenance" },
-    { label: "Fuel", id: "Fuel" },
-    { label: "Public Transport", id: "PublicTransport" },
-    { label: "TV Broadband", id: "TVBroadband" },
-    { label: "Recreation/Holidays", id: "Hobbies" },
-    { label: "Clothing", id: "Clothing" },
-    { label: "Medical Expenses", id: "MedicalExpenses" },
-    { label: "Education", id: "Education" },
-    { label: "Other Living Costs", id: "OtherLivingCosts" },
+    "Electricity",
+    "Gas",
+    "Water",
+    "Landline/Mobile Phones",
+    "TV Licence",
+    "Council Tax",
+    { label: "Ground Rent & Service Charges", hasCalculate: true },
+    "Buildings & Contents",
+    "Mortgage Payment Protection",
+    "Endowment",
+    "Pension Contribution",
+    "Childcare",
+    "Maintenance",
+    "Food",
+    "Car Maintenance",
+    "Fuel",
+    "Public Transport",
+    "TV Broadband",
+    "Recreation/Holidays",
+    "Clothing",
+    "Medical Expenses",
+    "Education",
+    "Other Living Costs",
   ];
 
-  // List of fields for reusability
   const insuranceFields = [
-    { label: "Motor Insurance", id: "MotorInsurance" },
-    { label: "Health Insurance", id: "HealthInsurance" },
-    { label: "Payment Protection", id: "PaymentProtection" },
-    { label: "Life Insurance", id: "LifeInsurance" },
-    { label: "Dental Insurance", id: "DentalInsurance" },
-    { label: "Other Insurance", id: "OtherInsurance" },
+    "Motor Insurance",
+    "Health Insurance",
+    "Payment Protection",
+    "Life Insurance",
+    "Dental Insurance",
+    "Other Insurance",
   ];
-  return (
-    <div>
-      <p>
-        <small>
-          Please enter all the household monthly living costs, make sure you
-          don't under estimate or it will be difficult to keep to the budget. If
-          your bills or living costs are not monthly you will need to convert
-          them into a monthly expense. Multiply weekly amounts by 4.3 Divide
-          quarterly amounts by 3 Divide annual amounts by 12.
-        </small>
-      </p>
-      <section className="row">
-        {/* Current Column */}
-        <div className="col-md-6">
-          <h4 className="text-center mb-3">Current</h4>
-          <div className="border rounded-3 shadow-sm">
-            <div className="bg-light border-bottom p-3">
-              <span className="fw-bold text-primary">Living Costs</span>
-            </div>
-            <div className="p-3">
-              <Form>
-                {livingCostFields.map((field) => (
-                  <div key={field.id}>
-                    <FormGroup row className="mb-2">
-                      <Label
-                        style={{ fontSize: "0.9rem" }}
-                        for={`CurrentBudgetPlanner_${field.id}`}
-                        sm={6}
-                      >
-                        {field.label}
-                        <span
-                          className="required"
-                          style={{ visibility: "hidden" }}
-                        >
-                          *
-                        </span>
-                      </Label>
-                      <Col sm={6}>
-                        <InputGroup>
-                          <InputGroupText>£</InputGroupText>
-                          <Input
-                            type="text"
-                            name={`CurrentBudgetPlanner.${field.id}`}
-                            id={`CurrentBudgetPlanner_${field.id}`}
-                            className="numeric-decimal living-cost"
-                            placeholder="0.00"
-                            data-val="true"
-                            data-val-number={`The field ${field.label} must be a number.`}
-                            data-val-range={`${field.label} exceeds maximum length of 16 digits`}
-                            data-val-range-max="1E+16"
-                            data-val-range-min="-1E+15"
-                          />
-                          {field.hasCalculate && (
-                            <Button
-                              color="primary"
-                              id={`Current${field.id}Calculate`}
-                            >
-                              Calculate
-                            </Button>
-                          )}
-                          <InputGroupText
-                            className="penNoteIcon_Holder"
-                            onClick={(e) => toggleNotes(e, `${field.id}_Notes`)}
-                            style={{ cursor: "pointer" }}
-                          >
-                            <FaEdit />
-                          </InputGroupText>
-                        </InputGroup>
-                        <span
-                          className="field-validation-valid"
-                          data-valmsg-for={`CurrentBudgetPlanner.${field.id}`}
-                          data-valmsg-replace="true"
-                        ></span>
-                      </Col>
-                    </FormGroup>
-                    <FormGroup
-                      className={`${field.id}_Notes_Holder mb-2`}
-                      style={{
-                        display: visibleNotes[`${field.id}_Notes`]
-                          ? "block"
-                          : "none",
-                      }}
-                    >
-                      <Label
-                        style={{ fontSize: "0.9rem" }}
-                        for={`CurrentBudgetPlanner_${field.id}_Notes`}
-                      >
-                        Notes
-                        <span
-                          className="required"
-                          style={{ visibility: "hidden" }}
-                        >
-                          *
-                        </span>
-                      </Label>
-                      <Input
-                        type="textarea"
-                        name={`CurrentBudgetPlanner.${field.id}_Notes`}
-                        id={`CurrentBudgetPlanner_${field.id}_Notes`}
-                        className="textAreaRestrictions form-control"
-                      />
-                      <span
-                        className="field-validation-valid"
-                        data-valmsg-for={`CurrentBudgetPlanner.${field.id}_Notes`}
-                        data-valmsg-replace="true"
-                      ></span>
-                    </FormGroup>
-                  </div>
-                ))}
-              </Form>
-            </div>
-          </div>
-        </div>
 
-        {/* Post Completion Column */}
-        <div className="col-md-6">
-          <h4 className="text-center mb-3">Post Completion</h4>
-          <div className="border rounded-3 shadow-sm">
-            <div className="bg-light border-bottom p-3 d-flex justify-content-between align-items-center">
-              <span className="fw-bold text-primary">Living Costs</span>
-              <Button
-                color="primary"
-                size="sm"
-                id="copyFromCurrentButton"
-                className="copyFromCurrentButton"
-              >
-                Copy from Current
-              </Button>
-            </div>
-            <div className="p-3">
-              <Form>
-                {livingCostFields.map((field) => (
-                  <div key={field.id}>
-                    <FormGroup row className="mb-2">
-                      <Label
-                        style={{ fontSize: "0.9rem" }}
-                        for={`PostCompletionBudgetPlanner_${field.id}`}
-                        sm={6}
-                      >
-                        {field.label}
-                        <span
-                          className="required"
-                          style={{ visibility: "hidden" }}
-                        >
-                          *
-                        </span>
-                      </Label>
-                      <Col sm={6}>
-                        <InputGroup>
-                          <InputGroupText>£</InputGroupText>
-                          <Input
-                            type="text"
-                            name={`PostCompletionBudgetPlanner.${field.id}`}
-                            id={`PostCompletionBudgetPlanner_${field.id}`}
-                            className="numeric-decimal living-cost"
-                            placeholder="0.00"
-                            data-val="true"
-                            data-val-number={`The field ${field.label} must be a number.`}
-                            data-val-range={`${field.label} exceeds maximum length of 16 digits`}
-                            data-val-range-max="1E+16"
-                            data-val-range-min="-1E+15"
-                          />
-                          {field.hasCalculate && (
-                            <Button
-                              color="primary"
-                              id={`PostCompletion${field.id}Calculate`}
-                            >
-                              Calculate
-                            </Button>
-                          )}
-                          <InputGroupText
-                            className="penNoteIcon_Holder"
-                            onClick={(e) =>
-                              toggleNotes(e, `Post_${field.id}_Notes`)
-                            }
-                            style={{ cursor: "pointer" }}
-                          >
-                            <FaEdit />
-                          </InputGroupText>
-                        </InputGroup>
-                        <span
-                          className="field-validation-valid"
-                          data-valmsg-for={`PostCompletionBudgetPlanner.${field.id}`}
-                          data-valmsg-replace="true"
-                        ></span>
-                      </Col>
-                    </FormGroup>
-                    <FormGroup
-                      className={`${field.id}_Notes_Holder mb-2`}
-                      style={{
-                        display: visibleNotes[`Post_${field.id}_Notes`]
-                          ? "block"
-                          : "none",
-                      }}
-                    >
-                      <Label
-                        style={{ fontSize: "0.9rem" }}
-                        for={`PostCompletionBudgetPlanner_${field.id}_Notes`}
-                      >
-                        Notes
-                        <span
-                          className="required"
-                          style={{ visibility: "hidden" }}
-                        >
-                          *
-                        </span>
-                      </Label>
-                      <Input
-                        type="textarea"
-                        name={`PostCompletionBudgetPlanner.${field.id}_Notes`}
-                        id={`PostCompletionBudgetPlanner_${field.id}_Notes`}
-                        className="textAreaRestrictions form-control"
-                      />
-                      <span
-                        className="field-validation-valid"
-                        data-valmsg-for={`PostCompletionBudgetPlanner.${field.id}_Notes`}
-                        data-valmsg-replace="true"
-                      ></span>
-                    </FormGroup>
-                  </div>
-                ))}
-              </Form>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="row mt-4">
-        {/* Current Column */}
-        <div className="col-md-6">
-          <h4 className="text-center mb-3">Current</h4>
-          <div className="border rounded-3 shadow-sm">
-            <div className="bg-light border-bottom p-3">
-              <span className="fw-bold text-primary">Insurances</span>
-            </div>
-            <div className="p-3">
-              <Form>
-                {insuranceFields.map((field) => (
-                  <div key={field.id}>
-                    <FormGroup row className="mb-2">
-                      <Label
-                        style={{ fontSize: "0.9rem" }}
-                        for={`CurrentBudgetPlanner_${field.id}`}
-                        sm={6}
-                      >
-                        {field.label}
-                        <span
-                          className="required"
-                          style={{ visibility: "hidden" }}
-                        >
-                          *
-                        </span>
-                      </Label>
-                      <Col sm={6}>
-                        <InputGroup>
-                          <InputGroupText>£</InputGroupText>
-                          <Input
-                            type="text"
-                            name={`CurrentBudgetPlanner.${field.id}`}
-                            id={`CurrentBudgetPlanner_${field.id}`}
-                            className="numeric-decimal living-cost"
-                            placeholder="0.00"
-                            data-val="true"
-                            data-val-number={`The field ${field.label} must be a number.`}
-                            data-val-range={`${field.label} exceeds maximum length of 16 digits`}
-                            data-val-range-max="1E+16"
-                            data-val-range-min="-1E+15"
-                          />
-                          <InputGroupText
-                            className="penNoteIcon_Holder"
-                            onClick={(e) => toggleNotes(e, `${field.id}_Notes`)}
-                            style={{ cursor: "pointer" }}
-                          >
-                            <FaEdit />
-                          </InputGroupText>
-                        </InputGroup>
-                        <span
-                          className="field-validation-valid"
-                          data-valmsg-for={`CurrentBudgetPlanner.${field.id}`}
-                          data-valmsg-replace="true"
-                        ></span>
-                      </Col>
-                    </FormGroup>
-                    <FormGroup
-                      className={`${field.id}_Notes_Holder mb-2`}
-                      style={{
-                        display: visibleNotes[`${field.id}_Notes`]
-                          ? "block"
-                          : "none",
-                      }}
-                    >
-                      <Label
-                        style={{ fontSize: "0.9rem" }}
-                        for={`CurrentBudgetPlanner_${field.id}_Notes`}
-                      >
-                        Notes
-                        <span
-                          className="required"
-                          style={{ visibility: "hidden" }}
-                        >
-                          *
-                        </span>
-                      </Label>
-                      <Input
-                        type="textarea"
-                        name={`CurrentBudgetPlanner.${field.id}_Notes`}
-                        id={`CurrentBudgetPlanner_${field.id}_Notes`}
-                        className="textAreaRestrictions form-control"
-                      />
-                      <span
-                        className="field-validation-valid"
-                        data-valmsg-for={`CurrentBudgetPlanner.${field.id}_Notes`}
-                        data-valmsg-replace="true"
-                      ></span>
-                    </FormGroup>
-                  </div>
-                ))}
-              </Form>
-            </div>
-          </div>
-        </div>
-
-        {/* Post Completion Column */}
-        <div className="col-md-6">
-          <h4 className="text-center mb-3">Post Completion</h4>
-          <div className="border rounded-3 shadow-sm">
-            <div className="bg-light border-bottom p-3 d-flex justify-content-between align-items-center">
-              <span className="fw-bold text-primary">Insurances</span>
-              <Button
-                color="primary"
-                size="sm"
-                id="copyFromCurrentButton"
-                className="copyFromCurrentButton"
-              >
-                Copy from Current
-              </Button>
-            </div>
-            <div className="p-3">
-              <Form>
-                {insuranceFields.map((field) => (
-                  <div key={field.id}>
-                    <FormGroup row className="mb-2">
-                      <Label
-                        style={{ fontSize: "0.9rem" }}
-                        for={`PostCompletionBudgetPlanner_${field.id}`}
-                        sm={6}
-                      >
-                        {field.label}
-                        <span
-                          className="required"
-                          style={{ visibility: "hidden" }}
-                        >
-                          *
-                        </span>
-                      </Label>
-                      <Col sm={6}>
-                        <InputGroup>
-                          <InputGroupText>£</InputGroupText>
-                          <Input
-                            type="text"
-                            name={`PostCompletionBudgetPlanner.${field.id}`}
-                            id={`PostCompletionBudgetPlanner_${field.id}`}
-                            className="numeric-decimal living-cost"
-                            placeholder="0.00"
-                            data-val="true"
-                            data-val-number={`The field ${field.label} must be a number.`}
-                            data-val-range={`${field.label} exceeds maximum length of 16 digits`}
-                            data-val-range-max="1E+16"
-                            data-val-range-min="-1E+15"
-                          />
-                          <InputGroupText
-                            className="penNoteIcon_Holder"
-                            onClick={(e) =>
-                              toggleNotes(e, `Post_${field.id}_Notes`)
-                            }
-                            style={{ cursor: "pointer" }}
-                          >
-                            <FaEdit />
-                          </InputGroupText>
-                        </InputGroup>
-                        <span
-                          className="field-validation-valid"
-                          data-valmsg-for={`PostCompletionBudgetPlanner.${field.id}`}
-                          data-valmsg-replace="true"
-                        ></span>
-                      </Col>
-                    </FormGroup>
-                    <FormGroup
-                      className={`${field.id}_Notes_Holder mb-2`}
-                      style={{
-                        display: visibleNotes[`Post_${field.id}_Notes`]
-                          ? "block"
-                          : "none",
-                      }}
-                    >
-                      <Label
-                        style={{ fontSize: "0.9rem" }}
-                        for={`PostCompletionBudgetPlanner_${field.id}_Notes`}
-                      >
-                        Notes
-                        <span
-                          className="required"
-                          style={{ visibility: "hidden" }}
-                        >
-                          *
-                        </span>
-                      </Label>
-                      <Input
-                        type="textarea"
-                        name={`PostCompletionBudgetPlanner.${field.id}_Notes`}
-                        id={`PostCompletionBudgetPlanner_${field.id}_Notes`}
-                        className="textAreaRestrictions form-control"
-                      />
-                      <span
-                        className="field-validation-valid"
-                        data-valmsg-for={`PostCompletionBudgetPlanner.${field.id}_Notes`}
-                        data-valmsg-replace="true"
-                      ></span>
-                    </FormGroup>
-                  </div>
-                ))}
-              </Form>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="row mt-4">
-        {/* Current Column */}
-        <div className="col-md-6">
-          <div className="panel-body no-padding-vr no-border">
+  const renderFields = (
+    prefix: string,
+    fields: (string | { label: string; hasCalculate?: boolean })[]
+  ) => (
+    <Form>
+      {fields.map((field) => {
+        const label = typeof field === "string" ? field : field.label;
+        const id = label.replace(/[\s/&]/g, "");
+        const hasCalculate = typeof field === "object" && field.hasCalculate;
+        return (
+          <div key={id}>
             <FormGroup row className="mb-2">
               <Label
-                style={{ fontSize: "0.9rem" }}
-                for="CurrentBudgetPlanner_TotalHome"
+                for={`${prefix}_${id}`}
                 sm={6}
-                className="control-label"
+                style={{ fontSize: "0.9rem" }}
               >
-                Total Living Expenses
-                <span className="required" style={{ visibility: "hidden" }}>
-                  *
-                </span>
+                {label}
               </Label>
               <Col sm={6}>
                 <InputGroup>
                   <InputGroupText>£</InputGroupText>
                   <Input
-                    type="text"
-                    name="CurrentBudgetPlanner.TotalHome"
-                    id="CurrentBudgetPlanner_TotalHome"
-                    className="form-control numeric-decimal fw-bold"
-                    readOnly
+                    type="number"
+                    name={`${prefix}.${id}`}
+                    id={`${prefix}_${id}`}
+                    className="numeric-decimal living-cost"
                     placeholder="0.00"
-                    data-val="true"
-                    data-val-number="The field Total Living Expenses must be a number."
-                    data-val-range="Total Living Expenses exceeds maximum length of 16 digits"
-                    data-val-range-max="1E+16"
-                    data-val-range-min="-1E+15"
+                    step="0.01"
                   />
+                  {hasCalculate && (
+                    <Button
+                      color="primary"
+                      id={`${
+                        prefix === "CurrentBudgetPlanner"
+                          ? "Current"
+                          : "PostCompletion"
+                      }${id}Calculate`}
+                    >
+                      Calculate
+                    </Button>
+                  )}
                   <InputGroupText
                     className="penNoteIcon_Holder"
-                    onClick={(e) => toggleNotes(e, "TotalHome_Notes")}
+                    onClick={(e) =>
+                      toggleNotes(
+                        e,
+                        `${
+                          prefix === "CurrentBudgetPlanner" ? "" : "Post_"
+                        }${id}_Notes`
+                      )
+                    }
                     style={{ cursor: "pointer" }}
                   >
                     <FaEdit />
                   </InputGroupText>
                 </InputGroup>
-                <span
-                  className="field-validation-valid"
-                  data-valmsg-for="CurrentBudgetPlanner.TotalHome"
-                  data-valmsg-replace="true"
-                ></span>
               </Col>
             </FormGroup>
             <FormGroup
-              className="TotalHome_Notes_Holder mb-2"
+              className={`${id}_Notes_Holder mb-2`}
               style={{
-                display: visibleNotes["TotalHome_Notes"] ? "block" : "none",
-              }}
-            >
-              <Label
-                style={{ fontSize: "0.9rem" }}
-                for="CurrentBudgetPlanner_TotalHome_Notes"
-                className="control-label"
-              >
-                Notes
-                <span className="required" style={{ visibility: "hidden" }}>
-                  *
-                </span>
-              </Label>
-              <Input
-                type="textarea"
-                name="CurrentBudgetPlanner.TotalHome_Notes"
-                id="CurrentBudgetPlanner_TotalHome_Notes"
-                className="textAreaRestrictions form-control"
-              />
-              <span
-                className="field-validation-valid"
-                data-valmsg-for="CurrentBudgetPlanner.TotalHome_Notes"
-                data-valmsg-replace="true"
-              ></span>
-            </FormGroup>
-          </div>
-        </div>
-
-        {/* Post Completion Column */}
-        <div className="col-md-6">
-          <div className="panel-body no-padding-vr no-border">
-            <FormGroup row className="mb-2">
-              <Label
-                style={{ fontSize: "0.9rem" }}
-                for="PostCompletionsBudgetPlanner_TotalHome"
-                sm={6}
-                className="control-label"
-              >
-                Total Living Expenses
-                <span className="required" style={{ visibility: "hidden" }}>
-                  *
-                </span>
-              </Label>
-              <Col sm={6}>
-                <InputGroup>
-                  <InputGroupText>£</InputGroupText>
-                  <Input
-                    type="text"
-                    name="PostCompletionsBudgetPlanner.TotalHome"
-                    id="PostCompletionsBudgetPlanner_TotalHome"
-                    className="form-control numeric-decimal fw-bold"
-                    readOnly
-                    placeholder="0.00"
-                    data-val="true"
-                    data-val-number="The field Total Living Expenses must be a number."
-                    data-val-range="Total Living Expenses exceeds maximum length of 16 digits"
-                    data-val-range-max="1E+16"
-                    data-val-range-min="-1E+15"
-                  />
-                  <InputGroupText
-                    className="penNoteIcon_Holder"
-                    onClick={(e) => toggleNotes(e, "Post_TotalHome_Notes")}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <FaEdit />
-                  </InputGroupText>
-                </InputGroup>
-                <span
-                  className="field-validation-valid"
-                  data-valmsg-for="PostCompletionsBudgetPlanner.TotalHome"
-                  data-valmsg-replace="true"
-                ></span>
-              </Col>
-            </FormGroup>
-            <FormGroup
-              className="TotalHome_Notes_HolderPC mb-2"
-              style={{
-                display: visibleNotes["Post_TotalHome_Notes"]
+                display: visibleNotes[
+                  `${
+                    prefix === "CurrentBudgetPlanner" ? "" : "Post_"
+                  }${id}_Notes`
+                ]
                   ? "block"
                   : "none",
               }}
             >
               <Label
+                for={`${prefix}_${id}_Notes`}
                 style={{ fontSize: "0.9rem" }}
-                for="PostCompletionsBudgetPlanner_TotalHome_Notes"
-                className="control-label"
               >
                 Notes
-                <span className="required" style={{ visibility: "hidden" }}>
-                  *
-                </span>
               </Label>
               <Input
                 type="textarea"
-                name="PostCompletionsBudgetPlanner.TotalHome_Notes"
-                id="PostCompletionsBudgetPlanner_TotalHome_Notes"
+                name={`${prefix}.${id}_Notes`}
+                id={`${prefix}_${id}_Notes`}
                 className="textAreaRestrictions form-control"
               />
-              <span
-                className="field-validation-valid"
-                data-valmsg-for="PostCompletionsBudgetPlanner.TotalHome_Notes"
-                data-valmsg-replace="true"
-              ></span>
             </FormGroup>
           </div>
+        );
+      })}
+    </Form>
+  );
+
+  const renderSection = (
+    title: string,
+    prefix: string,
+    fields?: (string | { label: string; hasCalculate?: boolean })[],
+    isTotal?: boolean
+  ) => (
+    <div className="col-md-6">
+      {!isTotal && <h4 className="text-center mb-3">{title}</h4>}
+      <div
+        className={`border rounded-3 shadow-sm ${
+          isTotal ? "no-padding-vr no-border" : ""
+        }`}
+      >
+        {!isTotal && (
+          <div
+            className={`bg-light border-bottom p-3 ${
+              title === "Post Completion"
+                ? "d-flex justify-content-between align-items-center"
+                : ""
+            }`}
+          >
+            <span className="fw-bold text-primary">
+              {fields === insuranceFields ? "Insurances" : "Living Costs"}
+            </span>
+            {title === "Post Completion" && (
+              <Button
+                color="primary"
+                size="sm"
+                id="copyFromCurrentButton"
+                className="copyFromCurrentButton"
+              >
+                Copy from Current
+              </Button>
+            )}
+          </div>
+        )}
+        <div className={`p-3 ${isTotal ? "no-padding-vr no-border" : ""}`}>
+          {isTotal ? (
+            <FormGroup row className="mb-2">
+              <Label
+                for={`${prefix}_TotalHome`}
+                sm={6}
+                style={{ fontSize: "0.9rem" }}
+              >
+                Total Living Expenses
+              </Label>
+              <Col sm={6}>
+                <InputGroup>
+                  <InputGroupText>£</InputGroupText>
+                  <Input
+                    type="number"
+                    name={`${prefix}.TotalHome`}
+                    id={`${prefix}_TotalHome`}
+                    className="numeric-decimal fw-bold"
+                    readOnly
+                    placeholder="0.00"
+                    step="0.01"
+                  />
+                  <InputGroupText
+                    className="penNoteIcon_Holder"
+                    onClick={(e) =>
+                      toggleNotes(
+                        e,
+                        `${
+                          prefix === "CurrentBudgetPlanner" ? "" : "Post_"
+                        }TotalHome_Notes`
+                      )
+                    }
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FaEdit />
+                  </InputGroupText>
+                </InputGroup>
+              </Col>
+            </FormGroup>
+          ) : (
+            renderFields(prefix, fields!)
+          )}
+          {isTotal && (
+            <FormGroup
+              className="TotalHome_Notes_Holder mb-2"
+              style={{
+                display: visibleNotes[
+                  `${
+                    prefix === "CurrentBudgetPlanner" ? "" : "Post_"
+                  }TotalHome_Notes`
+                ]
+                  ? "block"
+                  : "none",
+              }}
+            >
+              <Label
+                for={`${prefix}_TotalHome_Notes`}
+                style={{ fontSize: "0.9rem" }}
+              >
+                Notes
+              </Label>
+              <Input
+                type="textarea"
+                name={`${prefix}.TotalHome_Notes`}
+                id={`${prefix}_TotalHome_Notes`}
+                className="textAreaRestrictions form-control"
+              />
+            </FormGroup>
+          )}
         </div>
-      </section>
+      </div>
+    </div>
+  );
+
+  return (
+    <div>
+      <p>
+        <small>
+          Please enter all monthly living costs accurately. Convert non-monthly
+          expenses: multiply weekly by 4.3, divide quarterly by 3, annual by 12.
+        </small>
+      </p>
+      <Row>
+        {renderSection("Current", "CurrentBudgetPlanner", livingCostFields)}
+        {renderSection(
+          "Post Completion",
+          "PostCompletionBudgetPlanner",
+          livingCostFields
+        )}
+      </Row>
+      <Row className="mt-4">
+        {renderSection("Current", "CurrentBudgetPlanner", insuranceFields)}
+        {renderSection(
+          "Post Completion",
+          "PostCompletionBudgetPlanner",
+          insuranceFields
+        )}
+      </Row>
+      <Row className="mt-4">
+        {renderSection("", "CurrentBudgetPlanner", [], true)}
+        {renderSection("", "PostCompletionsBudgetPlanner", [], true)}
+      </Row>
     </div>
   );
 };

@@ -11,60 +11,32 @@ interface BudgetPlannerTabContentProps {
   setTabId: (id: number) => void;
 }
 
-const BudgetPlannerTabContent: FC<BudgetPlannerTabContentProps> = ({
-  tabId,
-  setTabId,
-}) => {
-  const handleNext = () => tabId !== null && setTabId(tabId + 1);
+const BudgetPlannerTabContent: FC<BudgetPlannerTabContentProps> = ({ tabId, setTabId }) => {
+  const tabs = [
+    { id: 1, Component: HouseHoldIncomeTabContent },
+    { id: 2, Component: DebtRepaymentTabContent },
+    { id: 3, Component: LivingExpensesTabContents },
+    { id: 4, Component: MonthlyBudgetTabContents },
+    { id: 5, Component: DisclaimerTabContents }
+  ];
 
   return (
-    <div>
-      <TabContent activeTab={tabId ?? undefined}>
-        <TabPane tabId={1}>
-          <HouseHoldIncomeTabContent />
-          <Button
-            color="primary"
-            onClick={handleNext}
-            className="float-end mt-2 "
-          >
-            Next
-          </Button>
+    <TabContent activeTab={tabId ?? undefined}>
+      {tabs.map(({ id, Component }) => (
+        <TabPane key={id} tabId={id}>
+          <Component />
+          {id !== 5 && (
+            <Button
+              color="primary"
+              onClick={() => tabId !== null && setTabId(tabId + 1)}
+              className="float-end mt-2"
+            >
+              Next
+            </Button>
+          )}
         </TabPane>
-        <TabPane tabId={2}>
-          <DebtRepaymentTabContent />
-          <Button
-            color="primary"
-            onClick={handleNext}
-            className="float-end mt-2 mt-2"
-          >
-            Next
-          </Button>
-        </TabPane>
-        <TabPane tabId={3}>
-          <LivingExpensesTabContents />
-          <Button
-            color="primary"
-            onClick={handleNext}
-            className="float-end mt-2 mt-2"
-          >
-            Next
-          </Button>
-        </TabPane>
-        <TabPane tabId={4}>
-          <MonthlyBudgetTabContents />
-          <Button
-            color="primary"
-            onClick={handleNext}
-            className="float-end mt-2 mt-2"
-          >
-            Next
-          </Button>
-        </TabPane>
-        <TabPane tabId={5}>
-          <DisclaimerTabContents />
-        </TabPane>
-      </TabContent>
-    </div>
+      ))}
+    </TabContent>
   );
 };
 

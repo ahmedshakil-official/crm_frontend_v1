@@ -1,7 +1,6 @@
 import { FC } from "react";
 import {
   Col,
-  Row,
   FormGroup,
   Label,
   Input,
@@ -70,7 +69,7 @@ const MonthlyBudgetTabContents: FC = () => {
                     <InputGroup>
                       <InputGroupText>£</InputGroupText>
                       <Input
-                        type="text"
+                        type="number"
                         name={`CurrentBudgetPlanner.${field.id}`}
                         id={field.inputId}
                         className="subtotal form-control fw-bold"
@@ -104,7 +103,7 @@ const MonthlyBudgetTabContents: FC = () => {
                   <InputGroup>
                     <InputGroupText>£</InputGroupText>
                     <Input
-                      type="text"
+                      type="number"
                       name={`CurrentBudgetPlanner.${availableIncomeField.id}`}
                       id={availableIncomeField.inputId}
                       className="availableIncome form-control fw-bold"
@@ -161,7 +160,7 @@ const MonthlyBudgetTabContents: FC = () => {
                     <InputGroup>
                       <InputGroupText>£</InputGroupText>
                       <Input
-                        type="text"
+                        type="number"
                         name={`PostCompletionsBudgetPlanner.${field.id}`}
                         id={`Post_${field.inputId}`}
                         className="subtotal form-control fw-bold"
@@ -195,7 +194,7 @@ const MonthlyBudgetTabContents: FC = () => {
                   <InputGroup>
                     <InputGroupText>£</InputGroupText>
                     <Input
-                      type="text"
+                      type="number"
                       name={`PostCompletionsBudgetPlanner.${availableIncomeField.id}`}
                       id={`PostCompletionsBudgetPlanner_${availableIncomeField.id}`}
                       className="availableIncome form-control fw-bold"
