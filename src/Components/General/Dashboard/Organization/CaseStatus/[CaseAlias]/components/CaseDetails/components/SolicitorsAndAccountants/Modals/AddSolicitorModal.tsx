@@ -1,3 +1,6 @@
+import { useAddSolicitorDetailsMutation } from "@/Redux/Reducers/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -18,11 +21,51 @@ interface AddSolicitorModalProps {
   toggle: () => void;
 }
 
-const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({ isOpen, toggle }) => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
+  isOpen,
+  toggle,
+}) => {
+  const params = useParams();
+  const { casealias } = params;
+  const [addSolicitorDetails, { isLoading }] = useAddSolicitorDetailsMutation();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Add your form submission logic here
-    toggle();
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const payload = {
+        name: formData.get("solicitorName"),
+        user_type: "SOLICITOR",
+        sra_number: formData.get("sraNumber") || "",
+        postcode: formData.get("postcode"),
+        building_name_or_number: formData.get("buildingName") || "",
+        street: formData.get("street"),
+        city: formData.get("city"),
+        county: formData.get("county") || "",
+        country: formData.get("country"),
+        phone_number: formData.get("phoneNumber"),
+        fax_number: formData.get("faxNumber"),
+        dx_number: formData.get("dxNumber"),
+        contact_name: formData.get("contactName"),
+        email_address: formData.get("emailAddress") || "",
+        number_of_partners_in_firm: formData.get("numberOfPartners") || null,
+        qualifications: formData.get("qualifications"),
+      };
+      console.log(payload);
+
+      const response = await addSolicitorDetails({
+        solicitorDetails: payload,
+      });
+
+      if (response) {
+        toast.success("Solicitor added successfully!");
+        toggle();
+      }
+    } catch (error) {
+      console.error("Failed to add solicitor:", error);
+      toast.error("Failed to add solicitor. Please try again!");
+    }
   };
 
   return (
@@ -35,31 +78,40 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({ isOpen, toggle })
           <Card>
             <CardBody>
               <Row>
-                <Col md={6}>
+                <Col md={4}>
                   <FormGroup>
-                    <Label for="solicitorName">Solicitor Name</Label>
+                    <Label for="solicitorName">Solicitor Full Name*</Label>
                     <Input
                       id="solicitorName"
                       name="solicitorName"
-                      type="select"
-                      placeholder="Search for a solicitor"
-                    >
-                      <option value="">Search for a solicitor</option>
-                    </Input>
+                      type="text"
+                      required
+                    />
                   </FormGroup>
                 </Col>
-                <Col md={6}>
+                <Col md={4}>
                   <FormGroup>
                     <Label for="sraNumber">SRA Number</Label>
                     <Input id="sraNumber" name="sraNumber" type="text" />
+                  </FormGroup>
+                </Col>
+                <Col md={4}>
+                  <FormGroup>
+                    <Label for="qualifications">Qualification*</Label>
+                    <Input
+                      id="qualifications"
+                      name="qualifications"
+                      type="text"
+                      required
+                    />
                   </FormGroup>
                 </Col>
               </Row>
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="postcode">Postcode</Label>
-                    <Input id="postcode" name="postcode" type="text" />
+                    <Label for="postcode">Postcode*</Label>
+                    <Input id="postcode" name="postcode" type="text" required />
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -72,14 +124,14 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({ isOpen, toggle })
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="street">Street</Label>
-                    <Input id="street" name="street" type="text" />
+                    <Label for="street">Street*</Label>
+                    <Input id="street" name="street" type="text" required />
                   </FormGroup>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="city">City</Label>
-                    <Input id="city" name="city" type="text" />
+                    <Label for="city">City*</Label>
+                    <Input id="city" name="city" type="text" required />
                   </FormGroup>
                 </Col>
               </Row>
@@ -92,8 +144,8 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({ isOpen, toggle })
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="country">Country</Label>
-                    <Input id="country" name="country" type="text" />
+                    <Label for="country">Country*</Label>
+                    <Input id="country" name="country" type="text" required />
                   </FormGroup>
                 </Col>
               </Row>
@@ -106,21 +158,26 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({ isOpen, toggle })
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="faxNumber">Fax Number</Label>
-                    <Input id="faxNumber" name="faxNumber" type="tel" />
+                    <Label for="faxNumber">Fax Number*</Label>
+                    <Input
+                      id="faxNumber"
+                      name="faxNumber"
+                      type="tel"
+                      required
+                    />
                   </FormGroup>
                 </Col>
               </Row>
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="dxNumber">DX Number</Label>
-                    <Input id="dxNumber" name="dxNumber" type="text" />
+                    <Label for="dxNumber">DX Number*</Label>
+                    <Input id="dxNumber" name="dxNumber" type="text" required />
                   </FormGroup>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="contactName">Contact Name</Label>
+                    <Label for="contactName">Contact Name*</Label>
                     <Input id="contactName" name="contactName" type="text" />
                   </FormGroup>
                 </Col>
