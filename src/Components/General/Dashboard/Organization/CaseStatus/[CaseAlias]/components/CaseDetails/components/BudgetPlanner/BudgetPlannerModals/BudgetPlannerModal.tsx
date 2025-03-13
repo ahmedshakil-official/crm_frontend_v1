@@ -46,7 +46,7 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
         <Card>
           <CardBody>
             <CardHeader className="d-flex justify-content-center align-items-center flex-wrap pb-2 p-0">
-              <Nav tabs className="simple-wrapper w-100">
+              <Nav tabs className="w-100">
                 {budgetPlannerTabTitleData.map((tabName, index) => (
                   <NavItem key={index + 1} className="flex-grow-1">
                     <NavLink
