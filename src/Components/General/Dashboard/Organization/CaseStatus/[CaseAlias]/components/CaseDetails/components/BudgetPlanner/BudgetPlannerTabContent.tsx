@@ -2,6 +2,9 @@ import { FC } from "react";
 import { TabContent, TabPane, Button } from "reactstrap";
 import HouseHoldIncomeTabContent from "./BudgetPlannerTabContents/HouseHoldIncomeTabContent";
 import DebtRepaymentTabContent from "./BudgetPlannerTabContents/DebtRepaymentTabContent";
+import LivingExpensesTabContents from "./BudgetPlannerTabContents/LivingExpensesTabContents";
+import MonthlyBudgetTabContents from "./BudgetPlannerTabContents/MonthlyBudgetTabContents";
+import DisclaimerTabContents from "./BudgetPlannerTabContents/DisclaimerTabContents";
 
 interface BudgetPlannerTabContentProps {
   tabId: number | null;
@@ -29,27 +32,36 @@ const BudgetPlannerTabContent: FC<BudgetPlannerTabContentProps> = ({
         </TabPane>
         <TabPane tabId={2}>
           <DebtRepaymentTabContent />
-          <Button color="primary" onClick={handleNext} className="float-end mt-2 mt-2">
+          <Button
+            color="primary"
+            onClick={handleNext}
+            className="float-end mt-2 mt-2"
+          >
             Next
           </Button>
         </TabPane>
         <TabPane tabId={3}>
-          <p>d</p>
-          <Button color="primary" onClick={handleNext} className="float-end mt-2 mt-2">
+          <LivingExpensesTabContents />
+          <Button
+            color="primary"
+            onClick={handleNext}
+            className="float-end mt-2 mt-2"
+          >
             Next
           </Button>
         </TabPane>
         <TabPane tabId={4}>
-          <p>ds</p>
-          <Button color="primary" onClick={handleNext} className="float-end mt-2 mt-2">
+          <MonthlyBudgetTabContents />
+          <Button
+            color="primary"
+            onClick={handleNext}
+            className="float-end mt-2 mt-2"
+          >
             Next
           </Button>
         </TabPane>
         <TabPane tabId={5}>
-          <p>Disclaimers</p>
-          <Button color="primary" className="float-end mt-2">
-            Save
-          </Button>
+          <DisclaimerTabContents />
         </TabPane>
       </TabContent>
     </div>
