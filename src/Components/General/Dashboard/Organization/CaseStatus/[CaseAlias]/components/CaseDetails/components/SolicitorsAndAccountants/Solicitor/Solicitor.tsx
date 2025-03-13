@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Button,
   Card,
@@ -9,10 +10,14 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import AddSolicitorModal from "../Modals/AddSolicitorModal";
 
 const Solicitor: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
   return (
-    <Col md={12}>
+    <>
       <Form>
         <Card>
           <CardBody>
@@ -129,14 +134,16 @@ const Solicitor: React.FC = () => {
             </Row>
             <Row>
               <Col md={12} className="d-flex justify-content-between">
-                <Button>Add New Solicitor</Button>
+                <Button onClick={toggleModal}>Add New Solicitor</Button>
                 <Button color="primary">Save Solicitor</Button>
               </Col>
             </Row>
           </CardBody>
         </Card>
       </Form>
-    </Col>
+      {/*  In your JSX: */}
+      <AddSolicitorModal isOpen={isModalOpen} toggle={toggleModal} />
+    </>
   );
 };
 
