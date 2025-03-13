@@ -283,11 +283,12 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
           <Row>
             <Col md={4}>
               <FormGroup>
-                <Label for="monthlyPayment">Monthly Mortgage Payment</Label>
+                <Label for="monthlyPayment">Monthly Mortgage Payment*</Label>
                 <Input
                   id="monthlyPayment"
                   name="monthlyPayment"
                   type="number"
+                  required
                 />
               </FormGroup>
             </Col>
