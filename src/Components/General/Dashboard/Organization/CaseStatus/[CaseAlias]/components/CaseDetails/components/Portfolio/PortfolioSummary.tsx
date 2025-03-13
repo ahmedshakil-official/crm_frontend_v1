@@ -38,7 +38,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
           <Card className="ecommerce-widget rounded-4">
             <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-primary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Value of Properties</h4>
+                <h6 className="fw-bold fs-6">Total Value of Properties</h6>
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-primary h1">
@@ -55,7 +55,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
           <Card className="ecommerce-widget rounded-4">
             <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-secondary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Current Mortgage Balance</h4>
+                <h6 className="fw-bold fs-6">Total Current Mortgage Balance</h6>
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-secondary h1">
@@ -72,7 +72,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
           <Card className="ecommerce-widget rounded-4">
             <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-success">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">LTV %</h4>
+                <h6 className="fw-bold fs-6">LTV %</h6>
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-success h1">
@@ -92,7 +92,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
           <Card className="ecommerce-widget rounded-4">
             <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-primary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Monthly Rental Income</h4>
+                <h6 className="fw-bold fs-6">Total Monthly Rental Income</h6>
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-primary h1">
@@ -109,7 +109,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
           <Card className="ecommerce-widget rounded-4">
             <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-secondary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Monthly Mortgage Payment</h4>
+                <h6 className="fw-bold fs-6">Total Monthly Mortgage Payment</h6>
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-secondary h1">
@@ -126,7 +126,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
           <Card className="ecommerce-widget rounded-4">
             <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-success">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">ICR %</h4>
+                <h6 className="fw-bold fs-6">ICR %</h6>
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-success h1">
