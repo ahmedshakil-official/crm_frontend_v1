@@ -16,6 +16,10 @@ const LivingExpensesTabContents: FC = () => {
   const [visibleNotes, setVisibleNotes] = useState<{ [key: string]: boolean }>(
     {}
   );
+  const [currentValues, setCurrentValues] = useState<Record<string, string>>(
+    {}
+  );
+  const [postValues, setPostValues] = useState<Record<string, string>>({});
 
   const toggleNotes = (event: React.MouseEvent, noteId: string) => {
     event.preventDefault();
@@ -29,7 +33,7 @@ const LivingExpensesTabContents: FC = () => {
     "Landline/Mobile Phones",
     "TV Licence",
     "Council Tax",
-    { label: "Ground Rent & Service Charges", hasCalculate: true },
+    { label: "Ground Rent & Service Charges" },
     "Buildings & Contents",
     "Mortgage Payment Protection",
     "Endowment",
@@ -59,13 +63,13 @@ const LivingExpensesTabContents: FC = () => {
 
   const renderFields = (
     prefix: string,
-    fields: (string | { label: string; hasCalculate?: boolean })[]
+    fields: (string | { label: string })[]
   ) => (
     <Form>
       {fields.map((field) => {
         const label = typeof field === "string" ? field : field.label;
         const id = label.replace(/[\s/&]/g, "");
-        const hasCalculate = typeof field === "object" && field.hasCalculate;
+        const fieldName = `${prefix}.${id}`;
         return (
           <div key={id}>
             <FormGroup row className="mb-2">
@@ -81,24 +85,26 @@ const LivingExpensesTabContents: FC = () => {
                   <InputGroupText>£</InputGroupText>
                   <Input
                     type="number"
-                    name={`${prefix}.${id}`}
+                    name={fieldName}
                     id={`${prefix}_${id}`}
                     className="numeric-decimal living-cost"
                     placeholder="0.00"
                     step="0.01"
-                  />
-                  {hasCalculate && (
-                    <Button
-                      color="primary"
-                      id={`${
+                    value={
+                      prefix === "CurrentBudgetPlanner"
+                        ? currentValues[fieldName] || ""
+                        : postValues[fieldName] || ""
+                    }
+                    onChange={(e) => {
+                      const newValues =
                         prefix === "CurrentBudgetPlanner"
-                          ? "Current"
-                          : "PostCompletion"
-                      }${id}Calculate`}
-                    >
-                      Calculate
-                    </Button>
-                  )}
+                          ? { ...currentValues, [fieldName]: e.target.value }
+                          : { ...postValues, [fieldName]: e.target.value };
+                      prefix === "CurrentBudgetPlanner"
+                        ? setCurrentValues(newValues)
+                        : setPostValues(newValues);
+                    }}
+                  />
                   <InputGroupText
                     className="penNoteIcon_Holder"
                     onClick={(e) =>
@@ -139,6 +145,26 @@ const LivingExpensesTabContents: FC = () => {
                 name={`${prefix}.${id}_Notes`}
                 id={`${prefix}_${id}_Notes`}
                 className="textAreaRestrictions form-control"
+                value={
+                  prefix === "CurrentBudgetPlanner"
+                    ? currentValues[`${prefix}.${id}_Notes`] || ""
+                    : postValues[`${prefix}.${id}_Notes`] || ""
+                }
+                onChange={(e) => {
+                  const newValues =
+                    prefix === "CurrentBudgetPlanner"
+                      ? {
+                          ...currentValues,
+                          [`${prefix}.${id}_Notes`]: e.target.value,
+                        }
+                      : {
+                          ...postValues,
+                          [`${prefix}.${id}_Notes`]: e.target.value,
+                        };
+                  prefix === "CurrentBudgetPlanner"
+                    ? setCurrentValues(newValues)
+                    : setPostValues(newValues);
+                }}
               />
             </FormGroup>
           </div>
@@ -147,10 +173,38 @@ const LivingExpensesTabContents: FC = () => {
     </Form>
   );
 
+  // Calculate total for a section
+  const calculateTotal = (
+    values: Record<string, string>,
+    fields: (string | { label: string })[],
+    prefix: string // Added prefix parameter
+  ) => {
+    return fields
+      .reduce((sum, field) => {
+        const label = typeof field === "string" ? field : field.label;
+        const fieldName = `${prefix}.${label.replace(/[\s/&]/g, "")}`;
+        return sum + (parseFloat(values[fieldName]) || 0);
+      }, 0)
+      .toFixed(2);
+  };
+
+  // Handle copy functionality
+  const handleCopyFromCurrent = () => {
+    const newPostValues: Record<string, string> = {};
+    Object.keys(currentValues).forEach((key) => {
+      const newKey = key.replace(
+        "CurrentBudgetPlanner",
+        "PostCompletionBudgetPlanner"
+      );
+      newPostValues[newKey] = currentValues[key];
+    });
+    setPostValues(newPostValues);
+  };
+
   const renderSection = (
     title: string,
     prefix: string,
-    fields?: (string | { label: string; hasCalculate?: boolean })[],
+    fields?: (string | { label: string })[],
     isTotal?: boolean
   ) => (
     <div className="col-md-6">
@@ -177,6 +231,7 @@ const LivingExpensesTabContents: FC = () => {
                 size="sm"
                 id="copyFromCurrentButton"
                 className="copyFromCurrentButton"
+                onClick={handleCopyFromCurrent}
               >
                 Copy from Current
               </Button>
@@ -204,6 +259,41 @@ const LivingExpensesTabContents: FC = () => {
                     readOnly
                     placeholder="0.00"
                     step="0.01"
+                    value={
+                      prefix === "CurrentBudgetPlanner"
+                        ? (
+                            parseFloat(
+                              calculateTotal(
+                                currentValues,
+                                livingCostFields,
+                                prefix
+                              )
+                            ) +
+                            parseFloat(
+                              calculateTotal(
+                                currentValues,
+                                insuranceFields,
+                                prefix
+                              )
+                            )
+                          ).toFixed(2)
+                        : (
+                            parseFloat(
+                              calculateTotal(
+                                postValues,
+                                livingCostFields,
+                                prefix
+                              )
+                            ) +
+                            parseFloat(
+                              calculateTotal(
+                                postValues,
+                                insuranceFields,
+                                prefix
+                              )
+                            )
+                          ).toFixed(2)
+                    }
                   />
                   <InputGroupText
                     className="penNoteIcon_Holder"
@@ -249,6 +339,26 @@ const LivingExpensesTabContents: FC = () => {
                 name={`${prefix}.TotalHome_Notes`}
                 id={`${prefix}_TotalHome_Notes`}
                 className="textAreaRestrictions form-control"
+                value={
+                  prefix === "CurrentBudgetPlanner"
+                    ? currentValues[`${prefix}.TotalHome_Notes`] || ""
+                    : postValues[`${prefix}.TotalHome_Notes`] || ""
+                }
+                onChange={(e) => {
+                  const newValues =
+                    prefix === "CurrentBudgetPlanner"
+                      ? {
+                          ...currentValues,
+                          [`${prefix}.TotalHome_Notes`]: e.target.value,
+                        }
+                      : {
+                          ...postValues,
+                          [`${prefix}.TotalHome_Notes`]: e.target.value,
+                        };
+                  prefix === "CurrentBudgetPlanner"
+                    ? setCurrentValues(newValues)
+                    : setPostValues(newValues);
+                }}
               />
             </FormGroup>
           )}
@@ -283,7 +393,7 @@ const LivingExpensesTabContents: FC = () => {
       </Row>
       <Row className="mt-4">
         {renderSection("", "CurrentBudgetPlanner", [], true)}
-        {renderSection("", "PostCompletionsBudgetPlanner", [], true)}
+        {renderSection("", "PostCompletionBudgetPlanner", [], true)}
       </Row>
     </div>
   );
