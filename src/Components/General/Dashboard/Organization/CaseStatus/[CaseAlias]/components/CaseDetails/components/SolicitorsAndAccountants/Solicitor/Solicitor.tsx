@@ -78,6 +78,16 @@ const Solicitor: React.FC = () => {
     );
   console.log({ caseSolicitors });
 
+  const getSelectedSolicitorValue = () => {
+    if (selectedCaseSolicitor?.solicitor_details?.id && solicitorName) {
+      const matchingSolicitor = solicitorName.find(
+        (s: any) => s.id === selectedCaseSolicitor.solicitor_details.id
+      );
+      return matchingSolicitor?.id || "";
+    }
+    return selectedSolicitor?.id || "";
+  };
+
   return (
     <>
       <Card>
@@ -114,13 +124,13 @@ const Solicitor: React.FC = () => {
                     <Col md={6}>
                       <Row>
                         <FormGroup>
-                          <Label for="solicitorName">Assign Solicitor:</Label>{" "}
+                          <Label for="assignSolicitor">Assign Solicitor:</Label>
                           <>
                             <Input
-                              id="solicitorName"
-                              name="solicitorName"
+                              id="assignSolicitor"
+                              name="assignSolicitor"
                               type="select"
-                              value={selectedSolicitor?.id || ""}
+                              value={getSelectedSolicitorValue()}
                               onChange={handleSolicitorChange}
                             >
                               <option value="">Select Solicitor...</option>
@@ -177,7 +187,9 @@ const Solicitor: React.FC = () => {
                               </div>
                             </>
                           ) : (
-                            <strong className="text-danger fs-4">"Not Selected Yet!"</strong>
+                            <strong className="text-danger fs-4">
+                              "Not Selected Yet!"
+                            </strong>
                           )}
                         </CardBody>
                       </Card>
