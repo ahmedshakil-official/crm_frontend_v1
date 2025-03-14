@@ -1,5 +1,5 @@
 import {
-  useAssignSolicitorMutation,
+  useAssignCaseSolicitorMutation,
   useGetCaseSolicitorDetailsQuery,
   useGetSolicitorDetailsQuery,
   useUpdateSolicitorDetailsMutation,
@@ -33,7 +33,7 @@ const Solicitor: React.FC = () => {
   const { data: caseSolicitors, isLoading: isCaseSolicitorLoading } =
     useGetCaseSolicitorDetailsQuery({ case_alias: casealias });
   const [assignSolicitor, { isLoading: isAssignedLoading }] =
-    useAssignSolicitorMutation();
+    useAssignCaseSolicitorMutation();
   const [updateSolicitorDetails, { isLoading: isUpdateLoading }] =
     useUpdateSolicitorDetailsMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,17 +76,6 @@ const Solicitor: React.FC = () => {
         <LoadingSpinner />
       </div>
     );
-  console.log({ caseSolicitors });
-
-  const getSelectedSolicitorValue = () => {
-    if (selectedCaseSolicitor?.solicitor_details?.id && solicitorName) {
-      const matchingSolicitor = solicitorName.find(
-        (s: any) => s.id === selectedCaseSolicitor.solicitor_details.id
-      );
-      return matchingSolicitor?.id || "";
-    }
-    return selectedSolicitor?.id || "";
-  };
 
   return (
     <>
@@ -117,87 +106,82 @@ const Solicitor: React.FC = () => {
 
           {/* First Form Group - Solicitor Selection */}
           <Row>
-            <Form>
+            <Col md={12}>
               <Row>
-                <Col md={12}>
-                  <Row>
-                    <Col md={6}>
-                      <Row>
-                        <FormGroup>
-                          <Label for="assignSolicitor">Assign Solicitor:</Label>
-                          <>
-                            <Input
-                              id="assignSolicitor"
-                              name="assignSolicitor"
-                              type="select"
-                              value={getSelectedSolicitorValue()}
-                              onChange={handleSolicitorChange}
-                            >
-                              <option value="">Select Solicitor...</option>
-                              {solicitorName?.map((solicitor: any) => (
-                                <option
-                                  key={solicitor?.id}
-                                  value={solicitor?.id}
-                                >
-                                  {solicitor?.name}
-                                </option>
-                              ))}
-                            </Input>
-                            <small className="text-muted text-danger">
-                              Note: Please select and assigned a solicitor from
-                              the dropdown list. If the solicitor is not listed,
-                              please add a new solicitor. If you'r not assigned
-                              a solicitor, after reload this selected value was
-                              not saved.
-                            </small>
-                          </>
-                        </FormGroup>
-                      </Row>
-                      <Row>
-                        <Col
-                          md={12}
-                          className="d-flex justify-content-between align-content-center gap-3"
-                        >
-                          <Button color="success" onClick={toggleModal}>
-                            Add New Solicitor
-                          </Button>
-                          <Button color="primary">Assign Solicitor</Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Card className="border-primary rounded-b-3 mt-4 m-0">
-                        <CardHeader className="bg-primary">
-                          <span className="fs-6 text-center">
-                            Selected Solicitor
-                          </span>
-                        </CardHeader>
-                        <CardBody className="text-center">
-                          {selectedCaseSolicitor?.solicitor_details ? (
-                            <>
-                              <div>
-                                <strong>Name: </strong>
-                                {selectedCaseSolicitor.solicitor_details.name ||
-                                  "N/A"}
-                              </div>
-                              <div>
-                                <strong>Type: </strong>
-                                {selectedCaseSolicitor.solicitor_details
-                                  .user_type || "N/A"}
-                              </div>
-                            </>
-                          ) : (
-                            <strong className="text-danger fs-4">
-                              "Not Selected Yet!"
-                            </strong>
-                          )}
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
+                <Col md={6}>
+                  <Form>
+                    <Row>
+                      <FormGroup>
+                        <Label for="assignSolicitor">Assign Solicitor:</Label>
+                        <>
+                          <Input
+                            id="assignSolicitor"
+                            name="assignSolicitor"
+                            type="select"
+                            value={selectedSolicitor?.id || ""}
+                            onChange={handleSolicitorChange}
+                          >
+                            <option value="">Select Solicitor...</option>
+                            {solicitorName?.map((solicitor: any) => (
+                              <option key={solicitor?.id} value={solicitor?.id}>
+                                {solicitor?.name}
+                              </option>
+                            ))}
+                          </Input>
+                          <small className="text-muted text-danger">
+                            Note: Please select and assigned a solicitor from
+                            the dropdown list. If the solicitor is not listed,
+                            please add a new solicitor. If you'r not assigned a
+                            solicitor, after reload this selected value was not
+                            saved.
+                          </small>
+                        </>
+                      </FormGroup>
+                    </Row>
+                    <Row>
+                      <Col
+                        md={12}
+                        className="d-flex justify-content-between align-content-center gap-3"
+                      >
+                        <Button color="success" onClick={toggleModal}>
+                          Add New Solicitor
+                        </Button>
+                        <Button color="primary">Assign Solicitor</Button>
+                      </Col>
+                    </Row>
+                  </Form>
+                </Col>
+                <Col md={6}>
+                  <Card className="border-primary rounded-b-3 mt-4 m-0">
+                    <CardHeader className="bg-primary">
+                      <span className="fs-6 text-center">
+                        Selected Solicitor
+                      </span>
+                    </CardHeader>
+                    <CardBody className="text-center">
+                      {selectedCaseSolicitor?.solicitor_details ? (
+                        <>
+                          <div>
+                            <strong>Name: </strong>
+                            {selectedCaseSolicitor.solicitor_details.name ||
+                              "N/A"}
+                          </div>
+                          <div>
+                            <strong>Type: </strong>
+                            {selectedCaseSolicitor.solicitor_details
+                              .user_type || "N/A"}
+                          </div>
+                        </>
+                      ) : (
+                        <strong className="text-danger fs-4">
+                          "Not Selected Yet!"
+                        </strong>
+                      )}
+                    </CardBody>
+                  </Card>
                 </Col>
               </Row>
-            </Form>
+            </Col>
           </Row>
 
           <hr />

@@ -25,7 +25,7 @@ export const SolicitorAndAccountantApi = baseApi.injectEndpoints({
       }),
       providesTags: ["SolicitorDetails"],
     }),
-    assignSolicitor: builder.mutation({
+    assignCaseSolicitor: builder.mutation({
       query: ({ case_alias, data }) => ({
         url: `/cases/${case_alias}/case/solicitors/`,
         method: "POST",
@@ -56,7 +56,7 @@ export const {
   useGetSolicitorDetailsQuery,
   useAddSolicitorDetailsMutation,
   useGetCaseSolicitorDetailsQuery,
-  useAssignSolicitorMutation,
+ useAssignCaseSolicitorMutation,
   useUpdateSolicitorDetailsMutation,
   useGetAccountantDetailsQuery,
 } = SolicitorAndAccountantApi;
