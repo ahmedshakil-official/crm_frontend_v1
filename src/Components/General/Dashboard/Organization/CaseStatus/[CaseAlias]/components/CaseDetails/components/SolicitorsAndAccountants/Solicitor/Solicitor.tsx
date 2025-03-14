@@ -11,6 +11,7 @@ import {
   Button,
   Card,
   CardBody,
+  CardHeader,
   Col,
   Form,
   FormGroup,
@@ -94,6 +95,7 @@ const Solicitor: React.FC = () => {
                         ? "active text-primary"
                         : "text-secondary"
                     }`}
+                    style={{ cursor: "pointer" }}
                     onClick={() => toggleTab(index.toString())}
                   >
                     Solicitor {index + 1}
@@ -107,66 +109,80 @@ const Solicitor: React.FC = () => {
           <Row>
             <Form>
               <Row>
-                {" "}
                 <Col md={12}>
                   <Row>
                     <Col md={6}>
-                      <FormGroup>
-                        <Label for="solicitorName">Assign Solicitor:</Label>{" "}
-                        <>
-                          <Input
-                            id="solicitorName"
-                            name="solicitorName"
-                            type="select"
-                            value={selectedSolicitor?.id || ""}
-                            onChange={handleSolicitorChange}
-                          >
-                            <option value="">Select Solicitor...</option>
-                            {solicitorName?.map((solicitor: any) => (
-                              <option key={solicitor?.id} value={solicitor?.id}>
-                                {solicitor?.name}
-                              </option>
-                            ))}
-                          </Input>
-                          <small className="text-muted text-danger">
-                            Note: Please select and assigned a solicitor from
-                            the dropdown list. If the solicitor is not listed,
-                            please add a new solicitor. If you'r not assigned a
-                            solicitor, after reload this selected value was not
-                            saved.
-                          </small>
-                        </>
-                      </FormGroup>
+                      <Row>
+                        <FormGroup>
+                          <Label for="solicitorName">Assign Solicitor:</Label>{" "}
+                          <>
+                            <Input
+                              id="solicitorName"
+                              name="solicitorName"
+                              type="select"
+                              value={selectedSolicitor?.id || ""}
+                              onChange={handleSolicitorChange}
+                            >
+                              <option value="">Select Solicitor...</option>
+                              {solicitorName?.map((solicitor: any) => (
+                                <option
+                                  key={solicitor?.id}
+                                  value={solicitor?.id}
+                                >
+                                  {solicitor?.name}
+                                </option>
+                              ))}
+                            </Input>
+                            <small className="text-muted text-danger">
+                              Note: Please select and assigned a solicitor from
+                              the dropdown list. If the solicitor is not listed,
+                              please add a new solicitor. If you'r not assigned
+                              a solicitor, after reload this selected value was
+                              not saved.
+                            </small>
+                          </>
+                        </FormGroup>
+                      </Row>
+                      <Row>
+                        <Col
+                          md={12}
+                          className="d-flex justify-content-between align-content-center gap-3"
+                        >
+                          <Button color="success" onClick={toggleModal}>
+                            Add New Solicitor
+                          </Button>
+                          <Button color="primary">Assign Solicitor</Button>
+                        </Col>
+                      </Row>
                     </Col>
                     <Col md={6}>
-                      <FormGroup>
-                        <Label>Selected Solicitor</Label>
-                        <Input
-                          id="selectedSolicitor"
-                          name="selectedSolicitor"
-                          type="text"
-                          value={
-                            selectedCaseSolicitor?.solicitor?.name ||
-                            "Not Selected Yet!"
-                          }
-                          readOnly
-                        />
-                      </FormGroup>
+                      <Card className="border-primary rounded-b-3 mt-4 m-0">
+                        <CardHeader className="bg-primary">
+                          <span className="fs-6 text-center">
+                            Selected Solicitor
+                          </span>
+                        </CardHeader>
+                        <CardBody className="text-center">
+                          {selectedCaseSolicitor?.solicitor_details ? (
+                            <>
+                              <div>
+                                <strong>Name: </strong>
+                                {selectedCaseSolicitor.solicitor_details.name ||
+                                  "N/A"}
+                              </div>
+                              <div>
+                                <strong>Type: </strong>
+                                {selectedCaseSolicitor.solicitor_details
+                                  .user_type || "N/A"}
+                              </div>
+                            </>
+                          ) : (
+                            <strong className="text-danger fs-4">"Not Selected Yet!"</strong>
+                          )}
+                        </CardBody>
+                      </Card>
                     </Col>
                   </Row>
-                </Col>
-                <Col
-                  md={12}
-                  className="d-flex justify-content-between align-content-center gap-3"
-                >
-                  <Button color="success" onClick={toggleModal}>
-                    Add New
-                  </Button>
-                  {caseSolicitors?.length > 0 ? (
-                    <Button color="info">Update Case Solicitor</Button>
-                  ) : (
-                    <Button color="primary">Assign Solicitor</Button>
-                  )}
                 </Col>
               </Row>
             </Form>
@@ -355,8 +371,7 @@ const Solicitor: React.FC = () => {
                 </Col>
               </Row>
               <Row>
-                <Col md={12} className="d-flex justify-content-between">
-                  <Button>Make More Solicitor</Button>
+                <Col md={12} className="d-flex justify-content-end">
                   <Button color="primary">Update Solicitor</Button>
                 </Col>
               </Row>
