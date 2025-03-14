@@ -52,7 +52,6 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
         number_of_partners_in_firm: formData.get("numberOfPartners") || null,
         qualifications: formData.get("qualifications"),
       };
-      console.log(payload);
 
       const response = await addSolicitorDetails({
         solicitorDetails: payload,
