@@ -1,40 +1,51 @@
-import { FC } from "react";
-import { FormGroup, Input } from "reactstrap";
+import { FC, useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Input,
+  Label,
+} from "reactstrap";
 
 const DisclaimerTabContents: FC = () => {
-  const disclaimerText = `
-    <p>I can confirm that I/we have filled out the budget planner as accurately as possible and reflects our current monthly expenditure.</p>
-    <p>I/we confirm we will inform our adviser should our expenditure change.</p>
-  `;
+  const [isChecked, setIsChecked] = useState(false);
+
+  const disclaimerText = (
+    <>
+      <p className="mb-2">
+        I/we confirm that the budget planner has been completed accurately and
+        reflects our current monthly expenditure.
+      </p>
+      <p className="mb-0">
+        I/we agree to inform our adviser of any changes to our expenditure.
+      </p>
+    </>
+  );
 
   return (
-    <div className="border rounded-3 shadow-sm mt-3">
-      <div className="d-flex align-items-center bg-light border-bottom p-3">
-        <div className="bg-white rounded">
+    <Card className="mt-3 shadow-sm">
+      <CardHeader className="bg-light d-flex align-items-center justify-content-between">
+        <span className="fw-bold text-primary">Disclaimer</span>
+      </CardHeader>
+      <CardBody>
+        <FormGroup check className="d-flex align-items-start">
           <Input
             type="checkbox"
             id="Disclaimer"
             name="Disclaimer"
-            className="me-3"
+            className="mt-1 me-3"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
             data-val="true"
             data-val-required="The Disclaimer field is required."
           />
-        </div>
-        <div>
-          <span className="fw-bold text-primary">Disclaimer</span>
-        </div>
-      </div>
-
-      <div className="p-3">
-        <FormGroup>
-          <Input type="hidden" name="DisclaimerText" value={disclaimerText} />
-          <div
-            dangerouslySetInnerHTML={{ __html: disclaimerText }}
-            className="text-muted "
-          />
+          <Label for="Disclaimer" className="text-muted">
+            {disclaimerText}
+          </Label>
         </FormGroup>
-      </div>
-    </div>
+      </CardBody>
+    </Card>
   );
 };
 
