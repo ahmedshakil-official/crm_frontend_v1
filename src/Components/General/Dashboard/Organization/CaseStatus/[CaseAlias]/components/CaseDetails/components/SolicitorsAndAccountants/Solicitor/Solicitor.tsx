@@ -41,6 +41,8 @@ const Solicitor: React.FC = () => {
   const [selectedSolicitor, setSelectedSolicitor] = useState<any>(null);
   const [selectedCaseSolicitor, setSelectedCaseSolicitor] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<string>("0");
+  // Add state for form fields
+  const [formData, setFormData] = useState<any>({});
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -50,21 +52,99 @@ const Solicitor: React.FC = () => {
     setSelectedSolicitor(solicitor);
   };
 
-  // Add this function to handle tab changes
   const toggleTab = (tab: string) => {
     if (activeTab !== tab) {
       setActiveTab(tab);
       const caseSolicitor = caseSolicitors?.[parseInt(tab)];
       setSelectedCaseSolicitor(caseSolicitor);
+      // Update form data when tab changes
+      const solicitorDetails = solicitorName?.find(
+        (s: any) => s.id === caseSolicitor?.solicitor_details?.id
+      );
+      setFormData(solicitorDetails || {});
     }
   };
 
-  // Set initial case solicitor when component loads
   useEffect(() => {
     if (caseSolicitors && caseSolicitors.length > 0) {
-      setSelectedCaseSolicitor(caseSolicitors[0]);
+      // Get current tab index or default to 0
+      const currentTabIndex = parseInt(activeTab);
+      const validIndex =
+        currentTabIndex < caseSolicitors.length ? currentTabIndex : 0;
+
+      setActiveTab(validIndex.toString());
+      setSelectedCaseSolicitor(caseSolicitors[validIndex]);
+
+      const solicitorDetails = solicitorName?.find(
+        (s: any) => s.id === caseSolicitors[validIndex]?.solicitor_details?.id
+      );
+      setFormData(solicitorDetails || {});
     }
-  }, [caseSolicitors]);
+  }, [caseSolicitors, solicitorName]);
+
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleAssignSolicitor = async () => {
+    if (!selectedSolicitor) {
+      toast.error("Please select a solicitor first");
+      return;
+    }
+
+    try {
+      await assignCaseSolicitor({
+        case_alias: casealias,
+        solicitor: { solicitor: selectedSolicitor.id },
+      }).unwrap();
+
+      setSelectedSolicitor(null);
+      toast.success("Solicitor assigned successfully!");
+    } catch (error) {
+      console.error("Failed to assign solicitor:", error);
+      toast.error("Failed to assign solicitor. Please try again.");
+    }
+  };
+
+  // Implement handleUpdateSolicitorDetails
+  const handleUpdateSolicitorDetails = async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent form submission
+    if (!selectedCaseSolicitor?.solicitor_details?.id) {
+      toast.error("Please select a solicitor to update");
+      return;
+    }
+
+    try {
+      const updatePayload = {
+        id: selectedCaseSolicitor.solicitor_details.id,
+        ...formData,
+      };
+
+      const result = await updateSolicitorDetails({
+        solicitor_alias: selectedCaseSolicitor.solicitor_details.alias,
+        updatedSolicitorDetails: updatePayload,
+      }).unwrap();
+
+      // Update local state with new data
+      const updatedSolicitor = { ...selectedCaseSolicitor };
+      updatedSolicitor.solicitor_details = {
+        ...updatedSolicitor.solicitor_details,
+        ...formData,
+      };
+
+      setSelectedCaseSolicitor(updatedSolicitor);
+
+      toast.success("Solicitor details updated successfully!");
+    } catch (error) {
+      console.error("Failed to update solicitor details:", error);
+      toast.error("Failed to update solicitor details. Please try again.");
+    }
+  };
 
   if (
     isLoading ||
@@ -77,25 +157,6 @@ const Solicitor: React.FC = () => {
         <LoadingSpinner />
       </div>
     );
-  const handleAssignSolicitor = async () => {
-    if (!selectedSolicitor) {
-      toast.error("Please select a solicitor first");
-      return;
-    }
-
-    try {
-      await assignCaseSolicitor({
-        case_alias: casealias,
-        solicitor:{ solicitor:selectedSolicitor.id}  
-      }).unwrap();
-      
-      setSelectedSolicitor(null);
-      toast.success("Solicitor assigned successfully!");
-    } catch (error) {
-      console.error("Failed to assign solicitor:", error);
-      toast.error("Failed to assign solicitor. Please try again.");
-    }
-  };
 
   return (
     <>
@@ -124,7 +185,6 @@ const Solicitor: React.FC = () => {
             </Nav>
           )}
 
-          {/* First Form Group - Solicitor Selection */}
           <Row>
             <Col md={12}>
               <Row>
@@ -133,27 +193,36 @@ const Solicitor: React.FC = () => {
                     <Row>
                       <FormGroup>
                         <Label for="assignSolicitor">Assign Solicitor:</Label>
-                        <>
-                          <Input
-                            id="assignSolicitor"
-                            name="assignSolicitor"
-                            type="select"
-                            value={selectedSolicitor?.id || ""}
-                            onChange={handleSolicitorChange}
-                          >
-                            <option value="">Select Solicitor...</option>
-                            {solicitorName?.map((solicitor: any) => (
-                              <option key={solicitor?.id} value={solicitor?.id}>
-                                {solicitor?.name}
-                              </option>
-                            ))}
-                          </Input>
-                          <small className="text-muted text-danger">
-                            Note: Please select and assigned a solicitor from
-                            the dropdown list. If the solicitor is not listed,
-                            please add a new solicitor.
-                          </small>
-                        </>
+                        <Input
+                          id="assignSolicitor"
+                          name="assignSolicitor"
+                          type="select"
+                          value={
+                            selectedCaseSolicitor?.solicitor_details?.id ||
+                            selectedSolicitor?.id ||
+                            ""
+                          }
+                          onChange={handleSolicitorChange}
+                        >
+                          <option value="">Select Solicitor...</option>
+                          {solicitorName?.map((solicitor: any) => (
+                            <option
+                              key={solicitor?.id}
+                              value={solicitor?.id}
+                              selected={
+                                solicitor?.id ===
+                                selectedCaseSolicitor?.solicitor_details?.id
+                              }
+                            >
+                              {solicitor?.name}
+                            </option>
+                          ))}
+                        </Input>
+                        <small className="text-muted text-danger">
+                          Note: Please select and assigned a solicitor from the
+                          dropdown list. If the solicitor is not listed, please
+                          add a new solicitor.
+                        </small>
                       </FormGroup>
                     </Row>
                     <Row>
@@ -210,9 +279,8 @@ const Solicitor: React.FC = () => {
 
           <hr />
 
-          {/* Second Form Group - Case Solicitor Details */}
           <Row>
-            <Form>
+            <Form onSubmit={handleUpdateSolicitorDetails}>
               <Row>
                 <Col md={6}>
                   <FormGroup>
@@ -221,8 +289,8 @@ const Solicitor: React.FC = () => {
                       id="qualifications"
                       name="qualifications"
                       type="text"
-                      value={selectedSolicitor?.qualifications || ""}
-                      readOnly
+                      value={formData.qualifications || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -231,15 +299,14 @@ const Solicitor: React.FC = () => {
                     <Label for="sraNumber">SRA Number</Label>
                     <Input
                       id="sraNumber"
-                      name="sraNumber"
+                      name="sra_number"
                       type="text"
-                      value={selectedSolicitor?.sra_number || ""}
-                      readOnly
+                      value={formData.sra_number || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
               </Row>
-              {/* Continue for other fields */}
               <Row>
                 <Col md={6}>
                   <FormGroup>
@@ -248,8 +315,8 @@ const Solicitor: React.FC = () => {
                       id="postcode"
                       name="postcode"
                       type="text"
-                      value={selectedSolicitor?.postcode || ""}
-                      readOnly
+                      value={formData.postcode || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -258,10 +325,10 @@ const Solicitor: React.FC = () => {
                     <Label for="buildingName">Building Name or Number</Label>
                     <Input
                       id="buildingName"
-                      name="buildingName"
+                      name="building_name_or_number"
                       type="text"
-                      value={selectedSolicitor?.building_name_or_number || ""}
-                      readOnly
+                      value={formData.building_name_or_number || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -274,7 +341,8 @@ const Solicitor: React.FC = () => {
                       id="street"
                       name="street"
                       type="text"
-                      value={selectedSolicitor?.street || ""}
+                      value={formData.street || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -285,7 +353,8 @@ const Solicitor: React.FC = () => {
                       id="city"
                       name="city"
                       type="text"
-                      value={selectedSolicitor?.city || ""}
+                      value={formData.city || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -298,7 +367,8 @@ const Solicitor: React.FC = () => {
                       id="county"
                       name="county"
                       type="text"
-                      value={selectedSolicitor?.county || ""}
+                      value={formData.county || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -309,7 +379,8 @@ const Solicitor: React.FC = () => {
                       id="country"
                       name="country"
                       type="text"
-                      value={selectedSolicitor?.country || ""}
+                      value={formData.country || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -320,9 +391,10 @@ const Solicitor: React.FC = () => {
                     <Label for="phoneNumber">Phone Number</Label>
                     <Input
                       id="phoneNumber"
-                      name="phoneNumber"
+                      name="phone_number"
                       type="tel"
-                      value={selectedSolicitor?.phone_number || ""}
+                      value={formData.phone_number || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -331,9 +403,10 @@ const Solicitor: React.FC = () => {
                     <Label for="faxNumber">Fax Number</Label>
                     <Input
                       id="faxNumber"
-                      name="faxNumber"
+                      name="fax_number"
                       type="tel"
-                      value={selectedSolicitor?.fax_number || ""}
+                      value={formData.fax_number || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -344,9 +417,10 @@ const Solicitor: React.FC = () => {
                     <Label for="dxNumber">DX Number</Label>
                     <Input
                       id="dxNumber"
-                      name="dxNumber"
+                      name="dx_number"
                       type="text"
-                      value={selectedSolicitor?.dx_number || ""}
+                      value={formData.dx_number || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -355,9 +429,10 @@ const Solicitor: React.FC = () => {
                     <Label for="contactName">Contact Name</Label>
                     <Input
                       id="contactName"
-                      name="contactName"
+                      name="contact_name"
                       type="text"
-                      value={selectedSolicitor?.contact_name || ""}
+                      value={formData.contact_name || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -368,9 +443,10 @@ const Solicitor: React.FC = () => {
                     <Label for="emailAddress">Email Address</Label>
                     <Input
                       id="emailAddress"
-                      name="emailAddress"
+                      name="email_address"
                       type="email"
-                      value={selectedSolicitor?.email_address || ""}
+                      value={formData.email_address || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -381,18 +457,23 @@ const Solicitor: React.FC = () => {
                     </Label>
                     <Input
                       id="numberOfPartners"
-                      name="numberOfPartners"
+                      name="number_of_partners_in_firm"
                       type="number"
-                      value={
-                        selectedSolicitor?.number_of_partners_in_firm || ""
-                      }
+                      value={formData.number_of_partners_in_firm || ""}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
               </Row>
               <Row>
                 <Col md={12} className="d-flex justify-content-end">
-                  <Button color="primary">Update Solicitor Info</Button>
+                  <Button
+                    type="submit"
+                    color="primary"
+                    disabled={isUpdateLoading}
+                  >
+                    Update Solicitor Info
+                  </Button>
                 </Col>
               </Row>
             </Form>
@@ -400,7 +481,6 @@ const Solicitor: React.FC = () => {
         </CardBody>
       </Card>
 
-      {/*  In your JSX: */}
       <AddSolicitorModal isOpen={isModalOpen} toggle={toggleModal} />
     </>
   );
