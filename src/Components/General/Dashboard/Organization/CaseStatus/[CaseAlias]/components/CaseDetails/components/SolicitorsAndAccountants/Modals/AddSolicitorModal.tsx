@@ -1,5 +1,4 @@
 import { useAddSolicitorDetailsMutation } from "@/Redux/Reducers/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
-import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -25,8 +24,6 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
   isOpen,
   toggle,
 }) => {
-  const params = useParams();
-  const { casealias } = params;
   const [addSolicitorDetails, { isLoading }] = useAddSolicitorDetailsMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -96,12 +93,11 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
                 </Col>
                 <Col md={4}>
                   <FormGroup>
-                    <Label for="qualifications">Qualification*</Label>
+                    <Label for="qualifications">Qualification</Label>
                     <Input
                       id="qualifications"
                       name="qualifications"
                       type="text"
-                      required
                     />
                   </FormGroup>
                 </Col>
@@ -123,14 +119,14 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="street">Street*</Label>
-                    <Input id="street" name="street" type="text" required />
+                    <Label for="street">Street</Label>
+                    <Input id="street" name="street" type="text" />
                   </FormGroup>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="city">City*</Label>
-                    <Input id="city" name="city" type="text" required />
+                    <Label for="city">City</Label>
+                    <Input id="city" name="city" type="text" />
                   </FormGroup>
                 </Col>
               </Row>
@@ -143,8 +139,8 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="country">Country*</Label>
-                    <Input id="country" name="country" type="text" required />
+                    <Label for="country">Country</Label>
+                    <Input id="country" name="country" type="text" />
                   </FormGroup>
                 </Col>
               </Row>
@@ -157,26 +153,21 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="faxNumber">Fax Number*</Label>
-                    <Input
-                      id="faxNumber"
-                      name="faxNumber"
-                      type="tel"
-                      required
-                    />
+                    <Label for="faxNumber">Fax Number</Label>
+                    <Input id="faxNumber" name="faxNumber" type="tel" />
                   </FormGroup>
                 </Col>
               </Row>
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="dxNumber">DX Number*</Label>
-                    <Input id="dxNumber" name="dxNumber" type="text" required />
+                    <Label for="dxNumber">DX Number</Label>
+                    <Input id="dxNumber" name="dxNumber" type="text" />
                   </FormGroup>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="contactName">Contact Name*</Label>
+                    <Label for="contactName">Contact Name</Label>
                     <Input id="contactName" name="contactName" type="text" />
                   </FormGroup>
                 </Col>
@@ -207,7 +198,7 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
                     Cancel
                   </Button>
                   <Button type="submit" color="primary">
-                    Save Solicitor
+                    {isLoading ? "Saving..." : "Save Solicitor"}
                   </Button>
                 </Col>
               </Row>

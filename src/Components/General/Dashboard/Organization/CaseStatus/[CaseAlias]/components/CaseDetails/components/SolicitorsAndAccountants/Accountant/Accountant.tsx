@@ -21,6 +21,8 @@ import {
   Row,
 } from "reactstrap";
 
+import AddAccountantModal from "../Modals/AddAccountantModal";
+
 const Accountant: React.FC = () => {
   const params = useParams();
   const { casealias } = params;
@@ -214,7 +216,6 @@ const Accountant: React.FC = () => {
                   </FormGroup>
                 </Col>
               </Row>
-              {/* Update all other input fields similarly */}
               <Row>
                 <Col md={6}>
                   <FormGroup>
@@ -234,7 +235,10 @@ const Accountant: React.FC = () => {
                       id="buildingName"
                       name="buildingName"
                       type="text"
-                      value={getCurrentAccountantDetails()?.building_name_or_number}
+                      value={
+                        getCurrentAccountantDetails()
+                          ?.building_name_or_number || ""
+                      }
                     />
                   </FormGroup>
                 </Col>
@@ -247,7 +251,7 @@ const Accountant: React.FC = () => {
                       id="city"
                       name="city"
                       type="text"
-                      value={getCurrentAccountantDetails()?.city}
+                      value={getCurrentAccountantDetails()?.city || ""}
                     />
                   </FormGroup>
                 </Col>
@@ -258,7 +262,7 @@ const Accountant: React.FC = () => {
                       id="street"
                       name="street"
                       type="text"
-                      value={getCurrentAccountantDetails()?.street}
+                      value={getCurrentAccountantDetails()?.street || ""}
                     />
                   </FormGroup>
                 </Col>
@@ -271,7 +275,7 @@ const Accountant: React.FC = () => {
                       id="county"
                       name="county"
                       type="text"
-                      value={getCurrentAccountantDetails()?.county}
+                      value={getCurrentAccountantDetails()?.county || ""}
                     />
                   </FormGroup>
                 </Col>
@@ -282,7 +286,7 @@ const Accountant: React.FC = () => {
                       id="country"
                       name="country"
                       type="text"
-                      value={getCurrentAccountantDetails()?.country}
+                      value={getCurrentAccountantDetails()?.country || ""}
                     />
                   </FormGroup>
                 </Col>
@@ -295,7 +299,7 @@ const Accountant: React.FC = () => {
                       id="phoneNumber"
                       name="phoneNumber"
                       type="tel"
-                      value={getCurrentAccountantDetails()?.phone_number}
+                      value={getCurrentAccountantDetails()?.phone_number || ""}
                     />
                   </FormGroup>
                 </Col>
@@ -306,7 +310,7 @@ const Accountant: React.FC = () => {
                       id="faxNumber"
                       name="faxNumber"
                       type="tel"
-                      value={getCurrentAccountantDetails()?.fax_number}
+                      value={getCurrentAccountantDetails()?.fax_number || ""}
                     />
                   </FormGroup>
                 </Col>
@@ -319,7 +323,7 @@ const Accountant: React.FC = () => {
                       id="emailAddress"
                       name="emailAddress"
                       type="email"
-                      value={getCurrentAccountantDetails()?.email_address}
+                      value={getCurrentAccountantDetails()?.email_address || ""}
                     />
                   </FormGroup>
                 </Col>
@@ -335,6 +339,7 @@ const Accountant: React.FC = () => {
           </Card>
         </Form>
       </Col>
+      <AddAccountantModal isOpen={isModalOpen} toggle={toggleModal} />
     </>
   );
 };
