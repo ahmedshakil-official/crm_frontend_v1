@@ -7,6 +7,7 @@ import {
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -32,7 +33,7 @@ const Solicitor: React.FC = () => {
 
   const { data: caseSolicitors, isLoading: isCaseSolicitorLoading } =
     useGetCaseSolicitorDetailsQuery({ case_alias: casealias });
-  const [assignSolicitor, { isLoading: isAssignedLoading }] =
+  const [assignCaseSolicitor, { isLoading: isAssignedLoading }] =
     useAssignCaseSolicitorMutation();
   const [updateSolicitorDetails, { isLoading: isUpdateLoading }] =
     useUpdateSolicitorDetailsMutation();
@@ -76,6 +77,25 @@ const Solicitor: React.FC = () => {
         <LoadingSpinner />
       </div>
     );
+  const handleAssignSolicitor = async () => {
+    if (!selectedSolicitor) {
+      toast.error("Please select a solicitor first");
+      return;
+    }
+
+    try {
+      await assignCaseSolicitor({
+        case_alias: casealias,
+        solicitor:{ solicitor:selectedSolicitor.id}  
+      }).unwrap();
+      
+      setSelectedSolicitor(null);
+      toast.success("Solicitor assigned successfully!");
+    } catch (error) {
+      console.error("Failed to assign solicitor:", error);
+      toast.error("Failed to assign solicitor. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -131,9 +151,7 @@ const Solicitor: React.FC = () => {
                           <small className="text-muted text-danger">
                             Note: Please select and assigned a solicitor from
                             the dropdown list. If the solicitor is not listed,
-                            please add a new solicitor. If you'r not assigned a
-                            solicitor, after reload this selected value was not
-                            saved.
+                            please add a new solicitor.
                           </small>
                         </>
                       </FormGroup>
@@ -146,7 +164,13 @@ const Solicitor: React.FC = () => {
                         <Button color="success" onClick={toggleModal}>
                           Add New Solicitor
                         </Button>
-                        <Button color="primary">Assign Solicitor</Button>
+                        <Button
+                          color="primary"
+                          onClick={handleAssignSolicitor}
+                          disabled={!selectedSolicitor}
+                        >
+                          Assign Solicitor
+                        </Button>
                       </Col>
                     </Row>
                   </Form>
