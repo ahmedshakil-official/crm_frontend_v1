@@ -472,7 +472,7 @@ const Solicitor: React.FC = () => {
                     color="primary"
                     disabled={isUpdateLoading}
                   >
-                    Update Solicitor
+                    Update Solicitor Info
                   </Button>
                 </Col>
               </Row>
