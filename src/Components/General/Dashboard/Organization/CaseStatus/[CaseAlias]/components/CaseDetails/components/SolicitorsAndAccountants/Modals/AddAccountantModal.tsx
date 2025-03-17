@@ -81,7 +81,7 @@ const AddAccountantModal: React.FC<AddAccountantModalProps> = ({
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="name">Name*</Label>
+                <Label for="name">Accountant Full Name*</Label>
                 <Input
                   id="name"
                   name="name"

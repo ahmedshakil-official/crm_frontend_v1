@@ -392,7 +392,7 @@ const Solicitor: React.FC = () => {
               </Row>
               <Row>
                 <Col md={12} className="d-flex justify-content-end">
-                  <Button color="primary">Update Solicitor</Button>
+                  <Button color="primary">Update Solicitor Info</Button>
                 </Col>
               </Row>
             </Form>
