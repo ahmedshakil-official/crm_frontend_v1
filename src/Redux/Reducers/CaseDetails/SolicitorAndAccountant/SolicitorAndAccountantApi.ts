@@ -34,10 +34,10 @@ export const SolicitorAndAccountantApi = baseApi.injectEndpoints({
       invalidatesTags: ["SolicitorDetails"],
     }),
     updateSolicitorDetails: builder.mutation({
-      query: ({ case_alias, data }) => ({
-        url: `/cases/${case_alias}/case/solicitors/`,
+      query: ({ solicitor_alias, updatedSolicitorDetails }) => ({
+        url: `/cases/solicitors/${solicitor_alias}/`,
         method: "PUT",
-        body: data,
+        body: updatedSolicitorDetails,
       }),
       invalidatesTags: ["SolicitorDetails"],
     }),
@@ -56,7 +56,7 @@ export const {
   useGetSolicitorDetailsQuery,
   useAddSolicitorDetailsMutation,
   useGetCaseSolicitorDetailsQuery,
- useAssignCaseSolicitorMutation,
+  useAssignCaseSolicitorMutation,
   useUpdateSolicitorDetailsMutation,
   useGetAccountantDetailsQuery,
 } = SolicitorAndAccountantApi;
