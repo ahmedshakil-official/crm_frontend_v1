@@ -26,10 +26,10 @@ export const SolicitorAndAccountantApi = baseApi.injectEndpoints({
       providesTags: ["SolicitorDetails"],
     }),
     assignCaseSolicitor: builder.mutation({
-      query: ({ case_alias, data }) => ({
+      query: ({ case_alias, solicitor }) => ({
         url: `/cases/${case_alias}/case/solicitors/`,
         method: "POST",
-        body: data,
+        body: solicitor,
       }),
       invalidatesTags: ["SolicitorDetails"],
     }),
