@@ -39,15 +39,30 @@ export const SolicitorAndAccountantApi = baseApi.injectEndpoints({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["SolicitorDetails"],
+      invalidatesTags: ["AccountantDetails"],
     }),
     // Accountant
     getAccountantDetails: builder.query({
-      query: ({ case_alias }) => ({
-        url: `/cases/${case_alias}/user/list/`,
+      query: () => ({
+        url: `/cases/accountants/`,
         method: "GET",
       }),
       providesTags: ["AccountantDetails"],
+    }),
+    getCaseAccountantDetails: builder.query({
+      query: ({ case_alias }) => ({
+        url: `/cases/${case_alias}/case/accountants/`,
+        method: "GET",
+      }),
+      providesTags: ["AccountantDetails"],
+    }),
+    assignCaseAccountant: builder.mutation({
+      query: ({ case_alias, accountant }) => ({
+        url: `/cases/${case_alias}/case/accountants/`,
+        method: "POST",
+        body: accountant,
+      }),
+      invalidatesTags: ["AccountantDetails"],
     }),
   }),
 });
@@ -56,7 +71,9 @@ export const {
   useGetSolicitorDetailsQuery,
   useAddSolicitorDetailsMutation,
   useGetCaseSolicitorDetailsQuery,
- useAssignCaseSolicitorMutation,
+  useAssignCaseSolicitorMutation,
   useUpdateSolicitorDetailsMutation,
   useGetAccountantDetailsQuery,
+  useGetCaseAccountantDetailsQuery,
+  useAssignCaseAccountantMutation,
 } = SolicitorAndAccountantApi;
