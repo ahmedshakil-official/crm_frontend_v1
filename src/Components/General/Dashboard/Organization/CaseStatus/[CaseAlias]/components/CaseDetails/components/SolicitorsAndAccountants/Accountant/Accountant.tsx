@@ -77,7 +77,12 @@ const Accountant: React.FC = () => {
     }
   }, [caseAccountants]);
 
-  if (isAccountantLoading || isCaseAccountantLoading || isAssigningLoading) {
+  if (
+    isAccountantLoading ||
+    isCaseAccountantLoading ||
+    isAssigningLoading ||
+    isUpdatingLoading
+  ) {
     return (
       <div>
         <LoadingSpinner />
@@ -239,7 +244,21 @@ const Accountant: React.FC = () => {
         <Card>
           <CardBody>
             <Row>
-              <Col md={6}>
+              <Col md={4}>
+                <FormGroup>
+                  <Label for="name">Name</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={
+                      formData.name || getCurrentAccountantDetails()?.name || ""
+                    }
+                    onChange={handleInputChange}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={4}>
                 <FormGroup>
                   <Label for="qualifications">Qualification*</Label>
                   <Input
@@ -255,12 +274,12 @@ const Accountant: React.FC = () => {
                   />
                 </FormGroup>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="companyName">Company Name</Label>
+                  <Label for="company_name">Company Name</Label>
                   <Input
-                    id="companyName"
-                    name="companyName"
+                    id="company_name"
+                    name="company_name"
                     type="text"
                     value={
                       formData.company_name ||
@@ -291,10 +310,12 @@ const Accountant: React.FC = () => {
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="buildingName">Building Name or Number</Label>
+                  <Label for="building_name_or_number">
+                    Building Name or Number
+                  </Label>
                   <Input
-                    id="buildingName"
-                    name="buildingName"
+                    id="building_name_or_number"
+                    name="building_name_or_number"
                     type="text"
                     value={
                       formData.building_name_or_number ||
@@ -375,10 +396,10 @@ const Accountant: React.FC = () => {
             <Row>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="phoneNumber">Phone Number</Label>
+                  <Label for="phone_number">Phone Number</Label>
                   <Input
-                    id="phoneNumber"
-                    name="phoneNumber"
+                    id="phone_number"
+                    name="phone_number"
                     type="tel"
                     value={
                       formData.phone_number ||
@@ -391,10 +412,10 @@ const Accountant: React.FC = () => {
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="faxNumber">Fax Number</Label>
+                  <Label for="fax_number">Fax Number</Label>
                   <Input
-                    id="faxNumber"
-                    name="faxNumber"
+                    id="fax_number"
+                    name="fax_number"
                     type="tel"
                     value={
                       formData.fax_number ||
@@ -409,10 +430,10 @@ const Accountant: React.FC = () => {
             <Row>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="emailAddress">Email Address</Label>
+                  <Label for="email_address">Email Address</Label>
                   <Input
-                    id="emailAddress"
-                    name="emailAddress"
+                    id="email_address"
+                    name="email_address"
                     type="email"
                     value={
                       formData.email_address ||
