@@ -22,6 +22,7 @@ import {
   Row,
 } from "reactstrap";
 
+import Swal from "sweetalert2";
 import AddAccountantModal from "../Modals/AddAccountantModal";
 
 const Accountant: React.FC = () => {
@@ -68,7 +69,7 @@ const Accountant: React.FC = () => {
       }).unwrap();
 
       setSelectedAccountant(null);
-      toast.success("Accountant assigned successfully!");
+      Swal.fire("Success!", "Accountant assigned successfully!", "success");
     } catch (error) {
       console.error("Failed to assign accountant:", error);
       toast.error("Failed to assign accountant. Please try again.");
@@ -262,6 +263,7 @@ const Accountant: React.FC = () => {
                     type="text"
                     value={formData.name || ""}
                     onChange={handleInputChange}
+                    required
                   />
                 </FormGroup>
               </Col>
