@@ -39,7 +39,7 @@ export const SolicitorAndAccountantApi = baseApi.injectEndpoints({
         method: "PUT",
         body: updatedSolicitorDetails,
       }),
-      invalidatesTags: ["AccountantDetails"],
+      invalidatesTags: ["SolicitorDetails"],
     }),
     // Accountant
     getAccountantDetails: builder.query({

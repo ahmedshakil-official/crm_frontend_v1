@@ -32,6 +32,7 @@ const Accountant: React.FC = () => {
     useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<any>({});
+  const [activeTab, setActiveTab] = useState<string>("0");
 
   const { data: accountantName, isLoading: isAccountantLoading } =
     useGetAccountantDetailsQuery(undefined);
@@ -46,8 +47,12 @@ const Accountant: React.FC = () => {
 
   const handleAccountantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedId = e.target.value;
-    const accountant = accountantName?.find((a: any) => a.id == selectedId);
-    setSelectedAccountant(accountant);
+    if (selectedId === selectedCaseAccountant?.accountant_details?.id) {
+      setSelectedAccountant(null);
+    } else {
+      const accountant = accountantName?.find((a: any) => a.id == selectedId);
+      setSelectedAccountant(accountant);
+    }
   };
 
   const handleAssignAccountant = async () => {
@@ -77,13 +82,6 @@ const Accountant: React.FC = () => {
     }
   }, [caseAccountants]);
 
-  if (isAccountantLoading || isCaseAccountantLoading || isAssigningLoading) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
-  }
   // Add this helper function
   const isAccountantAssigned = () => {
     return caseAccountants && caseAccountants.length > 0;
@@ -100,15 +98,21 @@ const Accountant: React.FC = () => {
     return selectedAccountant?.id || "";
   };
 
-  // Add this helper function to get the current accountant details
-  const getCurrentAccountantDetails = () => {
-    if (isAccountantAssigned() && selectedCaseAccountant?.accountant_details) {
-      return accountantName?.find(
-        (a: any) => a.id === selectedCaseAccountant.accountant_details.id
+  useEffect(() => {
+    if (caseAccountants && caseAccountants.length > 0) {
+      const currentTabIndex = parseInt(activeTab);
+      const validIndex =
+        currentTabIndex < caseAccountants.length ? currentTabIndex : 0;
+
+      setActiveTab(validIndex.toString());
+      setSelectedCaseAccountant(caseAccountants[validIndex]);
+
+      const accountantDetails = accountantName?.find(
+        (a: any) => a.id === caseAccountants[validIndex]?.accountant_details?.id
       );
+      setFormData(accountantDetails || {});
     }
-    return selectedAccountant;
-  };
+  }, [caseAccountants, accountantName]);
 
   // Add handleInputChange function
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,7 +139,6 @@ const Accountant: React.FC = () => {
 
       await updateAccountant({
         alias: selectedCaseAccountant.accountant_details.alias,
-        // data: { detail: updatePayload },
         data: updatePayload,
       }).unwrap();
 
@@ -154,7 +157,18 @@ const Accountant: React.FC = () => {
     }
   };
 
-  console.log(selectedAccountant);
+  if (
+    isAccountantLoading ||
+    isCaseAccountantLoading ||
+    isAssigningLoading ||
+    isUpdatingLoading
+  ) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   // Update the return section
   return (
@@ -239,34 +253,38 @@ const Accountant: React.FC = () => {
         <Card>
           <CardBody>
             <Row>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="qualifications">Qualification*</Label>
+                  <Label for="name">Name</Label>
                   <Input
-                    id="qualifications"
-                    name="qualifications"
+                    id="name"
+                    name="name"
                     type="text"
-                    value={
-                      formData.qualifications ||
-                      getCurrentAccountantDetails()?.qualifications ||
-                      ""
-                    }
+                    value={formData.name || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <FormGroup>
-                  <Label for="companyName">Company Name</Label>
+                  <Label for="qualifications">Qualification</Label>
                   <Input
-                    id="companyName"
-                    name="companyName"
+                    id="qualifications"
+                    name="qualifications"
                     type="text"
-                    value={
-                      formData.company_name ||
-                      getCurrentAccountantDetails()?.company_name ||
-                      ""
-                    }
+                    value={formData.qualifications || ""}
+                    onChange={handleInputChange}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={4}>
+                <FormGroup>
+                  <Label for="company_name">Company Name</Label>
+                  <Input
+                    id="company_name"
+                    name="company_name"
+                    type="text"
+                    value={formData.company_name || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
@@ -280,27 +298,21 @@ const Accountant: React.FC = () => {
                     id="postcode"
                     name="postcode"
                     type="text"
-                    value={
-                      formData.postcode ||
-                      getCurrentAccountantDetails()?.postcode ||
-                      ""
-                    }
+                    value={formData.postcode || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="buildingName">Building Name or Number</Label>
+                  <Label for="building_name_or_number">
+                    Building Name or Number
+                  </Label>
                   <Input
-                    id="buildingName"
-                    name="buildingName"
+                    id="building_name_or_number"
+                    name="building_name_or_number"
                     type="text"
-                    value={
-                      formData.building_name_or_number ||
-                      getCurrentAccountantDetails()?.building_name_or_number ||
-                      ""
-                    }
+                    value={formData.building_name_or_number || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
@@ -314,9 +326,7 @@ const Accountant: React.FC = () => {
                     id="city"
                     name="city"
                     type="text"
-                    value={
-                      formData.city || getCurrentAccountantDetails()?.city || ""
-                    }
+                    value={formData.city || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
@@ -328,11 +338,7 @@ const Accountant: React.FC = () => {
                     id="street"
                     name="street"
                     type="text"
-                    value={
-                      formData.street ||
-                      getCurrentAccountantDetails()?.street ||
-                      ""
-                    }
+                    value={formData.street || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
@@ -346,11 +352,7 @@ const Accountant: React.FC = () => {
                     id="county"
                     name="county"
                     type="text"
-                    value={
-                      formData.county ||
-                      getCurrentAccountantDetails()?.county ||
-                      ""
-                    }
+                    value={formData.county || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
@@ -362,11 +364,7 @@ const Accountant: React.FC = () => {
                     id="country"
                     name="country"
                     type="text"
-                    value={
-                      formData.country ||
-                      getCurrentAccountantDetails()?.country ||
-                      ""
-                    }
+                    value={formData.country || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
@@ -375,32 +373,24 @@ const Accountant: React.FC = () => {
             <Row>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="phoneNumber">Phone Number</Label>
+                  <Label for="phone_number">Phone Number</Label>
                   <Input
-                    id="phoneNumber"
-                    name="phoneNumber"
+                    id="phone_number"
+                    name="phone_number"
                     type="tel"
-                    value={
-                      formData.phone_number ||
-                      getCurrentAccountantDetails()?.phone_number ||
-                      ""
-                    }
+                    value={formData.phone_number || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="faxNumber">Fax Number</Label>
+                  <Label for="fax_number">Fax Number</Label>
                   <Input
-                    id="faxNumber"
-                    name="faxNumber"
+                    id="fax_number"
+                    name="fax_number"
                     type="tel"
-                    value={
-                      formData.fax_number ||
-                      getCurrentAccountantDetails()?.fax_number ||
-                      ""
-                    }
+                    value={formData.fax_number || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
@@ -409,16 +399,12 @@ const Accountant: React.FC = () => {
             <Row>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="emailAddress">Email Address</Label>
+                  <Label for="email_address">Email Address</Label>
                   <Input
-                    id="emailAddress"
-                    name="emailAddress"
+                    id="email_address"
+                    name="email_address"
                     type="email"
-                    value={
-                      formData.email_address ||
-                      getCurrentAccountantDetails()?.email_address ||
-                      ""
-                    }
+                    value={formData.email_address || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
