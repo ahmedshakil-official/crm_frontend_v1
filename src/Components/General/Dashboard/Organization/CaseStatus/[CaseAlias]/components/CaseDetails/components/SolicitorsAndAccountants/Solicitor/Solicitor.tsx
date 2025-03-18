@@ -48,8 +48,12 @@ const Solicitor: React.FC = () => {
 
   const handleSolicitorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedId = e.target.value;
-    const solicitor = solicitorName?.find((s: any) => s.id == selectedId);
-    setSelectedSolicitor(solicitor);
+    if (selectedId === selectedCaseSolicitor?.solicitor_details?.id) {
+      setSelectedSolicitor(null); // Clear selection if selecting current solicitor
+    } else {
+      const solicitor = solicitorName?.find((s: any) => s.id == selectedId);
+      setSelectedSolicitor(solicitor);
+    }
   };
 
   const toggleTab = (tab: string) => {
@@ -57,6 +61,8 @@ const Solicitor: React.FC = () => {
       setActiveTab(tab);
       const caseSolicitor = caseSolicitors?.[parseInt(tab)];
       setSelectedCaseSolicitor(caseSolicitor);
+      setSelectedSolicitor(null); // Reset selected solicitor when changing tabs
+      
       // Update form data when tab changes
       const solicitorDetails = solicitorName?.find(
         (s: any) => s.id === caseSolicitor?.solicitor_details?.id
@@ -197,11 +203,7 @@ const Solicitor: React.FC = () => {
                           id="assignSolicitor"
                           name="assignSolicitor"
                           type="select"
-                          value={
-                            selectedCaseSolicitor?.solicitor_details?.id ||
-                            selectedSolicitor?.id ||
-                            ""
-                          }
+                          value={selectedSolicitor?.id || selectedCaseSolicitor?.solicitor_details?.id || ""}
                           onChange={handleSolicitorChange}
                         >
                           <option value="">Select Solicitor...</option>
@@ -209,12 +211,11 @@ const Solicitor: React.FC = () => {
                             <option
                               key={solicitor?.id}
                               value={solicitor?.id}
-                              selected={
-                                solicitor?.id ===
-                                selectedCaseSolicitor?.solicitor_details?.id
-                              }
                             >
                               {solicitor?.name}
+                              {solicitor?.id === selectedCaseSolicitor?.solicitor_details?.id 
+                                ? " (Currently Assigned)" 
+                                : ""}
                             </option>
                           ))}
                         </Input>
