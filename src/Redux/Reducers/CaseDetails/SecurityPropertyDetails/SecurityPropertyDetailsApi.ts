@@ -2,25 +2,18 @@ import { baseApi } from "@/Redux/Api/BaseApi";
 
 export const SecurityPropertyDetailsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCaseUserDetails: builder.query({
-      query: ({ case_alias }) => ({
-        url: `/cases/${case_alias}/user/list/`,
-        method: "GET",
-      }),
-      providesTags: ["CaseUserDetails"],
-    }),
     getPropertyDetails: builder.query({
-      query: ({ case_alias, propertyId }) => ({
-        url: `/cases/${case_alias}/existing/protection/${propertyId}/`,
+      query: ({ case_alias }) => ({
+        url: `/cases/${case_alias}/existing/protections/`,
         method: "GET",
       }),
       providesTags: ["SecurityPropertyDetails"],
     }),
     addPropertyDetails: builder.mutation({
-      query: ({ case_alias, employer_id, employmentDetails }) => ({
-        url: `/cases/${case_alias}/existing/protection/${employer_id}`,
+      query: ({ case_alias, property_id, propertyDetails }) => ({
+        url: `/cases/${case_alias}/existing/protection/${property_id}`,
         method: "POST",
-        body: employmentDetails,
+        body: propertyDetails,
       }),
       invalidatesTags: ["SecurityPropertyDetails"],
     }),
@@ -36,7 +29,6 @@ export const SecurityPropertyDetailsApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetCaseUserDetailsQuery,
   useGetPropertyDetailsQuery,
   useAddPropertyDetailsMutation,
   useUpdatePropertyDetailsMutation,

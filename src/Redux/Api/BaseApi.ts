@@ -30,7 +30,6 @@ export const baseApi = createApi({
     "PropertyDetails",
     "SolicitorDetails",
     "AccountantDetails",
-    "CaseUserDetails",
     "SecurityPropertyDetails",
   ],
   endpoints: () => ({}),

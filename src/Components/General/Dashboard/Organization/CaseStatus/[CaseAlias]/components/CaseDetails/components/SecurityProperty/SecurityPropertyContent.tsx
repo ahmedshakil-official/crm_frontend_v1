@@ -13,21 +13,22 @@ import {
   Row,
 } from "reactstrap";
 import AddSecurityPropertyModal from "./Modals/AddSecurityPropertyModal";
+import { SecurityPropertyDetailsProps } from "@/Types/Organization/CaseDetails/SecurityPropertyDetailsTypes";
 
 
 interface SecurityPropertyContentProps {
-  applicantsData: ApplicantProps[];
+  propertyDetails: SecurityPropertyDetailsProps[];
   basicTab: string | null;
 }
 
 const SecurityPropertyContent: React.FC<SecurityPropertyContentProps> = ({
-  applicantsData,
+  propertyDetails,
   basicTab,
 }) => {
   const [hasSecurity, setHasSecurity] = useState<boolean>(false);
   const [hasNonStandardTerms, setHasNonStandardTerms] =
     useState<boolean>(false);
-  const currentApplicant = applicantsData?.find(
+  const currentApplicant = propertyDetails?.find(
     (app) => app.alias === basicTab
   );
   // Add new state at the top of component
@@ -43,9 +44,10 @@ const SecurityPropertyContent: React.FC<SecurityPropertyContentProps> = ({
     console.log("Security property data:", data);
     // Handle saving the data
   };
+  console.log(propertyDetails)
   return (
     <div>
-      {basicTab && applicantsData && applicantsData.length > 0 && (
+      {basicTab && propertyDetails && propertyDetails.length > 0 && (
         <>
           <Form>
             <Card className="mb-3 border-primary">

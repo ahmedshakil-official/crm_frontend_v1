@@ -1,5 +1,6 @@
-import { useGetApplicantsQuery } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
-import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
+import { useGetPropertyDetailsQuery } from "@/Redux/Reducers/CaseDetails/SecurityPropertyDetails/SecurityPropertyDetailsApi";
+import { SecurityPropertyDetailsProps } from "@/Types/Organization/CaseDetails/SecurityPropertyDetailsTypes";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -21,19 +22,23 @@ const SecurityPropertyTab: React.FC = () => {
   const { casealias } = params;
 
   // Fetch applicants data
-  const { data: applicantsData, isLoading } = useGetApplicantsQuery({
+  const { data: propertyDetails, isLoading } = useGetPropertyDetailsQuery({
     case_alias: casealias,
   });
 
   // Set the first applicant's alias as default when data is available
   useEffect(() => {
-    if (applicantsData?.length > 0 && !basicTab) {
-      setBasicTab(applicantsData[0]?.alias || null);
+    if (propertyDetails?.length > 0 && !basicTab) {
+      setBasicTab(propertyDetails[0]?.alias || null);
     }
-  }, [applicantsData, basicTab]);
+  }, [propertyDetails, basicTab]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (
@@ -42,23 +47,25 @@ const SecurityPropertyTab: React.FC = () => {
         <CardBody>
           <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-2 pb-2 p-0">
             <Nav className="nav-warning" pills>
-              {applicantsData?.map((applicantData: ApplicantProps) => (
-                <NavItem key={applicantData.alias}>
-                  <NavLink
-                    className={`cursor-pointer ${
-                      basicTab === applicantData.alias ? "active" : ""
-                    }`}
-                    onClick={() => setBasicTab(applicantData.alias || null)}
-                  >
-                    {`${applicantData?.applicant?.first_name} ${applicantData?.applicant?.last_name}`}
-                  </NavLink>
-                </NavItem>
-              ))}
+              {propertyDetails?.map(
+                (property: SecurityPropertyDetailsProps) => (
+                  <NavItem key={property.alias}>
+                    <NavLink
+                      className={`cursor-pointer ${
+                        basicTab === property.alias ? "active" : ""
+                      }`}
+                      onClick={() => setBasicTab(property.alias || null)}
+                    >
+                      {`${property?.user?.first_name} ${property?.user?.last_name}`}
+                    </NavLink>
+                  </NavItem>
+                )
+              )}
             </Nav>
           </CardHeader>
           <CardBody className="px-0 pb-0">
             <SecurityPropertyContent
-              applicantsData={applicantsData}
+              propertyDetails={propertyDetails}
               basicTab={basicTab}
             />
           </CardBody>
