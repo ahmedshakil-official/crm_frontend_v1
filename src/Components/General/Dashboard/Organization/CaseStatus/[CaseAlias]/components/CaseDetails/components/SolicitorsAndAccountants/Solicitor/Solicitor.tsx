@@ -23,6 +23,7 @@ import {
   NavLink,
   Row,
 } from "reactstrap";
+import Swal from "sweetalert2";
 import AddSolicitorModal from "../Modals/AddSolicitorModal";
 
 const Solicitor: React.FC = () => {
@@ -62,7 +63,7 @@ const Solicitor: React.FC = () => {
       const caseSolicitor = caseSolicitors?.[parseInt(tab)];
       setSelectedCaseSolicitor(caseSolicitor);
       setSelectedSolicitor(null); // Reset selected solicitor when changing tabs
-      
+
       // Update form data when tab changes
       const solicitorDetails = solicitorName?.find(
         (s: any) => s.id === caseSolicitor?.solicitor_details?.id
@@ -110,7 +111,7 @@ const Solicitor: React.FC = () => {
       }).unwrap();
 
       setSelectedSolicitor(null);
-      toast.success("Solicitor assigned successfully!");
+      Swal.fire("Success", "Solicitor assigned successfully!", "success");
     } catch (error) {
       console.error("Failed to assign solicitor:", error);
       toast.error("Failed to assign solicitor. Please try again.");
@@ -203,18 +204,20 @@ const Solicitor: React.FC = () => {
                           id="assignSolicitor"
                           name="assignSolicitor"
                           type="select"
-                          value={selectedSolicitor?.id || selectedCaseSolicitor?.solicitor_details?.id || ""}
+                          value={
+                            selectedSolicitor?.id ||
+                            selectedCaseSolicitor?.solicitor_details?.id ||
+                            ""
+                          }
                           onChange={handleSolicitorChange}
                         >
                           <option value="">Select Solicitor...</option>
                           {solicitorName?.map((solicitor: any) => (
-                            <option
-                              key={solicitor?.id}
-                              value={solicitor?.id}
-                            >
+                            <option key={solicitor?.id} value={solicitor?.id}>
                               {solicitor?.name}
-                              {solicitor?.id === selectedCaseSolicitor?.solicitor_details?.id 
-                                ? " (Currently Assigned)" 
+                              {solicitor?.id ===
+                              selectedCaseSolicitor?.solicitor_details?.id
+                                ? " (Currently Assigned)"
                                 : ""}
                             </option>
                           ))}
