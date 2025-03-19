@@ -9,11 +9,11 @@ export const SecurityPropertyDetailsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["SecurityPropertyDetails"],
     }),
-    addPropertyDetails: builder.mutation({
-      query: ({ case_alias, property_id, propertyDetails }) => ({
-        url: `/cases/${case_alias}/existing/protections/${property_id}`,
+    addSecurityPropertyDetails: builder.mutation({
+      query: ({ case_alias, property_id, propertyDetailsPayload }) => ({
+        url: `/cases/${case_alias}/existing/protections/${property_id}/`,
         method: "POST",
-        body: propertyDetails,
+        body: propertyDetailsPayload,
       }),
       invalidatesTags: ["SecurityPropertyDetails"],
     }),
@@ -30,6 +30,6 @@ export const SecurityPropertyDetailsApi = baseApi.injectEndpoints({
 
 export const {
   useGetPropertyDetailsQuery,
-  useAddPropertyDetailsMutation,
+  useAddSecurityPropertyDetailsMutation,
   useUpdatePropertyDetailsMutation,
 } = SecurityPropertyDetailsApi;

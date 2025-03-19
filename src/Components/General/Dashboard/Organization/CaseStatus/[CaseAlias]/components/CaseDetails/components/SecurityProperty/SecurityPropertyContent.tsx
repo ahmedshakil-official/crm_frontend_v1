@@ -649,13 +649,12 @@ const SecurityPropertyContent: React.FC<SecurityPropertyTabContentProps> = ({
               {isUpdateLoading ? "Saving..." : "Save Changes"}
             </Button>
           </div>
-          {/* Add modal component */}
-          <AddSecurityPropertyModal
-            isOpen={isModalOpen}
-            toggle={toggleModal}
-            // onSave={handleSave}
-          />
         </Form>
+        <AddSecurityPropertyModal
+          isOpen={isModalOpen}
+          toggle={toggleModal}
+          propertyData={formValues}
+        />
       </>
     </div>
   );
