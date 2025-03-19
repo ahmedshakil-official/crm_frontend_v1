@@ -1,46 +1,27 @@
-import { FC } from "react";
-import {
-  Container,
-  Table,
-  Row,
-  Col,
-} from "reactstrap";
+import { FC, useState } from "react";
+import { Container, Table, Row, Col, Button } from "reactstrap";
+import { Plus } from "react-feather";
+import { NoteTask } from "../NotesTabContent";
+import CreateTaskNoteModal from "../NotesModals/AddNewNoteModal";
 
-interface Task {
-  type: string;
-  date: string;
-  stage: string;
-  user: string;
-  information: string;
-  workflow: string;
-  id: string;
+interface TasksViewTabProps {
+  tasks: NoteTask[];
 }
 
-const TasksViewTab: FC = () => {
-  const tasks: Task[] = [
-    {
-      type: "Task",
-      date: "17/03/2025 22:10:20 (created)",
-      stage: "New Lead",
-      user: "sadat@benecofinance.co.uk - 34241987",
-      information: "Fact Find Sent to Client to complete<br>",
-      workflow: "Residential Mortgage",
-      id: "34241987",
-    },
-    {
-      type: "Task",
-      date: "17/03/2025 19:49:37 (created)",
-      stage: "",
-      user: "sadat@benecofinance.co.uk - 34233465",
-      information:
-        "Client Contacted<br>Task complete as primary stage has been manually changed",
-      workflow: "Residential Mortgage",
-      id: "34233465",
-    },
-  ];
+const TasksViewTab: FC<TasksViewTabProps> = ({ tasks }) => {
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <Container fluid className="py-4">
+      <Row className="mb-3">
+        <Col className="text-end">
+          <Button color="primary" onClick={() => setModalOpen(true)}>
+            <Plus size={16} className="me-1" />
+            Add New Task
+          </Button>
+        </Col>
+      </Row>
+
       <div className="table-responsive">
         <Table striped hover>
           <thead>
@@ -50,23 +31,27 @@ const TasksViewTab: FC = () => {
               <th style={{ minWidth: "150px" }}>Stage</th>
               <th style={{ minWidth: "200px" }}>User</th>
               <th style={{ minWidth: "400px" }}>Information</th>
-              <th style={{ minWidth: "150px" }}>Workflow</th>
+              <th style={{ minWidth: "150px" }}>Priority</th>
             </tr>
           </thead>
           <tbody>
             {tasks.map((task) => (
-              <tr key={task.id}>
-                <td>{task.type}</td>
-                <td>{task.date}</td>
-                <td>{task.stage}</td>
-                <td>{task.user}</td>
+              <tr key={task.alias}>
+                {" "}
+                {/* Using alias instead of id */}
+                <td>{task.note_task}</td> {/* "TASK" or "NOTE" */}
+                <td>{new Date(task.created_at).toLocaleString()}</td>{" "}
+                {/* Formatting the date */}
+                <td>{task.case.case_stage}</td> {/* Case stage */}
+                <td>{`${task.created_by.first_name} ${task.created_by.last_name}`}</td>{" "}
+                {/* User name */}
                 <td>
                   <div
-                    dangerouslySetInnerHTML={{ __html: task.information }}
+                    dangerouslySetInnerHTML={{ __html: task.note || "" }}
                     style={{ wordBreak: "break-word", maxWidth: "400px" }}
                   />
                 </td>
-                <td>{task.workflow}</td>
+                <td>{task.task_priority || "N/A"}</td> {/* Task priority */}
               </tr>
             ))}
           </tbody>
@@ -80,6 +65,11 @@ const TasksViewTab: FC = () => {
           </div>
         </Col>
       </Row>
+
+      <CreateTaskNoteModal
+        isOpen={modalOpen}
+        toggle={() => setModalOpen(!modalOpen)}
+      />
     </Container>
   );
 };

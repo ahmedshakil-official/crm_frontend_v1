@@ -1,57 +1,16 @@
 import { FC, useState } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Input,
-  Button,
-  Table,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Badge,
-} from "reactstrap";
+import { Container, Row, Col, Input, Button, Table, Badge } from "reactstrap";
 import { Plus, Trash2 } from "react-feather";
 import CreateTaskNoteModal from "../NotesModals/AddNewNoteModal";
+import { NoteTask } from "../NotesTabContent";
 
-interface Note {
-  category: string;
-  date: string;
-  stage: string;
-  user: string;
-  information: string;
-  introducerVisible: boolean;
-  clientVisible: boolean;
-  id: string;
+interface NotesViewTabProps {
+  notes: NoteTask[];
 }
 
-const NotesViewTab: FC = () => {
+const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
-
-  const notes: Note[] = [
-    {
-      category: "Uncategorised",
-      date: "17/03/2025 19:50:25",
-      stage: "New Lead",
-      user: "sadat@benecofinance.co.uk - 34233492",
-      information: "<p><strong>PP-Mushfiq</strong></p><hr>Created folder & OMS",
-      introducerVisible: false,
-      clientVisible: false,
-      id: "34233492",
-    },
-    {
-      category: "Declaration",
-      date: "17/03/2025 19:49:37",
-      stage: "",
-      user: "sadat@benecofinance.co.uk - 34233463",
-      information:
-        "<p>I/we agree that the information provided to date is a true record of my/our discussions and that the information provided is true to the best of my/our knowledge.</p>",
-      introducerVisible: true,
-      clientVisible: false,
-      id: "34233463",
-    },
-  ];
 
   const categories = [
     "All Categories",
@@ -68,15 +27,14 @@ const NotesViewTab: FC = () => {
     "Compliance Correspondence",
   ];
 
-  const handleAddNote = () => {
-    // Add note functionality here
-    console.log("Add new note clicked");
+  const handleDeleteNote = (alias: string) => {
+    console.log(`Delete note ${alias}`);
   };
 
-  const handleDeleteNote = (id: string) => {
-    // Delete note functionality here
-    console.log(`Delete note ${id}`);
-  };
+  // Filter notes based on selected category
+  const filteredNotes = selectedCategory
+    ? notes.filter((note) => note.category === selectedCategory)
+    : notes;
 
   return (
     <Container fluid className="py-4">
@@ -125,27 +83,27 @@ const NotesViewTab: FC = () => {
             </tr>
           </thead>
           <tbody>
-            {notes.map((note) => (
-              <tr key={note.id}>
-                <td>{note.category}</td>
-                <td>{note.date}</td>
-                <td>{note.stage}</td>
-                <td>{note.user}</td>
+            {filteredNotes.map((note) => (
+              <tr key={note.alias}>
+                <td>{note.category || "Uncategorised"}</td>
+                <td>{new Date(note.created_at).toLocaleString()}</td>
+                <td>{note.case.case_stage}</td>
+                <td>{`${note.created_by.first_name} ${note.created_by.last_name}`}</td>
                 <td>
                   <div
-                    dangerouslySetInnerHTML={{ __html: note.information }}
+                    dangerouslySetInnerHTML={{ __html: note.note || "" }}
                     style={{ wordBreak: "break-word", maxWidth: "400px" }}
                   />
                 </td>
                 <td>
-                  {note.introducerVisible && (
+                  {note.note_visible_to_introducer && (
                     <Badge color="success">
                       <i className="fa fa-check" />
                     </Badge>
                   )}
                 </td>
                 <td>
-                  {note.clientVisible && (
+                  {note.note_visible_to_client && (
                     <Badge color="success">
                       <i className="fa fa-check" />
                     </Badge>
@@ -155,7 +113,7 @@ const NotesViewTab: FC = () => {
                   <Button
                     color="danger"
                     size="sm"
-                    onClick={() => handleDeleteNote(note.id)}
+                    onClick={() => handleDeleteNote(note.alias)}
                   >
                     <Trash2 size={16} />
                   </Button>
@@ -169,7 +127,8 @@ const NotesViewTab: FC = () => {
       <Row className="mt-3 align-items-center">
         <Col sm={5}>
           <div className="text-muted">
-            Showing 1 to {notes.length} of {notes.length} entries
+            Showing 1 to {filteredNotes.length} of {filteredNotes.length}{" "}
+            entries
           </div>
         </Col>
       </Row>
