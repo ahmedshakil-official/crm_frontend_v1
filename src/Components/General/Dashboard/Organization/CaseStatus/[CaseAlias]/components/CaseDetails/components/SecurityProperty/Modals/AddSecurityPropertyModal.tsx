@@ -1,4 +1,8 @@
+import { useAddSecurityPropertyDetailsMutation } from "@/Redux/Reducers/CaseDetails/SecurityPropertyDetails/SecurityPropertyDetailsApi";
+import LoadingSpinner from "@/app/loading";
+import { useParams } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -16,24 +20,97 @@ import {
 interface AddSecurityPropertyModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: (data: any) => void;
+  propertyData: any;
 }
 
 const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
   isOpen,
   toggle,
-  onSave,
+  propertyData,
 }) => {
+  const params = useParams();
+  const { casealias } = params;
   const [hasNonStandardTerms, setHasNonStandardTerms] =
     useState<boolean>(false);
   const [willBeCancelled, setWillBeCancelled] = useState<boolean>(false);
+  const [addSecurityPropertyDetails, { isLoading }] =
+    useAddSecurityPropertyDetailsMutation();
+  const [formData, setFormData] = useState({
+    have_any_existing_Protection_policies_in_place: true,
+    policy_type: "",
+    policy_provider: "",
+    insurers_reference: "",
+    sum_assured: null,
+    premium: null,
+    premium_payment_type: "",
+    person_assured: "",
+    in_trust: "",
+    guaranteed_reviewable: "",
+    remaining_policy_term: "",
+    cancelled_lapsed_date: null,
+    renewal_date: null,
+    date_policy_started: null,
+    waiver_of_premium: "",
+    indexation: "",
+    death_in_service_provision: "",
+    non_standard_terms: "",
+    will_be_cancelled: "",
+    reason_for_policy_cancellation: "",
+    policy_cancellation_notes: "",
+    why_did_you_take_out_this_policy: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    onSave({});
-    toggle();
+  // Handle input changes
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
+
+  // Handle radio button changes
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await addSecurityPropertyDetails({
+        case_alias: casealias,
+        property_id: propertyData?.user?.id,
+        propertyDetailsPayload: formData,
+      }).unwrap();
+      console.log(res)
+
+      if (res) {
+        toast.success("Security Property Added Successfully!");
+        toggle(); // Close the modal
+      }
+    } catch (error) {
+      toast.error("Error Adding Security Property!");
+      console.error("Error:", error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="xl">
@@ -45,8 +122,14 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
           <Row>
             <Col md={4}>
               <FormGroup>
-                <Label>Policy Type</Label>
-                <Input type="select" defaultValue="">
+                <Label for="policyType">Policy Type</Label>
+                <Input
+                  type="select"
+                  id="policyType"
+                  name="policy_type"
+                  value={formData.policy_type}
+                  onChange={handleInputChange}
+                >
                   <option value="">Select...</option>
                   <option value="LIFE_ASSURANCE_LEVEL">
                     Life Assurance (Level)
@@ -76,14 +159,26 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label>Policy Provider</Label>
-                <Input type="text" />
+                <Label for="policyProvider">Policy Provider</Label>
+                <Input
+                  type="text"
+                  id="policyProvider"
+                  name="policy_provider"
+                  value={formData.policy_provider}
+                  onChange={handleInputChange}
+                />
               </FormGroup>
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label>Insurer's Reference</Label>
-                <Input type="text" />
+                <Label for="insurersReference">Insurer's Reference</Label>
+                <Input
+                  type="text"
+                  id="insurersReference"
+                  name="insurers_reference"
+                  value={formData.insurers_reference}
+                  onChange={handleInputChange}
+                />
               </FormGroup>
             </Col>
           </Row>
@@ -91,20 +186,40 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
           <Row>
             <Col md={4}>
               <FormGroup>
-                <Label>Sum Assured</Label>
-                <Input type="number" placeholder="£" defaultValue="0" />
+                <Label for="sumAssured">Sum Assured</Label>
+                <Input
+                  type="number"
+                  id="sumAssured"
+                  name="sum_assured"
+                  value={formData.sum_assured || ""}
+                  onChange={handleInputChange}
+                  placeholder="£"
+                />
               </FormGroup>
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label>Premium</Label>
-                <Input type="number" placeholder="£" />
+                <Label for="premium">Premium</Label>
+                <Input
+                  type="number"
+                  id="premium"
+                  name="premium"
+                  value={formData.premium || ""}
+                  onChange={handleInputChange}
+                  placeholder="£"
+                />
               </FormGroup>
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label>Premium Payment Type</Label>
-                <Input type="select" defaultValue="">
+                <Label for="premiumPaymentType">Premium Payment Type</Label>
+                <Input
+                  type="select"
+                  id="premiumPaymentType"
+                  name="premium_payment_type"
+                  value={formData.premium_payment_type}
+                  onChange={handleInputChange}
+                >
                   <option value="">Select...</option>
                   <option value="MONTHLY">Monthly</option>
                   <option value="ANNUALLY">Annually</option>
@@ -116,14 +231,26 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
           <Row>
             <Col md={4}>
               <FormGroup>
-                <Label>Person(s) Assured</Label>
-                <Input type="text" />
+                <Label for="personAssured">Person(s) Assured</Label>
+                <Input
+                  type="text"
+                  id="personAssured"
+                  name="person_assured"
+                  value={formData.person_assured}
+                  onChange={handleInputChange}
+                />
               </FormGroup>
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label>In Trust?</Label>
-                <Input type="select" defaultValue="">
+                <Label for="inTrust">In Trust?</Label>
+                <Input
+                  type="select"
+                  id="inTrust"
+                  name="in_trust"
+                  value={formData.in_trust}
+                  onChange={handleInputChange}
+                >
                   <option value="">Select...</option>
                   <option value="NA">N/A</option>
                   <option value="YES">Yes</option>
@@ -136,8 +263,16 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label>Guaranteed / Reviewable</Label>
-                <Input type="select" defaultValue="">
+                <Label for="guaranteedReviewable">
+                  Guaranteed / Reviewable
+                </Label>
+                <Input
+                  type="select"
+                  id="guaranteedReviewable"
+                  name="guaranteed_reviewable"
+                  value={formData.guaranteed_reviewable}
+                  onChange={handleInputChange}
+                >
                   <option value="">Select...</option>
                   <option value="NA">N/A</option>
                   <option value="GUARANTEED">Guaranteed</option>
@@ -154,20 +289,38 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
           <Row>
             <Col md={4}>
               <FormGroup>
-                <Label>Remaining Policy Term</Label>
-                <Input type="text" />
+                <Label for="remainingPolicyTerm">Remaining Policy Term</Label>
+                <Input
+                  type="text"
+                  id="remainingPolicyTerm"
+                  name="remaining_policy_term"
+                  value={formData.remaining_policy_term}
+                  onChange={handleInputChange}
+                />
               </FormGroup>
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label>Cancelled / Lapsed Date</Label>
-                <Input type="date" />
+                <Label for="cancelledLapsedDate">Cancelled / Lapsed Date</Label>
+                <Input
+                  type="date"
+                  id="cancelledLapsedDate"
+                  name="cancelled_lapsed_date"
+                  value={formData.cancelled_lapsed_date || ""}
+                  onChange={handleInputChange}
+                />
               </FormGroup>
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label>Date Policy Started</Label>
-                <Input type="date" />
+                <Label for="datePolicyStarted">Date Policy Started</Label>
+                <Input
+                  type="date"
+                  id="datePolicyStarted"
+                  name="date_policy_started"
+                  value={formData.date_policy_started || ""}
+                  onChange={handleInputChange}
+                />
               </FormGroup>
             </Col>
           </Row>
@@ -181,10 +334,13 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                     <FormGroup key={option} check inline>
                       <Input
                         type="radio"
-                        name="waiver"
-                        id={`M_waiver-${option}`}
+                        name="waiver_of_premium"
+                        id={`waiver-${option}`}
+                        value={option}
+                        checked={formData.waiver_of_premium === option}
+                        onChange={handleRadioChange}
                       />
-                      <Label check for={`M_waiver-${option}`}>
+                      <Label check for={`waiver-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
@@ -201,9 +357,12 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                       <Input
                         type="radio"
                         name="indexation"
-                        id={`M_indexation-${option}`}
+                        id={`indexation-${option}`}
+                        value={option}
+                        checked={formData.indexation === option}
+                        onChange={handleRadioChange}
                       />
-                      <Label check for={`M_indexation-${option}`}>
+                      <Label check for={`indexation-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
@@ -219,10 +378,13 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                     <FormGroup key={option} check inline>
                       <Input
                         type="radio"
-                        name="deathInService"
-                        id={`M_deathInService-${option}`}
+                        name="death_in_service_provision"
+                        id={`deathInService-${option}`}
+                        value={option}
+                        checked={formData.death_in_service_provision === option}
+                        onChange={handleRadioChange}
                       />
-                      <Label check for={`M_deathInService-${option}`}>
+                      <Label check for={`deathInService-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
@@ -241,13 +403,16 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                     <FormGroup key={option} check inline>
                       <Input
                         type="radio"
-                        name="nonStandardTerms"
-                        id={`M_nonStandardTerms-${option}`}
-                        onChange={(e) =>
-                          setHasNonStandardTerms(option === "yes")
-                        }
+                        name="non_standard_terms"
+                        id={`nonStandardTerms-${option}`}
+                        value={option}
+                        checked={formData.non_standard_terms === option}
+                        onChange={(e) => {
+                          handleRadioChange(e);
+                          setHasNonStandardTerms(option === "yes");
+                        }}
                       />
-                      <Label check for={`M_nonStandardTerms-${option}`}>
+                      <Label check for={`nonStandardTerms-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
@@ -258,10 +423,15 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
             <Col md={6}>
               {hasNonStandardTerms && (
                 <FormGroup>
-                  <Label>Copy and paste Non-standard terms from lender</Label>
+                  <Label for="nonStandardTermsDetails">
+                    Copy and paste Non-standard terms from lender
+                  </Label>
                   <Input
                     type="textarea"
-                    placeholder="Copy and paste Non-standard terms from lender"
+                    id="nonStandardTermsDetails"
+                    name="non_standard_terms"
+                    value={formData.non_standard_terms}
+                    onChange={handleInputChange}
                     rows={3}
                   />
                 </FormGroup>
@@ -278,11 +448,16 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                     <FormGroup key={option} check inline>
                       <Input
                         type="radio"
-                        name="willBeCancelled"
-                        id={`M_willBeCancelled-${option}`}
-                        onChange={(e) => setWillBeCancelled(option === "yes")}
+                        name="will_be_cancelled"
+                        id={`willBeCancelled-${option}`}
+                        value={option}
+                        checked={formData.will_be_cancelled === option}
+                        onChange={(e) => {
+                          handleRadioChange(e);
+                          setWillBeCancelled(option === "yes");
+                        }}
                       />
-                      <Label check for={`M_willBeCancelled-${option}`}>
+                      <Label check for={`willBeCancelled-${option}`}>
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Label>
                     </FormGroup>
@@ -293,9 +468,19 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
             <Col md={6}>
               {willBeCancelled && (
                 <FormGroup>
-                  <Label>Reason For Policy Cancellation</Label>
-                  <Input type="select" defaultValue="">
-                    <option value="">Not Values Yet</option>
+                  <Label for="reasonForPolicyCancellation">
+                    Reason For Policy Cancellation
+                  </Label>
+                  <Input
+                    type="select"
+                    id="reasonForPolicyCancellation"
+                    name="reason_for_policy_cancellation"
+                    value={formData.reason_for_policy_cancellation}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select...</option>
+                    <option value="REASON_1">Reason 1</option>
+                    <option value="REASON_2">Reason 2</option>
                   </Input>
                 </FormGroup>
               )}
@@ -306,8 +491,17 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
             <Row>
               <Col md={12}>
                 <FormGroup>
-                  <Label>Policy Cancellation Notes</Label>
-                  <Input type="textarea" rows={4} />
+                  <Label for="policyCancellationNotes">
+                    Policy Cancellation Notes
+                  </Label>
+                  <Input
+                    type="textarea"
+                    id="policyCancellationNotes"
+                    name="policy_cancellation_notes"
+                    value={formData.policy_cancellation_notes}
+                    onChange={handleInputChange}
+                    rows={4}
+                  />
                 </FormGroup>
               </Col>
             </Row>
@@ -316,8 +510,17 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
           <Row>
             <Col md={12}>
               <FormGroup>
-                <Label>Why did you take out this policy?</Label>
-                <Input type="textarea" rows={4} />
+                <Label for="whyTakeOutPolicy">
+                  Why did you take out this policy?
+                </Label>
+                <Input
+                  type="textarea"
+                  id="whyTakeOutPolicy"
+                  name="why_did_you_take_out_this_policy"
+                  value={formData.why_did_you_take_out_this_policy}
+                  onChange={handleInputChange}
+                  rows={4}
+                />
               </FormGroup>
             </Col>
           </Row>
@@ -326,8 +529,8 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>
-          <Button color="primary" type="submit">
-            Save Security
+          <Button color="primary" type="submit" disabled={isLoading}>
+            {isLoading ? "Adding..." : "Add Security"}
           </Button>
         </ModalFooter>
       </Form>

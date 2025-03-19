@@ -81,7 +81,6 @@ export const EmploymentTab = () => {
               })}
             </Nav>
           </CardHeader>
-
           {/* Inner Navigation Tabs (Employment Records) */}
           {activeUser && groupedData[activeUser] && (
             <CardHeader className=" d-flex justify-content-center align-items-center flex-wrap gap-3 pt-3 pb-0">
