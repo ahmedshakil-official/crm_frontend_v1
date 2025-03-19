@@ -112,8 +112,9 @@ const SecurityPropertyTab: React.FC = () => {
           {/* Tab Content */}
           {activeTab && activeUser && (
             <SecurityPropertyContent
-              propertyDetails={groupedData[activeUser]}
-              basicTab={activeTab}
+            activeTab={activeTab}
+            activeUser={activeUser}
+            groupedData={groupedData}
             />
           )}
         </CardBody>

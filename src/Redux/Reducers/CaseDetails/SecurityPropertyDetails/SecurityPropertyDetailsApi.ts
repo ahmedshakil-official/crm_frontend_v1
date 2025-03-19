@@ -11,7 +11,7 @@ export const SecurityPropertyDetailsApi = baseApi.injectEndpoints({
     }),
     addPropertyDetails: builder.mutation({
       query: ({ case_alias, property_id, propertyDetails }) => ({
-        url: `/cases/${case_alias}/existing/protection/${property_id}`,
+        url: `/cases/${case_alias}/existing/protections/${property_id}`,
         method: "POST",
         body: propertyDetails,
       }),
@@ -19,7 +19,7 @@ export const SecurityPropertyDetailsApi = baseApi.injectEndpoints({
     }),
     updatePropertyDetails: builder.mutation({
       query: ({ case_alias, property_alias, propertyUpdatePayload }) => ({
-        url: `/cases/${case_alias}/existing/protection/${property_alias}/`,
+        url: `/cases/${case_alias}/existing/protections/${property_alias}/`,
         method: "PUT",
         body: propertyUpdatePayload,
       }),

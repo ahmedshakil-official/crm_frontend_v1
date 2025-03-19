@@ -16,13 +16,11 @@ import {
 interface AddSecurityPropertyModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: (data: any) => void;
 }
 
 const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
   isOpen,
   toggle,
-  onSave,
 }) => {
   const [hasNonStandardTerms, setHasNonStandardTerms] =
     useState<boolean>(false);
@@ -31,7 +29,7 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    onSave({});
+
     toggle();
   };
 
