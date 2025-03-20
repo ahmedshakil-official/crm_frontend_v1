@@ -23,6 +23,13 @@ export const ClientDetailsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["ClientDetails"],
     }),
+    deleteClientDetails: builder.mutation({
+      query: ({ clientAlias }) => ({
+        url: `/director/clients/${clientAlias}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["ClientDetails"],
+    }),
   }),
 });
 
@@ -30,4 +37,5 @@ export const {
   useGetClientDetailsQuery,
   useAddClientDetailsMutation,
   useUpdateClientDetailsMutation,
+  useDeleteClientDetailsMutation,
 } = ClientDetailsApi;

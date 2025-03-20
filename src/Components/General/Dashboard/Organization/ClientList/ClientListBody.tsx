@@ -1,10 +1,7 @@
-import apiClient from "@/services/api-client";
-
 import { useGetClientDetailsQuery } from "@/Redux/Reducers/Directors/ClientDetailsApi";
 import { ClientInfoProps } from "@/Types/Organization/ClientTypes";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -84,22 +81,6 @@ const ClientListBody: React.FC = () => {
       setClients(clientsData || []);
     }
   }, [clientData]);
-
-  //delete fanctionality
-  const deleteClient = async (alias: string) => {
-    if (!alias) return;
-    try {
-      setIsLoading(true);
-      await apiClient.delete(`/director/clients/${alias}/`);
-      // fetchClients();
-      toast.success("Client deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting client:", error);
-      toast.error("Failed to delete the client. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // openmodals
   const openAddModal = () => {
@@ -319,13 +300,10 @@ const ClientListBody: React.FC = () => {
       <DeleteClientModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        onDelete={() => {
-          if (clientToDelete) deleteClient(clientToDelete.alias);
-          toggleDeleteModal();
-        }}
-        isLoading={isLoading}
+        clientAlias={clientToDelete?.alias || ""}
         clientName={`${clientToDelete?.user?.first_name} ${clientToDelete?.user?.last_name}`}
       />
+
       {/* modals end */}
     </div>
   );
