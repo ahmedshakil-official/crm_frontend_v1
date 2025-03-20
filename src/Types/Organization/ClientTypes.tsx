@@ -31,7 +31,6 @@ export interface ClientInfoProps {
 export interface AddClientModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
 }
 export interface UpdateClientModalProps {
   isOpen: boolean;

@@ -1,5 +1,4 @@
-import apiClient from "@/services/api-client";
-
+import { useGetClientDetailsQuery } from "@/Redux/Reducers/Directors/ClientDetailsApi";
 import { ClientInfoProps } from "@/Types/Organization/ClientTypes";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -20,7 +19,6 @@ import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
-import { toast } from "react-toastify";
 
 const ClientListBody: React.FC = () => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
@@ -30,6 +28,10 @@ const ClientListBody: React.FC = () => {
   const [clientsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
+  const { data: clientData, isLoading: isClientLoading } =
+    useGetClientDetailsQuery(undefined);
+
   const [selectedClient, setSelectedClient] = useState<
     Partial<ClientInfoProps>
   >({
@@ -71,41 +73,14 @@ const ClientListBody: React.FC = () => {
     toggleDeleteModal();
   };
 
-  const fetchClients = async () => {
-    setIsLoading(true);
-    try {
-      const response = await apiClient.get("/director/clients/");
-      const ClientsData = Array.isArray(response.data)
-        ? response.data
-        : response.data.clients;
-      setClients(ClientsData || []);
-    } catch (error) {
-      console.error("Error fetching Clients:", error);
-      setClients([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchClients();
-  }, []);
-
-  //delete fanctionality
-  const deleteClient = async (alias: string) => {
-    if (!alias) return;
-    try {
-      setIsLoading(true);
-      await apiClient.delete(`/director/clients/${alias}/`);
-      fetchClients();
-      toast.success("Client deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting client:", error);
-      toast.error("Failed to delete the client. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (clientData) {
+      const clientsData = Array.isArray(clientData)
+        ? clientData
+        : clientData.clients;
+      setClients(clientsData || []);
     }
-  };
+  }, [clientData]);
 
   // openmodals
   const openAddModal = () => {
@@ -313,15 +288,10 @@ const ClientListBody: React.FC = () => {
       </Row>
 
       {/* modals */}
-      <AddClientModal
-        isOpen={isModalOpen}
-        toggle={toggleModal}
-        onSave={() => fetchClients()}
-      />
+      <AddClientModal isOpen={isModalOpen} toggle={toggleModal} />
       <UpdateClientModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
-        fetchClients={fetchClients}
         onSave={() => {
           toggleUpdateModal();
         }}
@@ -330,13 +300,10 @@ const ClientListBody: React.FC = () => {
       <DeleteClientModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        onDelete={() => {
-          if (clientToDelete) deleteClient(clientToDelete.alias);
-          toggleDeleteModal();
-        }}
-        isLoading={isLoading}
+        clientAlias={clientToDelete?.alias || ""}
         clientName={`${clientToDelete?.user?.first_name} ${clientToDelete?.user?.last_name}`}
       />
+
       {/* modals end */}
     </div>
   );
