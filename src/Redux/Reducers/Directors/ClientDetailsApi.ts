@@ -10,9 +10,10 @@ export const ClientDetailsApi = baseApi.injectEndpoints({
       providesTags: ["ClientDetails"],
     }),
     addClientDetails: builder.mutation({
-      query: () => ({
+      query: ({ payload }) => ({
         url: `/director/clients/`,
         method: "POST",
+        body: payload,
       }),
       invalidatesTags: ["ClientDetails"],
     }),

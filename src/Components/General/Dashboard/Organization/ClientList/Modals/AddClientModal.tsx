@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useAddClientDetailsMutation } from "@/Redux/Reducers/Directors/ClientDetailsApi";
 import { AddClientModalProps } from "@/Types/Organization/ClientTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -11,13 +11,12 @@ import {
   Label,
   Modal,
   ModalBody,
-  ModalFooter,
   ModalHeader,
   Row,
 } from "reactstrap";
 
 const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [addClientDetails, { isLoading }] = useAddClientDetailsMutation();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -34,10 +33,8 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
     degree: "",
   });
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -45,16 +42,8 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
     }));
   };
 
-  const handleSaveClient = async () => {
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.password
-    ) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
+  const handleSaveClient = async (e: React.FormEvent) => {
+    e.preventDefault();
     let payload = {
       user: {
         first_name: formData.firstName,
@@ -74,9 +63,8 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
     };
 
     try {
-      setIsLoading(true);
-      const result = await apiClient.post("/director/clients/", payload);
-      if (result.status >= 200 && result.status < 300) {
+      const result = await addClientDetails({ payload });
+      if (result.data) {
         toast.success("Client added successfully.");
         // Reset form and close modal
         setFormData({
@@ -95,14 +83,14 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
           degree: "",
         });
         toggle();
-      } else {
-        toast.error("Invalid Request...");
+      } else if ("error" in result) {
+        const errorMessage =
+          (result.error as any)?.data?.user?.email?.[0] || "Invalid Request...";
+        toast.error(errorMessage);
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Error creating client:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -110,7 +98,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Add Client</ModalHeader>
       <ModalBody>
-        <Form>
+        <Form onSubmit={handleSaveClient}>
           <Row>
             {/* First Column */}
             <Col md="6" xs="12">
@@ -125,7 +113,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                     name="firstName"
                     type="text"
                     value={formData.firstName}
-                    onChange={(e) => handleInputChange(e, "firstName")}
+                    onChange={handleInputChange}
                     required
                   />
                 </FormGroup>
@@ -140,7 +128,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                     name="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => handleInputChange(e, "email")}
+                    onChange={handleInputChange}
                     required
                   />
                 </FormGroup>
@@ -155,7 +143,8 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                     name="password"
                     type="password"
                     value={formData.password}
-                    onChange={(e) => handleInputChange(e, "password")}
+                    onChange={handleInputChange}
+                    required
                   />
                 </FormGroup>
               </Row>
@@ -168,7 +157,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                       name="phone"
                       type="text"
                       value={formData.phone}
-                      onChange={(e) => handleInputChange(e, "phone")}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -182,7 +171,8 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                       name="gender"
                       type="select"
                       value={formData.gender}
-                      onChange={(e) => handleInputChange(e, "gender")}
+                      onChange={handleInputChange}
+                      required
                     >
                       <option value="">--Select Gender--</option>
                       <option value="MALE">MALE</option>
@@ -205,7 +195,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                     name="lastName"
                     type="text"
                     value={formData.lastName}
-                    onChange={(e) => handleInputChange(e, "lastName")}
+                    onChange={handleInputChange}
                     required
                   />
                 </FormGroup>
@@ -219,7 +209,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                       name="dob"
                       type="date"
                       value={formData.dob}
-                      onChange={(e) => handleInputChange(e, "dob")}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -231,7 +221,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                       name="joining_date"
                       type="date"
                       value={formData.joining_date}
-                      onChange={(e) => handleInputChange(e, "joining_date")}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -245,7 +235,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                       name="degree"
                       type="text"
                       value={formData.degree}
-                      onChange={(e) => handleInputChange(e, "degree")}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -257,7 +247,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                       name="designation"
                       type="text"
                       value={formData.designation}
-                      onChange={(e) => handleInputChange(e, "designation")}
+                      onChange={handleInputChange}
                     />
                   </FormGroup>
                 </Col>
@@ -270,9 +260,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                     name="registration_number"
                     type="text"
                     value={formData.registration_number}
-                    onChange={(e) =>
-                      handleInputChange(e, "registration_number")
-                    }
+                    onChange={handleInputChange}
                   />
                 </FormGroup>
               </Row>
@@ -285,7 +273,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                   name="present_address"
                   type="text"
                   value={formData.present_address}
-                  onChange={(e) => handleInputChange(e, "present_address")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
             </Row>
@@ -297,21 +285,26 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                   name="permanent_address"
                   type="text"
                   value={formData.permanent_address}
-                  onChange={(e) => handleInputChange(e, "permanent_address")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
             </Row>
           </Row>
+          <Row>
+            <Col
+              md={12}
+              className="d-flex justify-content-between align-items-center"
+            >
+              <Button color="secondary" onClick={toggle}>
+                Cancel
+              </Button>
+              <Button color="primary" type="submit">
+                {isLoading ? "Saving..." : "Save Client"}
+              </Button>
+            </Col>
+          </Row>
         </Form>
       </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={handleSaveClient}>
-          {isLoading ? "Saving..." : "Save"}
-        </Button>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-      </ModalFooter>
     </Modal>
   );
 };
