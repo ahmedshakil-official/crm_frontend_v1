@@ -1,5 +1,4 @@
 import { useDeleteClientDetailsMutation } from "@/Redux/Reducers/Directors/ClientDetailsApi";
-import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
@@ -16,8 +15,6 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
   clientName,
   clientAlias,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const [deleteClientDetails, { isLoading: isDeleteLoading }] =
     useDeleteClientDetailsMutation();
 
