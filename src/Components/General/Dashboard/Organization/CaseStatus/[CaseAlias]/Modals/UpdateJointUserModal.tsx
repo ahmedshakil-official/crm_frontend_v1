@@ -82,9 +82,11 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     if (res.data) {
       toast.success("User updated successfully!");
       toggle();
-    } else {
-      console.error("Error updating joint user info:", res.error);
-      toast.error("Failed to update user information.");
+    } else if ("error" in res) {
+      const errorMessage =
+        (res.error as any)?.data?.joint_user?.email?.[0] ||
+        "Failed to update user information.";
+      toast.error(errorMessage);
     }
   };
 
