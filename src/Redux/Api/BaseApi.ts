@@ -31,6 +31,7 @@ export const baseApi = createApi({
     "SolicitorDetails",
     "AccountantDetails",
     "SecurityPropertyDetails",
+    "Notes",
   ],
   endpoints: () => ({}),
 });

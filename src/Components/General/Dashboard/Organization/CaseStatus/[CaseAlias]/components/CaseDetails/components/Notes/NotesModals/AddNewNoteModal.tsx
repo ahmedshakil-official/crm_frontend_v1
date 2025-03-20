@@ -13,6 +13,9 @@ import {
   Col,
 } from "reactstrap";
 import { X } from "react-feather";
+import { useAddNotesMutation } from "@/Redux/Reducers/CaseDetails/Notes/NotesApi";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface CreateTaskNoteModalProps {
   isOpen: boolean;
@@ -23,16 +26,21 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
   isOpen,
   toggle,
 }) => {
+  const { casealias } = useParams();
   const [isTask, setIsTask] = useState(true);
   const [brokerVisible, setBrokerVisible] = useState(false);
   const [clientVisible, setClientVisible] = useState(false);
-  const [priority, setPriority] = useState("0");
-  const [dueDate, setDueDate] = useState("18/03/2025");
+  // Update the priority state initial value
+  const [priority, setPriority] = useState("LOW");
+  const [dueDate, setDueDate] = useState(
+    new Date().toLocaleDateString("en-GB")
+  );
   const [dueTime, setDueTime] = useState("");
-  const [caseId, setCaseId] = useState("00980291");
-  const [assignedTo, setAssignedTo] = useState("mostafiz@benecofinance.co.uk");
+  // Update the initial state
+  const [assignedTo, setAssignedTo] = useState("1"); // Changed from email to ID
   const [category, setCategory] = useState("");
   const [comments, setComments] = useState("");
+  const [addNotes, { isLoading }] = useAddNotesMutation();
 
   const categories = [
     "Uncategorised",
@@ -43,22 +51,39 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
     "Compliance Correspondence",
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log({
-      isTask,
-      brokerVisible,
-      clientVisible,
-      priority,
-      dueDate,
-      dueTime,
-      caseId,
-      assignedTo,
-      category,
-      comments,
+
+    // Convert date and time to ISO string format if both exist
+    const combinedDateTime =
+      dueTime && dueDate
+        ? new Date(
+            `${dueDate.split("/").reverse().join("-")}T${dueTime}:00Z`
+          ).toISOString()
+        : null;
+
+    // Create API payload with null checks
+    const apiPayload = {
+      note_task: isTask ? "TASK" : "NOTE",
+      note_visible_to_introducer: !isTask ? brokerVisible : false,
+      note_visible_to_client: !isTask ? clientVisible : false,
+      category: category ? category.toUpperCase().replace(/ /g, "_") : null,
+      task_priority: isTask && priority ? priority : null,
+      due_date: isTask ? combinedDateTime : null,
+      assigned_to: isTask && assignedTo ? parseInt(assignedTo) : null,
+      note: comments || "",
+    };
+
+    const response = await addNotes({
+      case_alias: casealias,
+      note: apiPayload,
     });
-    toggle();
+    if (response.data) {
+      toast.success("Note added successfully");
+      toggle();
+    } else {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -137,10 +162,10 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
                     value={priority}
                     onChange={(e) => setPriority(e.target.value)}
                   >
-                    <option value="0">Low</option>
-                    <option value="1">Normal</option>
-                    <option value="2">High</option>
-                    <option value="3">Urgent</option>
+                    <option value="LOW">Low</option>
+                    <option value="NORMAL">Normal</option>
+                    <option value="HIGH">High</option>
+                    <option value="URGENT">Urgent</option>
                   </Input>
                 </FormGroup>
               </Col>
@@ -190,9 +215,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
                     value={assignedTo}
                     onChange={(e) => setAssignedTo(e.target.value)}
                   >
-                    <option value="mostafiz@benecofinance.co.uk">
-                      mostafiz@benecofinance.co.uk
-                    </option>
+                    <option value="1">mostafiz@benecofinance.co.uk</option>
                     {/* Add more options as needed */}
                   </Input>
                 </FormGroup>
