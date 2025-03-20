@@ -35,3 +35,9 @@ export interface SecurityPropertyTabContentProps {
   activeUser: number | null;
   groupedData: Record<number, SecurityPropertyDetailsProps[]>;
 }
+
+export interface AddSecurityPropertyModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  propertyData: any;
+}
