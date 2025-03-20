@@ -74,8 +74,11 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
     if (res.data) {
       toast.success("Joint user added successfully!");
       toggle();
-    } else {
-      toast.error("Failed to add joint user.");
+    } else if ("error" in res) {
+      const errorMessage =
+        (res.error as any)?.data?.joint_user?.email?.[0] ||
+        "Failed to add joint user.";
+      toast.error(errorMessage);
     }
   };
 

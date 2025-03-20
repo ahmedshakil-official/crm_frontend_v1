@@ -111,8 +111,11 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
       } else {
         toast.error("Invalid Request...");
       }
-    } catch (error) {
-      toast.error("An error occurred. Please try again.");
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.user?.email?.[0] ||
+        "An error occurred. Please try again.";
+      toast.error(errorMessage);
       console.error("Error creating lead:", error);
     } finally {
       setIsLoading(false);
