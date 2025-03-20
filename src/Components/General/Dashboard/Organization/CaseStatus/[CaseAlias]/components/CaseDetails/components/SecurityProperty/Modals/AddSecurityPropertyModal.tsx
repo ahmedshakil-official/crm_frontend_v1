@@ -35,6 +35,7 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
   const [willBeCancelled, setWillBeCancelled] = useState<boolean>(false);
   const [addSecurityPropertyDetails, { isLoading }] =
     useAddSecurityPropertyDetailsMutation();
+
   const [formData, setFormData] = useState({
     have_any_existing_Protection_policies_in_place: true,
     policy_type: "",
@@ -50,11 +51,12 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
     cancelled_lapsed_date: null,
     renewal_date: null,
     date_policy_started: null,
-    waiver_of_premium: "",
-    indexation: "",
-    death_in_service_provision: "",
-    non_standard_terms: "",
-    will_be_cancelled: "",
+    waiver_of_premium: false,
+    indexation: false,
+    death_in_service_provision: false,
+    have_non_standard_terms_been_issued: false,
+    copy_and_paste_non_standard_terms_from_lender: "",
+    will_be_cancelled: false,
     reason_for_policy_cancellation: "",
     policy_cancellation_notes: "",
     why_did_you_take_out_this_policy: "",
@@ -76,9 +78,11 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
   // Handle radio button changes
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    const booleanValue = value === "yes"; // Convert "yes" to true, "no" to false
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: booleanValue,
     }));
   };
 
@@ -92,11 +96,41 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
         property_id: propertyData?.user?.id,
         propertyDetailsPayload: formData,
       }).unwrap();
-      console.log(res)
+      console.log(res);
 
       if (res) {
         toast.success("Security Property Added Successfully!");
         toggle(); // Close the modal
+        // Reset form data to initial values
+        setFormData({
+          have_any_existing_Protection_policies_in_place: true,
+          policy_type: "",
+          policy_provider: "",
+          insurers_reference: "",
+          sum_assured: null,
+          premium: null,
+          premium_payment_type: "",
+          person_assured: "",
+          in_trust: "",
+          guaranteed_reviewable: "",
+          remaining_policy_term: "",
+          cancelled_lapsed_date: null,
+          renewal_date: null,
+          date_policy_started: null,
+          waiver_of_premium: false,
+          indexation: false,
+          death_in_service_provision: false,
+          have_non_standard_terms_been_issued: false,
+          copy_and_paste_non_standard_terms_from_lender: "",
+          will_be_cancelled: false,
+          reason_for_policy_cancellation: "",
+          policy_cancellation_notes: "",
+          why_did_you_take_out_this_policy: "",
+        });
+
+        // Reset additional state variables
+        setHasNonStandardTerms(false);
+        setWillBeCancelled(false);
       }
     } catch (error) {
       toast.error("Error Adding Security Property!");
@@ -337,7 +371,9 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                         name="waiver_of_premium"
                         id={`waiver-${option}`}
                         value={option}
-                        checked={formData.waiver_of_premium === option}
+                        checked={
+                          formData.waiver_of_premium === (option === "yes")
+                        }
                         onChange={handleRadioChange}
                       />
                       <Label check for={`waiver-${option}`}>
@@ -359,7 +395,7 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                         name="indexation"
                         id={`indexation-${option}`}
                         value={option}
-                        checked={formData.indexation === option}
+                        checked={formData.indexation === (option === "yes")}
                         onChange={handleRadioChange}
                       />
                       <Label check for={`indexation-${option}`}>
@@ -381,7 +417,10 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                         name="death_in_service_provision"
                         id={`deathInService-${option}`}
                         value={option}
-                        checked={formData.death_in_service_provision === option}
+                        checked={
+                          formData.death_in_service_provision ===
+                          (option === "yes")
+                        }
                         onChange={handleRadioChange}
                       />
                       <Label check for={`deathInService-${option}`}>
@@ -403,10 +442,13 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                     <FormGroup key={option} check inline>
                       <Input
                         type="radio"
-                        name="non_standard_terms"
+                        name="have_non_standard_terms_been_issued"
                         id={`nonStandardTerms-${option}`}
                         value={option}
-                        checked={formData.non_standard_terms === option}
+                        checked={
+                          formData.have_non_standard_terms_been_issued ===
+                          (option === "yes")
+                        }
                         onChange={(e) => {
                           handleRadioChange(e);
                           setHasNonStandardTerms(option === "yes");
@@ -429,8 +471,10 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                   <Input
                     type="textarea"
                     id="nonStandardTermsDetails"
-                    name="non_standard_terms"
-                    value={formData.non_standard_terms}
+                    name="copy_and_paste_non_standard_terms_from_lender"
+                    value={
+                      formData.copy_and_paste_non_standard_terms_from_lender
+                    }
                     onChange={handleInputChange}
                     rows={3}
                   />
@@ -451,7 +495,9 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                         name="will_be_cancelled"
                         id={`willBeCancelled-${option}`}
                         value={option}
-                        checked={formData.will_be_cancelled === option}
+                        checked={
+                          formData.will_be_cancelled === (option === "yes")
+                        }
                         onChange={(e) => {
                           handleRadioChange(e);
                           setWillBeCancelled(option === "yes");
@@ -479,8 +525,7 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
                     onChange={handleInputChange}
                   >
                     <option value="">Select...</option>
-                    <option value="REASON_1">Reason 1</option>
-                    <option value="REASON_2">Reason 2</option>
+                    <option value="NOT_VALUES_YET">Not Values Yet</option>
                   </Input>
                 </FormGroup>
               )}

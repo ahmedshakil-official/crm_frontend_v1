@@ -11,6 +11,7 @@ export const JointUserDetailsApi = baseApi.injectEndpoints({
         "ApplicantsDetails",
         "EmploymentDetails",
         "JointUserDetails",
+        "SecurityPropertyDetails",
       ],
     }),
     addJointUserInfo: builder.mutation({
@@ -23,6 +24,7 @@ export const JointUserDetailsApi = baseApi.injectEndpoints({
         "ApplicantsDetails",
         "EmploymentDetails",
         "JointUserDetails",
+        "SecurityPropertyDetails",
       ],
     }),
     updateJointUserInfo: builder.mutation({
@@ -35,6 +37,7 @@ export const JointUserDetailsApi = baseApi.injectEndpoints({
         "ApplicantsDetails",
         "EmploymentDetails",
         "JointUserDetails",
+        "SecurityPropertyDetails",
       ],
     }),
     deleteJointUserInfo: builder.mutation({
@@ -46,6 +49,7 @@ export const JointUserDetailsApi = baseApi.injectEndpoints({
         "ApplicantsDetails",
         "EmploymentDetails",
         "JointUserDetails",
+        "SecurityPropertyDetails",
       ],
     }),
   }),
