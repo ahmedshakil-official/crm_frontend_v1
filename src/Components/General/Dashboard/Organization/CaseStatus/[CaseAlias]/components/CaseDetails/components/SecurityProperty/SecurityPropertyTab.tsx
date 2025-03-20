@@ -38,6 +38,34 @@ const SecurityPropertyTab: React.FC = () => {
     });
     return grouped;
   };
+  // Add this function after groupByUserId
+  // Calculate sum assured for each user
+  const calculateUserSumAssured = (
+    properties: SecurityPropertyDetailsProps[]
+  ) => {
+    const userSums = properties.reduce((acc, property) => {
+      const userId = property.user.id;
+      // Convert to number and handle null/undefined
+      const sumAssured = Number(property.sum_assured) || 0;
+
+      if (!acc[userId]) {
+        acc[userId] = {
+          total: 0,
+          name: `${property.user.first_name} ${property.user.last_name}`,
+        };
+      }
+      // Add the current property's sum_assured to the user's total
+      acc[userId].total = acc[userId].total + sumAssured;
+      return acc;
+    }, {} as Record<number, { total: number; name: string }>);
+
+    return userSums;
+  };
+
+  // Get all user sums
+  const userSumAssured = calculateUserSumAssured(propertyDetails || []);
+
+  // In the NavLink render section
 
   // Group property details by user ID
   const groupedData = groupByUserId(propertyDetails || []);
@@ -73,11 +101,21 @@ const SecurityPropertyTab: React.FC = () => {
                       className={`${activeUser === user.id ? "active" : ""}`}
                       onClick={() => {
                         setActiveUser(user.id);
-                        setActiveTab(groupedData[user.id][0]?.alias || null); // Set first property as active
+                        setActiveTab(groupedData[user.id][0]?.alias || null);
                       }}
                       style={{ cursor: "pointer" }}
                     >
-                      {`${user.first_name} ${user.last_name}`}
+                      {`${user.first_name} ${user.last_name} (£${
+                        userSumAssured[user.id]?.total
+                          ? parseFloat(
+                              userSumAssured[user.id].total.toString()
+                            ).toLocaleString("en-GB", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                              useGrouping: true,
+                            })
+                          : "0.00"
+                      })`}
                     </NavLink>
                   </NavItem>
                 );
@@ -112,9 +150,9 @@ const SecurityPropertyTab: React.FC = () => {
           {/* Tab Content */}
           {activeTab && activeUser && (
             <SecurityPropertyContent
-            activeTab={activeTab}
-            activeUser={activeUser}
-            groupedData={groupedData}
+              activeTab={activeTab}
+              activeUser={activeUser}
+              groupedData={groupedData}
             />
           )}
         </CardBody>
