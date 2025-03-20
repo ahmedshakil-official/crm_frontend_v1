@@ -19,6 +19,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQuery,
   tagTypes: [
+    "ClientDetails",
     "LoanDetails",
     "ApplicantsDetails",
     "Dependants",

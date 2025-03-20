@@ -16,11 +16,7 @@ import {
   Row,
 } from "reactstrap";
 
-const AddClientModal: React.FC<AddClientModalProps> = ({
-  isOpen,
-  toggle,
-  onSave,
-}) => {
+const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -99,7 +95,6 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
           degree: "",
         });
         toggle();
-        onSave();
       } else {
         toast.error("Invalid Request...");
       }
