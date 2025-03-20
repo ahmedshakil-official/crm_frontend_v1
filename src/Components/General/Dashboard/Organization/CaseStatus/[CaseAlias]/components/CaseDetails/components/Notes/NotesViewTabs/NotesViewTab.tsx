@@ -8,30 +8,83 @@ interface NotesViewTabProps {
   notes: NoteTask[];
 }
 
+// Reusable table column definitions
+const TABLE_COLUMNS = [
+  { key: "category", label: "Category", width: "100px" },
+  { key: "created_at", label: "Activity Date", width: "150px" },
+  { key: "case_stage", label: "Stage", width: "150px" },
+  { key: "user", label: "User", width: "200px" },
+  { key: "note", label: "Information", width: "400px" },
+  { key: "introducer", label: "Introducer Visible", width: "150px" },
+  { key: "client", label: "Client Visible", width: "150px" },
+  { key: "options", label: "Options", width: "100px" },
+] as const;
+
+// Categories constant
+const CATEGORIES = [
+  { display: "All Categories", value: "" },
+  { display: "Uncategorised", value: "UNCATEGORISED" },
+  { display: "Client Note", value: "CLIENT_NOTE" },
+  { display: "Introducer Note", value: "INTRODUCER_NOTE" },
+  { display: "Declaration", value: "DECLARATION" },
+  { display: "Email Communication", value: "EMAIL_COMMUNICATION" },
+  { display: "SMS Communication", value: "SMS_COMMUNICATION" },
+  { display: "Email Correspondence", value: "EMAIL_CORRESPONDENCE" },
+  { display: "Telephone conversation", value: "TELEPHONE_CONVERSATION" },
+  { display: "Lender Correspondence", value: "LENDER_CORRESPONDENCE" },
+  { display: "Solicitor Correspondence", value: "SOLICITOR_CORRESPONDENCE" },
+  { display: "Compliance Correspondence", value: "COMPLIANCE_CORRESPONDENCE" },
+] as const;
+
+// Reusable Badge component
+const VisibilityBadge: FC<{ isVisible: boolean }> = ({ isVisible }) => 
+  isVisible ? (
+    <Badge color="success">
+      <i className="fa fa-check" />
+    </Badge>
+  ) : null;
+
+// Reusable cell renderer
+const renderCell = (note: NoteTask, column: typeof TABLE_COLUMNS[number], handleDelete: (alias: string) => void) => {
+  switch (column.key) {
+    case "category":
+      return CATEGORIES.find(cat => cat.value === note.category)?.display || "Uncategorised";
+    case "created_at":
+      return new Date(note.created_at).toLocaleString();
+    case "case_stage":
+      return note.case.case_stage;
+    case "user":
+      return `${note.created_by.first_name} ${note.created_by.last_name}`;
+    case "note":
+      return (
+        <div
+          dangerouslySetInnerHTML={{ __html: note.note || "" }}
+          style={{ wordBreak: "break-word", maxWidth: "400px" }}
+        />
+      );
+    case "introducer":
+      return <VisibilityBadge isVisible={note.note_visible_to_introducer} />;
+    case "client":
+      return <VisibilityBadge isVisible={note.note_visible_to_client} />;
+    case "options":
+      return (
+        <Button color="danger" size="sm" onClick={() => handleDelete(note.alias)}>
+          <Trash2 size={16} />
+        </Button>
+      );
+    default:
+      return null;
+  }
+};
+
 const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
-
-  const categories = [
-    "All Categories",
-    "Uncategorised",
-    "Client Note",
-    "Introducer Note",
-    "Declaration",
-    "Email Communication",
-    "SMS Communication",
-    "Email Correspondence",
-    "Telephone conversation",
-    "Lender Correspondence",
-    "Solicitor Correspondence",
-    "Compliance Correspondence",
-  ];
 
   const handleDeleteNote = (alias: string) => {
     console.log(`Delete note ${alias}`);
   };
 
-  // Filter notes based on selected category
   const filteredNotes = selectedCategory
     ? notes.filter((note) => note.category === selectedCategory)
     : notes;
@@ -46,18 +99,13 @@ const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
-              {categories.map((category) => (
-                <option
-                  key={category}
-                  value={category === "All Categories" ? "" : category}
-                >
-                  {category}
+              {CATEGORIES.map((category) => (
+                <option key={category.value} value={category.value}>
+                  {category.display}
                 </option>
               ))}
             </Input>
-            <Button color="primary" className="ms-2">
-              Search
-            </Button>
+            <Button color="primary" className="ms-2">Search</Button>
           </div>
         </Col>
         <Col md={8} className="text-end">
@@ -72,52 +120,21 @@ const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
         <Table striped hover>
           <thead>
             <tr>
-              <th style={{ minWidth: "100px" }}>Category</th>
-              <th style={{ minWidth: "150px" }}>Activity Date</th>
-              <th style={{ minWidth: "150px" }}>Stage</th>
-              <th style={{ minWidth: "200px" }}>User</th>
-              <th style={{ minWidth: "400px" }}>Information</th>
-              <th style={{ minWidth: "150px" }}>Introducer Visible</th>
-              <th style={{ minWidth: "150px" }}>Client Visible</th>
-              <th style={{ minWidth: "100px" }}>Options</th>
+              {TABLE_COLUMNS.map(column => (
+                <th key={column.key} style={{ minWidth: column.width }}>
+                  {column.label}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {filteredNotes.map((note) => (
               <tr key={note.alias}>
-                <td>{note.category || "Uncategorised"}</td>
-                <td>{new Date(note.created_at).toLocaleString()}</td>
-                <td>{note.case.case_stage}</td>
-                <td>{`${note.created_by.first_name} ${note.created_by.last_name}`}</td>
-                <td>
-                  <div
-                    dangerouslySetInnerHTML={{ __html: note.note || "" }}
-                    style={{ wordBreak: "break-word", maxWidth: "400px" }}
-                  />
-                </td>
-                <td>
-                  {note.note_visible_to_introducer && (
-                    <Badge color="success">
-                      <i className="fa fa-check" />
-                    </Badge>
-                  )}
-                </td>
-                <td>
-                  {note.note_visible_to_client && (
-                    <Badge color="success">
-                      <i className="fa fa-check" />
-                    </Badge>
-                  )}
-                </td>
-                <td>
-                  <Button
-                    color="danger"
-                    size="sm"
-                    onClick={() => handleDeleteNote(note.alias)}
-                  >
-                    <Trash2 size={16} />
-                  </Button>
-                </td>
+                {TABLE_COLUMNS.map(column => (
+                  <td key={`${note.alias}-${column.key}`}>
+                    {renderCell(note, column, handleDeleteNote)}
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
@@ -127,11 +144,11 @@ const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
       <Row className="mt-3 align-items-center">
         <Col sm={5}>
           <div className="text-muted">
-            Showing 1 to {filteredNotes.length} of {filteredNotes.length}{" "}
-            entries
+            Showing  {filteredNotes.length} entries
           </div>
         </Col>
       </Row>
+
       <CreateTaskNoteModal
         isOpen={modalOpen}
         toggle={() => setModalOpen(!modalOpen)}
