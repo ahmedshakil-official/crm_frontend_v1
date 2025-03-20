@@ -65,8 +65,6 @@ const SecurityPropertyTab: React.FC = () => {
   // Get all user sums
   const userSumAssured = calculateUserSumAssured(propertyDetails || []);
 
-  // In the NavLink render section
-
   // Group property details by user ID
   const groupedData = groupByUserId(propertyDetails || []);
 

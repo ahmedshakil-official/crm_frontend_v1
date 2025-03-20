@@ -1,4 +1,5 @@
 import { useAddSecurityPropertyDetailsMutation } from "@/Redux/Reducers/CaseDetails/SecurityPropertyDetails/SecurityPropertyDetailsApi";
+import { AddSecurityPropertyModalProps } from "@/Types/Organization/CaseDetails/SecurityPropertyDetailsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -16,12 +17,6 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-
-interface AddSecurityPropertyModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  propertyData: any;
-}
 
 const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
   isOpen,
