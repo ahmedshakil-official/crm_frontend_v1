@@ -37,6 +37,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
   }, [selectedClient]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const { name, value } = e.target;
     const keys = name.split(".");
     setClientData((prev) => {
@@ -69,6 +70,8 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
             (result.error as any)?.data?.user?.nid?.[0] ||
             "Invalid Request...";
           toast.error(errorMessage);
+        } else {
+          toast.error("Failed to update client.");
         }
       }
     } catch (error) {

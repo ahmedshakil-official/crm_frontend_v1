@@ -87,6 +87,8 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
         const errorMessage =
           (result.error as any)?.data?.user?.email?.[0] || "Invalid Request...";
         toast.error(errorMessage);
+      } else {
+        toast.error("An error occurred. Please try again.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");

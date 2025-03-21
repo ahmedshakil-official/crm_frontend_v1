@@ -1,14 +1,30 @@
+import { useDeleteIntroducerDetailsMutation } from "@/Redux/Reducers/Directors/IntroducerDetailsApi";
 import { DeleteIntroducerModalProps } from "@/Types/Organization/IntroducerTypes";
 import React from "react";
+import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const DeleteIntroducerModal: React.FC<DeleteIntroducerModalProps> = ({
   isOpen,
   toggle,
-  onDelete,
   introducerName,
-  isLoading,
+  introducerAlias,
 }) => {
+  const [deleteIntroducerDetails, { isLoading }] =
+    useDeleteIntroducerDetailsMutation();
+
+  const handleDelete = async () => {
+    if (!introducerAlias) return;
+    try {
+      const response = await deleteIntroducerDetails({ introducerAlias });
+      if ("data" in response) {
+        toast.success("Introducer deleted successfully.");
+        toggle();
+      } else toast.error("Failed to delete introducer.");
+    } catch (error) {
+      toast.error("Failed to delete introducer.");
+    }
+  };
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>Delete Introducer</ModalHeader>
@@ -17,7 +33,7 @@ const DeleteIntroducerModal: React.FC<DeleteIntroducerModalProps> = ({
         <strong>{introducerName}</strong>? This action cannot be undone.
       </ModalBody>
       <ModalFooter>
-        <Button color="danger" onClick={onDelete}>
+        <Button color="danger" onClick={handleDelete}>
           {isLoading ? "Deleting..." : "Delete"}
         </Button>
         <Button color="secondary" onClick={toggle}>

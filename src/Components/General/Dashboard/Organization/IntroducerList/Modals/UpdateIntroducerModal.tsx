@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useUpdateIntroducerDetailsMutation } from "@/Redux/Reducers/Directors/IntroducerDetailsApi";
 import {
   IntroducerInfoProps,
   UpdateIntroducerModalProps,
@@ -24,12 +24,13 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
   toggle,
   onSave,
   selectedIntroducer,
-  fetchIntroducers,
 }) => {
   const [introducerData, setIntroducerData] =
     useState<Partial<IntroducerInfoProps>>(selectedIntroducer);
   const [isModified, setIsModified] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [updateIntroducerDetails, { isLoading }] =
+    useUpdateIntroducerDetailsMutation();
 
   useEffect(() => {
     setIntroducerData(selectedIntroducer);
@@ -37,10 +38,11 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
   }, [selectedIntroducer]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const { name, value } = e.target;
     const keys = name.split(".");
     setIntroducerData((prev) => {
-      const updatedData = { ...prev };
+      const updatedData = JSON.parse(JSON.stringify(prev));
       let current: any = updatedData;
       for (let i = 0; i < keys.length - 1; i++) {
         if (!current[keys[i]]) current[keys[i]] = {};
@@ -56,23 +58,26 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
     introducerData: Partial<IntroducerInfoProps>
   ) => {
     try {
-      setIsLoading(true);
       if (introducerData.alias) {
-        const result = await apiClient.put(
-          `/director/introducers/${introducerData.alias}/`,
-          introducerData
-        );
-        fetchIntroducers();
-        if (result.status >= 200 && result.status < 300) {
+        const result = await updateIntroducerDetails({
+          payload: introducerData,
+          introducerAlias: introducerData.alias,
+        });
+        if (result.data) {
           toast.success("Introducer update successfully.");
+        } else if ("error" in result) {
+          const errorMessage =
+            (result.error as any)?.data?.user?.email?.[0] ||
+            (result.error as any)?.data?.user?.nid?.[0] ||
+            "Invalid Request...";
+          toast.error(errorMessage);
         } else {
           toast.error("Invalid Request...");
         }
       }
     } catch (error) {
+      toast.error("Failed to update introducer.");
       console.error("Error saving introducer:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

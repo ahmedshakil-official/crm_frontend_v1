@@ -1,5 +1,7 @@
-import apiClient from "@/services/api-client";
+import { useGetIntroducerDetailsQuery } from "@/Redux/Reducers/Directors/IntroducerDetailsApi";
 import { IntroducerInfoProps } from "@/Types/Organization/IntroducerTypes";
+import LoadingSpinner from "@/app/loading";
+import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -19,16 +21,16 @@ import "./IntroducerList.css";
 import AddIntroducerModal from "./Modals/AddIntroducerModal";
 import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
 import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
-import { toast } from "react-toastify";
 
 const IntroducerListBody: React.FC = () => {
   const [introducers, setIntroducers] = useState<IntroducerInfoProps[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [introducersPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const { data: introduceData, isLoading } =
+    useGetIntroducerDetailsQuery(undefined);
   const [selectedIntroducer, setSelectedIntroducer] = useState<
     Partial<IntroducerInfoProps>
   >({
@@ -68,41 +70,14 @@ const IntroducerListBody: React.FC = () => {
     toggleDeleteModal();
   };
 
-  const fetchIntroducers = async () => {
-    setIsLoading(true);
-    try {
-      const response = await apiClient.get("/director/introducers/");
-      const IntroducersData = Array.isArray(response.data)
-        ? response.data
-        : response.data.introducers;
-      setIntroducers(IntroducersData || []);
-    } catch (error) {
-      console.error("Error fetching Introducers:", error);
-      setIntroducers([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchIntroducers();
-  }, []);
-
-  //delete introduce
-  const deleteIntoducer = async (alias: string) => {
-    if (!alias) return;
-    try {
-      setIsLoading(true);
-      await apiClient.delete(`/director/introducers/${alias}/`);
-      fetchIntroducers();
-      toast.success("Introducer deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting introducer:", error);
-      toast.error("Failed to delete the introducer. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (introduceData) {
+      const introducerData = Array.isArray(introduceData)
+        ? introduceData
+        : [introduceData];
+      setIntroducers(introducerData);
     }
-  };
+  }, [introduceData]);
 
   // openaddmodals
   const openAddModal = () => {
@@ -136,6 +111,12 @@ const IntroducerListBody: React.FC = () => {
   );
 
   const totalPages = Math.ceil(filteredIntroducers.length / introducersPerPage);
+
+  if (isLoading) {
+    <div>
+      <LoadingSpinner />
+    </div>;
+  }
 
   return (
     <div className="container mt-1">
@@ -197,7 +178,7 @@ const IntroducerListBody: React.FC = () => {
                     {introducer?.created_by?.first_name}{" "}
                     {introducer?.created_by?.last_name}
                   </td>
-                  <td>{new Date(introducer?.created_at).toLocaleString()}</td>
+                  <td>{formatDateToDMY(introducer?.created_at)}</td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
@@ -231,7 +212,6 @@ const IntroducerListBody: React.FC = () => {
         </Table>
       </Row>
       <Row>
-        {" "}
         <Pagination className="d-flex justify-content-end p-2">
           <PaginationItem disabled={currentPage === 1}>
             <PaginationLink first onClick={() => setCurrentPage(1)} />
@@ -312,15 +292,10 @@ const IntroducerListBody: React.FC = () => {
       </Row>
 
       {/* modals */}
-      <AddIntroducerModal
-        isOpen={isModalOpen}
-        toggle={toggleModal}
-        onSave={() => fetchIntroducers()}
-      />
+      <AddIntroducerModal isOpen={isModalOpen} toggle={toggleModal} />
       <UpdateIntroducerModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
-        fetchIntroducers={fetchIntroducers}
         onSave={() => {
           toggleUpdateModal(); // Close the modal
         }}
@@ -329,11 +304,7 @@ const IntroducerListBody: React.FC = () => {
       <DeleteIntroducerModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        onDelete={() => {
-          if (introducerToDelete) deleteIntoducer(introducerToDelete.alias);
-          toggleDeleteModal();
-        }}
-        isLoading={isLoading}
+        introducerAlias={introducerToDelete?.alias}
         introducerName={`${introducerToDelete?.user?.first_name} ${introducerToDelete?.user?.last_name}`}
       />
       {/* modals end */}

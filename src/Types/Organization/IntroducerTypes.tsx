@@ -31,19 +31,16 @@ export interface IntroducerInfoProps {
 export interface AddIntroducerModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
 }
 export interface UpdateIntroducerModalProps {
   isOpen: boolean;
   toggle: () => void;
   onSave: (introducerData: Partial<IntroducerInfoProps>) => void;
   selectedIntroducer: Partial<IntroducerInfoProps>;
-  fetchIntroducers?: any;
 }
 export interface DeleteIntroducerModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onDelete: () => void;
   introducerName: string;
-  isLoading?: any;
+  introducerAlias?: string;
 }
