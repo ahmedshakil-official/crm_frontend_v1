@@ -1,13 +1,7 @@
 import { useDeleteClientDetailsMutation } from "@/Redux/Reducers/Directors/ClientDetailsApi";
+import { DeleteClientModalProps } from "@/Types/Organization/ClientTypes";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-
-interface DeleteClientModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  clientName: string;
-  clientAlias: string;
-}
 
 const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
   isOpen,
@@ -15,8 +9,7 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
   clientName,
   clientAlias,
 }) => {
-  const [deleteClientDetails, { isLoading: isDeleteLoading }] =
-    useDeleteClientDetailsMutation();
+  const [deleteClientDetails, { isLoading }] = useDeleteClientDetailsMutation();
 
   const handleDelete = async () => {
     if (!clientAlias) return;
@@ -39,12 +32,8 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
       <ModalHeader toggle={toggle}>Delete Client</ModalHeader>
       <ModalBody>Are you sure you want to delete {clientName}?</ModalBody>
       <ModalFooter>
-        <Button
-          color="danger"
-          onClick={handleDelete}
-          disabled={isDeleteLoading}
-        >
-          {isDeleteLoading ? "Deleting..." : "Delete"}
+        <Button color="danger" onClick={handleDelete} disabled={isLoading}>
+          {isLoading ? "Deleting..." : "Delete"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Cancel

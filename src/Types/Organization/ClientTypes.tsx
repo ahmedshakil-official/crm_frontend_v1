@@ -42,7 +42,6 @@ export interface UpdateClientModalProps {
 export interface DeleteClientModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onDelete: () => void;
   clientName: string;
-  isLoading?: any;
+  clientAlias: string;
 }

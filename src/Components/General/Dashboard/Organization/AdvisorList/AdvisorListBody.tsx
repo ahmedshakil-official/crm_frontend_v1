@@ -2,6 +2,7 @@ import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDet
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import LoadingSpinner from "@/app/loading";
 import apiClient from "@/services/api-client";
+import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -196,7 +197,7 @@ const AdvisorListBody: React.FC = () => {
                     {advisor?.created_by?.first_name}{" "}
                     {advisor?.created_by?.last_name}
                   </td>
-                  <td>{new Date(advisor?.created_at).toLocaleString()}</td>
+                  <td>{formatDateToDMY(advisor?.created_at)}</td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
@@ -322,11 +323,7 @@ const AdvisorListBody: React.FC = () => {
       <DeleteAdvisorModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        onDelete={() => {
-          if (advisorToDelete) deleteAdvisor(advisorToDelete.alias);
-          toggleDeleteModal();
-        }}
-        isLoading={isLoading}
+        advisorAlias={advisorToDelete?.alias || ""}
         advisorName={`${advisorToDelete?.user?.first_name} ${advisorToDelete?.user?.last_name}`}
       />
       {/* modals end */}

@@ -43,7 +43,6 @@ export interface UpdateAdvisorModalProps {
 export interface DeleteAdvisorModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onDelete: () => void;
   advisorName: string;
-  isLoading?: any;
+  advisorAlias: string;
 }
