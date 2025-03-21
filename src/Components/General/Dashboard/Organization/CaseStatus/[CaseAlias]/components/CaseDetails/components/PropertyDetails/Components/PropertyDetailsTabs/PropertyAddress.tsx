@@ -1,6 +1,5 @@
-// AddressDetails.tsx
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { updateProperty } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
 import {
   Row,
@@ -10,163 +9,211 @@ import {
   Input,
   InputGroup,
   Button,
+  Form,
 } from "reactstrap";
+import { RootState } from "@/Redux/Store";
 
-const AddressDetails: React.FC = () => {
+interface AddressDetailsProps {
+  propertyData?: any;
+}
+
+const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
   const dispatch = useDispatch();
+  const propertyState = useSelector((state: RootState) => state.propertyForm.Properties);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (propertyData) {
+      dispatch(
+        updateProperty({
+          postcode: propertyData.postcode || "",
+          house_name_or_number: propertyData.house_name_or_number || "",
+          address_one: propertyData.address_one || "",
+          address_two: propertyData.address_two || "",
+          city: propertyData.city || "",
+          county: propertyData.county || "",
+          region: propertyData.region || null,
+          country: propertyData.country || null,
+        })
+      );
+    }
+  }, [propertyData, dispatch]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-   dispatch(updateProperty({ [name]: value }));
+    dispatch(updateProperty({ [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add your submit logic here
+    console.log("Form submitted:", propertyState);
   };
 
   return (
-    <Row>
-      <Col sm={12}>
-        <Row>
-          <Col sm={12}>
-            <FormGroup>
-              <Label for="Postcode">
-                Postcode <span className="text-danger">*</span>
-              </Label>
-              <InputGroup>
+    <Form onSubmit={handleSubmit}>
+      <Row>
+        <Col sm={12}>
+          <Row>
+            <Col sm={12}>
+              <FormGroup>
+                <Label for="postcode">
+                  Postcode <span className="text-danger">*</span>
+                </Label>
+                <InputGroup>
+                  <Input
+                    name="postcode"
+                    className="form-control"
+                    onChange={handleChange}
+                    value={propertyState.postcode}
+                    maxLength={10}
+                    required
+                  />
+                  <Button color="primary" className="mx-2">
+                    Copy Main Address
+                  </Button>
+                  <Button color="primary">Lookup</Button>
+                </InputGroup>
+              </FormGroup>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="house_name_or_number">
+                  House Name or Number <span className="text-danger">*</span>
+                </Label>
                 <Input
-                  name="postcode"
-                  className="form-control"
+                  id="house_name_or_number"
+                  name="house_name_or_number"
+                  value={propertyState.house_name_or_number}
                   onChange={handleChange}
-                  maxLength={10}
+                  maxLength={255}
                   required
                 />
-                <Button color="primary mx-2">Copy Main Address</Button>
-                <Button color="primary">Lookup</Button>
-              </InputGroup>
-            </FormGroup>
-          </Col>
-        </Row>
+              </FormGroup>
+            </Col>
 
-        <Row>
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="HouseNameOrNumber">
-                House Name or Number <span className="text-danger">*</span>
-              </Label>
-              <Input
-                id="Properties[0].Address.HouseNameOrNumber"
-                name="Properties[0].Address.HouseNameOrNumber"
-                defaultValue=""
-                maxLength={255}
-                required
-              />
-            </FormGroup>
-          </Col>
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="address_one">
+                  Address 1 <span className="text-danger">*</span>
+                </Label>
+                <Input
+                  id="address_one"
+                  name="address_one"
+                  value={propertyState.address_one}
+                  onChange={handleChange}
+                  maxLength={255}
+                  required
+                />
+              </FormGroup>
+            </Col>
+          </Row>
 
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="Address1">
-                Address 1 <span className="text-danger">*</span>
-              </Label>
-              <Input
-                id="Properties[0].Address.Address1"
-                name="Properties[0].Address.Address1"
-                defaultValue=""
-                maxLength={255}
-                required
-              />
-            </FormGroup>
-          </Col>
-        </Row>
+          <Row>
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="address_two">Address 2</Label>
+                <Input
+                  id="address_two"
+                  name="address_two"
+                  value={propertyState.address_two}
+                  onChange={handleChange}
+                  maxLength={255}
+                />
+              </FormGroup>
+            </Col>
 
-        <Row>
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="Address2">Address 2</Label>
-              <Input
-                id="Properties[0].Address.Address2"
-                name="Properties[0].Address.Address2"
-                defaultValue=""
-                maxLength={255}
-              />
-            </FormGroup>
-          </Col>
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="city">
+                  City <span className="text-danger">*</span>
+                </Label>
+                <Input
+                  id="city"
+                  name="city"
+                  value={propertyState.city}
+                  onChange={handleChange}
+                  maxLength={255}
+                  required
+                />
+              </FormGroup>
+            </Col>
+          </Row>
 
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="City">
-                City <span className="text-danger">*</span>
-              </Label>
-              <Input
-                id="Properties[0].Address.City"
-                name="Properties[0].Address.City"
-                defaultValue=""
-                maxLength={255}
-                required
-              />
-            </FormGroup>
-          </Col>
-        </Row>
+          <Row>
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="county">County</Label>
+                <Input
+                  id="county"
+                  name="county"
+                  value={propertyState.county}
+                  onChange={handleChange}
+                  maxLength={255}
+                />
+              </FormGroup>
+            </Col>
 
-        <Row>
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="County">County</Label>
-              <Input
-                id="Properties[0].Address.County"
-                name="Properties[0].Address.County"
-                defaultValue=""
-                maxLength={255}
-              />
-            </FormGroup>
-          </Col>
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="region">Region</Label>
+                <Input
+                  type="select"
+                  id="region"
+                  name="region"
+                  value={propertyState.region || ""}
+                  onChange={handleChange}
+                >
+                  <option value="">Please select a region</option>
+                  <option value="NORTH">North</option>
+                  <option value="NORTH_WEST">North West</option>
+                  <option value="YORKSHIRE_AND_HUMBERSIDE">
+                    Yorkshire and Humberside
+                  </option>
+                  <option value="EAST_MIDLANDS">East Midlands</option>
+                  <option value="WEST_MIDLANDS">West Midlands</option>
+                  <option value="EAST_ANGLIA">East Anglia</option>
+                  <option value="LONDON">London</option>
+                  <option value="SOUTH_EAST_NOT_LONDON">
+                    South East (Not London)
+                  </option>
+                  <option value="SOUTH_WEST">South West</option>
+                  <option value="WALES">Wales</option>
+                  <option value="SCOTLAND">Scotland</option>
+                  <option value="NORTHERN_IRELAND">Northern Ireland</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
 
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="RegionId">Region</Label>
-              <Input
-                type="select"
-                id="Properties[0].Address.RegionId"
-                name="Properties[0].Address.RegionId"
-                defaultValue=""
-              >
-                <option value="">Please select a region</option>
-                <option value="0">North</option>
-                <option value="1">North West</option>
-                <option value="2">Yorkshire and Humberside</option>
-                <option value="3">East Midlands</option>
-                <option value="4">West Midlands</option>
-                <option value="5">East Anglia</option>
-                <option value="6">London</option>
-                <option value="7">South East (Not London)</option>
-                <option value="8">South West</option>
-                <option value="9">Wales</option>
-                <option value="10">Scotland</option>
-                <option value="11">Northern Ireland</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="Country">Country</Label>
-              <Input
-                type="select"
-                id="Properties[0].Address.Country"
-                name="Properties[0].Address.Country"
-                defaultValue=""
-              >
-                <option value="">Please select a country</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="England">England</option>
-                <option value="Scotland">Scotland</option>
-                <option value="Wales">Wales</option>
-                <option value="Northern Ireland">Northern Ireland</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+          <Row>
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="country">Country</Label>
+                <Input
+                  type="select"
+                  id="country"
+                  name="country"
+                  value={propertyState.country || ""}
+                  onChange={handleChange}
+                >
+                  <option value="">Please select a country</option>
+                  <option value="UNITED_KINGDOM">United Kingdom</option>
+                  <option value="ENGLAND">England</option>
+                  <option value="SCOTLAND">Scotland</option>
+                  <option value="WALES">Wales</option>
+                  <option value="NORTHERN_IRELAND">Northern Ireland</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Form>
   );
 };
 

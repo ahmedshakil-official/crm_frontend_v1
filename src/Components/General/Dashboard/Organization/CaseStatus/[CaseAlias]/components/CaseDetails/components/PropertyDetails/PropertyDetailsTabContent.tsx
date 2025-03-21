@@ -1,21 +1,31 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Button, TabContent, TabPane } from "reactstrap";
-import { useSelector } from "react-redux";
 import AddressDetails from "./Components/PropertyDetailsTabs/PropertyAddress";
 import PropertyDetails from "./Components/PropertyDetailsTabs/PropertyType";
 import AdditionalInfo from "./Components/PropertyDetailsTabs/PropertyAdditionalInfo";
-import { RootState } from "@/Redux/Store";
+import { PropertyData } from "@/Types/Organization/CaseDetails/PropertyDetails";
+import { useDispatch } from "react-redux";
+import { initializeForm } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
 
 interface PropertyDetailsTabContentProps {
   tabId: string;
   setTabId: (id: string) => void;
+  propertyData?: PropertyData;
 }
 
 const PropertyDetailsTabContent: FC<PropertyDetailsTabContentProps> = ({
   tabId,
   setTabId,
+  propertyData,
 }) => {
+  const dispatch = useDispatch();
   const handleNext = () => setTabId((parseInt(tabId) + 1).toString());
+
+  useEffect(() => {
+    if (propertyData) {
+      dispatch(initializeForm(propertyData));
+    }
+  }, [propertyData, dispatch]);
 
   return (
     <div>
