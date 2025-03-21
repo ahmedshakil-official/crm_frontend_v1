@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useAddIntroducerDetailsMutation } from "@/Redux/Reducers/Directors/IntroducerDetailsApi";
 import { AddIntroducerModalProps } from "@/Types/Organization/IntroducerTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -11,7 +11,6 @@ import {
   Label,
   Modal,
   ModalBody,
-  ModalFooter,
   ModalHeader,
   Row,
 } from "reactstrap";
@@ -20,7 +19,9 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
   isOpen,
   toggle,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [addIntroducerDetails, { isLoading }] =
+    useAddIntroducerDetailsMutation();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -38,6 +39,7 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -45,18 +47,10 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
     }));
   };
 
-  const handleSaveIntroducer = async () => {
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.password
-    ) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
+  const handleSaveIntroducer = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const payload = {
+    let payload = {
       user: {
         first_name: formData.firstName,
         last_name: formData.lastName,
@@ -75,9 +69,8 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
     };
 
     try {
-      setIsLoading(true);
-      const result = await apiClient.post("/director/introducers/", payload);
-      if (result.status >= 200 && result.status < 300) {
+      const result = await addIntroducerDetails({ payload });
+      if (result.data) {
         toast.success("Introducer added successfully.");
         // Reset form and close modal
         setFormData({
@@ -96,14 +89,16 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
           degree: "",
         });
         toggle();
+      } else if ("error" in result) {
+        const errorMessage =
+          (result.error as any)?.data?.user?.email?.[0] || "Invalid Request...";
+        toast.error(errorMessage);
       } else {
-        toast.error("Invalid Request...");
+        toast.error("An error occurred. Please try again.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Error creating introducer:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -111,7 +106,7 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Add Introducer</ModalHeader>
       <ModalBody>
-        <Form>
+        <Form onSubmit={handleSaveIntroducer}>
           <Row>
             {/* First Column */}
             <Col md="6" xs="12">
@@ -265,53 +260,62 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
                 </Col>
               </Row>
               <Row>
-                <FormGroup>
-                  <Label for="registration_number">Registration Number</Label>
-                  <Input
-                    id="registration_number"
-                    name="registration_number"
-                    type="text"
-                    value={formData.registration_number}
-                    onChange={handleInputChange}
-                  />
-                </FormGroup>
+                <Col md={12}>
+                  <FormGroup>
+                    <Label for="registration_number">Registration Number</Label>
+                    <Input
+                      id="registration_number"
+                      name="registration_number"
+                      type="text"
+                      value={formData.registration_number}
+                      onChange={handleInputChange}
+                    />
+                  </FormGroup>
+                </Col>
               </Row>
             </Col>
             <Row>
-              <FormGroup>
-                <Label for="present_address">Present Address</Label>
-                <Input
-                  id="present_address"
-                  name="present_address"
-                  type="text"
-                  value={formData.present_address}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="present_address">Present Address</Label>
+                  <Input
+                    id="present_address"
+                    name="present_address"
+                    type="text"
+                    value={formData.present_address}
+                    onChange={handleInputChange}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="permanent_address">Permanent Address</Label>
+                  <Input
+                    id="permanent_address"
+                    name="permanent_address"
+                    type="text"
+                    value={formData.permanent_address}
+                    onChange={handleInputChange}
+                  />
+                </FormGroup>
+              </Col>
             </Row>
             <Row>
-              <FormGroup>
-                <Label for="permanent_address">Permanent Address</Label>
-                <Input
-                  id="permanent_address"
-                  name="permanent_address"
-                  type="text"
-                  value={formData.permanent_address}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
+              <Col
+                md="12"
+                className="d-flex justify-content-between align-items-center"
+              >
+                <Button color="secondary" onClick={toggle}>
+                  Cancel
+                </Button>
+                <Button color="primary" type="submit">
+                  {isLoading ? "Saving..." : "Save Introducer"}
+                </Button>
+              </Col>
             </Row>
           </Row>
         </Form>
       </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={handleSaveIntroducer}>
-          {isLoading ? "Saving..." : "Save"}
-        </Button>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-      </ModalFooter>
     </Modal>
   );
 };

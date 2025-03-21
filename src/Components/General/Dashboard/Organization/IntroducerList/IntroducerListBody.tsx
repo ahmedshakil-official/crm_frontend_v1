@@ -1,5 +1,6 @@
 import { useGetIntroducerDetailsQuery } from "@/Redux/Reducers/Directors/IntroducerDetailsApi";
 import { IntroducerInfoProps } from "@/Types/Organization/IntroducerTypes";
+import LoadingSpinner from "@/app/loading";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -19,6 +20,7 @@ import "./IntroducerList.css";
 import AddIntroducerModal from "./Modals/AddIntroducerModal";
 import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
 import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
+import formatDateToDMY from "@/utils/dateFormatter";
 
 const IntroducerListBody: React.FC = () => {
   const [introducers, setIntroducers] = useState<IntroducerInfoProps[]>([]);
@@ -110,6 +112,12 @@ const IntroducerListBody: React.FC = () => {
 
   const totalPages = Math.ceil(filteredIntroducers.length / introducersPerPage);
 
+  if (isLoading) {
+    <div>
+      <LoadingSpinner />
+    </div>;
+  }
+
   return (
     <div className="container mt-1">
       <Row className="flex justify-content-between py-4">
@@ -170,7 +178,7 @@ const IntroducerListBody: React.FC = () => {
                     {introducer?.created_by?.first_name}{" "}
                     {introducer?.created_by?.last_name}
                   </td>
-                  <td>{new Date(introducer?.created_at).toLocaleString()}</td>
+                  <td>{formatDateToDMY(introducer?.created_at)}</td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
