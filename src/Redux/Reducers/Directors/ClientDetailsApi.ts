@@ -18,9 +18,10 @@ export const ClientDetailsApi = baseApi.injectEndpoints({
       invalidatesTags: ["ClientDetails"],
     }),
     updateClientDetails: builder.mutation({
-      query: () => ({
-        url: `/director/clients/`,
+      query: ({clientAlias, payload}) => ({
+        url: `/director/clients/${clientAlias}/`,
         method: "PUT",
+        body: payload,
       }),
       invalidatesTags: ["ClientDetails"],
     }),
