@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useUpdateClientDetailsMutation } from "@/Redux/Reducers/Directors/ClientDetailsApi";
 import {
   ClientInfoProps,
   UpdateClientModalProps,
@@ -23,13 +23,13 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
   isOpen,
   toggle,
   onSave,
-  fetchClients,
   selectedClient,
 }) => {
   const [clientData, setClientData] =
     useState<Partial<ClientInfoProps>>(selectedClient);
   const [isModified, setIsModified] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [updateClientDetails, { isLoading }] = useUpdateClientDetailsMutation();
 
   useEffect(() => {
     setClientData(selectedClient);
@@ -40,37 +40,40 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
     const { name, value } = e.target;
     const keys = name.split(".");
     setClientData((prev) => {
-      const updatedData = { ...prev };
-      let current: any = updatedData;
+      const updatedData = JSON.parse(JSON.stringify(prev)); // Create a deep copy
+      let current = updatedData;
       for (let i = 0; i < keys.length - 1; i++) {
-        if (!current[keys[i]]) current[keys[i]] = {};
+        if (!current[keys[i]]) {
+          current[keys[i]] = {};
+        }
         current = current[keys[i]];
       }
       current[keys[keys.length - 1]] = value;
-      return updatedData as Partial<ClientInfoProps>;
+      return updatedData;
     });
-    setIsModified(true); // Set the form as modified
+    setIsModified(true);
   };
 
   const handleUpdateClient = async (clientData: Partial<ClientInfoProps>) => {
     try {
-      setIsLoading(true);
       if (clientData.alias) {
-        const result = await apiClient.put(
-          `/director/clients/${clientData.alias}/`,
-          clientData
-        );
-        fetchClients();
-        if (result.status >= 200 && result.status < 300) {
+        const result = await updateClientDetails({
+          payload: clientData,
+          clientAlias: clientData.alias,
+        });
+        if (result.data) {
           toast.success("Client update successfully.");
-        } else {
-          toast.error("Invalid Request...");
+        } else if ("error" in result) {
+          const errorMessage =
+            (result.error as any)?.data?.user?.email?.[0] ||
+            (result.error as any)?.data?.user?.nid?.[0] ||
+            "Invalid Request...";
+          toast.error(errorMessage);
         }
       }
     } catch (error) {
+      toast.error("An error occurred while updating the client.");
       console.error("Error saving client:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -345,7 +348,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
               </Row>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <FormGroup>
               <Label for="profile_image">Profile Image</Label>
               <Input
@@ -358,7 +361,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                 className="mb-2"
               />
             </FormGroup>
-          </Row>
+          </Row> */}
           <Row>
             <FormGroup>
               <Label for="present_address">Present Address</Label>

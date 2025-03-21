@@ -103,7 +103,6 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
             {/* First Column */}
             <Col md="6" xs="12">
               <Row>
-                {" "}
                 <FormGroup>
                   <Label for="firstName">
                     First Name<span className="text-danger">*</span>
