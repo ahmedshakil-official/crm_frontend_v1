@@ -102,7 +102,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Add Advisor</ModalHeader>{" "}
+      <ModalHeader toggle={toggle}>Add Advisor</ModalHeader>
       <Form onSubmit={handleSaveAdvisor}>
         <ModalBody>
           <Row>
@@ -122,7 +122,6 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
               </FormGroup>
             </Col>
             <Col md={6}>
-              {" "}
               <FormGroup>
                 <Label for="lastName">
                   Last Name<span className="text-danger">*</span>
@@ -172,7 +171,6 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
           </Row>
           <Row>
             <Col md={6}>
-              {" "}
               <FormGroup>
                 <Label for="phone">Phone</Label>
                 <Input
@@ -206,7 +204,6 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
           </Row>
           <Row>
             <Col md={6}>
-              {" "}
               <FormGroup>
                 <Label for="dob">Date of Birth</Label>
                 <Input
@@ -219,7 +216,6 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
               </FormGroup>
             </Col>
             <Col md={6}>
-              {" "}
               <FormGroup>
                 <Label for="degree">Degree</Label>
                 <Input
