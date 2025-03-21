@@ -1,23 +1,38 @@
+import { useDeleteAdvisorDetailsMutation } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import { DeleteAdvisorModalProps } from "@/Types/Organization/AdvisorTypes";
 import React from "react";
+import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const DeleteAdvisorModal: React.FC<DeleteAdvisorModalProps> = ({
   isOpen,
   toggle,
-  onDelete,
   advisorName,
-  isLoading,
+  advisorAlias,
 }) => {
+  const [deleteAdvisorDetails, { isLoading }] =
+    useDeleteAdvisorDetailsMutation();
+  const handleDelete = async () => {
+    if (!advisorAlias) return;
+    try {
+      const response = await deleteAdvisorDetails({ advisorAlias });
+      if ("data" in response) {
+        toast.success("Advisor deleted successfully.");
+        toggle();
+      } else toast.error("Failed to delete advisor.");
+    } catch (error) {
+      toast.error("Failed to delete advisor.");
+    }
+  };
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>Delete Advisor</ModalHeader>
       <ModalBody>
-        Are you sure you want to delete the advisor <strong>{advisorName}</strong>?
-        This action cannot be undone.
+        Are you sure you want to delete the advisor{" "}
+        <strong>{advisorName}</strong>? This action cannot be undone.
       </ModalBody>
       <ModalFooter>
-        <Button color="danger" onClick={onDelete}>
+        <Button color="danger" onClick={handleDelete} disabled={isLoading}>
           {isLoading ? "Deleting..." : "Delete"}
         </Button>
         <Button color="secondary" onClick={toggle}>

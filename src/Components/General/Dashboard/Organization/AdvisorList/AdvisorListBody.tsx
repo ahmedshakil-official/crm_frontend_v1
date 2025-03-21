@@ -1,7 +1,11 @@
-import apiClient from "@/services/api-client";
+import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
+import LoadingSpinner from "@/app/loading";
+import apiClient from "@/services/api-client";
+import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -19,16 +23,17 @@ import "./AdvisorList.css";
 import AddAdvisorModal from "./Modals/AddAdvisorModal";
 import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
 import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
-import { toast } from "react-toastify";
 
 const AdvisorListBody: React.FC = () => {
   const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [advisorsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
+  const { data: advisorData, isLoading } = useGetAdvisorDetailsQuery(undefined);
+
   const [selectedAdvisor, setSelectedAdvisor] = useState<
     Partial<AdvisorInfoProps>
   >({
@@ -70,39 +75,25 @@ const AdvisorListBody: React.FC = () => {
     toggleDeleteModal();
   };
 
-  const fetchAdvisors = async () => {
-    setIsLoading(true);
-    try {
-      const response = await apiClient.get("/director/advisors/");
-      const AdvisorsData = Array.isArray(response.data)
-        ? response.data
-        : response.data.advisors;
-      setAdvisors(AdvisorsData || []);
-    } catch (error) {
-      console.error("Error fetching Advisors:", error);
-      setAdvisors([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchAdvisors();
-  }, []);
+    if (advisorData) {
+      const advisorsArray: AdvisorInfoProps[] = Array.isArray(advisorData)
+        ? advisorData
+        : advisorData.advisors;
+      setAdvisors(advisorsArray || []);
+    }
+  }, [advisorData]);
 
   //delete advisor
   const deleteAdvisor = async (alias: string) => {
     if (!alias) return;
     try {
-      setIsLoading(true);
       await apiClient.delete(`/director/advisors/${alias}/`);
-      fetchAdvisors();
+
       toast.success("Advisor deleted successfully.");
     } catch (error) {
       console.error("Error deleting advisor", error);
       toast.error("Failed to delete the advisor. Please try again.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -136,6 +127,14 @@ const AdvisorListBody: React.FC = () => {
   );
 
   const totalPages = Math.ceil(filteredAdvisors.length / advisorsPerPage);
+
+  if (isLoading) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-1">
@@ -198,7 +197,7 @@ const AdvisorListBody: React.FC = () => {
                     {advisor?.created_by?.first_name}{" "}
                     {advisor?.created_by?.last_name}
                   </td>
-                  <td>{new Date(advisor?.created_at).toLocaleString()}</td>
+                  <td>{formatDateToDMY(advisor?.created_at)}</td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
@@ -312,28 +311,19 @@ const AdvisorListBody: React.FC = () => {
       </Row>
 
       {/* modals */}
-      <AddAdvisorModal
-        isOpen={isModalOpen}
-        toggle={toggleModal}
-        onSave={() => fetchAdvisors()}
-      />
+      <AddAdvisorModal isOpen={isModalOpen} toggle={toggleModal} />
       <UpdateAdvisorModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
-        fetchAdvisors={fetchAdvisors}
         onSave={() => {
-          toggleUpdateModal(); // Close the modal
+          toggleUpdateModal();
         }}
         selectedAdvisor={selectedAdvisor}
       />
       <DeleteAdvisorModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        onDelete={() => {
-          if (advisorToDelete) deleteAdvisor(advisorToDelete.alias);
-          toggleDeleteModal();
-        }}
-        isLoading={isLoading}
+        advisorAlias={advisorToDelete?.alias || ""}
         advisorName={`${advisorToDelete?.user?.first_name} ${advisorToDelete?.user?.last_name}`}
       />
       {/* modals end */}
