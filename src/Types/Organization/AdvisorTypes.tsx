@@ -32,7 +32,6 @@ export interface AdvisorInfoProps {
 export interface AddAdvisorModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
 }
 export interface UpdateAdvisorModalProps {
   isOpen: boolean;

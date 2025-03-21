@@ -19,7 +19,6 @@ import {
 const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
   isOpen,
   toggle,
-  onSave,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -98,7 +97,6 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
           degree: "",
         });
         toggle();
-        onSave();
       } else {
         toast.error("Invalid request. Please try again.");
       }

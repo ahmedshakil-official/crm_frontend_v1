@@ -1,5 +1,7 @@
 import { useGetClientDetailsQuery } from "@/Redux/Reducers/Directors/ClientDetailsApi";
 import { ClientInfoProps } from "@/Types/Organization/ClientTypes";
+import LoadingSpinner from "@/app/loading";
+import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -19,18 +21,16 @@ import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
-import formatDateToDMY from "@/utils/dateFormatter";
 
 const ClientListBody: React.FC = () => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [clientsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
-  const { data: clientData, isLoading: isClientLoading } =
+  const { data: clientData, isLoading } =
     useGetClientDetailsQuery(undefined);
 
   const [selectedClient, setSelectedClient] = useState<
@@ -114,6 +114,14 @@ const ClientListBody: React.FC = () => {
 
   const totalPages = Math.ceil(filteredClients.length / clientsPerPage);
 
+  if (isLoading) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
   return (
     <div className="container mt-1">
       <Row className="flex justify-content-between py-4">
@@ -163,7 +171,7 @@ const ClientListBody: React.FC = () => {
                 </td>
               </tr>
             ) : currentClients.length > 0 ? (
-              currentClients.map((client:any) => (
+              currentClients.map((client: any) => (
                 <tr key={client.alias}>
                   <td>
                     {client?.user?.first_name} {client?.user?.last_name}
