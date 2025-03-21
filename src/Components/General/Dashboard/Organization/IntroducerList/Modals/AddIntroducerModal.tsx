@@ -11,6 +11,7 @@ import {
   Label,
   Modal,
   ModalBody,
+  ModalFooter,
   ModalHeader,
   Row,
 } from "reactstrap";
@@ -104,9 +105,9 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Add Introducer</ModalHeader>
-      <ModalBody>
-        <Form onSubmit={handleSaveIntroducer}>
+      <ModalHeader toggle={toggle}>Add Introducer</ModalHeader>{" "}
+      <Form onSubmit={handleSaveIntroducer}>
+        <ModalBody>
           <Row>
             {/* First Column */}
             <Col md="6" xs="12">
@@ -300,22 +301,17 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
                 </FormGroup>
               </Col>
             </Row>
-            <Row>
-              <Col
-                md="12"
-                className="d-flex justify-content-between align-items-center"
-              >
-                <Button color="secondary" onClick={toggle}>
-                  Cancel
-                </Button>
-                <Button color="primary" type="submit">
-                  {isLoading ? "Saving..." : "Save Introducer"}
-                </Button>
-              </Col>
-            </Row>
           </Row>
-        </Form>
-      </ModalBody>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary" type="submit">
+            {isLoading ? "Saving..." : "Save Introducer"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };

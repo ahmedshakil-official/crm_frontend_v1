@@ -11,6 +11,7 @@ import {
   Label,
   Modal,
   ModalBody,
+  ModalFooter,
   ModalHeader,
   Row,
 } from "reactstrap";
@@ -101,9 +102,9 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Add Advisor</ModalHeader>
-      <ModalBody>
-        <Form onSubmit={handleSaveAdvisor}>
+      <ModalHeader toggle={toggle}>Add Advisor</ModalHeader>{" "}
+      <Form onSubmit={handleSaveAdvisor}>
+        <ModalBody>
           <Row>
             {/* First Column */}
             <Col md="6" xs="12">
@@ -292,22 +293,17 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                 />
               </FormGroup>
             </Row>
-            <Row>
-              <Col
-                xs="12"
-                className="d-flex justify-content-between align-items-center"
-              >
-                <Button color="secondary" onClick={toggle}>
-                  Cancel
-                </Button>
-                <Button color="primary">
-                  {isLoading ? "Saving..." : "Save Advisor"}
-                </Button>
-              </Col>
-            </Row>
           </Row>
-        </Form>
-      </ModalBody>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary">
+            {isLoading ? "Saving..." : "Save Advisor"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };
