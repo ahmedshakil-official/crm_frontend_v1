@@ -20,6 +20,7 @@ export const baseApi = createApi({
   baseQuery: baseQuery,
   tagTypes: [
     "ClientDetails",
+    "AdvisorDetails",
     "LoanDetails",
     "ApplicantsDetails",
     "Dependants",
