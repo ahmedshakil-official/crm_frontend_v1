@@ -17,7 +17,15 @@ export const PropertyDetailsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["PropertyDetails"],
     }),
+    updateSingleProperty: builder.mutation({
+      query: ({ case_alias, property_alias, updatedPropertyDetails }) => ({
+        url: `/cases/${case_alias}/property/details/${property_alias}/`,
+        method: "PUT",
+        body: updatedPropertyDetails,
+      }),
+      invalidatesTags: ["PropertyDetails"],
+    }),
   }),
 });
 
-export const { useGetPropertiesQuery } = PropertyDetailsApi;
+export const { useGetPropertiesQuery,useUpdateSinglePropertyMutation } = PropertyDetailsApi;

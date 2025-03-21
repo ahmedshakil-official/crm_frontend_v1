@@ -11,19 +11,36 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { useUpdateSinglePropertyMutation } from "@/Redux/Reducers/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 const NoteForProperty: React.FC = () => {
+  const { casealias } = useParams();
   const [notes, setNotes] = useState<string>("");
   const formData = useSelector(
     (state: RootState) => state.propertyForm.Properties
   );
+  const propertyAlias = formData.alias;
 
-  const handleSubmit = () => {
+  const [updateSingleProperty, { isLoading }] =
+    useUpdateSinglePropertyMutation();
+  const handleSubmit = async () => {
     const finalData = {
       ...formData,
       notes,
     };
-    console.log("Complete Form Data:", finalData);
+    // console.log("Complete Form Data:", finalData.alias);
+    const response = await updateSingleProperty({
+      case_alias: casealias,
+      property_alias: propertyAlias,
+      updatedPropertyDetails: finalData,
+    });
+    if (response.data) {
+      toast.success("Property Details Updated Successfully");
+    } else {
+      toast.error("Something went wrong");
+    }
     // Here you can handle the submission
   };
 

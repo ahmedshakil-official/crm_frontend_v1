@@ -1,30 +1,76 @@
 // AdditionalInfo.tsx
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, FormGroup, Label, Input, InputGroup } from "reactstrap";
+import { updateProperty } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
+import { RootState } from "@/Redux/Store";
 
-const AdditionalInfo: React.FC = () => {
-  const [isListedBuilding, setIsListedBuilding] = useState<boolean>(false);
-  const [ownFreehold, setOwnFreehold] = useState<boolean>(false);
-  const [hasHMOLicense, setHasHMOLicense] = useState<boolean>(false);
-  const [isOwnerOccupied, setIsOwnerOccupied] = useState<boolean>(false);
-  const [isPropertyRentedOut, setIsPropertyRentedOut] =
-    useState<boolean>(false);
-  const [isStandardConstruction, setIsStandardConstruction] =
-    useState<boolean>(false);
-  const [hasCladding, setHasCladding] = useState<boolean>(false);
-  const [isFloodRisk, setIsFloodRisk] = useState<boolean>(false);
-  const [hasFlooded, setHasFlooded] = useState<boolean>(false);
-  const [hasSubsidence, setHasSubsidence] = useState<boolean>(false);
-  const [isInTrust, setIsInTrust] = useState<boolean>(false);
-  const [isNearCommercial, setIsNearCommercial] = useState<boolean>(false);
-  const [hasSolarPanels, setHasSolarPanels] = useState<boolean>(false);
-  const [ownsSolarPanels, setOwnsSolarPanels] = useState<boolean>(false);
-  const [hasAnnexe, setHasAnnexe] = useState<boolean>(false);
-  const [tenure, setTenure] = useState<string>("Freehold");
+interface AdditionalInfoProps {
+  propertyData?: any;
+}
+
+const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ propertyData }) => {
+  const dispatch = useDispatch();
+  const propertyState = useSelector(
+    (state: RootState) => state.propertyForm.Properties
+  );
+
+  useEffect(() => {
+    if (propertyData) {
+      dispatch(
+        updateProperty({
+          is_the_property_a_listed_building:
+            propertyData.is_the_property_a_listed_building || false,
+          listed_status_of_the_building:
+            propertyData.listed_status_of_the_building || null,
+          listed_building_notes: propertyData.listed_building_notes || "",
+          do_you_or_will_you_own_part_or_all_of_the_freehold:
+            propertyData.do_you_or_will_you_own_part_or_all_of_the_freehold ||
+            false,
+          // No direct HMO license field in JSON, using a placeholder
+          will_the_property_be_owner_occupied:
+            propertyData.will_the_property_be_owner_occupied || false,
+          please_provide_further_details:
+            propertyData.please_provide_further_details || "",
+          is_the_property_rented_out_to_be_rented_out:
+            propertyData.is_the_property_rented_out_to_be_rented_out || false,
+          is_the_property_standard_construction:
+            propertyData.is_the_property_standard_construction || false,
+          comments_details: propertyData.comments_details || "", // Using as TypeOfConstruction equivalent
+          is_the_property_above_or_near_commercial_premises:
+            propertyData.is_the_property_above_or_near_commercial_premises ||
+            false,
+          does_the_property_have_solar_panels:
+            propertyData.does_the_property_have_solar_panels || false,
+          do_you_own_the_solar_panels:
+            propertyData.do_you_own_the_solar_panels || false,
+          is_there_an_annexe_within_the_property:
+            propertyData.is_there_an_annexe_within_the_property || false,
+        })
+      );
+    }
+  }, [propertyData, dispatch]);
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value, type } = e.target;
+    let updatedValue: any = value;
+
+    if (type === "radio") {
+      updatedValue = value === "true";
+    } else if (type === "number") {
+      updatedValue = value === "" ? null : Number(value);
+    }
+
+    dispatch(updateProperty({ [name]: updatedValue }));
+  };
 
   return (
     <div className="property-additional-info p-4">
-      <Row className=" d-flex justify-content-center">
+      <Row className="d-flex justify-content-center">
         <Col sm={12} lg={8}>
           <div className="bg-white rounded-lg p-4">
             {/* Section: Basic Property Information */}
@@ -38,7 +84,7 @@ const AdditionalInfo: React.FC = () => {
                       <Col sm={7}>
                         <Label
                           className="mb-0 fw-medium"
-                          for="IsThePropertyAListedBuilding"
+                          for="is_the_property_a_listed_building"
                         >
                           Is the property a listed building?
                         </Label>
@@ -47,9 +93,14 @@ const AdditionalInfo: React.FC = () => {
                         <div className="form-check">
                           <Input
                             type="radio"
-                            name="Properties[0].IsThePropertyAListedBuilding"
+                            name="is_the_property_a_listed_building"
+                            id="is_the_property_a_listed_building_yes"
                             value="true"
-                            onChange={() => setIsListedBuilding(true)}
+                            checked={
+                              propertyState.is_the_property_a_listed_building ===
+                              true
+                            }
+                            onChange={handleChange}
                             className="form-check-input"
                           />
                           <Label className="form-check-label">Yes</Label>
@@ -57,11 +108,15 @@ const AdditionalInfo: React.FC = () => {
                         <div className="form-check">
                           <Input
                             type="radio"
-                            name="Properties[0].IsThePropertyAListedBuilding"
+                            name="is_the_property_a_listed_building"
+                            id="is_the_property_a_listed_building_no"
                             value="false"
-                            defaultChecked
-                            onChange={() => setIsListedBuilding(false)}
-                            className="form-check-input "
+                            checked={
+                              propertyState.is_the_property_a_listed_building ===
+                              false
+                            }
+                            onChange={handleChange}
+                            className="form-check-input"
                           />
                           <Label className="form-check-label">No</Label>
                         </div>
@@ -70,18 +125,22 @@ const AdditionalInfo: React.FC = () => {
                   </FormGroup>
                 </Col>
 
-                {isListedBuilding && (
-                  <div id="ListedBuildingExtraFields0">
+                {propertyState.is_the_property_a_listed_building && (
+                  <div id="listedBuildingExtraFields">
                     <Row>
                       <Col sm={6}>
                         <FormGroup>
-                          <Label for="ListedBuildingStatus">
+                          <Label for="listed_status_of_the_building">
                             Listed status of the building
                           </Label>
                           <Input
                             type="select"
-                            name="Properties[0].ListedBuildingStatus"
-                            id="Properties[0].ListedBuildingStatus"
+                            name="listed_status_of_the_building"
+                            id="listed_status_of_the_building"
+                            value={
+                              propertyState.listed_status_of_the_building || ""
+                            }
+                            onChange={handleChange}
                           >
                             <option value="">Select...</option>
                             <option value="0">Grade I</option>
@@ -97,14 +156,16 @@ const AdditionalInfo: React.FC = () => {
                     <Row>
                       <Col sm={12}>
                         <FormGroup>
-                          <Label for="ListedBuildingNotes">
+                          <Label for="listed_building_notes">
                             Listed Building Notes (e.g. delisting application
                             pending, etc)
                           </Label>
                           <Input
                             type="textarea"
-                            name="Properties[0].ListedBuildingNotes"
-                            id="Properties[0].ListedBuildingNotes"
+                            name="listed_building_notes"
+                            id="listed_building_notes"
+                            value={propertyState.listed_building_notes || ""}
+                            onChange={handleChange}
                             className="form-control"
                           />
                         </FormGroup>
@@ -117,102 +178,103 @@ const AdditionalInfo: React.FC = () => {
                 <Col sm={12}>
                   <FormGroup>
                     <Col sm={7}>
-                      <Label for="OwnFreehold">
+                      <Label for="do_you_or_will_you_own_part_or_all_of_the_freehold">
                         Do you or will you own part or all of the freehold?
                       </Label>
                     </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].OwnFreehold"
-                        value="true"
-                        onChange={() => setOwnFreehold(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].OwnFreehold"
-                        value="false"
-                        defaultChecked
-                        onChange={() => setOwnFreehold(false)}
-                      />{" "}
-                      No
+                    <Col sm={5} className="radioBtnInputs d-flex gap-3">
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="do_you_or_will_you_own_part_or_all_of_the_freehold"
+                          id="do_you_or_will_you_own_part_or_all_of_the_freehold_yes"
+                          value="true"
+                          checked={
+                            propertyState.do_you_or_will_you_own_part_or_all_of_the_freehold ===
+                            true
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">Yes</Label>
+                      </div>
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="do_you_or_will_you_own_part_or_all_of_the_freehold"
+                          id="do_you_or_will_you_own_part_or_all_of_the_freehold_no"
+                          value="false"
+                          checked={
+                            propertyState.do_you_or_will_you_own_part_or_all_of_the_freehold ===
+                            false
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">No</Label>
+                      </div>
                     </Col>
                   </FormGroup>
                 </Col>
 
-                {/* HMO License */}
-                <Col sm={12}>
-                  <FormGroup>
-                    <Col sm={7}>
-                      <Label for="HMOlicense">
-                        Does the property have an HMO license?
-                      </Label>
-                    </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].HMOlicense"
-                        value="true"
-                        onChange={() => setHasHMOLicense(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].HMOlicense"
-                        value="false"
-                        defaultChecked
-                        onChange={() => setHasHMOLicense(false)}
-                      />{" "}
-                      No
-                    </Col>
-                  </FormGroup>
-                </Col>
 
                 {/* Owner Occupied */}
                 <Col sm={12}>
                   <FormGroup>
                     <Col sm={7}>
-                      <Label for="OwnerOccupied">
+                      <Label for="will_the_property_be_owner_occupied">
                         Will the property be owner occupied?
                       </Label>
                     </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].OwnerOccupied"
-                        value="true"
-                        onChange={() => setIsOwnerOccupied(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].OwnerOccupied"
-                        value="false"
-                        defaultChecked
-                        onChange={() => setIsOwnerOccupied(false)}
-                      />{" "}
-                      No
+                    <Col sm={5} className="radioBtnInputs d-flex gap-3">
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="will_the_property_be_owner_occupied"
+                          id="will_the_property_be_owner_occupied_yes"
+                          value="true"
+                          checked={
+                            propertyState.will_the_property_be_owner_occupied ===
+                            true
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">Yes</Label>
+                      </div>
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="will_the_property_be_owner_occupied"
+                          id="will_the_property_be_owner_occupied_no"
+                          value="false"
+                          checked={
+                            propertyState.will_the_property_be_owner_occupied ===
+                            false
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">No</Label>
+                      </div>
                     </Col>
                   </FormGroup>
                 </Col>
 
-                {!isOwnerOccupied && (
+                {!propertyState.will_the_property_be_owner_occupied && (
                   <Col sm={12}>
                     <FormGroup>
-                      <Label for="OwnerOccupied_FurtherDetails">
+                      <Label for="please_provide_further_details">
                         Please provide further details
                       </Label>
                       <Input
                         type="textarea"
-                        id="Properties[0].OwnerOccupied_FurtherDetails"
-                        name="Properties[0].OwnerOccupied_FurtherDetails"
+                        id="please_provide_further_details"
+                        name="please_provide_further_details"
+                        value={
+                          propertyState.please_provide_further_details || ""
+                        }
+                        onChange={handleChange}
                         className="form-control"
                       />
                     </FormGroup>
@@ -223,354 +285,98 @@ const AdditionalInfo: React.FC = () => {
                 <Col sm={12}>
                   <FormGroup>
                     <Col sm={7}>
-                      <Label for="IsPropertyRentedOut">
+                      <Label for="is_the_property_rented_out_to_be_rented_out">
                         Is the property rented out/to be rented out?
                       </Label>
                     </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].IsPropertyRentedOut"
-                        value="true"
-                        onChange={() => setIsPropertyRentedOut(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].IsPropertyRentedOut"
-                        value="false"
-                        defaultChecked
-                        onChange={() => setIsPropertyRentedOut(false)}
-                      />{" "}
-                      No
+                    <Col sm={5} className="radioBtnInputs d-flex gap-3">
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="is_the_property_rented_out_to_be_rented_out"
+                          id="is_the_property_rented_out_to_be_rented_out_yes"
+                          value="true"
+                          checked={
+                            propertyState.is_the_property_rented_out_to_be_rented_out ===
+                            true
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">Yes</Label>
+                      </div>
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="is_the_property_rented_out_to_be_rented_out"
+                          id="is_the_property_rented_out_to_be_rented_out_no"
+                          value="false"
+                          checked={
+                            propertyState.is_the_property_rented_out_to_be_rented_out ===
+                            false
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">No</Label>
+                      </div>
                     </Col>
                   </FormGroup>
                 </Col>
-
-                {isPropertyRentedOut && (
-                  <div className="showFor_IsPropertyRentedOut">
-                    <Row>
-                      <Col sm={6}>
-                        <FormGroup>
-                          <Label for="BTLExpectedRent">
-                            Monthly Gross Rental
-                          </Label>
-                          <InputGroup>
-                            <span className="input-group-text">£</span>
-                            <Input
-                              type="number"
-                              id="Properties[0].BTLExpectedRent"
-                              name="Properties[0].BTLExpectedRent"
-                              defaultValue="0"
-                              step="0.01"
-                            />
-                          </InputGroup>
-                        </FormGroup>
-                      </Col>
-
-                      <Col sm={6}>
-                        <FormGroup>
-                          <Label for="BTLExpectedNetRent">
-                            Monthly Net Rental
-                          </Label>
-                          <InputGroup>
-                            <span className="input-group-text">£</span>
-                            <Input
-                              type="number"
-                              id="Properties[0].BTLExpectedNetRent"
-                              name="Properties[0].BTLExpectedNetRent"
-                              defaultValue=""
-                              step="0.01"
-                            />
-                          </InputGroup>
-                        </FormGroup>
-                      </Col>
-
-                      <Col sm={6}>
-                        <FormGroup>
-                          <Label for="TenantType">Tenant Type</Label>
-                          <Input
-                            type="select"
-                            id="Properties[0].TenantType"
-                            name="Properties[0].TenantType"
-                          >
-                            <option value="">Select...</option>
-                            <option>Professional</option>
-                            <option>Student</option>
-                            <option>Housing Benefit</option>
-                            <option>Holiday Let</option>
-                            <option>AirBnB</option>
-                            <option>Corporate Let</option>
-                            <option>Local Council Let</option>
-                            <option>Other</option>
-                          </Input>
-                        </FormGroup>
-                      </Col>
-
-                      <Col sm={6}>
-                        <FormGroup>
-                          <Label for="NumberOfASTs">Number of ASTs</Label>
-                          <Input
-                            type="number"
-                            id="Properties[0].NumberOfASTs"
-                            name="Properties[0].NumberOfASTs"
-                            defaultValue=""
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                  </div>
-                )}
 
                 {/* Standard Construction */}
                 <Col sm={12}>
                   <FormGroup>
                     <Col sm={7}>
-                      <Label for="IsStandardConstruction">
+                      <Label for="is_the_property_standard_construction">
                         Is the property standard construction?
                       </Label>
                     </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].IsStandardConstruction"
-                        value="true"
-                        onChange={() => setIsStandardConstruction(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].IsStandardConstruction"
-                        value="false"
-                        defaultChecked
-                        onChange={() => setIsStandardConstruction(false)}
-                      />{" "}
-                      No
+                    <Col sm={5} className="radioBtnInputs d-flex gap-3">
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="is_the_property_standard_construction"
+                          id="is_the_property_standard_construction_yes"
+                          value="true"
+                          checked={
+                            propertyState.is_the_property_standard_construction ===
+                            true
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">Yes</Label>
+                      </div>
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="is_the_property_standard_construction"
+                          id="is_the_property_standard_construction_no"
+                          value="false"
+                          checked={
+                            propertyState.is_the_property_standard_construction ===
+                            false
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">No</Label>
+                      </div>
                     </Col>
                   </FormGroup>
                 </Col>
 
-                {!isStandardConstruction && (
+                {!propertyState.is_the_property_standard_construction && (
                   <Col sm={12}>
                     <FormGroup>
-                      <Label for="TypeOfConstruction">
-                        Type of Construction
-                      </Label>
+                      <Label for="comments_details">Type of Construction</Label>
                       <Input
                         type="text"
-                        id="Properties[0].TypeOfConstruction"
-                        name="Properties[0].TypeOfConstruction"
-                        defaultValue=""
-                      />
-                    </FormGroup>
-                  </Col>
-                )}
-
-                {/* Cladding */}
-                <Col sm={12}>
-                  <FormGroup>
-                    <Col sm={7}>
-                      <Label for="FlatCladdingOrBalconiesContainCombustibles">
-                        Does the property's building have cladding and/or
-                        vertically stacked balconies containing combustible
-                        materials?
-                      </Label>
-                    </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].FlatCladdingOrBalconiesContainCombustibles"
-                        value="true"
-                        onChange={() => setHasCladding(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].FlatCladdingOrBalconiesContainCombustibles"
-                        value="false"
-                        defaultChecked
-                        onChange={() => setHasCladding(false)}
-                      />{" "}
-                      No
-                    </Col>
-                  </FormGroup>
-                </Col>
-
-                {/* Flood Risk */}
-                <Col sm={12}>
-                  <FormGroup>
-                    <Col sm={7}>
-                      <Label for="FloodRiskArea">
-                        Is the property in a flood risk area?
-                      </Label>
-                    </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].FloodRiskArea"
-                        value="true"
-                        onChange={() => setIsFloodRisk(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].FloodRiskArea"
-                        value="false"
-                        onChange={() => setIsFloodRisk(false)}
-                      />{" "}
-                      No
-                    </Col>
-                  </FormGroup>
-                </Col>
-
-                {isFloodRisk && (
-                  <Col sm={12}>
-                    <FormGroup>
-                      <Label for="FloodRiskAreaDetails">Details</Label>
-                      <Input
-                        type="textarea"
-                        id="Properties[0].FloodRiskAreaDetails"
-                        name="Properties[0].FloodRiskAreaDetails"
-                        className="form-control"
-                      />
-                    </FormGroup>
-                  </Col>
-                )}
-
-                {/* Flood Past Five Years */}
-                <Col sm={12}>
-                  <FormGroup>
-                    <Col sm={7}>
-                      <Label for="FloodPastFiveYears">
-                        Has the property flooded in the last 5 years?
-                      </Label>
-                    </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].FloodPastFiveYears"
-                        value="true"
-                        onChange={() => setHasFlooded(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].FloodPastFiveYears"
-                        value="false"
-                        onChange={() => setHasFlooded(false)}
-                      />{" "}
-                      No
-                    </Col>
-                  </FormGroup>
-                </Col>
-
-                {hasFlooded && (
-                  <Col sm={12}>
-                    <FormGroup>
-                      <Label for="FloodPastFiveYearsDetails">Details</Label>
-                      <Input
-                        type="textarea"
-                        id="Properties[0].FloodPastFiveYearsDetails"
-                        name="Properties[0].FloodPastFiveYearsDetails"
-                        className="form-control"
-                      />
-                    </FormGroup>
-                  </Col>
-                )}
-
-                {/* Subsidence */}
-                <Col sm={12}>
-                  <FormGroup>
-                    <Col sm={7}>
-                      <Label for="SubsidenceLandslip">
-                        Has there been any evidence of subsidence or landslip?
-                      </Label>
-                    </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].SubsidenceLandslip"
-                        value="true"
-                        onChange={() => setHasSubsidence(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].SubsidenceLandslip"
-                        value="false"
-                        onChange={() => setHasSubsidence(false)}
-                      />{" "}
-                      No
-                    </Col>
-                  </FormGroup>
-                </Col>
-
-                {hasSubsidence && (
-                  <Col sm={12}>
-                    <FormGroup>
-                      <Label for="SubsidenceLandslipDetails">Details</Label>
-                      <Input
-                        type="textarea"
-                        id="Properties[0].SubsidenceLandslipDetails"
-                        name="Properties[0].SubsidenceLandslipDetails"
-                        className="form-control"
-                      />
-                    </FormGroup>
-                  </Col>
-                )}
-
-                {/* Property in Trust */}
-                <Col sm={12}>
-                  <FormGroup>
-                    <Col sm={7}>
-                      <Label for="IsPropertyInATrust">
-                        Is the property in a trust?
-                      </Label>
-                    </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].IsPropertyInATrust"
-                        value="true"
-                        onChange={() => setIsInTrust(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].IsPropertyInATrust"
-                        value="false"
-                        onChange={() => setIsInTrust(false)}
-                      />{" "}
-                      No
-                    </Col>
-                  </FormGroup>
-                </Col>
-
-                {isInTrust && (
-                  <Col sm={12}>
-                    <FormGroup>
-                      <Label for="IsPropertyInATrustReason">
-                        Reason the property is in a trust
-                      </Label>
-                      <Input
-                        type="textarea"
-                        id="Properties[0].IsPropertyInATrustReason"
-                        name="Properties[0].IsPropertyInATrustReason"
-                        className="form-control"
+                        id="comments_details"
+                        name="comments_details"
+                        value={propertyState.comments_details || ""}
+                        onChange={handleChange}
                       />
                     </FormGroup>
                   </Col>
@@ -580,103 +386,126 @@ const AdditionalInfo: React.FC = () => {
                 <Col sm={12}>
                   <FormGroup>
                     <Col sm={7}>
-                      <Label for="Commercial">
+                      <Label for="is_the_property_above_or_near_commercial_premises">
                         Is the property above or near commercial premises?
                       </Label>
                     </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].Commercial"
-                        value="true"
-                        onChange={() => setIsNearCommercial(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].Commercial"
-                        value="false"
-                        defaultChecked
-                        onChange={() => setIsNearCommercial(false)}
-                      />{" "}
-                      No
+                    <Col sm={5} className="radioBtnInputs d-flex gap-3">
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="is_the_property_above_or_near_commercial_premises"
+                          id="is_the_property_above_or_near_commercial_premises_yes"
+                          value="true"
+                          checked={
+                            propertyState.is_the_property_above_or_near_commercial_premises ===
+                            true
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">Yes</Label>
+                      </div>
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="is_the_property_above_or_near_commercial_premises"
+                          id="is_the_property_above_or_near_commercial_premises_no"
+                          value="false"
+                          checked={
+                            propertyState.is_the_property_above_or_near_commercial_premises ===
+                            false
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">No</Label>
+                      </div>
                     </Col>
                   </FormGroup>
                 </Col>
-
-                {isNearCommercial && (
-                  <Col sm={6}>
-                    <FormGroup>
-                      <Label for="CommercialType">
-                        Commercial Property Type
-                      </Label>
-                      <Input
-                        type="text"
-                        id="Properties[0].CommercialType"
-                        name="Properties[0].CommercialType"
-                        defaultValue=""
-                        maxLength={255}
-                      />
-                    </FormGroup>
-                  </Col>
-                )}
 
                 {/* Solar Panels */}
                 <Col sm={12}>
                   <FormGroup>
                     <Col sm={7}>
-                      <Label for="DoThePropertyHaveSolarPanels">
+                      <Label for="does_the_property_have_solar_panels">
                         Does the property have solar panels?
                       </Label>
                     </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].DoThePropertyHaveSolarPanels"
-                        value="true"
-                        onChange={() => setHasSolarPanels(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].DoThePropertyHaveSolarPanels"
-                        value="false"
-                        defaultChecked
-                        onChange={() => setHasSolarPanels(false)}
-                      />{" "}
-                      No
+                    <Col sm={5} className="radioBtnInputs d-flex gap-3">
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="does_the_property_have_solar_panels"
+                          id="does_the_property_have_solar_panels_yes"
+                          value="true"
+                          checked={
+                            propertyState.does_the_property_have_solar_panels ===
+                            true
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">Yes</Label>
+                      </div>
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="does_the_property_have_solar_panels"
+                          id="does_the_property_have_solar_panels_no"
+                          value="false"
+                          checked={
+                            propertyState.does_the_property_have_solar_panels ===
+                            false
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">No</Label>
+                      </div>
                     </Col>
                   </FormGroup>
                 </Col>
 
-                {hasSolarPanels && (
+                {propertyState.does_the_property_have_solar_panels && (
                   <Col sm={12}>
                     <FormGroup>
                       <Col sm={7}>
-                        <Label for="DoYouOwnTheSolarPanels">
+                        <Label for="do_you_own_the_solar_panels">
                           Do you own the solar panels?
                         </Label>
                       </Col>
-                      <Col sm={5} className="radioBtnInputs">
-                        <Input
-                          type="radio"
-                          name="Properties[0].DoYouOwnTheSolarPanels"
-                          value="true"
-                          onChange={() => setOwnsSolarPanels(true)}
-                        />{" "}
-                        Yes
-                        <Input
-                          type="radio"
-                          name="Properties[0].DoYouOwnTheSolarPanels"
-                          value="false"
-                          defaultChecked
-                          onChange={() => setOwnsSolarPanels(false)}
-                        />{" "}
-                        No
+                      <Col sm={5} className="radioBtnInputs d-flex gap-3">
+                        <div className="form-check">
+                          <Input
+                            type="radio"
+                            name="do_you_own_the_solar_panels"
+                            id="do_you_own_the_solar_panels_yes"
+                            value="true"
+                            checked={
+                              propertyState.do_you_own_the_solar_panels === true
+                            }
+                            onChange={handleChange}
+                            className="form-check-input"
+                          />
+                          <Label className="form-check-label">Yes</Label>
+                        </div>
+                        <div className="form-check">
+                          <Input
+                            type="radio"
+                            name="do_you_own_the_solar_panels"
+                            id="do_you_own_the_solar_panels_no"
+                            value="false"
+                            checked={
+                              propertyState.do_you_own_the_solar_panels ===
+                              false
+                            }
+                            onChange={handleChange}
+                            className="form-check-input"
+                          />
+                          <Label className="form-check-label">No</Label>
+                        </div>
                       </Col>
                     </FormGroup>
                   </Col>
@@ -686,28 +515,41 @@ const AdditionalInfo: React.FC = () => {
                 <Col sm={12}>
                   <FormGroup>
                     <Col sm={7}>
-                      <Label for="IsAnnexe">
+                      <Label for="is_there_an_annexe_within_the_property">
                         Is there an Annexe within the property?
                       </Label>
                     </Col>
-                    <Col sm={5} className="radioBtnInputs">
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].IsAnnexe"
-                        value="true"
-                        onChange={() => setHasAnnexe(true)}
-                      />{" "}
-                      Yes
-                      <Input
-                        type="radio"
-                        className="form-check-input "
-                        name="Properties[0].IsAnnexe"
-                        value="false"
-                        defaultChecked
-                        onChange={() => setHasAnnexe(false)}
-                      />{" "}
-                      No
+                    <Col sm={5} className="radioBtnInputs d-flex gap-3">
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="is_there_an_annexe_within_the_property"
+                          id="is_there_an_annexe_within_the_property_yes"
+                          value="true"
+                          checked={
+                            propertyState.is_there_an_annexe_within_the_property ===
+                            true
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">Yes</Label>
+                      </div>
+                      <div className="form-check">
+                        <Input
+                          type="radio"
+                          name="is_there_an_annexe_within_the_property"
+                          id="is_there_an_annexe_within_the_property_no"
+                          value="false"
+                          checked={
+                            propertyState.is_there_an_annexe_within_the_property ===
+                            false
+                          }
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label className="form-check-label">No</Label>
+                      </div>
                     </Col>
                   </FormGroup>
                 </Col>
@@ -739,7 +581,7 @@ const AdditionalInfo: React.FC = () => {
           }
           .property-additional-info .form-check-input {
             margin-right: 0.5rem;
-            margin-left:0.5rem;
+            margin-left: 0.5rem;
           }
           .property-additional-info .input-group {
             border-radius: 0.25rem;
