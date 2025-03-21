@@ -21,6 +21,7 @@ export const baseApi = createApi({
   tagTypes: [
     "ClientDetails",
     "AdvisorDetails",
+    "IntroducerDetails",
     "LoanDetails",
     "ApplicantsDetails",
     "Dependants",
