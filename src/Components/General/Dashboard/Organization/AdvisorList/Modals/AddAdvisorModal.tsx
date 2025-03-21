@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useAddAdvisorDetailsMutation } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import { AddAdvisorModalProps } from "@/Types/Organization/AdvisorTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -11,7 +11,6 @@ import {
   Label,
   Modal,
   ModalBody,
-  ModalFooter,
   ModalHeader,
   Row,
 } from "reactstrap";
@@ -20,7 +19,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
   isOpen,
   toggle,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [addAdvisorDetails, { isLoading }] = useAddAdvisorDetailsMutation();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -45,17 +44,8 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     }));
   };
 
-  const handleSaveAdvisor = async () => {
-    // Validate required fields
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.password
-    ) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
+  const handleSaveAdvisor = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     const payload = {
       user: {
@@ -76,9 +66,8 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     };
 
     try {
-      setIsLoading(true);
-      const result = await apiClient.post("/director/advisors/", payload);
-      if (result.status >= 200 && result.status < 300) {
+      const result = await addAdvisorDetails({ payload });
+      if (result.data) {
         toast.success("Advisor added successfully.");
         // Reset form and close modal
         setFormData({
@@ -97,14 +86,16 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
           degree: "",
         });
         toggle();
+      } else if ("error" in result) {
+        const errorMessage =
+          (result.error as any)?.data?.user?.email?.[0] || "Invalid Request...";
+        toast.error(errorMessage);
       } else {
         toast.error("Invalid request. Please try again.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Error adding advisor:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -112,7 +103,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Add Advisor</ModalHeader>
       <ModalBody>
-        <Form>
+        <Form onSubmit={handleSaveAdvisor}>
           <Row>
             {/* First Column */}
             <Col md="6" xs="12">
@@ -198,7 +189,6 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
             {/* Second Column */}
             <Col md="6" xs="12">
               <Row>
-                {" "}
                 <FormGroup>
                   <Label for="lastName">
                     Last Name<span className="text-danger">*</span>
@@ -302,17 +292,22 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
                 />
               </FormGroup>
             </Row>
+            <Row>
+              <Col
+                xs="12"
+                className="d-flex justify-content-between align-items-center"
+              >
+                <Button color="secondary" onClick={toggle}>
+                  Cancel
+                </Button>
+                <Button color="primary">
+                  {isLoading ? "Saving..." : "Save Advisor"}
+                </Button>
+              </Col>
+            </Row>
           </Row>
         </Form>
       </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={handleSaveAdvisor}>
-          {isLoading ? "Saving..." : "Save"}
-        </Button>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-      </ModalFooter>
     </Modal>
   );
 };
