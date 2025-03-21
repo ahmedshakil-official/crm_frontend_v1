@@ -19,6 +19,7 @@ import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
+import formatDateToDMY from "@/utils/dateFormatter";
 
 const ClientListBody: React.FC = () => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
@@ -162,7 +163,7 @@ const ClientListBody: React.FC = () => {
                 </td>
               </tr>
             ) : currentClients.length > 0 ? (
-              currentClients.map((client) => (
+              currentClients.map((client:any) => (
                 <tr key={client.alias}>
                   <td>
                     {client?.user?.first_name} {client?.user?.last_name}
@@ -174,7 +175,7 @@ const ClientListBody: React.FC = () => {
                     {client?.created_by?.first_name}{" "}
                     {client?.created_by?.last_name}
                   </td>
-                  <td>{new Date(client?.created_at).toLocaleString()}</td>
+                  <td>{formatDateToDMY(client?.created_at)}</td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
