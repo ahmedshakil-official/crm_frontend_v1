@@ -19,7 +19,6 @@ import {
 const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
   isOpen,
   toggle,
-  onSave,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -97,7 +96,6 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
           degree: "",
         });
         toggle();
-        onSave();
       } else {
         toast.error("Invalid Request...");
       }

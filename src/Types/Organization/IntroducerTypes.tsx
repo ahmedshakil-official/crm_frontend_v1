@@ -31,7 +31,6 @@ export interface IntroducerInfoProps {
 export interface AddIntroducerModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
 }
 export interface UpdateIntroducerModalProps {
   isOpen: boolean;
@@ -43,7 +42,6 @@ export interface UpdateIntroducerModalProps {
 export interface DeleteIntroducerModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onDelete: () => void;
   introducerName: string;
-  isLoading?: any;
+  introducerAlias?: string;
 }
