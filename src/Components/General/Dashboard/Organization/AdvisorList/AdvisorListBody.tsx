@@ -316,7 +316,7 @@ const AdvisorListBody: React.FC = () => {
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
-          toggleUpdateModal(); // Close the modal
+          toggleUpdateModal();
         }}
         selectedAdvisor={selectedAdvisor}
       />

@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useUpdateAdvisorDetailsMutation } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import {
   AdvisorInfoProps,
   UpdateAdvisorModalProps,
@@ -23,13 +23,13 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
   isOpen,
   toggle,
   onSave,
-  fetchAdvisors,
   selectedAdvisor,
 }) => {
   const [advisorData, setAdvisorData] =
     useState<Partial<AdvisorInfoProps>>(selectedAdvisor);
   const [isModified, setIsModified] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [updateAdvisorDetails, { isLoading }] =
+    useUpdateAdvisorDetailsMutation();
 
   useEffect(() => {
     setAdvisorData(selectedAdvisor);
@@ -40,7 +40,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
     const { name, value } = e.target;
     const keys = name.split(".");
     setAdvisorData((prev) => {
-      const updatedData = { ...prev };
+      const updatedData = JSON.parse(JSON.stringify(prev));
       let current: any = updatedData;
       for (let i = 0; i < keys.length - 1; i++) {
         if (!current[keys[i]]) current[keys[i]] = {};
@@ -56,24 +56,26 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
     advisorData: Partial<AdvisorInfoProps>
   ) => {
     try {
-      setIsLoading(true);
       if (advisorData.alias) {
-        const result = await apiClient.patch(
-          `/director/advisors/${advisorData.alias}/`,
-          advisorData
-        );
+        const result = await updateAdvisorDetails({
+          payload: advisorData,
+          advisorAlias: advisorData.alias,
+        });
 
-        fetchAdvisors();
-        if (result.status >= 200 && result.status < 300) {
+        if (result.data) {
           toast.success("Advisor update successfully.");
+        } else if ("error" in result) {
+          const errorMessage =
+            (result.error as any)?.data?.user?.email?.[0] ||
+            (result.error as any)?.data?.user?.nid?.[0] ||
+            "Invalid Request...";
+          toast.error(errorMessage);
         } else {
           toast.error("Invalid Request...");
         }
       }
     } catch (error) {
       console.error("Error saving advisor:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -347,7 +349,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
               </Row>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <FormGroup>
               <Label for="profile_image">Profile Image</Label>
               <Input
@@ -360,7 +362,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
                 className="mb-2"
               />
             </FormGroup>
-          </Row>
+          </Row> */}
           <Row>
             <FormGroup>
               <Label for="present_address">Present Address</Label>

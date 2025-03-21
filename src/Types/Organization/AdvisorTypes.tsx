@@ -38,7 +38,6 @@ export interface UpdateAdvisorModalProps {
   toggle: () => void;
   onSave: (AdvisorData: Partial<AdvisorInfoProps>) => void;
   selectedAdvisor: Partial<AdvisorInfoProps>;
-  fetchAdvisors?: any;
 }
 export interface DeleteAdvisorModalProps {
   isOpen: boolean;
