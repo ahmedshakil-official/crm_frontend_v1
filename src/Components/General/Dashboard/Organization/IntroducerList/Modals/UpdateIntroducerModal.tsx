@@ -349,7 +349,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
               </Row>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <FormGroup>
               <Label for="profile_image">Profile Image</Label>
               <Input
@@ -362,7 +362,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                 className="mb-2"
               />
             </FormGroup>
-          </Row>
+          </Row> */}
           <Row>
             <FormGroup>
               <Label for="present_address">Present Address</Label>
