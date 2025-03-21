@@ -1,6 +1,7 @@
 import { useGetIntroducerDetailsQuery } from "@/Redux/Reducers/Directors/IntroducerDetailsApi";
 import { IntroducerInfoProps } from "@/Types/Organization/IntroducerTypes";
 import LoadingSpinner from "@/app/loading";
+import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -20,7 +21,6 @@ import "./IntroducerList.css";
 import AddIntroducerModal from "./Modals/AddIntroducerModal";
 import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
 import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
-import formatDateToDMY from "@/utils/dateFormatter";
 
 const IntroducerListBody: React.FC = () => {
   const [introducers, setIntroducers] = useState<IntroducerInfoProps[]>([]);
@@ -212,7 +212,6 @@ const IntroducerListBody: React.FC = () => {
         </Table>
       </Row>
       <Row>
-        {" "}
         <Pagination className="d-flex justify-content-end p-2">
           <PaginationItem disabled={currentPage === 1}>
             <PaginationLink first onClick={() => setCurrentPage(1)} />

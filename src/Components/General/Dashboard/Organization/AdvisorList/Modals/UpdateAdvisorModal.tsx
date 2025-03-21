@@ -37,6 +37,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
   }, [selectedAdvisor]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const { name, value } = e.target;
     const keys = name.split(".");
     setAdvisorData((prev) => {
