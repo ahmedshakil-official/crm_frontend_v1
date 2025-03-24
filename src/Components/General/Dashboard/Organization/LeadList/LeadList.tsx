@@ -1,12 +1,11 @@
-import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import { Card, Col } from "reactstrap";
 import LeadListBody from "./LeadListBody";
 
-const LeadList: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
+const LeadList: React.FC = () => {
   return (
     <Col>
       <Card className="job-card">
-        <LeadListBody setIsFetchedLead={setIsFetchedLead} />
+        <LeadListBody />
       </Card>
     </Col>
   );

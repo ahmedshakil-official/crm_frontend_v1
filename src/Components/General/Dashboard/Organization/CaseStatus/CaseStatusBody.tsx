@@ -1,6 +1,5 @@
-import apiClient from "@/services/api-client";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
-import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
+import apiClient from "@/services/api-client";
 import formatDateToDMY from "@/utils/dateFormatter";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -8,10 +7,7 @@ import { Button, Row, Table } from "reactstrap";
 import "./CaseStatus.css";
 import CaseStatusHeader from "./CaseStatusHeader";
 
-const CaseStatusBody: React.FC<FetchLeadsProps> = ({
-  isFetchedLead,
-  setIsFetchedLead,
-}) => {
+const CaseStatusBody: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -46,8 +42,6 @@ const CaseStatusBody: React.FC<FetchLeadsProps> = ({
     <div className="container pb-3">
       <Row className="mb-3">
         <CaseStatusHeader
-          setIsFetchedLead={setIsFetchedLead}
-          isFetchedLead={isFetchedLead}
           fetchCaseInfo={fetchCaseInfo}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

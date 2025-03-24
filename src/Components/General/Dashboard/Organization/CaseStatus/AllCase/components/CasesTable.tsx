@@ -1,6 +1,5 @@
 import apiClient from "@/services/api-client";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
-import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -29,10 +28,7 @@ import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 import DeleteCaseModal from "../../Modals/DeleteCaseModal";
 import UpdateCaseModal from "../../Modals/UpdateCaseModal";
 
-const CaseTable: React.FC<FetchLeadsProps> = ({
-  setIsFetchedLead,
-  isFetchedLead,
-}) => {
+const CaseTable: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
   const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -506,8 +502,6 @@ const CaseTable: React.FC<FetchLeadsProps> = ({
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
-        isFetchedLead={isFetchedLead}
-        setIsFetchedLead={setIsFetchedLead}
         onSave={() => fetchCaseInfo()}
       />
       <UpdateCaseModal
