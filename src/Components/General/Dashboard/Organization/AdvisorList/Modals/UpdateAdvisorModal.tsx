@@ -97,7 +97,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
             <Col md={6} xs={12}>
               <Row>
                 <FormGroup>
-                  <Label for="firstName">First Name</Label>
+                  <Label for="firstName">First Name*</Label>
                   <Input
                     type="text"
                     id="firstName"
@@ -106,12 +106,13 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
                     value={advisorData.user?.first_name || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
               <Row>
                 <FormGroup>
-                  <Label for="dob">Official Email</Label>
+                  <Label for="dob">Official Email*</Label>
                   <Input
                     type="text"
                     id="official_email"
@@ -120,6 +121,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
                     value={advisorData.official_email || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
@@ -218,7 +220,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
             <Col md={6} xs={12}>
               <Row>
                 <FormGroup>
-                  <Label for="lastName">Last Name</Label>
+                  <Label for="lastName">Last Name*</Label>
                   <Input
                     type="text"
                     id="lastName"
@@ -227,6 +229,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
                     value={advisorData.user?.last_name || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
@@ -243,7 +246,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
                       onChange={handleChange}
                       className="mb-2 pointer-event"
                     >
-                      <option value="">--Select Type--</option>
+                      <option value="">Select...</option>
                       <option value="LEAD">LEAD</option>
                       <option value="CLIENT">CLIENT</option>
                       <option value="ADVISOR">ADVISOR</option>
@@ -263,7 +266,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
                       onChange={handleChange}
                       className="mb-2 pointer-event"
                     >
-                      <option value="">--Select Role--</option>
+                      <option value="">Select...</option>
                       <option value="LEAD">LEAD</option>
                       <option value="CLIENT">CLIENT</option>
                       <option value="ADVISOR">ADVISOR</option>
@@ -394,15 +397,15 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
           </Row>
         </ModalBody>
         <ModalFooter>
+          <Button type="button" color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
           <Button
             type="submit"
             color="primary"
             disabled={!isModified || isLoading}
           >
             {isLoading ? "Saving..." : "Save Changes"}
-          </Button>
-          <Button type="button" color="secondary" onClick={toggle}>
-            Cancel
           </Button>
         </ModalFooter>
       </Form>

@@ -1,5 +1,6 @@
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
 import { LeadsInfo } from "@/Types/Organization/LeadTypes";
+import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -161,7 +162,8 @@ const LeadListBody: React.FC = () => {
                   <td>
                     {lead?.created_by?.first_name} {lead?.created_by?.last_name}
                   </td>
-                  <td>{new Date(lead.created_at).toLocaleString()}</td>
+                  <td>{formatDateToDMY(lead?.created_at)}</td>
+
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button

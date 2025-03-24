@@ -34,7 +34,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
 
   useEffect(() => {
     setIntroducerData(selectedIntroducer);
-    setIsModified(false); // Reset modification flag when modal opens or lead changes
+    setIsModified(false);
   }, [selectedIntroducer]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +85,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
     e.preventDefault();
     handleUpdateIntroducer(introducerData); // Pass the updated data to the server
     onSave(introducerData); // Pass the updated data to the parent component
-    toggle(); // Close the modal
+    toggle();
   };
 
   return (
@@ -98,7 +98,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
             <Col md={6} xs={12}>
               <Row>
                 <FormGroup>
-                  <Label for="firstName">First Name</Label>
+                  <Label for="firstName">First Name*</Label>
                   <Input
                     type="text"
                     id="firstName"
@@ -107,12 +107,13 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                     value={introducerData?.user?.first_name || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
               <Row>
                 <FormGroup>
-                  <Label for="dob">Official Email</Label>
+                  <Label for="dob">Official Email*</Label>
                   <Input
                     type="text"
                     id="official_email"
@@ -121,6 +122,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                     value={introducerData?.official_email || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
@@ -219,7 +221,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
             <Col md={6} xs={12}>
               <Row>
                 <FormGroup>
-                  <Label for="lastName">Last Name</Label>
+                  <Label for="lastName">Last Name*</Label>
                   <Input
                     type="text"
                     id="lastName"
@@ -228,6 +230,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                     value={introducerData?.user?.last_name || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
@@ -244,7 +247,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                       onChange={handleChange}
                       className="mb-2 pointer-event"
                     >
-                      <option value="">--Select Type--</option>
+                      <option value="">Select...</option>
                       <option value="LEAD">LEAD</option>
                       <option value="CLIENT">CLIENT</option>
                       <option value="ADVISOR">ADVISOR</option>
@@ -264,7 +267,7 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
                       onChange={handleChange}
                       className="mb-2 pointer-event"
                     >
-                      <option value="">--Select Role--</option>
+                      <option value="">Select...</option>
                       <option value="LEAD">LEAD</option>
                       <option value="CLIENT">CLIENT</option>
                       <option value="ADVISOR">ADVISOR</option>
@@ -393,15 +396,15 @@ const UpdateIntroducerModal: React.FC<UpdateIntroducerModalProps> = ({
           </Row>
         </ModalBody>
         <ModalFooter>
+          <Button type="button" color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
           <Button
             type="submit"
             color="primary"
             disabled={!isModified || isLoading}
           >
             {isLoading ? "Saving..." : "Save Changes"}
-          </Button>
-          <Button type="button" color="secondary" onClick={toggle}>
-            Cancel
           </Button>
         </ModalFooter>
       </Form>

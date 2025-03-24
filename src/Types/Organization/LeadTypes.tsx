@@ -38,7 +38,6 @@ export interface UpdateLeadModalProps {
   toggle: () => void;
   onSave: (leadData: Partial<LeadsInfo>) => void;
   selectedLead: Partial<LeadsInfo>;
-  fetchLeads?: any;
 }
 export interface DeleteLeadModalProps {
   isOpen: boolean;
