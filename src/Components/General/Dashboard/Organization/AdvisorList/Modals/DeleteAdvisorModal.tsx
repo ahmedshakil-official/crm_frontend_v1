@@ -19,6 +19,10 @@ const DeleteAdvisorModal: React.FC<DeleteAdvisorModalProps> = ({
       if ("data" in response) {
         toast.success("Advisor deleted successfully.");
         toggle();
+      } else if ("error" in response) {
+        const errorMessage =
+          (response.error as any)?.data?.message || "Invalid Request...";
+        toast.error(errorMessage);
       } else toast.error("Failed to delete advisor.");
     } catch (error) {
       toast.error("Failed to delete advisor.");

@@ -19,6 +19,10 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
         toast.success("Client deleted successfully.");
         toggle();
       } else if ("error" in response) {
+        const errorMessage =
+          (response.error as any)?.data?.message || "Invalid Request...";
+        toast.error(errorMessage);
+      } else {
         toast.error("Failed to delete the client. Please try again.");
       }
     } catch (error) {

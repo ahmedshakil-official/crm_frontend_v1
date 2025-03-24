@@ -1,9 +1,7 @@
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
 import { FetchLeadsProps, LeadsInfo } from "@/Types/Organization/LeadTypes";
-import apiClient from "@/services/api-client";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -75,20 +73,6 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
       setLeads(leadsData || []);
     }
   }, [leadData]);
-
-  //delete lead
-  const deleteLead = async (alias: string) => {
-    if (!alias) return;
-    try {
-      await apiClient.delete(`/director/leads/${alias}/`);
-      // Refresh the leads after deletion
-      toast.success("Lead deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting lead:", error);
-      toast.error("Failed to delete the lead. Please try again.");
-    } finally {
-    }
-  };
 
   // openmodals
   const openAddModal = () => {
@@ -309,11 +293,7 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
       <DeleteLeadModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        onDelete={() => {
-          if (leadToDelete) deleteLead(leadToDelete.alias);
-          toggleDeleteModal();
-        }}
-        isLoading={isLoading}
+        leadAlias={leadToDelete?.alias}
         leadName={`${leadToDelete?.user?.first_name} ${leadToDelete?.user?.last_name}`}
       />
 

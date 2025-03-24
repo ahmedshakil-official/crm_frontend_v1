@@ -20,6 +20,10 @@ const DeleteIntroducerModal: React.FC<DeleteIntroducerModalProps> = ({
       if ("data" in response) {
         toast.success("Introducer deleted successfully.");
         toggle();
+      } else if ("error" in response) {
+        const errorMessage =
+          (response.error as any)?.data?.message || "Invalid Request...";
+        toast.error(errorMessage);
       } else toast.error("Failed to delete introducer.");
     } catch (error) {
       toast.error("Failed to delete introducer.");

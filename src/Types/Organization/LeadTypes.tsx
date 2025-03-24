@@ -47,7 +47,6 @@ export interface UpdateLeadModalProps {
 export interface DeleteLeadModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onDelete: () => void;
   leadName: string;
-  isLoading?: any;
+  leadAlias?: string;
 }
