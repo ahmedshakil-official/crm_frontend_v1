@@ -38,23 +38,10 @@ const CaseTable: React.FC = () => {
   const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [casesPerPage] = useState(10);
+  const [casesPerPage] = useState(5);
   const [filterIcon, setFilterIcon] = useState(false);
   const [isDeleteCaseModalOpen, setIsDeleteCaseModalOpen] = useState(false);
 
-  // RTK Query Hooks
-  const { data: advisorData, isLoading: isAdvisorLoading } =
-    useGetAdvisorDetailsQuery(undefined);
-  const {
-    data: caseData,
-    isLoading: isCaseLoading,
-    refetch: refetchCases,
-  } = useGetCaseDetailsQuery(undefined);
-  const [deleteCase] = useDeleteCaseDetailsMutation();
-
-  const isLoading = isAdvisorLoading || isCaseLoading;
-
-  // Filter State
   const defaultFilters = {
     created_by: "",
     case_category: "",
@@ -65,7 +52,21 @@ const CaseTable: React.FC = () => {
   };
   const [filters, setFilters] = useState(defaultFilters);
 
-  // Helper Functions
+  const { data: advisorData, isLoading: isAdvisorLoading } =
+    useGetAdvisorDetailsQuery(undefined);
+  const { data: caseData, isLoading: isCaseLoading } = useGetCaseDetailsQuery({
+    search: searchQuery,
+    ...filters,
+    page: currentPage,
+    limit: casesPerPage,
+  });
+  const [deleteCaseDetails, { isLoading: isDeleting }] =
+    useDeleteCaseDetailsMutation();
+
+  const isLoading = isAdvisorLoading || isCaseLoading || isDeleting;
+
+  console.log("caseData:", caseData); // Debug: Check the API response
+
   const toggleFilterIcon = () => setFilterIcon(!filterIcon);
   const toggleAddNewCaseModal = () =>
     setIsAddNewCaseModalOpen(!isAddNewCaseModalOpen);
@@ -84,19 +85,10 @@ const CaseTable: React.FC = () => {
     toggleDeleteCaseModal();
   };
 
-  const handleFilterChange = (filterKey: string, value: string) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterKey]: value,
-    }));
-  };
-
-  // Handle Case Deletion
   const handleCaseDeletion = async (caseAlias: string) => {
     try {
-      await deleteCase({ caseAlias }).unwrap();
+      await deleteCaseDetails({ caseAlias }).unwrap();
       toast.success("Case deleted successfully.");
-      refetchCases(); // Refetch cases after deletion
       toggleDeleteCaseModal();
     } catch (error) {
       console.error("Error deleting case:", error);
@@ -104,23 +96,18 @@ const CaseTable: React.FC = () => {
     }
   };
 
-  // Filter and Pagination Logic
-  const filteredCases = (caseData || []).filter((caseItem: CaseInfo) => {
-    const matchesSearch = caseItem.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesFilters = Object.entries(filters).every(([key, value]) => {
-      if (!value) return true; // Skip empty filters
-      return caseItem[key as keyof CaseInfo] === value;
-    });
-    return matchesSearch && matchesFilters;
-  });
+  const handleFilterChange = (filterKey: string, value: string) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterKey]: value,
+    }));
+    setCurrentPage(1);
+  };
 
-  const paginatedCases = filteredCases.slice(
-    (currentPage - 1) * casesPerPage,
-    currentPage * casesPerPage
-  );
-  const pageCount = Math.ceil(filteredCases.length / casesPerPage);
+  // Pagination Logic (assuming caseData is an array or has total)
+  const pageCount = caseData?.total
+    ? Math.ceil(caseData.total / casesPerPage)
+    : Math.ceil((caseData?.length || 0) / casesPerPage);
 
   return (
     <Card>
@@ -135,7 +122,10 @@ const CaseTable: React.FC = () => {
                 type="text"
                 placeholder="Search Case..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
               />
               <InputGroupText className="bg-success rounded-start-0 border-start-0">
                 <FaSearch />
@@ -158,16 +148,15 @@ const CaseTable: React.FC = () => {
       </CardHeader>
 
       <CardBody className="p-0 m-0">
-        {/* Filter Options */}
         {filterIcon && (
-          <Card className="shadow-lg rounded-1 p-3">
+          <Card className="shadow-lg rounded-1 p-3 mt-3">
             <Row className="justify-content-center text-center g-3">
-              {/* Employee Filter */}
               <Col xs="12" sm="6" md="3">
                 <Input
                   type="select"
                   id="employeeFilter"
                   className="py-1"
+                  value={filters.created_by}
                   onChange={(e) =>
                     handleFilterChange("created_by", e.target.value)
                   }
@@ -180,13 +169,12 @@ const CaseTable: React.FC = () => {
                   ))}
                 </Input>
               </Col>
-
-              {/* Case Category Filter */}
               <Col xs="12" sm="6" md="3">
                 <Input
                   type="select"
                   id="caseCategory"
                   className="py-1"
+                  value={filters.case_category}
                   onChange={(e) =>
                     handleFilterChange("case_category", e.target.value)
                   }
@@ -197,13 +185,12 @@ const CaseTable: React.FC = () => {
                   <option value="GENERAL_INSURANCE">General Insurance</option>
                 </Input>
               </Col>
-
-              {/* Case Stage Filter */}
               <Col xs="12" sm="6" md="3">
                 <Input
                   type="select"
                   id="caseStage"
                   className="py-1"
+                  value={filters.case_stage}
                   onChange={(e) =>
                     handleFilterChange("case_stage", e.target.value)
                   }
@@ -227,12 +214,13 @@ const CaseTable: React.FC = () => {
                   <option value="NOT_PROCEED">Not Proceed</option>
                 </Input>
               </Col>
-
-              {/* Clear All Filters Button */}
               <Col xs="12" sm="6" md="3">
                 <Button
                   className="btn btn-secondary w-100"
-                  onClick={() => setFilters(defaultFilters)}
+                  onClick={() => {
+                    setFilters(defaultFilters);
+                    setCurrentPage(1);
+                  }}
                 >
                   Clear All Filters
                 </Button>
@@ -241,9 +229,8 @@ const CaseTable: React.FC = () => {
           </Card>
         )}
 
-        {/* Case Table */}
         <Row>
-          <Table bordered hover responsive>
+          <Table bordered hover responsive className="mt-3">
             <thead className="thead-light text-center">
               <tr>
                 <th>Case Name</th>
@@ -263,8 +250,8 @@ const CaseTable: React.FC = () => {
                     <Spinner color="primary" />
                   </td>
                 </tr>
-              ) : paginatedCases.length > 0 ? (
-                paginatedCases.map((caseItem: CaseInfo) => (
+              ) : caseData?.length > 0 ? ( // Assuming caseData is an array
+                caseData.map((caseItem: CaseInfo) => (
                   <tr key={caseItem.alias}>
                     <td>
                       <Link href={`/dashboard/organization/${caseItem.alias}`}>
@@ -291,21 +278,23 @@ const CaseTable: React.FC = () => {
                       {caseItem.created_by?.last_name}
                     </td>
                     <td>
-                      <Button
-                        size="sm"
-                        color="success"
-                        className="me-2"
-                        onClick={() => openUpdateCaseModal(caseItem)}
-                      >
-                        <i className="icon-pencil-alt"></i>
-                      </Button>
-                      <Button
-                        size="sm"
-                        color="danger"
-                        onClick={() => openDeleteCaseModal(caseItem)}
-                      >
-                        <i className="icon-trash"></i>
-                      </Button>
+                      <div className="d-flex justify-content-center align-items-center">
+                        <Button
+                          size="sm"
+                          color="success"
+                          className="me-2"
+                          onClick={() => openUpdateCaseModal(caseItem)}
+                        >
+                          <i className="icon-pencil-alt"></i>
+                        </Button>
+                        <Button
+                          size="sm"
+                          color="danger"
+                          onClick={() => openDeleteCaseModal(caseItem)}
+                        >
+                          <i className="icon-trash"></i>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -320,7 +309,6 @@ const CaseTable: React.FC = () => {
           </Table>
         </Row>
 
-        {/* Pagination */}
         <Pagination className="d-flex justify-content-end p-2">
           <PaginationItem disabled={currentPage === 1}>
             <PaginationLink first onClick={() => setCurrentPage(1)} />
@@ -350,17 +338,14 @@ const CaseTable: React.FC = () => {
         </Pagination>
       </CardBody>
 
-      {/* Modals */}
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
-        onSave={refetchCases}
       />
       <UpdateCaseModal
         isOpen={isUpdateCaseModalOpen}
         toggle={toggleUpdateCaseModal}
         caseData={currentCase as CaseInfo}
-        onSave={refetchCases}
       />
       <DeleteCaseModal
         isOpen={isDeleteCaseModalOpen}

@@ -17,7 +17,6 @@ import {
 interface AddNewCaseModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
 }
 
 interface Lead {
@@ -32,7 +31,6 @@ interface Lead {
 const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   isOpen,
   toggle,
-  onSave,
 }) => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const { data: leadData, isLoading } = useGetLeadDetailsQuery(undefined);
@@ -78,7 +76,6 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
           case_stage: "",
           notes: "",
         });
-        onSave();
         toggle();
       } else {
         toast.error("Invalid Request...");

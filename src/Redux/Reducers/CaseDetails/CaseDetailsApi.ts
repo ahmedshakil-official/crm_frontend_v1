@@ -3,9 +3,10 @@ import { baseApi } from "@/Redux/Api/BaseApi";
 export const CaseDetailsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getCaseDetails: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: `/cases/`,
         method: "GET",
+        params,
       }),
       providesTags: ["CaseDetails"],
     }),

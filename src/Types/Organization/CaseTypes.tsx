@@ -123,7 +123,6 @@ export interface UpdateCaseModalProps {
   isOpen: boolean;
   toggle: () => void;
   caseData: CaseInfo;
-  onSave: () => void;
 }
 export interface DeleteCaseModalProps {
   isOpen: boolean;
