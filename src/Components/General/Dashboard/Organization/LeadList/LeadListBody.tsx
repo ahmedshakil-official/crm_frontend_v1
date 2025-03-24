@@ -1,5 +1,5 @@
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
-import { FetchLeadsProps, LeadsInfo } from "@/Types/Organization/LeadTypes";
+import { LeadsInfo } from "@/Types/Organization/LeadTypes";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -20,7 +20,7 @@ import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
 
-const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
+const LeadListBody: React.FC = () => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -275,17 +275,12 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
       </Row>
 
       {/* Modals */}
-      <AddLeadModal
-        isOpen={isModalOpen}
-        toggle={toggleModal}
-        setIsFetchedLead={setIsFetchedLead}
-      />
+      <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
 
       <UpdateLeadModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
-          setIsFetchedLead = { setIsFetchedLead };
           toggleUpdateModal();
         }}
         selectedLead={selectedLead}

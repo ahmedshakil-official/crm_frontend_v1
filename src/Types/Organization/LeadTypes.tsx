@@ -29,10 +29,6 @@ export interface LeadsInfo {
   created_at: string;
 }
 
-export interface FetchLeadsProps {
-  setIsFetchedLead?: any;
-  isFetchedLead?: any;
-}
 export interface AddLeadModalProps {
   isOpen: boolean;
   toggle: () => void;
