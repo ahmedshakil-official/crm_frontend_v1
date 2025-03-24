@@ -254,7 +254,7 @@ const CaseTable: React.FC = () => {
                 caseData.map((caseItem: CaseInfo) => (
                   <tr key={caseItem.alias}>
                     <td>
-                      <Link href={`/dashboard/organization/${caseItem.alias}`}>
+                      <Link className="custom-hover" href={`/dashboard/organization/${caseItem.alias}`}>
                         {caseItem.name}
                       </Link>
                     </td>
