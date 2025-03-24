@@ -31,6 +31,9 @@ const AdvisorListBody: React.FC = () => {
   const [advisorsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [advisorToDelete, setAdvisorToDelete] =
+    useState<AdvisorInfoProps | null>(null);
 
   const { data: advisorData, isLoading } = useGetAdvisorDetailsQuery(undefined);
 
@@ -64,9 +67,6 @@ const AdvisorListBody: React.FC = () => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [advisorToDelete, setAdvisorToDelete] =
-    useState<AdvisorInfoProps | null>(null);
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 

@@ -1,6 +1,5 @@
-import apiClient from "@/services/api-client";
+import { useUpdateLeadDetailsMutation } from "@/Redux/Reducers/Directors/LeadDetalisApi";
 import {
-  FetchLeadsProps,
   LeadsInfo,
   UpdateLeadModalProps,
 } from "@/Types/Organization/LeadTypes";
@@ -20,28 +19,27 @@ import {
   Row,
 } from "reactstrap";
 
-const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
+const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
   isOpen,
   toggle,
   onSave,
   selectedLead,
-  fetchLeads,
-  setIsFetchedLead,
 }) => {
   const [leadData, setLeadData] = useState<Partial<LeadsInfo>>(selectedLead);
   const [isModified, setIsModified] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [updateLeadDetails, { isLoading }] = useUpdateLeadDetailsMutation();
 
   useEffect(() => {
     setLeadData(selectedLead);
-    setIsModified(false); // Reset modification flag when modal opens or lead changes
+    setIsModified(false);
   }, [selectedLead]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const keys = name.split(".");
     setLeadData((prev: any) => {
-      const updatedData = { ...prev };
+      const updatedData = JSON.parse(JSON.stringify(prev));
       let current: any = updatedData;
       for (let i = 0; i < keys.length - 1; i++) {
         if (!current[keys[i]]) current[keys[i]] = {};
@@ -55,24 +53,26 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
 
   const handleUpdateLead = async (leadData: Partial<LeadsInfo>) => {
     try {
-      setIsLoading(true);
       if (leadData.alias) {
-        const result = await apiClient.put(
-          `/director/leads/${leadData.alias}/`,
-          leadData
-        );
-        fetchLeads();
-        if (result.status >= 200 && result.status < 300) {
+        const result = await updateLeadDetails({
+          payload: leadData,
+          leadAlias: leadData.alias,
+        });
+
+        if (result.data) {
           toast.success("Lead update successfully.");
-          setIsFetchedLead(true);
+        } else if ("error" in result) {
+          const errorMessage =
+            (result.error as any)?.data?.user?.email?.[0] ||
+            (result.error as any)?.data?.user?.nid?.[0] ||
+            "Invalid Request...";
+          toast.error(errorMessage);
         } else {
           toast.error("Invalid Request...");
         }
       }
     } catch (error) {
       console.error("Error saving lead:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -80,7 +80,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
     e.preventDefault();
     handleUpdateLead(leadData); // Pass the updated data to the server
     onSave(leadData); // Pass the updated data to the parent component
-    toggle(); // Close the modal
+    toggle();
   };
 
   return (
@@ -93,7 +93,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
             <Col md={6} xs={12}>
               <Row>
                 <FormGroup>
-                  <Label for="firstName">First Name</Label>
+                  <Label for="firstName">First Name*</Label>
                   <Input
                     type="text"
                     id="firstName"
@@ -102,12 +102,13 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                     value={leadData?.user?.first_name || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
               <Row>
                 <FormGroup>
-                  <Label for="dob">Official Email</Label>
+                  <Label for="dob">Official Email*</Label>
                   <Input
                     type="text"
                     id="official_email"
@@ -116,6 +117,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                     value={leadData?.official_email || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
@@ -214,7 +216,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
             <Col md={6} xs={12}>
               <Row>
                 <FormGroup>
-                  <Label for="lastName">Last Name</Label>
+                  <Label for="lastName">Last Name*</Label>
                   <Input
                     type="text"
                     id="lastName"
@@ -223,6 +225,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                     value={leadData?.user?.last_name || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
@@ -239,7 +242,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                       onChange={handleChange}
                       className="mb-2 pointer-event"
                     >
-                      <option value="">--Select Type--</option>
+                      <option value="">Select...</option>
                       <option value="LEAD">LEAD</option>
                       <option value="CLIENT">CLIENT</option>
                       <option value="ADVISOR">ADVISOR</option>
@@ -259,7 +262,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                       onChange={handleChange}
                       className="mb-2 pointer-event"
                     >
-                      <option value="">--Select Role--</option>
+                      <option value="">Select..</option>
                       <option value="LEAD">LEAD</option>
                       <option value="CLIENT">CLIENT</option>
                       <option value="ADVISOR">ADVISOR</option>
@@ -344,7 +347,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
               </Row>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <FormGroup>
               <Label for="profile_image">Profile Image</Label>
               <Input
@@ -357,7 +360,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
                 className="mb-2"
               />
             </FormGroup>
-          </Row>
+          </Row> */}
           <Row>
             <FormGroup>
               <Label for="present_address">Present Address</Label>
@@ -388,15 +391,15 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps & FetchLeadsProps> = ({
           </Row>
         </ModalBody>
         <ModalFooter>
+          <Button type="button" color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
           <Button
             type="submit"
             color="primary"
             disabled={!isModified || isLoading}
           >
             {isLoading ? "Saving..." : "Save Changes"}
-          </Button>
-          <Button type="button" color="secondary" onClick={toggle}>
-            Cancel
           </Button>
         </ModalFooter>
       </Form>

@@ -97,7 +97,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
             <Col md={6} xs={12}>
               <Row>
                 <FormGroup>
-                  <Label for="firstName">First Name</Label>
+                  <Label for="firstName">First Name*</Label>
                   <Input
                     type="text"
                     id="firstName"
@@ -106,13 +106,13 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                     value={clientData.user?.first_name || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
               <Row>
-                {" "}
                 <FormGroup>
-                  <Label for="dob">Official Email</Label>
+                  <Label for="dob">Official Email*</Label>
                   <Input
                     type="text"
                     id="official_email"
@@ -121,6 +121,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                     value={clientData.official_email || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
@@ -170,7 +171,6 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                   </FormGroup>
                 </Col>
                 <Col md={6} xs={12}>
-                  {" "}
                   <FormGroup>
                     <Label for="state">State</Label>
                     <Input
@@ -219,9 +219,8 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
             {/* Second column */}
             <Col md={6} xs={12}>
               <Row>
-                {" "}
                 <FormGroup>
-                  <Label for="lastName">Last Name</Label>
+                  <Label for="lastName">Last Name*</Label>
                   <Input
                     type="text"
                     id="lastName"
@@ -230,6 +229,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                     value={clientData.user?.last_name || ""}
                     onChange={handleChange}
                     className="mb-2"
+                    required
                   />
                 </FormGroup>
               </Row>
@@ -246,7 +246,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                       onChange={handleChange}
                       className="mb-2 pointer-event"
                     >
-                      <option value="">--Select Type--</option>
+                      <option value="">Select...</option>
                       <option value="LEAD">LEAD</option>
                       <option value="CLIENT">CLIENT</option>
                       <option value="ADVISOR">ADVISOR</option>
@@ -266,7 +266,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                       onChange={handleChange}
                       className="mb-2 pointer-event"
                     >
-                      <option value="">--Select Role--</option>
+                      <option value="">Select...</option>
                       <option value="LEAD">LEAD</option>
                       <option value="CLIENT">CLIENT</option>
                       <option value="ADVISOR">ADVISOR</option>
@@ -395,15 +395,15 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
           </Row>
         </ModalBody>
         <ModalFooter>
+          <Button type="button" color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
           <Button
             type="submit"
             color="primary"
             disabled={!isModified || isLoading}
           >
             {isLoading ? "Saving..." : "Save Changes"}
-          </Button>
-          <Button type="button" color="secondary" onClick={toggle}>
-            Cancel
           </Button>
         </ModalFooter>
       </Form>

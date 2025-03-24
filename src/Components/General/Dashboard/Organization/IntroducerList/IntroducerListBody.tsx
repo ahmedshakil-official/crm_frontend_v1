@@ -29,6 +29,9 @@ const IntroducerListBody: React.FC = () => {
   const [introducersPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [introducerToDelete, setIntroducerToDelete] =
+    useState<IntroducerInfoProps | null>(null);
   const { data: introduceData, isLoading } =
     useGetIntroducerDetailsQuery(undefined);
   const [selectedIntroducer, setSelectedIntroducer] = useState<
@@ -60,9 +63,7 @@ const IntroducerListBody: React.FC = () => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [introducerToDelete, setIntroducerToDelete] =
-    useState<IntroducerInfoProps | null>(null);
+
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
   const openDeleteModal = (introducer: IntroducerInfoProps) => {

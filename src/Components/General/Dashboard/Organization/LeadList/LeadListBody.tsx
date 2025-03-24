@@ -1,5 +1,6 @@
-import apiClient from "@/services/api-client";
-import { FetchLeadsProps, LeadsInfo } from "@/Types/Organization/LeadTypes";
+import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
+import { LeadsInfo } from "@/Types/Organization/LeadTypes";
+import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -19,16 +20,19 @@ import "./LeadList.css";
 import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
-import { toast } from "react-toastify";
 
-const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
+const LeadListBody: React.FC = () => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [leadsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
+
+  const { data: leadData, isLoading } = useGetLeadDetailsQuery(undefined);
+
   const [selectedLead, setSelectedLead] = useState<Partial<LeadsInfo>>({
     user: {
       first_name: "",
@@ -56,8 +60,6 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
@@ -66,41 +68,12 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
     toggleDeleteModal();
   };
 
-  const fetchLeads = async () => {
-    setIsLoading(true);
-    try {
-      const response = await apiClient.get("/director/leads/");
-      const LeadsData = Array.isArray(response.data)
-        ? response.data
-        : response.data.leads;
-      setLeads(LeadsData || []);
-    } catch (error) {
-      console.error("Error fetching Leads:", error);
-      setLeads([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchLeads();
-  }, []);
-
-  //delete lead
-  const deleteLead = async (alias: string) => {
-    if (!alias) return;
-    try {
-      setIsLoading(true);
-      await apiClient.delete(`/director/leads/${alias}/`);
-      fetchLeads(); // Refresh the leads after deletion
-      toast.success("Lead deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting lead:", error);
-      toast.error("Failed to delete the lead. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (leadData) {
+      const leadsData = Array.isArray(leadData) ? leadData : leadData.leads;
+      setLeads(leadsData || []);
     }
-  };
+  }, [leadData]);
 
   // openmodals
   const openAddModal = () => {
@@ -189,7 +162,8 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
                   <td>
                     {lead?.created_by?.first_name} {lead?.created_by?.last_name}
                   </td>
-                  <td>{new Date(lead.created_at).toLocaleString()}</td>
+                  <td>{formatDateToDMY(lead?.created_at)}</td>
+
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
@@ -303,19 +277,12 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
       </Row>
 
       {/* Modals */}
-      <AddLeadModal
-        isOpen={isModalOpen}
-        toggle={toggleModal}
-        setIsFetchedLead={setIsFetchedLead}
-        onSave={() => fetchLeads()}
-      />
+      <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
 
       <UpdateLeadModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
-        fetchLeads={fetchLeads}
         onSave={() => {
-          setIsFetchedLead = { setIsFetchedLead };
           toggleUpdateModal();
         }}
         selectedLead={selectedLead}
@@ -323,11 +290,7 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
       <DeleteLeadModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        onDelete={() => {
-          if (leadToDelete) deleteLead(leadToDelete.alias);
-          toggleDeleteModal();
-        }}
-        isLoading={isLoading}
+        leadAlias={leadToDelete?.alias}
         leadName={`${leadToDelete?.user?.first_name} ${leadToDelete?.user?.last_name}`}
       />
 

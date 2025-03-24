@@ -1,8 +1,5 @@
-import apiClient from "@/services/api-client";
-import {
-  AddLeadModalProps,
-  FetchLeadsProps,
-} from "@/Types/Organization/LeadTypes";
+import { useAddLeadDetailsMutation } from "@/Redux/Reducers/Directors/LeadDetalisApi";
+import { AddLeadModalProps } from "@/Types/Organization/LeadTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -19,13 +16,9 @@ import {
   Row,
 } from "reactstrap";
 
-const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
-  isOpen,
-  toggle,
-  onSave,
-  setIsFetchedLead,
-}) => {
-  const [isLoading, setIsLoading] = useState(false);
+const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
+  const [addLeadDetails, { isLoading }] = useAddLeadDetailsMutation();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -42,10 +35,8 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
     degree: "",
   });
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -53,17 +44,8 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
     }));
   };
 
-  const handleSaveLead = async () => {
-    if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.password
-    ) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-
+  const handleSaveLead = async (e: React.FormEvent) => {
+    e.preventDefault();
     const payload = {
       user: {
         first_name: formData.firstName,
@@ -83,13 +65,10 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
     };
 
     try {
-      setIsLoading(true);
-      const result = await apiClient.post("/director/leads/", payload);
+      const result = await addLeadDetails({ payload });
 
-      if (result.status >= 200 && result.status < 300) {
+      if (result.data) {
         toast.success("Lead added successfully.");
-        setIsFetchedLead(true);
-
         // Reset form and close modal
         setFormData({
           firstName: "",
@@ -107,7 +86,10 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
           degree: "",
         });
         toggle();
-        onSave();
+      } else if ("error" in result) {
+        const errorMessage =
+          (result.error as any)?.data?.user?.email?.[0] || "Invalid Request...";
+        toast.error(errorMessage);
       } else {
         toast.error("Invalid Request...");
       }
@@ -117,186 +99,177 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
         "An error occurred. Please try again.";
       toast.error(errorMessage);
       console.error("Error creating lead:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Add Lead</ModalHeader>
-      <ModalBody>
-        <Form>
+      <Form onSubmit={handleSaveLead}>
+        <ModalBody>
           <Row>
-            {/* First Column */}
-            <Col md="6" xs="12">
-              <Row>
-                <FormGroup>
-                  <Label for="firstName">
-                    First Name<span className="text-danger">*</span>
-                  </Label>
-                  <Input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    value={formData.firstName}
-                    onChange={(e) => handleInputChange(e, "firstName")}
-                    required
-                  />
-                </FormGroup>
-              </Row>
-              <Row>
-                <FormGroup>
-                  <Label for="email">
-                    Email<span className="text-danger">*</span>
-                  </Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange(e, "email")}
-                    required
-                  />
-                </FormGroup>
-              </Row>
-              <Row>
-                <FormGroup>
-                  <Label for="password">
-                    Password<span className="text-danger">*</span>
-                  </Label>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) => handleInputChange(e, "password")}
-                    required
-                  />
-                </FormGroup>
-              </Row>
-              <Row>
-                <Col md="6" xs="12">
-                  <FormGroup>
-                    <Label for="phone">Phone</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="text"
-                      value={formData.phone}
-                      onChange={(e) => handleInputChange(e, "phone")}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="6" xs="12">
-                  <FormGroup>
-                    <Label for="gender">
-                      Gender<span className="text-danger">*</span>
-                    </Label>
-                    <Input
-                      id="gender"
-                      name="gender"
-                      type="select"
-                      value={formData.gender}
-                      onChange={(e) => handleInputChange(e, "gender")}
-                      required
-                    >
-                      <option value="">--Select Gender--</option>
-                      <option value="MALE">MALE</option>
-                      <option value="FEMALE">FEMALE</option>
-                    </Input>
-                  </FormGroup>
-                </Col>
-              </Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="firstName">
+                  First Name<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  id="firstName"
+                  name="firstName"
+                  type="text"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormGroup>
             </Col>
-
-            {/* Second Column */}
-            <Col md="6" xs="12">
-              <Row>
-                <FormGroup>
-                  <Label for="lastName">
-                    Last Name<span className="text-danger">*</span>
-                  </Label>
-                  <Input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    value={formData.lastName}
-                    onChange={(e) => handleInputChange(e, "lastName")}
-                    required
-                  />
-                </FormGroup>
-              </Row>
-              <Row>
-                <Col md="6" xs="12">
-                  {/* dob  */}
-                  <FormGroup>
-                    <Label for="dob">Date of Birth</Label>
-                    <Input
-                      id="dob"
-                      name="dob"
-                      type="date"
-                      value={formData.dob}
-                      onChange={(e) => handleInputChange(e, "dob")}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="6" xs="12">
-                  {/* Joining Date */}
-                  <FormGroup>
-                    <Label for="joining_date">Joining Date</Label>
-                    <Input
-                      id="joining_date"
-                      name="joining_date"
-                      type="date"
-                      value={formData.joining_date}
-                      onChange={(e) => handleInputChange(e, "joining_date")}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md="6" xs="12">
-                  <FormGroup>
-                    <Label for="designation">Designation</Label>
-                    <Input
-                      id="designation"
-                      name="designation"
-                      type="text"
-                      value={formData.designation}
-                      onChange={(e) => handleInputChange(e, "designation")}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="6" xs="12">
-                  <FormGroup>
-                    <Label for="degree">Degree</Label>
-                    <Input
-                      id="degree"
-                      name="degree"
-                      type="text"
-                      value={formData.degree}
-                      onChange={(e) => handleInputChange(e, "degree")}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <FormGroup>
-                  <Label for="registration_number">Registration Number</Label>
-                  <Input
-                    id="registration_number"
-                    name="registration_number"
-                    type="text"
-                    value={formData.registration_number}
-                    onChange={(e) =>
-                      handleInputChange(e, "registration_number")
-                    }
-                  />
-                </FormGroup>
-              </Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="lastName">
+                  Last Name<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormGroup>
             </Col>
-            <Row>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="email">
+                  Email<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="password">
+                  Password<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="phone">Phone</Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="gender">
+                  Gender<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  id="gender"
+                  name="gender"
+                  type="select"
+                  value={formData.gender}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select...</option>
+                  <option value="MALE">MALE</option>
+                  <option value="FEMALE">FEMALE</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="dob">Date of Birth</Label>
+                <Input
+                  id="dob"
+                  name="dob"
+                  type="date"
+                  value={formData.dob}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="degree">Degree</Label>
+                <Input
+                  id="degree"
+                  name="degree"
+                  type="text"
+                  value={formData.degree}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={4}>
+              <FormGroup>
+                <Label for="joining_date">Joining Date</Label>
+                <Input
+                  id="joining_date"
+                  name="joining_date"
+                  type="date"
+                  value={formData.joining_date}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Label for="designation">Designation</Label>
+                <Input
+                  id="designation"
+                  name="designation"
+                  type="text"
+                  value={formData.designation}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Label for="registration_number">Registration Number</Label>
+                <Input
+                  id="registration_number"
+                  name="registration_number"
+                  type="text"
+                  value={formData.registration_number}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
               <FormGroup>
                 <Label for="present_address">Present Address</Label>
                 <Input
@@ -304,11 +277,11 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
                   name="present_address"
                   type="text"
                   value={formData.present_address}
-                  onChange={(e) => handleInputChange(e, "present_address")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
-            </Row>
-            <Row>
+            </Col>
+            <Col md={6}>
               <FormGroup>
                 <Label for="permanent_address">Permanent Address</Label>
                 <Input
@@ -316,21 +289,19 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
                   name="permanent_address"
                   type="text"
                   value={formData.permanent_address}
-                  onChange={(e) => handleInputChange(e, "permanent_address")}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
-            </Row>
+            </Col>
           </Row>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={handleSaveLead}>
-          {isLoading ? "Saving..." : "Save"}
-        </Button>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-      </ModalFooter>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary">{isLoading ? "Saving..." : "Save"}</Button>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };
