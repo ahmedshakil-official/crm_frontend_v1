@@ -1,5 +1,6 @@
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
 import { LeadsInfo } from "@/Types/Organization/LeadTypes";
+import LoadingSpinner from "@/app/loading";
 import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -102,6 +103,14 @@ const LeadListBody: React.FC = () => {
   const currentLeads = filteredLeads.slice(indexOfFirstLead, indexOfLastLead);
 
   const totalPages = Math.ceil(filteredLeads.length / leadsPerPage);
+
+  if (isLoading) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-1">

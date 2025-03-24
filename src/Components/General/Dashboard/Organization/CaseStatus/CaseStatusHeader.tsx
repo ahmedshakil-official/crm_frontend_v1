@@ -1,5 +1,5 @@
 import { CaseSearchProps } from "@/Types/Organization/CaseTypes";
-import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
+
 import Link from "next/link";
 import { useState } from "react";
 import { FaClock, FaSearch } from "react-icons/fa";
@@ -15,10 +15,8 @@ import {
 import "./CaseStatus.css";
 import AddNewCaseModal from "./Modals/AddNewCaseModal";
 
-const CaseStatusHeader: React.FC<FetchLeadsProps & CaseSearchProps> = ({
+const CaseStatusHeader: React.FC<CaseSearchProps> = ({
   fetchCaseInfo,
-  setIsFetchedLead,
-  isFetchedLead,
   searchQuery,
   setSearchQuery,
 }) => {
@@ -84,8 +82,6 @@ const CaseStatusHeader: React.FC<FetchLeadsProps & CaseSearchProps> = ({
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
-        isFetchedLead={isFetchedLead}
-        setIsFetchedLead={setIsFetchedLead}
         onSave={() => fetchCaseInfo()}
       />
     </CardHeader>

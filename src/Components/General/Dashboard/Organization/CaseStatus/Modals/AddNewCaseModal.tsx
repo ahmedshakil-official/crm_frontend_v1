@@ -1,5 +1,5 @@
+import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
 import apiClient from "@/services/api-client";
-import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -29,15 +29,14 @@ interface Lead {
   };
 }
 
-const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
+const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   isOpen,
   toggle,
   onSave,
-  setIsFetchedLead,
-  isFetchedLead,
 }) => {
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data: leadData, isLoading } = useGetLeadDetailsQuery(undefined);
+
   const [formData, setFormData] = useState({
     lead: 0,
     case_category: "",
@@ -48,23 +47,12 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
   });
 
   // Fetch leads data from backend
-  const fetchLeadsForCaseModal = async () => {
-    try {
-      const response = await apiClient.get("/director/leads/");
-      const LeadsData = Array.isArray(response.data)
-        ? response.data
-        : response.data.leads;
-      setIsFetchedLead(false);
-      setLeads(LeadsData || []);
-    } catch (error) {
-      console.error("Error fetching Leads:", error);
-      setLeads([]);
-    }
-  };
-
   useEffect(() => {
-    fetchLeadsForCaseModal();
-  }, [isFetchedLead]);
+    if (leadData) {
+      const leadsData = Array.isArray(leadData) ? leadData : leadData.leads;
+      setLeads(leadsData || []);
+    }
+  }, [leadData]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -79,7 +67,6 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      setIsLoading(true);
       const result = await apiClient.post("/cases/", formData);
       if (result.status >= 200 && result.status < 300) {
         toast.success("Case added successfully!");
@@ -98,8 +85,6 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
       }
     } catch (error) {
       console.error("Error during request setup:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -120,7 +105,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
               value={formData.lead}
               onChange={handleChange}
             >
-              <option value="">--Select Lead--</option>
+              <option value="">Select...</option>
               {leads.map((lead) => (
                 <option key={lead.user.id} value={lead.user.id}>
                   {`${lead.user?.first_name} ${lead.user?.last_name}`}
@@ -140,7 +125,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
               value={formData.case_category}
               onChange={handleChange}
             >
-              <option value="">--Select Category--</option>
+              <option value="">Select...</option>
               <option value="MORTGAGE">Mortgage</option>
               <option value="PROTECTION">Protection</option>
               <option value="GENERAL_INSURANCE">General Insurance</option>
@@ -158,7 +143,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps & FetchLeadsProps> = ({
               value={formData.case_stage}
               onChange={handleChange}
             >
-              <option value="">--Case Stage--</option>
+              <option value="">Select...</option>
               <option value="INQUIRY">Inquiry</option>
               <option value="FACT_FIND">Fact Find</option>
               <option value="RESEARCH_COMPLIANCE_CHECK">

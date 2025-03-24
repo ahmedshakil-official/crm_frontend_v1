@@ -1,6 +1,5 @@
 import Breadcrumbs from "@/CommonComponent/Breadcrumbs";
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
-import { useState } from "react";
 import { Container, Row } from "reactstrap";
 import AdvisorList from "./AdvisorList/AdvisorList";
 import CaseStatus from "./CaseStatus/CaseStatus";
@@ -12,7 +11,6 @@ import LeadList from "./LeadList/LeadList";
 import ProfileGreet from "./ProfileGreet/ProfileGreet";
 
 const MyOrganizationContainer = () => {
-  const [isFetchedLead, setIsFetchedLead] = useState(false);
   return (
     <>
       <Breadcrumbs
@@ -27,13 +25,10 @@ const MyOrganizationContainer = () => {
           <JobToday />
         </Row>
         <Row>
-          <CaseStatus
-            isFetchedLead={isFetchedLead}
-            setIsFetchedLead={setIsFetchedLead}
-          />
+          <CaseStatus />
         </Row>
         <Row>
-          <LeadList setIsFetchedLead={setIsFetchedLead} />
+          <LeadList />
         </Row>
         <Row>
           <ClientList />
