@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/Store";
 import {
   Card,
@@ -11,63 +11,53 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { useUpdateSinglePropertyMutation } from "@/Redux/Reducers/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CaseDetails/PropertyDetails/PropertyDetailsApi";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { updateProperty } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
 
-const NoteForProperty: React.FC = () => {
+const NoteForProperty: React.FC<{ property_alias: string }> = ({ property_alias }) => {
+  const dispatch = useDispatch();
   const { casealias } = useParams();
-  const [notes, setNotes] = useState<string>("");
-  const formData = useSelector(
-    (state: RootState) => state.propertyForm.Properties
-  );
-  const propertyAlias = formData.alias;
+  const formData = useSelector((state: RootState) => state.propertyForm.Properties);
+  const propertyAlias = property_alias;
 
-  const [updateSingleProperty, { isLoading }] =
-    useUpdateSinglePropertyMutation();
+  const [updateSingleProperty, { isLoading }] = useUpdatePropertyMutation();
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(updateProperty({ notes: e.target.value }));
+  };
+
   const handleSubmit = async () => {
-    const finalData = {
-      ...formData,
-      notes,
-    };
-    // console.log("Complete Form Data:", finalData.alias);
     const response = await updateSingleProperty({
       case_alias: casealias,
       property_alias: propertyAlias,
-      updatedPropertyDetails: finalData,
+      updatedPropertyDetails: formData,
     });
+    
     if (response.data) {
       toast.success("Property Details Updated Successfully");
     } else {
       toast.error("Something went wrong");
     }
-    // Here you can handle the submission
   };
 
   return (
     <Card className="mb-3">
-      <CardFooter
-        style={{
-          border: "2px solid #ececec",
-          padding: "20px",
-          backgroundColor: "#fff",
-        }}
-      >
+      <CardFooter style={{ border: "2px solid #ececec", padding: "20px", backgroundColor: "#fff" }}>
         <Row>
           <Col xs={12}>
             <FormGroup>
               <Label className="fw-semibold" for="PropertyNotes">
                 Notes
-                <span className="required" style={{ visibility: "hidden" }}>
-                  *
-                </span>
+                <span className="required" style={{ visibility: "hidden" }}>*</span>
               </Label>
               <Input
                 type="textarea"
                 id="PropertyNotes"
-                name="PropertyNotes"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
+                name="notes"
+                value={formData.notes || ""}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e as unknown as React.ChangeEvent<HTMLTextAreaElement>)}
                 style={{
                   maxWidth: "100%",
                   minWidth: "100%",
@@ -88,7 +78,7 @@ const NoteForProperty: React.FC = () => {
             className="px-4"
             onClick={handleSubmit}
           >
-            Submit
+            {isLoading ? "Updating..." : "Update"}
           </Button>
         </div>
       </CardFooter>

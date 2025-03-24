@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Card, CardBody, CardHeader, Nav, NavItem, NavLink } from "reactstrap";
 import FoundProperty from "./Components/FoundProperty";
 import NoteForProperty from "./Components/NoteForProperty";
 import PropertyValuationCard from "./Components/PropertyValuationCard";
 import PropertyDetailsTabContent from "./PropertyDetailsTabContent";
 import { useGetPropertiesQuery } from "@/Redux/Reducers/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { initializeForm } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
 import { useParams } from "next/navigation";
-import { PropertyData } from "@/Types/Organization/CaseDetails/PropertyDetails";
 
 const propertyContentTabs = [
   { id: "1", title: "Property Address" },
@@ -16,50 +17,35 @@ const propertyContentTabs = [
 
 const PropertyDetails: React.FC = () => {
   const { casealias } = useParams();
-  const [activePropertyTab, setActivePropertyTab] = useState("0");
+  const dispatch = useDispatch();
   const [activeContentTab, setActiveContentTab] = useState("1");
-  const [isPropertyFound, setIsPropertyFound] = useState(false);
   const { data: properties, isLoading } = useGetPropertiesQuery({ case_alias: casealias });
+  const [isPropertyFound, setIsPropertyFound] = useState(false);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (properties && properties.length > 0) {
+      setIsPropertyFound(properties[0].have_you_found_a_property_yet);
+      dispatch(initializeForm(properties[0]));
+    }
+  }, [properties, dispatch]);
+
+  if (isLoading || !properties || properties.length === 0) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
       <PropertyValuationCard />
-      <FoundProperty onPropertyFound={(value) => setIsPropertyFound(value)} />
-      {isPropertyFound && properties && properties.length > 0 && (
+      <FoundProperty
+        property={properties[0]}
+        onPropertyFound={(value) => setIsPropertyFound(value)}
+      />
+      {isPropertyFound && (
         <section>
           <Card className="shadow-sm">
             <CardHeader className="bg-white border-bottom">
               <Nav
-                className="nav-tabs mb-3 d-flex justify-content-center align-items-center"
-                style={{ gap: "0.5rem" }}
-              >
-                {properties.map((property: PropertyData, index: number) => (
-                  <NavItem key={index}>
-                    <NavLink
-                      className={
-                        activePropertyTab === index.toString() 
-                          ? "text-primary border-primary" 
-                          : ""
-                      }
-                      onClick={() => setActivePropertyTab(index.toString())}
-                      style={{ 
-                        cursor: "pointer",
-                        borderBottom: activePropertyTab === index.toString() 
-                          ? "2px solid var(--bs-primary)" 
-                          : "none"
-                      }}
-                    >
-                      Property {index + 1}
-                    </NavLink>
-                  </NavItem>
-                ))}
-              </Nav>
-              <Nav
-                className="nav-primary  d-flex justify-content-center align-items-center"
+                className="nav-primary d-flex justify-content-center align-items-center"
                 pills
                 style={{ gap: "0.5rem" }}
               >
@@ -80,13 +66,13 @@ const PropertyDetails: React.FC = () => {
               <PropertyDetailsTabContent
                 tabId={activeContentTab}
                 setTabId={setActiveContentTab}
-                propertyData={properties[parseInt(activePropertyTab)]}
+                propertyData={properties[0]}
               />
             </CardBody>
           </Card>
         </section>
       )}
-      <NoteForProperty />
+      <NoteForProperty property_alias={properties[0].alias} />
     </div>
   );
 };

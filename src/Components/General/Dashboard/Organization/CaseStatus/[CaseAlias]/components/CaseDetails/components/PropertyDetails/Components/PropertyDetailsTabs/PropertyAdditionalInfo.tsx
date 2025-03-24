@@ -138,17 +138,17 @@ const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ propertyData }) => {
                             name="listed_status_of_the_building"
                             id="listed_status_of_the_building"
                             value={
-                              propertyState.listed_status_of_the_building || ""
+                              propertyState.listed_status_of_the_building || null
                             }
                             onChange={handleChange}
                           >
-                            <option value="">Select...</option>
-                            <option value="0">Grade I</option>
-                            <option value="1">Grade II*</option>
-                            <option value="2">Grade II</option>
-                            <option value="3">Grade A</option>
-                            <option value="4">Grade B</option>
-                            <option value="5">Grade C</option>
+                            <option value="SELECT">Select...</option>
+                            <option value="GRADE_I">Grade I</option>
+                            <option value="GRADE_II*">Grade II*</option>
+                            <option value="GRADE_II">Grade II</option>
+                            <option value="GRADE_A">Grade A</option>
+                            <option value="GRADE_B">Grade B</option>
+                            <option value="GRADE_C">Grade C</option>
                           </Input>
                         </FormGroup>
                       </Col>
