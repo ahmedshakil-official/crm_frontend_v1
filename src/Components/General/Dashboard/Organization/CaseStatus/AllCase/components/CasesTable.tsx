@@ -20,6 +20,7 @@ import {
   Table,
 } from "reactstrap";
 
+import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import formatDateToDMY from "@/utils/dateFormatter";
 import { toast } from "react-toastify";
@@ -31,7 +32,6 @@ import UpdateCaseModal from "../../Modals/UpdateCaseModal";
 const CaseTable: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
   const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
   const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
@@ -39,6 +39,9 @@ const CaseTable: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(10);
   const [filterIcon, setFilterIcon] = useState(false);
+
+  // api call
+  const { data: advisorData, isLoading } = useGetAdvisorDetailsQuery(undefined);
 
   // State for Delete Modal
   const [isDeleteCaseModalOpen, setIsDeleteCaseModalOpen] = useState(false);
@@ -97,28 +100,19 @@ const CaseTable: React.FC = () => {
     }
   };
 
-  const fetchAdvisors = async () => {
-    try {
-      const response = await apiClient.get("/director/advisors/");
-      const AdvisorsData = Array.isArray(response.data)
-        ? response.data
-        : response.data.advisors;
-      setAdvisors(AdvisorsData || []);
-    } catch (error) {
-      console.error("Error fetching Advisors:", error);
-      setAdvisors([]);
-    }
-  };
-
   useEffect(() => {
-    fetchAdvisors();
-  }, []);
+    if (advisorData) {
+      const advisorsArray: AdvisorInfoProps[] = Array.isArray(advisorData)
+        ? advisorData
+        : advisorData.advisors;
+      setAdvisors(advisorsArray || []);
+    }
+  }, [advisorData]);
 
   const fetchCaseInfo = async (
     searchQuery: string = "",
     filters: Record<string, string | number> = {}
   ) => {
-    setIsLoading(true);
     try {
       const queryParams = new URLSearchParams({
         ...filters, // Include all filters dynamically
@@ -132,8 +126,6 @@ const CaseTable: React.FC = () => {
     } catch (error) {
       console.error("Error Fetching Cases:", error);
       setCaseInfo([]); // Reset case info on error
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -156,18 +148,10 @@ const CaseTable: React.FC = () => {
     const caseCategory = document.getElementById(
       "caseCategory"
     ) as HTMLSelectElement;
-    const applicationType = document.getElementById(
-      "applicationType"
-    ) as HTMLSelectElement;
-    const caseStatus = document.getElementById(
-      "caseStatus"
-    ) as HTMLSelectElement;
     const caseStage = document.getElementById("caseStage") as HTMLSelectElement;
 
     if (employeeFilter) employeeFilter.value = "";
     if (caseCategory) caseCategory.value = "";
-    if (applicationType) applicationType.value = "";
-    if (caseStatus) caseStatus.value = "";
     if (caseStage) caseStage.value = "";
 
     fetchCaseInfo(""); // Fetch data with cleared filters
@@ -239,7 +223,7 @@ const CaseTable: React.FC = () => {
                       handleFilterChange("created_by", e.target.value)
                     }
                   >
-                    <option value="">Select Employee</option>
+                    <option value="">Select Employee...</option>
                     {advisors &&
                       advisors.map((advisor) => (
                         <option key={advisor.alias} value={advisor.user.id}>
@@ -259,7 +243,7 @@ const CaseTable: React.FC = () => {
                       handleFilterChange("case_category", e.target.value)
                     }
                   >
-                    <option value="">Select Categories</option>
+                    <option value="">Select Categories...</option>
                     <option value="MORTGAGE">Mortgage</option>
                     <option value="PROTECTION">Protection</option>
                     <option value="GENERAL_INSURANCE">General Insurance</option>
@@ -276,7 +260,7 @@ const CaseTable: React.FC = () => {
                       handleFilterChange("case_stage", e.target.value)
                     }
                   >
-                    <option value="">Select Stages</option>
+                    <option value="">Select Stages...</option>
                     <option value="INQUIRY">Inquiry</option>
                     <option value="FACT_FIND">Fact Find</option>
                     <option value="RESEARCH_COMPLIANCE_CHECK">
