@@ -1,4 +1,6 @@
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
+import { AddNewCaseModalProps } from "@/Types/Organization/CaseTypes";
+import { LeadsInfo } from "@/Types/Organization/LeadTypes";
 import apiClient from "@/services/api-client";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -14,25 +16,11 @@ import {
   ModalHeader,
 } from "reactstrap";
 
-interface AddNewCaseModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
-
-interface Lead {
-  alias: string;
-  user: {
-    id: number;
-    first_name: string;
-    last_name: string;
-  };
-}
-
 const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   isOpen,
   toggle,
 }) => {
-  const [leads, setLeads] = useState<Lead[]>([]);
+  const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const { data: leadData, isLoading } = useGetLeadDetailsQuery(undefined);
 
   const [formData, setFormData] = useState({

@@ -60,10 +60,9 @@ const CaseTable: React.FC = () => {
     page: currentPage,
     limit: casesPerPage,
   });
-  const [deleteCaseDetails, { isLoading: isDeleting }] =
-    useDeleteCaseDetailsMutation();
 
-  const isLoading = isAdvisorLoading || isCaseLoading || isDeleting;
+
+  const isLoading = isAdvisorLoading || isCaseLoading;
 
   console.log("caseData:", caseData); // Debug: Check the API response
 
@@ -85,16 +84,7 @@ const CaseTable: React.FC = () => {
     toggleDeleteCaseModal();
   };
 
-  const handleCaseDeletion = async (caseAlias: string) => {
-    try {
-      await deleteCaseDetails({ caseAlias }).unwrap();
-      toast.success("Case deleted successfully.");
-      toggleDeleteCaseModal();
-    } catch (error) {
-      console.error("Error deleting case:", error);
-      toast.error("Failed to delete case. Please try again.");
-    }
-  };
+
 
   const handleFilterChange = (filterKey: string, value: string) => {
     setFilters((prevFilters) => ({
@@ -351,7 +341,7 @@ const CaseTable: React.FC = () => {
         isOpen={isDeleteCaseModalOpen}
         toggle={toggleDeleteCaseModal}
         caseData={currentCase}
-        onDelete={() => currentCase && handleCaseDeletion(currentCase.alias)}
+        onDelete={toggleDeleteCaseModal}
       />
     </Card>
   );

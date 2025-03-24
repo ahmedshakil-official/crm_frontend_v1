@@ -16,7 +16,7 @@ export interface CaseInfo {
   case_stage: string;
   notes: string;
   is_removed: boolean;
-  created_at:string;
+  created_at: string;
   created_by: {
     email: string;
     phone: string;
@@ -117,6 +117,11 @@ export interface FileDeleteModalProps {
   file?: { name?: string };
   onDelete?: () => void;
   isDeleting?: any;
+}
+
+export interface AddNewCaseModalProps {
+  isOpen: boolean;
+  toggle: () => void;
 }
 
 export interface UpdateCaseModalProps {
