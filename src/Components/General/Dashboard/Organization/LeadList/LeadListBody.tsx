@@ -1,7 +1,9 @@
-import apiClient from "@/services/api-client";
+import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
 import { FetchLeadsProps, LeadsInfo } from "@/Types/Organization/LeadTypes";
+import apiClient from "@/services/api-client";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -19,16 +21,19 @@ import "./LeadList.css";
 import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
-import { toast } from "react-toastify";
 
 const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [leadsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
+
+  const { data: leadData, isLoading } = useGetLeadDetailsQuery(undefined);
+
   const [selectedLead, setSelectedLead] = useState<Partial<LeadsInfo>>({
     user: {
       first_name: "",
@@ -56,8 +61,6 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
@@ -66,39 +69,24 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
     toggleDeleteModal();
   };
 
-  const fetchLeads = async () => {
-    setIsLoading(true);
-    try {
-      const response = await apiClient.get("/director/leads/");
-      const LeadsData = Array.isArray(response.data)
-        ? response.data
-        : response.data.leads;
-      setLeads(LeadsData || []);
-    } catch (error) {
-      console.error("Error fetching Leads:", error);
-      setLeads([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchLeads();
-  }, []);
+    if (leadData) {
+      const leadsData = Array.isArray(leadData) ? leadData : leadData.leads;
+      setLeads(leadsData || []);
+    }
+  }, [leadData]);
 
   //delete lead
   const deleteLead = async (alias: string) => {
     if (!alias) return;
     try {
-      setIsLoading(true);
       await apiClient.delete(`/director/leads/${alias}/`);
-      fetchLeads(); // Refresh the leads after deletion
+      // Refresh the leads after deletion
       toast.success("Lead deleted successfully.");
     } catch (error) {
       console.error("Error deleting lead:", error);
       toast.error("Failed to delete the lead. Please try again.");
     } finally {
-      setIsLoading(false);
     }
   };
 
@@ -307,13 +295,11 @@ const LeadListBody: React.FC<FetchLeadsProps> = ({ setIsFetchedLead }) => {
         isOpen={isModalOpen}
         toggle={toggleModal}
         setIsFetchedLead={setIsFetchedLead}
-        onSave={() => fetchLeads()}
       />
 
       <UpdateLeadModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
-        fetchLeads={fetchLeads}
         onSave={() => {
           setIsFetchedLead = { setIsFetchedLead };
           toggleUpdateModal();

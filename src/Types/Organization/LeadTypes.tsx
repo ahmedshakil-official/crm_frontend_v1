@@ -36,7 +36,6 @@ export interface FetchLeadsProps {
 export interface AddLeadModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
 }
 export interface UpdateLeadModalProps {
   isOpen: boolean;

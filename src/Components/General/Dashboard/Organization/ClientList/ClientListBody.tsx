@@ -29,6 +29,10 @@ const ClientListBody: React.FC = () => {
   const [clientsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [clientToDelete, setClientToDelete] = useState<ClientInfoProps | null>(
+    null
+  );
 
   const { data: clientData, isLoading } =
     useGetClientDetailsQuery(undefined);
@@ -62,10 +66,7 @@ const ClientListBody: React.FC = () => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [clientToDelete, setClientToDelete] = useState<ClientInfoProps | null>(
-    null
-  );
+ 
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 

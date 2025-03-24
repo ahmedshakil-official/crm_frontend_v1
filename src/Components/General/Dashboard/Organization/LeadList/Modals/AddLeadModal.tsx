@@ -22,7 +22,6 @@ import {
 const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
   isOpen,
   toggle,
-  onSave,
   setIsFetchedLead,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -107,7 +106,6 @@ const AddLeadModal: React.FC<AddLeadModalProps & FetchLeadsProps> = ({
           degree: "",
         });
         toggle();
-        onSave();
       } else {
         toast.error("Invalid Request...");
       }
