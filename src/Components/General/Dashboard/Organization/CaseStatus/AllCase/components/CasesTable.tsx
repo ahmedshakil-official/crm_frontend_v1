@@ -1,8 +1,7 @@
-import apiClient from "@/services/api-client";
-import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -20,18 +19,20 @@ import {
   Table,
 } from "reactstrap";
 
+import {
+  useDeleteCaseDetailsMutation,
+  useGetCaseDetailsQuery,
+} from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
+import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
+import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import formatDateToDMY from "@/utils/dateFormatter";
-import { toast } from "react-toastify";
 import "../../CaseStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 import DeleteCaseModal from "../../Modals/DeleteCaseModal";
 import UpdateCaseModal from "../../Modals/UpdateCaseModal";
 
 const CaseTable: React.FC = () => {
-  const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
-  const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
   const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
@@ -39,12 +40,8 @@ const CaseTable: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(10);
   const [filterIcon, setFilterIcon] = useState(false);
-
-  // State for Delete Modal
   const [isDeleteCaseModalOpen, setIsDeleteCaseModalOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Default filters
   const defaultFilters = {
     created_by: "",
     case_category: "",
@@ -55,137 +52,52 @@ const CaseTable: React.FC = () => {
   };
   const [filters, setFilters] = useState(defaultFilters);
 
-  //filter icon toggle
+  const { data: advisorData, isLoading: isAdvisorLoading } =
+    useGetAdvisorDetailsQuery(undefined);
+  const { data: caseData, isLoading: isCaseLoading } = useGetCaseDetailsQuery({
+    search: searchQuery,
+    ...filters,
+    page: currentPage,
+    limit: casesPerPage,
+  });
+
+
+  const isLoading = isAdvisorLoading || isCaseLoading;
+
+  console.log("caseData:", caseData); // Debug: Check the API response
+
   const toggleFilterIcon = () => setFilterIcon(!filterIcon);
-
-  const toggleUpdateCaseModal = () =>
-    setIsUpdateCaseModalOpen(!isUpdateCaseModalOpen);
-
   const toggleAddNewCaseModal = () =>
     setIsAddNewCaseModalOpen(!isAddNewCaseModalOpen);
+  const toggleUpdateCaseModal = () =>
+    setIsUpdateCaseModalOpen(!isUpdateCaseModalOpen);
+  const toggleDeleteCaseModal = () =>
+    setIsDeleteCaseModalOpen(!isDeleteCaseModalOpen);
 
-  const openAddNewCaseModal = () => {
-    toggleAddNewCaseModal();
-  };
-
+  const openAddNewCaseModal = () => toggleAddNewCaseModal();
   const openUpdateCaseModal = (caseItem: CaseInfo) => {
     setCurrentCase(caseItem);
     toggleUpdateCaseModal();
   };
-
-  const toggleDeleteCaseModal = () =>
-    setIsDeleteCaseModalOpen(!isDeleteCaseModalOpen);
-
   const openDeleteCaseModal = (caseItem: CaseInfo) => {
-    setCurrentCase(caseItem); // Set the case to be deleted
-    toggleDeleteCaseModal(); // Open the modal
+    setCurrentCase(caseItem);
+    toggleDeleteCaseModal();
   };
 
-  const handleCaseDeletion = async (caseAlias: string) => {
-    setIsDeleting(true);
-    try {
-      await apiClient.delete(`/cases/${caseAlias}/`);
-      toast.success("Case deleted successfully.");
-      // Refresh case list after deletion
-      fetchCaseInfo();
-      toggleDeleteCaseModal();
-    } catch (error) {
-      console.error("Error deleting case:", error);
-      toast.error("Failed to delete case. Please try again.");
-    } finally {
-      setIsDeleting(false);
-    }
-  };
 
-  const fetchAdvisors = async () => {
-    try {
-      const response = await apiClient.get("/director/advisors/");
-      const AdvisorsData = Array.isArray(response.data)
-        ? response.data
-        : response.data.advisors;
-      setAdvisors(AdvisorsData || []);
-    } catch (error) {
-      console.error("Error fetching Advisors:", error);
-      setAdvisors([]);
-    }
-  };
-
-  useEffect(() => {
-    fetchAdvisors();
-  }, []);
-
-  const fetchCaseInfo = async (
-    searchQuery: string = "",
-    filters: Record<string, string | number> = {}
-  ) => {
-    setIsLoading(true);
-    try {
-      const queryParams = new URLSearchParams({
-        ...filters, // Include all filters dynamically
-        search: searchQuery, // Add the search query
-      });
-
-      console.log("Filters applied:", filters, "Search query:", searchQuery); // Debugging log
-
-      const response = await apiClient.get(`/cases?${queryParams.toString()}`);
-      setCaseInfo(response.data || []);
-    } catch (error) {
-      console.error("Error Fetching Cases:", error);
-      setCaseInfo([]); // Reset case info on error
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    const debounceFetch = setTimeout(() => {
-      fetchCaseInfo(searchQuery, filters);
-    }, 300);
-
-    return () => clearTimeout(debounceFetch);
-  }, [filters, searchQuery]);
-
-  const clearFilters = () => {
-    setFilters(defaultFilters); // Reset filters to default
-    setSearchQuery(""); // Clear search query
-
-    // Clear all dropdown filters
-    const employeeFilter = document.getElementById(
-      "employeeFilter"
-    ) as HTMLSelectElement;
-    const caseCategory = document.getElementById(
-      "caseCategory"
-    ) as HTMLSelectElement;
-    const applicationType = document.getElementById(
-      "applicationType"
-    ) as HTMLSelectElement;
-    const caseStatus = document.getElementById(
-      "caseStatus"
-    ) as HTMLSelectElement;
-    const caseStage = document.getElementById("caseStage") as HTMLSelectElement;
-
-    if (employeeFilter) employeeFilter.value = "";
-    if (caseCategory) caseCategory.value = "";
-    if (applicationType) applicationType.value = "";
-    if (caseStatus) caseStatus.value = "";
-    if (caseStage) caseStage.value = "";
-
-    fetchCaseInfo(""); // Fetch data with cleared filters
-  };
 
   const handleFilterChange = (filterKey: string, value: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [filterKey]: value,
     }));
+    setCurrentPage(1);
   };
 
-  const filteredCases = caseInfo.slice(
-    (currentPage - 1) * casesPerPage,
-    currentPage * casesPerPage
-  );
-
-  const pageCount = Math.ceil(caseInfo.length / casesPerPage);
+  // Pagination Logic (assuming caseData is an array or has total)
+  const pageCount = caseData?.total
+    ? Math.ceil(caseData.total / casesPerPage)
+    : Math.ceil((caseData?.length || 0) / casesPerPage);
 
   return (
     <Card>
@@ -200,7 +112,10 @@ const CaseTable: React.FC = () => {
                 type="text"
                 placeholder="Search Case..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
               />
               <InputGroupText className="bg-success rounded-start-0 border-start-0">
                 <FaSearch />
@@ -222,96 +137,90 @@ const CaseTable: React.FC = () => {
         </Row>
       </CardHeader>
 
-      {/* Card Body */}
       <CardBody className="p-0 m-0">
-        <Row className="p-0 m-0 mt-3">
-          {/* Filter Options */}
-          {filterIcon && (
-            <Card className="shadow-lg rounded-1 p-3">
-              <Row className="justify-content-center text-center g-3">
-                {/* Employee Filter */}
-                <Col xs="12" sm="6" md="3">
-                  <Input
-                    type="select"
-                    id="employeeFilter"
-                    className="py-1"
-                    onChange={(e) =>
-                      handleFilterChange("created_by", e.target.value)
-                    }
-                  >
-                    <option value="">Select Employee</option>
-                    {advisors &&
-                      advisors.map((advisor) => (
-                        <option key={advisor.alias} value={advisor.user.id}>
-                          {advisor.user.first_name} {advisor.user.last_name}
-                        </option>
-                      ))}
-                  </Input>
-                </Col>
+        {filterIcon && (
+          <Card className="shadow-lg rounded-1 p-3 mt-3">
+            <Row className="justify-content-center text-center g-3">
+              <Col xs="12" sm="6" md="3">
+                <Input
+                  type="select"
+                  id="employeeFilter"
+                  className="py-1"
+                  value={filters.created_by}
+                  onChange={(e) =>
+                    handleFilterChange("created_by", e.target.value)
+                  }
+                >
+                  <option value="">Select Employee...</option>
+                  {advisorData?.map((advisor: AdvisorInfoProps) => (
+                    <option key={advisor.alias} value={advisor.user.id}>
+                      {advisor.user.first_name} {advisor.user.last_name}
+                    </option>
+                  ))}
+                </Input>
+              </Col>
+              <Col xs="12" sm="6" md="3">
+                <Input
+                  type="select"
+                  id="caseCategory"
+                  className="py-1"
+                  value={filters.case_category}
+                  onChange={(e) =>
+                    handleFilterChange("case_category", e.target.value)
+                  }
+                >
+                  <option value="">Select Categories...</option>
+                  <option value="MORTGAGE">Mortgage</option>
+                  <option value="PROTECTION">Protection</option>
+                  <option value="GENERAL_INSURANCE">General Insurance</option>
+                </Input>
+              </Col>
+              <Col xs="12" sm="6" md="3">
+                <Input
+                  type="select"
+                  id="caseStage"
+                  className="py-1"
+                  value={filters.case_stage}
+                  onChange={(e) =>
+                    handleFilterChange("case_stage", e.target.value)
+                  }
+                >
+                  <option value="">Select Stages...</option>
+                  <option value="INQUIRY">Inquiry</option>
+                  <option value="FACT_FIND">Fact Find</option>
+                  <option value="RESEARCH_COMPLIANCE_CHECK">
+                    Research and Compliance Check
+                  </option>
+                  <option value="DECISION_IN_PRINCIPLE">
+                    Decision in Principle
+                  </option>
+                  <option value="FULL_MORTGAGE_APPLICATION">
+                    Full Mortgage Application
+                  </option>
+                  <option value="OFFER_FROM_BANK">Offer From Bank</option>
+                  <option value="LEGAL">Legal</option>
+                  <option value="COMPLETION">Completion</option>
+                  <option value="FUTURE_OPPORTUNITY">Future Opportunity</option>
+                  <option value="NOT_PROCEED">Not Proceed</option>
+                </Input>
+              </Col>
+              <Col xs="12" sm="6" md="3">
+                <Button
+                  className="btn btn-secondary w-100"
+                  onClick={() => {
+                    setFilters(defaultFilters);
+                    setCurrentPage(1);
+                  }}
+                >
+                  Clear All Filters
+                </Button>
+              </Col>
+            </Row>
+          </Card>
+        )}
 
-                {/* Case Category Filter */}
-                <Col xs="12" sm="6" md="3">
-                  <Input
-                    type="select"
-                    id="caseCategory"
-                    className="py-1"
-                    onChange={(e) =>
-                      handleFilterChange("case_category", e.target.value)
-                    }
-                  >
-                    <option value="">Select Categories</option>
-                    <option value="MORTGAGE">Mortgage</option>
-                    <option value="PROTECTION">Protection</option>
-                    <option value="GENERAL_INSURANCE">General Insurance</option>
-                  </Input>
-                </Col>
-
-                {/* Case Stage Filter */}
-                <Col xs="12" sm="6" md="3">
-                  <Input
-                    type="select"
-                    id="caseStage"
-                    className="py-1"
-                    onChange={(e) =>
-                      handleFilterChange("case_stage", e.target.value)
-                    }
-                  >
-                    <option value="">Select Stages</option>
-                    <option value="INQUIRY">Inquiry</option>
-                    <option value="FACT_FIND">Fact Find</option>
-                    <option value="RESEARCH_COMPLIANCE_CHECK">
-                      Research and Compliance Check
-                    </option>
-                    <option value="DECISION_IN_PRINCIPLE">
-                      Decision in Principle
-                    </option>
-                    <option value="FULL_MORTGAGE_APPLICATION">
-                      Full Mortgage Application
-                    </option>
-                    <option value="OFFER_FROM_BANK">Offer From Bank</option>
-                    <option value="LEGAL">Legal</option>
-                    <option value="COMPLETION">Completion</option>
-                    <option value="FUTURE_OPPORTUNITY">
-                      Future Opportunity
-                    </option>
-                    <option value="NOT_PROCEED">Not Proceed</option>
-                  </Input>
-                </Col>
-                {/* Clear All Filters Button */}
-                <Col xs="12" sm="6" md="3">
-                  <Button
-                    className="btn btn-secondary w-100"
-                    onClick={clearFilters}
-                  >
-                    Clear All Filters
-                  </Button>
-                </Col>
-              </Row>
-            </Card>
-          )}
-        </Row>
         <Row>
-          <Table bordered hover responsive>
+          <Table bordered hover responsive className="mt-3">
             <thead className="thead-light text-center">
               <tr>
                 <th>Case Name</th>
@@ -327,20 +236,15 @@ const CaseTable: React.FC = () => {
             <tbody className="text-center">
               {isLoading ? (
                 <tr>
-                  <td colSpan={12} className="text-center">
-                    <div className="d-flex justify-content-center align-items-center">
-                      <Spinner color="primary" />
-                    </div>
+                  <td colSpan={8} className="text-center">
+                    <Spinner color="primary" />
                   </td>
                 </tr>
-              ) : filteredCases.length > 0 ? (
-                filteredCases.map((caseItem) => (
+              ) : caseData?.length > 0 ? ( // Assuming caseData is an array
+                caseData.map((caseItem: CaseInfo) => (
                   <tr key={caseItem.alias}>
                     <td>
-                      <Link
-                        className="custom-hover"
-                        href={`/dashboard/organization/${caseItem.alias}`}
-                      >
+                      <Link className="custom-hover" href={`/dashboard/organization/${caseItem.alias}`}>
                         {caseItem.name}
                       </Link>
                     </td>
@@ -349,38 +253,14 @@ const CaseTable: React.FC = () => {
                         ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
                         : "N/A"}
                     </td>
-                    <td>{caseItem.lead_user.phone}</td>
-                    <td>{caseItem.case_category}</td>
+                    <td>{caseItem.lead_user?.phone || "N/A"}</td>
                     <td>
-                      <span
-                        className={`rounded-4 px-2 text-white ${
-                          caseItem.case_stage === "INQUIRY"
-                            ? "bg-success"
-                            : caseItem.case_stage === "FACT_FIND"
-                            ? "bg-warning"
-                            : caseItem.case_stage ===
-                              "RESEARCH_COMPLIANCE_CHECK"
-                            ? "bg-dark"
-                            : caseItem.case_stage === "DECISION_IN_PRINCIPLE"
-                            ? "bg-info"
-                            : caseItem.case_stage ===
-                              "FULL_MORTGAGE_APPLICATION"
-                            ? "bg-dark"
-                            : caseItem.case_stage === "OFFER_FROM_BANK"
-                            ? "bg-dark"
-                            : caseItem.case_stage === "LEGAL"
-                            ? "bg-warning"
-                            : caseItem.case_stage === "COMPLETION"
-                            ? "bg-primary"
-                            : caseItem.case_stage === "FUTURE_OPPORTUNITY"
-                            ? "bg-info"
-                            : caseItem.case_stage === "NOT_PROCEED"
-                            ? "bg-danger"
-                            : "bg-secondary"
-                        }`}
-                      >
-                        {caseItem.case_stage}
-                      </span>
+                      {caseItem.case_category.charAt(0).toUpperCase() +
+                        caseItem?.case_category.slice(1).toLowerCase()}
+                    </td>
+                    <td>
+                      {caseItem.case_stage.charAt(0).toUpperCase() +
+                        caseItem.case_stage.slice(1).toLowerCase()}
                     </td>
                     <td>{formatDateToDMY(caseItem.created_at)}</td>
                     <td>
@@ -392,7 +272,6 @@ const CaseTable: React.FC = () => {
                         <Button
                           size="sm"
                           color="success"
-                          title="Edit"
                           className="me-2"
                           onClick={() => openUpdateCaseModal(caseItem)}
                         >
@@ -401,7 +280,6 @@ const CaseTable: React.FC = () => {
                         <Button
                           size="sm"
                           color="danger"
-                          title="Delete Case"
                           onClick={() => openDeleteCaseModal(caseItem)}
                         >
                           <i className="icon-trash"></i>
@@ -412,7 +290,7 @@ const CaseTable: React.FC = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={9} className="text-center">
+                  <td colSpan={8} className="text-center">
                     No cases found.
                   </td>
                 </tr>
@@ -431,61 +309,13 @@ const CaseTable: React.FC = () => {
               onClick={() => setCurrentPage(currentPage - 1)}
             />
           </PaginationItem>
-
-          {pageCount <= 5 ? (
-            Array.from({ length: pageCount }, (_, i) => i + 1).map(
-              (pageNumber) => (
-                <PaginationItem
-                  key={pageNumber}
-                  active={pageNumber === currentPage}
-                >
-                  <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
-                    {pageNumber}
-                  </PaginationLink>
-                </PaginationItem>
-              )
-            )
-          ) : (
-            <>
-              <PaginationItem active={currentPage === 1}>
-                <PaginationLink onClick={() => setCurrentPage(1)}>
-                  1
-                </PaginationLink>
-              </PaginationItem>
-
-              {currentPage > 3 && (
-                <PaginationItem disabled>
-                  <PaginationLink>...</PaginationLink>
-                </PaginationItem>
-              )}
-
-              {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
-                .filter((page) => page > 1 && page < pageCount)
-                .map((pageNumber) => (
-                  <PaginationItem
-                    key={pageNumber}
-                    active={pageNumber === currentPage}
-                  >
-                    <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-
-              {currentPage < pageCount - 2 && (
-                <PaginationItem disabled>
-                  <PaginationLink>...</PaginationLink>
-                </PaginationItem>
-              )}
-
-              <PaginationItem active={currentPage === pageCount}>
-                <PaginationLink onClick={() => setCurrentPage(pageCount)}>
-                  {pageCount}
-                </PaginationLink>
-              </PaginationItem>
-            </>
-          )}
-
+          {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
+            <PaginationItem key={page} active={page === currentPage}>
+              <PaginationLink onClick={() => setCurrentPage(page)}>
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
           <PaginationItem disabled={currentPage === pageCount}>
             <PaginationLink
               next
@@ -498,30 +328,20 @@ const CaseTable: React.FC = () => {
         </Pagination>
       </CardBody>
 
-      {/* Modals */}
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
-        onSave={() => fetchCaseInfo()}
       />
       <UpdateCaseModal
         isOpen={isUpdateCaseModalOpen}
         toggle={toggleUpdateCaseModal}
-        caseData={currentCase as CaseInfo} // Pass the selected case
-        onSave={() => {
-          fetchCaseInfo(); // Refresh the case table after saving
-          toggleUpdateCaseModal(); // Close the modal
-        }}
+        caseData={currentCase as CaseInfo}
       />
-      {/* Delete Modal */}
       <DeleteCaseModal
         isOpen={isDeleteCaseModalOpen}
         toggle={toggleDeleteCaseModal}
-        caseData={currentCase} // Pass the case to delete
-        isDeleting={isDeleting}
-        onDelete={() => {
-          if (currentCase) handleCaseDeletion(currentCase.alias);
-        }}
+        caseData={currentCase}
+        onDelete={toggleDeleteCaseModal}
       />
     </Card>
   );

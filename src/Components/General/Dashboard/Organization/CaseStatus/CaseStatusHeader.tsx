@@ -16,7 +16,6 @@ import "./CaseStatus.css";
 import AddNewCaseModal from "./Modals/AddNewCaseModal";
 
 const CaseStatusHeader: React.FC<CaseSearchProps> = ({
-  fetchCaseInfo,
   searchQuery,
   setSearchQuery,
 }) => {
@@ -82,7 +81,6 @@ const CaseStatusHeader: React.FC<CaseSearchProps> = ({
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
-        onSave={() => fetchCaseInfo()}
       />
     </CardHeader>
   );

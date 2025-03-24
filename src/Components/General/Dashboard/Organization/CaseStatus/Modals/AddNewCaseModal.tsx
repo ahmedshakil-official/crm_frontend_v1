@@ -1,5 +1,7 @@
+import { useAddCaseDetailsMutation } from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
-import apiClient from "@/services/api-client";
+import { AddNewCaseModalProps } from "@/Types/Organization/CaseTypes";
+import { LeadsInfo } from "@/Types/Organization/LeadTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -14,28 +16,16 @@ import {
   ModalHeader,
 } from "reactstrap";
 
-interface AddNewCaseModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSave: () => void;
-}
-
-interface Lead {
-  alias: string;
-  user: {
-    id: number;
-    first_name: string;
-    last_name: string;
-  };
-}
-
 const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   isOpen,
   toggle,
-  onSave,
 }) => {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const { data: leadData, isLoading } = useGetLeadDetailsQuery(undefined);
+  const [leads, setLeads] = useState<LeadsInfo[]>([]);
+  // Rtk query
+  const { data: leadData, isLoading: leadDataLoading } =
+    useGetLeadDetailsQuery(undefined);
+  const [addCaseDetails, { isLoading: addCaseLoading }] =
+    useAddCaseDetailsMutation();
 
   const [formData, setFormData] = useState({
     lead: 0,
@@ -67,8 +57,10 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await apiClient.post("/cases/", formData);
-      if (result.status >= 200 && result.status < 300) {
+      const result = await addCaseDetails({
+        payload: formData,
+      });
+      if (result.data) {
         toast.success("Case added successfully!");
         setFormData({
           lead: 0,
@@ -78,7 +70,6 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
           case_stage: "",
           notes: "",
         });
-        onSave();
         toggle();
       } else {
         toast.error("Invalid Request...");
@@ -174,14 +165,14 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" color="primary" disabled={isLoading}>
-            {isLoading ? "Saving..." : "Save"}
+          <Button type="submit" color="primary" disabled={addCaseLoading}>
+            {addCaseLoading ? "Saving..." : "Save"}
           </Button>
           <Button
             type="button"
             color="secondary"
             onClick={toggle}
-            disabled={isLoading}
+            disabled={addCaseLoading}
           >
             Cancel
           </Button>

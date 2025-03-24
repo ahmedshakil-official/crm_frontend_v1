@@ -23,6 +23,7 @@ export const baseApi = createApi({
     "ClientDetails",
     "AdvisorDetails",
     "IntroducerDetails",
+    "CaseDetails",
     "LoanDetails",
     "ApplicantsDetails",
     "Dependants",

@@ -1,11 +1,9 @@
 import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import LoadingSpinner from "@/app/loading";
-import apiClient from "@/services/api-client";
 import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -83,19 +81,6 @@ const AdvisorListBody: React.FC = () => {
       setAdvisors(advisorsArray || []);
     }
   }, [advisorData]);
-
-  //delete advisor
-  const deleteAdvisor = async (alias: string) => {
-    if (!alias) return;
-    try {
-      await apiClient.delete(`/director/advisors/${alias}/`);
-
-      toast.success("Advisor deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting advisor", error);
-      toast.error("Failed to delete the advisor. Please try again.");
-    }
-  };
 
   // openmodals
   const openAddModal = () => {
