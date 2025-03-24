@@ -38,7 +38,7 @@ const CaseTable: React.FC = () => {
   const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [casesPerPage] = useState(5);
+  const [casesPerPage] = useState(10);
   const [filterIcon, setFilterIcon] = useState(false);
   const [isDeleteCaseModalOpen, setIsDeleteCaseModalOpen] = useState(false);
 
