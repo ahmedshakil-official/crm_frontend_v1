@@ -1,30 +1,48 @@
+import { useAppSelector } from "@/Redux/Hooks";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { RootState } from "@/Redux/Store";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Card,
   CardHeader,
   FormGroup,
   Label,
   Input,
-  Button,
   Row,
   Col,
 } from "reactstrap";
-import PropertyDetailsModalTab from "../PropertyDetailsModal/PropertyDetailsModalTab";
 
 interface FoundPropertyProps {
   onPropertyFound: (value: boolean) => void;
+  property: any;
 }
 
-const FoundProperty: React.FC<FoundPropertyProps> = ({ onPropertyFound }) => {
-  const [foundProperty, setFoundProperty] = useState<boolean>(false);
-  const [modalOpen, setModalOpen] = useState(false);
+const FoundProperty: React.FC<FoundPropertyProps> = ({
+  onPropertyFound,
+  property,
+}) => {
+  const { casealias } = useParams();
+  const propertyAlias = property.alias;
 
-  const handlePropertyFound = (value: boolean) => {
+  const [updateSingleProperty, { isLoading }] = useUpdatePropertyMutation();
+
+  const [foundProperty, setFoundProperty] = useState<boolean>(
+    property.have_you_found_a_property_yet
+  );
+
+  const handlePropertyFound = async (value: boolean) => {
     setFoundProperty(value);
     onPropertyFound(value);
+    await updateSingleProperty({
+      case_alias: casealias,
+      property_alias: propertyAlias,
+      updatedPropertyDetails: {
+        have_you_found_a_property_yet: value,
+      },
+    });
   };
-
-  const toggleModal = () => setModalOpen(!modalOpen);
 
   return (
     <>
@@ -36,11 +54,14 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({ onPropertyFound }) => {
                 <Label
                   className="mb-0 fw-semibold me-4"
                   style={{ fontSize: "15px", color: "#495057" }}
-                  for="FoundPrimaryProperty"
+                  for="have_you_found_a_property_yet"
                 >
                   Is a property being insured? If so, do you know which property
                   is covered by this policy?
-                  <span className="text-danger" style={{ visibility: "hidden" }}>
+                  <span
+                    className="text-danger"
+                    style={{ visibility: "hidden" }}
+                  >
                     *
                   </span>
                 </Label>
@@ -49,9 +70,12 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({ onPropertyFound }) => {
                     <Input
                       type="radio"
                       id="FoundPrimaryPropertyYes"
-                      name="FoundPrimaryProperty"
+                      name="have_you_found_a_property_yet"
                       value="true"
-                      checked={foundProperty === true}
+                      checked={
+                        foundProperty === true ||
+                        property.have_you_found_a_property_yet === true
+                      }
                       onChange={() => handlePropertyFound(true)}
                       className="cursor-pointer me-2"
                     />
@@ -63,9 +87,12 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({ onPropertyFound }) => {
                     <Input
                       type="radio"
                       id="FoundPrimaryPropertyNo"
-                      name="FoundPrimaryProperty"
+                      name="have_you_found_a_property_yet"
                       value="false"
-                      checked={foundProperty === false}
+                      checked={
+                        foundProperty === false ||
+                        property.have_you_found_a_property_yet === false
+                      }
                       onChange={() => handlePropertyFound(false)}
                       className="cursor-pointer me-2"
                     />
@@ -76,23 +103,9 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({ onPropertyFound }) => {
                 </div>
               </div>
             </Col>
-            {foundProperty && (
-              <Col lg={3} className="text-end">
-                <Button
-                  color="primary"
-                  size="md"
-                  className="rounded"
-                  onClick={toggleModal}
-                >
-                  <i className="bi bi-plus-circle me-1"></i>
-                  Add New Property
-                </Button>
-              </Col>
-            )}
           </Row>
         </CardHeader>
       </Card>
-      <PropertyDetailsModalTab isOpen={modalOpen} toggle={toggleModal} />
     </>
   );
 };

@@ -1,4 +1,3 @@
-// PropertyDetails.tsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -51,6 +50,7 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
           floor: propertyData.floor || null,
           flats: propertyData.flats || null,
           number_of_units: propertyData.number_of_units || null,
+          charge_type: propertyData.charge_type || null,
         })
       );
     }
@@ -60,7 +60,6 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    // Convert numeric inputs to null if empty, otherwise parse as number where applicable
     const updatedValue =
       value === ""
         ? null
@@ -87,53 +86,73 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
   };
 
   const propertyTypes = [
-    "House",
-    "Flat",
-    "Maisonette",
-    "Bungalow",
-    "Warehouse",
-    "Land",
-    "Commercial",
-    "Semi-Commercial",
-    "Multi-Unit Block (MUB)",
-    "HMO",
+    { value: "HOUSE", label: "House" },
+    { value: "FLAT", label: "Flat" },
+    { value: "MAISONETTE", label: "Maisonette" },
+    { value: "BUNGALOW", label: "Bungalow" },
+    { value: "WAREHOUSE", label: "Warehouse" },
+    { value: "LAND", label: "Land" },
+    { value: "COMMERCIAL", label: "Commercial" },
+    { value: "SEMI_COMMERCIAL", label: "Semi-Commercial" },
+    { value: "MULTI_UNIT_BLOCK", label: "Multi-Unit Block (MUB)" },
+    { value: "HMO", label: "HMO" },
   ];
 
   const houseTypes = [
-    "Detached",
-    "Semi-Detached",
-    "Mid-Terraced",
-    "End-Terraced",
-    "Town House",
+    { value: "DETACHED", label: "Detached" },
+    { value: "SEMI_DETACHED", label: "Semi-Detached" },
+    { value: "MID_TERRACED", label: "Mid-Terraced" },
+    { value: "END_TERRACED", label: "End-Terraced" },
+    { value: "TOWN_HOUSE", label: "Town House" },
   ];
 
-  const flatTypes = ["Purpose Built", "Converted", "Studio"];
+  const flatTypes = [
+    { value: "PURPOSE_BUILT", label: "Purpose Built" },
+    { value: "CONVERTED", label: "Converted" },
+    { value: "STUDIO", label: "Studio" },
+  ];
 
   const constructionTypes = [
-    { value: "0", label: "Concrete" },
-    { value: "1", label: "Timber Framed" },
-    { value: "2", label: "Steel Framed" },
-    { value: "3", label: "Brick" },
-    { value: "4", label: "Mundic Block" },
-    { value: "5", label: "PRC Repair with Certificate" },
-    { value: "6", label: "Stone" },
-    { value: "7", label: "Cob" },
+    { value: "CONCRETE", label: "Concrete" },
+    { value: "TIMBER_FRAMED", label: "Timber Framed" },
+    { value: "STEEL_FRAMED", label: "Steel Framed" },
+    { value: "BRICK", label: "Brick" },
+    { value: "MUNDIC_BLOCK", label: "Mundic Block" },
+    {
+      value: "PRC_REPAIR_WITH_CERTIFICATE",
+      label: "PRC Repair with Certificate",
+    },
+    { value: "STONE", label: "Stone" },
+    { value: "COB", label: "Cob" },
   ];
 
   const roofTypes = [
-    { value: "0", label: "Tile (Any Type)" },
-    { value: "1", label: "Clay Tile" },
-    { value: "2", label: "Slate Tile" },
-    { value: "3", label: "Concrete Tile" },
-    { value: "4", label: "Flat" },
-    { value: "5", label: "Thatched" },
-    { value: "6", label: "Metal" },
-    { value: "7", label: "Wood" },
-    { value: "8", label: "Plastic (e.g. EPDM, PVC, CPE)" },
-    { value: "9", label: "Bitumen" },
-    { value: "10", label: "Green Roof" },
-    { value: "11", label: "Shingles" },
-    { value: "100", label: "Other" },
+    { value: "TILE", label: "Tile (Any Type)" },
+    { value: "CLAY_TILE", label: "Clay Tile" },
+    { value: "SLATE_TILE", label: "Slate Tile" },
+    { value: "CONCRETE_TILE", label: "Concrete Tile" },
+    { value: "FLAT", label: "Flat" },
+    { value: "THATCHED", label: "Thatched" },
+    { value: "METAL", label: "Metal" },
+    { value: "WOOD", label: "Wood" },
+    { value: "PLASTIC", label: "Plastic (e.g. EPDM, PVC, CPE)" },
+    { value: "BITUMEN", label: "Bitumen" },
+    { value: "GREEN_ROOF", label: "Green Roof" },
+    { value: "SHINGLES", label: "Shingles" },
+    { value: "OTHER", label: "Other" },
+  ];
+
+  const chargeTypes = [
+    { value: "ONE", label: "1st" },
+    { value: "TWO", label: "2nd" },
+    { value: "THREE", label: "3rd" },
+    { value: "FOUR", label: "4th" },
+    { value: "FIVE", label: "5th" },
+    { value: "SIX", label: "6th" },
+    { value: "SEVEN", label: "7th" },
+    { value: "EIGHT", label: "8th" },
+    { value: "NINE", label: "9th" },
+    { value: "TEN", label: "10th" },
   ];
 
   return (
@@ -152,16 +171,16 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
               >
                 <option value="">Select...</option>
                 {propertyTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
+                  <option key={type.value} value={type.value}>
+                    {type.label}
                   </option>
                 ))}
               </Input>
             </FormGroup>
           </Col>
 
-          {(propertyState.property_type === "House" ||
-            propertyState.property_type === "Bungalow") && (
+          {(propertyState.property_type === "HOUSE" ||
+            propertyState.property_type === "BUNGALOW") && (
             <Col sm={6}>
               <FormGroup>
                 <Label for="house_type">
@@ -171,13 +190,13 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                   type="select"
                   id="house_type"
                   name="house_type"
-                  value={propertyState.house_type || ""}
+                  value={propertyState.house_type || "SELECT"}
                   onChange={handleChange}
                 >
-                  <option value="">Select...</option>
+                  <option value="SELECT">Select...</option>
                   {houseTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
+                    <option key={type.value} value={type.value}>
+                      {type.label}
                     </option>
                   ))}
                 </Input>
@@ -185,7 +204,7 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
             </Col>
           )}
 
-          {propertyState.property_type === "Flat" && (
+          {propertyState.property_type === "FLAT" && (
             <Col sm={6}>
               <FormGroup>
                 <Label for="flat_type">Flat Type</Label>
@@ -193,13 +212,13 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                   type="select"
                   id="flat_type"
                   name="flat_type"
-                  value={propertyState.flat_type || ""}
+                  value={propertyState.flat_type || null}
                   onChange={handleChange}
                 >
                   <option value="">Select...</option>
                   {flatTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
+                    <option key={type.value} value={type.value}>
+                      {type.label}
                     </option>
                   ))}
                 </Input>
@@ -283,29 +302,6 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
         </Row>
 
         <Row>
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="epc_rating">EPC Rating</Label>
-              <InputGroup>
-                <Input
-                  type="select"
-                  id="epc_rating"
-                  name="epc_rating"
-                  value={propertyState.epc_rating || ""}
-                  onChange={handleChange}
-                >
-                  <option value="">Select...</option>
-                  {["A", "B", "C", "D", "E", "F", "G"].map((rating) => (
-                    <option key={rating} value={rating}>
-                      {rating}
-                    </option>
-                  ))}
-                </Input>
-                <Button color="primary">Search Register</Button>
-              </InputGroup>
-            </FormGroup>
-          </Col>
-
           <Col sm={6}>
             <FormGroup>
               <Label for="tenure">Tenure</Label>
@@ -482,7 +478,49 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
             </FormGroup>
           </Col>
 
-          {propertyState.property_type === "Flat" && (
+          <Col sm={6}>
+            <FormGroup>
+              <Label for="charge_type">Charge Type</Label>
+              <Input
+                type="select"
+                id="charge_type"
+                name="charge_type"
+                value={propertyState.charge_type || ""}
+                onChange={handleChange}
+              >
+                {chargeTypes.map((type) => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </Input>
+            </FormGroup>
+          </Col>
+
+          <Col sm={6}>
+            <FormGroup>
+              <Label for="epc_rating">EPC Rating</Label>
+              <InputGroup style={{ width: "100%" }}>
+                <Input
+                  type="select"
+                  id="epc_rating"
+                  name="epc_rating"
+                  className="epcRatingDropDown"
+                  value={propertyState.epc_rating || ""}
+                  onChange={handleChange}
+                >
+                  <option value="SELECT">Select...</option>
+                  {["A", "B", "C", "D", "E", "F", "G"].map((rating) => (
+                    <option key={rating} value={rating}>
+                      {rating}
+                    </option>
+                  ))}
+                </Input>
+              </InputGroup>
+            </FormGroup>
+          </Col>
+
+          {propertyState.property_type === "FLAT" && (
             <>
               <Col sm={6}>
                 <FormGroup>
@@ -511,7 +549,7 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
             </>
           )}
 
-          {propertyState.property_type === "Multi-Unit Block (MUB)" && (
+          {propertyState.property_type === "MULTI_UNIT_BLOCK" && (
             <Col sm={6}>
               <FormGroup>
                 <Label for="number_of_units">Number of Units</Label>
