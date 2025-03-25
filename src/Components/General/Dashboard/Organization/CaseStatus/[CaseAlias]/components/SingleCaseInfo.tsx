@@ -12,11 +12,7 @@ import {
 } from "reactstrap";
 import UpdateCaseModal from "../../Modals/UpdateCaseModal";
 
-const SingleCaseInfo: React.FC<SingleCaseProps> = ({
-  caseInfo,
-  isLoading,
-  fetchCaseInfo,
-}) => {
+const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
   const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
   const params = useParams();
@@ -228,11 +224,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
       <UpdateCaseModal
         isOpen={isUpdateCaseModalOpen}
         toggle={toggleUpdateCaseModal}
-        caseData={currentCase as CaseInfo} // Pass the selected case
-        onSave={() => {
-          fetchCaseInfo(); // Refresh the case table after saving
-          toggleUpdateCaseModal(); // Close the modal
-        }}
+        caseData={currentCase as CaseInfo}
       />
     </Col>
   );
