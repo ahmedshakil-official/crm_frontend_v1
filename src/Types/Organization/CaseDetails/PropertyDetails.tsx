@@ -72,6 +72,7 @@ export interface PropertyFormState {
     does_the_property_have_solar_panels: boolean; // false
     do_you_own_the_solar_panels: boolean; // true
     is_the_property_used_purely_for_residential_purposes: boolean; // true
+    other_new_build_warranty_provider: string; // "";
 
     // Valuation and Contact Details
     valuation_type: string; // "standard_val"
