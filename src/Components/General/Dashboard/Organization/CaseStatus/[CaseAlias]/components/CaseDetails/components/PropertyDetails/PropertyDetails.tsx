@@ -13,13 +13,16 @@ const propertyContentTabs = [
   { id: "1", title: "Property Address" },
   { id: "2", title: "Property Type" },
   { id: "3", title: "Additional Info" },
+  { id: "4", title: "Valuation/Access Details" },
 ];
 
 const PropertyDetails: React.FC = () => {
   const { casealias } = useParams();
   const dispatch = useDispatch();
   const [activeContentTab, setActiveContentTab] = useState("1");
-  const { data: properties, isLoading } = useGetPropertiesQuery({ case_alias: casealias });
+  const { data: properties, isLoading } = useGetPropertiesQuery({
+    case_alias: casealias,
+  });
   const [isPropertyFound, setIsPropertyFound] = useState(false);
 
   useEffect(() => {

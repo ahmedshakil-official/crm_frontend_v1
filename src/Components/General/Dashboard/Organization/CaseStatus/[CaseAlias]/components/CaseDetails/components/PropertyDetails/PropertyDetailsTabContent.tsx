@@ -6,6 +6,7 @@ import AdditionalInfo from "./Components/PropertyDetailsTabs/PropertyAdditionalI
 import { PropertyData } from "@/Types/Organization/CaseDetails/PropertyDetails";
 import { useDispatch } from "react-redux";
 import { initializeForm } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
+import ValuationInfo from "./Components/PropertyDetailsTabs/PropertyValuation";
 
 interface PropertyDetailsTabContentProps {
   tabId: string;
@@ -23,7 +24,7 @@ const PropertyDetailsTabContent: FC<PropertyDetailsTabContentProps> = ({
 
   useEffect(() => {
     if (propertyData) {
-      dispatch(initializeForm(propertyData));
+      dispatch(initializeForm({ ...propertyData, other_new_build_warranty_provider: '' }));
     }
   }, [propertyData, dispatch]);
 
@@ -44,6 +45,9 @@ const PropertyDetailsTabContent: FC<PropertyDetailsTabContentProps> = ({
         </TabPane>
         <TabPane tabId="3">
           <AdditionalInfo />
+        </TabPane>
+        <TabPane tabId="4">
+          <ValuationInfo />
         </TabPane>
       </TabContent>
     </div>
