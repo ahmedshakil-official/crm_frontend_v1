@@ -2,16 +2,16 @@ import { useAppSelector } from "@/Redux/Hooks";
 import { TabContent } from "reactstrap";
 import { AdverseTab } from "./Adverse/AdverseTab";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
+import BudgetPlanner from "./BudgetPlanner/BudgetPlanner";
 import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
 import { EmploymentTab } from "./Employment/EmploymentTab";
+import ExistingProtectionTab from "./ExistingProtection/ExistingProtectionTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 import MortgageYourNeedsContent from "./MortgageYourNeeds/MortgageYourNeedsContent";
+import { NotesTab } from "./Notes/NotesTab";
 import PortfolioContent from "./Portfolio/PortfolioContent";
 import PropertyDetails from "./PropertyDetails/PropertyDetails";
-import SecurityPropertyTab from "./SecurityProperty/SecurityPropertyTab";
 import SolicitorsAndAccountantsTab from "./SolicitorsAndAccountants/SolicitorsAndAccountantsTab";
-import BudgetPlanner from "./BudgetPlanner/BudgetPlanner";
-import { NotesTab } from "./Notes/NotesTab";
 
 // Define a mapping of tab names to components
 const tabComponents: Record<string, React.FC> = {
@@ -25,7 +25,7 @@ const tabComponents: Record<string, React.FC> = {
   "Property Details": PropertyDetails,
   "Solicitors & Accountants": SolicitorsAndAccountantsTab,
   "Budget Planner": BudgetPlanner,
-  "Security Property": SecurityPropertyTab,
+  "Existing Protection": ExistingProtectionTab,
   "Mortgage Your Needs": MortgageYourNeedsContent,
   Notes: NotesTab,
 };

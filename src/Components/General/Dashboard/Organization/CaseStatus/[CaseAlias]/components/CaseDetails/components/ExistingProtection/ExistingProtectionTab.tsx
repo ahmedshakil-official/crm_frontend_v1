@@ -1,5 +1,5 @@
-import { useGetPropertyDetailsQuery } from "@/Redux/Reducers/CaseDetails/SecurityPropertyDetails/SecurityPropertyDetailsApi";
-import { SecurityPropertyDetailsProps } from "@/Types/Organization/CaseDetails/SecurityPropertyDetailsTypes";
+import { useGetExistingPropertyDetailsQuery } from "@/Redux/Reducers/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
+import { ExistingProtectionDetailsProps } from "@/Types/Organization/CaseDetails/ExistingProtectionTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,24 +12,25 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import SecurityPropertyContent from "./SecurityPropertyContent";
+import ExistingProtectionContent from "./ExistingProtectionContent";
 
-const SecurityPropertyTab: React.FC = () => {
+const ExistingProtectionTab: React.FC = () => {
   const [activeUser, setActiveUser] = useState<number | null>(null); // State for active user
-  const [activeTab, setActiveTab] = useState<string | null>(null); // State for active property tab
+  const [activeTab, setActiveTab] = useState<string | null>(null); // State for active existingProtection tab
 
   // Get case alias from URL params
   const params = useParams();
   const { casealias } = params;
 
   // Fetch data
-  const { data: propertyDetails, isLoading } = useGetPropertyDetailsQuery({
-    case_alias: casealias,
-  });
+  const { data: existingProtectionDetails, isLoading } =
+    useGetExistingPropertyDetailsQuery({
+      case_alias: casealias,
+    });
 
-  // Group property details by user ID
-  const groupByUserId = (data: SecurityPropertyDetailsProps[]) => {
-    const grouped: Record<number, SecurityPropertyDetailsProps[]> = {};
+  // Group existingProtection details by user ID
+  const groupByUserId = (data: ExistingProtectionDetailsProps[]) => {
+    const grouped: Record<number, ExistingProtectionDetailsProps[]> = {};
     data?.forEach((record) => {
       if (!grouped[record.user.id]) {
         grouped[record.user.id] = [];
@@ -41,20 +42,20 @@ const SecurityPropertyTab: React.FC = () => {
   // Add this function after groupByUserId
   // Calculate sum assured for each user
   const calculateUserSumAssured = (
-    properties: SecurityPropertyDetailsProps[]
+    existingProtections: ExistingProtectionDetailsProps[]
   ) => {
-    const userSums = properties.reduce((acc, property) => {
-      const userId = property.user.id;
+    const userSums = existingProtections.reduce((acc, existingProtection) => {
+      const userId = existingProtection.user.id;
       // Convert to number and handle null/undefined
-      const sumAssured = Number(property.sum_assured) || 0;
+      const sumAssured = Number(existingProtection.sum_assured) || 0;
 
       if (!acc[userId]) {
         acc[userId] = {
           total: 0,
-          name: `${property.user.first_name} ${property.user.last_name}`,
+          name: `${existingProtection.user.first_name} ${existingProtection.user.last_name}`,
         };
       }
-      // Add the current property's sum_assured to the user's total
+      // Add the current existingProtection's sum_assured to the user's total
       acc[userId].total = acc[userId].total + sumAssured;
       return acc;
     }, {} as Record<number, { total: number; name: string }>);
@@ -63,19 +64,19 @@ const SecurityPropertyTab: React.FC = () => {
   };
 
   // Get all user sums
-  const userSumAssured = calculateUserSumAssured(propertyDetails || []);
+  const userSumAssured = calculateUserSumAssured(existingProtectionDetails || []);
 
-  // Group property details by user ID
-  const groupedData = groupByUserId(propertyDetails || []);
+  // Group existingProtection details by user ID
+  const groupedData = groupByUserId(existingProtectionDetails || []);
 
-  // Set the first user and their first property as default when data is fetched
+  // Set the first user and their first existingProtection as default when data is fetched
   useEffect(() => {
-    if (propertyDetails && propertyDetails.length > 0) {
-      const firstUserId = propertyDetails[0]?.user.id;
+    if (existingProtectionDetails && existingProtectionDetails.length > 0) {
+      const firstUserId = existingProtectionDetails[0]?.user.id;
       setActiveUser(firstUserId);
-      setActiveTab(propertyDetails[0]?.alias || null);
+      setActiveTab(existingProtectionDetails[0]?.alias || null);
     }
-  }, [propertyDetails]);
+  }, [existingProtectionDetails]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -128,13 +129,13 @@ const SecurityPropertyTab: React.FC = () => {
                 tabs
                 className="border-tab mb-0 d-flex flex-wrap gap-2 justify-content-center"
               >
-                {groupedData[activeUser].map((property, index) => (
-                  <NavItem key={property.alias}>
+                {groupedData[activeUser].map((existingProtection, index) => (
+                  <NavItem key={existingProtection.alias}>
                     <NavLink
                       className={`nav-border text-info tab-info ${
-                        activeTab === property.alias ? "active" : ""
+                        activeTab === existingProtection.alias ? "active" : ""
                       }`}
-                      onClick={() => setActiveTab(property.alias || null)}
+                      onClick={() => setActiveTab(existingProtection.alias || null)}
                       style={{ cursor: "pointer", fontSize: "0.7rem" }}
                     >
                       Security {index + 1}
@@ -147,7 +148,7 @@ const SecurityPropertyTab: React.FC = () => {
 
           {/* Tab Content */}
           {activeTab && activeUser && (
-            <SecurityPropertyContent
+            <ExistingProtectionContent
               activeTab={activeTab}
               activeUser={activeUser}
               groupedData={groupedData}
@@ -159,4 +160,4 @@ const SecurityPropertyTab: React.FC = () => {
   );
 };
 
-export default SecurityPropertyTab;
+export default ExistingProtectionTab;

@@ -1,5 +1,5 @@
-import { useAddSecurityPropertyDetailsMutation } from "@/Redux/Reducers/CaseDetails/SecurityPropertyDetails/SecurityPropertyDetailsApi";
-import { AddSecurityPropertyModalProps } from "@/Types/Organization/CaseDetails/SecurityPropertyDetailsTypes";
+import { useAddExistingProtectionDetailsMutation } from "@/Redux/Reducers/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
+import { AddExistingProtectionModalProps } from "@/Types/Organization/CaseDetails/ExistingProtectionTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -18,18 +18,18 @@ import {
   Row,
 } from "reactstrap";
 
-const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
+const AddExistingProtectionModal: React.FC<AddExistingProtectionModalProps> = ({
   isOpen,
   toggle,
-  propertyData,
+  existingProtectionData,
 }) => {
   const params = useParams();
   const { casealias } = params;
   const [hasNonStandardTerms, setHasNonStandardTerms] =
     useState<boolean>(false);
   const [willBeCancelled, setWillBeCancelled] = useState<boolean>(false);
-  const [addSecurityPropertyDetails, { isLoading }] =
-    useAddSecurityPropertyDetailsMutation();
+  const [addExistingProtectionDetails, { isLoading }] =
+    useAddExistingProtectionDetailsMutation();
 
   const [formData, setFormData] = useState({
     have_any_existing_Protection_policies_in_place: true,
@@ -86,10 +86,10 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
     e.preventDefault();
 
     try {
-      const res = await addSecurityPropertyDetails({
+      const res = await addExistingProtectionDetails({
         case_alias: casealias,
-        property_id: propertyData?.user?.id,
-        propertyDetailsPayload: formData,
+        existingProtection_id: existingProtectionData?.user?.id,
+        existingProtectionDetailsPayload: formData,
       }).unwrap();
       console.log(res);
 
@@ -144,7 +144,7 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="xl">
       <ModalHeader toggle={toggle}>
-        <span className="fs-4 text-primary">Add New Security Property</span>
+        <span className="fs-4 text-primary">Add New Existing Protection</span>
       </ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody className="px-4">
@@ -570,7 +570,7 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
             Cancel
           </Button>
           <Button color="primary" type="submit" disabled={isLoading}>
-            {isLoading ? "Adding..." : "Add Security"}
+            {isLoading ? "Adding..." : "Add Protection"}
           </Button>
         </ModalFooter>
       </Form>
@@ -578,4 +578,4 @@ const AddSecurityPropertyModal: React.FC<AddSecurityPropertyModalProps> = ({
   );
 };
 
-export default AddSecurityPropertyModal;
+export default AddExistingProtectionModal;
