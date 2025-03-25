@@ -7,7 +7,6 @@ import {
   Label,
   Input,
   InputGroup,
-  Button,
 } from "reactstrap";
 import { updateProperty } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
 import { RootState } from "@/Redux/Store";
