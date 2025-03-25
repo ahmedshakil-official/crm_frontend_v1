@@ -1,5 +1,6 @@
 "use client";
 import { FC, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Modal,
   ModalHeader,
@@ -13,6 +14,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import { RootState } from "@/Redux/Store";
 import BudgetPlannerTabContent from "../BudgetPlannerTabContent";
 
 interface BudgetPlannerModalProps {
@@ -24,7 +26,9 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
   isOpen,
   toggle,
 }) => {
-  const [basicTab, setBasicTab] = useState<number>(1); // Remove null type
+  const [basicTab, setBasicTab] = useState<number>(1);
+  const budgetPlannerData = useSelector((state: RootState) => state.budgetPlanner);
+
   const budgetPlannerTabTitleData = [
     "Household Income",
     "Debt Repayment",
@@ -35,6 +39,14 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
 
   const handleTabClick = (index: number) => {
     setBasicTab(index);
+  };
+
+  const handleSaveChanges = () => {
+    console.log("Budget Planner Complete Data:", {
+      current_income: budgetPlannerData.current_income,
+      post_income: budgetPlannerData.post_income,
+    });
+    toggle();
   };
 
   return (
@@ -75,7 +87,7 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
         <Button color="secondary" onClick={toggle}>
           Close
         </Button>
-        <Button color="primary" onClick={toggle}>
+        <Button color="primary" onClick={handleSaveChanges}>
           Save Changes
         </Button>
       </ModalFooter>

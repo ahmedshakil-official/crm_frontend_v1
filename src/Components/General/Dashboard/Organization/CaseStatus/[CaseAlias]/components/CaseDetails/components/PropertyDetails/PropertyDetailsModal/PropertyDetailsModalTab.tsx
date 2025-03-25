@@ -39,7 +39,7 @@ const PropertyDetailsModalTab: FC<PropertyDetailsModalTabProps> = ({
                 <NavLink
                   className={activeTab === tab.id ? "active" : ""}
                   onClick={() => setActiveTab(tab.id)}
-                  style={{ cursor: "pointer",  }}
+                  style={{ cursor: "pointer" }}
                 >
                   {tab.title}
                 </NavLink>
@@ -50,7 +50,6 @@ const PropertyDetailsModalTab: FC<PropertyDetailsModalTabProps> = ({
             <PropertyDetailsTabContent
               tabId={activeTab}
               setTabId={setActiveTab}
-              
             />
           </CardBody>
         </Card>

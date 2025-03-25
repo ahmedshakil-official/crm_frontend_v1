@@ -1,53 +1,82 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
-  Col,
-  Row,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  InputGroup,
-  InputGroupText,
-  Button,
+  Col, Row, Form, FormGroup, Label, Input, InputGroup, InputGroupText, Button,
 } from "reactstrap";
+import { updateBudgetPlannerSection } from "@/Redux/Reducers/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 
 const HouseHoldIncomeTabContent: FC = () => {
-  const incomeFields = [
-    "Applicant 1 Net Monthly Income",
-    "Applicant 2 Net Monthly Income",
-    "Rental Income",
-    "Part Time Income",
-    "Jobseeker's Allowance",
-    "Child Benefit",
-    "Tax Credits",
-    "Working Tax Credits",
-    "Maintenance",
-    "Pension",
-    "Other Benefits",
-  ];
-
-  // State to store current and post completion values
-  const [currentValues, setCurrentValues] = useState<Record<string, string>>(
-    {}
-  );
+  const dispatch = useDispatch();
+  const [currentValues, setCurrentValues] = useState<Record<string, string>>({});
   const [postValues, setPostValues] = useState<Record<string, string>>({});
+
+  const incomeFieldMappings = {
+    "Applicant 1 Net Monthly Income": "applicant_one_net_monthly_income",
+    "Applicant 2 Net Monthly Income": "applicant_two_net_monthly_income",
+    "Rental Income": "rental_income",
+    "Part Time Income": "part_time_income",
+    "Jobseeker's Allowance": "jobseekers_allowance",
+    "Child Benefit": "child_benefit",
+    "Tax Credits": "tax_credits",
+    "Working Tax Credits": "working_tax_credits",
+    "Maintenance": "maintenance",
+    "Pension": "pension",
+    "Other Benefits": "other_benefits",
+  };
+
+  useEffect(() => {
+    const formattedCurrentValues = {
+      ...Object.entries(currentValues).reduce((acc, [key, value]) => {
+        const fieldName = key.split('.')[1];
+        const reduxFieldName = incomeFieldMappings[fieldName as keyof typeof incomeFieldMappings];
+        if (reduxFieldName) {
+          (acc as Record<string, number | null>)[reduxFieldName] = value === "" ? null : parseFloat(value);
+        }
+        return acc;
+      }, {}),
+      total_income: calculateTotal(currentValues)
+    };
+
+    dispatch(updateBudgetPlannerSection({
+      section: 'current_income',
+      data: formattedCurrentValues
+    }));
+  }, [currentValues, dispatch]);
+
+  useEffect(() => {
+    const formattedPostValues = {
+      ...Object.entries(postValues).reduce((acc, [key, value]) => {
+        const fieldName = key.split('.')[1];
+        const reduxFieldName = incomeFieldMappings[fieldName as keyof typeof incomeFieldMappings];
+        if (reduxFieldName) {
+          (acc as Record<string, number | null>)[reduxFieldName] = value === "" ? null : parseFloat(value);
+        }
+        return acc;
+      }, {}),
+      total_income: calculateTotal(postValues)
+    };
+
+    dispatch(updateBudgetPlannerSection({
+      section: 'post_income',
+      data: formattedPostValues
+    }));
+  }, [postValues, dispatch]);
 
   const renderForm = (
     prefix: string,
     className: string,
-    hasCalculate?: boolean
   ) => (
     <Form>
-      {incomeFields.map((field, index) => {
-        const fieldName = `${prefix}.${field.replace(/\s/g, "")}`;
+      {Object.entries(incomeFieldMappings).map(([label, fieldKey]) => {
+        const fieldName = `${prefix}.${label}`;
         return (
-          <FormGroup row key={field}>
+          <FormGroup row key={fieldKey}>
             <Label
-              for={`${prefix}_${field.replace(/\s/g, "")}`}
+              for={`${prefix}_${fieldKey}`}
               sm={6}
               style={{ fontSize: "0.9rem" }}
             >
-              {field}
+              {label}
             </Label>
             <Col sm={6}>
               <InputGroup>
@@ -55,7 +84,7 @@ const HouseHoldIncomeTabContent: FC = () => {
                 <Input
                   type="number"
                   name={fieldName}
-                  id={`${prefix}_${field.replace(/\s/g, "")}`}
+                  id={`${prefix}_${fieldKey}`}
                   className={`numeric-decimal ${className}`}
                   placeholder="0.00"
                   step="0.01"
@@ -74,16 +103,6 @@ const HouseHoldIncomeTabContent: FC = () => {
                       : setPostValues(newValues);
                   }}
                 />
-                {/* {hasCalculate && index < 3 && (
-                  <Button
-                    color="primary"
-                    id={`${field.replace(/\s/g, "")}${
-                      prefix === "CurrentBudgetPlanner" ? "Current" : "Post"
-                    }Calculate`}
-                  >
-                    Calculate
-                  </Button>
-                )} */}
               </InputGroup>
             </Col>
           </FormGroup>
@@ -127,7 +146,7 @@ const HouseHoldIncomeTabContent: FC = () => {
               <span className="fw-bold text-primary">Income</span>
             </div>
             <div className="p-3">
-              {renderForm("CurrentBudgetPlanner", "living-expense", true)}
+              {renderForm("CurrentBudgetPlanner", "living-expense")}
             </div>
             <div className="p-3 bg-light border-top">
               <FormGroup row>
@@ -175,7 +194,6 @@ const HouseHoldIncomeTabContent: FC = () => {
               {renderForm(
                 "PostCompletionsBudgetPlanner",
                 "living-expensePC",
-                true
               )}
             </div>
             <div className="p-3 bg-light border-top">
