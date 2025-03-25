@@ -10,6 +10,13 @@ export const CaseDetailsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["CaseDetails"],
     }),
+    getSingleCaseDetails: builder.query({
+      query: ({ case_alias }) => ({
+        url: `/cases/${case_alias}/`,
+        method: "GET",
+      }),
+      providesTags: ["CaseDetails"],
+    }),
     addCaseDetails: builder.mutation({
       query: ({ payload }) => ({
         url: `/cases/`,
@@ -38,6 +45,7 @@ export const CaseDetailsApi = baseApi.injectEndpoints({
 
 export const {
   useGetCaseDetailsQuery,
+  useGetSingleCaseDetailsQuery,
   useAddCaseDetailsMutation,
   useUpdateCaseDetailsMutation,
   useDeleteCaseDetailsMutation,
