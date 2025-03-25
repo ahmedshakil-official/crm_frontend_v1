@@ -10,6 +10,7 @@ import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 import MortgageYourNeedsContent from "./MortgageYourNeeds/MortgageYourNeedsContent";
 import { NotesTab } from "./Notes/NotesTab";
 import PortfolioContent from "./Portfolio/PortfolioContent";
+import ProductContent from "./Product/ProductContent";
 import PropertyDetails from "./PropertyDetails/PropertyDetails";
 import SolicitorsAndAccountantsTab from "./SolicitorsAndAccountants/SolicitorsAndAccountantsTab";
 
@@ -28,6 +29,7 @@ const tabComponents: Record<string, React.FC> = {
   "Existing Protection": ExistingProtectionTab,
   "Mortgage Your Needs": MortgageYourNeedsContent,
   Notes: NotesTab,
+  Product: ProductContent,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
