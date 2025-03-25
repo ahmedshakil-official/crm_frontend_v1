@@ -74,6 +74,7 @@ const initialState: PropertyFormState = {
     contacts_mobile_telephone: "",
     contacts_email_address: "",
     estimated_value: null,
+    other_new_build_warranty_provider: ""
   },
 };
 

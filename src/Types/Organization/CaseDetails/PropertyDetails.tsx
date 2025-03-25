@@ -172,6 +172,7 @@ export interface PropertyData {
   does_the_property_have_solar_panels: boolean;
   do_you_own_the_solar_panels: boolean;
   is_the_property_used_purely_for_residential_purposes: boolean;
+  other_new_build_warranty_provider: string;
   valuation_type: string;
   select_applicant_list: string;
   contact_for_access: string;
