@@ -1,8 +1,8 @@
-import { useUpdatePropertyDetailsMutation } from "@/Redux/Reducers/CaseDetails/SecurityPropertyDetails/SecurityPropertyDetailsApi";
+import { useUpdateExistingProtectionDetailsMutation } from "@/Redux/Reducers/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
 import {
-  SecurityPropertyDetailsProps,
-  SecurityPropertyTabContentProps,
-} from "@/Types/Organization/CaseDetails/SecurityPropertyDetailsTypes";
+  ExistingProtectionDetailsProps,
+  ExistingProtectionTabContentProps,
+} from "@/Types/Organization/CaseDetails/ExistingProtectionTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -17,25 +17,23 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import AddSecurityPropertyModal from "./Modals/AddSecurityPropertyModal";
+import AddExistingProtectionModal from "./Modals/AddExistingProtectionModal";
 
-const SecurityPropertyContent: React.FC<SecurityPropertyTabContentProps> = ({
-  activeTab,
-  activeUser,
-  groupedData,
-}) => {
+const ExistingProtectionContent: React.FC<
+  ExistingProtectionTabContentProps
+> = ({ activeTab, activeUser, groupedData }) => {
   const params = useParams();
   const { casealias } = params;
 
   const [formValues, setFormValues] =
-    useState<SecurityPropertyDetailsProps | null>(null);
+    useState<ExistingProtectionDetailsProps | null>(null);
 
   // Add this state for modal
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   //fetch api
   const [updatePropertyDetails, { isLoading: isUpdateLoading }] =
-    useUpdatePropertyDetailsMutation();
+    useUpdateExistingProtectionDetailsMutation();
 
   // Add toggle function
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -43,29 +41,30 @@ const SecurityPropertyContent: React.FC<SecurityPropertyTabContentProps> = ({
   // `useEffect` to reset `formValues` when `activeTab` or `activeUser` changes
   useEffect(() => {
     if (activeTab && activeUser !== null) {
-      const userSecurityPropertyRecords = groupedData[activeUser];
-      const activeSecurityPropertyRecord = userSecurityPropertyRecords?.find(
-        (securityProperty) => securityProperty.alias === activeTab
-      );
-      setFormValues(activeSecurityPropertyRecord || null);
+      const userExistingProtectionRecords = groupedData[activeUser];
+      const activeExistingProtectionRecord =
+        userExistingProtectionRecords?.find(
+          (existingProtection) => existingProtection.alias === activeTab
+        );
+      setFormValues(activeExistingProtectionRecord || null);
     }
   }, [activeTab, activeUser, groupedData]);
 
   if (!activeTab || activeUser === null) {
-    return <div>No securityProperty data available.</div>;
+    return <div>No existingProtection data available.</div>;
   }
 
-  const userSecurityPropertyRecords = groupedData[activeUser];
-  const activeSecurityPropertyRecord = userSecurityPropertyRecords?.find(
-    (securityProperty) => securityProperty.alias === activeTab
+  const userExistingProtectionRecords = groupedData[activeUser];
+  const activeExistingProtectionRecord = userExistingProtectionRecords?.find(
+    (existingProtection) => existingProtection.alias === activeTab
   );
 
-  if (!activeSecurityPropertyRecord) {
-    return <div>No matching securityProperty record found.</div>;
+  if (!activeExistingProtectionRecord) {
+    return <div>No matching existingProtection record found.</div>;
   }
 
   const handleInputChange = (
-    name: keyof SecurityPropertyDetailsProps, // Use your type instead of `Applicant`
+    name: keyof ExistingProtectionDetailsProps, // Use your type instead of `Applicant`
     value: string | number | boolean | string[] | null
   ) => {
     setFormValues((prevValues) => ({
@@ -79,8 +78,8 @@ const SecurityPropertyContent: React.FC<SecurityPropertyTabContentProps> = ({
     e.preventDefault();
     const res = await updatePropertyDetails({
       case_alias: casealias,
-      property_alias: formValues?.alias,
-      propertyUpdatePayload: formValues,
+      existingProtection_alias: formValues?.alias,
+      existingProtectionUpdatePayload: formValues,
     });
     if (res.data) {
       toast.success("Updated Successfully!");
@@ -97,7 +96,7 @@ const SecurityPropertyContent: React.FC<SecurityPropertyTabContentProps> = ({
             <CardBody>
               <div className="px-3">
                 <Label className="mb-3">
-                  Do you have any existing "Security" policies in place? (such
+                  Do you have any existing "Protection" policies in place? (such
                   as income security, life assurance etc.)
                 </Label>
                 <div className="d-flex gap-2 mb-4">
@@ -211,8 +210,7 @@ const SecurityPropertyContent: React.FC<SecurityPropertyTabContentProps> = ({
                           type="number"
                           id="sum_assured"
                           placeholder="£"
-                          defaultValue="0"
-                          value={formValues?.sum_assured || 0}
+                          value={formValues?.sum_assured || ""}
                           onChange={(e) =>
                             handleInputChange("sum_assured", e.target.value)
                           }
@@ -226,7 +224,7 @@ const SecurityPropertyContent: React.FC<SecurityPropertyTabContentProps> = ({
                           type="number"
                           id="premium"
                           placeholder="£"
-                          value={formValues?.premium || 0}
+                          value={formValues?.premium || ""}
                           onChange={(e) =>
                             handleInputChange("premium", e.target.value)
                           }
@@ -650,14 +648,14 @@ const SecurityPropertyContent: React.FC<SecurityPropertyTabContentProps> = ({
             </Button>
           </div>
         </Form>
-        <AddSecurityPropertyModal
+        <AddExistingProtectionModal
           isOpen={isModalOpen}
           toggle={toggleModal}
-          propertyData={formValues}
+          existingProtectionData={formValues}
         />
       </>
     </div>
   );
 };
 
-export default SecurityPropertyContent;
+export default ExistingProtectionContent;
