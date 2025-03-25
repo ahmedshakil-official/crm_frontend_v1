@@ -19,6 +19,7 @@ import ThemeCustomizerReducer from "./Reducers/ThemeCustomizerReducer";
 import CaseDetailsTabIndicatorReducer from "./Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { baseApi } from "./Api/BaseApi";
 import propertyFormReducer from "./Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
+import budgetPlannerReducer from "./Reducers/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 
 const Store = configureStore({
   reducer: {
@@ -42,6 +43,7 @@ const Store = configureStore({
     themeCustomizer: ThemeCustomizerReducer,
     caseDetails: CaseDetailsTabIndicatorReducer,
     propertyForm: propertyFormReducer,
+    budgetPlanner: budgetPlannerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),

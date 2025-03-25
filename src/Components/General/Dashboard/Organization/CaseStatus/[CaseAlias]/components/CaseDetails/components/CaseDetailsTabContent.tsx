@@ -23,7 +23,7 @@ const tabComponents: Record<string, React.FC> = {
   "Credit Commitments": CreditCommitmentsContent,
   Adverse: AdverseTab,
   Portfolio: PortfolioContent,
-  "Property Details": PropertyDetails,
+  "Security Property": PropertyDetails,
   "Solicitors & Accountants": SolicitorsAndAccountantsTab,
   "Budget Planner": BudgetPlanner,
   "Existing Protection": ExistingProtectionTab,
