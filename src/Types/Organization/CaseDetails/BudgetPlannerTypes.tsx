@@ -1,4 +1,5 @@
 export interface BudgetPlanner {
+  alias?: string;
   current_income: {
     applicant_one_net_monthly_income: number | null;
     applicant_two_net_monthly_income: number | null;

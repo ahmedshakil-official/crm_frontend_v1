@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   Card,
   CardHeader,
@@ -7,9 +8,41 @@ import {
   Input,
   Label,
 } from "reactstrap";
+import { RootState } from "@/Redux/Store";
 
-const DisclaimerTabContents: FC = () => {
-  const [isChecked, setIsChecked] = useState(false);
+interface DisclaimerTabContentsProps {
+  updateField: (field: string, value: any) => void;
+}
+
+const DisclaimerTabContents: FC<DisclaimerTabContentsProps> = ({
+  updateField,
+}) => {
+  const budgetPlannerData = useSelector(
+    (state: RootState) => state.budgetPlanner
+  );
+  const [isChecked, setIsChecked] = useState(
+    budgetPlannerData.disclaimer || false
+  );
+  const [details, setDetails] = useState(
+    budgetPlannerData.disclaimer_details || ""
+  );
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.checked;
+    setIsChecked(newValue);
+    updateField("disclaimer", newValue);
+  };
+
+  const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setDetails(newValue);
+    updateField("disclaimer_details", newValue);
+  };
+
+  useEffect(() => {
+    setIsChecked(budgetPlannerData.disclaimer || false);
+    setDetails(budgetPlannerData.disclaimer_details || "");
+  }, [budgetPlannerData]);
 
   const disclaimerText = (
     <>
@@ -36,13 +69,26 @@ const DisclaimerTabContents: FC = () => {
             name="Disclaimer"
             className="mt-1 me-3"
             checked={isChecked}
-            onChange={(e) => setIsChecked(e.target.checked)}
+            onChange={handleCheckboxChange}
             data-val="true"
             data-val-required="The Disclaimer field is required."
           />
           <Label for="Disclaimer" className="text-muted">
             {disclaimerText}
           </Label>
+        </FormGroup>
+        <FormGroup className="mt-3">
+          <Label for="DisclaimerDetails" className="text-muted">
+            Additional Details (optional)
+          </Label>
+          <Input
+            type="textarea"
+            id="DisclaimerDetails"
+            name="DisclaimerDetails"
+            value={details}
+            onChange={handleDetailsChange}
+            placeholder="Enter any additional details about the disclaimer..."
+          />
         </FormGroup>
       </CardBody>
     </Card>

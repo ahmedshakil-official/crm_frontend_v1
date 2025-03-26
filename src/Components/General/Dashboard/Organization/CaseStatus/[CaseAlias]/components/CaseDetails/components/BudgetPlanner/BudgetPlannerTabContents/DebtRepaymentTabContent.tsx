@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   Col,
   Row,
@@ -10,55 +11,222 @@ import {
   InputGroupText,
   Button,
 } from "reactstrap";
+import { RootState } from "@/Redux/Store";
 
-const DebtRepaymentTabContent: FC = () => {
-  const debtRepayments = [
-    "Mortgage/Rent - Monthly",
-    "Second Mortgage - Monthly",
-    "Shared Ownership Rental - Monthly",
-  ];
-  const priorityDebts = [
-    "Mortgage Arrears - Monthly",
-    "Gas Arrears - Monthly",
-    "Maintenance Arrears - Monthly",
-    "Defaults - Monthly",
-    "CCJs - Monthly",
-    "Debt Management Plans - Monthly",
-    "Magistrate Court Fines - Monthly",
-    "Council Tax Arrears - Monthly",
-  ];
-  const unsecuredBorrowings = [
-    "Credit Cards - Monthly",
-    "Loans - Monthly",
-    "Car Finance - Monthly",
-    "Overdraft - Monthly",
-    "Store Cards - Monthly",
-    "Student Loans - Monthly",
-    "Other Borrowing - Monthly",
-  ];
+interface DebtRepaymentTabContentProps {
+  updateField: (field: string, value: any) => void;
+}
 
-  // State to store values
+const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
+  updateField,
+}) => {
+  const budgetPlannerData = useSelector(
+    (state: RootState) => state.budgetPlanner
+  );
   const [currentValues, setCurrentValues] = useState<Record<string, string>>(
     {}
   );
   const [postValues, setPostValues] = useState<Record<string, string>>({});
 
-  const renderForm = (prefix: string, fields: string[]) => (
+  const debtRepaymentFieldMappings = {
+    "Mortgage/Rent - Monthly": "mortgage_rent",
+    "Second Mortgage - Monthly": "second_mortgage",
+    "Shared Ownership Rental - Monthly": "shared_ownership_rental",
+  };
+
+  const priorityDebtFieldMappings = {
+    "Mortgage Arrears - Monthly": "mortgage_arrears",
+    "Gas Arrears - Monthly": "gas_arrears",
+    "Maintenance Arrears - Monthly": "maintenance_arrears",
+    "Defaults - Monthly": "defaults",
+    "CCJs - Monthly": "ccjs",
+    "Debt Management Plans - Monthly": "debt_management_plans",
+    "Magistrate Court Fines - Monthly": "magistrate_court_fines",
+    "Council Tax Arrears - Monthly": "council_tax_arrears",
+  };
+
+  const unsecuredBorrowingFieldMappings = {
+    "Credit Cards - Monthly": "credit_cards",
+    "Loans - Monthly": "loans",
+    "Car Finance - Monthly": "car_finance",
+    "Overdraft - Monthly": "overdraft",
+    "Store Cards - Monthly": "store_cards",
+    "Student Loans - Monthly": "student_loans",
+    "Other Borrowing - Monthly": "other_borrowing",
+  };
+
+  // Initialize local state with Redux data
+  useEffect(() => {
+    const initialCurrentValues: Record<string, string> = {};
+    const initialPostValues: Record<string, string> = {};
+
+    // Current Debt Repayments
+    Object.entries(debtRepaymentFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.current_debt_repayments[
+          key as keyof typeof budgetPlannerData.current_debt_repayments
+        ];
+      initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
+        value !== 0 ? String(value) : "";
+    });
+
+    // Post Debt Repayments
+    Object.entries(debtRepaymentFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.post_debt_repayments[
+          key as keyof typeof budgetPlannerData.post_debt_repayments
+        ];
+      initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
+        value !== 0 ? String(value) : "";
+    });
+
+    // Current Priority Debt
+    Object.entries(priorityDebtFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.current_priority_debt[
+          key as keyof typeof budgetPlannerData.current_priority_debt
+        ];
+      initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
+        value !== 0 ? String(value) : "";
+    });
+
+    // Post Priority Debt
+    Object.entries(priorityDebtFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.post_priority_debt[
+          key as keyof typeof budgetPlannerData.post_priority_debt
+        ];
+      initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
+        value !== 0 ? String(value) : "";
+    });
+
+    // Current Unsecured Borrowing
+    Object.entries(unsecuredBorrowingFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.current_unsecured_borrowing[
+          key as keyof typeof budgetPlannerData.current_unsecured_borrowing
+        ];
+      initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
+        value !== 0 ? String(value) : "";
+    });
+
+    // Post Unsecured Borrowing
+    Object.entries(unsecuredBorrowingFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.post_unsecured_borrowing[
+          key as keyof typeof budgetPlannerData.post_unsecured_borrowing
+        ];
+      initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
+        value !== 0 ? String(value) : "";
+    });
+
+    setCurrentValues((prev) => ({ ...prev, ...initialCurrentValues }));
+    setPostValues((prev) => ({ ...prev, ...initialPostValues }));
+  }, [budgetPlannerData]);
+
+  // Update parent modal with current values
+  useEffect(() => {
+    const formatValues = (
+      values: Record<string, string>,
+      mappings: Record<string, string>,
+      section: string
+    ) => {
+      const formatted = Object.entries(values)
+        .filter(([key]) => key.startsWith("CurrentBudgetPlanner"))
+        .reduce((acc, [key, value]) => {
+          const fieldName = key.split(".")[1];
+          const reduxFieldName = mappings[fieldName as keyof typeof mappings];
+          if (reduxFieldName) {
+            acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
+          }
+          return acc;
+        }, {} as Record<string, number | 0>);
+      formatted.total_debt_repayment =
+        parseFloat(
+          calculateSectionTotal(
+            values,
+            Object.keys(mappings),
+            "CurrentBudgetPlanner"
+          )
+        ) || 0;
+      updateField(section, formatted);
+    };
+
+    formatValues(
+      currentValues,
+      debtRepaymentFieldMappings,
+      "current_debt_repayments"
+    );
+    formatValues(
+      currentValues,
+      priorityDebtFieldMappings,
+      "current_priority_debt"
+    );
+    formatValues(
+      currentValues,
+      unsecuredBorrowingFieldMappings,
+      "current_unsecured_borrowing"
+    );
+  }, [currentValues, updateField]);
+
+  // Update parent modal with post values
+  useEffect(() => {
+    const formatValues = (
+      values: Record<string, string>,
+      mappings: Record<string, string>,
+      section: string
+    ) => {
+      const formatted = Object.entries(values)
+        .filter(([key]) => key.startsWith("PostCompletionBudgetPlanner"))
+        .reduce((acc, [key, value]) => {
+          const fieldName = key.split(".")[1];
+          const reduxFieldName = mappings[fieldName as keyof typeof mappings];
+          if (reduxFieldName) {
+            acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
+          }
+          return acc;
+        }, {} as Record<string, number | 0>);
+      formatted.total_debt_repayment =
+        parseFloat(
+          calculateSectionTotal(
+            values,
+            Object.keys(mappings),
+            "PostCompletionBudgetPlanner"
+          )
+        ) || 0;
+      updateField(section, formatted);
+    };
+
+    formatValues(
+      postValues,
+      debtRepaymentFieldMappings,
+      "post_debt_repayments"
+    );
+    formatValues(postValues, priorityDebtFieldMappings, "post_priority_debt");
+    formatValues(
+      postValues,
+      unsecuredBorrowingFieldMappings,
+      "post_unsecured_borrowing"
+    );
+  }, [postValues, updateField]);
+
+  const renderForm = (
+    prefix: string,
+    fields: string[],
+    mappings: Record<string, string>
+  ) => (
     <Form>
-      {fields.map((field, index) => {
-        const fieldName = `${prefix}.${field.replace(/[\s/-]/g, "")}`;
+      {fields.map((field) => {
+        const fieldName = `${prefix}.${field}`;
+        const reduxFieldName = mappings[field];
         return (
           <FormGroup row key={field} className="mb-2">
             <Label
-              className="control-label"
-              for={`${prefix}_${field.replace(/[\s/-]/g, "")}`}
+              for={`${prefix}_${reduxFieldName}`}
               sm={6}
               style={{ fontSize: "0.9rem" }}
             >
               {field}
-              <span className="required" style={{ visibility: "hidden" }}>
-                *
-              </span>
             </Label>
             <Col sm={6}>
               <InputGroup>
@@ -66,22 +234,14 @@ const DebtRepaymentTabContent: FC = () => {
                 <Input
                   type="number"
                   name={fieldName}
-                  id={`${prefix}_${field.replace(/[\s/-]/g, "")}`}
+                  id={`${prefix}_${reduxFieldName}`}
                   className="numeric-decimal debt-repayment"
                   placeholder="0.00"
-                  data-val="true"
-                  data-val-number={`The field ${field} must be a number.`}
-                  data-val-range={`${field
-                    .split("-")[0]
-                    .trim()} exceeds maximum length of 16 digits`}
-                  data-val-range-max="1E+16"
-                  data-val-range-min="-1E+15"
+                  step="0.01"
                   value={
                     prefix === "CurrentBudgetPlanner"
-                      ? currentValues[fieldName] ||
-                        (fields === unsecuredBorrowings ? "0" : "")
-                      : postValues[fieldName] ||
-                        (fields === unsecuredBorrowings ? "0" : "")
+                      ? currentValues[fieldName] || ""
+                      : postValues[fieldName] || ""
                   }
                   onChange={(e) => {
                     const newValues =
@@ -94,11 +254,6 @@ const DebtRepaymentTabContent: FC = () => {
                   }}
                 />
               </InputGroup>
-              <span
-                className="field-validation-valid"
-                data-valmsg-for={fieldName}
-                data-valmsg-replace="true"
-              ></span>
             </Col>
           </FormGroup>
         );
@@ -106,7 +261,6 @@ const DebtRepaymentTabContent: FC = () => {
     </Form>
   );
 
-  // Calculate total for a specific section
   const calculateSectionTotal = (
     values: Record<string, string>,
     fields: string[],
@@ -114,22 +268,29 @@ const DebtRepaymentTabContent: FC = () => {
   ) => {
     return fields
       .reduce((sum, field) => {
-        const fieldName = `${prefix}.${field.replace(/[\s/-]/g, "")}`;
+        const fieldName = `${prefix}.${field}`;
         return sum + (parseFloat(values[fieldName]) || 0);
       }, 0)
       .toFixed(2);
   };
 
-  // Calculate overall total
   const calculateOverallTotal = (
     values: Record<string, string>,
     prefix: string
   ) => {
-    const debtTotal = calculateSectionTotal(values, debtRepayments, prefix);
-    const priorityTotal = calculateSectionTotal(values, priorityDebts, prefix);
+    const debtTotal = calculateSectionTotal(
+      values,
+      Object.keys(debtRepaymentFieldMappings),
+      prefix
+    );
+    const priorityTotal = calculateSectionTotal(
+      values,
+      Object.keys(priorityDebtFieldMappings),
+      prefix
+    );
     const unsecuredTotal = calculateSectionTotal(
       values,
-      unsecuredBorrowings,
+      Object.keys(unsecuredBorrowingFieldMappings),
       prefix
     );
     return (
@@ -139,7 +300,6 @@ const DebtRepaymentTabContent: FC = () => {
     ).toFixed(2);
   };
 
-  // Handle copy functionality
   const handleCopyFromCurrent = (prefix: string) => {
     const newPostValues: Record<string, string> = {};
     Object.keys(currentValues).forEach((key) => {
@@ -155,6 +315,7 @@ const DebtRepaymentTabContent: FC = () => {
     title: string,
     prefix: string,
     fields: string[],
+    mappings: Record<string, string>,
     hasCalculate?: boolean,
     showCopyButton?: boolean
   ) => (
@@ -187,8 +348,6 @@ const DebtRepaymentTabContent: FC = () => {
             <Button
               color="primary"
               size="sm"
-              id={`${prefix}CopyFromCurrentButton`}
-              className="copyFromCurrentButton"
               onClick={() => handleCopyFromCurrent(prefix)}
             >
               Copy from Current
@@ -197,52 +356,39 @@ const DebtRepaymentTabContent: FC = () => {
         </div>
         <div className="p-3">
           {title === "Total Debt Repayment" ? (
-            <div className="panel-default panel no-padding-vr no-border">
-              <div className="panel-body no-padding-vr no-border">
-                <FormGroup row className="mb-2">
-                  <Label
-                    className="control-label"
-                    for={`${prefix}_TotalDebtRepayment`}
-                    sm={6}
-                    style={{ fontSize: "0.9rem" }}
-                  >
-                    Total Debt Repayment - Monthly
-                    <span className="required" style={{ visibility: "hidden" }}>
-                      *
-                    </span>
-                  </Label>
-                  <Col sm={6}>
-                    <InputGroup>
-                      <InputGroupText>£</InputGroupText>
-                      <Input
-                        type="number"
-                        name={`${prefix}.TotalDebtRepayment`}
-                        id={`${prefix}_TotalDebtRepayment`}
-                        className="numeric-decimal fw-bold"
-                        readOnly
-                        placeholder="0.00"
-                        value={calculateOverallTotal(
-                          prefix === "CurrentBudgetPlanner"
-                            ? currentValues
-                            : postValues,
-                          prefix
-                        )}
-                      />
-                    </InputGroup>
-                    <span
-                      className="field-validation-valid"
-                      data-valmsg-for={`${prefix}.TotalDebtRepayment`}
-                      data-valmsg-replace="true"
-                    ></span>
-                  </Col>
-                </FormGroup>
-              </div>
-            </div>
+            <FormGroup row className="mb-2">
+              <Label
+                for={`${prefix}_TotalDebtRepayment`}
+                sm={6}
+                style={{ fontSize: "0.9rem" }}
+              >
+                Total Debt Repayment - Monthly
+              </Label>
+              <Col sm={6}>
+                <InputGroup>
+                  <InputGroupText>£</InputGroupText>
+                  <Input
+                    type="number"
+                    name={`${prefix}.TotalDebtRepayment`}
+                    id={`${prefix}_TotalDebtRepayment`}
+                    className="numeric-decimal fw-bold"
+                    readOnly
+                    placeholder="0.00"
+                    value={calculateOverallTotal(
+                      prefix === "CurrentBudgetPlanner"
+                        ? currentValues
+                        : postValues,
+                      prefix
+                    )}
+                  />
+                </InputGroup>
+              </Col>
+            </FormGroup>
           ) : (
-            renderForm(prefix, fields)
+            renderForm(prefix, fields, mappings)
           )}
         </div>
-        {title === "Debt Repayments" && (
+        {hasCalculate && (
           <div className="p-3 bg-light border-top">
             <FormGroup row className="mb-0">
               <Label
@@ -251,10 +397,7 @@ const DebtRepaymentTabContent: FC = () => {
                 sm={6}
                 style={{ fontSize: "0.9rem" }}
               >
-                Total Debt Repayments
-                <span className="required" style={{ visibility: "hidden" }}>
-                  *
-                </span>
+                Total {title}
               </Label>
               <Col sm={6}>
                 <InputGroup>
@@ -275,11 +418,6 @@ const DebtRepaymentTabContent: FC = () => {
                     )}
                   />
                 </InputGroup>
-                <span
-                  className="field-validation-valid"
-                  data-valmsg-for={`${prefix}.TotalDebt`}
-                  data-valmsg-replace="true"
-                ></span>
               </Col>
             </FormGroup>
           </div>
@@ -297,21 +435,34 @@ const DebtRepaymentTabContent: FC = () => {
         </small>
       </p>
       <Row>
-        {renderSection("Current", "CurrentBudgetPlanner", debtRepayments, true)}
+        {renderSection(
+          "Current",
+          "CurrentBudgetPlanner",
+          Object.keys(debtRepaymentFieldMappings),
+          debtRepaymentFieldMappings,
+          true
+        )}
         {renderSection(
           "Post Completion",
           "PostCompletionBudgetPlanner",
-          debtRepayments,
+          Object.keys(debtRepaymentFieldMappings),
+          debtRepaymentFieldMappings,
           true,
           true
         )}
       </Row>
       <Row className="mt-4">
-        {renderSection("Priority Debt", "CurrentBudgetPlanner", priorityDebts)}
+        {renderSection(
+          "Priority Debt",
+          "CurrentBudgetPlanner",
+          Object.keys(priorityDebtFieldMappings),
+          priorityDebtFieldMappings
+        )}
         {renderSection(
           "Priority Debt",
           "PostCompletionBudgetPlanner",
-          priorityDebts,
+          Object.keys(priorityDebtFieldMappings),
+          priorityDebtFieldMappings,
           false,
           true
         )}
@@ -320,23 +471,26 @@ const DebtRepaymentTabContent: FC = () => {
         {renderSection(
           "Unsecured Borrowing",
           "CurrentBudgetPlanner",
-          unsecuredBorrowings,
+          Object.keys(unsecuredBorrowingFieldMappings),
+          unsecuredBorrowingFieldMappings,
           true
         )}
         {renderSection(
           "Unsecured Borrowing",
           "PostCompletionBudgetPlanner",
-          unsecuredBorrowings,
+          Object.keys(unsecuredBorrowingFieldMappings),
+          unsecuredBorrowingFieldMappings,
           true,
           true
         )}
       </Row>
       <Row className="mt-4">
-        {renderSection("Total Debt Repayment", "CurrentBudgetPlanner", [])}
+        {renderSection("Total Debt Repayment", "CurrentBudgetPlanner", [], {})}
         {renderSection(
           "Total Debt Repayment",
           "PostCompletionBudgetPlanner",
-          []
+          [],
+          {}
         )}
       </Row>
     </div>
