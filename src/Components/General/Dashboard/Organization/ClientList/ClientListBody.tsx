@@ -34,8 +34,7 @@ const ClientListBody: React.FC = () => {
     null
   );
 
-  const { data: clientData, isLoading } =
-    useGetClientDetailsQuery(undefined);
+  const { data: clientData, isLoading } = useGetClientDetailsQuery(undefined);
 
   const [selectedClient, setSelectedClient] = useState<
     Partial<ClientInfoProps>
@@ -66,7 +65,6 @@ const ClientListBody: React.FC = () => {
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
- 
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
@@ -129,7 +127,7 @@ const ClientListBody: React.FC = () => {
         <Col md="3">
           <h2>Client List</h2>
         </Col>
-        <Col>
+        <Col md={6}>
           <InputGroup>
             <Input
               type="text"
@@ -142,14 +140,21 @@ const ClientListBody: React.FC = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
-          <Button color="primary" onClick={openAddModal}>
-            Add Client
+        <Col md="3" xs="12" className="d-flex justify-content-end">
+          <Button
+            color="primary"
+            onClick={openAddModal}
+            className="d-flex justify-content-center align-items-center gap-1"
+          >
+            <span>Add Client</span>
+            <span>
+              <i className="fa-solid fa-circle-plus"></i>
+            </span>
           </Button>
         </Col>
       </Row>
       <Row>
-        <Table bordered hover responsive>
+        <Table hover responsive>
           <thead className="thead-light">
             <tr className="text-center">
               <th>Name</th>
@@ -178,7 +183,7 @@ const ClientListBody: React.FC = () => {
                     {client?.user?.first_name} {client?.user?.last_name}
                   </td>
                   <td>{client.official_email}</td>
-                  <td>{client.official_phone}</td>
+                  <td>{client.official_phone || "N/A"}</td>
                   <td>{client.role}</td>
                   <td>
                     {client?.created_by?.first_name}{" "}

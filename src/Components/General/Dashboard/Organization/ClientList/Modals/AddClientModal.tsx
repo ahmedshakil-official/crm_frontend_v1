@@ -99,7 +99,9 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Add Client</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        <span className="fs-4 text-primary">Add Client</span>
+      </ModalHeader>
       <Form onSubmit={handleSaveClient}>
         <ModalBody>
           <Row>

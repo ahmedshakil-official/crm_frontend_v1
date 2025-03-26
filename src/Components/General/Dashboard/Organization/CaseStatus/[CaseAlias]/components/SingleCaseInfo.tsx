@@ -32,8 +32,12 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             color="primary"
             onClick={() => openUpdateCaseModal(caseInfo!)}
             disabled={!caseInfo} // Disable if caseInfo is null
+            className="d-flex justify-content-center align-items-center gap-1"
           >
-            Update Info
+            <span>Update Info</span>
+            <span>
+              <i className="fa-regular fa-circle-up"></i>
+            </span>
           </Button>
         </CardHeader>
 

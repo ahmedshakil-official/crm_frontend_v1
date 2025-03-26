@@ -85,7 +85,9 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Update Lead</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        <span className="fs-4 text-primary">Update Lead</span>
+      </ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
           <Row>
