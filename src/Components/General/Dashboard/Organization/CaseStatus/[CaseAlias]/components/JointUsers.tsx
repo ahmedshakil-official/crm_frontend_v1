@@ -37,8 +37,15 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <h3>Joint Users</h3>
-          <Button color="primary" onClick={toggleAddModal}>
-            Add Joint User
+          <Button
+            color="primary"
+            onClick={toggleAddModal}
+            className="d-flex justify-content-center align-items-center gap-1"
+          >
+            <span> Add Joint User</span>
+            <span>
+              <i className="fa-solid fa-circle-plus"></i>
+            </span>
           </Button>
         </CardHeader>
         <CardBody className="pt-0 recent-order">
@@ -94,7 +101,7 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
                       <td className="f-w-600">
                         {userInfo.joint_user_details?.user_type}
                       </td>
-                      <td>{userInfo?.relationship}</td>
+                      <td>{userInfo?.relationship || "N/A"}</td>
                       <td className="text-center">
                         <div className="d-flex justify-content-center gap-2 align-items-center">
                           <Button

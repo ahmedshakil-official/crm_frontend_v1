@@ -224,7 +224,7 @@ const CaseTable: React.FC = () => {
         )}
 
         <Row>
-          <Table bordered hover responsive className="mt-3">
+          <Table hover responsive className="mt-3">
             <thead className="thead-light text-center">
               <tr>
                 <th>Case Name</th>

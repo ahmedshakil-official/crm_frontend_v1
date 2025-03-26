@@ -1,8 +1,8 @@
-import apiClient from "@/services/api-client";
 import {
   CaseFileProps,
   FileDeleteModalProps,
 } from "@/Types/Organization/CaseTypes";
+import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -93,7 +93,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
           <Col md="3">
             <h3>File Manager</h3>
           </Col>
-          <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
+          <Col md="3" xs="12" className="d-flex justify-content-end">
             <Button onClick={toggleFilterIcon} className="me-2">
               {filterIcon ? (
                 <i className="fa-solid fa-filter-circle-xmark"></i>
@@ -101,8 +101,15 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                 <i className="fa-solid fa-filter"></i>
               )}
             </Button>
-            <Button color="primary" onClick={toggleModal}>
-              Upload Files
+            <Button
+              color="primary"
+              onClick={toggleModal}
+              className="d-flex justify-content-center align-items-center gap-1"
+            >
+              <span>Upload Files</span>
+              <span>
+                <i className="fa-regular fa-circle-up"></i>
+              </span>
             </Button>
           </Col>
         </CardHeader>
@@ -158,7 +165,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
               </div>
             ) : (
               <>
-                <Table bordered hover responsive className="text-center">
+                <Table hover responsive className="text-center">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -173,7 +180,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                       currentFiles.map((file, index) => (
                         <tr key={index}>
                           <td>{indexOfFirstFile + index + 1}</td>
-                          <td>{file.name}</td>
+                          <td>{file.name || "N/A"}</td>
                           <td>
                             {file?.file_owner_info?.first_name}{" "}
                             {file?.file_owner_info?.last_name}

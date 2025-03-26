@@ -102,7 +102,9 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Update Joint User</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        <span className="fs-4 text-primary">Update Joint User</span>
+      </ModalHeader>
       <ModalBody>
         <Form>
           <Row>
@@ -184,15 +186,15 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
         </Form>
       </ModalBody>
       <ModalFooter>
+        <Button color="secondary" onClick={toggle}>
+          Cancel
+        </Button>{" "}
         <Button
           color="primary"
           onClick={handleSave}
           disabled={!hasChanges || isLoading}
         >
           {isLoading ? "Saving..." : "Save Changes"}
-        </Button>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
         </Button>
       </ModalFooter>
     </Modal>
