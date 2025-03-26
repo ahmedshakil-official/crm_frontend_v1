@@ -18,12 +18,22 @@ export const CaseFilesDetailsApi = baseApi.injectEndpoints({
       providesTags: ["CaseFilesDetails", "JointUserDetails"],
     }),
 
+    // addCaseFilesDetails: builder.mutation({
+    //   query: ({ case_alias, payload }) => ({
+    //     url: `/cases/${case_alias}/files/`,
+    //     method: "POST",
+    //     body: payload,
+    //   }),
+    //   invalidatesTags: ["CaseFilesDetails"],
+    // }),
     addCaseFilesDetails: builder.mutation({
-      query: ({ case_alias, payload }) => ({
-        url: `/cases/${case_alias}/files/`,
-        method: "POST",
-        body: payload,
-      }),
+      query: ({ case_alias, payload }) => {
+        return {
+          url: `/cases/${case_alias}/files/`,
+          method: "POST",
+          body: payload,
+        };
+      },
       invalidatesTags: ["CaseFilesDetails"],
     }),
 

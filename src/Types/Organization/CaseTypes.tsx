@@ -112,7 +112,7 @@ export interface CaseFileProps {
 export interface FileDeleteModalProps {
   isOpen?: boolean;
   toggle?: () => void;
-  file?: { name?: string };
+  file?: { name?: string; file_type?: string };
   case_alias?: string;
   fileAlias?: string;
 }

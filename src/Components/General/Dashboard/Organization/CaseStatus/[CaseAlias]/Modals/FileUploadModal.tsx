@@ -2,7 +2,6 @@ import {
   useAddCaseFilesDetailsMutation,
   useGetCaseUserDetailsQuery,
 } from "@/Redux/Reducers/CaseInfoDetails/FileManagerDetailsApi";
-import apiClient from "@/services/api-client";
 import {
   FileOwnerProps,
   FileUploadModalProps,
@@ -22,6 +21,7 @@ import {
   ModalFooter,
   ModalHeader,
   Row,
+  Spinner,
 } from "reactstrap";
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
@@ -29,7 +29,6 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   toggle,
 }) => {
   const [files, setFiles] = useState<File | null>(null);
-  // const [isUploading, setIsUploading] = useState(false);
   const params = useParams();
   const { casealias } = params;
   const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
@@ -72,33 +71,43 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     });
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!files) {
       toast.error("Please fill in all required fields.");
       return;
     }
 
-    const payload = {
-      file: files, // Use 'files' here instead of formData.file
-      file_type: formData.fileType,
-      file_owner: formData.fileOwner,
-      name: formData.fileName || "N/A",
-      description: formData.description,
-      special_notes: formData.specialNotes,
-    };
+    const uploadData = new FormData();
+    // Append all fields including the file
+    uploadData.append("file", files as File);
+    uploadData.append("file_type", formData.fileType);
+    uploadData.append("file_owner", formData.fileOwner.toString());
+    uploadData.append("name", formData.fileName || "N/A");
+    uploadData.append("description", formData.description);
+    uploadData.append("special_notes", formData.specialNotes);
 
     try {
-
-      await apiClient.post(`/cases/${casealias}/files/`, payload, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await addCaseFilesDetails({
+        case_alias: casealias,
+        payload: uploadData,
+      }).unwrap();
+      // Reset form data after successful upload
+      setFiles(null);
+      setFormData({
+        file: "",
+        fileType: "",
+        fileOwner: 0,
+        fileName: "",
+        description: "",
+        specialNotes: "",
       });
-
       toast.success("File uploaded successfully!");
       toggle();
     } catch (error) {
       console.error("Error uploading file:", error);
       toast.error("Failed to upload file.");
-    } 
+    }
   };
 
   return (
@@ -106,8 +115,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Upload File</span>
       </ModalHeader>
-      <ModalBody>
-        <Form>
+      <Form onSubmit={handleUpload}>
+        <ModalBody>
           <Row>
             <Col md={12}>
               <FormGroup>
@@ -186,7 +195,11 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
                   <option value="">Select...</option>
 
                   {/* Options for Joint Users */}
-                  {fileOwners && Object.keys(fileOwners).length > 0 ? (
+                  {isLoading ? (
+                    <option>
+                      <Spinner color="primary" />
+                    </option>
+                  ) : fileOwners && Object.keys(fileOwners).length > 0 ? (
                     <>
                       {/* Lead User Option */}
                       <option value={fileOwners?.lead_user?.id}>
@@ -260,16 +273,16 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
               </FormGroup>
             </Col>
           </Row>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-        <Button color="primary" onClick={handleUpload}>
-          {isUploading ? "Uploading..." : "Upload File"}
-        </Button>
-      </ModalFooter>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary">
+            {isUploading ? "Uploading..." : "Upload File"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };
