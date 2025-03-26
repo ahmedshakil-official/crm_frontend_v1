@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { FaEdit } from "react-icons/fa";
 import {
   Col,
@@ -11,8 +12,18 @@ import {
   InputGroupText,
   Button,
 } from "reactstrap";
+import { RootState } from "@/Redux/Store";
 
-const LivingExpensesTabContents: FC = () => {
+interface LivingExpensesTabContentsProps {
+  updateField: (field: string, value: any) => void;
+}
+
+const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
+  updateField,
+}) => {
+  const budgetPlannerData = useSelector(
+    (state: RootState) => state.budgetPlanner
+  );
   const [visibleNotes, setVisibleNotes] = useState<{ [key: string]: boolean }>(
     {}
   );
@@ -21,64 +32,185 @@ const LivingExpensesTabContents: FC = () => {
   );
   const [postValues, setPostValues] = useState<Record<string, string>>({});
 
+  const livingCostFieldMappings = {
+    Electricity: "electricity",
+    Gas: "gas",
+    Water: "water",
+    "Landline/Mobile Phones": "landline_mobile_phone",
+    "TV Licence": "tv_license",
+    "Council Tax": "council_tax",
+    "Ground Rent & Service Charges": "ground_rent_service_charges",
+    "Buildings & Contents": "buildings_contents",
+    "Mortgage Payment Protection": "mortgage_payment_protection",
+    Endowment: "endowment",
+    "Pension Contribution": "pension_contribution",
+    Childcare: "childcare",
+    Maintenance: "maintenance",
+    Food: "food",
+    "Car Maintenance": "car_maintenance",
+    Fuel: "fuel",
+    "Public Transport": "public_transport",
+    "TV Broadband": "tv_broadband",
+    "Recreation/Holidays": "recreation_holidays",
+    Clothing: "clothing",
+    "Medical Expenses": "medical_expenses",
+    Education: "education",
+    "Other Living Costs": "other_living_costs",
+  };
+
+  const insuranceFieldMappings = {
+    "Motor Insurance": "motor_insurance",
+    "Health Insurance": "health_insurance",
+    "Payment Protection": "payment_protection",
+    "Life Insurance": "life_insurance",
+    "Dental Insurance": "dental_insurance",
+    "Other Insurance": "other_insurance",
+  };
+
+  // Initialize local state with Redux data
+  useEffect(() => {
+    const initialCurrentValues: Record<string, string> = {};
+    const initialPostValues: Record<string, string> = {};
+
+    // Current Living Costs
+    Object.entries(livingCostFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.current_living_cost[
+          key as keyof typeof budgetPlannerData.current_living_cost
+        ];
+      initialCurrentValues[
+        `CurrentBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
+      ] = value !== 0 ? String(value) : "";
+    });
+
+    // Post Living Costs
+    Object.entries(livingCostFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.post_living_cost[
+          key as keyof typeof budgetPlannerData.post_living_cost
+        ];
+      initialPostValues[
+        `PostCompletionBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
+      ] = value !== 0 ? String(value) : "";
+    });
+
+    // Current Insurance
+    Object.entries(insuranceFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.current_insurance[
+          key as keyof typeof budgetPlannerData.current_insurance
+        ];
+      initialCurrentValues[
+        `CurrentBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
+      ] = value !== 0 ? String(value) : "";
+    });
+
+    // Post Insurance
+    Object.entries(insuranceFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData.post_insurance[
+          key as keyof typeof budgetPlannerData.post_insurance
+        ];
+      initialPostValues[
+        `PostCompletionBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
+      ] = value !== 0 ? String(value) : "";
+    });
+
+    setCurrentValues((prev) => ({ ...prev, ...initialCurrentValues }));
+    setPostValues((prev) => ({ ...prev, ...initialPostValues }));
+  }, [budgetPlannerData]);
+
+  // Update parent modal with current values
+  useEffect(() => {
+    const formatValues = (
+      values: Record<string, string>,
+      mappings: Record<string, string>,
+      section: string
+    ) => {
+      const formatted = Object.entries(values)
+        .filter(
+          ([key]) =>
+            key.startsWith("CurrentBudgetPlanner") && !key.includes("_Notes")
+        )
+        .reduce((acc, [key, value]) => {
+          const fieldName = key.split(".")[1];
+          const reduxFieldName = mappings[fieldName as keyof typeof mappings];
+          if (reduxFieldName) {
+            acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
+          }
+          return acc;
+        }, {} as Record<string, number | 0>);
+      formatted.total_living_expenses =
+        parseFloat(
+          calculateTotal(values, Object.keys(mappings), "CurrentBudgetPlanner")
+        ) || 0;
+      updateField(section, formatted);
+    };
+
+    formatValues(currentValues, livingCostFieldMappings, "current_living_cost");
+    formatValues(currentValues, insuranceFieldMappings, "current_insurance");
+  }, [currentValues, updateField]);
+
+  // Update parent modal with post values
+  useEffect(() => {
+    const formatValues = (
+      values: Record<string, string>,
+      mappings: Record<string, string>,
+      section: string
+    ) => {
+      const formatted = Object.entries(values)
+        .filter(
+          ([key]) =>
+            key.startsWith("PostCompletionBudgetPlanner") &&
+            !key.includes("_Notes")
+        )
+        .reduce((acc, [key, value]) => {
+          const fieldName = key.split(".")[1];
+          const reduxFieldName = mappings[fieldName as keyof typeof mappings];
+          if (reduxFieldName) {
+            acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
+          }
+          return acc;
+        }, {} as Record<string, number | 0>);
+      formatted.total_living_expenses =
+        parseFloat(
+          calculateTotal(
+            values,
+            Object.keys(mappings),
+            "PostCompletionBudgetPlanner"
+          )
+        ) || 0;
+      updateField(section, formatted);
+    };
+
+    formatValues(postValues, livingCostFieldMappings, "post_living_cost");
+    formatValues(postValues, insuranceFieldMappings, "post_insurance");
+  }, [postValues, updateField]);
+
   const toggleNotes = (event: React.MouseEvent, noteId: string) => {
     event.preventDefault();
     setVisibleNotes((prev) => ({ ...prev, [noteId]: !prev[noteId] }));
   };
 
-  const livingCostFields = [
-    "Electricity",
-    "Gas",
-    "Water",
-    "Landline/Mobile Phones",
-    "TV Licence",
-    "Council Tax",
-    { label: "Ground Rent & Service Charges" },
-    "Buildings & Contents",
-    "Mortgage Payment Protection",
-    "Endowment",
-    "Pension Contribution",
-    "Childcare",
-    "Maintenance",
-    "Food",
-    "Car Maintenance",
-    "Fuel",
-    "Public Transport",
-    "TV Broadband",
-    "Recreation/Holidays",
-    "Clothing",
-    "Medical Expenses",
-    "Education",
-    "Other Living Costs",
-  ];
-
-  const insuranceFields = [
-    "Motor Insurance",
-    "Health Insurance",
-    "Payment Protection",
-    "Life Insurance",
-    "Dental Insurance",
-    "Other Insurance",
-  ];
-
   const renderFields = (
     prefix: string,
-    fields: (string | { label: string })[]
+    fields: string[],
+    mappings: Record<string, string>
   ) => (
     <Form>
       {fields.map((field) => {
-        const label = typeof field === "string" ? field : field.label;
-        const id = label.replace(/[\s/&]/g, "");
+        const id = field.replace(/[\s/&]/g, "");
         const fieldName = `${prefix}.${id}`;
+        const reduxFieldName = mappings[field];
         return (
           <div key={id}>
             <FormGroup row className="mb-2">
               <Label
-                for={`${prefix}_${id}`}
+                for={`${prefix}_${reduxFieldName}`}
                 sm={6}
                 style={{ fontSize: "0.9rem" }}
               >
-                {label}
+                {field}
               </Label>
               <Col sm={6}>
                 <InputGroup>
@@ -86,7 +218,7 @@ const LivingExpensesTabContents: FC = () => {
                   <Input
                     type="number"
                     name={fieldName}
-                    id={`${prefix}_${id}`}
+                    id={`${prefix}_${reduxFieldName}`}
                     className="numeric-decimal living-cost"
                     placeholder="0.00"
                     step="0.01"
@@ -112,7 +244,7 @@ const LivingExpensesTabContents: FC = () => {
                         e,
                         `${
                           prefix === "CurrentBudgetPlanner" ? "" : "Post_"
-                        }${id}_Notes`
+                        }${reduxFieldName}_Notes`
                       )
                     }
                     style={{ cursor: "pointer" }}
@@ -123,43 +255,43 @@ const LivingExpensesTabContents: FC = () => {
               </Col>
             </FormGroup>
             <FormGroup
-              className={`${id}_Notes_Holder mb-2`}
+              className={`${reduxFieldName}_Notes_Holder mb-2`}
               style={{
                 display: visibleNotes[
                   `${
                     prefix === "CurrentBudgetPlanner" ? "" : "Post_"
-                  }${id}_Notes`
+                  }${reduxFieldName}_Notes`
                 ]
                   ? "block"
                   : "none",
               }}
             >
               <Label
-                for={`${prefix}_${id}_Notes`}
+                for={`${prefix}_${reduxFieldName}_Notes`}
                 style={{ fontSize: "0.9rem" }}
               >
                 Notes
               </Label>
               <Input
                 type="textarea"
-                name={`${prefix}.${id}_Notes`}
-                id={`${prefix}_${id}_Notes`}
+                name={`${prefix}.${reduxFieldName}_Notes`}
+                id={`${prefix}_${reduxFieldName}_Notes`}
                 className="textAreaRestrictions form-control"
                 value={
                   prefix === "CurrentBudgetPlanner"
-                    ? currentValues[`${prefix}.${id}_Notes`] || ""
-                    : postValues[`${prefix}.${id}_Notes`] || ""
+                    ? currentValues[`${prefix}.${reduxFieldName}_Notes`] || ""
+                    : postValues[`${prefix}.${reduxFieldName}_Notes`] || ""
                 }
                 onChange={(e) => {
                   const newValues =
                     prefix === "CurrentBudgetPlanner"
                       ? {
                           ...currentValues,
-                          [`${prefix}.${id}_Notes`]: e.target.value,
+                          [`${prefix}.${reduxFieldName}_Notes`]: e.target.value,
                         }
                       : {
                           ...postValues,
-                          [`${prefix}.${id}_Notes`]: e.target.value,
+                          [`${prefix}.${reduxFieldName}_Notes`]: e.target.value,
                         };
                   prefix === "CurrentBudgetPlanner"
                     ? setCurrentValues(newValues)
@@ -173,22 +305,19 @@ const LivingExpensesTabContents: FC = () => {
     </Form>
   );
 
-  // Calculate total for a section
   const calculateTotal = (
     values: Record<string, string>,
-    fields: (string | { label: string })[],
-    prefix: string // Added prefix parameter
+    fields: string[],
+    prefix: string
   ) => {
     return fields
       .reduce((sum, field) => {
-        const label = typeof field === "string" ? field : field.label;
-        const fieldName = `${prefix}.${label.replace(/[\s/&]/g, "")}`;
+        const fieldName = `${prefix}.${field.replace(/[\s/&]/g, "")}`;
         return sum + (parseFloat(values[fieldName]) || 0);
       }, 0)
       .toFixed(2);
   };
 
-  // Handle copy functionality
   const handleCopyFromCurrent = () => {
     const newPostValues: Record<string, string> = {};
     Object.keys(currentValues).forEach((key) => {
@@ -204,7 +333,8 @@ const LivingExpensesTabContents: FC = () => {
   const renderSection = (
     title: string,
     prefix: string,
-    fields?: (string | { label: string })[],
+    fields?: string[],
+    mappings?: Record<string, string>,
     isTotal?: boolean
   ) => (
     <div className="col-md-6">
@@ -223,16 +353,12 @@ const LivingExpensesTabContents: FC = () => {
             }`}
           >
             <span className="fw-bold text-primary">
-              {fields === insuranceFields ? "Insurances" : "Living Costs"}
+              {fields && Object.keys(insuranceFieldMappings).includes(fields[0])
+                ? "Insurances"
+                : "Living Costs"}
             </span>
             {title === "Post Completion" && (
-              <Button
-                color="primary"
-                size="sm"
-                id="copyFromCurrentButton"
-                className="copyFromCurrentButton"
-                onClick={handleCopyFromCurrent}
-              >
+              <Button color="primary" size="sm" onClick={handleCopyFromCurrent}>
                 Copy from Current
               </Button>
             )}
@@ -265,14 +391,14 @@ const LivingExpensesTabContents: FC = () => {
                             parseFloat(
                               calculateTotal(
                                 currentValues,
-                                livingCostFields,
+                                Object.keys(livingCostFieldMappings),
                                 prefix
                               )
                             ) +
                             parseFloat(
                               calculateTotal(
                                 currentValues,
-                                insuranceFields,
+                                Object.keys(insuranceFieldMappings),
                                 prefix
                               )
                             )
@@ -281,14 +407,14 @@ const LivingExpensesTabContents: FC = () => {
                             parseFloat(
                               calculateTotal(
                                 postValues,
-                                livingCostFields,
+                                Object.keys(livingCostFieldMappings),
                                 prefix
                               )
                             ) +
                             parseFloat(
                               calculateTotal(
                                 postValues,
-                                insuranceFields,
+                                Object.keys(insuranceFieldMappings),
                                 prefix
                               )
                             )
@@ -313,7 +439,7 @@ const LivingExpensesTabContents: FC = () => {
               </Col>
             </FormGroup>
           ) : (
-            renderFields(prefix, fields!)
+            renderFields(prefix, fields!, mappings!)
           )}
           {isTotal && (
             <FormGroup
@@ -376,24 +502,36 @@ const LivingExpensesTabContents: FC = () => {
         </small>
       </p>
       <Row>
-        {renderSection("Current", "CurrentBudgetPlanner", livingCostFields)}
+        {renderSection(
+          "Current",
+          "CurrentBudgetPlanner",
+          Object.keys(livingCostFieldMappings),
+          livingCostFieldMappings
+        )}
         {renderSection(
           "Post Completion",
           "PostCompletionBudgetPlanner",
-          livingCostFields
+          Object.keys(livingCostFieldMappings),
+          livingCostFieldMappings
         )}
       </Row>
       <Row className="mt-4">
-        {renderSection("Current", "CurrentBudgetPlanner", insuranceFields)}
+        {renderSection(
+          "Current",
+          "CurrentBudgetPlanner",
+          Object.keys(insuranceFieldMappings),
+          insuranceFieldMappings
+        )}
         {renderSection(
           "Post Completion",
           "PostCompletionBudgetPlanner",
-          insuranceFields
+          Object.keys(insuranceFieldMappings),
+          insuranceFieldMappings
         )}
       </Row>
       <Row className="mt-4">
-        {renderSection("", "CurrentBudgetPlanner", [], true)}
-        {renderSection("", "PostCompletionBudgetPlanner", [], true)}
+        {renderSection("", "CurrentBudgetPlanner", [], {}, true)}
+        {renderSection("", "PostCompletionBudgetPlanner", [], {}, true)}
       </Row>
     </div>
   );

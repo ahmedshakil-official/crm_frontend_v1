@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   Col,
   FormGroup,
@@ -8,12 +9,108 @@ import {
   InputGroupText,
   Button,
 } from "reactstrap";
+import { RootState } from "@/Redux/Store";
 
-const MonthlyBudgetTabContents: FC = () => {
+interface MonthlyBudgetTabContentsProps {
+  updateField: (field: string, value: any) => void;
+}
+
+const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
+  updateField,
+}) => {
+  const budgetPlannerData = useSelector(
+    (state: RootState) => state.budgetPlanner
+  );
   const [currentValues, setCurrentValues] = useState<Record<string, string>>(
     {}
   );
   const [postValues, setPostValues] = useState<Record<string, string>>({});
+
+  const subtotalFieldMappings = {
+    TotalIncome: "total_income",
+    TotalDebtRepayment: "total_debt_repayment",
+    TotalHome: "total_living_expenses",
+    AvailableIncome: "available_income",
+  };
+
+  // Initialize local state with Redux data
+  useEffect(() => {
+    const initialCurrentValues: Record<string, string> = {};
+    const initialPostValues: Record<string, string> = {};
+
+    // Current Sub Totals
+    Object.entries(subtotalFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData?.current_sub_total?.[
+          key as keyof typeof budgetPlannerData.current_sub_total
+        ] ?? 0;
+      initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
+        value !== 0 ? String(value) : "";
+    });
+
+    // Post Sub Totals
+    Object.entries(subtotalFieldMappings).forEach(([field, key]) => {
+      const value =
+        budgetPlannerData?.post_sub_total?.[
+          key as keyof typeof budgetPlannerData.post_sub_total
+        ] ?? 0;
+      initialPostValues[`PostCompletionsBudgetPlanner.${field}`] =
+        value !== 0 ? String(value) : "";
+    });
+
+    setCurrentValues((prev) => ({ ...prev, ...initialCurrentValues }));
+    setPostValues((prev) => ({ ...prev, ...initialPostValues }));
+  }, [budgetPlannerData]);
+
+  // Update parent modal with current values
+  useEffect(() => {
+    if (!budgetPlannerData?.current_sub_total) return;
+
+    const formattedCurrentValues = {
+      ...Object.entries(currentValues).reduce((acc, [key, value]) => {
+        const fieldName = key.split(".")[1];
+        const reduxFieldName =
+          subtotalFieldMappings[
+            fieldName as keyof typeof subtotalFieldMappings
+          ];
+        if (reduxFieldName) {
+          acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
+        }
+        return acc;
+      }, {} as Record<string, number | 0>),
+      available_income:
+        parseFloat(
+          calculateAvailableIncome(currentValues, "CurrentBudgetPlanner")
+        ) || 0,
+    };
+
+    updateField("current_sub_total", formattedCurrentValues);
+  }, [currentValues, updateField, budgetPlannerData]);
+
+  // Update parent modal with post values
+  useEffect(() => {
+    if (!budgetPlannerData?.post_sub_total) return;
+
+    const formattedPostValues = {
+      ...Object.entries(postValues).reduce((acc, [key, value]) => {
+        const fieldName = key.split(".")[1];
+        const reduxFieldName =
+          subtotalFieldMappings[
+            fieldName as keyof typeof subtotalFieldMappings
+          ];
+        if (reduxFieldName) {
+          acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
+        }
+        return acc;
+      }, {} as Record<string, number | 0>),
+      available_income:
+        parseFloat(
+          calculateAvailableIncome(postValues, "PostCompletionsBudgetPlanner")
+        ) || 0,
+    };
+
+    updateField("post_sub_total", formattedPostValues);
+  }, [postValues, updateField, budgetPlannerData]);
 
   const subtotalFields = [
     {
@@ -80,13 +177,7 @@ const MonthlyBudgetTabContents: FC = () => {
         >
           <span className="fw-bold text-primary">Sub-Totals</span>
           {showCopyButton && (
-            <Button
-              color="primary"
-              size="sm"
-              id="copyFromCurrentButton"
-              className="copyFromCurrentButton"
-              onClick={handleCopyFromCurrent}
-            >
+            <Button color="primary" size="sm" onClick={handleCopyFromCurrent}>
               Copy from Current
             </Button>
           )}
@@ -184,11 +275,6 @@ const MonthlyBudgetTabContents: FC = () => {
                       ? calculateAvailableIncome(currentValues, prefix)
                       : calculateAvailableIncome(postValues, prefix)
                   }
-                  data-val="true"
-                  data-val-number="The field AvailableIncome must be a number."
-                  data-val-range="Available Income exceeds maximum length of 16 digits"
-                  data-val-range-max="1E+16"
-                  data-val-range-min="-1E+15"
                 />
               </InputGroup>
               <span

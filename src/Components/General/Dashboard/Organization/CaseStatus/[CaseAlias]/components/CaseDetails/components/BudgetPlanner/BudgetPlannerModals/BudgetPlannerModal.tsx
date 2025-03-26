@@ -1,6 +1,6 @@
 "use client";
-import { FC, useState } from "react";
-import { useSelector } from "react-redux";
+import { FC, useState, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Modal,
   ModalHeader,
@@ -16,37 +16,74 @@ import {
 } from "reactstrap";
 import { RootState } from "@/Redux/Store";
 import BudgetPlannerTabContent from "../BudgetPlannerTabContent";
+import { initializeBudgetPlannerForm } from "@/Redux/Reducers/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import { useUpdateBudgetPlannerMutation } from "@/Redux/Reducers/CaseDetails/BudgetPlanner/BudgetPlannerApi";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface BudgetPlannerModalProps {
   isOpen: boolean;
   toggle: () => void;
 }
 
+const budgetPlannerTabTitleData = [
+  "Household Income",
+  "Debt Repayment",
+  "Living Expenses",
+  "Monthly Budget",
+  "Disclaimers",
+];
+
 const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
   isOpen,
   toggle,
 }) => {
+  const { casealias } = useParams();
+  const dispatch = useDispatch();
   const [basicTab, setBasicTab] = useState<number>(1);
-  const budgetPlannerData = useSelector((state: RootState) => state.budgetPlanner);
-
-  const budgetPlannerTabTitleData = [
-    "Household Income",
-    "Debt Repayment",
-    "Living Expenses",
-    "Monthly Budget",
-    "Disclaimers",
-  ];
+  const budgetPlannerData = useSelector(
+    (state: RootState) => state.budgetPlanner
+  );
+  const [updateBudgetPlanner, { isLoading }] = useUpdateBudgetPlannerMutation();
+  // Local state to track only the changes
+  const [updatedFields, setUpdatedFields] = useState<
+    Partial<typeof budgetPlannerData>
+  >({});
 
   const handleTabClick = (index: number) => {
     setBasicTab(index);
   };
 
-  const handleSaveChanges = () => {
-    console.log("Budget Planner Complete Data:", {
-      current_income: budgetPlannerData.current_income,
-      post_income: budgetPlannerData.post_income,
+  const handleSaveChanges = useCallback(async () => {
+    // Merge the initial data with only the updated fields
+    const finalData = {
+      ...budgetPlannerData,
+      ...updatedFields,
+      updated_at: new Date().toISOString(),
+    };
+
+    console.log("Budget Planner Submitted Updated Data:", finalData);
+    dispatch(initializeBudgetPlannerForm(finalData));
+
+    const res = await updateBudgetPlanner({
+      case_alias: casealias,
+      budgetplanner_alias: budgetPlannerData.alias,
+      updatedBudgetPlannerData: finalData,
     });
-    toggle();
+    if (res.data) {
+      toast.success("Budget Planner Updated Successfully");
+      toggle();
+    } else {
+      toast.error("Budget Planner Update Failed");
+    }
+  }, [budgetPlannerData, updatedFields, dispatch, toggle]);
+
+  // Function to update local changes
+  const updateField = (field: keyof typeof budgetPlannerData, value: any) => {
+    setUpdatedFields((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   return (
@@ -78,6 +115,9 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
               <BudgetPlannerTabContent
                 tabId={basicTab}
                 setTabId={setBasicTab}
+                updateField={(field: string, value: any) =>
+                  updateField(field as keyof typeof budgetPlannerData, value)
+                }
               />
             </CardBody>
           </CardBody>
@@ -87,8 +127,12 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
         <Button color="secondary" onClick={toggle}>
           Close
         </Button>
-        <Button color="primary" onClick={handleSaveChanges}>
-          Save Changes
+        <Button
+          color="primary"
+          onClick={handleSaveChanges}
+          disabled={!budgetPlannerData.disclaimer && !updatedFields.disclaimer}
+        >
+          {isLoading ? "Saving..." : "Save Changes"}
         </Button>
       </ModalFooter>
     </Modal>
