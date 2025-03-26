@@ -23,6 +23,7 @@ export const baseApi = createApi({
     "ClientDetails",
     "AdvisorDetails",
     "IntroducerDetails",
+    "CaseFilesDetails",
     "CaseDetails",
     "LoanDetails",
     "ApplicantsDetails",
@@ -38,6 +39,7 @@ export const baseApi = createApi({
     "ExistingProtectionDetails",
     "Notes",
     "BudgetPlanner",
+    "ProductDetails",
   ],
   endpoints: () => ({}),
 });

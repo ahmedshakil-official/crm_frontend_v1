@@ -104,7 +104,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Add Lead</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        <span className="fs-4 text-primary">Add Lead</span>
+      </ModalHeader>
       <Form onSubmit={handleSaveLead}>
         <ModalBody>
           <Row>
@@ -296,7 +298,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
           </Row>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary">{isLoading ? "Saving..." : "Save"}</Button>
+          <Button color="primary">
+            {isLoading ? "Saving..." : "Save Lead"}
+          </Button>
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>

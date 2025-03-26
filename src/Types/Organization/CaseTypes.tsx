@@ -37,7 +37,6 @@ export interface CaseInfo {
 }
 export interface SingleCaseProps {
   caseInfo: CaseInfo | undefined;
-  fetchCaseInfo?: any;
   isLoading: boolean;
 }
 export interface CaseSearchProps {
@@ -48,7 +47,6 @@ export interface CaseSearchProps {
 export interface FileUploadModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
   handleFileUpload?: any;
 }
 export interface FileOwnerProps {
@@ -114,9 +112,9 @@ export interface CaseFileProps {
 export interface FileDeleteModalProps {
   isOpen?: boolean;
   toggle?: () => void;
-  file?: { name?: string };
-  onDelete?: () => void;
-  isDeleting?: any;
+  file?: { name?: string; file_type?: string };
+  case_alias?: string;
+  fileAlias?: string;
 }
 
 export interface AddNewCaseModalProps {

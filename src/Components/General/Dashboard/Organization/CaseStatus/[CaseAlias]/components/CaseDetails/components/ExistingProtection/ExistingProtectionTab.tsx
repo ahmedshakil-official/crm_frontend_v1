@@ -1,4 +1,4 @@
-import { useGetExistingPropertyDetailsQuery } from "@/Redux/Reducers/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
+import { useGetExistingProtectionDetailsQuery } from "@/Redux/Reducers/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
 import { ExistingProtectionDetailsProps } from "@/Types/Organization/CaseDetails/ExistingProtectionTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
@@ -24,7 +24,7 @@ const ExistingProtectionTab: React.FC = () => {
 
   // Fetch data
   const { data: existingProtectionDetails, isLoading } =
-    useGetExistingPropertyDetailsQuery({
+    useGetExistingProtectionDetailsQuery({
       case_alias: casealias,
     });
 
@@ -64,7 +64,9 @@ const ExistingProtectionTab: React.FC = () => {
   };
 
   // Get all user sums
-  const userSumAssured = calculateUserSumAssured(existingProtectionDetails || []);
+  const userSumAssured = calculateUserSumAssured(
+    existingProtectionDetails || []
+  );
 
   // Group existingProtection details by user ID
   const groupedData = groupByUserId(existingProtectionDetails || []);
@@ -135,7 +137,9 @@ const ExistingProtectionTab: React.FC = () => {
                       className={`nav-border text-info tab-info ${
                         activeTab === existingProtection.alias ? "active" : ""
                       }`}
-                      onClick={() => setActiveTab(existingProtection.alias || null)}
+                      onClick={() =>
+                        setActiveTab(existingProtection.alias || null)
+                      }
                       style={{ cursor: "pointer", fontSize: "0.7rem" }}
                     >
                       Security {index + 1}

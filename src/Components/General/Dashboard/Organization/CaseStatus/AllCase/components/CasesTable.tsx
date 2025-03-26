@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -19,10 +18,7 @@ import {
   Table,
 } from "reactstrap";
 
-import {
-  useDeleteCaseDetailsMutation,
-  useGetCaseDetailsQuery,
-} from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
+import { useGetCaseDetailsQuery } from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
 import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
@@ -61,7 +57,6 @@ const CaseTable: React.FC = () => {
     limit: casesPerPage,
   });
 
-
   const isLoading = isAdvisorLoading || isCaseLoading;
 
   console.log("caseData:", caseData); // Debug: Check the API response
@@ -83,8 +78,6 @@ const CaseTable: React.FC = () => {
     setCurrentCase(caseItem);
     toggleDeleteCaseModal();
   };
-
-
 
   const handleFilterChange = (filterKey: string, value: string) => {
     setFilters((prevFilters) => ({
@@ -122,7 +115,11 @@ const CaseTable: React.FC = () => {
               </InputGroupText>
             </InputGroup>
           </Col>
-          <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
+          <Col
+            md="3"
+            xs="12"
+            className="text-md-end text-center mt-2 mt-md-0 d-flex justify-content-end align-items-center gap-2"
+          >
             <Button onClick={toggleFilterIcon} className="me-2">
               {filterIcon ? (
                 <i className="fa-solid fa-filter-circle-xmark"></i>
@@ -130,8 +127,15 @@ const CaseTable: React.FC = () => {
                 <i className="fa-solid fa-filter"></i>
               )}
             </Button>
-            <Button color="primary" onClick={openAddNewCaseModal}>
-              Add New Case
+            <Button
+              color="primary"
+              onClick={openAddNewCaseModal}
+              className="d-flex justify-content-center align-items-center gap-1"
+            >
+              <span>Add New Case</span>
+              <span>
+                <i className="fa-solid fa-circle-plus"></i>
+              </span>
             </Button>
           </Col>
         </Row>
@@ -220,7 +224,7 @@ const CaseTable: React.FC = () => {
         )}
 
         <Row>
-          <Table bordered hover responsive className="mt-3">
+          <Table hover responsive className="mt-3">
             <thead className="thead-light text-center">
               <tr>
                 <th>Case Name</th>
@@ -244,7 +248,10 @@ const CaseTable: React.FC = () => {
                 caseData.map((caseItem: CaseInfo) => (
                   <tr key={caseItem.alias}>
                     <td>
-                      <Link className="custom-hover" href={`/dashboard/organization/${caseItem.alias}`}>
+                      <Link
+                        className="custom-hover"
+                        href={`/dashboard/organization/${caseItem.alias}`}
+                      >
                         {caseItem.name}
                       </Link>
                     </td>

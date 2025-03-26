@@ -2,7 +2,7 @@ import { baseApi } from "@/Redux/Api/BaseApi";
 
 export const ExistingProtectionDetailsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getExistingPropertyDetails: builder.query({
+    getExistingProtectionDetails: builder.query({
       query: ({ case_alias }) => ({
         url: `/cases/${case_alias}/existing/protections/`,
         method: "GET",
@@ -37,7 +37,7 @@ export const ExistingProtectionDetailsApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetExistingPropertyDetailsQuery,
+  useGetExistingProtectionDetailsQuery,
   useAddExistingProtectionDetailsMutation,
   useUpdateExistingProtectionDetailsMutation,
 } = ExistingProtectionDetailsApi;

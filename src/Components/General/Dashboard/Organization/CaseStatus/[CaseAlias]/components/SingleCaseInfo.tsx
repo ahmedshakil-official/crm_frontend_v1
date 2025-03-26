@@ -1,5 +1,4 @@
 import { CaseInfo, SingleCaseProps } from "@/Types/Organization/CaseTypes";
-import { useParams } from "next/navigation";
 import { useState } from "react";
 import {
   Button,
@@ -12,15 +11,9 @@ import {
 } from "reactstrap";
 import UpdateCaseModal from "../../Modals/UpdateCaseModal";
 
-const SingleCaseInfo: React.FC<SingleCaseProps> = ({
-  caseInfo,
-  isLoading,
-  fetchCaseInfo,
-}) => {
+const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
   const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
-  const params = useParams();
-  const { casealias } = params;
 
   const toggleUpdateCaseModal = () =>
     setIsUpdateCaseModalOpen(!isUpdateCaseModalOpen);
@@ -39,8 +32,12 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
             color="primary"
             onClick={() => openUpdateCaseModal(caseInfo!)}
             disabled={!caseInfo} // Disable if caseInfo is null
+            className="d-flex justify-content-center align-items-center gap-1"
           >
-            Update Info
+            <span>Update Info</span>
+            <span>
+              <i className="fa-regular fa-circle-up"></i>
+            </span>
           </Button>
         </CardHeader>
 
@@ -228,11 +225,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({
       <UpdateCaseModal
         isOpen={isUpdateCaseModalOpen}
         toggle={toggleUpdateCaseModal}
-        caseData={currentCase as CaseInfo} // Pass the selected case
-        onSave={() => {
-          fetchCaseInfo(); // Refresh the case table after saving
-          toggleUpdateCaseModal(); // Close the modal
-        }}
+        caseData={currentCase as CaseInfo}
       />
     </Col>
   );

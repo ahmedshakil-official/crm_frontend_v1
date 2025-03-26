@@ -1,11 +1,10 @@
-import apiClient from "@/services/api-client";
+import { useGetCaseFilesDetailsQuery } from "@/Redux/Reducers/CaseInfoDetails/FileManagerDetailsApi";
 import {
   CaseFileProps,
   FileDeleteModalProps,
 } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -27,49 +26,26 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<CaseFileProps | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [filterIcon, setFilterIcon] = useState(false);
   const params = useParams();
   const { casealias } = params;
+
+  // RTK hooks
+  const { data: caseFilesData, isLoading } = useGetCaseFilesDetailsQuery({
+    case_alias: casealias,
+  });
 
   const totalPages = Math.ceil(caseFiles.length / filesPerPage);
   const indexOfLastFile = currentPage * filesPerPage;
   const indexOfFirstFile = indexOfLastFile - filesPerPage;
   const currentFiles = caseFiles.slice(indexOfFirstFile, indexOfLastFile);
 
-  const fetchCaseFiles = async () => {
-    setIsLoading(true);
-    try {
-      const CaseData = await apiClient.get(`/cases/${casealias}/files/`);
-      setCaseFiles(CaseData?.data || []);
-    } catch (error) {
-      console.error("Error Fetching Cases", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchCaseFiles();
-  }, []);
-
-  const deleteFile = async (alias: string) => {
-    setIsDeleting(true);
-    setIsLoading(true);
-    try {
-      await apiClient.delete(`/cases/${casealias}/files/${alias}/`);
-      fetchCaseFiles();
-      toast.success("File deleted successfully.");
-    } catch (error) {
-      console.error("Error Deleting File", error);
-      toast.error("Failed to delete the file. Please try again.");
-    } finally {
-      setIsLoading(false);
-      setIsDeleting(false);
-      toggleDeleteModal();
+    if (caseFilesData) {
+      setCaseFiles(caseFilesData as CaseFileProps[]);
     }
-  };
+  }, [caseFilesData]);
 
   //filter icon toggle
   const toggleFilterIcon = () => setFilterIcon(!filterIcon);
@@ -93,7 +69,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
           <Col md="3">
             <h3>File Manager</h3>
           </Col>
-          <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
+          <Col md="3" xs="12" className="d-flex justify-content-end">
             <Button onClick={toggleFilterIcon} className="me-2">
               {filterIcon ? (
                 <i className="fa-solid fa-filter-circle-xmark"></i>
@@ -101,8 +77,15 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                 <i className="fa-solid fa-filter"></i>
               )}
             </Button>
-            <Button color="primary" onClick={toggleModal}>
-              Upload Files
+            <Button
+              color="primary"
+              onClick={toggleModal}
+              className="d-flex justify-content-center align-items-center gap-1"
+            >
+              <span>Upload Files</span>
+              <span>
+                <i className="fa-regular fa-circle-up"></i>
+              </span>
             </Button>
           </Col>
         </CardHeader>
@@ -158,7 +141,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
               </div>
             ) : (
               <>
-                <Table bordered hover responsive className="text-center">
+                <Table hover responsive className="text-center">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -173,7 +156,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                       currentFiles.map((file, index) => (
                         <tr key={index}>
                           <td>{indexOfFirstFile + index + 1}</td>
-                          <td>{file.name}</td>
+                          <td>{file.name || "N/A"}</td>
                           <td>
                             {file?.file_owner_info?.first_name}{" "}
                             {file?.file_owner_info?.last_name}
@@ -249,20 +232,16 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
           </Row>
         </CardBody>
       </Card>
-
-      <FileUploadModal
-        isOpen={modalOpen}
-        toggle={toggleModal}
-        onSave={fetchCaseFiles}
-      />
+      {/* Modals  */}
+      <FileUploadModal isOpen={modalOpen} toggle={toggleModal} />
 
       {selectedFile && (
         <FileDeleteModal
           isOpen={deleteModalOpen}
           toggle={toggleDeleteModal}
           file={selectedFile}
-          isDeleting={isDeleting}
-          onDelete={() => deleteFile(selectedFile.alias)}
+          case_alias={casealias?.toString()}
+          fileAlias={selectedFile.alias}
         />
       )}
     </Col>

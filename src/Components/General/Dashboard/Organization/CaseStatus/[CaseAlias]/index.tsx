@@ -1,6 +1,6 @@
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
+import { useGetSingleCaseDetailsQuery } from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
 import { useGetJointUserInfoQuery } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
-import apiClient from "@/services/api-client";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,29 +15,21 @@ import SingleCaseInfo from "./components/SingleCaseInfo";
 
 const CaseContainer: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
-  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const { casealias } = params;
+
+  // rtk hooks
   const { data: jointUserInfo, isLoading: isJointUserFetcing } =
     useGetJointUserInfoQuery({
       case_alias: casealias,
     });
 
-  const fetchCaseInfo = async () => {
-    setIsLoading(true);
-    try {
-      const CaseData = await apiClient.get(`/cases/${casealias}`);
-      setCaseInfo(CaseData?.data || {});
-    } catch (error) {
-      console.error("Error Fetching Cases", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  const { data: caseData, isLoading } = useGetSingleCaseDetailsQuery({
+    case_alias: casealias,
+  });
   useEffect(() => {
-    fetchCaseInfo();
-  }, []);
+    setCaseInfo(caseData || {});
+  }, [caseData]);
 
   return (
     <>
@@ -50,11 +42,7 @@ const CaseContainer: React.FC = () => {
       />
       <Container fluid>
         <Row>
-          <SingleCaseInfo
-            caseInfo={caseInfo}
-            isLoading={isLoading}
-            fetchCaseInfo={fetchCaseInfo}
-          />
+          <SingleCaseInfo caseInfo={caseInfo} isLoading={isLoading} />
         </Row>
         <Row>
           <CaseDetails caseStage={caseInfo?.case_stage || ""} />
@@ -63,7 +51,7 @@ const CaseContainer: React.FC = () => {
           <FileManager />
         </Row>
         <Row>
-          <JointUsers jointUserInfo={jointUserInfo} isLoading={isLoading} />
+          <JointUsers jointUserInfo={jointUserInfo} isLoading={isJointUserFetcing} />
         </Row>
         <Row>
           <MeetingHistory />

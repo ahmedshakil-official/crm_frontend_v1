@@ -1,4 +1,7 @@
-import apiClient from "@/services/api-client";
+import {
+  useAddCaseFilesDetailsMutation,
+  useGetCaseUserDetailsQuery,
+} from "@/Redux/Reducers/CaseInfoDetails/FileManagerDetailsApi";
 import {
   FileOwnerProps,
   FileUploadModalProps,
@@ -8,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
+  Col,
   Form,
   FormGroup,
   Input,
@@ -16,17 +20,25 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  Row,
+  Spinner,
 } from "reactstrap";
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
   isOpen,
   toggle,
-  onSave,
 }) => {
   const [files, setFiles] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
   const params = useParams();
   const { casealias } = params;
+  const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
+
+  // rtk hooks
+  const { data: caseUsers, isLoading } = useGetCaseUserDetailsQuery({
+    case_alias: casealias,
+  });
+  const [addCaseFilesDetails, { isLoading: isUploading }] =
+    useAddCaseFilesDetailsMutation();
 
   const [formData, setFormData] = useState({
     file: "",
@@ -36,21 +48,12 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     description: "",
     specialNotes: "",
   });
-  const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
-
-  const fetchCaseFileOwners = async () => {
-    try {
-      const response = await apiClient.get(`/cases/${casealias}/users/`);
-      setfileOwners(response.data || []);
-      console.log("Fetched File Owners:", response.data); // Debug log
-    } catch (error) {
-      console.error("Error Fetching Cases", error);
-    }
-  };
 
   useEffect(() => {
-    fetchCaseFileOwners();
-  }, []);
+    if (caseUsers) {
+      setfileOwners(caseUsers);
+    }
+  }, [caseUsers]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -68,185 +71,218 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     });
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!files) {
       toast.error("Please fill in all required fields.");
       return;
     }
 
-    const payload = {
-      file: files, // Use 'files' here instead of formData.file
-      file_type: formData.fileType,
-      file_owner: formData.fileOwner,
-      name: formData.fileName || "N/A",
-      description: formData.description,
-      special_notes: formData.specialNotes,
-    };
+    const uploadData = new FormData();
+    // Append all fields including the file
+    uploadData.append("file", files as File);
+    uploadData.append("file_type", formData.fileType);
+    uploadData.append("file_owner", formData.fileOwner.toString());
+    uploadData.append("name", formData.fileName || "N/A");
+    uploadData.append("description", formData.description);
+    uploadData.append("special_notes", formData.specialNotes);
 
     try {
-      setIsUploading(true);
-      await apiClient.post(`/cases/${casealias}/files/`, payload, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await addCaseFilesDetails({
+        case_alias: casealias,
+        payload: uploadData,
+      }).unwrap();
+      // Reset form data after successful upload
+      setFiles(null);
+      setFormData({
+        file: "",
+        fileType: "",
+        fileOwner: 0,
+        fileName: "",
+        description: "",
+        specialNotes: "",
       });
-
       toast.success("File uploaded successfully!");
-      onSave(); // Callback to refresh data
-      toggle(); // Close modal
+      toggle();
     } catch (error) {
       console.error("Error uploading file:", error);
       toast.error("Failed to upload file.");
-    } finally {
-      setIsUploading(false);
     }
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Upload File</ModalHeader>
-      <ModalBody>
-        <Form>
-          <FormGroup>
-            <Label for="fileUpload" className="form-label">
-              Select Files<span className="text-danger">*</span>
-            </Label>
-            <Input
-              type="file"
-              id="fileUpload"
-              name="fileUpload"
-              onChange={handleFileChange}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label for="fileType" className="form-label">
-              Select File Type<span className="text-danger">*</span>
-            </Label>
-            <Input
-              type="select"
-              id="fileType"
-              name="fileType"
-              value={formData.fileType}
-              onChange={handleInputChange}
-            >
-              <option value="">--Select File Type--</option>
-              <option value="COMPLIANCE_DOCUMENTS">Compliance Documents</option>
-              <option value="FACT_FINDS">Fact Finds</option>
-              <option value="IDS">IDs</option>
-              <option value="PROOF_OF_ADDRESS">Proof of Address</option>
-              <option value="INCOME_DOCUMENTS">Income Documents</option>
-              <option value="BANK_STATEMENTS">Bank Statements</option>
-              <option value="PROOF_OF_DEPOSIT_BANK_STATEMENTS">
-                Proof of Deposit - Bank Statements
-              </option>
-              <option value="DONOR_DOCUMENTS">Donor Documents</option>
-              <option value="CREDIT_REPORT">Credit Report</option>
-              <option value="RESEARCH_DOCUMENTS">Research Documents</option>
-              <option value="LENDERS_KFI">Lender's KFI</option>
-              <option value="LENDERS_DIP">Lender's DIP</option>
-              <option value="LENDERS_FULL_MORTGAGE_APPLICATION">
-                Lender's Full Mortgage Application
-              </option>
-              <option value="LENDERS_OFFER">Lender's Offer</option>
-              <option value="SUITABILITY_LETTER">Suitability Letter</option>
-              <option value="GENERAL_INSURANCE_DOCUMENTS">
-                General Insurance Documents
-              </option>
-              <option value="PROTECTION_DOCUMENTS">Protection Documents</option>
-              <option value="AML_AND_SANCTIONS_SEARCH">
-                AML and Sanctions Search
-              </option>
-              <option value="OTHERS">Others</option>
-            </Input>
-          </FormGroup>
-
-          <FormGroup>
-            <Label for="fileOwner" className="form-label">
-              File Owner<span className="text-danger">*</span>
-            </Label>
-            <Input
-              type="select"
-              id="fileOwner"
-              name="fileOwner"
-              value={formData.fileOwner}
-              onChange={handleInputChange}
-            >
-              <option value="">--Select File Owner--</option>
-
-              {/* Options for Joint Users */}
-              {fileOwners && Object.keys(fileOwners).length > 0 ? (
-                <>
-                  {/* Lead User Option */}
-                  <option value={fileOwners?.lead_user?.id}>
-                    {`${fileOwners.lead_user?.first_name} ${fileOwners?.lead_user?.last_name} (Lead User)`}
+    <Modal isOpen={isOpen} toggle={toggle} size="lg">
+      <ModalHeader toggle={toggle}>
+        <span className="fs-4 text-primary">Upload File</span>
+      </ModalHeader>
+      <Form onSubmit={handleUpload}>
+        <ModalBody>
+          <Row>
+            <Col md={12}>
+              <FormGroup>
+                <Label for="fileUpload" className="form-label">
+                  Select Files<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="file"
+                  id="fileUpload"
+                  name="fileUpload"
+                  onChange={handleFileChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="fileType" className="form-label">
+                  Select File Type<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="select"
+                  id="fileType"
+                  name="fileType"
+                  value={formData.fileType}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select...</option>
+                  <option value="COMPLIANCE_DOCUMENTS">
+                    Compliance Documents
                   </option>
+                  <option value="FACT_FINDS">Fact Finds</option>
+                  <option value="IDS">IDs</option>
+                  <option value="PROOF_OF_ADDRESS">Proof of Address</option>
+                  <option value="INCOME_DOCUMENTS">Income Documents</option>
+                  <option value="BANK_STATEMENTS">Bank Statements</option>
+                  <option value="PROOF_OF_DEPOSIT_BANK_STATEMENTS">
+                    Proof of Deposit - Bank Statements
+                  </option>
+                  <option value="DONOR_DOCUMENTS">Donor Documents</option>
+                  <option value="CREDIT_REPORT">Credit Report</option>
+                  <option value="RESEARCH_DOCUMENTS">Research Documents</option>
+                  <option value="LENDERS_KFI">Lender's KFI</option>
+                  <option value="LENDERS_DIP">Lender's DIP</option>
+                  <option value="LENDERS_FULL_MORTGAGE_APPLICATION">
+                    Lender's Full Mortgage Application
+                  </option>
+                  <option value="LENDERS_OFFER">Lender's Offer</option>
+                  <option value="SUITABILITY_LETTER">Suitability Letter</option>
+                  <option value="GENERAL_INSURANCE_DOCUMENTS">
+                    General Insurance Documents
+                  </option>
+                  <option value="PROTECTION_DOCUMENTS">
+                    Protection Documents
+                  </option>
+                  <option value="AML_AND_SANCTIONS_SEARCH">
+                    AML and Sanctions Search
+                  </option>
+                  <option value="OTHERS">Others</option>
+                </Input>
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="fileOwner" className="form-label">
+                  File Owner<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="select"
+                  id="fileOwner"
+                  name="fileOwner"
+                  value={formData.fileOwner}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select...</option>
 
-                  {/* Joint Users Options */}
-                  {fileOwners.joint_users?.map((jointUser) => (
-                    <option
-                      key={jointUser.joint_user?.id}
-                      value={jointUser.joint_user?.id}
-                    >
-                      {`${jointUser.joint_user?.first_name} ${jointUser.joint_user?.last_name} (Joint User)`}
+                  {/* Options for Joint Users */}
+                  {isLoading ? (
+                    <option>
+                      <Spinner color="primary" />
                     </option>
-                  ))}
-                </>
-              ) : (
-                <option disabled>No file owners available</option>
-              )}
-            </Input>
-          </FormGroup>
+                  ) : fileOwners && Object.keys(fileOwners).length > 0 ? (
+                    <>
+                      {/* Lead User Option */}
+                      <option value={fileOwners?.lead_user?.id}>
+                        {`${fileOwners.lead_user?.first_name} ${fileOwners?.lead_user?.last_name} (Lead User)`}
+                      </option>
 
-          <FormGroup>
-            <Label for="fileName" className="form-label">
-              File Name
-            </Label>
-            <Input
-              type="text"
-              id="fileName"
-              name="fileName"
-              placeholder="Write your file name"
-              value={formData.fileName}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label for="description" className="form-label">
-              Description
-            </Label>
-            <Input
-              type="textarea"
-              id="description"
-              name="description"
-              placeholder="Enter description"
-              value={formData.description}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label for="specialNotes" className="form-label">
-              Special Notes
-            </Label>
-            <Input
-              type="textarea"
-              id="specialNotes"
-              name="specialNotes"
-              placeholder="Enter special notes"
-              value={formData.specialNotes}
-              onChange={handleInputChange}
-            />
-          </FormGroup>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={handleUpload}>
-          {isUploading ? "Uploading..." : "Upload"}
-        </Button>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-      </ModalFooter>
+                      {/* Joint Users Options */}
+                      {fileOwners.joint_users?.map((jointUser) => (
+                        <option
+                          key={jointUser.joint_user?.id}
+                          value={jointUser.joint_user?.id}
+                        >
+                          {`${jointUser.joint_user?.first_name} ${jointUser.joint_user?.last_name} (Joint User)`}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    <option disabled>No file owners available</option>
+                  )}
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12}>
+              <FormGroup>
+                <Label for="fileName" className="form-label">
+                  File Name
+                </Label>
+                <Input
+                  type="text"
+                  id="fileName"
+                  name="fileName"
+                  placeholder="Write your file name"
+                  value={formData.fileName}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="description" className="form-label">
+                  Description
+                </Label>
+                <Input
+                  type="textarea"
+                  id="description"
+                  name="description"
+                  placeholder="Enter description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              {" "}
+              <FormGroup>
+                <Label for="specialNotes" className="form-label">
+                  Special Notes
+                </Label>
+                <Input
+                  type="textarea"
+                  id="specialNotes"
+                  name="specialNotes"
+                  placeholder="Enter special notes"
+                  value={formData.specialNotes}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary">
+            {isUploading ? "Uploading..." : "Upload File"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };

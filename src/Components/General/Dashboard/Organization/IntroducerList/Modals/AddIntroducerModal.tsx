@@ -105,7 +105,9 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Add Introducer</ModalHeader>{" "}
+      <ModalHeader toggle={toggle}>
+        <span className="fs-4 text-primary">Add Introducer</span>
+      </ModalHeader>
       <Form onSubmit={handleSaveIntroducer}>
         <ModalBody>
           <Row>

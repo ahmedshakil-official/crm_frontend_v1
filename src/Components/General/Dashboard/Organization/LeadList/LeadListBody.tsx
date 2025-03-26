@@ -114,11 +114,11 @@ const LeadListBody: React.FC = () => {
 
   return (
     <div className="container mt-1">
-      <Row className="flex justify-content-between py-4">
-        <Col md="3">
+      <Row className="d-flex justify-content-between py-4">
+        <Col md="3" xs="12">
           <h2>Lead List</h2>
         </Col>
-        <Col>
+        <Col md={6} xs="12">
           <InputGroup>
             <Input
               type="text"
@@ -131,14 +131,21 @@ const LeadListBody: React.FC = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
-          <Button color="primary" onClick={openAddModal}>
-            Add Lead
+        <Col md="3" xs="12" className="d-flex justify-content-end">
+          <Button
+            color="primary"
+            onClick={openAddModal}
+            className="d-flex justify-content-center align-items-center gap-1"
+          >
+            <span>Add Lead</span>
+            <span>
+              <i className="fa-solid fa-circle-plus"></i>
+            </span>
           </Button>
         </Col>
       </Row>
       <Row>
-        <Table bordered hover responsive>
+        <Table hover responsive>
           <thead className="thead-light">
             <tr className="text-center">
               <th>Name</th>
@@ -166,7 +173,7 @@ const LeadListBody: React.FC = () => {
                     {lead?.user?.first_name} {lead?.user?.last_name}
                   </td>
                   <td>{lead?.official_email}</td>
-                  <td>{lead?.official_phone}</td>
+                  <td>{lead?.official_phone || "N/A"}</td>
                   <td>{lead?.role}</td>
                   <td>
                     {lead?.created_by?.first_name} {lead?.created_by?.last_name}
