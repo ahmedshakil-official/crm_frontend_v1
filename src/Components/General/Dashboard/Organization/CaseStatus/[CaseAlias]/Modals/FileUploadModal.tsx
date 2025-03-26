@@ -23,7 +23,6 @@ import {
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
   isOpen,
   toggle,
-  onSave,
 }) => {
   const [files, setFiles] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -92,7 +91,6 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
       });
 
       toast.success("File uploaded successfully!");
-      onSave(); // Callback to refresh data
       toggle();
     } catch (error) {
       console.error("Error uploading file:", error);

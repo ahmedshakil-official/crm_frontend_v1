@@ -47,7 +47,6 @@ export interface CaseSearchProps {
 export interface FileUploadModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: () => void;
   handleFileUpload?: any;
 }
 export interface FileOwnerProps {
