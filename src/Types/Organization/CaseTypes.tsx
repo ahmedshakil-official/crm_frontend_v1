@@ -113,8 +113,8 @@ export interface FileDeleteModalProps {
   isOpen?: boolean;
   toggle?: () => void;
   file?: { name?: string };
-  onDelete?: () => void;
-  isDeleting?: any;
+  case_alias?: string;
+  fileAlias?: string;
 }
 
 export interface AddNewCaseModalProps {

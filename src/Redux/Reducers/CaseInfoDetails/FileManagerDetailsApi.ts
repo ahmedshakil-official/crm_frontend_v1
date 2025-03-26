@@ -10,27 +10,36 @@ export const CaseFilesDetailsApi = baseApi.injectEndpoints({
       providesTags: ["CaseFilesDetails"],
     }),
 
+    getCaseUserDetails: builder.query({
+      query: ({ case_alias }) => ({
+        url: `/cases/${case_alias}/users/`,
+        method: "GET",
+      }),
+      providesTags: ["CaseFilesDetails", "JointUserDetails"],
+    }),
+
     addCaseFilesDetails: builder.mutation({
       query: ({ case_alias, payload }) => ({
         url: `/cases/${case_alias}/files/`,
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["CaseFilesDetails", "LeadDetails"],
+      invalidatesTags: ["CaseFilesDetails"],
     }),
 
     deleteCaseFilesDetails: builder.mutation({
-      query: ({ case_alias }) => ({
-        url: `/cases/${case_alias}/files/`,
+      query: ({ case_alias, file_alias }) => ({
+        url: `/cases/${case_alias}/files/${file_alias}/`,
         method: "DELETE",
       }),
-      invalidatesTags: ["CaseFilesDetails", "LeadDetails"],
+      invalidatesTags: ["CaseFilesDetails"],
     }),
   }),
 });
 
 export const {
   useGetCaseFilesDetailsQuery,
+  useGetCaseUserDetailsQuery,
   useAddCaseFilesDetailsMutation,
   useDeleteCaseFilesDetailsMutation,
 } = CaseFilesDetailsApi;

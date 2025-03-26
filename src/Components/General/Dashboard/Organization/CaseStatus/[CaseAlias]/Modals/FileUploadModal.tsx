@@ -1,3 +1,7 @@
+import {
+  useAddCaseFilesDetailsMutation,
+  useGetCaseUserDetailsQuery,
+} from "@/Redux/Reducers/CaseInfoDetails/FileManagerDetailsApi";
 import apiClient from "@/services/api-client";
 import {
   FileOwnerProps,
@@ -25,9 +29,17 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   toggle,
 }) => {
   const [files, setFiles] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  // const [isUploading, setIsUploading] = useState(false);
   const params = useParams();
   const { casealias } = params;
+  const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
+
+  // rtk hooks
+  const { data: caseUsers, isLoading } = useGetCaseUserDetailsQuery({
+    case_alias: casealias,
+  });
+  const [addCaseFilesDetails, { isLoading: isUploading }] =
+    useAddCaseFilesDetailsMutation();
 
   const [formData, setFormData] = useState({
     file: "",
@@ -37,21 +49,12 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     description: "",
     specialNotes: "",
   });
-  const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
-
-  const fetchCaseFileOwners = async () => {
-    try {
-      const response = await apiClient.get(`/cases/${casealias}/users/`);
-      setfileOwners(response.data || []);
-      console.log("Fetched File Owners:", response.data); // Debug log
-    } catch (error) {
-      console.error("Error Fetching Cases", error);
-    }
-  };
 
   useEffect(() => {
-    fetchCaseFileOwners();
-  }, []);
+    if (caseUsers) {
+      setfileOwners(caseUsers);
+    }
+  }, [caseUsers]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -85,7 +88,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     };
 
     try {
-      setIsUploading(true);
+
       await apiClient.post(`/cases/${casealias}/files/`, payload, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -95,9 +98,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     } catch (error) {
       console.error("Error uploading file:", error);
       toast.error("Failed to upload file.");
-    } finally {
-      setIsUploading(false);
-    }
+    } 
   };
 
   return (

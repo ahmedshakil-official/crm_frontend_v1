@@ -3,10 +3,8 @@ import {
   CaseFileProps,
   FileDeleteModalProps,
 } from "@/Types/Organization/CaseTypes";
-import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -48,23 +46,6 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
       setCaseFiles(caseFilesData as CaseFileProps[]);
     }
   }, [caseFilesData]);
-  console.log("Test:", caseFiles);
-
-  const deleteFile = async (alias: string) => {
-    setIsDeleting(true);
-
-    try {
-      await apiClient.delete(`/cases/${casealias}/files/${alias}/`);
-
-      toast.success("File deleted successfully.");
-    } catch (error) {
-      console.error("Error Deleting File", error);
-      toast.error("Failed to delete the file. Please try again.");
-    } finally {
-      setIsDeleting(false);
-      toggleDeleteModal();
-    }
-  };
 
   //filter icon toggle
   const toggleFilterIcon = () => setFilterIcon(!filterIcon);
@@ -251,7 +232,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
           </Row>
         </CardBody>
       </Card>
-
+      {/* Modals  */}
       <FileUploadModal isOpen={modalOpen} toggle={toggleModal} />
 
       {selectedFile && (
@@ -259,8 +240,8 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
           isOpen={deleteModalOpen}
           toggle={toggleDeleteModal}
           file={selectedFile}
-          isDeleting={isDeleting}
-          onDelete={() => deleteFile(selectedFile.alias)}
+          case_alias={casealias?.toString()}
+          fileAlias={selectedFile.alias}
         />
       )}
     </Col>
