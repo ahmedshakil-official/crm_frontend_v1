@@ -102,7 +102,9 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Add Advisor</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        <span className="fs-4 text-primary">Add Advisor</span>
+      </ModalHeader>
       <Form onSubmit={handleSaveAdvisor}>
         <ModalBody>
           <Row>

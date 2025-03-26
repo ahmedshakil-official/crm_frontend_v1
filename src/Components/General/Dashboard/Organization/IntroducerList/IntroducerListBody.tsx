@@ -125,7 +125,7 @@ const IntroducerListBody: React.FC = () => {
         <Col md="3">
           <h2>Introducer List</h2>
         </Col>
-        <Col>
+        <Col md={6}>
           <InputGroup>
             <Input
               type="text"
@@ -138,14 +138,21 @@ const IntroducerListBody: React.FC = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
-          <Button color="primary" onClick={openAddModal}>
-            Add Introducer
+        <Col md="3" xs="12" className="d-flex justify-content-end">
+          <Button
+            color="primary"
+            onClick={openAddModal}
+            className="d-flex justify-content-center align-items-center gap-1"
+          >
+            <span>Add Introducer</span>
+            <span>
+              <i className="fa-solid fa-circle-plus"></i>
+            </span>
           </Button>
         </Col>
       </Row>
       <Row>
-        <Table bordered hover responsive>
+        <Table hover responsive>
           <thead className="thead-light">
             <tr className="text-center">
               <th>Name</th>
@@ -173,7 +180,7 @@ const IntroducerListBody: React.FC = () => {
                     {introducer?.user?.first_name} {introducer?.user?.last_name}
                   </td>
                   <td>{introducer?.official_email}</td>
-                  <td>{introducer?.official_phone}</td>
+                  <td>{introducer?.official_phone || "N/A"}</td>
                   <td>{introducer?.role}</td>
                   <td>
                     {introducer?.created_by?.first_name}{" "}

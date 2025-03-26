@@ -127,7 +127,7 @@ const AdvisorListBody: React.FC = () => {
         <Col md="3">
           <h2>Advisor List</h2>
         </Col>
-        <Col>
+        <Col md={6}>
           <InputGroup>
             <Input
               type="text"
@@ -140,14 +140,21 @@ const AdvisorListBody: React.FC = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md="3" xs="12" className="text-md-end text-center mt-2 mt-md-0">
-          <Button color="primary" onClick={openAddModal}>
-            Add Advisor
+        <Col md="3" xs="12" className="d-flex justify-content-end">
+          <Button
+            color="primary"
+            onClick={openAddModal}
+            className="d-flex justify-content-center align-items-center gap-1"
+          >
+            <span>Add Advisor</span>
+            <span>
+              <i className="fa-solid fa-circle-plus"></i>
+            </span>
           </Button>
         </Col>
       </Row>
       <Row>
-        <Table bordered hover responsive>
+        <Table hover responsive>
           <thead className="thead-light">
             <tr className="text-center">
               <th>Name</th>
@@ -159,7 +166,6 @@ const AdvisorListBody: React.FC = () => {
               <th>Action</th>
             </tr>
           </thead>
-
           <tbody>
             {isLoading ? (
               <tr>
@@ -176,7 +182,7 @@ const AdvisorListBody: React.FC = () => {
                     {advisor?.user?.first_name} {advisor?.user?.last_name}
                   </td>
                   <td>{advisor?.official_email}</td>
-                  <td>{advisor?.official_phone}</td>
+                  <td>{advisor?.official_phone || "N/A"}</td>
                   <td>{advisor?.role}</td>
                   <td>
                     {advisor?.created_by?.first_name}{" "}
