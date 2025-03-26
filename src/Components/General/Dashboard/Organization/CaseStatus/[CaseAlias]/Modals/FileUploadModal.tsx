@@ -1,4 +1,7 @@
-import apiClient from "@/services/api-client";
+import {
+  useAddCaseFilesDetailsMutation,
+  useGetCaseUserDetailsQuery,
+} from "@/Redux/Reducers/CaseInfoDetails/FileManagerDetailsApi";
 import {
   FileOwnerProps,
   FileUploadModalProps,
@@ -18,17 +21,24 @@ import {
   ModalFooter,
   ModalHeader,
   Row,
+  Spinner,
 } from "reactstrap";
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
   isOpen,
   toggle,
-  onSave,
 }) => {
   const [files, setFiles] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
   const params = useParams();
   const { casealias } = params;
+  const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
+
+  // rtk hooks
+  const { data: caseUsers, isLoading } = useGetCaseUserDetailsQuery({
+    case_alias: casealias,
+  });
+  const [addCaseFilesDetails, { isLoading: isUploading }] =
+    useAddCaseFilesDetailsMutation();
 
   const [formData, setFormData] = useState({
     file: "",
@@ -38,21 +48,12 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     description: "",
     specialNotes: "",
   });
-  const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
-
-  const fetchCaseFileOwners = async () => {
-    try {
-      const response = await apiClient.get(`/cases/${casealias}/users/`);
-      setfileOwners(response.data || []);
-      console.log("Fetched File Owners:", response.data); // Debug log
-    } catch (error) {
-      console.error("Error Fetching Cases", error);
-    }
-  };
 
   useEffect(() => {
-    fetchCaseFileOwners();
-  }, []);
+    if (caseUsers) {
+      setfileOwners(caseUsers);
+    }
+  }, [caseUsers]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -70,35 +71,42 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     });
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!files) {
       toast.error("Please fill in all required fields.");
       return;
     }
 
-    const payload = {
-      file: files, // Use 'files' here instead of formData.file
-      file_type: formData.fileType,
-      file_owner: formData.fileOwner,
-      name: formData.fileName || "N/A",
-      description: formData.description,
-      special_notes: formData.specialNotes,
-    };
+    const uploadData = new FormData();
+    // Append all fields including the file
+    uploadData.append("file", files as File);
+    uploadData.append("file_type", formData.fileType);
+    uploadData.append("file_owner", formData.fileOwner.toString());
+    uploadData.append("name", formData.fileName || "N/A");
+    uploadData.append("description", formData.description);
+    uploadData.append("special_notes", formData.specialNotes);
 
     try {
-      setIsUploading(true);
-      await apiClient.post(`/cases/${casealias}/files/`, payload, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await addCaseFilesDetails({
+        case_alias: casealias,
+        payload: uploadData,
+      }).unwrap();
+      // Reset form data after successful upload
+      setFiles(null);
+      setFormData({
+        file: "",
+        fileType: "",
+        fileOwner: 0,
+        fileName: "",
+        description: "",
+        specialNotes: "",
       });
-
       toast.success("File uploaded successfully!");
-      onSave(); // Callback to refresh data
       toggle();
     } catch (error) {
       console.error("Error uploading file:", error);
       toast.error("Failed to upload file.");
-    } finally {
-      setIsUploading(false);
     }
   };
 
@@ -107,8 +115,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Upload File</span>
       </ModalHeader>
-      <ModalBody>
-        <Form>
+      <Form onSubmit={handleUpload}>
+        <ModalBody>
           <Row>
             <Col md={12}>
               <FormGroup>
@@ -187,7 +195,11 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
                   <option value="">Select...</option>
 
                   {/* Options for Joint Users */}
-                  {fileOwners && Object.keys(fileOwners).length > 0 ? (
+                  {isLoading ? (
+                    <option>
+                      <Spinner color="primary" />
+                    </option>
+                  ) : fileOwners && Object.keys(fileOwners).length > 0 ? (
                     <>
                       {/* Lead User Option */}
                       <option value={fileOwners?.lead_user?.id}>
@@ -261,16 +273,16 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
               </FormGroup>
             </Col>
           </Row>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-        <Button color="primary" onClick={handleUpload}>
-          {isUploading ? "Uploading..." : "Upload File"}
-        </Button>
-      </ModalFooter>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary">
+            {isUploading ? "Uploading..." : "Upload File"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };
