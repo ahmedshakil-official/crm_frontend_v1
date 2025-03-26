@@ -31,7 +31,7 @@ const CaseStatusBody: React.FC = () => {
         />
       </Row>
       <Row className="my-3">
-        <Table bordered hover responsive>
+        <Table hover responsive>
           <thead className="thead-light text-center">
             <tr>
               <th>Case Name</th>

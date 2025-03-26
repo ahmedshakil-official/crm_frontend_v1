@@ -84,7 +84,9 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Add Joint User</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        <span className="fs-4 text-primary">Add Joint User</span>
+      </ModalHeader>
       <ModalBody>
         <Form>
           <Row>
@@ -190,15 +192,15 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
         </Form>
       </ModalBody>
       <ModalFooter>
+        <Button color="secondary" onClick={toggle} block>
+          Cancel
+        </Button>
         <Button
           color="primary"
           onClick={handleSubmit}
           block={isAddingJointUser}
         >
-          {isAddingJointUser ? "Saving..." : "Save"}
-        </Button>
-        <Button color="secondary" onClick={toggle} block>
-          Cancel
+          {isAddingJointUser ? "Saving..." : "Save Joint User"}
         </Button>
       </ModalFooter>
     </Modal>
