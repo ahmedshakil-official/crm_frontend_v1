@@ -1,5 +1,4 @@
 import { CaseInfo, SingleCaseProps } from "@/Types/Organization/CaseTypes";
-import { useParams } from "next/navigation";
 import { useState } from "react";
 import {
   Button,
@@ -15,8 +14,6 @@ import UpdateCaseModal from "../../Modals/UpdateCaseModal";
 const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
   const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
-  const params = useParams();
-  const { casealias } = params;
 
   const toggleUpdateCaseModal = () =>
     setIsUpdateCaseModalOpen(!isUpdateCaseModalOpen);

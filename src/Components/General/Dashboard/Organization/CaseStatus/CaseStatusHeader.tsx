@@ -52,7 +52,7 @@ const CaseStatusHeader: React.FC<CaseSearchProps> = ({
         </Col>
 
         {/* Center: Search Bar */}
-        <Col lg={6} sm={12} className="mt-1">
+        <Col lg={5} sm={12} className="mt-1">
           <InputGroup className="py-1">
             <Input
               type="text"
@@ -67,12 +67,24 @@ const CaseStatusHeader: React.FC<CaseSearchProps> = ({
         </Col>
 
         {/* Right Side: Buttons */}
-        <Col lg={3} sm={12} className="mt-1 d-flex justify-content-end gap-2">
-          <Button color="primary" onClick={openAddNewCaseModal}>
-            Add New Case
+        <Col lg={4} sm={12} className="mt-1 d-flex justify-content-end gap-2">
+          <Button
+            color="primary"
+            onClick={openAddNewCaseModal}
+            className="d-flex justify-content-center align-items-center gap-1"
+          >
+            <span>Add New Case</span>
+            <span>
+              <i className="fa-solid fa-circle-plus"></i>
+            </span>
           </Button>
           <Link href="/dashboard/organization/allcase" passHref>
-            <Button color="success">View All Case</Button>
+            <Button color="success" className="d-flex justify-content-center align-items-center gap-1">
+              <span>View All Case</span>
+              <span>
+                <i className="fa-solid fa-eye"></i>
+              </span>
+            </Button>
           </Link>
         </Col>
       </Row>
