@@ -119,8 +119,17 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       </h6>
                       <h6 className="pt-1">
                         <strong>Case Category:</strong>{" "}
-                        <span className="fw-light" style={{ fontSize: "13px" }}>
-                          {caseInfo?.case_category}
+                        <span>
+                          {caseInfo?.case_category
+                            ? caseInfo.case_category
+                                .split("_")
+                                .map(
+                                  (word) =>
+                                    word.charAt(0).toUpperCase() +
+                                    word.slice(1).toLowerCase()
+                                )
+                                .join(" ")
+                            : "N/A"}
                         </span>
                       </h6>
                     </Col>
@@ -161,11 +170,17 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       </h6>
                       <h6 className="pt-1">
                         <strong>Case Stage:</strong>{" "}
-                        <span
-                          className="fw-light bg-info p-1 rounded-1"
-                          style={{ fontSize: "12px" }}
-                        >
-                          {caseInfo?.case_stage}
+                        <span className="bg-info p-1 rounded-1">
+                          {caseInfo?.case_stage
+                            ? caseInfo.case_stage
+                                .split("_")
+                                .map(
+                                  (word) =>
+                                    word.charAt(0).toUpperCase() +
+                                    word.slice(1).toLowerCase()
+                                )
+                                .join(" ")
+                            : "N/A"}
                         </span>
                       </h6>
                     </Col>
@@ -200,8 +215,17 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       </h6>
                       <h6 className="pt-1">
                         <strong>User Type:</strong>{" "}
-                        <span className="fw-light" style={{ fontSize: "13px" }}>
-                          {caseInfo?.created_by?.user_type}
+                        <span>
+                          {caseInfo?.created_by?.user_type
+                            ? caseInfo.created_by?.user_type
+                                .split("_")
+                                .map(
+                                  (word) =>
+                                    word.charAt(0).toUpperCase() +
+                                    word.slice(1).toLowerCase()
+                                )
+                                .join(" ")
+                            : "N/A"}
                         </span>
                       </h6>
                     </Col>
