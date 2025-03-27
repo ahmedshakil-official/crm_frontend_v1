@@ -57,33 +57,45 @@ const CaseStatusBody: React.FC = () => {
                   <td>
                     <Link
                       className="custom-hover"
-                      href={`/dashboard/organization/${caseItem.alias}`}
+                      href={`/dashboard/organization/${caseItem?.alias}`}
                     >
-                      {caseItem.name}
+                      {caseItem?.name}
                     </Link>
                   </td>
                   <td>
-                    {caseItem.lead_user
-                      ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
+                    {caseItem?.lead_user
+                      ? `${caseItem?.lead_user.first_name} ${caseItem?.lead_user.last_name}`
                       : "N/A"}
                   </td>
-                  <td>{caseItem.lead_user.phone || "N/A"}</td>
+                  <td>{caseItem?.lead_user.phone || "N/A"}</td>
                   <td>
-                    {caseItem.case_category.charAt(0).toUpperCase() +
-                      caseItem?.case_category.slice(1).toLowerCase()}
+                    {caseItem?.case_category
+                      .split("_")
+                      .map(
+                        (word) =>
+                          word.charAt(0).toUpperCase() +
+                          word.slice(1).toLowerCase()
+                      )
+                      .join(" ")}
                   </td>
                   <td>
-                    {caseItem.case_stage.charAt(0).toUpperCase() +
-                      caseItem.case_stage.slice(1).toLowerCase()}
+                  {caseItem?.case_stage
+                        .split("_")
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                        )
+                        .join(" ")}
                   </td>
-                  <td>{formatDateToDMY(caseItem.created_at)}</td>
+                  <td>{formatDateToDMY(caseItem?.created_at)}</td>
                   <td>
-                    {caseItem.created_by.first_name}{" "}
-                    {caseItem.created_by.last_name}
+                    {caseItem?.created_by.first_name}{" "}
+                    {caseItem?.created_by.last_name}
                   </td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
-                      <Link href={`/dashboard/organization/${caseItem.alias}`}>
+                      <Link href={`/dashboard/organization/${caseItem?.alias}`}>
                         <Button color="primary" size="sm" title="View">
                           <i className="fa-regular fa-eye"></i>
                         </Button>
