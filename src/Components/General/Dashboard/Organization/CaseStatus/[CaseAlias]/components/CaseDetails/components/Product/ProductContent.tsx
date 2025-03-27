@@ -2,6 +2,7 @@ import {
   useGetProductDetailsQuery,
   useUpdateProductDetailsMutation,
 } from "@/Redux/Reducers/CaseDetails/ProductDetails/ProductDetailsApi";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -113,23 +114,12 @@ const ProductContent: React.FC = () => {
     }));
   };
 
-  //   // Handle form submission
-  //   const handleSubmit = async (e: React.FormEvent) => {
-  //     e.preventDefault();
-  //     try {
-  //       await updateProductDetails({
-  //         case_alias: casealias,
-  //         product_alias: productDetails?.alias,
-  //         productUpdatePayload: formData,
-  //       }).unwrap();
-  //       alert("Product details updated successfully!");
-  //     } catch (error) {
-  //       console.error("Failed to update product details:", error);
-  //       alert("Failed to update product details");
-  //     }
-  //   };
-
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
 
   return (
     <Form className="p-3" onSubmit={handleSubmit}>
