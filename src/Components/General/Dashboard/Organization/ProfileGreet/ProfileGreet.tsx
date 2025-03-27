@@ -1,6 +1,6 @@
 import SvgIcon from "@/CommonComponent/SVG/IconSvg";
 import { Href, ImagePath } from "@/Constant";
-import apiClient from "@/services/api-client";
+import { useGetOrganizationDetailsQuery } from "@/Redux/Reducers/OrganizationDetails/OrganizationDetailsApi";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -30,18 +30,16 @@ const ProfileGreet = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
+  // rt hooks
+  const { data: organizationDetails, isLoading } =
+    useGetOrganizationDetailsQuery(undefined);
+
   // Fetch profile data
-  const fetchProfileData = async () => {
-    try {
-      const response = await apiClient.get("/organization/details/");
-      setProfileData(response.data);
-    } catch (error) {
-      console.error("Error fetching profile data:", error);
-    }
-  };
   useEffect(() => {
-    fetchProfileData();
-  }, []);
+    if (organizationDetails) {
+      setProfileData(organizationDetails);
+    }
+  }, [organizationDetails]);
 
   // Update time every second
   useEffect(() => {
