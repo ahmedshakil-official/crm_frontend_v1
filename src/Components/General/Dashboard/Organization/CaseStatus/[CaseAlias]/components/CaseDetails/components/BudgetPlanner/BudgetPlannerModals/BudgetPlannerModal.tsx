@@ -55,14 +55,12 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
   };
 
   const handleSaveChanges = useCallback(async () => {
-    // Merge the initial data with only the updated fields
     const finalData = {
       ...budgetPlannerData,
       ...updatedFields,
       updated_at: new Date().toISOString(),
     };
 
-    console.log("Budget Planner Submitted Updated Data:", finalData);
     dispatch(initializeBudgetPlannerForm(finalData));
 
     const res = await updateBudgetPlanner({
