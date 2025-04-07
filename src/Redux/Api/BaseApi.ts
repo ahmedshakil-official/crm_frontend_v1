@@ -41,6 +41,7 @@ export const baseApi = createApi({
     "Notes",
     "BudgetPlanner",
     "ProductDetails",
+    "DIPHistoryDetails",
   ],
   endpoints: () => ({}),
 });

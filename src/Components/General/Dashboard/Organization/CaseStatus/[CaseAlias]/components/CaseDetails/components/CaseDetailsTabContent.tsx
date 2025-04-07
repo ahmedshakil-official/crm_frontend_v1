@@ -4,6 +4,7 @@ import { AdverseTab } from "./Adverse/AdverseTab";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
 import BudgetPlanner from "./BudgetPlanner/BudgetPlanner";
 import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
+import DIPHistoryTab from "./DIPHistory/DIPHistoryTab";
 import { EmploymentTab } from "./Employment/EmploymentTab";
 import ExistingProtectionTab from "./ExistingProtection/ExistingProtectionTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
@@ -30,6 +31,7 @@ const tabComponents: Record<string, React.FC> = {
   "Mortgage Your Needs": MortgageYourNeedsContent,
   Notes: NotesTab,
   Product: ProductContent,
+  "DIP History": DIPHistoryTab,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
