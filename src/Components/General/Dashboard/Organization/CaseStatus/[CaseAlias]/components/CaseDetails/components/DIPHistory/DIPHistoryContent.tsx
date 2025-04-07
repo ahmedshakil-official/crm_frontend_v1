@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import AddNewLenderHistoryModal from "./Modals/AddNewLenderHistoryModal";
 
 const DIPHistoryContent: React.FC = () => {
   const [hasDecision, setHasDecision] = useState<boolean>(false);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   return (
     <div className="p-3">
@@ -87,7 +89,11 @@ const DIPHistoryContent: React.FC = () => {
             )}
             <Row>
               <Col className="mt-4 d-flex justify-content-between align-items-center">
-                <Button color="secondary" className="me-2">
+                <Button
+                  color="secondary"
+                  className="me-2"
+                  onClick={() => setModalIsOpen(true)}
+                >
                   Add New Lender History
                 </Button>
                 <Button color="primary">Save History</Button>
@@ -96,6 +102,11 @@ const DIPHistoryContent: React.FC = () => {
           </Form>
         </div>
       </>
+      <AddNewLenderHistoryModal
+        isOpen={modalIsOpen}
+        toggle={() => setModalIsOpen(!modalIsOpen)}
+        
+      />
     </div>
   );
 };
