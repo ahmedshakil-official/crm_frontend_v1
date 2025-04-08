@@ -1,24 +1,38 @@
 import { useUpdateDIPHistoryDetailsMutation } from "@/Redux/Reducers/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import AddNewLenderHistoryModal from "./Modals/AddNewLenderHistoryModal";
 
 const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
-  //   const [hasDecision, setHasDecision] = useState<boolean>(dipData?.has_decision || false);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     is_this_application_had_a_decision_in_principle:
       dipData?.is_this_application_had_a_decision_in_principle || false,
     lender: dipData?.lender || "",
-    dipDate: dipData?.dip_date || "",
-    dipDecision: dipData?.dip_decision || "",
-    dipReference: dipData?.dip_reference_number || "",
+    dip_date: dipData?.dip_date || null,
+    dip_decision: dipData?.dip_decision || "",
+    dip_reference_number: dipData?.dip_reference_number || "",
     notes: dipData?.notes || "",
   });
 
-  const [updateDIPHistoryDetails] = useUpdateDIPHistoryDetailsMutation();
+  // Add useEffect to update form data when dipData changes
+  useEffect(() => {
+    setFormData({
+      is_this_application_had_a_decision_in_principle:
+        dipData?.is_this_application_had_a_decision_in_principle || false,
+      lender: dipData?.lender || "",
+      dip_date: dipData?.dip_date || null,
+      dip_decision: dipData?.dip_decision || "",
+      dip_reference_number: dipData?.dip_reference_number || "",
+      notes: dipData?.notes || "",
+    });
+  }, [dipData]);
+
+  const [updateDIPHistoryDetails, { isLoading }] =
+    useUpdateDIPHistoryDetailsMutation();
   const { casealias } = useParams();
 
   const handleInputChange = (
@@ -44,6 +58,14 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
       toast.error("Failed to update DIP History");
     }
   };
+
+  if (isLoading) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="p-3">
@@ -90,15 +112,181 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label>Lender</Label>
+                    <Label>Lender*</Label>
                     <Input
                       type="select"
                       name="lender"
                       value={formData.lender}
                       onChange={handleInputChange}
+                      required
                     >
                       <option value="">Select...</option>
-                      <option value="Amicus PLC">Amicus PLC</option>
+                      <option value="ACCORD_MORTGAGES">Accord Mortgages</option>
+                      <option value="AHLI_UNITED_BANK">Ahli United Bank</option>
+                      <option value="AL_RAYAN_BANK">Al Rayan Bank</option>
+                      <option value="ALDERMORE_MORTGAGES">
+                        Aldermore Mortgages
+                      </option>
+                      <option value="AMICUS_PLC">Amicus PLC</option>
+                      <option value="ASSETZ_CAPITAL">Assetz Capital</option>
+                      <option value="ATOM_BANK">Atom Bank</option>
+                      <option value="AVIVA_EQUITY_RELEASE">
+                        Aviva Equity Release
+                      </option>
+                      <option value="AXIS_BANK">Axis Bank</option>
+                      <option value="BANK_AND_CLIENTS_PLC">
+                        Bank & Clients PLC
+                      </option>
+                      <option value="BANK_OF_CHINA">Bank of China</option>
+                      <option value="BANK_OF_CYPRUS_UK">
+                        Bank of Cyprus UK
+                      </option>
+                      <option value="BANK_OF_IRELAND">Bank of Ireland</option>
+                      <option value="BARCLAYS">Barclays</option>
+                      <option value="BARCLAYS_COMMERCIAL">
+                        Barclays Commercial
+                      </option>
+                      <option value="BATH_BUILDING_SOCIETY">
+                        Bath Building Society
+                      </option>
+                      <option value="BEVERLEY_BUILDING_SOCIETY">
+                        Beverley Building Society
+                      </option>
+                      <option value="BLUESTONE_MORTGAGES">
+                        Bluestone Mortgages
+                      </option>
+                      <option value="BLUEZEST">BlueZest</option>
+                      <option value="BM_SOLUTIONS">BM Solutions</option>
+                      <option value="BOOST_CAPITAL">Boost Capital</option>
+                      <option value="BRIDGEWATER_EQUITY_RELEASE">
+                        Bridgewater Equity Release
+                      </option>
+                      <option value="BUCKINGHAMSHIRE_BUILDING_SOCIETY">
+                        Buckinghamshire Building Society
+                      </option>
+                      <option value="CAMBRIDGE_AND_COUNTIES_BANK">
+                        Cambridge and Counties Bank
+                      </option>
+                      <option value="CAMBRIDGE_BUILDING_SOCIETY">
+                        Cambridge Building Society
+                      </option>
+                      <option value="CENTRAL_TRUST">Central Trust</option>
+                      <option value="CHARTERBANK">Charterbank</option>
+                      <option value="CHL_MORTGAGES">CHL Mortgages</option>
+                      <option value="CHORLEY_DISTRICT_BUILDING_SOCIETY">
+                        Chorley & District Building Society
+                      </option>
+                      <option value="CLEARLY_LOANS">Clearly Loans</option>
+                      <option value="COUTTS">Coutts</option>
+                      <option value="COVENTRY_BUILDING_SOCIETY">
+                        Coventry Building Society
+                      </option>
+                      <option value="CROWN_EQUITY_RELEASE">
+                        Crown Equity Release
+                      </option>
+                      <option value="CUMBERLAND_BUILDING_SOCIETY">
+                        Cumberland Building Society
+                      </option>
+                      <option value="DANSKE_BANK">Danske Bank</option>
+                      <option value="DARLINGTON_BUILDING_SOCIETY">
+                        Darlington Building Society
+                      </option>
+                      <option value="DIGITAL_MORTGAGES">
+                        Digital Mortgages
+                      </option>
+                      <option value="DUDLEY_BUILDING_SOCIETY">
+                        Dudley Building Society
+                      </option>
+                      <option value="EARL_SHILTON_BUILDING_SOCIETY">
+                        Earl Shilton Building Society
+                      </option>
+                      <option value="ECOLOGY_BUILDING_SOCIETY">
+                        Ecology Building Society
+                      </option>
+                      <option value="EQUIFINANCE">Equifinance</option>
+                      <option value="FAMILY_BUILDING_SOCIETY">
+                        Family Building Society
+                      </option>
+                      <option value="FINSEC">FinSec</option>
+                      <option value="FIRST_TRUST_BANK">First Trust Bank</option>
+                      <option value="FLEET_MORTGAGES">Fleet Mortgages</option>
+                      <option value="FOUNDATION_HOME_LOANS">
+                        Foundation Home Loans
+                      </option>
+                      <option value="FURNESS_BUILDING_SOCIETY">
+                        Furness Building Society
+                      </option>
+                      <option value="GATEHOUSE_BANK">Gatehouse Bank</option>
+                      <option value="GENERATION_HOME">Generation Home</option>
+                      <option value="GODIVA_MORTGAGES">Godiva Mortgages</option>
+                      <option value="HALIFAX">Halifax</option>
+                      <option value="HAMPSHIRE_TRUST_BANK">
+                        Hampshire Trust Bank
+                      </option>
+                      <option value="HANDELSBANKEN">Handelsbanken</option>
+                      <option value="HANLEY_ECONOMIC_BUILDING_SOCIETY">
+                        Hanley Economic Building Society
+                      </option>
+                      <option value="HARPDEN_BUILDING_SOCIETY">
+                        Harpenden Building Society
+                      </option>
+                      <option value="HSBC">HSBC</option>
+                      <option value="ICICI_BANK">ICICI Bank</option>
+                      <option value="INTERBAY_COMMERCIAL">
+                        Interbay Commercial
+                      </option>
+                      <option value="INVESTEC">Investec</option>
+                      <option value="IPSWICH_BUILDING_SOCIETY">
+                        Ipswich Building Society
+                      </option>
+                      <option value="JUST_RETIREMENT_SOLUTIONS">
+                        Just Retirement Solutions
+                      </option>
+                      <option value="KENSINGTON_MORTGAGES">
+                        Kensington Mortgages
+                      </option>
+                      <option value="KENT_RELIANCE">Kent Reliance</option>
+                      <option value="KEYSTONE_PROPERTY_FINANCE">
+                        Keystone Property Finance
+                      </option>
+                      <option value="LEEDS_BUILDING_SOCIETY">
+                        Leeds Building Society
+                      </option>
+                      <option value="LEEK_UNITED_BUILDING_SOCIETY">
+                        Leek United Building Society
+                      </option>
+                      <option value="METRO_BANK">Metro Bank</option>
+                      <option value="MONMOUTHSHIRE_BUILDING_SOCIETY">
+                        Monmouthshire Building Society
+                      </option>
+                      <option value="NATIONWIDE">Nationwide</option>
+                      <option value="NATWEST">NatWest</option>
+                      <option value="NOTTINGHAM_BUILDING_SOCIETY">
+                        Nottingham Building Society
+                      </option>
+                      <option value="PARAGON_MORTGAGES">
+                        Paragon Mortgages
+                      </option>
+                      <option value="PEPPER_MONEY">Pepper Money</option>
+                      <option value="POST_OFFICE_MORTGAGES">
+                        Post Office Mortgages
+                      </option>
+                      <option value="PRINCIPALITY_BUILDING_SOCIETY">
+                        Principality Building Society
+                      </option>
+                      <option value="SANTANDER">Santander</option>
+                      <option value="SKIPTON_BUILDING_SOCIETY">
+                        Skipton Building Society
+                      </option>
+                      <option value="TSB">TSB</option>
+                      <option value="ULSTER_BANK">Ulster Bank</option>
+                      <option value="UNKNOWN">Unknown</option>
+                      <option value="UNKNOWN_DEFAULT">Unknown (Default)</option>
+                      <option value="VIDA_HOMELOANS">Vida Homeloans</option>
+                      <option value="WEST_BROMWICH_BUILDING_SOCIETY">
+                        West Bromwich Building Society
+                      </option>
+                      <option value="WEST_ONE_LOANS">West One Loans</option>
                     </Input>
                   </FormGroup>
                 </Col>
@@ -107,8 +295,8 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
                     <Label>DIP Date</Label>
                     <Input
                       type="date"
-                      name="dipDate"
-                      value={formData.dipDate}
+                      name="dip_date"
+                      value={formData.dip_date}
                       onChange={handleInputChange}
                     />
                   </FormGroup>
@@ -117,17 +305,18 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label>DIP Decision</Label>
+                    <Label>DIP Decision*</Label>
                     <Input
                       type="select"
-                      name="dipDecision"
-                      value={formData.dipDecision}
+                      name="dip_decision"
+                      value={formData.dip_decision}
                       onChange={handleInputChange}
+                      required
                     >
                       <option value="">Select...</option>
-                      <option value="Accepted">Accepted</option>
-                      <option value="Declined">Declined</option>
-                      <option value="Referred">Referred</option>
+                      <option value="ACCEPTED">Accepted</option>
+                      <option value="DECLINED">Declined</option>
+                      <option value="REFERED">Refered</option>
                     </Input>
                   </FormGroup>
                 </Col>
@@ -136,8 +325,8 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
                     <Label>DIP Reference Number</Label>
                     <Input
                       type="text"
-                      name="dipReference"
-                      value={formData.dipReference}
+                      name="dip_reference_number"
+                      value={formData.dip_reference_number}
                       onChange={handleInputChange}
                     />
                   </FormGroup>
