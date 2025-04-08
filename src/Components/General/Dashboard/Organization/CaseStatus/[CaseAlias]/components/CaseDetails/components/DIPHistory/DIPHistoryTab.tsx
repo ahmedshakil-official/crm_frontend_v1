@@ -35,20 +35,18 @@ const DIPHistoryTab: React.FC = () => {
   }
 
   return (
-    <div className="p-3">
+    <div className="p-1">
       {dipHistories.length > 0 ? (
         <>
-          <Nav tabs className="justify-content-center">
+          <Nav className="nav-warning justify-content-center" pills>
             {dipHistories.map((_: any, index: number) => (
               <NavItem key={index}>
                 <NavLink
                   className={`${
                     activeTab === String(index + 1) ? "active" : ""
-                  } 
-                    ${activeTab !== String(index + 1) ? "text-black" : ""}
-                    ${activeTab === String(index + 1) ? "text-primary" : ""}`}
+                  }`}
                   onClick={() => toggle(String(index + 1))}
-                  style={{ cursor: "pointer", fontWeight: "normal" }}
+                  style={{ cursor: "pointer" }}
                 >
                   DIP History {index + 1}
                 </NavLink>
@@ -59,7 +57,7 @@ const DIPHistoryTab: React.FC = () => {
           <TabContent activeTab={activeTab}>
             {dipHistories.map((dipHistory: DIPHistoryProps, index: number) => (
               <TabPane key={index} tabId={String(index + 1)}>
-                <div className="p-3">
+                <div className="p-1">
                   <DIPHistoryContent dipData={dipHistory} />
                 </div>
               </TabPane>

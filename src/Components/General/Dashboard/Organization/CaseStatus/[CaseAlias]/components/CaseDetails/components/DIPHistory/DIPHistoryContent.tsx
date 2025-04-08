@@ -12,7 +12,7 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
     is_this_application_had_a_decision_in_principle:
       dipData?.is_this_application_had_a_decision_in_principle || false,
     lender: dipData?.lender || "",
-    dip_date: dipData?.dip_date || "",
+    dip_date: dipData?.dip_date || null,
     dip_decision: dipData?.dip_decision || "",
     dip_reference_number: dipData?.dip_reference_number || "",
     notes: dipData?.notes || "",
@@ -24,7 +24,7 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
       is_this_application_had_a_decision_in_principle:
         dipData?.is_this_application_had_a_decision_in_principle || false,
       lender: dipData?.lender || "",
-      dip_date: dipData?.dip_date || "",
+      dip_date: dipData?.dip_date || null,
       dip_decision: dipData?.dip_decision || "",
       dip_reference_number: dipData?.dip_reference_number || "",
       notes: dipData?.notes || "",
@@ -112,12 +112,13 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label>Lender</Label>
+                    <Label>Lender*</Label>
                     <Input
                       type="select"
                       name="lender"
                       value={formData.lender}
                       onChange={handleInputChange}
+                      required
                     >
                       <option value="">Select...</option>
                       <option value="ACCORD_MORTGAGES">Accord Mortgages</option>
@@ -304,12 +305,13 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label>DIP Decision</Label>
+                    <Label>DIP Decision*</Label>
                     <Input
                       type="select"
                       name="dip_decision"
                       value={formData.dip_decision}
                       onChange={handleInputChange}
+                      required
                     >
                       <option value="">Select...</option>
                       <option value="ACCEPTED">Accepted</option>
