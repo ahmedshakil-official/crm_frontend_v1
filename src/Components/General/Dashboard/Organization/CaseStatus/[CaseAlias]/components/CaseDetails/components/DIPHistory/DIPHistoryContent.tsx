@@ -1,12 +1,12 @@
 import { useUpdateDIPHistoryDetailsMutation } from "@/Redux/Reducers/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import AddNewLenderHistoryModal from "./Modals/AddNewLenderHistoryModal";
 
 const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
-  //   const [hasDecision, setHasDecision] = useState<boolean>(dipData?.has_decision || false);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     is_this_application_had_a_decision_in_principle:
@@ -18,7 +18,21 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
     notes: dipData?.notes || "",
   });
 
-  const [updateDIPHistoryDetails] = useUpdateDIPHistoryDetailsMutation();
+  // Add useEffect to update form data when dipData changes
+  useEffect(() => {
+    setFormData({
+      is_this_application_had_a_decision_in_principle:
+        dipData?.is_this_application_had_a_decision_in_principle || false,
+      lender: dipData?.lender || "",
+      dip_date: dipData?.dip_date || "",
+      dip_decision: dipData?.dip_decision || "",
+      dip_reference_number: dipData?.dip_reference_number || "",
+      notes: dipData?.notes || "",
+    });
+  }, [dipData]);
+
+  const [updateDIPHistoryDetails, { isLoading }] =
+    useUpdateDIPHistoryDetailsMutation();
   const { casealias } = useParams();
 
   const handleInputChange = (
@@ -44,6 +58,14 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
       toast.error("Failed to update DIP History");
     }
   };
+
+  if (isLoading) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="p-3">

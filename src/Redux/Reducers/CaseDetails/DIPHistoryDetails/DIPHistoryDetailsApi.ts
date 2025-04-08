@@ -9,6 +9,14 @@ export const DIPHistoryDetailsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["DIPHistoryDetails"],
     }),
+    addDIPHistoryDetails: builder.mutation({
+      query: ({ case_alias, payload }) => ({
+        url: `/cases/${case_alias}/dip/history/`,
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["DIPHistoryDetails"],
+    }),
     updateDIPHistoryDetails: builder.mutation({
       query: ({ case_alias, dipHistory_alias, payload }) => ({
         url: `/cases/${case_alias}/dip/history/${dipHistory_alias}/`,
@@ -22,5 +30,6 @@ export const DIPHistoryDetailsApi = baseApi.injectEndpoints({
 
 export const {
   useGetDIPHistoryDetailsQuery,
+  useAddDIPHistoryDetailsMutation,
   useUpdateDIPHistoryDetailsMutation,
 } = DIPHistoryDetailsApi;

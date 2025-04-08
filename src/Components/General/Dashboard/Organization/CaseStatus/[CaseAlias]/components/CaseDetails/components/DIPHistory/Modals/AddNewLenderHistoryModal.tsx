@@ -1,4 +1,8 @@
+import { useAddDIPHistoryDetailsMutation } from "@/Redux/Reducers/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+import LoadingSpinner from "@/app/loading";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -21,9 +25,15 @@ const AddNewLenderHistoryModal: React.FC<AddNewLenderHistoryModalProps> = ({
   isOpen,
   toggle,
 }) => {
+  const { casealias } = useParams();
+  //Rtk hooks
+  const [addDIPHistoryDetails, { isLoading }] =
+    useAddDIPHistoryDetailsMutation();
+
   const [formData, setFormData] = useState({
+    is_this_application_had_a_decision_in_principle: true,
     lender: "",
-    dip_date: "",
+    dip_date: "" || null,
     dip_decision: "",
     dip_reference_number: "",
     notes: "",
@@ -41,8 +51,34 @@ const AddNewLenderHistoryModal: React.FC<AddNewLenderHistoryModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      addDIPHistoryDetails({
+        case_alias: casealias,
+        payload: formData,
+      }).unwrap();
+      toast.success("DIP History added successfully");
+      // Clear form data after successful submission
+      setFormData({
+        is_this_application_had_a_decision_in_principle: true,
+        lender: "",
+        dip_date: "" || null,
+        dip_decision: "",
+        dip_reference_number: "",
+        notes: "",
+      });
+    } catch (error) {
+      toast.error("Failed to add DIP History");
+    }
     toggle();
   };
+
+  if (isLoading) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
@@ -250,7 +286,7 @@ const AddNewLenderHistoryModal: React.FC<AddNewLenderHistoryModalProps> = ({
                   <option value="">Select...</option>
                   <option value="ACCEPTED">Accepted</option>
                   <option value="DECLINED">Declined</option>
-                  <option value="REFERRED">Referred</option>
+                  <option value="REFERED">Referred</option>
                 </Input>
               </FormGroup>
             </Col>
