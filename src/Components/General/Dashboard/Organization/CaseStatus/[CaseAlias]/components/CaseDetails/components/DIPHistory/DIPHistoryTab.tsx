@@ -18,7 +18,6 @@ interface DIPHistoryProps {
 
 const DIPHistoryTab: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("1");
-  // const [dipHistories, setDipHistories] = useState<any[]>([]);
   const { casealias } = useParams();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
