@@ -14,6 +14,7 @@ import PortfolioContent from "./Portfolio/PortfolioContent";
 import ProductContent from "./Product/ProductContent";
 import PropertyDetails from "./PropertyDetails/PropertyDetails";
 import SolicitorsAndAccountantsTab from "./SolicitorsAndAccountants/SolicitorsAndAccountantsTab";
+import FeesTab from "./Fees/FeesTab";
 
 // Define a mapping of tab names to components
 const tabComponents: Record<string, React.FC> = {
@@ -32,6 +33,7 @@ const tabComponents: Record<string, React.FC> = {
   Notes: NotesTab,
   Product: ProductContent,
   "DIP History": DIPHistoryTab,
+  Fees: FeesTab,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
