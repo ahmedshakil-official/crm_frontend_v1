@@ -1,3 +1,6 @@
+import { useGetCreditCommitmentsDetailsQuery } from "@/Redux/Reducers/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import LoadingSpinner from "@/app/loading";
+import { useParams } from "next/navigation";
 import {
   Button,
   Card,
@@ -6,9 +9,27 @@ import {
   Col,
   Container,
   Row,
+  Table,
 } from "reactstrap";
 
 const CreditCommitmentsContent: React.FC = () => {
+  const { casealias } = useParams();
+  // rtk hooks
+  const { data: creditCommitments, isLoading } =
+    useGetCreditCommitmentsDetailsQuery({ case_alias: casealias });
+  // rtk hooks end
+
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+
+  console.log(creditCommitments);
+
+  if (creditCommitments?.data?.length === 0) return <div>No data found</div>;
+
   return (
     <Container>
       <Row>
@@ -116,7 +137,7 @@ const CreditCommitmentsContent: React.FC = () => {
           <Card className="ecommerce-widget rounded-4">
             <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-primary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Settlement  Balance</h4>
+                <h4 className="fw-bold fs-6">Total Settlement Balance</h4>
               </CardHeader>
               <div className="d-flex justify-content-between align-items-center mt-2">
                 <span className="text-primary h1">
@@ -131,15 +152,113 @@ const CreditCommitmentsContent: React.FC = () => {
       {/* Cards Rows end  */}
       <Row>
         <Col className="d-flex justify-content-between">
-          <Button color="secondary" type="submit">
-            View Summary
+          <Button
+            color="secondary"
+            type="submit"
+            className="d-flex justify-content-center align-items-center gap-1"
+          >
+            <span>View Summary</span>
+            <i className="fa-solid fa-eye"></i>
           </Button>
-          <Button color="primary" type="submit">
-            Add Credit Item
+          <Button
+            color="primary"
+            type="submit"
+            className="d-flex justify-content-center align-items-center gap-1"
+          >
+            <span>Add Credit Item</span>
+            <i className="fa-solid fa-circle-plus"></i>
           </Button>
         </Col>
       </Row>
       {/* Table start  */}
+      <Row className="mt-4">
+        <Col>
+          {/* <div className="table-responsive"> */}
+          <Table responsive bordered hover>
+            <thead>
+              <tr>
+                <th>Actions</th>
+                <th>Applicant</th>
+                <th>Joint</th>
+                <th>Type</th>
+                <th>Company</th>
+                <th>Account No.</th>
+                <th>OS Balance (£)</th>
+                <th>Settlement Balance (£)</th>
+                <th>Monthly Repayment (£)</th>
+                <th>Interest Rate (%)</th>
+                <th>Card Limit (£)</th>
+                <th>Term Remaining (Months)</th>
+                <th>Balloon Payment (£)</th>
+                <th>Court Ordered</th>
+                <th>Cost of Credit (£)</th>
+                <th>Paid on Completion</th>
+                <th>Source</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              {creditCommitments?.map((item: any, index: number) => (
+                <tr key={index}>
+                  <td>
+                    <div className="d-flex gap-2">
+                      <button className="btn btn-sm btn-primary">
+                        <i className="fa fa-edit"></i>
+                      </button>
+                      <button className="btn btn-sm btn-danger">
+                        <i className="fa fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    {`${item.applicant_details?.first_name || ""} ${
+                      item.applicant_details?.last_name || ""
+                    }` || "-"}
+                  </td>
+                  <td>
+                    {item.joint?.charAt(0).toUpperCase() +
+                      item.joint?.slice(1).toLowerCase() || "-"}
+                  </td>
+                  <td>
+                    {item.type
+                      ?.split("_")
+                      .map(
+                        (word: any) =>
+                          word.charAt(0).toUpperCase() +
+                          word.slice(1).toLowerCase()
+                      )
+                      .join(" ") || "-"}
+                  </td>
+                  <td>{item.company || "-"}</td>
+                  <td>{item.account_no || "-"}</td>
+                  <td>£{item.os_balance?.toFixed(2) || "0.00"}</td>
+                  <td>£{item.settlement_balance?.toFixed(2) || "0.00"}</td>
+                  <td>£{item.monthly_repayment?.toFixed(2) || "0.00"}</td>
+                  <td>{item.interest_rate?.toFixed(2) || "0.00"}%</td>
+                  <td>£{item.card_limit?.toFixed(2) || "0.00"}</td>
+                  <td>{item.term_remaining || "0"}</td>
+                  <td>£{item.balloon_payment?.toFixed(2) || "0.00"}</td>
+                  <td>
+                    {item.court_ordered?.charAt(0).toUpperCase() +
+                      item.court_ordered?.slice(1).toLowerCase() || "-"}
+                  </td>
+                  <td>£{item.cost_of_credit?.toFixed(2) || "0.00"}</td>
+                  <td>
+                    {item.paid_on_completion.charAt(0).toUpperCase() +
+                      item.paid_on_completion?.slice(1).toLowerCase() || "-"}
+                  </td>
+                  <td>{item.source || "-"}</td>
+                  <td>
+                    {item.has_the_unsecured_credit_mounted_up ||
+                      "No note available"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          {/* </div> */}
+        </Col>
+      </Row>
     </Container>
   );
 };
