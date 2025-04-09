@@ -1,6 +1,7 @@
 import { useGetCreditCommitmentsDetailsQuery } from "@/Redux/Reducers/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import {
   Button,
   Card,
@@ -11,9 +12,11 @@ import {
   Row,
   Table,
 } from "reactstrap";
+import AddCreditCommitmentModal from "./CreditCommitmentsModals/AddCreditCommitmentModal";
 
 const CreditCommitmentsContent: React.FC = () => {
   const { casealias } = useParams();
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   // rtk hooks
   const { data: creditCommitments, isLoading } =
     useGetCreditCommitmentsDetailsQuery({ case_alias: casealias });
@@ -164,6 +167,7 @@ const CreditCommitmentsContent: React.FC = () => {
             color="primary"
             type="submit"
             className="d-flex justify-content-center align-items-center gap-1"
+            onClick={() => setModalIsOpen(!modalIsOpen)}
           >
             <span>Add Credit Item</span>
             <i className="fa-solid fa-circle-plus"></i>
@@ -259,6 +263,10 @@ const CreditCommitmentsContent: React.FC = () => {
           {/* </div> */}
         </Col>
       </Row>
+      <AddCreditCommitmentModal
+        isOpen={modalIsOpen}
+        toggle={() => setModalIsOpen(!modalIsOpen)}
+      />
     </Container>
   );
 };
