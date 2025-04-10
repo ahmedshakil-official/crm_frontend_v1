@@ -54,8 +54,6 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
   const [addCreditCommitmentsDetails, { isLoading: isAdding }] =
     useAddCreditCommitmentsDetailsMutation();
 
-  console.log(caseUsers);
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -66,13 +64,13 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      addCreditCommitmentsDetails({
+      const res = await addCreditCommitmentsDetails({
         case_alias: casealias,
         payload: formData,
-      });
+      }).unwrap();
       setFormData({
         applicant: "",
         joint: "",
@@ -92,14 +90,18 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
         source: "",
         has_the_unsecured_credit_mounted_up: "",
       });
-      toast.success("Credit Commitment added successfully");
+      if (res) {
+        toast.success("Credit Commitment added successfully");
+      } else {
+        toast.error("Error adding credit commitment");
+      }
     } catch (error) {
       toast.error("Error adding credit commitment");
     }
     toggle();
   };
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading || isAdding) return <LoadingSpinner />;
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">

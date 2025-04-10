@@ -29,8 +29,6 @@ const CreditCommitmentsContent: React.FC = () => {
       </div>
     );
 
-  console.log(creditCommitments);
-
   if (creditCommitments?.data?.length === 0) return <div>No data found</div>;
 
   return (
