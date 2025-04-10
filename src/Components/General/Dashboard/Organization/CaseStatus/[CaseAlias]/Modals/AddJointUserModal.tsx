@@ -1,4 +1,4 @@
-import { useAddJointUserInfoMutation } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
+import { useAddJointUserInfoMutation } from "@/Redux/Reducers/SingleCaseInfo/JointUserDetails/JointUserDetailsApi";
 import { AddJointUserModalProps } from "@/Types/Organization/JointUserTypes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
