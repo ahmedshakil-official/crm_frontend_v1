@@ -1,5 +1,5 @@
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
-import { useGetSingleCaseDetailsQuery } from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
+import { useGetSingleCaseDetailsQuery } from "@/Redux/Reducers/Cases/CaseDetailsApi";
 import { useGetJointUserInfoQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/JointUserDetails/JointUserDetailsApi";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import { useParams } from "next/navigation";

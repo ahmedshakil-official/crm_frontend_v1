@@ -1,4 +1,4 @@
-import { useAddCaseDetailsMutation } from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
+import { useAddCaseDetailsMutation } from "@/Redux/Reducers/Cases/CaseDetailsApi";
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
 import { AddNewCaseModalProps } from "@/Types/Organization/CaseTypes";
 import { LeadsInfo } from "@/Types/Organization/LeadTypes";

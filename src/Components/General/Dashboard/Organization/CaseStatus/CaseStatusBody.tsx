@@ -1,4 +1,4 @@
-import { useGetCaseDetailsQuery } from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
+import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Cases/CaseDetailsApi";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
 import formatDateToDMY from "@/utils/dateFormatter";
 import Link from "next/link";
@@ -79,14 +79,14 @@ const CaseStatusBody: React.FC = () => {
                       .join(" ")}
                   </td>
                   <td>
-                  {caseItem?.case_stage
-                        .split("_")
-                        .map(
-                          (word) =>
-                            word.charAt(0).toUpperCase() +
-                            word.slice(1).toLowerCase()
-                        )
-                        .join(" ")}
+                    {caseItem?.case_stage
+                      .split("_")
+                      .map(
+                        (word) =>
+                          word.charAt(0).toUpperCase() +
+                          word.slice(1).toLowerCase()
+                      )
+                      .join(" ")}
                   </td>
                   <td>{formatDateToDMY(caseItem?.created_at)}</td>
                   <td>
