@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useGetPropertiesQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { initializeForm } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Card, CardBody, CardHeader, Nav, NavItem, NavLink } from "reactstrap";
 import FoundProperty from "./Components/FoundProperty";
 import NoteForProperty from "./Components/NoteForProperty";
 import PropertyValuationCard from "./Components/PropertyValuationCard";
 import PropertyDetailsTabContent from "./PropertyDetailsTabContent";
-import { useGetPropertiesQuery } from "@/Redux/Reducers/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { initializeForm } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
-import { useParams } from "next/navigation";
 
 const propertyContentTabs = [
   { id: "1", title: "Property Address" },
