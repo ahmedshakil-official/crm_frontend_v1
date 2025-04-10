@@ -1,20 +1,20 @@
-import { useAddFeesOutDetailsMutation } from "@/Redux/Reducers/CaseDetails/Fees/FeesApi";
+import { useAddFeesOutDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
+  Col,
   Form,
   FormGroup,
-  Label,
   Input,
   InputGroup,
   InputGroupText,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
   Row,
-  Col,
 } from "reactstrap";
 
 interface FeeData {
