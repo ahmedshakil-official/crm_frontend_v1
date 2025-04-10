@@ -3,7 +3,7 @@ import { baseApi } from "@/Redux/Api/BaseApi";
 export const LoanDetailsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getCaseLoanDetails: builder.query({
-      query: ( case_alias ) => ({
+      query: (case_alias) => ({
         url: `/cases/${case_alias}/loan/details/`,
         method: "GET",
       }),
@@ -27,5 +27,8 @@ export const LoanDetailsApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetLoanDetailsQuery, useUpdateLoanDetailsMutation,useGetCaseLoanDetailsQuery } =
-  LoanDetailsApi;
+export const {
+  useGetLoanDetailsQuery,
+  useUpdateLoanDetailsMutation,
+  useGetCaseLoanDetailsQuery,
+} = LoanDetailsApi;
