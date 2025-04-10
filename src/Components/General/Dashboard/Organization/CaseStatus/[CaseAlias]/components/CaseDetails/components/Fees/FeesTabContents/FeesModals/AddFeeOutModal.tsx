@@ -1,4 +1,6 @@
-import { FC } from "react";
+import { useAddFeesOutDetailsMutation } from "@/Redux/Reducers/CaseDetails/Fees/FeesApi";
+import { FC, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Modal,
   ModalHeader,
@@ -16,13 +18,6 @@ import {
 } from "reactstrap";
 
 interface FeeData {
-  id: string;
-  index: number;
-  isDeleted: boolean;
-  feeInFeeOutId: string;
-  caseType: string;
-  propertyName: string;
-  paymentLink: string;
   fee: string;
   feeType: string;
   method: string;
@@ -34,8 +29,9 @@ interface AddFeeOutModalProps {
   isOpen: boolean;
   toggle: () => void;
   onSubmit: (feeData: FeeData) => void;
-  feeTypes: string[];
-  methods: string[];
+  feeTypes: { title: string; value: string }[];
+  methods: { title: string; value: string }[];
+  caseAlias: string | string[];
 }
 
 const AddFeeOutModal: FC<AddFeeOutModalProps> = ({
@@ -44,25 +40,49 @@ const AddFeeOutModal: FC<AddFeeOutModalProps> = ({
   onSubmit,
   feeTypes,
   methods,
+  caseAlias,
 }) => {
-  const initialFeeData: FeeData = {
-    id: "",
-    index: 0,
-    isDeleted: false,
-    feeInFeeOutId: "",
-    caseType: "",
-    propertyName: "List_Fees_Out",
-    paymentLink: "",
+  const [addFeesOutDetails, { isLoading }] = useAddFeesOutDetailsMutation();
+  const initialState = {
     fee: "",
     feeType: "",
     method: "",
     notes: "",
     feeDate: "",
   };
+  const [feeData, setFeeData] = useState<FeeData>(initialState);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = (field: keyof FeeData, value: string) => {
+    setFeeData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(initialFeeData);
+    const data = {
+      amount: Number(feeData.fee) || 0,
+      case_alias: caseAlias,
+      date_paid_out: feeData.feeDate || null,
+      fee_out_type: feeData.feeType || null,
+      fees_type: "FEES_OUT",
+      method: feeData.method || null,
+      notes: feeData.notes || "",
+    };
+
+    const res = await addFeesOutDetails({
+      case_alias: caseAlias,
+      feesOutDetails: data,
+    });
+    if (res.data) {
+      onSubmit(feeData);
+      setFeeData(initialState); // Reset form
+      toggle();
+      toast.success("Fee added successfully");
+    } else {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -80,10 +100,8 @@ const AddFeeOutModal: FC<AddFeeOutModalProps> = ({
                     type="text"
                     id="amount"
                     placeholder="0.00"
-                    value={initialFeeData.fee}
-                    onChange={(e) => {
-                      initialFeeData.fee = e.target.value;
-                    }}
+                    value={feeData.fee}
+                    onChange={(e) => handleInputChange("fee", e.target.value)}
                   />
                 </InputGroup>
               </FormGroup>
@@ -94,15 +112,13 @@ const AddFeeOutModal: FC<AddFeeOutModalProps> = ({
                 <Input
                   type="select"
                   id="feeType"
-                  value={initialFeeData.feeType}
-                  onChange={(e) => {
-                    initialFeeData.feeType = e.target.value;
-                  }}
+                  value={feeData.feeType}
+                  onChange={(e) => handleInputChange("feeType", e.target.value)}
                 >
                   <option value="">Select Type</option>
                   {feeTypes.map((type) => (
-                    <option key={type} value={type === "Unknown" ? "" : type}>
-                      {type}
+                    <option key={type.value} value={type.value}>
+                      {type.title}
                     </option>
                   ))}
                 </Input>
@@ -116,15 +132,13 @@ const AddFeeOutModal: FC<AddFeeOutModalProps> = ({
                 <Input
                   type="select"
                   id="method"
-                  value={initialFeeData.method}
-                  onChange={(e) => {
-                    initialFeeData.method = e.target.value;
-                  }}
+                  value={feeData.method}
+                  onChange={(e) => handleInputChange("method", e.target.value)}
                 >
                   <option value="">Select Method</option>
                   {methods.map((method) => (
-                    <option key={method} value={method}>
-                      {method}
+                    <option key={method.value} value={method.value}>
+                      {method.title}
                     </option>
                   ))}
                 </Input>
@@ -136,10 +150,8 @@ const AddFeeOutModal: FC<AddFeeOutModalProps> = ({
                 <Input
                   type="date"
                   id="feeDate"
-                  value={initialFeeData.feeDate}
-                  onChange={(e) => {
-                    initialFeeData.feeDate = e.target.value;
-                  }}
+                  value={feeData.feeDate}
+                  onChange={(e) => handleInputChange("feeDate", e.target.value)}
                 />
               </FormGroup>
             </Col>
@@ -151,10 +163,8 @@ const AddFeeOutModal: FC<AddFeeOutModalProps> = ({
               id="notes"
               rows={3}
               placeholder="Add notes..."
-              value={initialFeeData.notes}
-              onChange={(e) => {
-                initialFeeData.notes = e.target.value;
-              }}
+              value={feeData.notes}
+              onChange={(e) => handleInputChange("notes", e.target.value)}
             />
           </FormGroup>
         </ModalBody>
@@ -162,8 +172,8 @@ const AddFeeOutModal: FC<AddFeeOutModalProps> = ({
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>
-          <Button color="primary" type="submit">
-            Add Fee
+          <Button color="primary" type="submit" disabled={isLoading}>
+            {isLoading ? "Adding..." : "Add Fee"}
           </Button>
         </ModalFooter>
       </Form>

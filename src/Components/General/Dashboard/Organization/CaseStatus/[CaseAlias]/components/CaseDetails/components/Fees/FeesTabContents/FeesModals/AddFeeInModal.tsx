@@ -18,13 +18,6 @@ import {
 } from "reactstrap";
 
 interface FeeData {
-  id: string;
-  index: number;
-  isDeleted: boolean;
-  feeInFeeOutId: string;
-  caseType: string;
-  propertyName: string;
-  paymentLink: string;
   fee: string;
   feeType: string;
   method: string;
@@ -50,20 +43,14 @@ const AddFeeInModal: FC<AddFeeInModalProps> = ({
   caseAlias,
 }) => {
   const [addFeesInDetails, { isLoading }] = useAddFeesInDetailsMutation();
-  const [feeData, setFeeData] = useState<FeeData>({
-    id: "",
-    index: 0,
-    isDeleted: false,
-    feeInFeeOutId: "",
-    caseType: "",
-    propertyName: "List_Fees_In",
-    paymentLink: "",
+  const initialState = {
     fee: "",
     feeType: "",
     method: "",
     notes: "",
     feeDate: "",
-  });
+  };
+  const [feeData, setFeeData] = useState<FeeData>(initialState);
 
   const handleInputChange = (field: keyof FeeData, value: string) => {
     setFeeData((prev) => ({
@@ -75,11 +62,13 @@ const AddFeeInModal: FC<AddFeeInModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const data = {
-      amount: feeData.fee,
-      feeType: feeData.feeType,
-      method: feeData.method,
-      dateReceived: feeData.feeDate,
-      notes: feeData.notes,
+      amount: Number(feeData.fee) || 0,
+      case_alias: caseAlias,
+      date_received: feeData.feeDate || null,
+      fee_in_type: feeData.feeType || null,
+      fees_type: "FEES_IN",
+      method: feeData.method || null,
+      notes: feeData.notes || "",
     };
 
     const res = await addFeesInDetails({
@@ -88,6 +77,7 @@ const AddFeeInModal: FC<AddFeeInModalProps> = ({
     });
     if (res.data) {
       onSubmit(feeData);
+      setFeeData(initialState); // Reset form
       toggle();
       toast.success("Fee added successfully");
     } else {
