@@ -1,21 +1,18 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import {
-  basicTabIndicator,
-} from "@/Redux/Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
-import {
-  InqueryTabTitleData,
-  FFDTabTitleData,
-  RCCTabTitleData,
-  DIPTabTitleData,
-  FMATabTitleData,
-  OFBTabTitleData,
-  LegalTabTitleData,
   CompletionTabTitleData,
+  DIPTabTitleData,
+  FFDTabTitleData,
+  FMATabTitleData,
   FOPTabTitleData,
+  InqueryTabTitleData,
+  LegalTabTitleData,
   NPDTabTitleData,
+  OFBTabTitleData,
+  RCCTabTitleData,
 } from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
-import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { basicTabIndicator } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -25,6 +22,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import { CaseDetailsTabContent } from "./components/CaseDetailsTabContent";
 
 const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
   const basicTab = useAppSelector((state) => state.caseDetails.basicTabId);

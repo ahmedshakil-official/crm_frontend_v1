@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProperty } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
+
+import { updateProperty } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { RootState } from "@/Redux/Store";
 import {
-  Row,
+  Button,
   Col,
+  Form,
   FormGroup,
-  Label,
   Input,
   InputGroup,
-  Button,
-  Form,
+  Label,
+  Row,
 } from "reactstrap";
-import { RootState } from "@/Redux/Store";
 
 interface AddressDetailsProps {
   propertyData?: any;
@@ -19,7 +20,9 @@ interface AddressDetailsProps {
 
 const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
   const dispatch = useDispatch();
-  const propertyState = useSelector((state: RootState) => state.propertyForm.Properties);
+  const propertyState = useSelector(
+    (state: RootState) => state.propertyForm.Properties
+  );
 
   useEffect(() => {
     if (propertyData) {

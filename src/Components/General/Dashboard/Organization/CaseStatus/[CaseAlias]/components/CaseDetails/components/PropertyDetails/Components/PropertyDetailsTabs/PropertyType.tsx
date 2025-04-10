@@ -1,14 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Row,
-  Col,
-  FormGroup,
-  Label,
-  Input,
-  InputGroup,
-} from "reactstrap";
-import { updateProperty } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
+import { Col, FormGroup, Input, InputGroup, Label, Row } from "reactstrap";
+
+import { updateProperty } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import { RootState } from "@/Redux/Store";
 
 interface PropertyDetailsProps {

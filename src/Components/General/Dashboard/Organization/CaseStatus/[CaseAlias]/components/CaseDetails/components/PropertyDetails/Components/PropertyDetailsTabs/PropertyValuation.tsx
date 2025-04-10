@@ -1,8 +1,8 @@
+import { updateProperty } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { RootState } from "@/Redux/Store";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, FormGroup, Label, Input } from "reactstrap";
-import { updateProperty } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
-import { RootState } from "@/Redux/Store";
+import { Col, FormGroup, Input, Label, Row } from "reactstrap";
 
 interface ValuationInfoProps {
   propertyData?: any;
@@ -52,9 +52,7 @@ const ValuationInfo: React.FC<ValuationInfoProps> = ({ propertyData }) => {
   ];
 
   // Sample applicants - these would typically come from props or API
-  const applicants = [
-    { value: "demo_x", label: "Demo X" },
-  ];
+  const applicants = [{ value: "demo_x", label: "Demo X" }];
 
   return (
     <div className="valuation-info p-4">
@@ -69,17 +67,26 @@ const ValuationInfo: React.FC<ValuationInfoProps> = ({ propertyData }) => {
                   <FormGroup className="mb-4 border-bottom pb-3">
                     <Row className="mb-3">
                       <Col sm={3}>
-                        <Label className="mb-0 fw-medium text-muted" htmlFor="valuation_type">
+                        <Label
+                          className="mb-0 fw-medium text-muted"
+                          htmlFor="valuation_type"
+                        >
                           Valuation Type
                         </Label>
                       </Col>
                       <Col sm={9} className="d-flex flex-wrap gap-3">
                         {valuationTypes.map((type) => (
                           <div
-                            className={`valuation-option ${propertyState.valuation_type === type.value ? 'active' : ''}`}
+                            className={`valuation-option ${
+                              propertyState.valuation_type === type.value
+                                ? "active"
+                                : ""
+                            }`}
                             key={type.value}
                             onClick={() => {
-                              dispatch(updateProperty({ valuation_type: type.value }));
+                              dispatch(
+                                updateProperty({ valuation_type: type.value })
+                              );
                             }}
                           >
                             <Input
@@ -87,11 +94,13 @@ const ValuationInfo: React.FC<ValuationInfoProps> = ({ propertyData }) => {
                               name="valuation_type"
                               id={`valuation_type_${type.value}`}
                               value={type.value}
-                              checked={propertyState.valuation_type === type.value}
+                              checked={
+                                propertyState.valuation_type === type.value
+                              }
                               className="position-absolute opacity-0"
                             />
-                            <Label 
-                              className="d-flex align-items-center gap-2 m-0 py-2 px-3 rounded-3" 
+                            <Label
+                              className="d-flex align-items-center gap-2 m-0 py-2 px-3 rounded-3"
                               htmlFor={`valuation_type_${type.value}`}
                             >
                               <span className="radio-circle"></span>
@@ -131,7 +140,7 @@ const ValuationInfo: React.FC<ValuationInfoProps> = ({ propertyData }) => {
                           border-color: #0d6efd;
                         }
                         .active .radio-circle:after {
-                          content: '';
+                          content: "";
                           position: absolute;
                           width: 8px;
                           height: 8px;
