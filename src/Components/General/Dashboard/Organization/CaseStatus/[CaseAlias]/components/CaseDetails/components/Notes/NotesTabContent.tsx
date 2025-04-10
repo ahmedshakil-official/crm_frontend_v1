@@ -1,9 +1,9 @@
-import React from "react";
-import { TabContent, TabPane, Button } from "reactstrap";
+import { useGetNotesQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
 import { useParams } from "next/navigation";
+import React from "react";
+import { Button, TabContent, TabPane } from "reactstrap";
 import NotesViewTab from "./NotesViewTabs/NotesViewTab";
 import TasksViewTab from "./NotesViewTabs/TasksViewTab";
-import { useGetNotesQuery } from "@/Redux/Reducers/CaseDetails/Notes/NotesApi";
 
 interface NotesTabContentProps {
   tabId: string;
@@ -19,8 +19,8 @@ export const NotesTabContent: React.FC<NotesTabContentProps> = ({
 
   const handleNext = () => setTabId((parseInt(tabId) + 1).toString());
   // Use API data if available, otherwise use static data
-  const notes = data?.filter((item:NoteTask) => item.note_task === "NOTE");
-  const tasks = data?.filter((item:NoteTask) => item.note_task === "TASK");
+  const notes = data?.filter((item: NoteTask) => item.note_task === "NOTE");
+  const tasks = data?.filter((item: NoteTask) => item.note_task === "TASK");
 
   if (isLoading) {
     return <div>Loading...</div>;

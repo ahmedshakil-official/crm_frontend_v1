@@ -1,21 +1,21 @@
+import { useAddNotesMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
+import { useParams } from "next/navigation";
 import { FC, useState } from "react";
+import { X } from "react-feather";
+import { toast } from "react-toastify";
 import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+  Button,
+  Col,
   Form,
   FormGroup,
-  Label,
   Input,
-  Button,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
   Row,
-  Col,
 } from "reactstrap";
-import { X } from "react-feather";
-import { useAddNotesMutation } from "@/Redux/Reducers/CaseDetails/Notes/NotesApi";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
 
 interface CreateTaskNoteModalProps {
   isOpen: boolean;
