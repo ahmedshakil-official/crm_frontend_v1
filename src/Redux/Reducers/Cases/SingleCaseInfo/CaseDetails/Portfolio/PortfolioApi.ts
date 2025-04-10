@@ -17,7 +17,7 @@ export const PortfolioApi = baseApi.injectEndpoints({
       providesTags: ["PortfolioDetails"],
     }),
     addPropertyDetails: builder.mutation({
-      query: ({ case_alias,propertyDetails }) => ({
+      query: ({ case_alias, propertyDetails }) => ({
         url: `/cases/${case_alias}/properties/`,
         method: "POST",
         body: propertyDetails,

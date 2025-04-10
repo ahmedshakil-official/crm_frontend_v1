@@ -1,4 +1,4 @@
-import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/CaseDetails/Portfolio/PortfolioApi";
+import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Portfolio/PortfolioApi";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useState } from "react";
