@@ -1,4 +1,4 @@
-import { useUpdateJointUserInfoMutation } from "@/Redux/Reducers/CaseDetails/JointUserDetails/JointUserDetailsApi";
+import { useUpdateJointUserInfoMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/JointUserDetails/JointUserDetailsApi";
 import { UpdateJointUserModalProps } from "@/Types/Organization/JointUserTypes";
 import { isEqual } from "lodash";
 import { useParams } from "next/navigation";

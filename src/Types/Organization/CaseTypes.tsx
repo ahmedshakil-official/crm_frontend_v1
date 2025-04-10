@@ -50,6 +50,9 @@ export interface FileUploadModalProps {
   handleFileUpload?: any;
 }
 export interface FileOwnerProps {
+  id: number;
+  first_name: string;
+  last_name: string;
   lead_user: {
     id: number;
     email: string;

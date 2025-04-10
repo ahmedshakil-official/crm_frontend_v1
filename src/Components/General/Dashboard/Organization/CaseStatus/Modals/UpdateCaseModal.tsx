@@ -1,4 +1,4 @@
-import { useUpdateCaseDetailsMutation } from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
+import { useUpdateCaseDetailsMutation } from "@/Redux/Reducers/Cases/CaseDetailsApi";
 import { CaseInfo, UpdateCaseModalProps } from "@/Types/Organization/CaseTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

@@ -1,4 +1,4 @@
-import { useDeleteCaseDetailsMutation } from "@/Redux/Reducers/CaseDetails/CaseDetailsApi";
+import { useDeleteCaseDetailsMutation } from "@/Redux/Reducers/Cases/CaseDetailsApi";
 import { DeleteCaseModalProps } from "@/Types/Organization/CaseTypes";
 import React from "react";
 import { toast } from "react-toastify";
