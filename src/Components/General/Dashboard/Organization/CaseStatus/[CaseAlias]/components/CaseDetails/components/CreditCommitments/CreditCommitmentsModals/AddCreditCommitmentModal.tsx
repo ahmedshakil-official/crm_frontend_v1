@@ -111,7 +111,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
       <Form onSubmit={handleSubmit}>
         <ModalBody>
           <Row>
-            <Col md={6}>
+            <Col md={4}>
               <FormGroup>
                 <Label>Applicant</Label>
                 <Input
@@ -129,7 +129,22 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 </Input>
               </FormGroup>
             </Col>
-            <Col md={6}>
+            <Col md={4}>
+              <FormGroup>
+                <Label>Joint</Label>
+                <Input
+                  type="select"
+                  name="joint"
+                  value={formData.joint}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select...</option>
+                  <option value="YES">Yes</option>
+                  <option value="NO">No</option>
+                </Input>
+              </FormGroup>
+            </Col>
+            <Col md={4}>
               <FormGroup>
                 <Label>Type</Label>
                 <Input

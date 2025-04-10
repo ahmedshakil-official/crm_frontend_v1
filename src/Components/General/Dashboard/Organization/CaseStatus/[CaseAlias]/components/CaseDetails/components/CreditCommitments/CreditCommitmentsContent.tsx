@@ -13,10 +13,15 @@ import {
   Table,
 } from "reactstrap";
 import AddCreditCommitmentModal from "./CreditCommitmentsModals/AddCreditCommitmentModal";
+import DeleteCreditCommitmentModal from "./CreditCommitmentsModals/DeleteCreditCommitmentModal";
 
 const CreditCommitmentsContent: React.FC = () => {
   const { casealias } = useParams();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  // Add this state to track which item is being deleted
+  const [selectedItemAlias, setSelectedItemAlias] = useState<string>("");
+  const [selectedItemName, setSelectedItemName] = useState<string>("");
   // rtk hooks
   const { data: creditCommitments, isLoading } =
     useGetCreditCommitmentsDetailsQuery({ case_alias: casealias });
@@ -207,7 +212,18 @@ const CreditCommitmentsContent: React.FC = () => {
                       <button className="btn btn-sm btn-primary">
                         <i className="fa fa-edit"></i>
                       </button>
-                      <button className="btn btn-sm btn-danger">
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => {
+                          setSelectedItemAlias(item.alias);
+                          setSelectedItemName(
+                            `${item.applicant_details?.first_name || ""} ${
+                              item.applicant_details?.last_name || ""
+                            }`
+                          );
+                          setIsDeleteModalOpen(true);
+                        }}
+                      >
                         <i className="fa fa-trash"></i>
                       </button>
                     </div>
@@ -261,9 +277,17 @@ const CreditCommitmentsContent: React.FC = () => {
           {/* </div> */}
         </Col>
       </Row>
+      {/* modals start */}
       <AddCreditCommitmentModal
         isOpen={modalIsOpen}
         toggle={() => setModalIsOpen(!modalIsOpen)}
+      />
+      <DeleteCreditCommitmentModal
+        isOpen={isDeleteModalOpen}
+        toggle={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
+        casealias={casealias?.toString()}
+        creditCommitmentAlias={selectedItemAlias}
+        creditCommitmentName={selectedItemName}
       />
     </Container>
   );
