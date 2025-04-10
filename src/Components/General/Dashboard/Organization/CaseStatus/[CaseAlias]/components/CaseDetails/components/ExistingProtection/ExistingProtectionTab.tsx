@@ -1,4 +1,4 @@
-import { useGetExistingProtectionDetailsQuery } from "@/Redux/Reducers/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
+import { useGetExistingProtectionDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
 import { ExistingProtectionDetailsProps } from "@/Types/Organization/CaseDetails/ExistingProtectionTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
