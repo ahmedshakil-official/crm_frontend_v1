@@ -13,10 +13,19 @@ import {
   Table,
 } from "reactstrap";
 import AddCreditCommitmentModal from "./CreditCommitmentsModals/AddCreditCommitmentModal";
+import DeleteCreditCommitmentModal from "./CreditCommitmentsModals/DeleteCreditCommitmentModal";
+import UpdateCreditCommitmentModal from "./CreditCommitmentsModals/UpdateCreditCommitmentModal";
 
 const CreditCommitmentsContent: React.FC = () => {
   const { casealias } = useParams();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  // Add these states at the top with other state declarations
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
+  const [selectedCreditData, setSelectedCreditData] = useState<any>(null);
+  // Add this state to track which item is being deleted
+  const [selectedItemAlias, setSelectedItemAlias] = useState<string>("");
+  const [selectedItemName, setSelectedItemName] = useState<string>("");
   // rtk hooks
   const { data: creditCommitments, isLoading } =
     useGetCreditCommitmentsDetailsQuery({ case_alias: casealias });
@@ -28,8 +37,6 @@ const CreditCommitmentsContent: React.FC = () => {
         <LoadingSpinner />
       </div>
     );
-
-  console.log(creditCommitments);
 
   if (creditCommitments?.data?.length === 0) return <div>No data found</div>;
 
@@ -206,10 +213,27 @@ const CreditCommitmentsContent: React.FC = () => {
                 <tr key={index}>
                   <td>
                     <div className="d-flex gap-2">
-                      <button className="btn btn-sm btn-primary">
+                      <button
+                        className="btn btn-sm btn-primary"
+                        onClick={() => {
+                          setSelectedCreditData(item);
+                          setIsUpdateModalOpen(true);
+                        }}
+                      >
                         <i className="fa fa-edit"></i>
                       </button>
-                      <button className="btn btn-sm btn-danger">
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => {
+                          setSelectedItemAlias(item.alias);
+                          setSelectedItemName(
+                            `${item.applicant_details?.first_name || ""} ${
+                              item.applicant_details?.last_name || ""
+                            }`
+                          );
+                          setIsDeleteModalOpen(true);
+                        }}
+                      >
                         <i className="fa fa-trash"></i>
                       </button>
                     </div>
@@ -263,10 +287,25 @@ const CreditCommitmentsContent: React.FC = () => {
           {/* </div> */}
         </Col>
       </Row>
+      {/* modals start */}
       <AddCreditCommitmentModal
         isOpen={modalIsOpen}
         toggle={() => setModalIsOpen(!modalIsOpen)}
       />
+      <UpdateCreditCommitmentModal
+        isOpen={isUpdateModalOpen}
+        toggle={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
+        casealias={casealias?.toString()}
+        creditData={selectedCreditData}
+      />
+      <DeleteCreditCommitmentModal
+        isOpen={isDeleteModalOpen}
+        toggle={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
+        casealias={casealias?.toString()}
+        creditCommitmentAlias={selectedItemAlias}
+        creditCommitmentName={selectedItemName}
+      />
+      {/* modals end */}
     </Container>
   );
 };

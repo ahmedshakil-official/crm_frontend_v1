@@ -1,8 +1,6 @@
-import { useAddCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import { useUpdateCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
 import { useGetCaseUsersQuery } from "@/Redux/Reducers/SingleCaseInfo/CaseUsers/CaseUsersApi";
-import LoadingSpinner from "@/app/loading";
-import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -18,41 +16,50 @@ import {
   Row,
 } from "reactstrap";
 
-interface AddCreditCommitmentModalProps {
+interface UpdateCreditCommitmentModalProps {
   isOpen: boolean;
   toggle: () => void;
+  casealias: string;
+  creditData: any;
 }
 
-const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
-  isOpen,
-  toggle,
-}) => {
-  const { casealias } = useParams();
-  const [formData, setFormData] = useState({
-    applicant: "",
-    joint: "",
-    type: "",
-    company: "",
-    account_no: null,
-    os_balance: "",
-    settlement_balance: "",
-    monthly_repayment: "",
-    interest_rate: "",
-    card_limit: "",
-    term_remaining: "",
-    balloon_payment: "",
-    court_ordered: "",
-    cost_of_credit: "",
-    paid_on_completion: "",
-    source: "",
-    has_the_unsecured_credit_mounted_up: "",
-  });
-  // rtk hooks
+const UpdateCreditCommitmentModal: React.FC<
+  UpdateCreditCommitmentModalProps
+> = ({ isOpen, toggle, casealias, creditData }) => {
+    // rtk hooks 
   const { data: caseUsers, isLoading } = useGetCaseUsersQuery({
     case_alias: casealias,
   });
-  const [addCreditCommitmentsDetails, { isLoading: isAdding }] =
-    useAddCreditCommitmentsDetailsMutation();
+
+  const [formData, setFormData] = useState({
+    applicant: creditData?.applicant || "",
+    joint: creditData?.joint || "",
+    type: creditData?.type || "",
+    company: creditData?.company || "",
+    account_no: creditData?.account_no || "",
+    os_balance: creditData?.os_balance || "",
+    settlement_balance: creditData?.settlement_balance || "",
+    monthly_repayment: creditData?.monthly_repayment || "",
+    interest_rate: creditData?.interest_rate || "",
+    card_limit: creditData?.card_limit || "",
+    term_remaining: creditData?.term_remaining || "",
+    balloon_payment: creditData?.balloon_payment || "",
+    court_ordered: creditData?.court_ordered || "",
+    cost_of_credit: creditData?.cost_of_credit || "",
+    paid_on_completion: creditData?.paid_on_completion || "",
+    source: creditData?.source || "",
+    has_the_unsecured_credit_mounted_up:
+      creditData?.has_the_unsecured_credit_mounted_up || "",
+  });
+
+  const [updateCreditCommitmentsDetails, { isLoading:isUpdating }] =
+    useUpdateCreditCommitmentsDetailsMutation();
+
+  useEffect(() => {
+    if (creditData) {
+      setFormData(creditData);
+    }
+  }, [creditData]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -67,46 +74,26 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await addCreditCommitmentsDetails({
+      const res = await updateCreditCommitmentsDetails({
         case_alias: casealias,
+        creditCommitment_alias: creditData.alias,
         payload: formData,
       }).unwrap();
-      setFormData({
-        applicant: "",
-        joint: "",
-        type: "",
-        company: "",
-        account_no: null,
-        os_balance: "",
-        settlement_balance: "",
-        monthly_repayment: "",
-        interest_rate: "",
-        card_limit: "",
-        term_remaining: "",
-        balloon_payment: "",
-        court_ordered: "",
-        cost_of_credit: "",
-        paid_on_completion: "",
-        source: "",
-        has_the_unsecured_credit_mounted_up: "",
-      });
       if (res) {
-        toast.success("Credit Commitment added successfully");
+        toast.success("Credit Commitment updated successfully!");
       } else {
-        toast.error("Error adding credit commitment");
+        toast.error("Failed to update Credit Commitment");
       }
+      toggle();
     } catch (error) {
-      toast.error("Error adding credit commitment");
+      toast.error("Failed to update Credit Commitment");
     }
-    toggle();
   };
-
-  if (isLoading || isAdding) return <LoadingSpinner />;
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>
-        <span className="fs-4 text-primary">Add Credit Commitment</span>
+        <span className="fs-4 text-primary">Update Credit Commitment</span>
       </ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
@@ -195,9 +182,9 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
               <FormGroup>
                 <Label>Account No.</Label>
                 <Input
-                  type="number"
+                  type="text"
                   name="account_no"
-                  value={formData.account_no || null}
+                  value={formData.account_no}
                   onChange={handleInputChange}
                 />
               </FormGroup>
@@ -279,7 +266,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
+            <Col md={4}>
               <FormGroup>
                 <Label>Balloon Payment (£)</Label>
                 <Input
@@ -291,7 +278,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md={6}>
+            <Col md={4}>
               <FormGroup>
                 <Label>Cost of Credit (£)</Label>
                 <Input
@@ -303,8 +290,6 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col md={4}>
               <FormGroup>
                 <Label>Court Ordered</Label>
@@ -320,7 +305,9 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 </Input>
               </FormGroup>
             </Col>
-            <Col md={4}>
+          </Row>
+          <Row>
+            <Col md={6}>
               <FormGroup>
                 <Label>Paid on Completion</Label>
                 <Input
@@ -335,7 +322,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 </Input>
               </FormGroup>
             </Col>
-            <Col md={4}>
+            <Col md={6}>
               <FormGroup>
                 <Label>Source</Label>
                 <Input
@@ -347,13 +334,26 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
               </FormGroup>
             </Col>
           </Row>
+          <Row>
+            <Col>
+              <FormGroup>
+                <Label>Note</Label>
+                <Input
+                  type="textarea"
+                  name="has_the_unsecured_credit_mounted_up"
+                  value={formData.has_the_unsecured_credit_mounted_up}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>
-          <Button color="primary" type="submit">
-            Save Commitment
+          <Button color="primary" type="submit" disabled={isUpdating}>
+            {isUpdating ? "Updating..." : "Update"}
           </Button>
         </ModalFooter>
       </Form>
@@ -361,4 +361,4 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
   );
 };
 
-export default AddCreditCommitmentModal;
+export default UpdateCreditCommitmentModal;

@@ -49,14 +49,13 @@ const AddNewLenderHistoryModal: React.FC<AddNewLenderHistoryModalProps> = ({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      addDIPHistoryDetails({
+      const res = await addDIPHistoryDetails({
         case_alias: casealias,
         payload: formData,
       }).unwrap();
-      toast.success("DIP History added successfully");
       // Clear form data after successful submission
       setFormData({
         is_this_application_had_a_decision_in_principle: true,
@@ -66,6 +65,11 @@ const AddNewLenderHistoryModal: React.FC<AddNewLenderHistoryModalProps> = ({
         dip_reference_number: "",
         notes: "",
       });
+      if (res) {
+        toast.success("DIP History added successfully");
+      } else {
+        toast.error("Failed to add DIP History");
+      }
     } catch (error) {
       toast.error("Failed to add DIP History");
     }

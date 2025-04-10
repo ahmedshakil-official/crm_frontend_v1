@@ -48,12 +48,16 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await updateDIPHistoryDetails({
+      const res = await updateDIPHistoryDetails({
         case_alias: casealias,
         dipHistory_alias: dipData?.alias,
         payload: formData,
       }).unwrap();
-      toast.success("DIP History updated successfully!");
+      if (res) {
+        toast.success("DIP History updated successfully!");
+      } else {
+        toast.error("Failed to update DIP History");
+      }
     } catch (error) {
       toast.error("Failed to update DIP History");
     }

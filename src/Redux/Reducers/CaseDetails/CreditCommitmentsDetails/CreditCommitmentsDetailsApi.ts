@@ -25,6 +25,13 @@ export const CreditCommitmentsDetailsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["CreditCommitmentsDetails"],
     }),
+    deleteCreditCommitmentsDetails: builder.mutation({
+      query: ({ case_alias, creditCommitment_alias }) => ({
+        url: `/cases/${case_alias}/credit/commitments/${creditCommitment_alias}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["CreditCommitmentsDetails"],
+    }),
   }),
 });
 
@@ -32,4 +39,5 @@ export const {
   useGetCreditCommitmentsDetailsQuery,
   useAddCreditCommitmentsDetailsMutation,
   useUpdateCreditCommitmentsDetailsMutation,
+  useDeleteCreditCommitmentsDetailsMutation,
 } = CreditCommitmentsDetailsApi;
