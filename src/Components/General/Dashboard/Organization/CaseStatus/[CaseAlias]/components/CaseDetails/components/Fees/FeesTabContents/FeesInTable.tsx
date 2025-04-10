@@ -1,14 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Table,
-  Input,
-  InputGroup,
-  InputGroupText,
-  Button,
-} from "reactstrap";
+import { Container, Row, Col, Table, Button } from "reactstrap";
 import AddFeeInModal from "./FeesModals/AddFeeInModal";
 import { useGetFeesInDetailsQuery } from "@/Redux/Reducers/CaseDetails/Fees/FeesApi";
 import { useParams } from "next/navigation";
@@ -18,7 +9,6 @@ const FeeInTable = () => {
   const { data: feesInDetails, isLoading } = useGetFeesInDetailsQuery({
     case_alias: casealias,
   });
-
 
   useEffect(() => {
     if (feesInDetails?.length > 0) {
@@ -75,36 +65,6 @@ const FeeInTable = () => {
     { title: "Other", value: "OTHER" },
   ];
 
-  const addNewFee = () => {
-    const newFee = {
-      id: "",
-      index: fees.length,
-      isDeleted: false,
-      feeInFeeOutId: "",
-      caseType: "",
-      propertyName: "List_Fees_In",
-      paymentLink: "",
-      fee: "",
-      feeType: "",
-      method: "",
-      notes: "",
-      feeDate: "",
-    };
-    setFees([...fees, newFee]);
-  };
-
-  const removeFee = (index: number) => {
-    setFees(
-      fees.map((fee, i) => (i === index ? { ...fee, isDeleted: true } : fee))
-    );
-  };
-
-  const handleInputChange = (index: number, field: string, value: string) => {
-    setFees(
-      fees.map((fee, i) => (i === index ? { ...fee, [field]: value } : fee))
-    );
-  };
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -144,49 +104,77 @@ const FeeInTable = () => {
             <Table hover bordered className="mb-0">
               <thead className="bg-light">
                 <tr>
-                  <th className="text-center" style={{ width: "5%" }}>#</th>
-                  <th className="text-center" style={{ width: "20%" }}>Amount</th>
-                  <th className="text-center" style={{ width: "15%" }}>Fee Type</th>
-                  <th className="text-center" style={{ width: "15%" }}>Method</th>
-                  <th className="text-center" style={{ width: "25%" }}>Notes</th>
-                  <th className="text-center" style={{ width: "15%" }}>Date Received</th>
-                  <th className="text-center" style={{ width: "5%" }}>Action</th>
+                  <th className="text-center" style={{ width: "5%" }}>
+                    #
+                  </th>
+                  <th className="text-center" style={{ width: "20%" }}>
+                    Amount
+                  </th>
+                  <th className="text-center" style={{ width: "15%" }}>
+                    Fee Type
+                  </th>
+                  <th className="text-center" style={{ width: "15%" }}>
+                    Method
+                  </th>
+                  <th className="text-center" style={{ width: "25%" }}>
+                    Notes
+                  </th>
+                  <th className="text-center" style={{ width: "15%" }}>
+                    Date Received
+                  </th>
+                  <th className="text-center" style={{ width: "5%" }}>
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {fees.map((fee, index) =>
-                  !fee.isDeleted && (
-                    <tr key={fee.id || index} className="feeTableRow feeRowIn">
-                      <td className="text-center align-middle">
-                        <span className="fw-bold">{index + 1}</span>
-                      </td>
-                      <td className="text-center align-middle">
-                        £{fee.fee || '0.00'}
-                      </td>
-                      <td className="text-center align-middle">
-                        {feeTypes.find(type => type.value === fee.feeType)?.title || '-'}
-                      </td>
-                      <td className="text-center align-middle">
-                        {methods.find(method => method.value === fee.method)?.title || '-'}
-                      </td>
-                      <td className="text-center align-middle">
-                        {fee.notes || '-'}
-                      </td>
-                      <td className="text-center align-middle">
-                        {fee.feeDate || '-'}
-                      </td>
-                      <td className="text-center align-middle">
-                        <Button
-                          color="danger"
-                          size="sm"
-                          outline
-                          className="removeFee"
-                          onClick={() => removeFee(index)}
+                {feesInDetails?.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="text-center py-4">
+                      No fees available
+                    </td>
+                  </tr>
+                ) : (
+                  fees.map(
+                    (fee, index) =>
+                      !fee.isDeleted && (
+                        <tr
+                          key={fee.id || index}
+                          className="feeTableRow feeRowIn"
                         >
-                          <i className="fa fa-trash"></i>
-                        </Button>
-                      </td>
-                    </tr>
+                          <td className="text-center align-middle">
+                            <span className="fw-bold">{index + 1}</span>
+                          </td>
+                          <td className="text-center align-middle">
+                            £{fee.fee || "0.00"}
+                          </td>
+                          <td className="text-center align-middle">
+                            {feeTypes.find((type) => type.value === fee.feeType)
+                              ?.title || "-"}
+                          </td>
+                          <td className="text-center align-middle">
+                            {methods.find(
+                              (method) => method.value === fee.method
+                            )?.title || "-"}
+                          </td>
+                          <td className="text-center align-middle">
+                            {fee.notes || "-"}
+                          </td>
+                          <td className="text-center align-middle">
+                            {fee.feeDate || "-"}
+                          </td>
+                          <td className="text-center align-middle">
+                            <Button
+                              color="danger"
+                              size="sm"
+                              outline
+                              className="removeFee"
+                            >
+                              <i className="fa fa-trash"></i>
+                            </Button>
+                          </td>
+                        </tr>
+                      )
                   )
                 )}
               </tbody>

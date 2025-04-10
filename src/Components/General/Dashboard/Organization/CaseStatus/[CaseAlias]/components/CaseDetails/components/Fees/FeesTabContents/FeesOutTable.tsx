@@ -1,17 +1,35 @@
-import { useState } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Table,
-  Input,
-  InputGroup,
-  InputGroupText,
-  Button,
-} from "reactstrap";
+import { useState, useEffect, FC } from "react";
+import { Container, Row, Col, Table, Button } from "reactstrap";
 import AddFeeOutModal from "./FeesModals/AddFeeOutModal";
+import { useGetFeesOutDetailsQuery } from "@/Redux/Reducers/CaseDetails/Fees/FeesApi";
+import { useParams } from "next/navigation";
 
 const FeeOutTable = () => {
+  const { casealias } = useParams();
+  const { data: feesOutDetails, isLoading } = useGetFeesOutDetailsQuery({
+    case_alias: casealias,
+  });
+
+  useEffect(() => {
+    if (feesOutDetails?.length > 0) {
+      const formattedFees = feesOutDetails.map((fee: any, index: number) => ({
+        id: fee.alias || "",
+        index: index,
+        isDeleted: false,
+        feeInFeeOutId: fee.case?.alias || "",
+        caseType: fee.case?.case_category || "",
+        propertyName: "List_Fees_Out",
+        paymentLink: "",
+        fee: fee.amount || "",
+        feeType: fee.fee_out_type || "",
+        method: fee.method || "",
+        notes: fee.notes || "",
+        feeDate: fee.date_paid_out || "",
+      }));
+      setFees(formattedFees);
+    }
+  }, [feesOutDetails]);
+
   const [fees, setFees] = useState([
     {
       id: "",
@@ -29,49 +47,24 @@ const FeeOutTable = () => {
     },
   ]);
 
-  const feeTypes = ["Unknown", "Commission (Proc Fee Share)"];
-
-  const methods = [
-    "Credit / Debit Card",
-    "Bacs",
-    "Cheque",
-    "Cash",
-    "Online",
-    "Other",
+  const feeTypes = [
+    { title: "Unknown", value: "UNKNOWN" },
+    {
+      title: "Commission (Proc Fee Share)",
+      value: "COMMISSION_PROC_FEE_SHARE",
+    },
   ];
 
-  const addNewFee = () => {
-    const newFee = {
-      id: "",
-      index: fees.length,
-      isDeleted: false,
-      feeInFeeOutId: "",
-      caseType: "",
-      propertyName: "List_Fees_Out",
-      paymentLink: "",
-      fee: "",
-      feeType: "",
-      method: "",
-      notes: "",
-      feeDate: "",
-    };
-    setFees([...fees, newFee]);
-  };
-
-  const removeFee = (index: number) => {
-    setFees(
-      fees.map((fee, i) => (i === index ? { ...fee, isDeleted: true } : fee))
-    );
-  };
-
-  const handleInputChange = (index: number, field: string, value: string) => {
-    setFees(
-      fees.map((fee, i) => (i === index ? { ...fee, [field]: value } : fee))
-    );
-  };
+  const methods = [
+    { title: "Credit / Debit Card", value: "CREDIT_DEBIT_CARD" },
+    { title: "Bacs", value: "BACS" },
+    { title: "Cheque", value: "CHEQUE" },
+    { title: "Cash", value: "CASH" },
+    { title: "Online", value: "ONLINE" },
+    { title: "Other", value: "OTHER" },
+  ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const handleAddFee = (newFee: any) => {
@@ -79,6 +72,7 @@ const FeeOutTable = () => {
     toggleModal();
   };
 
+  if (isLoading) return <div>Loading...</div>;
   return (
     <Container fluid className="panel-body">
       <Row className="mb-3">
@@ -100,11 +94,12 @@ const FeeOutTable = () => {
         onSubmit={handleAddFee}
         feeTypes={feeTypes}
         methods={methods}
+        caseAlias={casealias}
       />
       <Row>
         <Col sm={12} className="form-group" id="FeeOut">
           <div className="table-responsive shadow-sm rounded">
-            <Table hover bordered className="mb-0" id="FeeOutTable">
+            <Table hover bordered className="mb-0">
               <thead className="bg-light">
                 <tr>
                   <th className="text-center" style={{ width: "5%" }}>
@@ -130,149 +125,55 @@ const FeeOutTable = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody id="FeeOutTableBody">
-                {fees.map(
-                  (fee, index) =>
-                    !fee.isDeleted && (
-                      <tr key={index} className="feeTableRow feeRowOut">
-                        <td className="text-center align-middle">
-                          <span className="fw-bold">{index + 1}</span>
-                          {/* Hidden inputs */}
-                          <input
-                            type="hidden"
-                            name={`List_Fees_Out[${index}].Id`}
-                            value={fee.id}
-                          />
-                          <input
-                            type="hidden"
-                            name={`List_Fees_Out[${index}].Index`}
-                            value={fee.index}
-                          />
-                          <input
-                            type="hidden"
-                            name={`List_Fees_Out[${index}].IsDeleted`}
-                            value={fee.isDeleted.toString()}
-                          />
-                          <input
-                            type="hidden"
-                            name={`List_Fees_Out[${index}].FeeInFeeOutId`}
-                            value={fee.feeInFeeOutId}
-                          />
-                          <input
-                            type="hidden"
-                            name={`List_Fees_Out[${index}].CaseType`}
-                            value={fee.caseType}
-                          />
-                          <input
-                            type="hidden"
-                            name={`List_Fees_Out[${index}].PropertyName`}
-                            value={fee.propertyName}
-                          />
-                          <input
-                            type="hidden"
-                            name={`List_Fees_Out[${index}].PaymentLink`}
-                            value={fee.paymentLink}
-                          />
-                        </td>
-                        <td className="p-2">
-                          <InputGroup>
-                            <InputGroupText className="text-primary">
-                              £
-                            </InputGroupText>
-                            <Input
-                              type="text"
-                              name={`List_Fees_Out[${index}].Fee`}
-                              value={fee.fee}
-                              onChange={(e) =>
-                                handleInputChange(index, "fee", e.target.value)
-                              }
-                              className="numeric-decimal feevalueOut form-control-sm"
-                              placeholder="0.00"
-                            />
-                          </InputGroup>
-                        </td>
-                        <td className="p-2">
-                          <Input
-                            type="select"
-                            name={`List_Fees_Out[${index}].FeeType`}
-                            value={fee.feeType}
-                            onChange={(e) =>
-                              handleInputChange(
-                                index,
-                                "feeType",
-                                e.target.value
-                              )
-                            }
-                            className="form-control-sm"
-                          >
-                            <option value="">Select Type</option>
-                            {feeTypes.map((type) => (
-                              <option
-                                key={type}
-                                value={type === "Unknown" ? "" : type}
-                              >
-                                {type}
-                              </option>
-                            ))}
-                          </Input>
-                        </td>
-                        <td className="p-2">
-                          <Input
-                            type="select"
-                            name={`List_Fees_Out[${index}].Method`}
-                            value={fee.method}
-                            onChange={(e) =>
-                              handleInputChange(index, "method", e.target.value)
-                            }
-                            className="form-control-sm"
-                          >
-                            {methods.map((method) => (
-                              <option key={method} value={method}>
-                                {method}
-                              </option>
-                            ))}
-                          </Input>
-                        </td>
-                        <td className="p-2">
-                          <Input
-                            type="text"
-                            name={`List_Fees_Out[${index}].Notes`}
-                            value={fee.notes}
-                            onChange={(e) =>
-                              handleInputChange(index, "notes", e.target.value)
-                            }
-                            className="form-control-sm"
-                            placeholder="Add notes..."
-                          />
-                        </td>
-                        <td className="p-2">
-                          <Input
-                            type="date"
-                            name={`List_Fees_Out[${index}].FeeDate`}
-                            value={fee.feeDate}
-                            onChange={(e) =>
-                              handleInputChange(
-                                index,
-                                "feeDate",
-                                e.target.value
-                              )
-                            }
-                            className="form-control-sm"
-                          />
-                        </td>
-                        <td className="text-center p-2">
-                          <Button
-                            color="danger"
-                            size="sm"
-                            outline
-                            className="removeFee"
-                            onClick={() => removeFee(index)}
-                          >
-                            <i className="fa fa-trash"></i>
-                          </Button>
-                        </td>
-                      </tr>
-                    )
+              <tbody>
+                {feesOutDetails?.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="text-center py-4">
+                      No fees available
+                    </td>
+                  </tr>
+                ) : (
+                  fees.map(
+                    (fee, index) =>
+                      !fee.isDeleted && (
+                        <tr
+                          key={fee.id || index}
+                          className="feeTableRow feeRowOut"
+                        >
+                          <td className="text-center align-middle">
+                            <span className="fw-bold">{index + 1}</span>
+                          </td>
+                          <td className="text-center align-middle">
+                            £{fee.fee || "0.00"}
+                          </td>
+                          <td className="text-center align-middle">
+                            {feeTypes.find((type) => type.value === fee.feeType)
+                              ?.title || "-"}
+                          </td>
+                          <td className="text-center align-middle">
+                            {methods.find(
+                              (method) => method.value === fee.method
+                            )?.title || "-"}
+                          </td>
+                          <td className="text-center align-middle">
+                            {fee.notes || "-"}
+                          </td>
+                          <td className="text-center align-middle">
+                            {fee.feeDate || "-"}
+                          </td>
+                          <td className="text-center align-middle">
+                            <Button
+                              color="danger"
+                              size="sm"
+                              outline
+                              className="removeFee"
+                            >
+                              <i className="fa fa-trash"></i>
+                            </Button>
+                          </td>
+                        </tr>
+                      )
+                  )
                 )}
               </tbody>
             </Table>

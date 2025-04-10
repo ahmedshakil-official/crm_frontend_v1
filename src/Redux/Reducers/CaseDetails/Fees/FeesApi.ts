@@ -9,6 +9,13 @@ export const FeesApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Fees"],
     }),
+    getFeesOutDetails: builder.query({
+      query: ({ case_alias }) => ({
+        url: `/cases/${case_alias}/fees/out/`,
+        method: "GET",
+      }),
+      providesTags: ["Fees"],
+    }),
     addFeesInDetails: builder.mutation({
       query: ({ case_alias, feesInDetails }) => ({
         url: `/cases/${case_alias}/fees/in/`,
@@ -17,18 +24,20 @@ export const FeesApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Fees"],
     }),
-    // updateEmploymentDetails: builder.mutation({
-    //   query: ({ case_alias, employmentDetails_alias, employmentDetails }) => ({
-    //     url: `/cases/${case_alias}/employment/details/${employmentDetails_alias}/`,
-    //     method: "PUT",
-    //     body: employmentDetails,
-    //   }),
-    //   invalidatesTags: ["EmploymentDetails"],
-    // }),
+    addFeesOutDetails: builder.mutation({
+      query: ({ case_alias, feesOutDetails }) => ({
+        url: `/cases/${case_alias}/fees/out/`,
+        method: "POST",
+        body: feesOutDetails,
+      }),
+      invalidatesTags: ["Fees"],
+    }),
   }),
 });
 
 export const {
   useGetFeesInDetailsQuery,
+  useGetFeesOutDetailsQuery,
   useAddFeesInDetailsMutation,
+  useAddFeesOutDetailsMutation,
 } = FeesApi;
