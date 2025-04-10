@@ -1,5 +1,6 @@
 import { useUpdateCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
-import { useGetCaseUsersQuery } from "@/Redux/Reducers/SingleCaseInfo/CaseUsers/CaseUsersApi";
+import { useGetCaseUsersQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
+
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -26,7 +27,7 @@ interface UpdateCreditCommitmentModalProps {
 const UpdateCreditCommitmentModal: React.FC<
   UpdateCreditCommitmentModalProps
 > = ({ isOpen, toggle, casealias, creditData }) => {
-    // rtk hooks 
+  // rtk hooks
   const { data: caseUsers, isLoading } = useGetCaseUsersQuery({
     case_alias: casealias,
   });
@@ -52,7 +53,7 @@ const UpdateCreditCommitmentModal: React.FC<
       creditData?.has_the_unsecured_credit_mounted_up || "",
   });
 
-  const [updateCreditCommitmentsDetails, { isLoading:isUpdating }] =
+  const [updateCreditCommitmentsDetails, { isLoading: isUpdating }] =
     useUpdateCreditCommitmentsDetailsMutation();
 
   useEffect(() => {
