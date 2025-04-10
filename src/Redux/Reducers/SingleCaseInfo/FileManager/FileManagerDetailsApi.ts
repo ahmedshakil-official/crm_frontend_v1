@@ -10,22 +10,6 @@ export const CaseFilesDetailsApi = baseApi.injectEndpoints({
       providesTags: ["CaseFilesDetails"],
     }),
 
-    getCaseUserDetails: builder.query({
-      query: ({ case_alias }) => ({
-        url: `/cases/${case_alias}/users/`,
-        method: "GET",
-      }),
-      providesTags: ["CaseFilesDetails", "JointUserDetails"],
-    }),
-
-    // addCaseFilesDetails: builder.mutation({
-    //   query: ({ case_alias, payload }) => ({
-    //     url: `/cases/${case_alias}/files/`,
-    //     method: "POST",
-    //     body: payload,
-    //   }),
-    //   invalidatesTags: ["CaseFilesDetails"],
-    // }),
     addCaseFilesDetails: builder.mutation({
       query: ({ case_alias, payload }) => {
         return {
@@ -49,7 +33,6 @@ export const CaseFilesDetailsApi = baseApi.injectEndpoints({
 
 export const {
   useGetCaseFilesDetailsQuery,
-  useGetCaseUserDetailsQuery,
   useAddCaseFilesDetailsMutation,
   useDeleteCaseFilesDetailsMutation,
 } = CaseFilesDetailsApi;

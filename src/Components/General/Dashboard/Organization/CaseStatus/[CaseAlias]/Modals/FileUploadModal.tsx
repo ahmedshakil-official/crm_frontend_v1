@@ -1,7 +1,5 @@
-import {
-  useAddCaseFilesDetailsMutation,
-  useGetCaseUserDetailsQuery,
-} from "@/Redux/Reducers/CaseInfoDetails/FileManagerDetailsApi";
+import { useGetCaseUsersQuery } from "@/Redux/Reducers/SingleCaseInfo/CaseUsers/CaseUsersApi";
+import { useAddCaseFilesDetailsMutation } from "@/Redux/Reducers/SingleCaseInfo/FileManager/FileManagerDetailsApi";
 import {
   FileOwnerProps,
   FileUploadModalProps,
@@ -21,7 +19,6 @@ import {
   ModalFooter,
   ModalHeader,
   Row,
-  Spinner,
 } from "reactstrap";
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
@@ -34,7 +31,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
 
   // rtk hooks
-  const { data: caseUsers, isLoading } = useGetCaseUserDetailsQuery({
+  const { data: caseUsers, isLoading } = useGetCaseUsersQuery({
     case_alias: casealias,
   });
   const [addCaseFilesDetails, { isLoading: isUploading }] =
@@ -195,30 +192,12 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
                   <option value="">Select...</option>
 
                   {/* Options for Joint Users */}
-                  {isLoading ? (
-                    <option>
-                      <Spinner color="primary" />
-                    </option>
-                  ) : fileOwners && Object.keys(fileOwners).length > 0 ? (
-                    <>
-                      {/* Lead User Option */}
-                      <option value={fileOwners?.lead_user?.id}>
-                        {`${fileOwners.lead_user?.first_name} ${fileOwners?.lead_user?.last_name} (Lead User)`}
+                  {Array.isArray(fileOwners) &&
+                    fileOwners.map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.first_name} {user.last_name}
                       </option>
-
-                      {/* Joint Users Options */}
-                      {fileOwners.joint_users?.map((jointUser) => (
-                        <option
-                          key={jointUser.joint_user?.id}
-                          value={jointUser.joint_user?.id}
-                        >
-                          {`${jointUser.joint_user?.first_name} ${jointUser.joint_user?.last_name} (Joint User)`}
-                        </option>
-                      ))}
-                    </>
-                  ) : (
-                    <option disabled>No file owners available</option>
-                  )}
+                    ))}
                 </Input>
               </FormGroup>
             </Col>

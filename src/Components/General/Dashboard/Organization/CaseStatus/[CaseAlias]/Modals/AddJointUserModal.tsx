@@ -56,7 +56,8 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     const payload = {
       joint_user: {
         first_name: formData.firstName,
@@ -73,6 +74,16 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
     });
     if (res.data) {
       toast.success("Joint user added successfully!");
+      // Reset form data after successful submission
+      setFormData({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        relationship: "",
+        profileImage: "",
+        notes: "",
+      });
       toggle();
     } else if ("error" in res) {
       const errorMessage =
@@ -87,8 +98,8 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Joint User</span>
       </ModalHeader>
-      <ModalBody>
-        <Form>
+      <Form onSubmit={handleSubmit}>
+        <ModalBody>
           <Row>
             <Col xs={12} md={6}>
               <FormGroup>
@@ -189,20 +200,16 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
               </FormGroup>
             </Col>
           </Row>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="secondary" onClick={toggle} block>
-          Cancel
-        </Button>
-        <Button
-          color="primary"
-          onClick={handleSubmit}
-          block={isAddingJointUser}
-        >
-          {isAddingJointUser ? "Saving..." : "Save Joint User"}
-        </Button>
-      </ModalFooter>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle} block>
+            Cancel
+          </Button>
+          <Button color="primary" block={isAddingJointUser}>
+            {isAddingJointUser ? "Saving..." : "Save Joint User"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };
