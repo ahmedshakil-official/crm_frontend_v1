@@ -1,44 +1,41 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import {
+  useGetSingleAdverseDetailsQuery,
+  useUpdateAdverseDetailsMutation,
+} from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { ApplicantsUsersProps } from "@/Types/Organization/CaseDetails/ApplicantsUserTypes";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
   CardBody,
+  Col,
   Container,
   Form,
   FormGroup,
   Input,
   Label,
   Row,
-  Col,
 } from "reactstrap";
-import AddNewDefaultsModal from "./AdverseModals/AddModals/AddNewDefaultsModal";
-import AddNewRegisteredCCJsModal from "./AdverseModals/AddModals/AddNewRegisteredccjsModal";
-import AddNewCommitmentPaymentsMissedModal from "./AdverseModals/AddModals/AddNewCommitmentPaymentsMissedModal";
-import AddNewPropertiesRepossessedModal from "./AdverseModals/AddModals/AddNewPropertiesRepossessedModal";
 import AddNewBankruptciesModal from "./AdverseModals/AddModals/AddNewBankruptciesModal";
-import AddNewIVAsModal from "./AdverseModals/AddModals/AddNewIVAsModal";
+import AddNewCommitmentPaymentsMissedModal from "./AdverseModals/AddModals/AddNewCommitmentPaymentsMissedModal";
 import AddNewDMPsModal from "./AdverseModals/AddModals/AddNewDMPsModal";
+import AddNewDefaultsModal from "./AdverseModals/AddModals/AddNewDefaultsModal";
+import AddNewIVAsModal from "./AdverseModals/AddModals/AddNewIVAsModal";
 import AddNewPayDayLoansModal from "./AdverseModals/AddModals/AddNewPayDayLoansModal";
-import {
-  useGetSingleAdverseDetailsQuery,
-  useUpdateAdverseDetailsMutation,
-} from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
-import ViewPropertiesRepossessedModal from "./AdverseModals/ViewModals/ViewPropertiesRepossessedModal";
-import ViewCommitmentPaymentsMissedModal from "./AdverseModals/ViewModals/ViewCommitmentPaymentsMissedModal";
-import ViewDefaultsModal from "./AdverseModals/ViewModals/ViewDefaultsModal";
+import AddNewPropertiesRepossessedModal from "./AdverseModals/AddModals/AddNewPropertiesRepossessedModal";
+import AddNewRegisteredCCJsModal from "./AdverseModals/AddModals/AddNewRegisteredccjsModal";
 import ViewBankruptciesModal from "./AdverseModals/ViewModals/ViewBankruptciesModal";
-import ViewIVAsModal from "./AdverseModals/ViewModals/ViewIVAsModal";
-import ViewDMPsModal from "./AdverseModals/ViewModals/ViewDMPsModal";
-import ViewPayDayLoansModal from "./AdverseModals/ViewModals/ViewPayDayLoansModal";
 import ViewCCJsModal from "./AdverseModals/ViewModals/ViewCCJsModal";
-
-export interface ApplicantsUsersProps {
-  basicTab: string;
-}
+import ViewCommitmentPaymentsMissedModal from "./AdverseModals/ViewModals/ViewCommitmentPaymentsMissedModal";
+import ViewDMPsModal from "./AdverseModals/ViewModals/ViewDMPsModal";
+import ViewDefaultsModal from "./AdverseModals/ViewModals/ViewDefaultsModal";
+import ViewIVAsModal from "./AdverseModals/ViewModals/ViewIVAsModal";
+import ViewPayDayLoansModal from "./AdverseModals/ViewModals/ViewPayDayLoansModal";
+import ViewPropertiesRepossessedModal from "./AdverseModals/ViewModals/ViewPropertiesRepossessedModal";
 
 const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
   const params = useParams();
