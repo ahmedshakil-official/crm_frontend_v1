@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useGetIVAsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import {
+  IVAItemProps,
+  ViewIVAsModalProps,
+} from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { useParams } from "next/navigation";
+import React from "react";
 import {
   Button,
   Modal,
@@ -7,21 +13,6 @@ import {
   ModalHeader,
   Table,
 } from "reactstrap";
-import { useGetIVAsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { useParams } from "next/navigation";
-
-interface ViewIVAsModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
-
-interface IVAItem {
-  date_registered: string | null;
-  outstanding_balance: string | null;
-  satisfied: boolean;
-  date_satisfied: string | null;
-}
 
 const ViewIVAsModal: React.FC<ViewIVAsModalProps> = ({
   isOpen,
@@ -55,15 +46,18 @@ const ViewIVAsModal: React.FC<ViewIVAsModalProps> = ({
           </thead>
           <tbody>
             {ivasData && ivasData.length > 0 ? (
-              ivasData.map((iva: IVAItem, index: number) => (
+              ivasData.map((iva: IVAItemProps, index: number) => (
                 <tr key={index}>
                   <td>{iva.date_registered || "N/A"}</td>
                   <td>
                     {iva.outstanding_balance
-                      ? `£${parseFloat(iva.outstanding_balance).toLocaleString("en-GB", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}`
+                      ? `£${parseFloat(iva.outstanding_balance).toLocaleString(
+                          "en-GB",
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }
+                        )}`
                       : "N/A"}
                   </td>
                   <td>{iva.satisfied ? "Yes" : "No"}</td>

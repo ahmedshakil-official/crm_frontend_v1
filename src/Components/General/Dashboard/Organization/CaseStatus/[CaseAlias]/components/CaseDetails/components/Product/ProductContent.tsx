@@ -1,7 +1,7 @@
 import {
   useGetProductDetailsQuery,
   useUpdateProductDetailsMutation,
-} from "@/Redux/Reducers/CaseDetails/ProductDetails/ProductDetailsApi";
+} from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ProductDetails/ProductDetailsApi";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";

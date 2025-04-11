@@ -1,25 +1,25 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { baseApi } from "./Api/BaseApi";
 import BookmarkHeaderSlice from "./Reducers/BookmarkHeaderSlice";
-import LetterBoxSlice from "./Reducers/LetterBoxSlice";
-import LayoutSlice from "./Reducers/LayoutSlice";
-import ProjectSlice from "./Reducers/ProjectSlice";
+import BookmarkTabSlice from "./Reducers/BookmarkTabSlice";
+import budgetPlannerReducer from "./Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import CaseDetailsTabIndicatorReducer from "./Reducers/Cases/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import propertyFormReducer from "./Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import ChatSlice from "./Reducers/ChatSlice";
+import ContactReducer from "./Reducers/ContactReducer";
 import AddProductSlice from "./Reducers/Ecommerce/AddProductSlice";
+import CartSlice from "./Reducers/Ecommerce/CartSlice";
 import FilterSlice from "./Reducers/Ecommerce/FilterSlice";
 import ProductSlice from "./Reducers/Ecommerce/ProductSlice";
-import CartSlice from "./Reducers/Ecommerce/CartSlice";
-import TwoFactorSlice from "./Reducers/FormLayout/TwoFactorSlice";
-import FormWizardTwoSlice from "./Reducers/FormLayout/FormWizardTwoSlice";
 import FormWizardOne from "./Reducers/FormLayout/FormWizardOneSlice";
-import ContactReducer from "./Reducers/ContactReducer";
+import FormWizardTwoSlice from "./Reducers/FormLayout/FormWizardTwoSlice";
+import TwoFactorSlice from "./Reducers/FormLayout/TwoFactorSlice";
+import LayoutSlice from "./Reducers/LayoutSlice";
+import LetterBoxSlice from "./Reducers/LetterBoxSlice";
+import ProjectSlice from "./Reducers/ProjectSlice";
 import TaskSlice from "./Reducers/TaskSlice";
-import BookmarkTabSlice from "./Reducers/BookmarkTabSlice";
-import ToDoSlice from "./Reducers/ToDoSlice";
-import ChatSlice from "./Reducers/ChatSlice";
 import ThemeCustomizerReducer from "./Reducers/ThemeCustomizerReducer";
-import CaseDetailsTabIndicatorReducer from "./Reducers/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { baseApi } from "./Api/BaseApi";
-import propertyFormReducer from "./Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
-import budgetPlannerReducer from "./Reducers/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import ToDoSlice from "./Reducers/ToDoSlice";
 
 const Store = configureStore({
   reducer: {

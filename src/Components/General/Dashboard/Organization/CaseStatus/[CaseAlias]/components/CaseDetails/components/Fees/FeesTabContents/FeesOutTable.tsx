@@ -1,8 +1,8 @@
-import { useState, useEffect, FC } from "react";
-import { Container, Row, Col, Table, Button } from "reactstrap";
-import AddFeeOutModal from "./FeesModals/AddFeeOutModal";
-import { useGetFeesOutDetailsQuery } from "@/Redux/Reducers/CaseDetails/Fees/FeesApi";
+import { useGetFeesOutDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Button, Col, Container, Row, Table } from "reactstrap";
+import AddFeeOutModal from "./FeesModals/AddFeeOutModal";
 
 const FeeOutTable = () => {
   const { casealias } = useParams();

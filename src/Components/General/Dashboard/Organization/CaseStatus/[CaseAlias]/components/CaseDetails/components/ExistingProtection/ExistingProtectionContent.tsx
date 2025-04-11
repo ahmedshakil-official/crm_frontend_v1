@@ -1,4 +1,4 @@
-import { useUpdateExistingProtectionDetailsMutation } from "@/Redux/Reducers/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
+import { useUpdateExistingProtectionDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
 import {
   ExistingProtectionDetailsProps,
   ExistingProtectionTabContentProps,

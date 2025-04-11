@@ -1,3 +1,9 @@
+import { useGetPayDayLoansQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import {
+  PayDayLoanProps,
+  ViewPayDayLoansModalProps,
+} from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { useParams } from "next/navigation";
 import React from "react";
 import {
   Button,
@@ -7,22 +13,6 @@ import {
   ModalHeader,
   Table,
 } from "reactstrap";
-import { useGetPayDayLoansQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { useParams } from "next/navigation";
-
-interface ViewPayDayLoansModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
-
-interface PayDayLoan {
-  loan_amount: string | null;
-  loan_date: string | null;
-  has_the_pay_day_loan_been_repaid: boolean;
-  date_repaid: string | null;
-  lender_name: string;
-}
 
 const ViewPayDayLoansModal: React.FC<ViewPayDayLoansModalProps> = ({
   isOpen,
@@ -57,19 +47,28 @@ const ViewPayDayLoansModal: React.FC<ViewPayDayLoansModalProps> = ({
           </thead>
           <tbody>
             {payDayLoans && payDayLoans.length > 0 ? (
-              payDayLoans.map((loan: PayDayLoan, index: number) => (
+              payDayLoans.map((loan: PayDayLoanProps, index: number) => (
                 <tr key={index}>
                   <td>
                     {loan.loan_amount
-                      ? `£${parseFloat(loan.loan_amount).toLocaleString("en-GB", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}`
+                      ? `£${parseFloat(loan.loan_amount).toLocaleString(
+                          "en-GB",
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }
+                        )}`
                       : "N/A"}
                   </td>
                   <td>{loan.loan_date || "N/A"}</td>
-                  <td>{loan.has_the_pay_day_loan_been_repaid ? "Yes" : "No"}</td>
-                  <td>{loan.has_the_pay_day_loan_been_repaid ? loan.date_repaid || "N/A" : "N/A"}</td>
+                  <td>
+                    {loan.has_the_pay_day_loan_been_repaid ? "Yes" : "No"}
+                  </td>
+                  <td>
+                    {loan.has_the_pay_day_loan_been_repaid
+                      ? loan.date_repaid || "N/A"
+                      : "N/A"}
+                  </td>
                   <td>{loan.lender_name || "N/A"}</td>
                 </tr>
               ))

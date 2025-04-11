@@ -3,7 +3,7 @@ import {
   useGetCaseSolicitorDetailsQuery,
   useGetSolicitorDetailsQuery,
   useUpdateSolicitorDetailsMutation,
-} from "@/Redux/Reducers/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
+} from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

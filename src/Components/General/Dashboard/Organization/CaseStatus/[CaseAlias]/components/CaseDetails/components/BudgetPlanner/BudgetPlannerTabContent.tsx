@@ -1,20 +1,15 @@
+import { useGetCaseBudgetPlannerQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
+import { initializeBudgetPlannerForm } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import { BudgetPlannerTabContentProps } from "@/Types/Organization/CaseDetails/BudgetPlannerTypes";
+import { useParams } from "next/navigation";
 import { FC, useEffect } from "react";
-import { TabContent, TabPane, Button } from "reactstrap";
 import { useDispatch } from "react-redux";
-import HouseHoldIncomeTabContent from "./BudgetPlannerTabContents/HouseHoldIncomeTabContent";
+import { Button, TabContent, TabPane } from "reactstrap";
 import DebtRepaymentTabContent from "./BudgetPlannerTabContents/DebtRepaymentTabContent";
+import DisclaimerTabContents from "./BudgetPlannerTabContents/DisclaimerTabContents";
+import HouseHoldIncomeTabContent from "./BudgetPlannerTabContents/HouseHoldIncomeTabContent";
 import LivingExpensesTabContents from "./BudgetPlannerTabContents/LivingExpensesTabContents";
 import MonthlyBudgetTabContents from "./BudgetPlannerTabContents/MonthlyBudgetTabContents";
-import DisclaimerTabContents from "./BudgetPlannerTabContents/DisclaimerTabContents";
-import { useGetCaseBudgetPlannerQuery } from "@/Redux/Reducers/CaseDetails/BudgetPlanner/BudgetPlannerApi";
-import { useParams } from "next/navigation";
-import { initializeBudgetPlannerForm } from "@/Redux/Reducers/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
-
-interface BudgetPlannerTabContentProps {
-  tabId: number | null;
-  setTabId: (id: number) => void;
-  updateField: (field: string, value: any) => void;
-}
 
 const tabs = [
   { id: 1, Component: HouseHoldIncomeTabContent },

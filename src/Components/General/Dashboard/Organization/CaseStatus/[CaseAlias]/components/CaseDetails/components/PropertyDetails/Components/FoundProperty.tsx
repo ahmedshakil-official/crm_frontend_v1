@@ -1,17 +1,14 @@
-import { useAppSelector } from "@/Redux/Hooks";
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { RootState } from "@/Redux/Store";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import {
   Card,
   CardHeader,
-  FormGroup,
-  Label,
-  Input,
-  Row,
   Col,
+  FormGroup,
+  Input,
+  Label,
+  Row,
 } from "reactstrap";
 
 interface FoundPropertyProps {

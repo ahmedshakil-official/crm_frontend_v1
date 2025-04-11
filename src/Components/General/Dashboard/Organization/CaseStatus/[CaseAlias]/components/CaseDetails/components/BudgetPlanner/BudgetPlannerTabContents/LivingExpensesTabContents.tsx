@@ -1,18 +1,18 @@
-import { FC, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/Store";
+import { FC, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import {
+  Button,
   Col,
-  Row,
   Form,
   FormGroup,
-  Label,
   Input,
   InputGroup,
   InputGroupText,
-  Button,
+  Label,
+  Row,
 } from "reactstrap";
-import { RootState } from "@/Redux/Store";
 
 interface LivingExpensesTabContentsProps {
   updateField: (field: string, value: any) => void;
@@ -22,7 +22,13 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
   updateField,
 }) => {
   const budgetPlannerData = useSelector(
-    (state: RootState) => state.budgetPlanner
+    (state: RootState) =>
+      state.budgetPlanner ?? {
+        current_living_cost: {},
+        post_living_cost: {},
+        current_insurance: {},
+        post_insurance: {},
+      }
   );
   const [visibleNotes, setVisibleNotes] = useState<{ [key: string]: boolean }>(
     {}
@@ -69,15 +75,17 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
 
   // Initialize local state with Redux data
   useEffect(() => {
+    if (!budgetPlannerData) return;
+
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
 
     // Current Living Costs
     Object.entries(livingCostFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.current_living_cost[
+        budgetPlannerData?.current_living_cost?.[
           key as keyof typeof budgetPlannerData.current_living_cost
-        ];
+        ] ?? 0;
       initialCurrentValues[
         `CurrentBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
       ] = value !== 0 ? String(value) : "";
@@ -86,9 +94,9 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
     // Post Living Costs
     Object.entries(livingCostFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.post_living_cost[
+        budgetPlannerData?.post_living_cost?.[
           key as keyof typeof budgetPlannerData.post_living_cost
-        ];
+        ] ?? 0;
       initialPostValues[
         `PostCompletionBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
       ] = value !== 0 ? String(value) : "";
@@ -97,9 +105,9 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
     // Current Insurance
     Object.entries(insuranceFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.current_insurance[
+        budgetPlannerData?.current_insurance?.[
           key as keyof typeof budgetPlannerData.current_insurance
-        ];
+        ] ?? 0;
       initialCurrentValues[
         `CurrentBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
       ] = value !== 0 ? String(value) : "";
@@ -108,9 +116,9 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
     // Post Insurance
     Object.entries(insuranceFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.post_insurance[
+        budgetPlannerData?.post_insurance?.[
           key as keyof typeof budgetPlannerData.post_insurance
-        ];
+        ] ?? 0;
       initialPostValues[
         `PostCompletionBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
       ] = value !== 0 ? String(value) : "";

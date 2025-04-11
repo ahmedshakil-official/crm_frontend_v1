@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { Container, Row, Col, Table, Button } from "reactstrap";
-import AddFeeInModal from "./FeesModals/AddFeeInModal";
-import { useGetFeesInDetailsQuery } from "@/Redux/Reducers/CaseDetails/Fees/FeesApi";
+import { useGetFeesInDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Button, Col, Container, Row, Table } from "reactstrap";
+import AddFeeInModal from "./FeesModals/AddFeeInModal";
 
 const FeeInTable = () => {
   const { casealias } = useParams();

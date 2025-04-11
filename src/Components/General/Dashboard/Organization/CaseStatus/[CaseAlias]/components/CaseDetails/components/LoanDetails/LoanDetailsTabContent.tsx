@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { TabContent, TabPane, Button } from "reactstrap";
-import LoanDetailsFormTab1 from "./LoanDetailsFormTabs/LoanDetailsFormTab1";
-import LoanDetailsFormTab2 from "./LoanDetailsFormTabs/LoanDetailsFormTab2";
-import LoanDetailsFormTab3 from "./LoanDetailsFormTabs/LoanDetailsFormTab3";
-import LoanDetailsFormTab4 from "./LoanDetailsFormTabs/LoanDetailsFormTab4";
-import { useParams } from "next/navigation";
 import {
   useGetCaseLoanDetailsQuery,
   useGetLoanDetailsQuery,
   useUpdateLoanDetailsMutation,
-} from "@/Redux/Reducers/CaseDetails/LoanDetails/LoanDetailsApi";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { toast } from "react-toastify";
+} from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/LoanDetails/LoanDetailsApi";
 import LoadingSpinner from "@/app/loading";
+import { skipToken } from "@reduxjs/toolkit/query";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { Button, TabContent, TabPane } from "reactstrap";
+import LoanDetailsFormTab1 from "./LoanDetailsFormTabs/LoanDetailsFormTab1";
+import LoanDetailsFormTab2 from "./LoanDetailsFormTabs/LoanDetailsFormTab2";
+import LoanDetailsFormTab3 from "./LoanDetailsFormTabs/LoanDetailsFormTab3";
+import LoanDetailsFormTab4 from "./LoanDetailsFormTabs/LoanDetailsFormTab4";
 
 interface LoanDetailsTabContentProps {
   tabId: string;

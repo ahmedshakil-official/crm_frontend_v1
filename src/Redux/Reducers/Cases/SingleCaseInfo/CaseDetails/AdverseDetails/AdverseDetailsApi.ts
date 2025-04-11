@@ -1,5 +1,4 @@
 import { baseApi } from "@/Redux/Api/BaseApi";
-import { get } from "http";
 
 export const AdverseDetailsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

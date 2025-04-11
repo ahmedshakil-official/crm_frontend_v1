@@ -1,27 +1,22 @@
+import { useAddPayDayLoansMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { AddNewPayDayLoansModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
+  Col,
+  FormGroup,
+  Input,
+  InputGroup,
+  InputGroupText,
+  Label,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
-  FormGroup,
-  Label,
-  Input,
   Row,
-  Col,
-  InputGroup,
-  InputGroupText,
 } from "reactstrap";
-import { useAddPayDayLoansMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
-
-interface AddNewPayDayLoansModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
 
 const AddNewPayDayLoansModal: React.FC<AddNewPayDayLoansModalProps> = ({
   isOpen,
@@ -34,7 +29,8 @@ const AddNewPayDayLoansModal: React.FC<AddNewPayDayLoansModalProps> = ({
 
   const [loan_amount, setLoanAmount] = useState<string>("");
   const [loan_date, setLoanDate] = useState<string>("");
-  const [has_the_pay_day_loan_been_repaid, setHasPayDayLoanBeenRepaid] = useState<boolean>(false);
+  const [has_the_pay_day_loan_been_repaid, setHasPayDayLoanBeenRepaid] =
+    useState<boolean>(false);
   const [date_repaid, setDateRepaid] = useState<string>("");
   const [lender_name, setLenderName] = useState<string>("");
 
@@ -107,7 +103,9 @@ const AddNewPayDayLoansModal: React.FC<AddNewPayDayLoansModalProps> = ({
         <Row>
           <Col sm={6}>
             <FormGroup>
-              <Label for="has_the_pay_day_loan_been_repaid">Has the Pay Day Loan Been Repaid?</Label>
+              <Label for="has_the_pay_day_loan_been_repaid">
+                Has the Pay Day Loan Been Repaid?
+              </Label>
               <div>
                 <FormGroup check inline>
                   <Input

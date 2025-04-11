@@ -1,4 +1,5 @@
-import { useGetDIPHistoryDetailsQuery } from "@/Redux/Reducers/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+
+import { useGetDIPHistoryDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";

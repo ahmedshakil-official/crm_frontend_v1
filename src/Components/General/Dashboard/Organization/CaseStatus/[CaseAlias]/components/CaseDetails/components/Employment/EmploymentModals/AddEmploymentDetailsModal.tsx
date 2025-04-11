@@ -1,4 +1,5 @@
-import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
+
+import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
 import { useState } from "react";

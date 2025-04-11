@@ -167,3 +167,14 @@ export interface BudgetPlanner {
   disclaimer: boolean;
   disclaimer_details: string;
 }
+
+export interface BudgetPlannerModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+}
+
+export interface BudgetPlannerTabContentProps {
+  tabId: number | null;
+  setTabId: (id: number) => void;
+  updateField: (field: string, value: any) => void;
+}

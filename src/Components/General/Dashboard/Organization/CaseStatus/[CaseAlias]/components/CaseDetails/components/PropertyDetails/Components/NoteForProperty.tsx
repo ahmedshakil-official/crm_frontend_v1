@@ -1,25 +1,30 @@
+import { RootState } from "@/Redux/Store";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/Redux/Store";
 import {
+  Button,
   Card,
   CardFooter,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  Row,
   Col,
+  FormGroup,
+  Input,
+  Label,
+  Row,
 } from "reactstrap";
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/CaseDetails/PropertyDetails/PropertyDetailsApi";
+
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { updateProperty } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
-import { updateProperty } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
 
-const NoteForProperty: React.FC<{ property_alias: string }> = ({ property_alias }) => {
+const NoteForProperty: React.FC<{ property_alias: string }> = ({
+  property_alias,
+}) => {
   const dispatch = useDispatch();
   const { casealias } = useParams();
-  const formData = useSelector((state: RootState) => state.propertyForm.Properties);
+  const formData = useSelector(
+    (state: RootState) => state.propertyForm.Properties
+  );
   const propertyAlias = property_alias;
 
   const [updateSingleProperty, { isLoading }] = useUpdatePropertyMutation();
@@ -34,7 +39,7 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({ property_alias 
       property_alias: propertyAlias,
       updatedPropertyDetails: formData,
     });
-    
+
     if (response.data) {
       toast.success("Property Details Updated Successfully");
     } else {
@@ -44,20 +49,32 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({ property_alias 
 
   return (
     <Card className="mb-3">
-      <CardFooter style={{ border: "2px solid #ececec", padding: "20px", backgroundColor: "#fff" }}>
+      <CardFooter
+        style={{
+          border: "2px solid #ececec",
+          padding: "20px",
+          backgroundColor: "#fff",
+        }}
+      >
         <Row>
           <Col xs={12}>
             <FormGroup>
               <Label className="fw-semibold" for="PropertyNotes">
                 Notes
-                <span className="required" style={{ visibility: "hidden" }}>*</span>
+                <span className="required" style={{ visibility: "hidden" }}>
+                  *
+                </span>
               </Label>
               <Input
                 type="textarea"
                 id="PropertyNotes"
                 name="notes"
                 value={formData.notes || ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e as unknown as React.ChangeEvent<HTMLTextAreaElement>)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleChange(
+                    e as unknown as React.ChangeEvent<HTMLTextAreaElement>
+                  )
+                }
                 style={{
                   maxWidth: "100%",
                   minWidth: "100%",

@@ -1,5 +1,6 @@
-import { useAddCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import { useAddCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
 import { useGetCaseUsersQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
+import { AddCreditCommitmentModalProps } from "@/Types/Organization/CaseDetails/CreditCommitmentsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -17,11 +18,6 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-
-interface AddCreditCommitmentModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
 
 const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
   isOpen,

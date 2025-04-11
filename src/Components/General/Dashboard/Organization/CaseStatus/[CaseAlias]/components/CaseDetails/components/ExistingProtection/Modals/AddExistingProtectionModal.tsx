@@ -1,4 +1,4 @@
-import { useAddExistingProtectionDetailsMutation } from "@/Redux/Reducers/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
+import { useAddExistingProtectionDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
 import { AddExistingProtectionModalProps } from "@/Types/Organization/CaseDetails/ExistingProtectionTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";

@@ -1,4 +1,5 @@
-import { useGetCommitmentPaymentsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useGetCommitmentPaymentsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { ViewCommitmentPaymentsMissedModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import {
@@ -7,15 +8,9 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  Table,
   Spinner,
+  Table,
 } from "reactstrap";
-
-interface ViewCommitmentPaymentsMissedModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
 
 const ViewCommitmentPaymentsMissedModal: React.FC<
   ViewCommitmentPaymentsMissedModalProps

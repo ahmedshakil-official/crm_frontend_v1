@@ -1,4 +1,5 @@
-import { useGetApplicantsQuery } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { useGetApplicantsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -11,7 +12,6 @@ import {
   NavLink,
 } from "reactstrap";
 import ApplicantsDetailsTabContent from "./ApplicantsDetailsTabContent";
-import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
 
 export const ApplicantsDetailsTab = () => {
   const [basicTab, setBasicTab] = useState<string | null>(null);
@@ -59,7 +59,7 @@ export const ApplicantsDetailsTab = () => {
           <CardBody className="px-0 pb-0">
             <ApplicantsDetailsTabContent
               applicantsData={applicantsData}
-              basicTab={basicTab}
+              basicTab={basicTab || ""}
             />
           </CardBody>
         </CardBody>

@@ -5,8 +5,8 @@ import PropertyDetails from "./Components/PropertyDetailsTabs/PropertyType";
 import AdditionalInfo from "./Components/PropertyDetailsTabs/PropertyAdditionalInfo";
 import { PropertyData } from "@/Types/Organization/CaseDetails/PropertyDetails";
 import { useDispatch } from "react-redux";
-import { initializeForm } from "@/Redux/Reducers/CaseDetails/PropertyDetails/propertyFormSlice";
 import ValuationInfo from "./Components/PropertyDetailsTabs/PropertyValuation";
+import { initializeForm } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 
 interface PropertyDetailsTabContentProps {
   tabId: string;

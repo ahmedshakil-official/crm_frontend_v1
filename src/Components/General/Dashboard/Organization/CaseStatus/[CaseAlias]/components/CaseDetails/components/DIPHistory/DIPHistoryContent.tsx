@@ -1,4 +1,4 @@
-import { useUpdateDIPHistoryDetailsMutation } from "@/Redux/Reducers/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+import { useUpdateDIPHistoryDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";

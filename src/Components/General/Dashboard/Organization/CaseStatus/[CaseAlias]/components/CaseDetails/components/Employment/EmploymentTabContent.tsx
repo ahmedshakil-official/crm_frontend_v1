@@ -1,4 +1,4 @@
-import { useUpdateEmploymentDetailsMutation } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
+
 import {
   EmploymentDetailsProps,
   EmploymentTabContentProps,
@@ -17,6 +17,7 @@ import {
   Row,
 } from "reactstrap";
 import AddEmploymentDetailsModal from "./EmploymentModals/AddEmploymentDetailsModal";
+import { useUpdateEmploymentDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 
 export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   activeTab,

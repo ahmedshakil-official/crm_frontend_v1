@@ -1,8 +1,9 @@
 "use client";
-import LoadingSpinner from "@/app/loading";
 import { countries } from "@/Data/Countries/Countries";
-import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
+import { ApplicantsUsersProps } from "@/Types/Organization/CaseDetails/ApplicantsUserTypes";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -20,16 +21,9 @@ import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/AddApplicantCom
 import AddDependantFormModal from "./ApplicantDetailsModals/AddApplicantDependantsModal";
 import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
 
-export interface ApplicantsUsersProps {
-  applicantsData?: ApplicantProps[];
-  basicTab: string | null;
-  // fetchApplicants: () => void;
-}
-
 const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   applicantsData,
   basicTab,
-  // fetchApplicants,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
@@ -47,7 +41,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     useUpdateApplicantDetailsMutation();
 
   const [formValues, setFormValues] = useState<ApplicantProps>({
-    alias: basicTab || '', // Add this line to initialize alias
+    alias: basicTab || "", // Add this line to initialize alias
     is_company_application: false,
     title: "",
     maiden_name: "",

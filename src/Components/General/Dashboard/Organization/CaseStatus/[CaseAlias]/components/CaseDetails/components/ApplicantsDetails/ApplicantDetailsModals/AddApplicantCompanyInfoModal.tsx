@@ -2,7 +2,7 @@ import LoadingSpinner from "@/app/loading";
 import {
   useAddCompanyDetailsMutation,
   useGetCompanyDetailsQuery,
-} from "@/Redux/Reducers/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+} from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import {
   AddCompanyDetailsFormModalProps,
   ApplicantCompanyProps,
