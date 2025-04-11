@@ -1,5 +1,4 @@
 import LoadingSpinner from "@/app/loading";
-import { useGetEmploymentDetailsQuery } from "@/Redux/Reducers/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import {
   NavLink,
 } from "reactstrap";
 import { EmploymentTabContent } from "./EmploymentTabContent";
+import { useGetEmploymentDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 
 export const EmploymentTab = () => {
   // State for active user, active tab, and employment data
