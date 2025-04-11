@@ -1,11 +1,7 @@
+import { FeesTabContentProps } from "@/Types/Organization/CaseDetails/FeeTypes";
 import { FC } from "react";
 import FeeInTable from "./FeesTabContents/FeesInTable";
 import FeeOutTable from "./FeesTabContents/FeesOutTable";
-
-interface FeesTabContentProps {
-  tabId: string;
-  setTabId: (id: string) => void;
-}
 
 export const FeesTabContent: FC<FeesTabContentProps> = ({
   tabId,

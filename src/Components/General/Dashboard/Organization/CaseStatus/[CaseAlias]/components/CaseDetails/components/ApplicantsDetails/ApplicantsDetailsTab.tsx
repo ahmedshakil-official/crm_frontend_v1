@@ -1,5 +1,6 @@
 import { useGetApplicantsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -33,7 +34,11 @@ export const ApplicantsDetailsTab = () => {
   }, [applicantsData, basicTab]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
   return (
     <Col xxl="12" className="px-5">

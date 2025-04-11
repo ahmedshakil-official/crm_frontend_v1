@@ -1,19 +1,6 @@
+import { LoanDetailsFormTab4Props } from "@/Types/Organization/CaseDetails/LoanDetailsTypes";
 import React from "react";
-import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
-
-interface LoanDetailsFormTab4Props {
-  formData: {
-    sale_type: string;
-    introduction_type: string;
-    lead_source: string;
-    introducer_payment_terms: string;
-    introducer_fee: string | null;
-    reasons_for_capital_raising: string;
-    accepted_or_declined_by_lender: boolean;
-    case_summary: string;
-  };
-  handleFormChange: (name: string, value: string|number|boolean|null) => void;
-}
+import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
   formData,

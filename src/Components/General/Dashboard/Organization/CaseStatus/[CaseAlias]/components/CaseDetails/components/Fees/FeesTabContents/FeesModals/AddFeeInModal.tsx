@@ -1,4 +1,8 @@
 import { useAddFeesInDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
+import {
+  AddFeeInModalProps,
+  FeeDataProps,
+} from "@/Types/Organization/CaseDetails/FeeTypes";
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -17,23 +21,6 @@ import {
   Row,
 } from "reactstrap";
 
-interface FeeData {
-  fee: string;
-  feeType: string;
-  method: string;
-  notes: string;
-  feeDate: string;
-}
-
-interface AddFeeInModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  onSubmit: (feeData: FeeData) => void;
-  feeTypes: { title: string; value: string }[];
-  methods: { title: string; value: string }[];
-  caseAlias: string | string[];
-}
-
 const AddFeeInModal: FC<AddFeeInModalProps> = ({
   isOpen,
   toggle,
@@ -50,9 +37,9 @@ const AddFeeInModal: FC<AddFeeInModalProps> = ({
     notes: "",
     feeDate: "",
   };
-  const [feeData, setFeeData] = useState<FeeData>(initialState);
+  const [feeData, setFeeData] = useState<FeeDataProps>(initialState);
 
-  const handleInputChange = (field: keyof FeeData, value: string) => {
+  const handleInputChange = (field: keyof FeeDataProps, value: string) => {
     setFeeData((prev) => ({
       ...prev,
       [field]: value,

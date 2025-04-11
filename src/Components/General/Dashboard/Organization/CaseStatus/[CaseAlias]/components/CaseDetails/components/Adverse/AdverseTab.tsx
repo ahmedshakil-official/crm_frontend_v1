@@ -1,5 +1,6 @@
 import { useGetAdverseDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import { AdverseProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -29,7 +30,12 @@ export const AdverseTab = () => {
     }
   }, [adverseData]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
 
   if (!adverseData || adverseData.length === 0) {
     return (

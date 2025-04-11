@@ -1,24 +1,6 @@
+import { LoanDetailsFormTab2Props } from "@/Types/Organization/CaseDetails/LoanDetailsTypes";
 import React from "react";
-import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
-
-interface LoanDetailsFormTab2Props {
-  formData: {
-    property_valuation: number;
-    loan_amount: number;
-    estimated_value: number;
-    ltv: string | null;
-    term_years: number;
-    term_months: number;
-    interest_only_amount: null | string;
-    outstanding_balance: null | string;
-    current_monthly_payment: null | string;
-    current_lender: string;
-    original_purchase_price: string;
-    date_of_purchase: string | null;
-    advice_level: string;
-  };
-  handleFormChange: (name: string, value: any) => void;
-}
+import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
   formData,
@@ -97,7 +79,9 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
               type="number"
               name="term_months"
               value={formData.term_months}
-              onChange={(e) => handleFormChange(e.target.name, Number(e.target.value))}
+              onChange={(e) =>
+                handleFormChange(e.target.name, Number(e.target.value))
+              }
             />
           </FormGroup>
 

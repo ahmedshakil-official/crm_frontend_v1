@@ -1,4 +1,5 @@
 import { useGetNotesQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import React from "react";
 import { Button, TabContent, TabPane } from "reactstrap";
@@ -23,7 +24,11 @@ export const NotesTabContent: React.FC<NotesTabContentProps> = ({
   const tasks = data?.filter((item: NoteTask) => item.note_task === "TASK");
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (
