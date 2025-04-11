@@ -1,17 +1,17 @@
-import { FC, useState, useEffect } from "react";
+import { RootState } from "@/Redux/Store";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
+  Button,
   Col,
-  Row,
   Form,
   FormGroup,
-  Label,
   Input,
   InputGroup,
   InputGroupText,
-  Button,
+  Label,
+  Row,
 } from "reactstrap";
-import { RootState } from "@/Redux/Store";
 
 interface DebtRepaymentTabContentProps {
   updateField: (field: string, value: any) => void;
@@ -21,7 +21,15 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
   updateField,
 }) => {
   const budgetPlannerData = useSelector(
-    (state: RootState) => state.budgetPlanner
+    (state: RootState) =>
+      state.budgetPlanner ?? {
+        current_debt_repayments: {},
+        post_debt_repayments: {},
+        current_priority_debt: {},
+        post_priority_debt: {},
+        current_unsecured_borrowing: {},
+        post_unsecured_borrowing: {},
+      }
   );
   const [currentValues, setCurrentValues] = useState<Record<string, string>>(
     {}
@@ -57,15 +65,17 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
 
   // Initialize local state with Redux data
   useEffect(() => {
+    if (!budgetPlannerData) return; // Add early return if data is null
+
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
 
     // Current Debt Repayments
     Object.entries(debtRepaymentFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.current_debt_repayments[
+        budgetPlannerData?.current_debt_repayments?.[
           key as keyof typeof budgetPlannerData.current_debt_repayments
-        ];
+        ] ?? 0;
       initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
     });
@@ -73,9 +83,9 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
     // Post Debt Repayments
     Object.entries(debtRepaymentFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.post_debt_repayments[
+        budgetPlannerData?.post_debt_repayments?.[
           key as keyof typeof budgetPlannerData.post_debt_repayments
-        ];
+        ] ?? 0;
       initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
     });
@@ -83,9 +93,9 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
     // Current Priority Debt
     Object.entries(priorityDebtFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.current_priority_debt[
+        budgetPlannerData?.current_priority_debt?.[
           key as keyof typeof budgetPlannerData.current_priority_debt
-        ];
+        ] ?? 0;
       initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
     });
@@ -93,9 +103,9 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
     // Post Priority Debt
     Object.entries(priorityDebtFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.post_priority_debt[
+        budgetPlannerData?.post_priority_debt?.[
           key as keyof typeof budgetPlannerData.post_priority_debt
-        ];
+        ] ?? 0;
       initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
     });
@@ -103,9 +113,9 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
     // Current Unsecured Borrowing
     Object.entries(unsecuredBorrowingFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.current_unsecured_borrowing[
+        budgetPlannerData?.current_unsecured_borrowing?.[
           key as keyof typeof budgetPlannerData.current_unsecured_borrowing
-        ];
+        ] ?? 0;
       initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
     });
@@ -113,9 +123,9 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
     // Post Unsecured Borrowing
     Object.entries(unsecuredBorrowingFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.post_unsecured_borrowing[
+        budgetPlannerData?.post_unsecured_borrowing?.[
           key as keyof typeof budgetPlannerData.post_unsecured_borrowing
-        ];
+        ] ?? 0;
       initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
     });

@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./Api/BaseApi";
 import BookmarkHeaderSlice from "./Reducers/BookmarkHeaderSlice";
 import BookmarkTabSlice from "./Reducers/BookmarkTabSlice";
-import budgetPlannerReducer from "./Reducers/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import budgetPlannerReducer from "./Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 import CaseDetailsTabIndicatorReducer from "./Reducers/Cases/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import propertyFormReducer from "./Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import ChatSlice from "./Reducers/ChatSlice";

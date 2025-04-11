@@ -1,17 +1,17 @@
-import { FC, useState, useEffect } from "react";
+import { RootState } from "@/Redux/Store";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
+  Button,
   Col,
-  Row,
   Form,
   FormGroup,
-  Label,
   Input,
   InputGroup,
   InputGroupText,
-  Button,
+  Label,
+  Row,
 } from "reactstrap";
-import { RootState } from "@/Redux/Store";
 
 interface HouseHoldIncomeTabContentProps {
   updateField: (field: string, value: any) => void;
@@ -21,7 +21,11 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
   updateField,
 }) => {
   const budgetPlannerData = useSelector(
-    (state: RootState) => state.budgetPlanner
+    (state: RootState) =>
+      state.budgetPlanner ?? {
+        current_income: {},
+        post_income: {},
+      }
   );
   const [currentValues, setCurrentValues] = useState<Record<string, string>>(
     {}
@@ -50,7 +54,7 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
     // Current Income
     Object.entries(incomeFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.current_income[
+        budgetPlannerData?.current_income?.[
           key as keyof typeof budgetPlannerData.current_income
         ] ?? 0;
       initialCurrentValues[`CurrentBudgetPlanner.${field}`] = String(value);
@@ -59,10 +63,11 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
     // Post Income
     Object.entries(incomeFieldMappings).forEach(([field, key]) => {
       const value =
-        budgetPlannerData.post_income[
+        budgetPlannerData?.post_income?.[
           key as keyof typeof budgetPlannerData.post_income
         ] ?? 0;
-      initialPostValues[`PostCompletionsBudgetPlanner.${field}`] = String(value);
+      initialPostValues[`PostCompletionsBudgetPlanner.${field}`] =
+        String(value);
     });
 
     setCurrentValues((prev) => ({ ...prev, ...initialCurrentValues }));

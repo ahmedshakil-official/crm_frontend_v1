@@ -1,30 +1,26 @@
 "use client";
-import { FC, useState, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useUpdateBudgetPlannerMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
+import { initializeBudgetPlannerForm } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import { RootState } from "@/Redux/Store";
+import { BudgetPlannerModalProps } from "@/Types/Organization/CaseDetails/BudgetPlannerTypes";
+import { useParams } from "next/navigation";
+import { FC, useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
   Card,
   CardBody,
   CardHeader,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
   Nav,
   NavItem,
   NavLink,
 } from "reactstrap";
-import { RootState } from "@/Redux/Store";
 import BudgetPlannerTabContent from "../BudgetPlannerTabContent";
-import { initializeBudgetPlannerForm } from "@/Redux/Reducers/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
-import { useUpdateBudgetPlannerMutation } from "@/Redux/Reducers/CaseDetails/BudgetPlanner/BudgetPlannerApi";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
-
-interface BudgetPlannerModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
 
 const budgetPlannerTabTitleData = [
   "Household Income",
