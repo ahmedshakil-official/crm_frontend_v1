@@ -1,5 +1,6 @@
-import { useUpdateCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import { useUpdateCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
 import { useGetCaseUsersQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
+import { UpdateCreditCommitmentModalProps } from "@/Types/Organization/CaseDetails/CreditCommitmentsTypes";
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -16,13 +17,6 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-
-interface UpdateCreditCommitmentModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  casealias: string;
-  creditData: any;
-}
 
 const UpdateCreditCommitmentModal: React.FC<
   UpdateCreditCommitmentModalProps

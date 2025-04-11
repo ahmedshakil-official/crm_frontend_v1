@@ -5,3 +5,23 @@ export interface CreditCommitmentProps {
     last_name: string;
   };
 }
+
+export interface AddCreditCommitmentModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+}
+
+export interface UpdateCreditCommitmentModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  casealias: string;
+  creditData: any;
+}
+
+export interface DeleteCreditCommitmentModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  casealias: string;
+  creditCommitmentAlias: string;
+  creditCommitmentName: string;
+}
