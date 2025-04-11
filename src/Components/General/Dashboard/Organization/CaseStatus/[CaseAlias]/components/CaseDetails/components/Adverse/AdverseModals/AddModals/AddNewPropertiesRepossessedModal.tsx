@@ -1,25 +1,20 @@
-import { useAddPropertyRepossessedMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useAddPropertyRepossessedMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { AddNewPropertiesRepossessedModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
+  Col,
+  FormGroup,
+  Input,
+  Label,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
-  FormGroup,
-  Label,
-  Input,
   Row,
-  Col,
 } from "reactstrap";
-
-interface AddNewPropertiesRepossessedModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
 
 const AddNewPropertiesRepossessedModal: React.FC<
   AddNewPropertiesRepossessedModalProps

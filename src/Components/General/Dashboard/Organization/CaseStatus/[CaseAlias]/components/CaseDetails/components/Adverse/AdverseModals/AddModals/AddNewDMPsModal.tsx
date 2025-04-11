@@ -1,27 +1,22 @@
+import { useAddDMPsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { AddNewDMPsModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
+  Col,
+  FormGroup,
+  Input,
+  InputGroup,
+  InputGroupText,
+  Label,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
-  FormGroup,
-  Label,
-  Input,
   Row,
-  Col,
-  InputGroup,
-  InputGroupText,
 } from "reactstrap";
-import { useAddDMPsMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
-
-interface AddNewDMPsModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
 
 const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
   isOpen,
@@ -153,7 +148,7 @@ const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
                   type="checkbox"
                   checked={satisfied}
                   onChange={(e) => setSatisfied(e.target.checked)}
-                />{' '}
+                />{" "}
                 Satisfied?
               </Label>
             </FormGroup>

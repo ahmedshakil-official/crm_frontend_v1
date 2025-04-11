@@ -1,9 +1,8 @@
 "use client";
-
 import {
   useGetSingleAdverseDetailsQuery,
   useUpdateAdverseDetailsMutation,
-} from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+} from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import { ApplicantsUsersProps } from "@/Types/Organization/CaseDetails/ApplicantsUserTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";

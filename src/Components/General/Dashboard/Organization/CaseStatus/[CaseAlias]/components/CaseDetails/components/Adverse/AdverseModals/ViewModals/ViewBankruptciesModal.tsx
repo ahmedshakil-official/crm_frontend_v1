@@ -1,4 +1,5 @@
-import { useGetBankruptsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useGetBankruptsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { ViewBankruptciesModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import {
@@ -7,15 +8,9 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  Table,
   Spinner,
+  Table,
 } from "reactstrap";
-
-interface ViewBankruptciesModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
 
 const ViewBankruptciesModal: React.FC<ViewBankruptciesModalProps> = ({
   isOpen,

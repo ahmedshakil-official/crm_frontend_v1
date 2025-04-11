@@ -1,4 +1,5 @@
-import { useGetPropertyRepossessedQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useGetPropertyRepossessedQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { ViewPropertiesRepossessedModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import {
@@ -9,12 +10,6 @@ import {
   ModalHeader,
   Table,
 } from "reactstrap";
-
-interface ViewPropertiesRepossessedModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
 
 const ViewPropertiesRepossessedModal: React.FC<
   ViewPropertiesRepossessedModalProps

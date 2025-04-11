@@ -1,4 +1,6 @@
-import { useGetDefaultsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+
+import { useGetDefaultsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { ViewDefaultsModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import {
@@ -11,11 +13,7 @@ import {
   Spinner,
 } from "reactstrap";
 
-interface ViewDefaultsModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
+
 
 const ViewDefaultsModal: React.FC<ViewDefaultsModalProps> = ({
   isOpen,

@@ -1,27 +1,22 @@
+import { useAddIVAsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { AddNewIVAsModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
+  Col,
+  FormGroup,
+  Input,
+  InputGroup,
+  InputGroupText,
+  Label,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
-  FormGroup,
-  Label,
-  Input,
   Row,
-  Col,
-  InputGroup,
-  InputGroupText,
 } from "reactstrap";
-import { useAddIVAsMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
-
-interface AddNewIVAsModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias:string;
-}
 
 const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
   isOpen,
@@ -50,7 +45,7 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
       adverse_alias: adverseAlias,
       value,
     });
-    console.log({res})
+    console.log({ res });
 
     if (res.data) {
       toast.success("IVA Added Successfully");

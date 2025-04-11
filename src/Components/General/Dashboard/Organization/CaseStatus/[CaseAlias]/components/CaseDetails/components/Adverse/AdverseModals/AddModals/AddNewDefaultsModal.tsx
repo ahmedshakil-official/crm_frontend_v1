@@ -1,25 +1,20 @@
-import { useAddDefaultsMutation } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useAddDefaultsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { AddNewDefaultsModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
+  Col,
+  FormGroup,
+  Input,
+  Label,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
-  FormGroup,
-  Label,
-  Input,
   Row,
-  Col,
 } from "reactstrap";
-
-interface AddNewDefaultsModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
 
 const AddNewDefaultsModal: React.FC<AddNewDefaultsModalProps> = ({
   isOpen,
@@ -126,7 +121,9 @@ const AddNewDefaultsModal: React.FC<AddNewDefaultsModalProps> = ({
 
           <Col sm={6}>
             <FormGroup>
-              <Label for="has_satisfied">Has the Default been satisfied?*</Label>
+              <Label for="has_satisfied">
+                Has the Default been satisfied?*
+              </Label>
               <div className="d-flex align-items-center">
                 <div>
                   <Input

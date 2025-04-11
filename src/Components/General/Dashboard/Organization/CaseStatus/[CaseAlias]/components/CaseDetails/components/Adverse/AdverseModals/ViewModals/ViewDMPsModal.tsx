@@ -1,3 +1,9 @@
+import { useGetDMPsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import {
+  DMPItemProps,
+  ViewDMPsModalProps,
+} from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { useParams } from "next/navigation";
 import React from "react";
 import {
   Button,
@@ -7,23 +13,6 @@ import {
   ModalHeader,
   Table,
 } from "reactstrap";
-import { useGetDMPsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { useParams } from "next/navigation";
-
-interface ViewDMPsModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
-
-interface DMPItem {
-  plan: "DIRECT" | "THIRD_PARTY";
-  loan_company_name: string;
-  date_registered: string | null;
-  outstanding_balance: string | null;
-  satisfied: boolean;
-  date_satisfied: string | null;
-}
 
 const ViewDMPsModal: React.FC<ViewDMPsModalProps> = ({
   isOpen,
@@ -59,17 +48,20 @@ const ViewDMPsModal: React.FC<ViewDMPsModalProps> = ({
           </thead>
           <tbody>
             {dmpsData && dmpsData.length > 0 ? (
-              dmpsData.map((dmp: DMPItem, index: number) => (
+              dmpsData.map((dmp: DMPItemProps, index: number) => (
                 <tr key={index}>
                   <td>{dmp.plan === "DIRECT" ? "Direct" : "3rd Party"}</td>
                   <td>{dmp.loan_company_name || "N/A"}</td>
                   <td>{dmp.date_registered || "N/A"}</td>
                   <td>
                     {dmp.outstanding_balance
-                      ? `£${parseFloat(dmp.outstanding_balance).toLocaleString("en-GB", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}`
+                      ? `£${parseFloat(dmp.outstanding_balance).toLocaleString(
+                          "en-GB",
+                          {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }
+                        )}`
                       : "N/A"}
                   </td>
                   <td>{dmp.satisfied ? "Yes" : "No"}</td>

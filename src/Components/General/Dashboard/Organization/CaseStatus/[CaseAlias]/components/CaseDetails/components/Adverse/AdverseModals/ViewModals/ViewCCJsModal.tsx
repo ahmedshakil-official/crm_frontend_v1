@@ -1,3 +1,9 @@
+import { useGetCCJsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import {
+  CCJProps,
+  ViewCCJsModalProps,
+} from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { useParams } from "next/navigation";
 import React from "react";
 import {
   Button,
@@ -7,22 +13,6 @@ import {
   ModalHeader,
   Table,
 } from "reactstrap";
-import { useGetCCJsQuery } from "@/Redux/Reducers/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { useParams } from "next/navigation";
-
-interface ViewCCJsModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  adverseAlias: string;
-}
-
-interface CCJ {
-  amount: string | null;
-  loan_company_name: string;
-  date_registered: string | null;
-  has_satisfied: boolean;
-  date_satisfied: string | null;
-}
 
 const ViewCCJsModal: React.FC<ViewCCJsModalProps> = ({
   isOpen,
@@ -57,7 +47,7 @@ const ViewCCJsModal: React.FC<ViewCCJsModalProps> = ({
           </thead>
           <tbody>
             {ccjs && ccjs.length > 0 ? (
-              ccjs.map((ccj: CCJ, index: number) => (
+              ccjs.map((ccj: CCJProps, index: number) => (
                 <tr key={index}>
                   <td>
                     {ccj.amount
@@ -70,7 +60,9 @@ const ViewCCJsModal: React.FC<ViewCCJsModalProps> = ({
                   <td>{ccj.loan_company_name || "N/A"}</td>
                   <td>{ccj.date_registered || "N/A"}</td>
                   <td>{ccj.has_satisfied ? "Yes" : "No"}</td>
-                  <td>{ccj.has_satisfied ? ccj.date_satisfied || "N/A" : "N/A"}</td>
+                  <td>
+                    {ccj.has_satisfied ? ccj.date_satisfied || "N/A" : "N/A"}
+                  </td>
                 </tr>
               ))
             ) : (
