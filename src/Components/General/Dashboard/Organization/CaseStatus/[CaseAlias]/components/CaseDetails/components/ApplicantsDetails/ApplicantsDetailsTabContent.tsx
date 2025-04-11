@@ -151,8 +151,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   };
   if (isLoading)
     return (
-      <div className=" d-flex justify-content-center">
-        <LoadingSpinner />{" "}
+      <div>
+        <LoadingSpinner />
       </div>
     );
   return (

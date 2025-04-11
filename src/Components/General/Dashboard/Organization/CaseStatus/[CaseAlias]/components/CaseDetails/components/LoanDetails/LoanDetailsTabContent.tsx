@@ -3,6 +3,7 @@ import {
   useGetLoanDetailsQuery,
   useUpdateLoanDetailsMutation,
 } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/LoanDetails/LoanDetailsApi";
+import { LoanDetailsTabContentProps } from "@/Types/Organization/CaseDetails/LoanDetailsTypes";
 import LoadingSpinner from "@/app/loading";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useParams } from "next/navigation";
@@ -13,11 +14,6 @@ import LoanDetailsFormTab1 from "./LoanDetailsFormTabs/LoanDetailsFormTab1";
 import LoanDetailsFormTab2 from "./LoanDetailsFormTabs/LoanDetailsFormTab2";
 import LoanDetailsFormTab3 from "./LoanDetailsFormTabs/LoanDetailsFormTab3";
 import LoanDetailsFormTab4 from "./LoanDetailsFormTabs/LoanDetailsFormTab4";
-
-interface LoanDetailsTabContentProps {
-  tabId: string;
-  setTabId: (id: string) => void;
-}
 
 export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   tabId,
@@ -192,7 +188,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   if (isLoading || isLoandetailsDataLoading)
     return (
       <div className=" d-flex justify-content-center">
-        <LoadingSpinner />{" "}
+        <LoadingSpinner />
       </div>
     );
   if (isError) return <div>Error loading data</div>;

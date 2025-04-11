@@ -1,5 +1,6 @@
 import { useGetPropertiesQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
 import { initializeForm } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -33,7 +34,11 @@ const PropertyDetails: React.FC = () => {
   }, [properties, dispatch]);
 
   if (isLoading || !properties || properties.length === 0) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (

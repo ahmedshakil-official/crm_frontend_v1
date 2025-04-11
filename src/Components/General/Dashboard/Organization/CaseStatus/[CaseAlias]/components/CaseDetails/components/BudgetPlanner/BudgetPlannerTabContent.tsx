@@ -1,6 +1,7 @@
 import { useGetCaseBudgetPlannerQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
 import { initializeBudgetPlannerForm } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 import { BudgetPlannerTabContentProps } from "@/Types/Organization/CaseDetails/BudgetPlannerTypes";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -37,7 +38,11 @@ const BudgetPlannerTabContent: FC<BudgetPlannerTabContentProps> = ({
   }, [data, dispatch]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (

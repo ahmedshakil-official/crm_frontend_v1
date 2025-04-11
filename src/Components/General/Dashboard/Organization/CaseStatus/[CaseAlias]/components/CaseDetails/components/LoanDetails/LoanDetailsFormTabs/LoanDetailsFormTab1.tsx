@@ -1,23 +1,5 @@
-import { Container, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
-
-interface LoanDetailsFormTab1Props {
-  formData: {
-    application_type: string;
-    lenders_reference: string;
-    mortgage_type: string;
-    loan_purpose: string;
-    borrower_type: string;
-    interest_rate_type: string;
-    product_term: string;
-    lender: string;
-    repayment_method: string;
-    repayment_vehicle: string;
-  };
-  handleFormChange: (
-    name: string,
-    value: string | null | number | boolean
-  ) => void;
-}
+import { LoanDetailsFormTab1Props } from "@/Types/Organization/CaseDetails/LoanDetailsTypes";
+import { Col, Container, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 const LoanDetailsFormTab1: React.FC<LoanDetailsFormTab1Props> = ({
   formData,

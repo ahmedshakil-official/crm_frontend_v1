@@ -1,18 +1,6 @@
+import { LoanDetailsFormTab3Props } from "@/Types/Organization/CaseDetails/LoanDetailsTypes";
 import React from "react";
 import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
-
-interface LoanDetailsFormTab3Props {
-  formData: {
-    dip_accept_date: string | null;
-    dip_expiry_date: string | null;
-    expected_completion_date: string | null;
-    product_expiry_date: string | null;
-  };
-  handleFormChange: (
-    name: string,
-    value: string | number | boolean | null
-  ) => void;
-}
 
 const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
   formData,
