@@ -176,42 +176,89 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
-              <FormGroup>
-                <Label>Company</Label>
-                <Input
-                  type="text"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label>Account No.</Label>
-                <Input
-                  type="number"
-                  name="account_no"
-                  value={formData.account_no || null}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
+            {(formData.type === "CREDIT_CARD" ||
+              formData.type === "STORE_CARD" ||
+              formData.type === "LOAN" ||
+              formData.type === "HP" ||
+              formData.type === "OVERDRAFT" ||
+              formData.type === "STUDENT_LOAN" ||
+              formData.type === "LEASE" ||
+              formData.type === "UNSECURED" ||
+              formData.type === "MORTGAGE_RENT" ||
+              formData.type === "PUBLIC_UTILITY" ||
+              formData.type === "COMMUNICATIONS" ||
+              formData.type === "INSURANCE" ||
+              formData.type === "SECURED" ||
+              formData.type === "PCP" ||
+              formData.type === "MAIL_ORDER" ||
+              formData.type === "BNPL" ||
+              formData.type === "DMP") && (
+              <Col md={6}>
+                <FormGroup>
+                  <Label>Company</Label>
+                  <Input
+                    type="text"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                  />
+                </FormGroup>
+              </Col>
+            )}
+            {(formData.type === "CREDIT_CARD" ||
+              formData.type === "STORE_CARD" ||
+              formData.type === "LOAN" ||
+              formData.type === "HP" ||
+              formData.type === "OVERDRAFT" ||
+              formData.type === "STUDENT_LOAN" ||
+              formData.type === "UNSECURED" ||
+              formData.type === "MORTGAGE_RENT" ||
+              formData.type === "SECURED" ||
+              formData.type === "PCP" ||
+              formData.type === "MAIL_ORDER" ||
+              formData.type === "BNPL" ||
+              formData.type === "DMP") && (
+              <Col md={6}>
+                <FormGroup>
+                  <Label>Account No.</Label>
+                  <Input
+                    type="number"
+                    name="account_no"
+                    value={formData.account_no || null}
+                    onChange={handleInputChange}
+                  />
+                </FormGroup>
+              </Col>
+            )}
           </Row>
           <Row>
-            <Col md={4}>
-              <FormGroup>
-                <Label>OS Balance (£)</Label>
-                <Input
-                  type="number"
-                  name="os_balance"
-                  value={formData.os_balance}
-                  onChange={handleInputChange}
-                  step="0.01"
-                />
-              </FormGroup>
-            </Col>
+            {(formData.type === "CREDIT_CARD" ||
+              formData.type === "STORE_CARD" ||
+              formData.type === "LOAN" ||
+              formData.type === "HP" ||
+              formData.type === "OVERDRAFT" ||
+              formData.type === "STUDENT_LOAN" ||
+              formData.type === "LEASE" ||
+              formData.type === "UNSECURED" ||
+              formData.type === "MORTGAGE_RENT" ||
+              formData.type === "SECURED" ||
+              formData.type === "PCP" ||
+              formData.type === "MAIL_ORDER" ||
+              formData.type === "BNPL" ||
+              formData.type === "DMP") && (
+              <Col md={4}>
+                <FormGroup>
+                  <Label>OS Balance (£)</Label>
+                  <Input
+                    type="number"
+                    name="os_balance"
+                    value={formData.os_balance}
+                    onChange={handleInputChange}
+                    step="0.01"
+                  />
+                </FormGroup>
+              </Col>
+            )}
             <Col md={4}>
               <FormGroup>
                 <Label>Settlement Balance (£)</Label>
@@ -224,124 +271,212 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label>Monthly Repayment (£)</Label>
-                <Input
-                  type="number"
-                  name="monthly_repayment"
-                  value={formData.monthly_repayment}
-                  onChange={handleInputChange}
-                  step="0.01"
-                />
-              </FormGroup>
-            </Col>
+            {(formData.type === "CREDIT_CARD" ||
+              formData.type === "STORE_CARD" ||
+              formData.type === "LOAN" ||
+              formData.type === "HP" ||
+              formData.type === "OVERDRAFT" ||
+              formData.type === "STUDENT_LOAN" ||
+              formData.type === "MAINTENANCE" ||
+              formData.type === "LEASE" ||
+              formData.type === "UNSECURED" ||
+              formData.type === "MORTGAGE_RENT" ||
+              formData.type === "PUBLIC_UTILITY" ||
+              formData.type === "COMMUNICATIONS" ||
+              formData.type === "INSURANCE" ||
+              formData.type === "SECURED" ||
+              formData.type === "PCP" ||
+              formData.type === "MAIL_ORDER" ||
+              formData.type === "CHILDCARE" ||
+              formData.type === "BNPL" ||
+              formData.type === "DMP") && (
+              <Col md={4}>
+                <FormGroup>
+                  <Label>Monthly Repayment (£)</Label>
+                  <Input
+                    type="number"
+                    name="monthly_repayment"
+                    value={formData.monthly_repayment}
+                    onChange={handleInputChange}
+                    step="0.01"
+                  />
+                </FormGroup>
+              </Col>
+            )}
           </Row>
           <Row>
-            <Col md={4}>
-              <FormGroup>
-                <Label>Interest Rate (%)</Label>
-                <Input
-                  type="number"
-                  name="interest_rate"
-                  value={formData.interest_rate}
-                  onChange={handleInputChange}
-                  step="0.01"
-                />
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label>Card Limit (£)</Label>
-                <Input
-                  type="number"
-                  name="card_limit"
-                  value={formData.card_limit}
-                  onChange={handleInputChange}
-                  step="0.01"
-                />
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label>Term Remaining (Months)</Label>
-                <Input
-                  type="number"
-                  name="term_remaining"
-                  value={formData.term_remaining}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
+            {(formData.type === "CREDIT_CARD" ||
+              formData.type === "STORE_CARD" ||
+              formData.type === "LOAN" ||
+              formData.type === "HP" ||
+              formData.type === "OVERDRAFT" ||
+              formData.type === "UNSECURED" ||
+              formData.type === "MORTGAGE_RENT" ||
+              formData.type === "SECURED" ||
+              formData.type === "PCP" ||
+              formData.type === "MAIL_ORDER" ||
+              formData.type === "BNPL" ||
+              formData.type === "DMP") && (
+              <Col md={4}>
+                <FormGroup>
+                  <Label>Interest Rate (%)</Label>
+                  <Input
+                    type="number"
+                    name="interest_rate"
+                    value={formData.interest_rate}
+                    onChange={handleInputChange}
+                    step="0.01"
+                  />
+                </FormGroup>
+              </Col>
+            )}
+            {(formData.type === "CREDIT_CARD" ||
+              formData.type === "STORE_CARD" ||
+              formData.type === "MAIL_ORDER" ||
+              formData.type === "BNPL") && (
+              <Col md={4}>
+                <FormGroup>
+                  <Label>Card Limit (£)</Label>
+                  <Input
+                    type="number"
+                    name="card_limit"
+                    value={formData.card_limit}
+                    onChange={handleInputChange}
+                    step="0.01"
+                  />
+                </FormGroup>
+              </Col>
+            )}
+            {(formData.type === "LOAN" ||
+              formData.type === "HP" ||
+              formData.type === "MAINTENANCE" ||
+              formData.type === "LEASE" ||
+              formData.type === "UNSECURED" ||
+              formData.type === "SECURED" ||
+              formData.type === "PCP" ||
+              formData.type === "CHILDCARE" ||
+              formData.type === "BNPL" ||
+              formData.type === "DMP") && (
+              <Col md={4}>
+                <FormGroup>
+                  <Label>Term Remaining (Months)</Label>
+                  <Input
+                    type="number"
+                    name="term_remaining"
+                    value={formData.term_remaining}
+                    onChange={handleInputChange}
+                  />
+                </FormGroup>
+              </Col>
+            )}
           </Row>
           <Row>
-            <Col md={6}>
-              <FormGroup>
-                <Label>Balloon Payment (£)</Label>
-                <Input
-                  type="number"
-                  name="balloon_payment"
-                  value={formData.balloon_payment}
-                  onChange={handleInputChange}
-                  step="0.01"
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label>Cost of Credit (£)</Label>
-                <Input
-                  type="number"
-                  name="cost_of_credit"
-                  value={formData.cost_of_credit}
-                  onChange={handleInputChange}
-                  step="0.01"
-                />
-              </FormGroup>
-            </Col>
+            {formData.type === "PCP" && (
+              <Col md={6}>
+                <FormGroup>
+                  <Label>Balloon Payment (£)</Label>
+                  <Input
+                    type="number"
+                    name="balloon_payment"
+                    value={formData.balloon_payment}
+                    onChange={handleInputChange}
+                    step="0.01"
+                  />
+                </FormGroup>
+              </Col>
+            )}
+            {(formData.type === "MAINTENANCE" ||
+              formData.type === "CHILDCARE") && (
+              <Col md={4}>
+                <FormGroup>
+                  <Label>Court Ordered</Label>
+                  <Input
+                    type="select"
+                    name="court_ordered"
+                    value={formData.court_ordered}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select...</option>
+                    <option value="YES">Yes</option>
+                    <option value="NO">No</option>
+                  </Input>
+                </FormGroup>
+              </Col>
+            )}
           </Row>
           <Row>
-            <Col md={4}>
-              <FormGroup>
-                <Label>Court Ordered</Label>
-                <Input
-                  type="select"
-                  name="court_ordered"
-                  value={formData.court_ordered}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select...</option>
-                  <option value="YES">Yes</option>
-                  <option value="NO">No</option>
-                </Input>
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label>Paid on Completion</Label>
-                <Input
-                  type="select"
-                  name="paid_on_completion"
-                  value={formData.paid_on_completion}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select...</option>
-                  <option value="YES">Yes</option>
-                  <option value="NO">No</option>
-                </Input>
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label>Source</Label>
-                <Input
-                  type="text"
-                  name="source"
-                  value={formData.source}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
+            {(formData.type === "CREDIT_CARD" ||
+              formData.type === "STORE_CARD" ||
+              formData.type === "LOAN" ||
+              formData.type === "HP" ||
+              formData.type === "OVERDRAFT" ||
+              formData.type === "STUDENT_LOAN" ||
+              formData.type === "LEASE" ||
+              formData.type === "UNSECURED" ||
+              formData.type === "MORTGAGE_RENT" ||
+              formData.type === "SECURED" ||
+              formData.type === "PCP" ||
+              formData.type === "MAIL_ORDER" ||
+              formData.type === "BNPL" ||
+              formData.type === "DMP") && (
+              <Col md={6}>
+                <FormGroup>
+                  <Label>Cost of Credit (£)</Label>
+                  <Input
+                    type="number"
+                    name="cost_of_credit"
+                    value={formData.cost_of_credit}
+                    onChange={handleInputChange}
+                    step="0.01"
+                  />
+                </FormGroup>
+              </Col>
+            )}
+            {(formData.type === "CREDIT_CARD" ||
+              formData.type === "STORE_CARD" ||
+              formData.type === "LOAN" ||
+              formData.type === "HP" ||
+              formData.type === "OVERDRAFT" ||
+              formData.type === "STUDENT_LOAN" ||
+              formData.type === "LEASE" ||
+              formData.type === "UNSECURED" ||
+              formData.type === "MORTGAGE_RENT" ||
+              formData.type === "SECURED" ||
+              formData.type === "PCP" ||
+              formData.type === "MAIL_ORDER" ||
+              formData.type === "BNPL" ||
+              formData.type === "DMP") && (
+              <>
+                <Col md={4}>
+                  <FormGroup>
+                    <Label>Paid on Completion</Label>
+                    <Input
+                      type="select"
+                      name="paid_on_completion"
+                      value={formData.paid_on_completion}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Select...</option>
+                      <option value="YES">Yes</option>
+                      <option value="NO">No</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+                {formData.paid_on_completion === "YES" && (
+                  <Col md={4}>
+                    <FormGroup>
+                      <Label>Source</Label>
+                      <Input
+                        type="text"
+                        name="source"
+                        value={formData.source}
+                        onChange={handleInputChange}
+                      />
+                    </FormGroup>
+                  </Col>
+                )}
+              </>
+            )}
           </Row>
         </ModalBody>
         <ModalFooter>
