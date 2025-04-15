@@ -329,10 +329,9 @@ const CreditCommitmentsContent: React.FC = () => {
                     {item.os_balance ? (
                       `£${item.os_balance.toFixed(2)}`
                     ) : (
-                      <span className="text-danger">£0.00</span>
+                      <span className="text-danger opacity-50">£0.00</span>
                     )}
                   </td>
-                  <td>£{item.settlement_balance?.toFixed(2) || "0.00"}</td>
                   <td>£{item.settlement_balance?.toFixed(2) || "0.00"}</td>
                   <td>£{item.monthly_repayment?.toFixed(2) || "0.00"}</td>
                   <td>{item.interest_rate?.toFixed(2) || "0.00"}%</td>
@@ -350,8 +349,11 @@ const CreditCommitmentsContent: React.FC = () => {
                   </td>
                   <td>{item.source || "-"}</td>
                   <td>
-                    {item.has_the_unsecured_credit_mounted_up ||
-                      "No note available"}
+                    {item.has_the_unsecured_credit_mounted_up || (
+                      <span className="text-danger opacity-50">
+                        No note available
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
