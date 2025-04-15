@@ -109,12 +109,13 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
           <Row>
             <Col md={4}>
               <FormGroup>
-                <Label>Applicant</Label>
+                <Label>Applicant*</Label>
                 <Input
                   type="select"
                   name="applicant"
                   value={formData.applicant}
                   onChange={handleInputChange}
+                  required
                 >
                   <option value="">Select...</option>
                   {caseUsers?.map((user: any) => (
@@ -142,12 +143,13 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label>Type</Label>
+                <Label>Type*</Label>
                 <Input
                   type="select"
                   name="type"
                   value={formData.type}
                   onChange={handleInputChange}
+                  required
                 >
                   <option value="">Select...</option>
                   <option value="CREDIT_CARD">Credit Card</option>
@@ -230,8 +232,6 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 </FormGroup>
               </Col>
             )}
-          </Row>
-          <Row>
             {(formData.type === "CREDIT_CARD" ||
               formData.type === "STORE_CARD" ||
               formData.type === "LOAN" ||
@@ -246,31 +246,54 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
               formData.type === "MAIL_ORDER" ||
               formData.type === "BNPL" ||
               formData.type === "DMP") && (
-              <Col md={4}>
+              <Col md={6}>
                 <FormGroup>
-                  <Label>OS Balance (£)</Label>
+                  <Label>OS Balance* (£)</Label>
                   <Input
                     type="number"
                     name="os_balance"
                     value={formData.os_balance}
                     onChange={handleInputChange}
                     step="0.01"
+                    required
                   />
                 </FormGroup>
               </Col>
             )}
-            <Col md={4}>
-              <FormGroup>
-                <Label>Settlement Balance (£)</Label>
-                <Input
-                  type="number"
-                  name="settlement_balance"
-                  value={formData.settlement_balance}
-                  onChange={handleInputChange}
-                  step="0.01"
-                />
-              </FormGroup>
-            </Col>
+            {(formData.type === "CREDIT_CARD" ||
+              formData.type === "STORE_CARD" ||
+              formData.type === "LOAN" ||
+              formData.type === "HP" ||
+              formData.type === "OVERDRAFT" ||
+              formData.type === "STUDENT_LOAN" ||
+              formData.type === "MAINTENANCE" ||
+              formData.type === "LEASE" ||
+              formData.type === "UNSECURED" ||
+              formData.type === "MORTGAGE_RENT" ||
+              formData.type === "PUBLIC_UTILITY" ||
+              formData.type === "COMMUNICATIONS" ||
+              formData.type === "INSURANCE" ||
+              formData.type === "SECURED" ||
+              formData.type === "PCP" ||
+              formData.type === "MAIL_ORDER" ||
+              formData.type === "CHILDCARE" ||
+              formData.type === "CAR_FINANCE" ||
+              formData.type === "BNPL" ||
+              formData.type === "CREDIT_COMMITMENT" ||
+              formData.type === "DMP") && (
+              <Col md={6}>
+                <FormGroup>
+                  <Label>Settlement Balance (£)</Label>
+                  <Input
+                    type="number"
+                    name="settlement_balance"
+                    value={formData.settlement_balance}
+                    onChange={handleInputChange}
+                    step="0.01"
+                  />
+                </FormGroup>
+              </Col>
+            )}
             {(formData.type === "CREDIT_CARD" ||
               formData.type === "STORE_CARD" ||
               formData.type === "LOAN" ||
@@ -290,7 +313,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
               formData.type === "CHILDCARE" ||
               formData.type === "BNPL" ||
               formData.type === "DMP") && (
-              <Col md={4}>
+              <Col md={6}>
                 <FormGroup>
                   <Label>Monthly Repayment (£)</Label>
                   <Input
@@ -303,8 +326,6 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 </FormGroup>
               </Col>
             )}
-          </Row>
-          <Row>
             {(formData.type === "CREDIT_CARD" ||
               formData.type === "STORE_CARD" ||
               formData.type === "LOAN" ||
@@ -317,7 +338,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
               formData.type === "MAIL_ORDER" ||
               formData.type === "BNPL" ||
               formData.type === "DMP") && (
-              <Col md={4}>
+              <Col md={6}>
                 <FormGroup>
                   <Label>Interest Rate (%)</Label>
                   <Input
@@ -334,7 +355,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
               formData.type === "STORE_CARD" ||
               formData.type === "MAIL_ORDER" ||
               formData.type === "BNPL") && (
-              <Col md={4}>
+              <Col md={6}>
                 <FormGroup>
                   <Label>Card Limit (£)</Label>
                   <Input
@@ -357,7 +378,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
               formData.type === "CHILDCARE" ||
               formData.type === "BNPL" ||
               formData.type === "DMP") && (
-              <Col md={4}>
+              <Col md={6}>
                 <FormGroup>
                   <Label>Term Remaining (Months)</Label>
                   <Input
@@ -368,9 +389,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                   />
                 </FormGroup>
               </Col>
-            )}
-          </Row>
-          <Row>
+            )}{" "}
             {formData.type === "PCP" && (
               <Col md={6}>
                 <FormGroup>
@@ -387,7 +406,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
             )}
             {(formData.type === "MAINTENANCE" ||
               formData.type === "CHILDCARE") && (
-              <Col md={4}>
+              <Col md={6}>
                 <FormGroup>
                   <Label>Court Ordered</Label>
                   <Input
@@ -403,8 +422,6 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 </FormGroup>
               </Col>
             )}
-          </Row>
-          <Row>
             {(formData.type === "CREDIT_CARD" ||
               formData.type === "STORE_CARD" ||
               formData.type === "LOAN" ||
@@ -447,7 +464,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
               formData.type === "BNPL" ||
               formData.type === "DMP") && (
               <>
-                <Col md={4}>
+                <Col md={6}>
                   <FormGroup>
                     <Label>Paid on Completion</Label>
                     <Input
@@ -463,7 +480,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                   </FormGroup>
                 </Col>
                 {formData.paid_on_completion === "YES" && (
-                  <Col md={4}>
+                  <Col md={6}>
                     <FormGroup>
                       <Label>Source</Label>
                       <Input
@@ -477,6 +494,17 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                 )}
               </>
             )}
+            <Col>
+              <FormGroup>
+                <Label>Note</Label>
+                <Input
+                  type="textarea"
+                  name="has_the_unsecured_credit_mounted_up"
+                  value={formData.has_the_unsecured_credit_mounted_up}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
           </Row>
         </ModalBody>
         <ModalFooter>
