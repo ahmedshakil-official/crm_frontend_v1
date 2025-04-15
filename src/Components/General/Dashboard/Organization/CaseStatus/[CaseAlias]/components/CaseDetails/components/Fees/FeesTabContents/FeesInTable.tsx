@@ -91,8 +91,8 @@ const FeeInTable = () => {
             className="addFee d-flex align-items-center gap-2"
             onClick={toggleModal}
           >
-            <i className="fa fa-plus"></i>
             Add New Fee In
+            <i className="fa-solid fa-circle-plus"></i>
           </Button>
         </Col>
       </Row>

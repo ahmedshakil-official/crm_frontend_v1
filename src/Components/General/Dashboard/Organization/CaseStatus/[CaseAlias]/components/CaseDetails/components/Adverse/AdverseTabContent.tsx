@@ -4,6 +4,7 @@ import {
   useUpdateAdverseDetailsMutation,
 } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import { ApplicantsUsersProps } from "@/Types/Organization/CaseDetails/ApplicantsUserTypes";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -216,7 +217,12 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
 
   return (
     <Container>
