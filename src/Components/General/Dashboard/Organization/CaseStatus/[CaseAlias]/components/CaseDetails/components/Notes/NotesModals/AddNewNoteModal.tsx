@@ -30,14 +30,12 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
   const [isTask, setIsTask] = useState(true);
   const [brokerVisible, setBrokerVisible] = useState(false);
   const [clientVisible, setClientVisible] = useState(false);
-  // Update the priority state initial value
   const [priority, setPriority] = useState("LOW");
   const [dueDate, setDueDate] = useState(
     new Date().toLocaleDateString("en-GB")
   );
   const [dueTime, setDueTime] = useState("");
-  // Update the initial state
-  const [assignedTo, setAssignedTo] = useState("1"); // Changed from email to ID
+  const [assignedTo, setAssignedTo] = useState("1");
   const [category, setCategory] = useState("");
   const [comments, setComments] = useState("");
   const [addNotes, { isLoading }] = useAddNotesMutation();
@@ -161,6 +159,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
                     id="priority"
                     value={priority}
                     onChange={(e) => setPriority(e.target.value)}
+                    required
                   >
                     <option value="LOW">Low</option>
                     <option value="NORMAL">Normal</option>
@@ -188,6 +187,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
                             e.target.value.split("-").reverse().join("/")
                           )
                         }
+                        required
                       />
                     </Col>
                     <Col xs={6}>
@@ -214,6 +214,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
                     id="assignedTo"
                     value={assignedTo}
                     onChange={(e) => setAssignedTo(e.target.value)}
+                    required
                   >
                     <option value="1">mostafiz@benecofinance.co.uk</option>
                     {/* Add more options as needed */}
@@ -233,6 +234,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
                     id="category"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
+                    required
                   >
                     <option value="">Select...</option>
                     {categories.map((cat) => (
@@ -257,6 +259,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
               value={comments}
               onChange={(e) => setComments(e.target.value)}
               placeholder="Enter your comments here..."
+              required
             />
           </FormGroup>
         </ModalBody>
@@ -264,8 +267,8 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>
-          <Button color="primary" type="submit">
-            Create
+          <Button color="primary" type="submit" disabled={isLoading}>
+            {isLoading ? "Loading..." : "Create"}
           </Button>
         </ModalFooter>
       </Form>
