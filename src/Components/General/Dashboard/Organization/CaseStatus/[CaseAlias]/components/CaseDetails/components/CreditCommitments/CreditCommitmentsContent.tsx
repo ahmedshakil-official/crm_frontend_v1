@@ -106,7 +106,6 @@ const CreditCommitmentsContent: React.FC = () => {
                   <i className="fa-solid fa-sterling-sign"></i>
                 </span>
                 <span className="h2 text-primary font-weight-bold">
-                  {" "}
                   £{totals.totalBalance.toFixed(2)}
                 </span>
               </div>
@@ -326,7 +325,14 @@ const CreditCommitmentsContent: React.FC = () => {
                   </td>
                   <td>{item.company || "-"}</td>
                   <td>{item.account_no || "-"}</td>
-                  <td>£{item.os_balance?.toFixed(2) || "0.00"}</td>
+                  <td>
+                    {item.os_balance ? (
+                      `£${item.os_balance.toFixed(2)}`
+                    ) : (
+                      <span className="text-danger">£0.00</span>
+                    )}
+                  </td>
+                  <td>£{item.settlement_balance?.toFixed(2) || "0.00"}</td>
                   <td>£{item.settlement_balance?.toFixed(2) || "0.00"}</td>
                   <td>£{item.monthly_repayment?.toFixed(2) || "0.00"}</td>
                   <td>{item.interest_rate?.toFixed(2) || "0.00"}%</td>

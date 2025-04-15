@@ -93,7 +93,7 @@ const UpdateCreditCommitmentModal: React.FC<
       <Form onSubmit={handleSubmit}>
         <ModalBody>
           <Row>
-            <Col md={4}>
+            <Col md={6}>
               <FormGroup>
                 <Label>Applicant*</Label>
                 <Input
@@ -104,15 +104,19 @@ const UpdateCreditCommitmentModal: React.FC<
                   required
                 >
                   <option value="">Select...</option>
-                  {caseUsers?.map((user: any) => (
-                    <option key={user.id} value={user.id}>
-                      {user.first_name} {user.last_name}
-                    </option>
-                  ))}
+                  {isLoading ? (
+                    <option>Loading...</option>
+                  ) : (
+                    caseUsers?.map((user: any) => (
+                      <option key={user.id} value={user.id}>
+                        {user.first_name} {user.last_name}
+                      </option>
+                    ))
+                  )}
                 </Input>
               </FormGroup>
             </Col>
-            <Col md={4}>
+            <Col md={6}>
               <FormGroup>
                 <Label>Joint</Label>
                 <Input
@@ -127,7 +131,7 @@ const UpdateCreditCommitmentModal: React.FC<
                 </Input>
               </FormGroup>
             </Col>
-            <Col md={4}>
+            {/* <Col md={4}>
               <FormGroup>
                 <Label>Type*</Label>
                 <Input
@@ -161,7 +165,7 @@ const UpdateCreditCommitmentModal: React.FC<
                   <option value="DMP">DMP</option>
                 </Input>
               </FormGroup>
-            </Col>
+            </Col> */}
           </Row>
           <Row>
             {(formData.type === "CREDIT_CARD" ||
@@ -183,12 +187,13 @@ const UpdateCreditCommitmentModal: React.FC<
               formData.type === "DMP") && (
               <Col md={6}>
                 <FormGroup>
-                  <Label>Company</Label>
+                  <Label>Company*</Label>
                   <Input
                     type="text"
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
+                    required
                   />
                 </FormGroup>
               </Col>
@@ -217,7 +222,7 @@ const UpdateCreditCommitmentModal: React.FC<
                   />
                 </FormGroup>
               </Col>
-            )}{" "}
+            )}
             {(formData.type === "CREDIT_CARD" ||
               formData.type === "STORE_CARD" ||
               formData.type === "LOAN" ||
@@ -375,7 +380,7 @@ const UpdateCreditCommitmentModal: React.FC<
                   />
                 </FormGroup>
               </Col>
-            )}{" "}
+            )}
             {formData.type === "PCP" && (
               <Col md={6}>
                 <FormGroup>

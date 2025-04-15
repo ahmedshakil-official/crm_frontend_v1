@@ -197,12 +197,13 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
               formData.type === "DMP") && (
               <Col md={6}>
                 <FormGroup>
-                  <Label>Company</Label>
+                  <Label>Company*</Label>
                   <Input
                     type="text"
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
+                    required
                   />
                 </FormGroup>
               </Col>
