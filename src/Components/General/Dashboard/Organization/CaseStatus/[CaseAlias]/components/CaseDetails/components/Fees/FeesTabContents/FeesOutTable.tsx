@@ -82,8 +82,8 @@ const FeeOutTable = () => {
             className="addFee d-flex align-items-center gap-2"
             onClick={toggleModal}
           >
-            <i className="fa fa-plus"></i>
             Add New Fee Out
+            <i className="fa-solid fa-circle-plus"></i>
           </Button>
         </Col>
       </Row>

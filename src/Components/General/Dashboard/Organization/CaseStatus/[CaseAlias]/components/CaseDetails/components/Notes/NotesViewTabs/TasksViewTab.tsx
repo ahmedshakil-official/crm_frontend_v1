@@ -1,8 +1,7 @@
 import { FC, useState } from "react";
-import { Container, Table, Row, Col, Button } from "reactstrap";
-import { Plus } from "react-feather";
-import { NoteTask } from "../NotesTabContent";
+import { Button, Col, Container, Row, Table } from "reactstrap";
 import CreateTaskNoteModal from "../NotesModals/AddNewNoteModal";
+import { NoteTask } from "../NotesTabContent";
 
 interface TasksViewTabProps {
   tasks: NoteTask[];
@@ -16,8 +15,8 @@ const TasksViewTab: FC<TasksViewTabProps> = ({ tasks }) => {
       <Row className="mb-3">
         <Col className="text-end">
           <Button color="primary" onClick={() => setModalOpen(true)}>
-            <Plus size={16} className="me-1" />
             Add New Task
+            <i className="fa-solid fa-circle-plus ms-1"></i>
           </Button>
         </Col>
       </Row>

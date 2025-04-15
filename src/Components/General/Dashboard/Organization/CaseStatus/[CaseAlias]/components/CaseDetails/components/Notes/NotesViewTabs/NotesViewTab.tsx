@@ -1,6 +1,7 @@
+import formatDateToDMY from "@/utils/dateFormatter";
 import { FC, useState } from "react";
-import { Container, Row, Col, Input, Button, Table, Badge } from "reactstrap";
-import { Plus, Trash2 } from "react-feather";
+import { Trash2 } from "react-feather";
+import { Badge, Button, Col, Container, Input, Row, Table } from "reactstrap";
 import CreateTaskNoteModal from "../NotesModals/AddNewNoteModal";
 import { NoteTask } from "../NotesTabContent";
 
@@ -37,7 +38,7 @@ const CATEGORIES = [
 ] as const;
 
 // Reusable Badge component
-const VisibilityBadge: FC<{ isVisible: boolean }> = ({ isVisible }) => 
+const VisibilityBadge: FC<{ isVisible: boolean }> = ({ isVisible }) =>
   isVisible ? (
     <Badge color="success">
       <i className="fa fa-check" />
@@ -45,12 +46,20 @@ const VisibilityBadge: FC<{ isVisible: boolean }> = ({ isVisible }) =>
   ) : null;
 
 // Reusable cell renderer
-const renderCell = (note: NoteTask, column: typeof TABLE_COLUMNS[number], handleDelete: (alias: string) => void) => {
+const renderCell = (
+  note: NoteTask,
+  column: (typeof TABLE_COLUMNS)[number],
+  handleDelete: (alias: string) => void
+) => {
   switch (column.key) {
     case "category":
-      return CATEGORIES.find(cat => cat.value === note.category)?.display || "Uncategorised";
+      return (
+        CATEGORIES.find((cat) => cat.value === note.category)?.display ||
+        "Uncategorised"
+      );
     case "created_at":
-      return new Date(note.created_at).toLocaleString();
+      // return new Date(note.created_at).toLocaleString();
+      return formatDateToDMY(note.created_at);
     case "case_stage":
       return note.case.case_stage;
     case "user":
@@ -68,7 +77,11 @@ const renderCell = (note: NoteTask, column: typeof TABLE_COLUMNS[number], handle
       return <VisibilityBadge isVisible={note.note_visible_to_client} />;
     case "options":
       return (
-        <Button color="danger" size="sm" onClick={() => handleDelete(note.alias)}>
+        <Button
+          color="danger"
+          size="sm"
+          onClick={() => handleDelete(note.alias)}
+        >
           <Trash2 size={16} />
         </Button>
       );
@@ -105,13 +118,15 @@ const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
                 </option>
               ))}
             </Input>
-            <Button color="primary" className="ms-2">Search</Button>
+            <Button color="primary" className="ms-2">
+              Search
+            </Button>
           </div>
         </Col>
         <Col md={8} className="text-end">
           <Button color="primary" onClick={() => setModalOpen(true)}>
-            <Plus size={16} className="me-1" />
             Add New Note
+            <i className="fa-solid fa-circle-plus ms-1"></i>
           </Button>
         </Col>
       </Row>
@@ -120,7 +135,7 @@ const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
         <Table striped hover>
           <thead>
             <tr>
-              {TABLE_COLUMNS.map(column => (
+              {TABLE_COLUMNS.map((column) => (
                 <th key={column.key} style={{ minWidth: column.width }}>
                   {column.label}
                 </th>
@@ -130,7 +145,7 @@ const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
           <tbody>
             {filteredNotes.map((note) => (
               <tr key={note.alias}>
-                {TABLE_COLUMNS.map(column => (
+                {TABLE_COLUMNS.map((column) => (
                   <td key={`${note.alias}-${column.key}`}>
                     {renderCell(note, column, handleDeleteNote)}
                   </td>
@@ -144,7 +159,7 @@ const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
       <Row className="mt-3 align-items-center">
         <Col sm={5}>
           <div className="text-muted">
-            Showing  {filteredNotes.length} entries
+            Showing {filteredNotes.length} entries
           </div>
         </Col>
       </Row>
