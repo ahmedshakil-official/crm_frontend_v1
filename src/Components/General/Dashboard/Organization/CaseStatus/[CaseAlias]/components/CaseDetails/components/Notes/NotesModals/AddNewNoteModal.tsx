@@ -268,7 +268,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
             Cancel
           </Button>
           <Button color="primary" type="submit" disabled={isLoading}>
-            Create
+            {isLoading ? "Loading..." : "Create"}
           </Button>
         </ModalFooter>
       </Form>
