@@ -275,88 +275,119 @@ const CreditCommitmentsContent: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {creditCommitments?.map((item: any, index: number) => (
-                <tr key={index}>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <button
-                        className="btn btn-sm btn-primary"
-                        onClick={() => {
-                          setSelectedCreditData(item);
-                          setIsUpdateModalOpen(true);
-                        }}
-                      >
-                        <i className="fa fa-edit"></i>
-                      </button>
-                      <button
-                        className="btn btn-sm btn-danger"
-                        onClick={() => {
-                          setSelectedItemAlias(item.alias);
-                          setSelectedItemName(
-                            `${item.applicant_details?.first_name || ""} ${
-                              item.applicant_details?.last_name || ""
-                            }`
-                          );
-                          setIsDeleteModalOpen(true);
-                        }}
-                      >
-                        <i className="fa fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    {`${item.applicant_details?.first_name || ""} ${
-                      item.applicant_details?.last_name || ""
-                    }` || "-"}
-                  </td>
-                  <td>
-                    {item.joint?.charAt(0).toUpperCase() +
-                      item.joint?.slice(1).toLowerCase() || "-"}
-                  </td>
-                  <td>
-                    {item.type
-                      ?.split("_")
-                      .map(
-                        (word: any) =>
-                          word.charAt(0).toUpperCase() +
-                          word.slice(1).toLowerCase()
-                      )
-                      .join(" ") || "-"}
-                  </td>
-                  <td>{item.company || "-"}</td>
-                  <td>{item.account_no || "-"}</td>
-                  <td>
-                    {item.os_balance ? (
-                      `£${item.os_balance.toFixed(2)}`
-                    ) : (
-                      <span className="text-danger opacity-50">£0.00</span>
-                    )}
-                  </td>
-                  <td>£{item.settlement_balance?.toFixed(2) || "0.00"}</td>
-                  <td>£{item.monthly_repayment?.toFixed(2) || "0.00"}</td>
-                  <td>{item.interest_rate?.toFixed(2) || "0.00"}%</td>
-                  <td>£{item.card_limit?.toFixed(2) || "0.00"}</td>
-                  <td>{item.term_remaining || "0"}</td>
-                  <td>£{item.balloon_payment?.toFixed(2) || "0.00"}</td>
-                  <td>
-                    {item.court_ordered?.charAt(0).toUpperCase() +
-                      item.court_ordered?.slice(1).toLowerCase() || "-"}
-                  </td>
-                  <td>£{item.cost_of_credit?.toFixed(2) || "0.00"}</td>
-                  <td>
-                    {item.paid_on_completion.charAt(0).toUpperCase() +
-                      item.paid_on_completion?.slice(1).toLowerCase() || "-"}
-                  </td>
-                  <td>{item.source || "-"}</td>
-                  <td>
-                    {item.has_the_unsecured_credit_mounted_up || (
-                      <span className="text-danger opacity-50">
-                        No note available
-                      </span>
-                    )}
+              {!creditCommitments || creditCommitments.length === 0 ? (
+                <tr>
+                  <td colSpan={18} className="text-center">
+                    <span className="text-danger opacity-75 fs-6">
+                      No credit commitments available
+                    </span>
                   </td>
                 </tr>
-              ))}
+              ) : (
+                creditCommitments.map((item: any, index: number) => (
+                  <tr key={index}>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <button
+                          className="btn btn-sm btn-primary"
+                          onClick={() => {
+                            setSelectedCreditData(item);
+                            setIsUpdateModalOpen(true);
+                          }}
+                        >
+                          <i className="fa fa-edit"></i>
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger"
+                          onClick={() => {
+                            setSelectedItemAlias(item.alias);
+                            setSelectedItemName(
+                              `${item.applicant_details?.first_name || ""} ${
+                                item.applicant_details?.last_name || ""
+                              }`
+                            );
+                            setIsDeleteModalOpen(true);
+                          }}
+                        >
+                          <i className="fa fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                    <td>
+                      {`${item.applicant_details?.first_name || ""} ${
+                        item.applicant_details?.last_name || ""
+                      }` || "-"}
+                    </td>
+                    <td>
+                      <div className="d-flex justify-content-center align-items-center fs-4">
+                        {item.joint?.toLowerCase() === "yes" ? (
+                          <i className="fa-solid fa-circle-check text-success"></i>
+                        ) : item.joint?.toLowerCase() === "no" ? (
+                          <i className="fa-solid fa-circle-xmark text-danger"></i>
+                        ) : (
+                          "-"
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      {item.type
+                        ?.split("_")
+                        .map(
+                          (word: any) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                        )
+                        .join(" ") || "-"}
+                    </td>
+                    <td>{item.company || "-"}</td>
+                    <td>{item.account_no || "-"}</td>
+                    <td>
+                      {item.os_balance ? (
+                        `£${item.os_balance.toFixed(2)}`
+                      ) : (
+                        <span className="text-danger opacity-50">£0.00</span>
+                      )}
+                    </td>
+                    <td>£{item.settlement_balance?.toFixed(2) || "0.00"}</td>
+                    <td>£{item.monthly_repayment?.toFixed(2) || "0.00"}</td>
+                    <td>{item.interest_rate?.toFixed(2) || "0.00"}%</td>
+                    <td>£{item.card_limit?.toFixed(2) || "0.00"}</td>
+                    <td>{item.term_remaining || "0"}</td>
+                    <td>£{item.balloon_payment?.toFixed(2) || "0.00"}</td>
+                    <td>
+                      <div className="d-flex justify-content-center align-items-center fs-4">
+                        {item.court_ordered?.toLowerCase() === "yes" ? (
+                          <i className="fa-solid fa-circle-check text-success"></i>
+                        ) : item.court_ordered?.toLowerCase() === "no" ? (
+                          <i className="fa-solid fa-circle-xmark text-danger"></i>
+                        ) : (
+                          "-"
+                        )}
+                      </div>
+                    </td>
+                    <td>£{item.cost_of_credit?.toFixed(2) || "0.00"}</td>
+                    <td>
+                      <div className="d-flex justify-content-center align-items-center fs-4">
+                        {item.paid_on_completion?.toLowerCase() === "yes" ? (
+                          <i className="fa-solid fa-circle-check text-success"></i>
+                        ) : item.paid_on_completion?.toLowerCase() === "no" ? (
+                          <i className="fa-solid fa-circle-xmark text-danger"></i>
+                        ) : (
+                          "-"
+                        )}
+                      </div>
+                    </td>
+                    <td>{item.source || "-"}</td>
+                    <td>
+                      {item.has_the_unsecured_credit_mounted_up || (
+                        <span className="text-danger opacity-50">
+                          No note available
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </Table>
           {/* </div> */}
