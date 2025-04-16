@@ -1,10 +1,9 @@
-
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { FC, useState } from "react";
 import { Trash2 } from "react-feather";
-import { Badge, Button, Col, Container, Input, Row, Table } from "reactstrap";
+import { Button, Col, Container, Input, Row, Table } from "reactstrap";
 import CreateTaskNoteModal from "../NotesModals/AddNewNoteModal";
 import { NoteTask } from "../NotesTabContent";
-import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 
 interface NotesViewTabProps {
   notes: NoteTask[];
@@ -38,14 +37,6 @@ const CATEGORIES = [
   { display: "Compliance Correspondence", value: "COMPLIANCE_CORRESPONDENCE" },
 ] as const;
 
-// Reusable Badge component
-const VisibilityBadge: FC<{ isVisible: boolean }> = ({ isVisible }) =>
-  isVisible ? (
-    <Badge color="success">
-      <i className="fa fa-check" />
-    </Badge>
-  ) : null;
-
 // Reusable cell renderer
 const renderCell = (
   note: NoteTask,
@@ -73,9 +64,25 @@ const renderCell = (
         />
       );
     case "introducer":
-      return <VisibilityBadge isVisible={note.note_visible_to_introducer} />;
+      return (
+        <div className="d-flex justify-content-center fs-4">
+          {note.note_visible_to_introducer ? (
+            <i className="fa-solid fa-circle-check text-success"></i>
+          ) : (
+            <i className="fa-solid fa-circle-xmark text-danger"></i>
+          )}
+        </div>
+      );
     case "client":
-      return <VisibilityBadge isVisible={note.note_visible_to_client} />;
+      return (
+        <div className="d-flex justify-content-center fs-4">
+          {note.note_visible_to_client ? (
+            <i className="fa-solid fa-circle-check text-success"></i>
+          ) : (
+            <i className="fa-solid fa-circle-xmark text-danger"></i>
+          )}
+        </div>
+      );
     case "options":
       return (
         <Button
