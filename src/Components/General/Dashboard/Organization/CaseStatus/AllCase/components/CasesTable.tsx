@@ -22,11 +22,11 @@ import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Cases/CaseDetailsApi";
 import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
-import formatDateToDMY from "@/utils/dateFormatter";
 import "../../CaseStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 import DeleteCaseModal from "../../Modals/DeleteCaseModal";
 import UpdateCaseModal from "../../Modals/UpdateCaseModal";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 
 const CaseTable: React.FC = () => {
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
@@ -281,7 +281,7 @@ const CaseTable: React.FC = () => {
                         )
                         .join(" ")}
                     </td>
-                    <td>{formatDateToDMY(caseItem?.created_at)}</td>
+                    <td>{formatDateToDMYAndTime(caseItem?.created_at)}</td>
                     <td>
                       {caseItem?.created_by?.first_name}{" "}
                       {caseItem?.created_by?.last_name}

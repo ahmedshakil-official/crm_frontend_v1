@@ -1,5 +1,6 @@
 import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Portfolio/PortfolioApi";
 import LoadingSpinner from "@/app/loading";
+import { formatDateToDMY } from "@/utils/dateAndTimeFormatter";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import {
@@ -158,9 +159,9 @@ const PortfolioContent: React.FC = () => {
                               {Number(item?.value_at_purchase).toLocaleString()}
                             </td>
                             <td>
-                              {new Date(
-                                item?.date_purchased
-                              ).toLocaleDateString()}
+                              {item?.date_purchased
+                                ? formatDateToDMY(item.date_purchased)
+                                : "-"}
                             </td>
                             <td>
                               £
@@ -182,18 +183,50 @@ const PortfolioContent: React.FC = () => {
                                 Number(item?.monthly_mortgage_payment)
                               ).toFixed(2)}
                             </td>
-                            <td>{item?.is_hmo ? "Yes" : "No"}</td>
-                            <td>{item?.is_mufb ? "Yes" : "No"}</td>
+                            <td>
+                              <div className="d-flex justify-content-center fs-4">
+                                {item?.is_hmo ? (
+                                  <i className="fa-solid fa-circle-check text-success"></i>
+                                ) : (
+                                  <i className="fa-solid fa-circle-xmark text-danger"></i>
+                                )}
+                              </div>
+                            </td>
+                            <td>
+                              <div className="d-flex justify-content-center fs-4">
+                                {item?.is_mufb ? (
+                                  <i className="fa-solid fa-circle-check text-success"></i>
+                                ) : (
+                                  <i className="fa-solid fa-circle-xmark text-danger"></i>
+                                )}
+                              </div>
+                            </td>
                             <td>{item?.epc_rating || "-"}</td>
                             <td>{item?.repayment_type || "-"}</td>
                             <td>{item?.to_be_repaid || "-"}</td>
                             <td>{item?.current_rate || "-"}</td>
                             <td>{item?.rate_type || "-"}</td>
-                            <td>{item?.current_rate_end_date || "-"}</td>
-                            <td>{item?.erc_end_date || "-"}</td>
+                            <td>
+                              {item?.current_rate_end_date
+                                ? formatDateToDMY(item.current_rate_end_date)
+                                : "-"}
+                            </td>
+                            <td>
+                              {item?.erc_end_date
+                                ? formatDateToDMY(item.erc_end_date)
+                                : "-"}
+                            </td>
                             <td>{item?.account_number || "-"}</td>
                             <td>{item?.ownership || "-"}</td>
-                            <td>{item?.is_limited_company ? "Yes" : "No"}</td>
+                            <td>
+                              <div className="d-flex justify-content-center fs-4">
+                                {item?.is_limited_company ? (
+                                  <i className="fa-solid fa-circle-check text-success"></i>
+                                ) : (
+                                  <i className="fa-solid fa-circle-xmark text-danger"></i>
+                                )}
+                              </div>
+                            </td>
                             <td>{item?.remaining_mortgage_term || "-"}</td>
                             <td>{item?.number_of_bedrooms || "-"}</td>
                             <td>{item?.year_built || "-"}</td>

@@ -1,7 +1,7 @@
 import { useGetClientDetailsQuery } from "@/Redux/Reducers/Directors/ClientDetailsApi";
 import { ClientInfoProps } from "@/Types/Organization/ClientTypes";
 import LoadingSpinner from "@/app/loading";
-import formatDateToDMY from "@/utils/dateFormatter";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -189,7 +189,7 @@ const ClientListBody: React.FC = () => {
                     {client?.created_by?.first_name}{" "}
                     {client?.created_by?.last_name}
                   </td>
-                  <td>{formatDateToDMY(client?.created_at)}</td>
+                  <td>{formatDateToDMYAndTime(client?.created_at)}</td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button

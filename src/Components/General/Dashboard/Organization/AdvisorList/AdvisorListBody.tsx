@@ -1,7 +1,6 @@
 import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import LoadingSpinner from "@/app/loading";
-import formatDateToDMY from "@/utils/dateFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -21,6 +20,7 @@ import "./AdvisorList.css";
 import AddAdvisorModal from "./Modals/AddAdvisorModal";
 import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
 import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
+import { formatDateToDMY, formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 
 const AdvisorListBody: React.FC = () => {
   const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
@@ -188,7 +188,7 @@ const AdvisorListBody: React.FC = () => {
                     {advisor?.created_by?.first_name}{" "}
                     {advisor?.created_by?.last_name}
                   </td>
-                  <td>{formatDateToDMY(advisor?.created_at)}</td>
+                  <td>{formatDateToDMYAndTime(advisor?.created_at)}</td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button

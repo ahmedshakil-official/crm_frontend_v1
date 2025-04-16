@@ -1,7 +1,7 @@
 import { useGetIntroducerDetailsQuery } from "@/Redux/Reducers/Directors/IntroducerDetailsApi";
 import { IntroducerInfoProps } from "@/Types/Organization/IntroducerTypes";
 import LoadingSpinner from "@/app/loading";
-import formatDateToDMY from "@/utils/dateFormatter";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -186,7 +186,7 @@ const IntroducerListBody: React.FC = () => {
                     {introducer?.created_by?.first_name}{" "}
                     {introducer?.created_by?.last_name}
                   </td>
-                  <td>{formatDateToDMY(introducer?.created_at)}</td>
+                  <td>{formatDateToDMYAndTime(introducer?.created_at)}</td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
