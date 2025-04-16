@@ -50,7 +50,6 @@ const renderCell = (
         "Uncategorised"
       );
     case "created_at":
-      // return new Date(note.created_at).toLocaleString();
       return formatDateToDMYAndTime(note.created_at);
     case "case_stage":
       return note.case.case_stage;
