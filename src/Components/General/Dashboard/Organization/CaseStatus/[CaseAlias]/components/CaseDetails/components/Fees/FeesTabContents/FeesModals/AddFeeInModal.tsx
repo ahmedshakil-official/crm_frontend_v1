@@ -115,12 +115,13 @@ const AddFeeInModal: FC<AddFeeInModalProps> = ({
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="method">Payment Method</Label>
+                <Label for="method">Payment Method*</Label>
                 <Input
                   type="select"
                   id="method"
                   value={feeData.method}
                   onChange={(e) => handleInputChange("method", e.target.value)}
+                  required
                 >
                   <option value="">Select Method</option>
                   {methods.map((method) => (
