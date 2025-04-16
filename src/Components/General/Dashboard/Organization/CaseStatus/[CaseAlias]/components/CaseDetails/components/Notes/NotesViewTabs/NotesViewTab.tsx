@@ -11,6 +11,7 @@ interface NotesViewTabProps {
 
 // Reusable table column definitions
 const TABLE_COLUMNS = [
+  { key: "actions", label: "Actions", width: "100px" },
   { key: "category", label: "Category", width: "100px" },
   { key: "created_at", label: "Activity Date", width: "150px" },
   { key: "case_stage", label: "Stage", width: "150px" },
@@ -18,7 +19,6 @@ const TABLE_COLUMNS = [
   { key: "note", label: "Information", width: "400px" },
   { key: "introducer", label: "Introducer Visible", width: "150px" },
   { key: "client", label: "Client Visible", width: "150px" },
-  { key: "options", label: "Options", width: "100px" },
 ] as const;
 
 // Categories constant
@@ -44,6 +44,18 @@ const renderCell = (
   handleDelete: (alias: string) => void
 ) => {
   switch (column.key) {
+    case "actions":
+      return (
+        <div className="d-flex justify-content-start align-items-center">
+          <Button
+            color="danger"
+            size="sm"
+            onClick={() => handleDelete(note.alias)}
+          >
+            <Trash2 size={16} />
+          </Button>
+        </div>
+      );
     case "category":
       return (
         CATEGORIES.find((cat) => cat.value === note.category)?.display ||
@@ -52,7 +64,12 @@ const renderCell = (
     case "created_at":
       return formatDateToDMYAndTime(note.created_at);
     case "case_stage":
-      return note.case.case_stage;
+      return note.case.case_stage
+        .split("_")
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ");
     case "user":
       return `${note.created_by.first_name} ${note.created_by.last_name}`;
     case "note":
@@ -82,16 +99,16 @@ const renderCell = (
           )}
         </div>
       );
-    case "options":
-      return (
-        <Button
-          color="danger"
-          size="sm"
-          onClick={() => handleDelete(note.alias)}
-        >
-          <Trash2 size={16} />
-        </Button>
-      );
+    // case "actions":
+    //   return (
+    //     <Button
+    //       color="danger"
+    //       size="sm"
+    //       onClick={() => handleDelete(note.alias)}
+    //     >
+    //       <Trash2 size={16} />
+    //     </Button>
+    //   );
     default:
       return null;
   }
