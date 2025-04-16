@@ -1,9 +1,10 @@
-import formatDateToDMY from "@/utils/dateFormatter";
+
 import { FC, useState } from "react";
 import { Trash2 } from "react-feather";
 import { Badge, Button, Col, Container, Input, Row, Table } from "reactstrap";
 import CreateTaskNoteModal from "../NotesModals/AddNewNoteModal";
 import { NoteTask } from "../NotesTabContent";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 
 interface NotesViewTabProps {
   notes: NoteTask[];
@@ -59,7 +60,7 @@ const renderCell = (
       );
     case "created_at":
       // return new Date(note.created_at).toLocaleString();
-      return formatDateToDMY(note.created_at);
+      return formatDateToDMYAndTime(note.created_at);
     case "case_stage":
       return note.case.case_stage;
     case "user":

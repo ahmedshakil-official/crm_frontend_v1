@@ -1,11 +1,11 @@
 import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Cases/CaseDetailsApi";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
-import formatDateToDMY from "@/utils/dateFormatter";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button, Row, Spinner, Table } from "reactstrap";
 import "./CaseStatus.css";
 import CaseStatusHeader from "./CaseStatusHeader";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 
 const CaseStatusBody: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);
@@ -88,7 +88,7 @@ const CaseStatusBody: React.FC = () => {
                       )
                       .join(" ")}
                   </td>
-                  <td>{formatDateToDMY(caseItem?.created_at)}</td>
+                  <td>{formatDateToDMYAndTime(caseItem?.created_at)}</td>
                   <td>
                     {caseItem?.created_by.first_name}{" "}
                     {caseItem?.created_by.last_name}
