@@ -174,6 +174,10 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                   <option value="CREDIT_COMMITMENT">Credit Commitment</option>
                   <option value="DMP">DMP</option>
                 </Input>
+                <small className="text-danger" style={{fontSize:"9px"}}>
+                  Select the "Type" correctly, as it cannot be updated
+                  later.
+                </small>
               </FormGroup>
             </Col>
           </Row>
