@@ -10,8 +10,8 @@ export const SingleOrganizationApi = baseApi.injectEndpoints({
       providesTags: ["SingleOrganization"],
     }),
     updateOrganization: builder.mutation({
-      query: ({ payload }) => ({
-        url: `/organization/list/`,
+      query: ({slug, payload }) => ({
+        url: `/organization/list/${slug}/`,
         method: "PUT",
         body: payload,
       }),

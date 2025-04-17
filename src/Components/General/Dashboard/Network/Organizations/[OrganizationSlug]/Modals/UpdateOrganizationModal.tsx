@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useUpdateOrganizationMutation } from "@/Redux/Reducers/Network/Organization/SingleOrganization/SingleOrganizationApi";
 import { UpdateOrganizationModalProps } from "@/Types/Network/OrganizationsTypes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -23,7 +23,6 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
   toggle,
   slug,
   organizationData,
-  onUpdateSuccess,
 }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -39,9 +38,9 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
 
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [logo, setLogo] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [oldName, setOldName] = useState("");
+  // Rtk hooks
+  const [updateOrganization, { isLoading }] = useUpdateOrganizationMutation();
 
   // Set initial form values when modal opens
   useEffect(() => {
@@ -80,11 +79,10 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
   };
 
   // Handle form submission
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      setIsLoading(true);
       const formDataToSend = new FormData();
-
       // Append text fields
       Object.entries(formData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
@@ -96,35 +94,37 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
       if (logo) {
         formDataToSend.append("logo", logo);
       }
-      await apiClient.put(`/organization/list/${slug}/`, formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      toast.success("Organization updated successfully!");
-      // Redirect if name changed
-      if (formData.name !== oldName) {
-        router.push("/dashboard/network");
-        toast.success(
-          "Due to the name change, redirected to the network page."
-        );
-      } else {
-        onUpdateSuccess();
-        toggle();
+      // Use RTK Query mutation
+      const response = await updateOrganization({
+        slug,
+        payload: formDataToSend,
+      }).unwrap();
+      if (response) {
+        toast.success("Organization updated successfully!");
+        // Redirect if name changed
+        if (formData.name !== oldName) {
+          router.push("/dashboard/network");
+          toast.success(
+            "Due to the name change, redirected to the network page."
+          );
+        } else {
+          toggle();
+        }
       }
-    } catch (error) {
-      console.error("Error updating organization:", error);
-      toast.error("Invalid Request...");
-    } finally {
-      setIsLoading(false);
+    } catch (error: any) {
+      if (error?.data?.email?.[0]) {
+        toast.error(error.data.email[0]);
+      } else {
+        toast.error("Failed to add organization. Please try again.");
+      }
     }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>Update Organization</ModalHeader>
-      <ModalBody>
-        <Form onSubmit={(e) => e.preventDefault()}>
+      <Form onSubmit={handleSubmit}>
+        <ModalBody>
           <Row>
             <Col md={6} xs={12}>
               <FormGroup>
@@ -272,16 +272,16 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
               </FormGroup>
             </Col>
           </Row>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={handleSubmit} disabled={isLoading}>
-          {isLoading ? "Saving..." : "Save Changes"}
-        </Button>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-      </ModalFooter>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary" disabled={isLoading}>
+            {isLoading ? "Saving..." : "Save Changes"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };

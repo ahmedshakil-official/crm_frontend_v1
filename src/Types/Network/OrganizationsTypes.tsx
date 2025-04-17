@@ -65,6 +65,5 @@ export interface UpdateOrganizationModalProps {
   isOpen: boolean;
   toggle: () => void;
   slug: string | undefined;
-  organizationData?: any; // Accept organization data as a prop
-  onUpdateSuccess: () => void;
+  organizationData?: any;
 }

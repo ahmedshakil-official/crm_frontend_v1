@@ -17,7 +17,6 @@ import UpdateOrganizationModal from "../Modals/UpdateOrganizationModal";
 
 const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
   organizationInfo,
-  fetchsetOrganizationInfo,
   isLoading,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -161,8 +160,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
         isOpen={isModalOpen}
         toggle={toggleUpdateModal}
         slug={organizationInfo?.slug}
-        organizationData={organizationInfo} // Pass existing organization data
-        onUpdateSuccess={() => fetchsetOrganizationInfo(null)}
+        organizationData={organizationInfo}
       />
     </>
   );
