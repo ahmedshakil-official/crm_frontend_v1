@@ -45,7 +45,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
           {/* 1st card */}
           <Col lg="6" md="12">
             <Card className="ecommerce-widget rounded-4">
-              <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-primary">
+              <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-primary">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
                   <h4 className="fw-bold">Case User</h4>
                 </CardHeader>
