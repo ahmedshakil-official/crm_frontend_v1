@@ -1,4 +1,5 @@
 import { useGetFeesOutDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Table } from "reactstrap";
@@ -72,7 +73,12 @@ const FeeOutTable = () => {
     toggleModal();
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   return (
     <Container fluid className="panel-body">
       <Row className="mb-3">

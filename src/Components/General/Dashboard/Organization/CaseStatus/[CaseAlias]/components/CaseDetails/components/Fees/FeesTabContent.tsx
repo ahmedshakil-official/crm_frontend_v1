@@ -5,7 +5,6 @@ import FeeOutTable from "./FeesTabContents/FeesOutTable";
 
 export const FeesTabContent: FC<FeesTabContentProps> = ({
   tabId,
-  setTabId,
 }) => {
   const renderTabContent = () => {
     switch (tabId) {

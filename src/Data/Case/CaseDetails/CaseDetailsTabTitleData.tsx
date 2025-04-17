@@ -1,5 +1,5 @@
 export const InqueryTabTitleData = [
-  { id: "1", nav: "Applicants" },
+  { id: "1", nav: "Applicant(s) Details" },
   { id: "2", nav: "Additional Details" },
   { id: "3", nav: "Details" },
   { id: "4", nav: "Portfolio" },
