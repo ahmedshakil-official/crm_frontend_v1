@@ -16,71 +16,67 @@ const Employee: React.FC = () => {
         </div>
       </CardHeader>
       <CardBody>
-        <div className="table-responsive">
-          <Table hover className="text-nowrap">
-            <thead className="table-light">
-              <tr>
-                <th className="text-center" style={{ width: "100px" }}>
-                  Actions
-                </th>
-                <th>Employee ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Designation</th>
-                <th>Department</th>
-                <th>Join Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="text-center">
-                  <div className="d-flex justify-content-center gap-2">
-                    <Button color="primary" size="sm">
-                      <i className="fa-solid fa-pen-to-square"></i>
-                    </Button>
-                    <Button color="danger" size="sm">
-                      <i className="fa-solid fa-trash"></i>
-                    </Button>
-                  </div>
-                </td>
-                <td>EMP001</td>
-                <td>John Doe</td>
-                <td>john@example.com</td>
-                <td>+1234567890</td>
-                <td>Software Engineer</td>
-                <td>Development</td>
-                <td>01/01/2023</td>
-                <td>
-                  <span className="badge bg-success">Active</span>
-                </td>
-              </tr>
-              <tr>
-                <td className="text-center">
-                  <div className="d-flex justify-content-center gap-2">
-                    <Button color="primary" size="sm">
-                      <i className="fa-solid fa-pen-to-square"></i>
-                    </Button>
-                    <Button color="danger" size="sm">
-                      <i className="fa-solid fa-trash"></i>
-                    </Button>
-                  </div>
-                </td>
-                <td>EMP002</td>
-                <td>Roky Bhai</td>
-                <td>johnabr@example.com</td>
-                <td>+1234567890</td>
-                <td>Software Engineer</td>
-                <td>Development</td>
-                <td>01/01/2023</td>
-                <td>
-                  <span className="badge bg-danger">Deactive</span>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </div>
+        <Table hover responsive className="text-nowrap">
+          <thead className="table-light">
+            <tr className="text-center">
+              <th style={{ width: "100px" }}>Actions</th>
+              <th>Employee ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Designation</th>
+              <th>Department</th>
+              <th>Join Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="text-center">
+              <td>
+                <div className="d-flex justify-content-center gap-2">
+                  <Button color="primary" size="sm">
+                    <i className="fa-solid fa-pen-to-square"></i>
+                  </Button>
+                  <Button color="danger" size="sm">
+                    <i className="fa-solid fa-trash"></i>
+                  </Button>
+                </div>
+              </td>
+              <td>EMP001</td>
+              <td>John Doe</td>
+              <td>john@example.com</td>
+              <td>+1234567890</td>
+              <td>Software Engineer</td>
+              <td>Development</td>
+              <td>01/01/2023</td>
+              <td>
+                <span className="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr className="text-center">
+              <td>
+                <div className="d-flex justify-content-center gap-2">
+                  <Button color="primary" size="sm">
+                    <i className="fa-solid fa-pen-to-square"></i>
+                  </Button>
+                  <Button color="danger" size="sm">
+                    <i className="fa-solid fa-trash"></i>
+                  </Button>
+                </div>
+              </td>
+              <td>EMP002</td>
+              <td>Roky Bhai</td>
+              <td>johnabr@example.com</td>
+              <td>+1234567890</td>
+              <td>Software Engineer</td>
+              <td>Development</td>
+              <td>01/01/2023</td>
+              <td>
+                <span className="badge bg-danger">Deactive</span>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
       </CardBody>
     </Card>
   );
