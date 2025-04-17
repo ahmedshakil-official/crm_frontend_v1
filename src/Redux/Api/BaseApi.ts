@@ -19,6 +19,11 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQuery,
   tagTypes: [
+    //Network start
+    "OrganizationList",
+    //Network start
+
+    //Organization start
     "LeadDetails",
     "ClientDetails",
     "AdvisorDetails",
@@ -44,6 +49,7 @@ export const baseApi = createApi({
     "ProductDetails",
     "DIPHistoryDetails",
     "Fees",
+    //Organization end
   ],
   endpoints: () => ({}),
 });

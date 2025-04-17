@@ -59,7 +59,6 @@ const CaseTable: React.FC = () => {
 
   const isLoading = isAdvisorLoading || isCaseLoading;
 
-  console.log("caseData:", caseData); // Debug: Check the API response
 
   const toggleFilterIcon = () => setFilterIcon(!filterIcon);
   const toggleAddNewCaseModal = () =>

@@ -1,5 +1,5 @@
-import apiClient from "@/services/api-client";
 import { OrganizationsProps } from "@/Types/Network/OrganizationsTypes";
+import apiClient from "@/services/api-client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
@@ -11,8 +11,7 @@ const OrganizationContainer: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [organizationInfo, setOrganizationInfo] =
     useState<OrganizationsProps>();
-  const params = useParams();
-  const { organizationslug } = params;
+  const { organizationslug } = useParams();
 
   const fetchsetOrganizationInfo = async () => {
     setIsLoading(true);

@@ -1,5 +1,5 @@
 import SvgIcon from "@/CommonComponent/SVG/IconSvg";
-import apiClient from "@/services/api-client";
+import { useGetOrganizationListQuery } from "@/Redux/Reducers/Network/Organization/OrganizationListApi";
 import { OrganizationsProps } from "@/Types/Network/OrganizationsTypes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -21,34 +21,28 @@ import "../Organization.css";
 const OrganizationCards = () => {
   const [organizations, setOrganizations] = useState<OrganizationsProps[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  //RTK Hooks
+  const { data: organizationList, isLoading } = useGetOrganizationListQuery({
+    search: searchQuery,
+  });
 
   // Toggle modal visibility
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  // Fetch organizations from the API
-  const fetchOrganizations = async () => {
-    setIsLoading(true);
-    try {
-      const response = await apiClient.get("/organization/list/", {
-        params: { search: searchQuery },
-      });
-      setOrganizations(response.data || []);
-    } catch (error) {
-      console.error("Error fetching organizations:", error);
-      setOrganizations([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   // Fetch organizations when the search query changes
   useEffect(() => {
-    fetchOrganizations();
-  }, [searchQuery]);
+    try {
+      if (organizationList) {
+        setOrganizations(organizationList);
+      }
+    } catch (error) {
+      console.error("Error fetching organizations:", error);
+    }
+  }, [organizationList]);
 
   return (
     <Card>
@@ -149,11 +143,7 @@ const OrganizationCards = () => {
         )}
       </Row>
       {/* Add Organization Modal */}
-      <AddOrganizationModal
-        isOpen={isModalOpen}
-        toggleModal={toggleModal}
-        refreshOrganizations={fetchOrganizations}
-      />
+      <AddOrganizationModal isOpen={isModalOpen} toggleModal={toggleModal} />
     </Card>
   );
 };
