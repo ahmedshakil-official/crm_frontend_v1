@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
 import DangerZone from "./DangerZone/DangerZone";
+import Employee from "./Employee/Employee";
 import OrganizationBreadcrumbs from "./OrganizationBreadcrumbs/OrganizationBreadcrumbs";
 import OrganizationBanner from "./OrganizationProfile/OrganizationBanner";
 
@@ -46,6 +47,9 @@ const OrganizationContainer: React.FC = () => {
             organizationInfo={organizationInfo}
             isLoading={isLoading}
           />
+        </Row>
+        <Row>
+          <Employee />
         </Row>
         <Row>
           <DangerZone organizationInfo={organizationInfo} />
