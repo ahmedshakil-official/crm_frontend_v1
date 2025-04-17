@@ -21,6 +21,7 @@ export const baseApi = createApi({
   tagTypes: [
     //Network start
     "OrganizationList",
+    "SingleOrganization",
     //Network start
 
     //Organization start

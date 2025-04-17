@@ -267,11 +267,11 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" type="submit" onClick={handleSubmit}>
-          {isLoading ? "Saving..." : "Save"}
-        </Button>
         <Button color="secondary" onClick={toggleModal}>
           Cancel
+        </Button>
+        <Button color="primary" type="submit" onClick={handleSubmit}>
+          {isLoading ? "Saving..." : "Save"}
         </Button>
       </ModalFooter>
     </Modal>

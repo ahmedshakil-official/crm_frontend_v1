@@ -88,8 +88,7 @@ const DangerZone: React.FC<FetchSingleOrganizationProps> = ({
             <DeleteOrganizationModal
               isOpen={isModalOpen}
               toggle={toggleModal}
-              slug={organizationInfo.slug}
-              onDeleteSuccess={() => fetchsetOrganizationInfo(null)}
+              organizationInfo={organizationInfo}
             />
           )}
         </CardBody>

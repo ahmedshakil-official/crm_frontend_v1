@@ -58,8 +58,7 @@ export interface AddOrganizationModalProps {
 export interface DeleteOrganizationModalProps {
   isOpen: boolean;
   toggle: () => void;
-  slug?: string;
-  onDeleteSuccess: () => void;
+  organizationInfo?: any;
 }
 // update organization modal props
 export interface UpdateOrganizationModalProps {

@@ -1,32 +1,33 @@
-import apiClient from "@/services/api-client";
+import { useDeleteOrganizationMutation } from "@/Redux/Reducers/Network/Organization/SingleOrganization/SingleOrganizationApi";
 import { DeleteOrganizationModalProps } from "@/Types/Network/OrganizationsTypes";
 import { useRouter } from "next/navigation";
 
-import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const DeleteOrganizationModal: React.FC<DeleteOrganizationModalProps> = ({
   isOpen,
   toggle,
-  slug,
-  onDeleteSuccess,
+  organizationInfo,
 }) => {
-  const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
+  // rtk hooks
+  const [deleteOrganization, { isLoading }] = useDeleteOrganizationMutation();
 
   const handleDelete = async () => {
-    setIsDeleting(true);
     try {
-      await apiClient.delete(`/organization/list/${slug}/`);
-      onDeleteSuccess();
+      const slug = organizationInfo?.slug;
+      const response = await deleteOrganization({ slug });
+      toggle();
+      if (response.data === null) {
+        toast.success("Organization deleted successfully!");
+      } else {
+        toast.error("Failed to delete organization.");
+      }
       router.push("/dashboard/network");
-      toast.success("Organization deleted successfully!");
     } catch (error) {
       console.error("Failed to delete organization", error);
       toast.error("Failed to delete organization. Please try again.");
-    } finally {
-      setIsDeleting(false);
     }
   };
 
@@ -35,15 +36,16 @@ const DeleteOrganizationModal: React.FC<DeleteOrganizationModalProps> = ({
       <ModalHeader toggle={toggle}>Confirm Deletion</ModalHeader>
       <ModalBody>
         <p>
-          Are you sure you want to delete this organization? This action cannot
-          be undone.
+          Are you sure you want to delete{" "}
+          <strong className="text-danger">{organizationInfo?.name}</strong>{" "}
+          organization? This action cannot be undone.
         </p>
       </ModalBody>
       <ModalFooter>
-        <Button color="danger" onClick={handleDelete} disabled={isDeleting}>
-          {isDeleting ? "Deleting..." : "Delete"}
+        <Button color="danger" onClick={handleDelete} disabled={isLoading}>
+          {isLoading ? "Deleting..." : "Delete"}
         </Button>
-        <Button color="secondary" onClick={toggle} disabled={isDeleting}>
+        <Button color="secondary" onClick={toggle} disabled={isLoading}>
           Cancel
         </Button>
       </ModalFooter>

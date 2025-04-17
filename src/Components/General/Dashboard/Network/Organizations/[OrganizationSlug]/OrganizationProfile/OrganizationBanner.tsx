@@ -58,7 +58,9 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
               <Image
                 width={120}
                 height={120}
-                src={organizationInfo?.logo || "/assets/images/user/2.png"}
+                src={
+                  organizationInfo?.logo || "/assets/images/network/logo.jpg"
+                }
                 alt="Profile"
                 className="profile-pic object-fit-cover"
               />
