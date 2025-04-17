@@ -22,7 +22,6 @@ import {
 const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
   isOpen,
   toggleModal,
-  refreshOrganizations,
 }) => {
   const [formData, setFormData] = useState<AddOrganizationProps>({
     name: "",
@@ -40,7 +39,7 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
     is_removed: false,
   });
   // rtk hooks
-  const [AddOrganization, { isLoading }] = useAddOrganizationMutation();
+  const [addOrganization, { isLoading }] = useAddOrganizationMutation();
 
   // Handle text input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,11 +74,12 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
           formDataToSend.append(key, formData[key] as any);
         }
       }
-
       // Replace axios with RTK Query mutation
-      const response = await AddOrganization({
+      const response = await addOrganization({
         payload: formDataToSend,
       }).unwrap();
+
+      console.log("Response:", response);
 
       if (response) {
         toast.success("Organization added successfully!");
@@ -99,23 +99,22 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
           license_image: null,
           is_removed: false,
         });
-        // Refresh the organizations list
-        if (refreshOrganizations) {
-          refreshOrganizations();
-        }
         toggleModal();
       }
-    } catch (error) {
-      console.error("Error adding organization:", error);
-      toast.error("Failed to add organization. Please try again.");
+    } catch (error: any) {
+      if (error?.data?.email?.[0]) {
+        toast.error(error.data.email[0]);
+      } else {
+        toast.error("Failed to add organization. Please try again.");
+      }
     }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggleModal} size="lg">
-      <ModalHeader toggle={toggleModal}>Add New Organization</ModalHeader>
-      <ModalBody>
-        <Form onSubmit={handleSubmit}>
+      <ModalHeader toggle={toggleModal}>Add New Organization</ModalHeader>{" "}
+      <Form onSubmit={handleSubmit}>
+        <ModalBody>
           <Row>
             {/* 1st colunm  */}
             <Col md={6} xs={12}>
@@ -264,16 +263,16 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
               </FormGroup>
             </Col>
           </Row>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="secondary" onClick={toggleModal}>
-          Cancel
-        </Button>
-        <Button color="primary" type="submit" onClick={handleSubmit}>
-          {isLoading ? "Saving..." : "Save"}
-        </Button>
-      </ModalFooter>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggleModal}>
+            Cancel
+          </Button>
+          <Button color="primary" type="submit">
+            {isLoading ? "Saving..." : "Save Organization"}
+          </Button>
+        </ModalFooter>{" "}
+      </Form>
     </Modal>
   );
 };

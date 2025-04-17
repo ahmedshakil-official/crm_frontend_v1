@@ -10,7 +10,7 @@ export const OrganizationListApi = baseApi.injectEndpoints({
       }),
       providesTags: ["OrganizationList"],
     }),
-    AddOrganization: builder.mutation({
+    addOrganization: builder.mutation({
       query: ({ payload }) => ({
         url: `/organization/list/`,
         method: "POST",
