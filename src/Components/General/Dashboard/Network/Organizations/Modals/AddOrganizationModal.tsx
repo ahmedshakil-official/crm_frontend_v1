@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useAddOrganizationMutation } from "@/Redux/Reducers/Network/Organization/OrganizationListApi";
 import {
   AddOrganizationModalProps,
   AddOrganizationProps,
@@ -39,7 +39,8 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
     license_image: null,
     is_removed: false,
   });
-  const [isLoading, setIsLoading] = useState(false);
+  // rtk hooks
+  const [AddOrganization, { isLoading }] = useAddOrganizationMutation();
 
   // Handle text input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,44 +68,46 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      setIsLoading(true);
       const formDataToSend = new FormData();
       // Append all form fields to FormData
       for (const key in formData) {
         if (formData[key] !== null && formData[key] !== "") {
-          formDataToSend.append(key, formData[key] as any); // Using 'as any' here since FormData only supports string|Blob
+          formDataToSend.append(key, formData[key] as any);
         }
       }
-      await apiClient.post("/organization/list/", formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      toast.success("Organization added successfully!");
-      // Clear the form data after submission
-      setFormData({
-        name: "",
-        email: "",
-        logo: null,
-        profile_image: null,
-        hero_image: null,
-        primary_mobile: "",
-        other_contact: "",
-        contact_person: "",
-        contact_person_designation: "",
-        website: "",
-        license_no: "",
-        license_image: null,
-        is_removed: false,
-      });
-      // Refresh the organizations list (assuming you have this function in parent)
-      refreshOrganizations();
-      toggleModal();
+
+      // Replace axios with RTK Query mutation
+      const response = await AddOrganization({
+        payload: formDataToSend,
+      }).unwrap();
+
+      if (response) {
+        toast.success("Organization added successfully!");
+        // Clear the form data after submission
+        setFormData({
+          name: "",
+          email: "",
+          logo: null,
+          profile_image: null,
+          hero_image: null,
+          primary_mobile: "",
+          other_contact: "",
+          contact_person: "",
+          contact_person_designation: "",
+          website: "",
+          license_no: "",
+          license_image: null,
+          is_removed: false,
+        });
+        // Refresh the organizations list
+        if (refreshOrganizations) {
+          refreshOrganizations();
+        }
+        toggleModal();
+      }
     } catch (error) {
       console.error("Error adding organization:", error);
       toast.error("Failed to add organization. Please try again.");
-    } finally {
-      setIsLoading(false);
     }
   };
 

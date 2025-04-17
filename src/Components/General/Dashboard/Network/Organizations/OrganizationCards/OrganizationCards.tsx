@@ -92,7 +92,7 @@ const OrganizationCards = () => {
                         width="68"
                         height="68"
                         className="img-fluid object-fit-cover"
-                        src={item.logo || "https://via.placeholder.com/68"}
+                        src={item.logo || "/assets/images/network/logo.jpg"}
                         alt="Organization"
                       />
                     </div>
