@@ -8,7 +8,8 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import { ComplianceRatingCard } from "./CompianceTabContents/ComplianceRatingCard";
+import { ComplianceRatingCard } from "./ComplianceTabContents/ComplianceRatingCard";
+import { ComplianceTabContents } from "./ComplianceTabContents";
 
 export const ComplianceTab = () => {
   const [basicTab, setBasicTab] = useState("1");
@@ -49,7 +50,7 @@ export const ComplianceTab = () => {
             </Nav>
           </CardHeader>
           <CardBody className="px-0 pb-0">
-            <h1>hello compliance</h1>
+            <ComplianceTabContents tabId={basicTab} setTabId={setBasicTab} />
           </CardBody>
         </CardBody>
       </Card>
