@@ -1,4 +1,4 @@
-import apiClient from "@/services/api-client";
+import { useAddOrganizationMutation } from "@/Redux/Reducers/Network/Organization/OrganizationListApi";
 import {
   AddOrganizationModalProps,
   AddOrganizationProps,
@@ -22,7 +22,6 @@ import {
 const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
   isOpen,
   toggleModal,
-  refreshOrganizations,
 }) => {
   const [formData, setFormData] = useState<AddOrganizationProps>({
     name: "",
@@ -39,7 +38,8 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
     license_image: null,
     is_removed: false,
   });
-  const [isLoading, setIsLoading] = useState(false);
+  // rtk hooks
+  const [addOrganization, { isLoading }] = useAddOrganizationMutation();
 
   // Handle text input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,52 +67,54 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      setIsLoading(true);
       const formDataToSend = new FormData();
       // Append all form fields to FormData
       for (const key in formData) {
         if (formData[key] !== null && formData[key] !== "") {
-          formDataToSend.append(key, formData[key] as any); // Using 'as any' here since FormData only supports string|Blob
+          formDataToSend.append(key, formData[key] as any);
         }
       }
-      await apiClient.post("/organization/list/", formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      toast.success("Organization added successfully!");
-      // Clear the form data after submission
-      setFormData({
-        name: "",
-        email: "",
-        logo: null,
-        profile_image: null,
-        hero_image: null,
-        primary_mobile: "",
-        other_contact: "",
-        contact_person: "",
-        contact_person_designation: "",
-        website: "",
-        license_no: "",
-        license_image: null,
-        is_removed: false,
-      });
-      // Refresh the organizations list (assuming you have this function in parent)
-      refreshOrganizations();
-      toggleModal();
-    } catch (error) {
-      console.error("Error adding organization:", error);
-      toast.error("Failed to add organization. Please try again.");
-    } finally {
-      setIsLoading(false);
+      // Replace axios with RTK Query mutation
+      const response = await addOrganization({
+        payload: formDataToSend,
+      }).unwrap();
+
+      console.log("Response:", response);
+
+      if (response) {
+        toast.success("Organization added successfully!");
+        // Clear the form data after submission
+        setFormData({
+          name: "",
+          email: "",
+          logo: null,
+          profile_image: null,
+          hero_image: null,
+          primary_mobile: "",
+          other_contact: "",
+          contact_person: "",
+          contact_person_designation: "",
+          website: "",
+          license_no: "",
+          license_image: null,
+          is_removed: false,
+        });
+        toggleModal();
+      }
+    } catch (error: any) {
+      if (error?.data?.email?.[0]) {
+        toast.error(error.data.email[0]);
+      } else {
+        toast.error("Failed to add organization. Please try again.");
+      }
     }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggleModal} size="lg">
-      <ModalHeader toggle={toggleModal}>Add New Organization</ModalHeader>
-      <ModalBody>
-        <Form onSubmit={handleSubmit}>
+      <ModalHeader toggle={toggleModal}>Add New Organization</ModalHeader>{" "}
+      <Form onSubmit={handleSubmit}>
+        <ModalBody>
           <Row>
             {/* 1st colunm  */}
             <Col md={6} xs={12}>
@@ -261,16 +263,16 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
               </FormGroup>
             </Col>
           </Row>
-        </Form>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="primary" type="submit" onClick={handleSubmit}>
-          {isLoading ? "Saving..." : "Save"}
-        </Button>
-        <Button color="secondary" onClick={toggleModal}>
-          Cancel
-        </Button>
-      </ModalFooter>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggleModal}>
+            Cancel
+          </Button>
+          <Button color="primary" type="submit">
+            {isLoading ? "Saving..." : "Save Organization"}
+          </Button>
+        </ModalFooter>{" "}
+      </Form>
     </Modal>
   );
 };

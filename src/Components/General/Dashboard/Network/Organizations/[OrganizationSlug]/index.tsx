@@ -1,5 +1,6 @@
-import apiClient from "@/services/api-client";
+import { useGetSingleOrganizationQuery } from "@/Redux/Reducers/Network/Organization/SingleOrganization/SingleOrganizationApi";
 import { OrganizationsProps } from "@/Types/Network/OrganizationsTypes";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
@@ -8,30 +9,31 @@ import OrganizationBreadcrumbs from "./OrganizationBreadcrumbs/OrganizationBread
 import OrganizationBanner from "./OrganizationProfile/OrganizationBanner";
 
 const OrganizationContainer: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [organizationInfo, setOrganizationInfo] =
     useState<OrganizationsProps>();
-  const params = useParams();
-  const { organizationslug } = params;
-
-  const fetchsetOrganizationInfo = async () => {
-    setIsLoading(true);
-    try {
-      const OrganizationData = await apiClient.get(
-        `/organization/list/${organizationslug}`
-      );
-      setOrganizationInfo(OrganizationData?.data || {});
-      console.log(OrganizationData);
-    } catch (error) {
-      console.error("Error Fetching Cases", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { organizationslug } = useParams();
+  // rtk hooks
+  const { data: organizationData, isLoading } = useGetSingleOrganizationQuery({
+    organizationslug,
+  });
 
   useEffect(() => {
-    fetchsetOrganizationInfo();
-  }, []);
+    try {
+      if (organizationData) {
+        setOrganizationInfo(organizationData);
+      }
+    } catch (error) {
+      console.error("Error Fetching Cases", error);
+    }
+  }, [organizationData]);
+
+  if (isLoading) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -42,15 +44,11 @@ const OrganizationContainer: React.FC = () => {
         <Row>
           <OrganizationBanner
             organizationInfo={organizationInfo}
-            fetchsetOrganizationInfo={fetchsetOrganizationInfo}
             isLoading={isLoading}
           />
         </Row>
         <Row>
-          <DangerZone
-            organizationInfo={organizationInfo}
-            fetchsetOrganizationInfo={fetchsetOrganizationInfo}
-          />
+          <DangerZone organizationInfo={organizationInfo} />
         </Row>
       </Container>
     </>

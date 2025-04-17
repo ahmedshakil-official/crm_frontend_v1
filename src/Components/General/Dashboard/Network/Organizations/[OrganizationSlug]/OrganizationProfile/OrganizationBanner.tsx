@@ -17,7 +17,6 @@ import UpdateOrganizationModal from "../Modals/UpdateOrganizationModal";
 
 const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
   organizationInfo,
-  fetchsetOrganizationInfo,
   isLoading,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,7 +57,9 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
               <Image
                 width={120}
                 height={120}
-                src={organizationInfo?.logo || "/assets/images/user/2.png"}
+                src={
+                  organizationInfo?.logo || "/assets/images/network/logo.jpg"
+                }
                 alt="Profile"
                 className="profile-pic object-fit-cover"
               />
@@ -159,8 +160,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
         isOpen={isModalOpen}
         toggle={toggleUpdateModal}
         slug={organizationInfo?.slug}
-        organizationData={organizationInfo} // Pass existing organization data
-        onUpdateSuccess={() => fetchsetOrganizationInfo(null)}
+        organizationData={organizationInfo}
       />
     </>
   );
