@@ -18,7 +18,7 @@ import {
   Table,
 } from "reactstrap";
 
-import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Cases/CaseDetailsApi";
+import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
 import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
