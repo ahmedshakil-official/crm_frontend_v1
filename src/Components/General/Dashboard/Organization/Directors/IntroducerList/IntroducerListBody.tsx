@@ -175,7 +175,7 @@ const IntroducerListBody: React.FC = () => {
               </tr>
             ) : currentIntroducers.length > 0 ? (
               currentIntroducers.map((introducer) => (
-                <tr key={introducer.alias}>
+                <tr key={introducer.alias} className="text-center">
                   <td>
                     {introducer?.user?.first_name} {introducer?.user?.last_name}
                   </td>
@@ -187,7 +187,7 @@ const IntroducerListBody: React.FC = () => {
                     {introducer?.created_by?.last_name}
                   </td>
                   <td>{formatDateToDMYAndTime(introducer?.created_at)}</td>
-                  <td className="text-center">
+                  <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"

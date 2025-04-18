@@ -168,7 +168,7 @@ const LeadListBody: React.FC = () => {
               </tr>
             ) : currentLeads.length > 0 ? (
               currentLeads.map((lead) => (
-                <tr key={lead.alias}>
+                <tr key={lead.alias} className="text-center">
                   <td>
                     {lead?.user?.first_name} {lead?.user?.last_name}
                   </td>
@@ -180,7 +180,7 @@ const LeadListBody: React.FC = () => {
                   </td>
                   <td>{formatDateToDMYAndTime(lead?.created_at)}</td>
 
-                  <td className="text-center">
+                  <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"

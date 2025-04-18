@@ -178,7 +178,7 @@ const ClientListBody: React.FC = () => {
               </tr>
             ) : currentClients.length > 0 ? (
               currentClients.map((client: any) => (
-                <tr key={client.alias}>
+                <tr key={client.alias} className="text-center">
                   <td>
                     {client?.user?.first_name} {client?.user?.last_name}
                   </td>
@@ -190,7 +190,7 @@ const ClientListBody: React.FC = () => {
                     {client?.created_by?.last_name}
                   </td>
                   <td>{formatDateToDMYAndTime(client?.created_at)}</td>
-                  <td className="text-center">
+                  <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"

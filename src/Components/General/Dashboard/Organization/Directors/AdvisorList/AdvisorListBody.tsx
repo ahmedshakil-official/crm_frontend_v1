@@ -177,7 +177,7 @@ const AdvisorListBody: React.FC = () => {
               </tr>
             ) : currentAdvisors.length > 0 ? (
               currentAdvisors.map((advisor) => (
-                <tr key={advisor.alias}>
+                <tr key={advisor.alias} className="text-center">
                   <td>
                     {advisor?.user?.first_name} {advisor?.user?.last_name}
                   </td>
@@ -189,7 +189,7 @@ const AdvisorListBody: React.FC = () => {
                     {advisor?.created_by?.last_name}
                   </td>
                   <td>{formatDateToDMYAndTime(advisor?.created_at)}</td>
-                  <td className="text-center">
+                  <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"
