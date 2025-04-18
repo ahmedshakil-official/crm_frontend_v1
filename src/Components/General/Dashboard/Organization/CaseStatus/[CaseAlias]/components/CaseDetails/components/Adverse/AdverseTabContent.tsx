@@ -2,7 +2,7 @@
 import {
   useGetSingleAdverseDetailsQuery,
   useUpdateAdverseDetailsMutation,
-} from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import { ApplicantsUsersProps } from "@/Types/Organization/CaseDetails/ApplicantsUserTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";

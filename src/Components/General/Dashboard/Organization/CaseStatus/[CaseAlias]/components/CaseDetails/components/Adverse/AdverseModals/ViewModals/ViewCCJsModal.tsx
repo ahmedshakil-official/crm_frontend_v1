@@ -1,4 +1,4 @@
-import { useGetCCJsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useGetCCJsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import {
   CCJProps,
   ViewCCJsModalProps,

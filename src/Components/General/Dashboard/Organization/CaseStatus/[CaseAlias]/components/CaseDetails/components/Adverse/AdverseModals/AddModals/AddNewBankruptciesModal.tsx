@@ -1,4 +1,4 @@
-import { useAddBankruptsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useAddBankruptsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import { AddNewBankruptciesModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";

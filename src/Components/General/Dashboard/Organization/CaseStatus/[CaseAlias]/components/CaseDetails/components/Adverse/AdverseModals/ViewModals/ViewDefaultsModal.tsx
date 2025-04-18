@@ -1,5 +1,4 @@
-
-import { useGetDefaultsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useGetDefaultsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import { ViewDefaultsModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
@@ -9,11 +8,9 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  Table,
   Spinner,
+  Table,
 } from "reactstrap";
-
-
 
 const ViewDefaultsModal: React.FC<ViewDefaultsModalProps> = ({
   isOpen,
@@ -74,9 +71,7 @@ const ViewDefaultsModal: React.FC<ViewDefaultsModalProps> = ({
                     <td>
                       <span
                         className={`badge ${
-                          item.has_satisfied
-                            ? "bg-success"
-                            : "bg-danger"
+                          item.has_satisfied ? "bg-success" : "bg-danger"
                         }`}
                       >
                         {item.has_satisfied ? "Satisfied" : "Not Satisfied"}

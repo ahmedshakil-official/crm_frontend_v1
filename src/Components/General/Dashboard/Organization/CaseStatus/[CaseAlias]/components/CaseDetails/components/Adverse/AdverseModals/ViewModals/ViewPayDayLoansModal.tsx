@@ -1,4 +1,4 @@
-import { useGetPayDayLoansQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useGetPayDayLoansQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import {
   PayDayLoanProps,
   ViewPayDayLoansModalProps,

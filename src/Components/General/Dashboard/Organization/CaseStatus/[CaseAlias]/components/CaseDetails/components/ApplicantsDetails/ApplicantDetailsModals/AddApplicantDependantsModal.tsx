@@ -1,4 +1,4 @@
-import { useAddDependantsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { useAddDependantsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { AddDependantFormModalProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";

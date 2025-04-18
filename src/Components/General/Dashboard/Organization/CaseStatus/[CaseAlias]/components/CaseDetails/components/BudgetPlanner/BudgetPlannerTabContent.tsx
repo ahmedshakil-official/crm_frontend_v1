@@ -1,5 +1,5 @@
-import { useGetCaseBudgetPlannerQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
-import { initializeBudgetPlannerForm } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import { useGetCaseBudgetPlannerQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
+import { initializeBudgetPlannerForm } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 import { BudgetPlannerTabContentProps } from "@/Types/Organization/CaseDetails/BudgetPlannerTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
