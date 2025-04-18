@@ -1,7 +1,7 @@
 import {
   useAddPropertyDetailsMutation,
   useGetPortfolioApplicantsQuery,
-} from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Portfolio/PortfolioApi";
+} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Portfolio/PortfolioApi";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
