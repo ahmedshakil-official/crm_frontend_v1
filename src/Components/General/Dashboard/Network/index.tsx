@@ -1,7 +1,7 @@
 import { Container, Row } from "reactstrap";
-import AdvisorList from "../Organization/AdvisorList/AdvisorList";
 import CaseStatus from "../Organization/CaseStatus/CaseStatus";
 import ClientList from "../Organization/ClientList/ClientList";
+import AdvisorList from "../Organization/Directors/AdvisorList/AdvisorList";
 import IntroducerList from "../Organization/IntroducerList/IntroducerList";
 import LeadList from "../Organization/LeadList/LeadList";
 import NetworkBreadcrumbs from "./NetworkBreadcrumbs/Breadcrumbs";
