@@ -21,7 +21,7 @@ import {
   useGetAccountantDetailsQuery,
   useGetCaseAccountantDetailsQuery,
   useUpdateAccountantDetailsMutation,
-} from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
+} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
 import Swal from "sweetalert2";
 import AddAccountantModal from "../Modals/AddAccountantModal";
 

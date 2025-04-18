@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, FormGroup, Input, InputGroup, Label, Row } from "reactstrap";
 
-import { updateProperty } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { updateProperty } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import { RootState } from "@/Redux/Store";
 
 interface PropertyDetailsProps {

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { updateProperty } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { updateProperty } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import { RootState } from "@/Redux/Store";
 import {
   Button,

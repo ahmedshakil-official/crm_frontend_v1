@@ -1,4 +1,4 @@
-import { useAddSolicitorDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
+import { useAddSolicitorDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
 import { toast } from "react-toastify";
 import {
   Button,

@@ -12,8 +12,8 @@ import {
   Row,
 } from "reactstrap";
 
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { updateProperty } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { updateProperty } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 
