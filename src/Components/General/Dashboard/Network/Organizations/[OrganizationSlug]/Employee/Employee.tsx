@@ -1,19 +1,47 @@
 import { useState } from "react";
-import { Button, Card, CardBody, CardHeader, Table } from "reactstrap";
+import { FaSearch } from "react-icons/fa";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Input,
+  InputGroup,
+  InputGroupText,
+  Row,
+  Table,
+} from "reactstrap";
+import AddEmployeeModal from "../../Modals/AddEmployeeModal";
 
 const Employee: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
     <Card>
       <CardHeader>
-        <div className="d-flex justify-content-between align-items-center">
-          <h3 className="mb-0">Employee</h3>
-          <Button color="primary" onClick={() => setIsModalOpen(true)}>
-            Add Employee
-            <i className="fa-solid fa-circle-plus ms-2"></i>
-          </Button>
-        </div>
+        <Row className="d-flex justify-content-between align-items-center">
+          <Col md={3}>
+            <h3 className="mb-0">Employee</h3>
+          </Col>
+          <Col md={6} xs="12">
+            <InputGroup>
+              <Input type="text" placeholder="Search by name or email... " />
+              <InputGroupText className="bg-success rounded-start-0 border-start-0">
+                <FaSearch />
+              </InputGroupText>
+            </InputGroup>
+          </Col>
+          <Col md={3} xs="12" className="d-flex justify-content-end">
+            <Button color="primary" onClick={toggleModal}>
+              Add Employee
+              <i className="fa-solid fa-circle-plus ms-2"></i>
+            </Button>
+          </Col>
+        </Row>
       </CardHeader>
       <CardBody>
         <Table hover responsive className="text-nowrap">
@@ -78,6 +106,11 @@ const Employee: React.FC = () => {
           </tbody>
         </Table>
       </CardBody>
+      {/* Modal */}
+      <AddEmployeeModal 
+        isOpen={isModalOpen}
+        toggle={toggleModal}
+      />
     </Card>
   );
 };
