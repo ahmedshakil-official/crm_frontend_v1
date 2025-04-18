@@ -1,4 +1,4 @@
-import { useGetNotesQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
+import { useGetNotesQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import React from "react";
