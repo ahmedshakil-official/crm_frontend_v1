@@ -69,7 +69,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
                 </Button>
               </div>
             </div>
-            <CardTitle tag="h3" className="mt-5">
+            <CardTitle tag="h3" className="mt-5 text-primary">
               {organizationInfo?.name}
             </CardTitle>
             <CardText className="text-muted">
