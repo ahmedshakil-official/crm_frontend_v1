@@ -1,4 +1,4 @@
-import { useAddLeadDetailsMutation } from "@/Redux/Reducers/Directors/LeadDetalisApi";
+import { useAddLeadDetailsMutation } from "@/Redux/Reducers/Organization/Directors/LeadDetalisApi";
 import { AddLeadModalProps } from "@/Types/Organization/LeadTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";

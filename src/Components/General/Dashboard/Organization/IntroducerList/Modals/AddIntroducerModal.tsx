@@ -1,4 +1,4 @@
-import { useAddIntroducerDetailsMutation } from "@/Redux/Reducers/Directors/IntroducerDetailsApi";
+import { useAddIntroducerDetailsMutation } from "@/Redux/Reducers/Organization/Directors/IntroducerDetailsApi";
 import { AddIntroducerModalProps } from "@/Types/Organization/IntroducerTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
