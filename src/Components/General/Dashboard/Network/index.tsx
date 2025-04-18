@@ -2,8 +2,8 @@ import { Container, Row } from "reactstrap";
 import CaseStatus from "../Organization/CaseStatus/CaseStatus";
 import ClientList from "../Organization/ClientList/ClientList";
 import AdvisorList from "../Organization/Directors/AdvisorList/AdvisorList";
+import LeadList from "../Organization/Directors/LeadList/LeadList";
 import IntroducerList from "../Organization/IntroducerList/IntroducerList";
-import LeadList from "../Organization/LeadList/LeadList";
 import NetworkBreadcrumbs from "./NetworkBreadcrumbs/Breadcrumbs";
 import OrganizationCards from "./Organizations/OrganizationCards/OrganizationCards";
 
