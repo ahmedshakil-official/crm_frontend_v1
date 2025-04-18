@@ -19,14 +19,14 @@ import {
 } from "reactstrap";
 
 import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Cases/CaseDetailsApi";
-import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
+import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import "../../CaseStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
 import DeleteCaseModal from "../../Modals/DeleteCaseModal";
 import UpdateCaseModal from "../../Modals/UpdateCaseModal";
-import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 
 const CaseTable: React.FC = () => {
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
@@ -58,7 +58,6 @@ const CaseTable: React.FC = () => {
   });
 
   const isLoading = isAdvisorLoading || isCaseLoading;
-
 
   const toggleFilterIcon = () => setFilterIcon(!filterIcon);
   const toggleAddNewCaseModal = () =>
