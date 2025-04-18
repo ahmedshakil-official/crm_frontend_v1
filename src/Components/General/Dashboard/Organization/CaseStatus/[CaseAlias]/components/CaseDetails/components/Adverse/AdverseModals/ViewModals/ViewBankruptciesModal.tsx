@@ -1,5 +1,5 @@
 import { useGetBankruptsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { ViewBankruptciesModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { ViewBankruptciesModalProps } from "@/Types/Organization/Cases/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import {

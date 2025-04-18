@@ -1,5 +1,5 @@
 import { useGetExistingProtectionDetailsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
-import { ExistingProtectionDetailsProps } from "@/Types/Organization/CaseDetails/ExistingProtectionTypes";
+import { ExistingProtectionDetailsProps } from "@/Types/Organization/Cases/CaseDetails/ExistingProtectionTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

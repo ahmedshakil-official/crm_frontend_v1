@@ -1,5 +1,5 @@
 import { useAddExistingProtectionDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
-import { AddExistingProtectionModalProps } from "@/Types/Organization/CaseDetails/ExistingProtectionTypes";
+import { AddExistingProtectionModalProps } from "@/Types/Organization/Cases/CaseDetails/ExistingProtectionTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useState } from "react";

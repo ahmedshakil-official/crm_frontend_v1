@@ -1,4 +1,4 @@
-import { PropertiesTypeProps } from "@/Types/Organization/CaseDetails/PortfilioTypes";
+import { PropertiesTypeProps } from "@/Types/Organization/Cases/CaseDetails/PortfilioTypes";
 import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 
 const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({

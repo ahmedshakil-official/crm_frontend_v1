@@ -2,7 +2,7 @@ import { useUpdateExistingProtectionDetailsMutation } from "@/Redux/Reducers/Org
 import {
   ExistingProtectionDetailsProps,
   ExistingProtectionTabContentProps,
-} from "@/Types/Organization/CaseDetails/ExistingProtectionTypes";
+} from "@/Types/Organization/Cases/CaseDetails/ExistingProtectionTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

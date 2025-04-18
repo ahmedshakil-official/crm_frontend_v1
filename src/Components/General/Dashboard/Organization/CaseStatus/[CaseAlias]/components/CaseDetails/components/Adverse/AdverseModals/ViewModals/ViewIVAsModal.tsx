@@ -2,7 +2,7 @@ import { useGetIVAsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseI
 import {
   IVAItemProps,
   ViewIVAsModalProps,
-} from "@/Types/Organization/CaseDetails/AdverseTypes";
+} from "@/Types/Organization/Cases/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import {

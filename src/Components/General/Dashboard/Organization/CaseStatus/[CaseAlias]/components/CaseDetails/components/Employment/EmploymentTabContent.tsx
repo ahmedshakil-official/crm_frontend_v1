@@ -2,7 +2,7 @@ import { useUpdateEmploymentDetailsMutation } from "@/Redux/Reducers/Organizatio
 import {
   EmploymentDetailsProps,
   EmploymentTabContentProps,
-} from "@/Types/Organization/CaseDetails/EmploymentTypes";
+} from "@/Types/Organization/Cases/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

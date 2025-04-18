@@ -2,7 +2,7 @@ import { useAddFeesInDetailsMutation } from "@/Redux/Reducers/Organization/Cases
 import {
   AddFeeInModalProps,
   FeeDataProps,
-} from "@/Types/Organization/CaseDetails/FeeTypes";
+} from "@/Types/Organization/Cases/CaseDetails/FeeTypes";
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {

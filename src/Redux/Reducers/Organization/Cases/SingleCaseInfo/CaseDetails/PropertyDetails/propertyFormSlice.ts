@@ -1,4 +1,4 @@
-import { PropertyFormState } from "@/Types/Organization/CaseDetails/PropertyDetails";
+import { PropertyFormState } from "@/Types/Organization/Cases/CaseDetails/PropertyDetails";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: PropertyFormState = {
@@ -55,7 +55,8 @@ const initialState: PropertyFormState = {
     date_of_purchase: null,
     discounted_price: null,
     is_the_property_ex_local_authority: false,
-    is_this_property_being_purchased_from_the_council_with_this_application: false,
+    is_this_property_being_purchased_from_the_council_with_this_application:
+      false,
     is_there_an_annexe_within_the_property: false,
     will_the_property_be_owner_occupied: false,
     please_provide_further_details: "",
@@ -74,7 +75,7 @@ const initialState: PropertyFormState = {
     contacts_mobile_telephone: "",
     contacts_email_address: "",
     estimated_value: null,
-    other_new_build_warranty_provider: ""
+    other_new_build_warranty_provider: "",
   },
 };
 
@@ -98,5 +99,6 @@ const propertyFormSlice = createSlice({
   },
 });
 
-export const { updateProperty, resetForm, initializeForm } = propertyFormSlice.actions;
+export const { updateProperty, resetForm, initializeForm } =
+  propertyFormSlice.actions;
 export default propertyFormSlice.reducer;

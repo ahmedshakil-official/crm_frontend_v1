@@ -1,11 +1,9 @@
-import { FeesTabContentProps } from "@/Types/Organization/CaseDetails/FeeTypes";
+import { FeesTabContentProps } from "@/Types/Organization/Cases/CaseDetails/FeeTypes";
 import { FC } from "react";
 import FeeInTable from "./FeesTabContents/FeesInTable";
 import FeeOutTable from "./FeesTabContents/FeesOutTable";
 
-export const FeesTabContent: FC<FeesTabContentProps> = ({
-  tabId,
-}) => {
+export const FeesTabContent: FC<FeesTabContentProps> = ({ tabId }) => {
   const renderTabContent = () => {
     switch (tabId) {
       case "1":

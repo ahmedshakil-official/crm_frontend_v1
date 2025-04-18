@@ -1,5 +1,5 @@
 import { useGetDefaultsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { ViewDefaultsModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { ViewDefaultsModalProps } from "@/Types/Organization/Cases/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import {

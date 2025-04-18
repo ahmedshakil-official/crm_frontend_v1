@@ -1,5 +1,5 @@
 import { useAddCCJsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { AddNewRegisteredCCJsModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { AddNewRegisteredCCJsModalProps } from "@/Types/Organization/Cases/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";

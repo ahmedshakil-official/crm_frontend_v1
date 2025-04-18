@@ -1,5 +1,5 @@
 import { useGetAdverseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { AdverseProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { AdverseProps } from "@/Types/Organization/Cases/CaseDetails/AdverseTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

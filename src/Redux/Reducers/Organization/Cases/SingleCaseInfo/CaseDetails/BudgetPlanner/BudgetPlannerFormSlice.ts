@@ -1,4 +1,4 @@
-import { BudgetPlanner } from "@/Types/Organization/CaseDetails/BudgetPlannerTypes";
+import { BudgetPlanner } from "@/Types/Organization/Cases/CaseDetails/BudgetPlannerTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Initial state matching your data structure
@@ -185,7 +185,7 @@ const budgetPlannerSlice = createSlice({
       }>
     ) => {
       const { section, data } = action.payload;
-      if (typeof data === 'object' && data !== null) {
+      if (typeof data === "object" && data !== null) {
         if (section === "disclaimer") {
           state.disclaimer = Boolean(data);
         } else if (section === "disclaimer_details") {
@@ -194,22 +194,33 @@ const budgetPlannerSlice = createSlice({
           // Ensure required fields have default values
           const updatedData = {
             ...data,
-            ...(section === 'current_debt_repayments' && { total_debt_repayment: data.total_debt_repayment ?? 0 }),
-            ...(section === 'post_debt_repayments' && { total_debt_repayment: data.total_debt_repayment ?? 0 }),
-            ...(section === 'current_sub_total' && { available_income: data.available_income ?? 0 }),
-            ...(section === 'post_sub_total' && { available_income: data.available_income ?? 0 }),
+            ...(section === "current_debt_repayments" && {
+              total_debt_repayment: data.total_debt_repayment ?? 0,
+            }),
+            ...(section === "post_debt_repayments" && {
+              total_debt_repayment: data.total_debt_repayment ?? 0,
+            }),
+            ...(section === "current_sub_total" && {
+              available_income: data.available_income ?? 0,
+            }),
+            ...(section === "post_sub_total" && {
+              available_income: data.available_income ?? 0,
+            }),
           };
 
           state[section] = {
             ...(state[section] as object),
-            ...updatedData
+            ...updatedData,
           };
         }
       }
     },
 
     // Initialize entire form with new data
-    initializeBudgetPlannerForm: (state, action: PayloadAction<BudgetPlanner>) => {
+    initializeBudgetPlannerForm: (
+      state,
+      action: PayloadAction<BudgetPlanner>
+    ) => {
       return { ...state, ...action.payload };
     },
 
