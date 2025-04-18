@@ -116,23 +116,13 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
                 </Button>
               </Link>
               <Link href="">
-                <Button color="danger" className="mx-2">
-                  <i className="fa-regular fa-envelope"></i>
-                </Button>
-              </Link>
-              <Link href="">
-                <Button color="info" className="mx-2">
+                <Button color="dark" className="mx-2">
                   <i className="fa-brands fa-twitter"></i>
                 </Button>
               </Link>
               <Link href={`${organizationInfo?.website}`} target="_blank">
                 <Button color="success" className="mx-2">
                   <i className="fa-solid fa-earth-americas"></i>
-                </Button>
-              </Link>
-              <Link href="">
-                <Button color="dark" className="mx-2">
-                  <i className="fa-brands fa-instagram"></i>
                 </Button>
               </Link>
             </div>
