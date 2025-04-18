@@ -1,4 +1,4 @@
-import { useUpdateCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import { useUpdateCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
 import { useGetCaseUsersQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
 import { UpdateCreditCommitmentModalProps } from "@/Types/Organization/CaseDetails/CreditCommitmentsTypes";
 
