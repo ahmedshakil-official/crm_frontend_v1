@@ -1,5 +1,5 @@
 import { useGetEmploymentDetailsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
-import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
+import { EmploymentDetailsProps } from "@/Types/Organization/Cases/CaseDetails/EmploymentTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

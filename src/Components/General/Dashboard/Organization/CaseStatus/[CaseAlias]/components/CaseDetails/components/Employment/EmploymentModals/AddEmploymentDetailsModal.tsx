@@ -1,5 +1,5 @@
 import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
-import { EmploymentDetailsProps } from "@/Types/Organization/CaseDetails/EmploymentTypes";
+import { EmploymentDetailsProps } from "@/Types/Organization/Cases/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";

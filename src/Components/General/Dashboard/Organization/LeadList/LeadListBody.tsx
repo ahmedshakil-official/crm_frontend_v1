@@ -1,5 +1,5 @@
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Organization/Directors/LeadDetalisApi";
-import { LeadsInfo } from "@/Types/Organization/LeadTypes";
+import { LeadsInfo } from "@/Types/Organization/Directors/LeadTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";

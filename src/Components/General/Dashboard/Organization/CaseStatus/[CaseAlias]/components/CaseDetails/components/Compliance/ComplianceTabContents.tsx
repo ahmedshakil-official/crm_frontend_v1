@@ -1,14 +1,14 @@
-import { FeesTabContentProps } from "@/Types/Organization/CaseDetails/FeeTypes";
+import { FeesTabContentProps } from "@/Types/Organization/Cases/CaseDetails/FeeTypes";
 import { FC } from "react";
-import DisclosureDocumentsTabContent from "./ComplianceTabContents/DisclosureDocumentsTabContent";
-import DataProtectionTabContent from "./ComplianceTabContents/DataProtectionTabContent";
 import AntiMoneyLaunderingTabContent from "./ComplianceTabContents/AntiMoneyLaunderingTabContent";
-import MandatoryDocumentationTabContent from "./ComplianceTabContents/MandatoryDocumentationTabContent";
-import FactFindTabContent from "./ComplianceTabContents/FactFindTabContent";
-import ComplianceBudgetPlannerTabContent from "./ComplianceTabContents/ComplianceBudgetPlannerTabContent";
-import EorKfiTabContent from "./ComplianceTabContents/EorKfiTabContent";
 import ComplianceApplicationTabContent from "./ComplianceTabContents/ComplianceApplicationTabContent";
+import ComplianceBudgetPlannerTabContent from "./ComplianceTabContents/ComplianceBudgetPlannerTabContent";
 import ComplianceSuitabilityTabContent from "./ComplianceTabContents/ComplianceSuitabilityTabContent";
+import DataProtectionTabContent from "./ComplianceTabContents/DataProtectionTabContent";
+import DisclosureDocumentsTabContent from "./ComplianceTabContents/DisclosureDocumentsTabContent";
+import EorKfiTabContent from "./ComplianceTabContents/EorKfiTabContent";
+import FactFindTabContent from "./ComplianceTabContents/FactFindTabContent";
+import MandatoryDocumentationTabContent from "./ComplianceTabContents/MandatoryDocumentationTabContent";
 
 export const ComplianceTabContents: FC<FeesTabContentProps> = ({
   tabId,

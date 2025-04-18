@@ -1,5 +1,5 @@
 import { useAddBankruptsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { AddNewBankruptciesModalProps } from "@/Types/Organization/CaseDetails/AdverseTypes";
+import { AddNewBankruptciesModalProps } from "@/Types/Organization/Cases/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";

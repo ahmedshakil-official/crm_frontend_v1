@@ -1,6 +1,6 @@
 import { useUpdateCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
 import { useGetCaseUsersQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
-import { UpdateCreditCommitmentModalProps } from "@/Types/Organization/CaseDetails/CreditCommitmentsTypes";
+import { UpdateCreditCommitmentModalProps } from "@/Types/Organization/Cases/CaseDetails/CreditCommitmentsTypes";
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";

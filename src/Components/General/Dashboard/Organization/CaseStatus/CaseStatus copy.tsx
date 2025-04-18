@@ -1,4 +1,4 @@
-import { FetchLeadsProps } from "@/Types/Organization/LeadTypes";
+import { FetchLeadsProps } from "@/Types/Organization/Directors/LeadTypes";
 import { Card, Col } from "reactstrap";
 import CaseStatusBody from "./CaseStatusBody";
 

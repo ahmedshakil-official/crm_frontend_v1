@@ -1,4 +1,4 @@
-import { JointUserProps } from "@/Types/Organization/JointUserTypes";
+import { JointUserProps } from "@/Types/Organization/Cases/JointUser/JointUserTypes";
 import React, { useState } from "react";
 import {
   Button,

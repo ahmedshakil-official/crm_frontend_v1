@@ -2,7 +2,7 @@
 import { useUpdateBudgetPlannerMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
 import { initializeBudgetPlannerForm } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 import { RootState } from "@/Redux/Store";
-import { BudgetPlannerModalProps } from "@/Types/Organization/CaseDetails/BudgetPlannerTypes";
+import { BudgetPlannerModalProps } from "@/Types/Organization/Cases/CaseDetails/BudgetPlannerTypes";
 import { useParams } from "next/navigation";
 import { FC, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

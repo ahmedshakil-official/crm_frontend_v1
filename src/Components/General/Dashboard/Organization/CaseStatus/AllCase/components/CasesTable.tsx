@@ -20,8 +20,8 @@ import {
 
 import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
 import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
-import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
-import { CaseInfo } from "@/Types/Organization/CaseTypes";
+import { CaseInfo } from "@/Types/Organization/Cases/CaseTypes";
+import { AdvisorInfoProps } from "@/Types/Organization/Directors/AdvisorTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import "../../CaseStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";

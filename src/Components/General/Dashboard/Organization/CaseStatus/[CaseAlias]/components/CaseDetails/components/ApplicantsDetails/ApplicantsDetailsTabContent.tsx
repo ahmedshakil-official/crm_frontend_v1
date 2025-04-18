@@ -2,7 +2,7 @@
 import { countries } from "@/Data/Countries/Countries";
 import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
-import { ApplicantsUsersProps } from "@/Types/Organization/CaseDetails/ApplicantsUserTypes";
+import { ApplicantsUsersProps } from "@/Types/Organization/Cases/CaseDetails/ApplicantsUserTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

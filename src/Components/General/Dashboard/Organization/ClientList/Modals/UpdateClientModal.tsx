@@ -2,7 +2,7 @@ import { useUpdateClientDetailsMutation } from "@/Redux/Reducers/Organization/Di
 import {
   ClientInfoProps,
   UpdateClientModalProps,
-} from "@/Types/Organization/ClientTypes";
+} from "@/Types/Organization/Directors/ClientTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
