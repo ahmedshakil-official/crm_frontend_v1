@@ -12,9 +12,13 @@ import {
   Row,
   Table,
 } from "reactstrap";
+import AddEmployeeModal from "../../Modals/AddEmployeeModal";
 
 const Employee: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
     <Card>
@@ -32,7 +36,7 @@ const Employee: React.FC = () => {
             </InputGroup>
           </Col>
           <Col md={3} xs="12" className="d-flex justify-content-end">
-            <Button color="primary" onClick={() => setIsModalOpen(true)}>
+            <Button color="primary" onClick={toggleModal}>
               Add Employee
               <i className="fa-solid fa-circle-plus ms-2"></i>
             </Button>
@@ -102,6 +106,11 @@ const Employee: React.FC = () => {
           </tbody>
         </Table>
       </CardBody>
+      {/* Modal */}
+      <AddEmployeeModal 
+        isOpen={isModalOpen}
+        toggle={toggleModal}
+      />
     </Card>
   );
 };

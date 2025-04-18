@@ -67,3 +67,8 @@ export interface UpdateOrganizationModalProps {
   slug: string | undefined;
   organizationData?: any;
 }
+
+export interface AddEmployeeModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+}
