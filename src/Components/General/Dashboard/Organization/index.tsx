@@ -4,9 +4,9 @@ import { Container, Row } from "reactstrap";
 import CaseStatus from "./CaseStatus/CaseStatus";
 import ClientList from "./ClientList/ClientList";
 import AdvisorList from "./Directors/AdvisorList/AdvisorList";
+import IntroducerList from "./Directors/IntroducerList/IntroducerList";
 import LeadList from "./Directors/LeadList/LeadList";
 import EarningsTrend from "./EarningsTrend/EarningsTrend";
-import IntroducerList from "./IntroducerList/IntroducerList";
 import JobToday from "./JobToday/JobToday";
 import ProfileGreet from "./ProfileGreet/ProfileGreet";
 
