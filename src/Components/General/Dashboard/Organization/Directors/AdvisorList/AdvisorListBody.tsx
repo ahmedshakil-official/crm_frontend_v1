@@ -1,5 +1,5 @@
-import { useGetIntroducerDetailsQuery } from "@/Redux/Reducers/Organization/Directors/IntroducerDetailsApi";
-import { IntroducerInfoProps } from "@/Types/Organization/Directors/IntroducerTypes";
+import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
+import { AdvisorInfoProps } from "@/Types/Organization/Directors/AdvisorTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";
@@ -17,27 +17,29 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./IntroducerList.css";
-import AddIntroducerModal from "./Modals/AddIntroducerModal";
-import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
-import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
+import "./AdvisorList.css";
+import AddAdvisorModal from "./Modals/AddAdvisorModal";
+import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
+import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
 
-const IntroducerListBody: React.FC = () => {
-  const [introducers, setIntroducers] = useState<IntroducerInfoProps[]>([]);
+const AdvisorListBody: React.FC = () => {
+  const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [introducersPerPage] = useState(5);
+  const [advisorsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [introducerToDelete, setIntroducerToDelete] =
-    useState<IntroducerInfoProps | null>(null);
-  const { data: introduceData, isLoading } =
-    useGetIntroducerDetailsQuery(undefined);
-  const [selectedIntroducer, setSelectedIntroducer] = useState<
-    Partial<IntroducerInfoProps>
+  const [advisorToDelete, setAdvisorToDelete] =
+    useState<AdvisorInfoProps | null>(null);
+
+  const { data: advisorData, isLoading } = useGetAdvisorDetailsQuery(undefined);
+
+  const [selectedAdvisor, setSelectedAdvisor] = useState<
+    Partial<AdvisorInfoProps>
   >({
     user: {
+      id: 0,
       first_name: "",
       last_name: "",
       profile_image: "",
@@ -66,64 +68,64 @@ const IntroducerListBody: React.FC = () => {
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
-  const openDeleteModal = (introducer: IntroducerInfoProps) => {
-    setIntroducerToDelete(introducer);
+  const openDeleteModal = (advisor: AdvisorInfoProps) => {
+    setAdvisorToDelete(advisor);
     toggleDeleteModal();
   };
 
   useEffect(() => {
-    if (introduceData) {
-      const introducerData = Array.isArray(introduceData)
-        ? introduceData
-        : [introduceData];
-      setIntroducers(introducerData);
+    if (advisorData) {
+      const advisorsArray: AdvisorInfoProps[] = Array.isArray(advisorData)
+        ? advisorData
+        : advisorData.advisors;
+      setAdvisors(advisorsArray || []);
     }
-  }, [introduceData]);
+  }, [advisorData]);
 
-  // openaddmodals
+  // openmodals
   const openAddModal = () => {
     toggleModal();
   };
 
-  const openUpdateModal = (introducer: IntroducerInfoProps) => {
-    setSelectedIntroducer(introducer);
+  const openUpdateModal = (advisor: AdvisorInfoProps) => {
+    setSelectedAdvisor(advisor);
     toggleUpdateModal();
   };
-  // openaddmodals end
+  // openmodals end
 
-  const filteredIntroducers = introducers.filter((introducer) => {
-    const fullName = `${introducer?.user?.first_name || ""} ${
-      introducer?.user?.last_name || ""
+  const filteredAdvisors = advisors.filter((advisor) => {
+    const fullName = `${advisor?.user?.first_name || ""} ${
+      advisor?.user?.last_name || ""
     }`.toLowerCase();
 
     return (
       fullName.includes(searchQuery.toLowerCase()) ||
-      introducer?.official_email
-        ?.toLowerCase()
-        .includes(searchQuery.toLowerCase())
+      advisor?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
 
-  const indexOfLastIntroducer = currentPage * introducersPerPage;
-  const indexOfFirstIntroducer = indexOfLastIntroducer - introducersPerPage;
-  const currentIntroducers = filteredIntroducers.slice(
-    indexOfFirstIntroducer,
-    indexOfLastIntroducer
+  const indexOfLastAdvisor = currentPage * advisorsPerPage;
+  const indexOfFirstAdvisor = indexOfLastAdvisor - advisorsPerPage;
+  const currentAdvisors = filteredAdvisors.slice(
+    indexOfFirstAdvisor,
+    indexOfLastAdvisor
   );
 
-  const totalPages = Math.ceil(filteredIntroducers.length / introducersPerPage);
+  const totalPages = Math.ceil(filteredAdvisors.length / advisorsPerPage);
 
   if (isLoading) {
-    <div>
-      <LoadingSpinner />
-    </div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (
     <div className="container mt-1">
       <Row className="flex justify-content-between py-4">
         <Col md="3">
-          <h2>Introducer List</h2>
+          <h2>Advisor List</h2>
         </Col>
         <Col md={6}>
           <InputGroup>
@@ -144,7 +146,7 @@ const IntroducerListBody: React.FC = () => {
             onClick={openAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
-            <span>Add Introducer</span>
+            <span>Add Advisor</span>
             <span>
               <i className="fa-solid fa-circle-plus"></i>
             </span>
@@ -173,27 +175,27 @@ const IntroducerListBody: React.FC = () => {
                   </div>
                 </td>
               </tr>
-            ) : currentIntroducers.length > 0 ? (
-              currentIntroducers.map((introducer) => (
-                <tr key={introducer.alias}>
+            ) : currentAdvisors.length > 0 ? (
+              currentAdvisors.map((advisor) => (
+                <tr key={advisor.alias} className="text-center">
                   <td>
-                    {introducer?.user?.first_name} {introducer?.user?.last_name}
+                    {advisor?.user?.first_name} {advisor?.user?.last_name}
                   </td>
-                  <td>{introducer?.official_email}</td>
-                  <td>{introducer?.official_phone || "N/A"}</td>
-                  <td>{introducer?.role}</td>
+                  <td>{advisor?.official_email}</td>
+                  <td>{advisor?.official_phone || "N/A"}</td>
+                  <td>{advisor?.role}</td>
                   <td>
-                    {introducer?.created_by?.first_name}{" "}
-                    {introducer?.created_by?.last_name}
+                    {advisor?.created_by?.first_name}{" "}
+                    {advisor?.created_by?.last_name}
                   </td>
-                  <td>{formatDateToDMYAndTime(introducer?.created_at)}</td>
-                  <td className="text-center">
+                  <td>{formatDateToDMYAndTime(advisor?.created_at)}</td>
+                  <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"
                         size="sm"
                         title="Update User"
-                        onClick={() => openUpdateModal(introducer)}
+                        onClick={() => openUpdateModal(advisor)}
                       >
                         <i className="icon-pencil-alt"></i>
                       </Button>
@@ -201,7 +203,7 @@ const IntroducerListBody: React.FC = () => {
                         color="danger"
                         size="sm"
                         title="Delete User"
-                        onClick={() => openDeleteModal(introducer)}
+                        onClick={() => openDeleteModal(advisor)}
                       >
                         <i className="icon-trash"></i>
                       </Button>
@@ -212,7 +214,7 @@ const IntroducerListBody: React.FC = () => {
             ) : (
               <tr>
                 <td colSpan={7} className="text-center">
-                  No introducers available.
+                  No advisors available.
                 </td>
               </tr>
             )}
@@ -300,24 +302,24 @@ const IntroducerListBody: React.FC = () => {
       </Row>
 
       {/* modals */}
-      <AddIntroducerModal isOpen={isModalOpen} toggle={toggleModal} />
-      <UpdateIntroducerModal
+      <AddAdvisorModal isOpen={isModalOpen} toggle={toggleModal} />
+      <UpdateAdvisorModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
-          toggleUpdateModal(); // Close the modal
+          toggleUpdateModal();
         }}
-        selectedIntroducer={selectedIntroducer}
+        selectedAdvisor={selectedAdvisor}
       />
-      <DeleteIntroducerModal
+      <DeleteAdvisorModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        introducerAlias={introducerToDelete?.alias}
-        introducerName={`${introducerToDelete?.user?.first_name} ${introducerToDelete?.user?.last_name}`}
+        advisorAlias={advisorToDelete?.alias || ""}
+        advisorName={`${advisorToDelete?.user?.first_name} ${advisorToDelete?.user?.last_name}`}
       />
       {/* modals end */}
     </div>
   );
 };
 
-export default IntroducerListBody;
+export default AdvisorListBody;

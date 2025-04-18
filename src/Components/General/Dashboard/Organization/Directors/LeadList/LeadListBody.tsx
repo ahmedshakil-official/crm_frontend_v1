@@ -1,5 +1,5 @@
-import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
-import { AdvisorInfoProps } from "@/Types/Organization/Directors/AdvisorTypes";
+import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Organization/Directors/LeadDetalisApi";
+import { LeadsInfo } from "@/Types/Organization/Directors/LeadTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";
@@ -17,29 +17,25 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./AdvisorList.css";
-import AddAdvisorModal from "./Modals/AddAdvisorModal";
-import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
-import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
+import "./LeadList.css";
+import AddLeadModal from "./Modals/AddLeadModal";
+import DeleteLeadModal from "./Modals/DeleteLeadModal";
+import UpdateLeadModal from "./Modals/UpdateLeadModal";
 
-const AdvisorListBody: React.FC = () => {
-  const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
+const LeadListBody: React.FC = () => {
+  const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [advisorsPerPage] = useState(5);
+  const [leadsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [advisorToDelete, setAdvisorToDelete] =
-    useState<AdvisorInfoProps | null>(null);
+  const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
 
-  const { data: advisorData, isLoading } = useGetAdvisorDetailsQuery(undefined);
+  const { data: leadData, isLoading } = useGetLeadDetailsQuery(undefined);
 
-  const [selectedAdvisor, setSelectedAdvisor] = useState<
-    Partial<AdvisorInfoProps>
-  >({
+  const [selectedLead, setSelectedLead] = useState<Partial<LeadsInfo>>({
     user: {
-      id: 0,
       first_name: "",
       last_name: "",
       profile_image: "",
@@ -68,50 +64,45 @@ const AdvisorListBody: React.FC = () => {
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
-  const openDeleteModal = (advisor: AdvisorInfoProps) => {
-    setAdvisorToDelete(advisor);
+  const openDeleteModal = (lead: LeadsInfo) => {
+    setLeadToDelete(lead);
     toggleDeleteModal();
   };
 
   useEffect(() => {
-    if (advisorData) {
-      const advisorsArray: AdvisorInfoProps[] = Array.isArray(advisorData)
-        ? advisorData
-        : advisorData.advisors;
-      setAdvisors(advisorsArray || []);
+    if (leadData) {
+      const leadsData = Array.isArray(leadData) ? leadData : leadData.leads;
+      setLeads(leadsData || []);
     }
-  }, [advisorData]);
+  }, [leadData]);
 
   // openmodals
   const openAddModal = () => {
     toggleModal();
   };
 
-  const openUpdateModal = (advisor: AdvisorInfoProps) => {
-    setSelectedAdvisor(advisor);
+  const openUpdateModal = (lead: LeadsInfo) => {
+    setSelectedLead(lead);
     toggleUpdateModal();
   };
   // openmodals end
 
-  const filteredAdvisors = advisors.filter((advisor) => {
-    const fullName = `${advisor?.user?.first_name || ""} ${
-      advisor?.user?.last_name || ""
+  const filteredLeads = leads.filter((lead) => {
+    const fullName = `${lead?.user?.first_name || ""} ${
+      lead?.user?.last_name || ""
     }`.toLowerCase();
 
     return (
       fullName.includes(searchQuery.toLowerCase()) ||
-      advisor?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
+      lead?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
 
-  const indexOfLastAdvisor = currentPage * advisorsPerPage;
-  const indexOfFirstAdvisor = indexOfLastAdvisor - advisorsPerPage;
-  const currentAdvisors = filteredAdvisors.slice(
-    indexOfFirstAdvisor,
-    indexOfLastAdvisor
-  );
+  const indexOfLastLead = currentPage * leadsPerPage;
+  const indexOfFirstLead = indexOfLastLead - leadsPerPage;
+  const currentLeads = filteredLeads.slice(indexOfFirstLead, indexOfLastLead);
 
-  const totalPages = Math.ceil(filteredAdvisors.length / advisorsPerPage);
+  const totalPages = Math.ceil(filteredLeads.length / leadsPerPage);
 
   if (isLoading) {
     return (
@@ -123,11 +114,11 @@ const AdvisorListBody: React.FC = () => {
 
   return (
     <div className="container mt-1">
-      <Row className="flex justify-content-between py-4">
-        <Col md="3">
-          <h2>Advisor List</h2>
+      <Row className="d-flex justify-content-between py-4">
+        <Col md="3" xs="12">
+          <h2>Lead List</h2>
         </Col>
-        <Col md={6}>
+        <Col md={6} xs="12">
           <InputGroup>
             <Input
               type="text"
@@ -146,7 +137,7 @@ const AdvisorListBody: React.FC = () => {
             onClick={openAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
-            <span>Add Advisor</span>
+            <span>Add Lead</span>
             <span>
               <i className="fa-solid fa-circle-plus"></i>
             </span>
@@ -175,27 +166,27 @@ const AdvisorListBody: React.FC = () => {
                   </div>
                 </td>
               </tr>
-            ) : currentAdvisors.length > 0 ? (
-              currentAdvisors.map((advisor) => (
-                <tr key={advisor.alias}>
+            ) : currentLeads.length > 0 ? (
+              currentLeads.map((lead) => (
+                <tr key={lead.alias} className="text-center">
                   <td>
-                    {advisor?.user?.first_name} {advisor?.user?.last_name}
+                    {lead?.user?.first_name} {lead?.user?.last_name}
                   </td>
-                  <td>{advisor?.official_email}</td>
-                  <td>{advisor?.official_phone || "N/A"}</td>
-                  <td>{advisor?.role}</td>
+                  <td>{lead?.official_email}</td>
+                  <td>{lead?.official_phone || "N/A"}</td>
+                  <td>{lead?.role}</td>
                   <td>
-                    {advisor?.created_by?.first_name}{" "}
-                    {advisor?.created_by?.last_name}
+                    {lead?.created_by?.first_name} {lead?.created_by?.last_name}
                   </td>
-                  <td>{formatDateToDMYAndTime(advisor?.created_at)}</td>
-                  <td className="text-center">
+                  <td>{formatDateToDMYAndTime(lead?.created_at)}</td>
+
+                  <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"
                         size="sm"
                         title="Update User"
-                        onClick={() => openUpdateModal(advisor)}
+                        onClick={() => openUpdateModal(lead)}
                       >
                         <i className="icon-pencil-alt"></i>
                       </Button>
@@ -203,7 +194,7 @@ const AdvisorListBody: React.FC = () => {
                         color="danger"
                         size="sm"
                         title="Delete User"
-                        onClick={() => openDeleteModal(advisor)}
+                        onClick={() => openDeleteModal(lead)}
                       >
                         <i className="icon-trash"></i>
                       </Button>
@@ -214,7 +205,7 @@ const AdvisorListBody: React.FC = () => {
             ) : (
               <tr>
                 <td colSpan={7} className="text-center">
-                  No advisors available.
+                  No leads available.
                 </td>
               </tr>
             )}
@@ -301,25 +292,27 @@ const AdvisorListBody: React.FC = () => {
         </Pagination>
       </Row>
 
-      {/* modals */}
-      <AddAdvisorModal isOpen={isModalOpen} toggle={toggleModal} />
-      <UpdateAdvisorModal
+      {/* Modals */}
+      <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
+
+      <UpdateLeadModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
           toggleUpdateModal();
         }}
-        selectedAdvisor={selectedAdvisor}
+        selectedLead={selectedLead}
       />
-      <DeleteAdvisorModal
+      <DeleteLeadModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        advisorAlias={advisorToDelete?.alias || ""}
-        advisorName={`${advisorToDelete?.user?.first_name} ${advisorToDelete?.user?.last_name}`}
+        leadAlias={leadToDelete?.alias}
+        leadName={`${leadToDelete?.user?.first_name} ${leadToDelete?.user?.last_name}`}
       />
+
       {/* modals end */}
     </div>
   );
 };
 
-export default AdvisorListBody;
+export default LeadListBody;

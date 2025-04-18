@@ -1,5 +1,5 @@
-import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Organization/Directors/LeadDetalisApi";
-import { LeadsInfo } from "@/Types/Organization/Directors/LeadTypes";
+import { useGetClientDetailsQuery } from "@/Redux/Reducers/Organization/Directors/ClientDetailsApi";
+import { ClientInfoProps } from "@/Types/Organization/Directors/ClientTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";
@@ -17,24 +17,28 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./LeadList.css";
-import AddLeadModal from "./Modals/AddLeadModal";
-import DeleteLeadModal from "./Modals/DeleteLeadModal";
-import UpdateLeadModal from "./Modals/UpdateLeadModal";
+import "./ClientList.css";
+import AddClientModal from "./Modals/AddClientModal";
+import DeleteClientModal from "./Modals/DeleteClientModal";
+import UpdateClientModal from "./Modals/UpdateClientModal";
 
-const LeadListBody: React.FC = () => {
-  const [leads, setLeads] = useState<LeadsInfo[]>([]);
+const ClientListBody: React.FC = () => {
+  const [clients, setClients] = useState<ClientInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [leadsPerPage] = useState(5);
+  const [clientsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
+  const [clientToDelete, setClientToDelete] = useState<ClientInfoProps | null>(
+    null
+  );
 
-  const { data: leadData, isLoading } = useGetLeadDetailsQuery(undefined);
+  const { data: clientData, isLoading } = useGetClientDetailsQuery(undefined);
 
-  const [selectedLead, setSelectedLead] = useState<Partial<LeadsInfo>>({
+  const [selectedClient, setSelectedClient] = useState<
+    Partial<ClientInfoProps>
+  >({
     user: {
       first_name: "",
       last_name: "",
@@ -64,45 +68,50 @@ const LeadListBody: React.FC = () => {
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
-  const openDeleteModal = (lead: LeadsInfo) => {
-    setLeadToDelete(lead);
+  const openDeleteModal = (client: ClientInfoProps) => {
+    setClientToDelete(client);
     toggleDeleteModal();
   };
 
   useEffect(() => {
-    if (leadData) {
-      const leadsData = Array.isArray(leadData) ? leadData : leadData.leads;
-      setLeads(leadsData || []);
+    if (clientData) {
+      const clientsData = Array.isArray(clientData)
+        ? clientData
+        : clientData.clients;
+      setClients(clientsData || []);
     }
-  }, [leadData]);
+  }, [clientData]);
 
   // openmodals
   const openAddModal = () => {
     toggleModal();
   };
 
-  const openUpdateModal = (lead: LeadsInfo) => {
-    setSelectedLead(lead);
+  const openUpdateModal = (client: ClientInfoProps) => {
+    setSelectedClient(client);
     toggleUpdateModal();
   };
   // openmodals end
 
-  const filteredLeads = leads.filter((lead) => {
-    const fullName = `${lead?.user?.first_name || ""} ${
-      lead?.user?.last_name || ""
+  const filteredClients = clients.filter((client) => {
+    const fullName = `${client?.user?.first_name || ""} ${
+      client?.user?.last_name || ""
     }`.toLowerCase();
 
     return (
       fullName.includes(searchQuery.toLowerCase()) ||
-      lead?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
+      client?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
 
-  const indexOfLastLead = currentPage * leadsPerPage;
-  const indexOfFirstLead = indexOfLastLead - leadsPerPage;
-  const currentLeads = filteredLeads.slice(indexOfFirstLead, indexOfLastLead);
+  const indexOfLastClient = currentPage * clientsPerPage;
+  const indexOfFirstClient = indexOfLastClient - clientsPerPage;
+  const currentClients = filteredClients.slice(
+    indexOfFirstClient,
+    indexOfLastClient
+  );
 
-  const totalPages = Math.ceil(filteredLeads.length / leadsPerPage);
+  const totalPages = Math.ceil(filteredClients.length / clientsPerPage);
 
   if (isLoading) {
     return (
@@ -114,11 +123,11 @@ const LeadListBody: React.FC = () => {
 
   return (
     <div className="container mt-1">
-      <Row className="d-flex justify-content-between py-4">
-        <Col md="3" xs="12">
-          <h2>Lead List</h2>
+      <Row className="flex justify-content-between py-4">
+        <Col md="3">
+          <h2>Client List</h2>
         </Col>
-        <Col md={6} xs="12">
+        <Col md={6}>
           <InputGroup>
             <Input
               type="text"
@@ -137,7 +146,7 @@ const LeadListBody: React.FC = () => {
             onClick={openAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
-            <span>Add Lead</span>
+            <span>Add Client</span>
             <span>
               <i className="fa-solid fa-circle-plus"></i>
             </span>
@@ -157,6 +166,7 @@ const LeadListBody: React.FC = () => {
               <th>Action</th>
             </tr>
           </thead>
+
           <tbody>
             {isLoading ? (
               <tr>
@@ -166,27 +176,27 @@ const LeadListBody: React.FC = () => {
                   </div>
                 </td>
               </tr>
-            ) : currentLeads.length > 0 ? (
-              currentLeads.map((lead) => (
-                <tr key={lead.alias}>
+            ) : currentClients.length > 0 ? (
+              currentClients.map((client: any) => (
+                <tr key={client.alias} className="text-center">
                   <td>
-                    {lead?.user?.first_name} {lead?.user?.last_name}
+                    {client?.user?.first_name} {client?.user?.last_name}
                   </td>
-                  <td>{lead?.official_email}</td>
-                  <td>{lead?.official_phone || "N/A"}</td>
-                  <td>{lead?.role}</td>
+                  <td>{client.official_email}</td>
+                  <td>{client.official_phone || "N/A"}</td>
+                  <td>{client.role}</td>
                   <td>
-                    {lead?.created_by?.first_name} {lead?.created_by?.last_name}
+                    {client?.created_by?.first_name}{" "}
+                    {client?.created_by?.last_name}
                   </td>
-                  <td>{formatDateToDMYAndTime(lead?.created_at)}</td>
-
-                  <td className="text-center">
+                  <td>{formatDateToDMYAndTime(client?.created_at)}</td>
+                  <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"
                         size="sm"
                         title="Update User"
-                        onClick={() => openUpdateModal(lead)}
+                        onClick={() => openUpdateModal(client)}
                       >
                         <i className="icon-pencil-alt"></i>
                       </Button>
@@ -194,7 +204,7 @@ const LeadListBody: React.FC = () => {
                         color="danger"
                         size="sm"
                         title="Delete User"
-                        onClick={() => openDeleteModal(lead)}
+                        onClick={() => openDeleteModal(client)}
                       >
                         <i className="icon-trash"></i>
                       </Button>
@@ -205,7 +215,7 @@ const LeadListBody: React.FC = () => {
             ) : (
               <tr>
                 <td colSpan={7} className="text-center">
-                  No leads available.
+                  No clients available.
                 </td>
               </tr>
             )}
@@ -292,22 +302,21 @@ const LeadListBody: React.FC = () => {
         </Pagination>
       </Row>
 
-      {/* Modals */}
-      <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
-
-      <UpdateLeadModal
+      {/* modals */}
+      <AddClientModal isOpen={isModalOpen} toggle={toggleModal} />
+      <UpdateClientModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
           toggleUpdateModal();
         }}
-        selectedLead={selectedLead}
+        selectedClient={selectedClient}
       />
-      <DeleteLeadModal
+      <DeleteClientModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        leadAlias={leadToDelete?.alias}
-        leadName={`${leadToDelete?.user?.first_name} ${leadToDelete?.user?.last_name}`}
+        clientAlias={clientToDelete?.alias || ""}
+        clientName={`${clientToDelete?.user?.first_name} ${clientToDelete?.user?.last_name}`}
       />
 
       {/* modals end */}
@@ -315,4 +324,4 @@ const LeadListBody: React.FC = () => {
   );
 };
 
-export default LeadListBody;
+export default ClientListBody;

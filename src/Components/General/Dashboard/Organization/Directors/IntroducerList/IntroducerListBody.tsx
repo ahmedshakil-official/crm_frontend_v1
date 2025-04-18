@@ -1,5 +1,5 @@
-import { useGetClientDetailsQuery } from "@/Redux/Reducers/Organization/Directors/ClientDetailsApi";
-import { ClientInfoProps } from "@/Types/Organization/Directors/ClientTypes";
+import { useGetIntroducerDetailsQuery } from "@/Redux/Reducers/Organization/Directors/IntroducerDetailsApi";
+import { IntroducerInfoProps } from "@/Types/Organization/Directors/IntroducerTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";
@@ -17,27 +17,25 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./ClientList.css";
-import AddClientModal from "./Modals/AddClientModal";
-import DeleteClientModal from "./Modals/DeleteClientModal";
-import UpdateClientModal from "./Modals/UpdateClientModal";
+import "./IntroducerList.css";
+import AddIntroducerModal from "./Modals/AddIntroducerModal";
+import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
+import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
 
-const ClientListBody: React.FC = () => {
-  const [clients, setClients] = useState<ClientInfoProps[]>([]);
+const IntroducerListBody: React.FC = () => {
+  const [introducers, setIntroducers] = useState<IntroducerInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [clientsPerPage] = useState(5);
+  const [introducersPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [clientToDelete, setClientToDelete] = useState<ClientInfoProps | null>(
-    null
-  );
-
-  const { data: clientData, isLoading } = useGetClientDetailsQuery(undefined);
-
-  const [selectedClient, setSelectedClient] = useState<
-    Partial<ClientInfoProps>
+  const [introducerToDelete, setIntroducerToDelete] =
+    useState<IntroducerInfoProps | null>(null);
+  const { data: introduceData, isLoading } =
+    useGetIntroducerDetailsQuery(undefined);
+  const [selectedIntroducer, setSelectedIntroducer] = useState<
+    Partial<IntroducerInfoProps>
   >({
     user: {
       first_name: "",
@@ -68,64 +66,64 @@ const ClientListBody: React.FC = () => {
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
-  const openDeleteModal = (client: ClientInfoProps) => {
-    setClientToDelete(client);
+  const openDeleteModal = (introducer: IntroducerInfoProps) => {
+    setIntroducerToDelete(introducer);
     toggleDeleteModal();
   };
 
   useEffect(() => {
-    if (clientData) {
-      const clientsData = Array.isArray(clientData)
-        ? clientData
-        : clientData.clients;
-      setClients(clientsData || []);
+    if (introduceData) {
+      const introducerData = Array.isArray(introduceData)
+        ? introduceData
+        : [introduceData];
+      setIntroducers(introducerData);
     }
-  }, [clientData]);
+  }, [introduceData]);
 
-  // openmodals
+  // openaddmodals
   const openAddModal = () => {
     toggleModal();
   };
 
-  const openUpdateModal = (client: ClientInfoProps) => {
-    setSelectedClient(client);
+  const openUpdateModal = (introducer: IntroducerInfoProps) => {
+    setSelectedIntroducer(introducer);
     toggleUpdateModal();
   };
-  // openmodals end
+  // openaddmodals end
 
-  const filteredClients = clients.filter((client) => {
-    const fullName = `${client?.user?.first_name || ""} ${
-      client?.user?.last_name || ""
+  const filteredIntroducers = introducers.filter((introducer) => {
+    const fullName = `${introducer?.user?.first_name || ""} ${
+      introducer?.user?.last_name || ""
     }`.toLowerCase();
 
     return (
       fullName.includes(searchQuery.toLowerCase()) ||
-      client?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
+      introducer?.official_email
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase())
     );
   });
 
-  const indexOfLastClient = currentPage * clientsPerPage;
-  const indexOfFirstClient = indexOfLastClient - clientsPerPage;
-  const currentClients = filteredClients.slice(
-    indexOfFirstClient,
-    indexOfLastClient
+  const indexOfLastIntroducer = currentPage * introducersPerPage;
+  const indexOfFirstIntroducer = indexOfLastIntroducer - introducersPerPage;
+  const currentIntroducers = filteredIntroducers.slice(
+    indexOfFirstIntroducer,
+    indexOfLastIntroducer
   );
 
-  const totalPages = Math.ceil(filteredClients.length / clientsPerPage);
+  const totalPages = Math.ceil(filteredIntroducers.length / introducersPerPage);
 
   if (isLoading) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    <div>
+      <LoadingSpinner />
+    </div>;
   }
 
   return (
     <div className="container mt-1">
       <Row className="flex justify-content-between py-4">
         <Col md="3">
-          <h2>Client List</h2>
+          <h2>Introducer List</h2>
         </Col>
         <Col md={6}>
           <InputGroup>
@@ -146,7 +144,7 @@ const ClientListBody: React.FC = () => {
             onClick={openAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
-            <span>Add Client</span>
+            <span>Add Introducer</span>
             <span>
               <i className="fa-solid fa-circle-plus"></i>
             </span>
@@ -166,7 +164,6 @@ const ClientListBody: React.FC = () => {
               <th>Action</th>
             </tr>
           </thead>
-
           <tbody>
             {isLoading ? (
               <tr>
@@ -176,27 +173,27 @@ const ClientListBody: React.FC = () => {
                   </div>
                 </td>
               </tr>
-            ) : currentClients.length > 0 ? (
-              currentClients.map((client: any) => (
-                <tr key={client.alias}>
+            ) : currentIntroducers.length > 0 ? (
+              currentIntroducers.map((introducer) => (
+                <tr key={introducer.alias} className="text-center">
                   <td>
-                    {client?.user?.first_name} {client?.user?.last_name}
+                    {introducer?.user?.first_name} {introducer?.user?.last_name}
                   </td>
-                  <td>{client.official_email}</td>
-                  <td>{client.official_phone || "N/A"}</td>
-                  <td>{client.role}</td>
+                  <td>{introducer?.official_email}</td>
+                  <td>{introducer?.official_phone || "N/A"}</td>
+                  <td>{introducer?.role}</td>
                   <td>
-                    {client?.created_by?.first_name}{" "}
-                    {client?.created_by?.last_name}
+                    {introducer?.created_by?.first_name}{" "}
+                    {introducer?.created_by?.last_name}
                   </td>
-                  <td>{formatDateToDMYAndTime(client?.created_at)}</td>
-                  <td className="text-center">
+                  <td>{formatDateToDMYAndTime(introducer?.created_at)}</td>
+                  <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"
                         size="sm"
                         title="Update User"
-                        onClick={() => openUpdateModal(client)}
+                        onClick={() => openUpdateModal(introducer)}
                       >
                         <i className="icon-pencil-alt"></i>
                       </Button>
@@ -204,7 +201,7 @@ const ClientListBody: React.FC = () => {
                         color="danger"
                         size="sm"
                         title="Delete User"
-                        onClick={() => openDeleteModal(client)}
+                        onClick={() => openDeleteModal(introducer)}
                       >
                         <i className="icon-trash"></i>
                       </Button>
@@ -215,7 +212,7 @@ const ClientListBody: React.FC = () => {
             ) : (
               <tr>
                 <td colSpan={7} className="text-center">
-                  No clients available.
+                  No introducers available.
                 </td>
               </tr>
             )}
@@ -303,25 +300,24 @@ const ClientListBody: React.FC = () => {
       </Row>
 
       {/* modals */}
-      <AddClientModal isOpen={isModalOpen} toggle={toggleModal} />
-      <UpdateClientModal
+      <AddIntroducerModal isOpen={isModalOpen} toggle={toggleModal} />
+      <UpdateIntroducerModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
-          toggleUpdateModal();
+          toggleUpdateModal(); // Close the modal
         }}
-        selectedClient={selectedClient}
+        selectedIntroducer={selectedIntroducer}
       />
-      <DeleteClientModal
+      <DeleteIntroducerModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        clientAlias={clientToDelete?.alias || ""}
-        clientName={`${clientToDelete?.user?.first_name} ${clientToDelete?.user?.last_name}`}
+        introducerAlias={introducerToDelete?.alias}
+        introducerName={`${introducerToDelete?.user?.first_name} ${introducerToDelete?.user?.last_name}`}
       />
-
       {/* modals end */}
     </div>
   );
 };
 
-export default ClientListBody;
+export default IntroducerListBody;
