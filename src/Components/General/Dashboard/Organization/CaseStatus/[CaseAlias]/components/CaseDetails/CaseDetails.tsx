@@ -9,7 +9,7 @@ import {
   NPDTabTitleData,
   OFBTabTitleData,
   RCCTabTitleData,
-} from "@/Data/Case/CaseDetails/CaseDetailsTabTitleData";
+} from "@/Data/Organization/Case/CaseDetails/CaseDetailsTabTitleData";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { basicTabIndicator } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useEffect } from "react";

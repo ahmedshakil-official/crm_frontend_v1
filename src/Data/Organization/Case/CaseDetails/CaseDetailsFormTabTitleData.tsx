@@ -2,19 +2,19 @@
 export const LoanDetailsFormTabTitleData = [
   {
     id: "1",
-    text: "Step 1",
+    nav: "Step 1",
   },
   {
     id: "2",
-    text: "Step 2",
+    nav: "Step 2",
   },
   {
     id: "3",
-    text: "Step 3",
+    nav: "Step 3",
   },
   {
     id: "4",
-    text: "Step 4",
+    nav: "Step 4",
   },
 ];
 
