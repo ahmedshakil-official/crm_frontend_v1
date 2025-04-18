@@ -15,7 +15,7 @@ export const SingleOrganizationApi = baseApi.injectEndpoints({
         method: "PUT",
         body: payload,
       }),
-      invalidatesTags: ["SingleOrganization"],
+      invalidatesTags: ["SingleOrganization", "OrganizationList"],
     }),
     deleteOrganization: builder.mutation({
       query: ({ slug }) => ({
