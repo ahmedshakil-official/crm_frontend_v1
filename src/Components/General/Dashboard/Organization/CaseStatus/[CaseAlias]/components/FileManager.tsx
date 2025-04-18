@@ -1,4 +1,4 @@
-import { useGetCaseFilesDetailsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
+import { useGetCaseFilesDetailsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
 import {
   CaseFileProps,
   FileDeleteModalProps,

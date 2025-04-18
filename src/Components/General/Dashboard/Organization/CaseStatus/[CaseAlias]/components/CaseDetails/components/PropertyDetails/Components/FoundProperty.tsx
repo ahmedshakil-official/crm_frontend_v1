@@ -1,4 +1,4 @@
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import {

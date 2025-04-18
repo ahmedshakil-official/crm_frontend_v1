@@ -1,6 +1,6 @@
 import SvgIcon from "@/CommonComponent/SVG/IconSvg";
 import { Href, ImagePath } from "@/Constant";
-import { useGetOrganizationDetailsQuery } from "@/Redux/Reducers/OrganizationDetails/OrganizationDetailsApi";
+import { useGetOrganizationDetailsQuery } from "@/Redux/Reducers/Organization/OrganizationDetails/OrganizationDetailsApi";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";

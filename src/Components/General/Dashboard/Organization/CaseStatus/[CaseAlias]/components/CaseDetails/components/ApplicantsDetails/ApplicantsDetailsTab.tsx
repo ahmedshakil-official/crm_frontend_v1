@@ -1,4 +1,4 @@
-import { useGetApplicantsQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { useGetApplicantsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";

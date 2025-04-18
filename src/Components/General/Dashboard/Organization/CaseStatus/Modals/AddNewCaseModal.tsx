@@ -1,5 +1,5 @@
-import { useAddCaseDetailsMutation } from "@/Redux/Reducers/Cases/CaseDetailsApi";
-import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Directors/LeadDetalisApi";
+import { useAddCaseDetailsMutation } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
+import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Organization/Directors/LeadDetalisApi";
 import { AddNewCaseModalProps } from "@/Types/Organization/CaseTypes";
 import { LeadsInfo } from "@/Types/Organization/LeadTypes";
 import React, { useEffect, useState } from "react";

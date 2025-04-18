@@ -2,7 +2,7 @@ import {
   useGetCaseLoanDetailsQuery,
   useGetLoanDetailsQuery,
   useUpdateLoanDetailsMutation,
-} from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/LoanDetails/LoanDetailsApi";
+} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/LoanDetails/LoanDetailsApi";
 import { LoanDetailsTabContentProps } from "@/Types/Organization/CaseDetails/LoanDetailsTypes";
 import LoadingSpinner from "@/app/loading";
 import { skipToken } from "@reduxjs/toolkit/query";

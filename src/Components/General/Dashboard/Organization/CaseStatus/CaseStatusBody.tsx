@@ -1,11 +1,11 @@
-import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Cases/CaseDetailsApi";
+import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
 import { CaseInfo } from "@/Types/Organization/CaseTypes";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button, Row, Spinner, Table } from "reactstrap";
 import "./CaseStatus.css";
 import CaseStatusHeader from "./CaseStatusHeader";
-import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 
 const CaseStatusBody: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo[]>([]);

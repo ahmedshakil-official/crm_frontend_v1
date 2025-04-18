@@ -1,5 +1,5 @@
-import { useAddCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
-import { useGetCaseUsersQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
+import { useAddCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import { useGetCaseUsersQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
 import { AddCreditCommitmentModalProps } from "@/Types/Organization/CaseDetails/CreditCommitmentsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
@@ -174,9 +174,8 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                   <option value="CREDIT_COMMITMENT">Credit Commitment</option>
                   <option value="DMP">DMP</option>
                 </Input>
-                <small className="text-danger" style={{fontSize:"9px"}}>
-                  Select the "Type" correctly, as it cannot be updated
-                  later.
+                <small className="text-danger" style={{ fontSize: "9px" }}>
+                  Select the "Type" correctly, as it cannot be updated later.
                 </small>
               </FormGroup>
             </Col>

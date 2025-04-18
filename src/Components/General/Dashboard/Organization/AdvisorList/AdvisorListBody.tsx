@@ -1,6 +1,7 @@
-import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Directors/AdvisorDetailsApi";
+import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
 import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
 import LoadingSpinner from "@/app/loading";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -20,7 +21,6 @@ import "./AdvisorList.css";
 import AddAdvisorModal from "./Modals/AddAdvisorModal";
 import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
 import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
-import { formatDateToDMY, formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 
 const AdvisorListBody: React.FC = () => {
   const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);

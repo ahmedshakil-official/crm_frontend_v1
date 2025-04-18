@@ -1,12 +1,12 @@
+import { initializeForm } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { PropertyData } from "@/Types/Organization/CaseDetails/PropertyDetails";
 import { FC, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Button, TabContent, TabPane } from "reactstrap";
+import AdditionalInfo from "./Components/PropertyDetailsTabs/PropertyAdditionalInfo";
 import AddressDetails from "./Components/PropertyDetailsTabs/PropertyAddress";
 import PropertyDetails from "./Components/PropertyDetailsTabs/PropertyType";
-import AdditionalInfo from "./Components/PropertyDetailsTabs/PropertyAdditionalInfo";
-import { PropertyData } from "@/Types/Organization/CaseDetails/PropertyDetails";
-import { useDispatch } from "react-redux";
 import ValuationInfo from "./Components/PropertyDetailsTabs/PropertyValuation";
-import { initializeForm } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 
 interface PropertyDetailsTabContentProps {
   tabId: string;
@@ -24,7 +24,12 @@ const PropertyDetailsTabContent: FC<PropertyDetailsTabContentProps> = ({
 
   useEffect(() => {
     if (propertyData) {
-      dispatch(initializeForm({ ...propertyData, other_new_build_warranty_provider: '' }));
+      dispatch(
+        initializeForm({
+          ...propertyData,
+          other_new_build_warranty_provider: "",
+        })
+      );
     }
   }, [propertyData, dispatch]);
 

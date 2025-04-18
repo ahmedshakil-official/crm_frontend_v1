@@ -1,4 +1,4 @@
-import { useAddFeesOutDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
+import { useAddFeesOutDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {

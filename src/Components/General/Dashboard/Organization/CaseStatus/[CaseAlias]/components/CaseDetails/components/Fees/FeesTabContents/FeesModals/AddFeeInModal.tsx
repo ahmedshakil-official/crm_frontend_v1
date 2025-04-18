@@ -1,4 +1,4 @@
-import { useAddFeesInDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
+import { useAddFeesInDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
 import {
   AddFeeInModalProps,
   FeeDataProps,

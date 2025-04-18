@@ -1,5 +1,5 @@
-import { useGetCaseUsersQuery } from "@/Redux/Reducers/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
-import { useAddCaseFilesDetailsMutation } from "@/Redux/Reducers/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
+import { useGetCaseUsersQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
+import { useAddCaseFilesDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
 
 import {
   FileOwnerProps,
