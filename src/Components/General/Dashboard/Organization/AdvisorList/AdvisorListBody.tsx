@@ -1,5 +1,5 @@
 import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
-import { AdvisorInfoProps } from "@/Types/Organization/AdvisorTypes";
+import { AdvisorInfoProps } from "@/Types/Organization/Directors/AdvisorTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";

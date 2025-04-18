@@ -1,5 +1,5 @@
 import { useAddClientDetailsMutation } from "@/Redux/Reducers/Organization/Directors/ClientDetailsApi";
-import { AddClientModalProps } from "@/Types/Organization/ClientTypes";
+import { AddClientModalProps } from "@/Types/Organization/Directors/ClientTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {

@@ -1,4 +1,4 @@
-import { CaseSearchProps } from "@/Types/Organization/CaseTypes";
+import { CaseSearchProps } from "@/Types/Organization/Cases/CaseTypes";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -79,7 +79,10 @@ const CaseStatusHeader: React.FC<CaseSearchProps> = ({
             </span>
           </Button>
           <Link href="/dashboard/organization/allcase" passHref>
-            <Button color="success" className="d-flex justify-content-center align-items-center gap-1">
+            <Button
+              color="success"
+              className="d-flex justify-content-center align-items-center gap-1"
+            >
               <span>View All Case</span>
               <span>
                 <i className="fa-solid fa-eye"></i>

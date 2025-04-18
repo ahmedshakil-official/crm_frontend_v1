@@ -1,5 +1,5 @@
 import { useGetClientDetailsQuery } from "@/Redux/Reducers/Organization/Directors/ClientDetailsApi";
-import { ClientInfoProps } from "@/Types/Organization/ClientTypes";
+import { ClientInfoProps } from "@/Types/Organization/Directors/ClientTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";

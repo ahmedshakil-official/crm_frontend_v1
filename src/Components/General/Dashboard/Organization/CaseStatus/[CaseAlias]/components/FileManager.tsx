@@ -2,7 +2,7 @@ import { useGetCaseFilesDetailsQuery } from "@/Redux/Reducers/Organization/Cases
 import {
   CaseFileProps,
   FileDeleteModalProps,
-} from "@/Types/Organization/CaseTypes";
+} from "@/Types/Organization/Cases/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {

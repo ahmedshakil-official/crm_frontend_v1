@@ -1,5 +1,5 @@
 import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
-import { CaseInfo } from "@/Types/Organization/CaseTypes";
+import { CaseInfo } from "@/Types/Organization/Cases/CaseTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import Link from "next/link";
 import { useEffect, useState } from "react";

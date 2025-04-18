@@ -2,7 +2,7 @@ import { useUpdateAdvisorDetailsMutation } from "@/Redux/Reducers/Organization/D
 import {
   AdvisorInfoProps,
   UpdateAdvisorModalProps,
-} from "@/Types/Organization/AdvisorTypes";
+} from "@/Types/Organization/Directors/AdvisorTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {

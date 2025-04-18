@@ -1,4 +1,7 @@
-import { CaseInfo, SingleCaseProps } from "@/Types/Organization/CaseTypes";
+import {
+  CaseInfo,
+  SingleCaseProps,
+} from "@/Types/Organization/Cases/CaseTypes";
 import { useState } from "react";
 import {
   Button,

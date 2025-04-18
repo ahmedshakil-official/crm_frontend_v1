@@ -1,5 +1,5 @@
 import { useGetIntroducerDetailsQuery } from "@/Redux/Reducers/Organization/Directors/IntroducerDetailsApi";
-import { IntroducerInfoProps } from "@/Types/Organization/IntroducerTypes";
+import { IntroducerInfoProps } from "@/Types/Organization/Directors/IntroducerTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import React, { useEffect, useState } from "react";

@@ -4,7 +4,7 @@ import { useAddCaseFilesDetailsMutation } from "@/Redux/Reducers/Organization/Ca
 import {
   FileOwnerProps,
   FileUploadModalProps,
-} from "@/Types/Organization/CaseTypes";
+} from "@/Types/Organization/Cases/CaseTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

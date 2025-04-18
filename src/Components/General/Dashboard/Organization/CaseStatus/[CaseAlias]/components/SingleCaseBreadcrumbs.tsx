@@ -1,5 +1,5 @@
 import { PropsTypes } from "@/Types/LayoutTypes";
-import { SingleCaseProps } from "@/Types/Organization/CaseTypes";
+import { SingleCaseProps } from "@/Types/Organization/Cases/CaseTypes";
 import Link from "next/link";
 import React from "react";
 import {
@@ -10,7 +10,6 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-
 
 const SingleCaseBreadcrumbs: React.FC<PropsTypes & SingleCaseProps> = ({
   mainTitle,

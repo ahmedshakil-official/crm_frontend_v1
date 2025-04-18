@@ -1,5 +1,5 @@
 import { useDeleteAdvisorDetailsMutation } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
-import { DeleteAdvisorModalProps } from "@/Types/Organization/AdvisorTypes";
+import { DeleteAdvisorModalProps } from "@/Types/Organization/Directors/AdvisorTypes";
 import React from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";

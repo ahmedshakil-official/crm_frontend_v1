@@ -1,7 +1,7 @@
 import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
 import { useGetSingleCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
 import { useGetJointUserInfoQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/JointUser/JointUserDetailsApi";
-import { CaseInfo } from "@/Types/Organization/CaseTypes";
+import { CaseInfo } from "@/Types/Organization/Cases/CaseTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";

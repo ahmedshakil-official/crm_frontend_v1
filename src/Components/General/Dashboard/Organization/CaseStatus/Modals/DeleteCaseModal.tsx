@@ -1,5 +1,5 @@
 import { useDeleteCaseDetailsMutation } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
-import { DeleteCaseModalProps } from "@/Types/Organization/CaseTypes";
+import { DeleteCaseModalProps } from "@/Types/Organization/Cases/CaseTypes";
 import React from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
