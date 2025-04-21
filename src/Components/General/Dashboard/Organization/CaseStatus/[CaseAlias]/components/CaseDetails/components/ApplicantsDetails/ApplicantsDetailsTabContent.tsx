@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
-  CardFooter,
   Col,
   Container,
   Form,
@@ -1507,11 +1506,11 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
           </Row>
           {/* Submit Button */}
-          <CardFooter className="d-flex justify-content-end">
-            <Button type="submit" color="success" disabled={isLoading}>
-              {isUpdatingApplicant ? "Updating..." : "Update"}
+          <div className="d-flex justify-content-end">
+            <Button type="submit" color="primary" disabled={isLoading}>
+              {isUpdatingApplicant ? "Updating..." : "Update Applicant"}
             </Button>
-          </CardFooter>
+          </div>
         </Form>
       </Row>
 
