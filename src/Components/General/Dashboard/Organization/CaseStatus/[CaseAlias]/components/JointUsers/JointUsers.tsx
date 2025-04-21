@@ -56,7 +56,8 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
               style={{ width: "100%" }}
             >
               <thead>
-                <tr>
+                <tr className="text-center">
+                  <th>#</th>
                   <th>User</th>
                   <th>Email</th>
                   <th>Phone</th>
@@ -81,7 +82,8 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
                   </tr>
                 ) : (
                   jointUserInfo?.map((userInfo: any, index: number) => (
-                    <tr key={index}>
+                    <tr key={index} className="text-center">
+                      <td>{index + 1}</td>
                       <td>
                         <div className="d-flex align-items-center gap-3">
                           <div className="flex-grow-1">
@@ -99,10 +101,17 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
                         {userInfo.joint_user_details?.phone}
                       </td>
                       <td className="f-w-600">
-                        {userInfo.joint_user_details?.user_type}
+                        {userInfo.joint_user_details?.user_type
+                          ?.split("_")
+                          .map(
+                            (word: any) =>
+                              word.charAt(0).toUpperCase() +
+                              word.slice(1).toLowerCase()
+                          )
+                          .join(" ")}
                       </td>
                       <td>{userInfo?.relationship || "N/A"}</td>
-                      <td className="text-center">
+                      <td>
                         <div className="d-flex justify-content-center gap-2 align-items-center">
                           <Button
                             color="success"

@@ -161,7 +161,16 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                             {file?.file_owner_info?.first_name}{" "}
                             {file?.file_owner_info?.last_name}
                           </td>
-                          <td>{file.file_type}</td>
+                          <td>
+                            {file?.file_type
+                              ?.split("_")
+                              .map(
+                                (word) =>
+                                  word.charAt(0).toUpperCase() +
+                                  word.slice(1).toLowerCase()
+                              )
+                              .join(" ")}
+                          </td>
                           <td>
                             <div className="d-flex justify-content-center gap-2 align-items-center">
                               <a
