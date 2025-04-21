@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 import { Container, Row } from "reactstrap";
 import CalenderContainer from "./components/Calender/CalenderContainer";
 import CaseDetails from "./components/CaseDetails/CaseDetails";
-import FileManager from "./components/FileManager";
-import JointUsers from "./components/JointUsers";
-import MeetingHistory from "./components/MeetingHistory";
+import FileManager from "./components/FileManager/FileManager";
+import JointUsers from "./components/JointUsers/JointUsers";
+import MeetingHistory from "./components/MeetingHistory/MeetingHistory";
 import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
-import SingleCaseInfo from "./components/SingleCaseInfo";
+import SingleCaseInfo from "./components/SingleCaseInfo/SingleCaseInfo";
 
 const CaseContainer: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();

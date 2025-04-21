@@ -12,12 +12,12 @@
     transform: rotate(360deg);
   }
 }
-.custom-hover {
+.custom_hover {
   text-decoration: none;
   color: #308e87;
 }
 
-.custom-hover:hover {
+.custom_hover:hover {
   text-decoration: underline;
 }
 

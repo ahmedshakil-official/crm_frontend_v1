@@ -41,7 +41,18 @@ const TasksViewTab: FC<TasksViewTabProps> = ({ tasks }) => {
                 <td>{task.note_task}</td> {/* "TASK" or "NOTE" */}
                 <td>{new Date(task.created_at).toLocaleString()}</td>{" "}
                 {/* Formatting the date */}
-                <td>{task.case.case_stage}</td> {/* Case stage */}
+                <td>
+                  {task.case.case_stage
+                    ? task.case.case_stage
+                        .split("_")
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                        )
+                        .join(" ")
+                    : "N/A"}
+                </td>
                 <td>{`${task.created_by.first_name} ${task.created_by.last_name}`}</td>{" "}
                 {/* User name */}
                 <td>

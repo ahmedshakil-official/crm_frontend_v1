@@ -12,7 +12,7 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import UpdateCaseModal from "../../Modals/UpdateCaseModal";
+import UpdateCaseModal from "../../../Modals/UpdateCaseModal";
 
 const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
