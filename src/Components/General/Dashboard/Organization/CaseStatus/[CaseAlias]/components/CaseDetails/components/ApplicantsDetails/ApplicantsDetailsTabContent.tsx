@@ -1,9 +1,8 @@
 "use client";
 import { countries } from "@/Data/Countries/Countries";
 import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
-import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
+import { ApplicantProps } from "@/Types/Organization/Cases/CaseDetails/ApplicantsDetailsTypes";
 import { ApplicantsUsersProps } from "@/Types/Organization/Cases/CaseDetails/ApplicantsUserTypes";
-import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -149,12 +148,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       setIsLoading(false);
     }
   };
-  if (isLoading)
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+
   return (
     <Container>
       <Row>
@@ -855,12 +849,46 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   id="residential_status"
                   type="select"
                   value={formValues.residential_status || ""}
-                  onChange={(e) =>
-                    handleInputChange("residential_status", e.target.value)
-                  }
+                  onChange={(e) => {
+                    const select = e.target as unknown as HTMLSelectElement;
+                    const option = select.options[select.selectedIndex];
+                    select.className = `form-select ${
+                      option.value === "OWNER"
+                        ? "text-success"
+                        : option.value === "RENTING_PRIVATE"
+                        ? "text-info"
+                        : option.value === "RENTING_LOCAL_AUTHORITY"
+                        ? "text-primary"
+                        : option.value === "TIED_ACCOMMODATION"
+                        ? "text-warning"
+                        : option.value === "LIVING_WITH_PARENTS"
+                        ? "text-success"
+                        : option.value === "LIVING_WITH_FRIENDS_FAMILY"
+                        ? "text-info"
+                        : ""
+                    }`;
+                    handleInputChange("residential_status", e.target.value);
+                  }}
                   required
+                  className={`form-select ${
+                    formValues.residential_status === "OWNER"
+                      ? "text-success"
+                      : formValues.residential_status === "RENTING_PRIVATE"
+                      ? "text-info"
+                      : formValues.residential_status ===
+                        "RENTING_LOCAL_AUTHORITY"
+                      ? "text-primary"
+                      : formValues.residential_status === "TIED_ACCOMMODATION"
+                      ? "text-warning"
+                      : formValues.residential_status === "LIVING_WITH_PARENTS"
+                      ? "text-success"
+                      : formValues.residential_status ===
+                        "LIVING_WITH_FRIENDS_FAMILY"
+                      ? "text-info"
+                      : ""
+                  }`}
                 >
-                  <option value="">Select an option</option>
+                  <option value="">Select...</option>
                   <option value="OWNER">Owner</option>
                   <option value="RENTING_PRIVATE">Renting - Private</option>
                   <option value="RENTING_LOCAL_AUTHORITY">
@@ -877,7 +905,593 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </FormGroup>
             </Col>
           </Row>
-
+          <Row>
+            {formValues.residential_status === "OWNER" && (
+              <>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label
+                      for="current_mortgage_balance"
+                      className="text-success"
+                    >
+                      Current Mortgage Balance
+                    </Label>
+                    <Input
+                      id="current_mortgage_balance"
+                      type="number"
+                      className="border-success"
+                      value={formValues.current_mortgage_balance || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "current_mortgage_balance",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="property_value" className="text-success">
+                      Property Value
+                    </Label>
+                    <Input
+                      id="property_value"
+                      type="number"
+                      className="border-success"
+                      value={formValues.property_value || ""}
+                      onChange={(e) =>
+                        handleInputChange("property_value", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="owner_monthly_payment" className="text-success">
+                      Owner Monthly Payment
+                    </Label>
+                    <Input
+                      id="owner_monthly_payment"
+                      type="number"
+                      className="border-success"
+                      value={formValues.owner_monthly_payment || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "owner_monthly_payment",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="lender" className="text-success">
+                      Lender
+                    </Label>
+                    <Input
+                      id="lender"
+                      type="text"
+                      className="border-success"
+                      value={formValues.lender || ""}
+                      onChange={(e) =>
+                        handleInputChange("lender", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="current_interest_rate" className="text-success">
+                      Current Interest Rate
+                    </Label>
+                    <Input
+                      id="current_interest_rate"
+                      type="number"
+                      className="border-success"
+                      value={formValues.current_interest_rate || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "current_interest_rate",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="mortgage_start_date" className="text-success">
+                      Mortgage Start Date
+                    </Label>
+                    <Input
+                      id="mortgage_start_date"
+                      type="date"
+                      className="border-success"
+                      value={formValues.mortgage_start_date || ""}
+                      onChange={(e) =>
+                        handleInputChange("mortgage_start_date", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="remaining_term" className="text-success">
+                      Remaining Term
+                    </Label>
+                    <Input
+                      id="remaining_term"
+                      type="number"
+                      className="border-success"
+                      value={formValues.remaining_term || ""}
+                      onChange={(e) =>
+                        handleInputChange("remaining_term", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="mortgage_type" className="text-success">
+                      Mortgage Type
+                    </Label>
+                    <Input
+                      id="mortgage_type"
+                      type="select"
+                      className="border-success"
+                      value={formValues.mortgage_type || ""}
+                      onChange={(e) =>
+                        handleInputChange("mortgage_type", e.target.value)
+                      }
+                    >
+                      <option value="">Select...</option>
+                      <option value="SECURED_LOAN">
+                        Secured Loan (Applicant Commitments)
+                      </option>
+                      <option value="SECOND_HOME">
+                        Second Home (Applicant Commitments)
+                      </option>
+                      <option value="HOLIDAY_HOME">
+                        Holiday Home (Applicant Commitments)
+                      </option>
+                      <option value="BUY_TO_LET">
+                        Buy to Let (Applicant Mortgage Details)
+                      </option>
+                      <option value="HOLIDAY_LET">
+                        Holiday Let (Applicant Mortgage Details)
+                      </option>
+                      <option value="COMMERCIAL_INVESTMENT">
+                        Commercial Investment (Applicant Mortgage Details)
+                      </option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="repayment_type" className="text-success">
+                      Repayment Type
+                    </Label>
+                    <Input
+                      id="repayment_type"
+                      type="select"
+                      className="border-success"
+                      value={formValues.repayment_type || ""}
+                      onChange={(e) =>
+                        handleInputChange("repayment_type", e.target.value)
+                      }
+                    >
+                      <option value="">Select...</option>
+                      <option value="CAPITAL_INTEREST">
+                        Capital and Interest
+                      </option>
+                      <option value="INTEREST_ONLY">Interest Only</option>
+                      <option value="PART_AND_PART">Part And Part</option>
+                      <option value="SERVICED">Serviced</option>
+                      <option value="ROLLED_UP">Rolled Up</option>
+                      <option value="RETAINED">Retained</option>
+                      <option value="OTHER">Other</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="current_interest_type" className="text-success">
+                      Current Interest Type
+                    </Label>
+                    <Input
+                      id="current_interest_type"
+                      type="select"
+                      className="border-success"
+                      value={formValues.current_interest_type || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "current_interest_type",
+                          e.target.value
+                        )
+                      }
+                    >
+                      <option value="">Select...</option>
+                      <option value="FIXED">Fixed</option>
+                      <option value="VARIABLE">Variable</option>
+                      <option value="TRACKER">Tracker</option>
+                      <option value="DISCOUNT">Discount</option>
+                      <option value="CAPPED">Capped</option>
+                      <option value="SVR">SVR</option>
+                      <option value="OFFSET">Offset</option>
+                      <option value="LIFETIME">Lifetime</option>
+                      <option value="OTHER">Other</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label
+                      for="early_repayment_charge_applies"
+                      className="text-success"
+                    >
+                      Does an early repayment charge apply?
+                    </Label>
+                    {["yes", "no"].map((value) => (
+                      <div key={value}>
+                        <Label className="me-2 text-success">
+                          <Input
+                            type="radio"
+                            name="early_repayment_charge_applies"
+                            className="border-success me-1"
+                            value={value}
+                            checked={
+                              formValues.early_repayment_charge_applies ===
+                              (value === "yes")
+                            }
+                            onChange={(e) =>
+                              handleInputChange(
+                                "early_repayment_charge_applies",
+                                e.target.value === "yes"
+                              )
+                            }
+                          />
+                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                        </Label>
+                      </div>
+                    ))}
+                  </FormGroup>
+                </Col>
+                {formValues.early_repayment_charge_applies === true && (
+                  <>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for="erc_expiry_date" className="text-success">
+                          ERC Expiry Date
+                        </Label>
+                        <Input
+                          id="early_repayment_charge"
+                          type="number"
+                          className="border-success"
+                          value={formValues.erc_expiry_date || ""}
+                          onChange={(e) =>
+                            handleInputChange("erc_expiry_date", e.target.value)
+                          }
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label
+                          for="mortgage_not_to_complete_until_erc_ended"
+                          className="text-success"
+                        >
+                          Mortgage not to complete until ERC ended
+                        </Label>
+                        <Input
+                          id="mortgage_not_to_complete_until_erc_ended"
+                          type="select"
+                          className="border-success"
+                          value={
+                            formValues.mortgage_not_to_complete_until_erc_ended ||
+                            ""
+                          }
+                          onChange={(e) =>
+                            handleInputChange(
+                              "mortgage_not_to_complete_until_erc_ended",
+                              e.target.value
+                            )
+                          }
+                        >
+                          <option value="">Select...</option>
+                          <option value="NA">N/A</option>
+                          <option value="YES">Yes</option>
+                          <option value="NO">No</option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for="erc_amount" className="text-success">
+                          ERC Amount
+                        </Label>
+                        <Input
+                          id="erc_amount"
+                          type="number"
+                          className="border-success"
+                          value={formValues.erc_amount || ""}
+                          onChange={(e) =>
+                            handleInputChange("erc_amount", e.target.value)
+                          }
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for="erc_being_paid" className="text-success">
+                          Is The ERC Being Paid?
+                        </Label>
+                        {["yes", "no"].map((value) => (
+                          <div key={value}>
+                            <Label className="me-2 text-success">
+                              <Input
+                                type="radio"
+                                name="erc_being_paid"
+                                className="border-success me-1"
+                                value={value}
+                                checked={
+                                  formValues.erc_being_paid ===
+                                  (value === "yes")
+                                }
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    "erc_being_paid",
+                                    e.target.value === "yes"
+                                  )
+                                }
+                              />
+                              {value.charAt(0).toUpperCase() + value.slice(1)}
+                            </Label>
+                          </div>
+                        ))}
+                      </FormGroup>
+                    </Col>
+                  </>
+                )}
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="being_redeemed" className="text-success">
+                      Being Redeemed?
+                    </Label>
+                    {["yes", "no"].map((value) => (
+                      <div key={value}>
+                        <Label className="me-2 text-success">
+                          <Input
+                            type="radio"
+                            name="being_redeemed"
+                            className="border-success me-1"
+                            value={value}
+                            checked={
+                              formValues.being_redeemed === (value === "yes")
+                            }
+                            onChange={(e) =>
+                              handleInputChange(
+                                "being_redeemed",
+                                e.target.value === "yes"
+                              )
+                            }
+                          />
+                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                        </Label>
+                      </div>
+                    ))}
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="is_mortgage_portable" className="text-success">
+                      Is The Mortgage Portable?
+                    </Label>
+                    {["yes", "no"].map((value) => (
+                      <div key={value}>
+                        <Label className="me-2 text-success">
+                          <Input
+                            type="radio"
+                            name="is_mortgage_portable"
+                            className="border-success me-1"
+                            value={value}
+                            checked={
+                              formValues.is_mortgage_portable ===
+                              (value === "yes")
+                            }
+                            onChange={(e) =>
+                              handleInputChange(
+                                "is_mortgage_portable",
+                                e.target.value === "yes"
+                              )
+                            }
+                          />
+                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                        </Label>
+                      </div>
+                    ))}
+                  </FormGroup>
+                </Col>
+                {formValues.is_mortgage_portable === true && (
+                  <>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label
+                          for="is_mortgage_being_ported"
+                          className="text-success"
+                        >
+                          Is The Mortgage Being Ported?
+                        </Label>
+                        {["yes", "no"].map((value) => (
+                          <div key={value}>
+                            <Label className="me-2 text-success">
+                              <Input
+                                type="radio"
+                                name="is_mortgage_being_ported"
+                                className="border-success me-1"
+                                value={value}
+                                checked={
+                                  formValues.is_mortgage_being_ported ===
+                                  (value === "yes")
+                                }
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    "is_mortgage_being_ported",
+                                    e.target.value === "yes"
+                                  )
+                                }
+                              />
+                              {value.charAt(0).toUpperCase() + value.slice(1)}
+                            </Label>
+                          </div>
+                        ))}
+                      </FormGroup>
+                    </Col>
+                  </>
+                )}
+                <Col md={6}>
+                  <FormGroup>
+                    <Label
+                      for="mortgage_account_number"
+                      className="text-success"
+                    >
+                      Mortgage Account Number
+                    </Label>
+                    <Input
+                      id="mortgage_account_number"
+                      type="text"
+                      className="border-success"
+                      value={formValues.mortgage_account_number || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "mortgage_account_number",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label
+                      for="mortgage_charter_scheme"
+                      className="text-success"
+                    >
+                      Are you in a Mortgage Charter Scheme?
+                    </Label>
+                    {["yes", "no"].map((value) => (
+                      <div key={value}>
+                        <Label className="me-2 text-success">
+                          <Input
+                            type="radio"
+                            name="mortgage_charter_scheme"
+                            className="border-success me-1"
+                            value={value}
+                            checked={
+                              formValues.mortgage_charter_scheme ===
+                              (value === "yes")
+                            }
+                            onChange={(e) =>
+                              handleInputChange(
+                                "mortgage_charter_scheme",
+                                e.target.value === "yes"
+                              )
+                            }
+                          />
+                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                        </Label>
+                      </div>
+                    ))}
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="property_type" className="text-success">
+                      Property Type
+                    </Label>
+                    <Input
+                      id="property_type"
+                      type="select"
+                      className="border-success"
+                      value={formValues.property_type || ""}
+                      onChange={(e) =>
+                        handleInputChange("property_type", e.target.value)
+                      }
+                    >
+                      <option value="">Select...</option>
+                      <option value="HOUSE">House</option>
+                      <option value="FLAT">Flat</option>
+                      <option value="MAISONETTE">Maisonette</option>
+                      <option value="BUNGALOW">Bungalow</option>
+                      <option value="WAREHOUSE">Warehouse</option>
+                      <option value="LAND">Land</option>
+                      <option value="COMMERCIAL">Commercial</option>
+                      <option value="SEMI_COMMERCIAL">Semi-Commercial</option>
+                      <option value="MULTI_UNIT_BLOCK">
+                        Multi-Unit Block (MUB)
+                      </option>
+                      <option value="HMO">HMO</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="bedrooms" className="text-success">
+                      Bedrooms
+                    </Label>
+                    <Input
+                      id="bedrooms"
+                      type="number"
+                      className="border-success"
+                      value={formValues.bedrooms || ""}
+                      onChange={(e) =>
+                        handleInputChange("bedrooms", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="tenure" className="text-success">
+                      Tenure
+                    </Label>
+                    <Input
+                      id="tenure"
+                      type="select"
+                      className="border-success"
+                      value={formValues.tenure || ""}
+                      onChange={(e) =>
+                        handleInputChange("tenure", e.target.value)
+                      }
+                    >
+                      <option value="">Select...</option>
+                      <option value="FREEHOLD">Freehold</option>
+                      <option value="LEASEHOLD">Leasehold</option>
+                      <option value="COMMONHOLD">Commonhold</option>
+                      <option value="FEUDAL">Feudal</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="year_built" className="text-success">
+                      Year Built
+                    </Label>
+                    <Input
+                      id="mortgage_not_to_complete_until_erc_ended"
+                      type="number"
+                      className="border-success"
+                      value={formValues.year_built || ""}
+                      onChange={(e) =>
+                        handleInputChange("year_built", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </>
+            )}
+          </Row>
           <Row>
             <Col md={12}>
               <FormGroup>
@@ -891,11 +1505,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </FormGroup>
             </Col>
           </Row>
-
           {/* Submit Button */}
           <div className="d-flex justify-content-end">
-            <Button type="submit" color="success" disabled={isLoading}>
-              {isUpdatingApplicant ? "Updating..." : "Update"}
+            <Button type="submit" color="primary" disabled={isLoading}>
+              {isUpdatingApplicant ? "Updating..." : "Update Applicant"}
             </Button>
           </div>
         </Form>
