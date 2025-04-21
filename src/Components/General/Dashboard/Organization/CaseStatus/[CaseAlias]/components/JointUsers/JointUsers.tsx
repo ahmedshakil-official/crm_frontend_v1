@@ -9,9 +9,9 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import AddJointUserModal from "../Modals/AddJointUserModal";
-import JointUserDeleteModal from "../Modals/JointUserDeleteModal"; // Import the delete modal
-import UpdateJointUserModal from "../Modals/UpdateJointUserModal";
+import AddJointUserModal from "../../Modals/AddJointUserModal";
+import JointUserDeleteModal from "../../Modals/JointUserDeleteModal"; // Import the delete modal
+import UpdateJointUserModal from "../../Modals/UpdateJointUserModal";
 
 const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
   const [addModalOpen, setAddModalOpen] = useState(false);
