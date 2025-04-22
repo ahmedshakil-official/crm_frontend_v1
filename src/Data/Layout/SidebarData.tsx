@@ -37,14 +37,22 @@ export const MenuList: MenuItem[] | undefined = [
         lanClass: "lan-3",
         children: [
           { path: "/dashboard/default", title: "Default", type: "link", lanClass: "lan-4" },
-          { path: "/dashboard/organization", title: "My Organization", type: "link", lanClass: "lan-4" },
+          // { path: "/dashboard/organization", title: "Organization", type: "link", lanClass: "lan-4" },
+          { title: "Organization",
+            type: "sub",
+            children: [
+              { path: "/dashboard/organization", title: "Organization", type: "link" },
+              { path: "/dashboard/organization/allcase", title: "Cases", type: "link" },
+            ],
+
+           },
           { path: "/dashboard/network", title: "Network", type: "link", lanClass: "lan-4" },
           { path: "/dashboard/ecommerce", title: "Ecommerce", type: "link", lanClass: "lan-5" },
           { path: "/dashboard/education", title: "Education", type: "link" },
         ],
       },
       {
-        title: "Cases",
+        title: "Widgets",
         id: 2,
         icon: "Pie",
         type: "sub",
