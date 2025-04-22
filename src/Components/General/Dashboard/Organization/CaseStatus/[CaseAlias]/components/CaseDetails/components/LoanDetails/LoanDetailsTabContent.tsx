@@ -233,7 +233,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
             handleFormChange={(name, value) => handleFormChange(4, name, value)}
           />
           <Button color="primary" onClick={handleSave} className="float-end">
-            {isUpdating ? "Saving..." : "Save"}
+            {isUpdating ? "Saving..." : "Save Details"}
           </Button>
         </TabPane>
       </TabContent>

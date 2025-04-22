@@ -119,35 +119,34 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
       <Row>
         <Col md={6}>
           <FormGroup>
-            <Label for="accepted_or_declined_by_lender">
+            <Label for="is_mortgage_being_ported">
               Has this been accepted or declined with any lender already?
             </Label>
-            <div>
-              <Input
-                type="radio"
-                name="accepted_or_declined_by_lender"
-                value="true"
-                checked={formData.accepted_or_declined_by_lender === true}
-                onChange={(e) =>
-                  handleFormChange(e.target.name, e.target.value === "true")
-                }
-              />
-              Yes
-              <Input
-                type="radio"
-                name="accepted_or_declined_by_lender"
-                value="false"
-                checked={formData.accepted_or_declined_by_lender === false}
-                onChange={(e) =>
-                  handleFormChange(e.target.name, e.target.value === "true")
-                }
-                className="ms-2"
-              />
-              No
-            </div>
+            {["yes", "no"].map((value) => (
+              <div key={value}>
+                <Label className="me-2">
+                  <Input
+                    type="radio"
+                    name="accepted_or_declined_by_lender"
+                    className="me-1"
+                    value={value}
+                    checked={
+                      formData.accepted_or_declined_by_lender ===
+                      (value === "yes")
+                    }
+                    onChange={(e) =>
+                      handleFormChange(
+                        "accepted_or_declined_by_lender",
+                        e.target.value === "yes"
+                      )
+                    }
+                  />
+                  {value.charAt(0).toUpperCase() + value.slice(1)}
+                </Label>
+              </div>
+            ))}
           </FormGroup>
         </Col>
-
         <Col md={6}>
           <FormGroup>
             <Label for="case_summary">Case Summary</Label>
