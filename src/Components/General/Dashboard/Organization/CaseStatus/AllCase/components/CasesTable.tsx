@@ -247,7 +247,7 @@ const CaseTable: React.FC = () => {
                   <tr key={caseItem?.alias}>
                     <td>
                       <Link
-                        className="custom-hover"
+                        className="custom_hover"
                         href={`/dashboard/organization/${caseItem?.alias}`}
                       >
                         {caseItem?.name}

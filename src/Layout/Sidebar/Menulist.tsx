@@ -8,7 +8,12 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "reactstrap";
 
-const Menulist: React.FC<MenuListType> = ({ menu, setActiveMenu, activeMenu, level }) => {
+const Menulist: React.FC<MenuListType> = ({
+  menu,
+  setActiveMenu,
+  activeMenu,
+  level,
+}) => {
   const { pinedMenu } = useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const dispatch = useAppDispatch();
@@ -46,10 +51,37 @@ const Menulist: React.FC<MenuListType> = ({ menu, setActiveMenu, activeMenu, lev
   return (
     <>
       {menu?.map((item, index) => (
-        <li key={index} className={`${level === 0 ? "sidebar-list" : ""} ${pinedMenu.includes(item.title || "") ? "pined" : ""} ${(item.children ? item.children.map((innerItem) => ActiveNavLinkUrl(innerItem.path)).includes(true) : ActiveNavLinkUrl(item.path)) || activeMenu[level] === item.title ? "active" : ""} `}>
-          {level === 0 && <i className="fa-solid fa-thumbtack" onClick={() => dispatch(handlePined(item.title))}></i>}
+        <li
+          key={index}
+          className={`${level === 0 ? "sidebar-list" : ""} ${
+            pinedMenu.includes(item.title || "") ? "pined" : ""
+          } ${
+            (item.children
+              ? item.children
+                  .map((innerItem) => ActiveNavLinkUrl(innerItem.path))
+                  .includes(true)
+              : ActiveNavLinkUrl(item.path)) || activeMenu[level] === item.title
+              ? "active"
+              : ""
+          } `}
+        >
+          {level === 0 && (
+            <i
+              className="fa-solid fa-thumbtack"
+              onClick={() => dispatch(handlePined(item.title))}
+            ></i>
+          )}
           <Link
-            className={`${level / 2 === 0 ? "sidebar-link" : ""} ${(item.children ? item.children.map((innerItem) => ActiveNavLinkUrl(innerItem.path)).includes(true) : ActiveNavLinkUrl(item.path)) || activeMenu[level] === item.title ? "active" : ""}`}
+            className={`${level / 2 === 0 ? "sidebar-link" : ""} ${
+              (item.children
+                ? item.children
+                    .map((innerItem) => ActiveNavLinkUrl(innerItem.path))
+                    .includes(true)
+                : ActiveNavLinkUrl(item.path)) ||
+              activeMenu[level] === item.title
+                ? "active"
+                : ""
+            }`}
             href={item?.path ? item?.path : ""}
             onClick={() => {
               const temp = activeMenu;
@@ -58,17 +90,50 @@ const Menulist: React.FC<MenuListType> = ({ menu, setActiveMenu, activeMenu, lev
             }}
           >
             {item.icon && <SVG className={`stroke-icon`} iconId={item.icon} />}
-            {!item.icon ? t(item.title) : <h6 className={item.lanClass && item.lanClass}>{t(item.title)}</h6>}
+            {!item.icon ? (
+              t(item.title)
+            ) : (
+              <h6 className={item.lanClass && item.lanClass}>
+                {t(item.title)}
+              </h6>
+            )}
             {item.badge && (
               <Badge pill color="primary">
                 {item.badge}
               </Badge>
             )}
-            {item.children && <i className={`iconly-Arrow-Right-2 icli ${level / 2 !== 0 ?"custom-menu-arrow" :""}`}></i>}
+            {item.children && (
+              <i
+                className={`iconly-Arrow-Right-2 icli ${
+                  level / 2 !== 0 ? "custom-menu-arrow" : ""
+                }`}
+              ></i>
+            )}
           </Link>
-          {item.children && ( 
-            <ul className={` simple-list ${level / 2 === 0 ? "sidebar-submenu" : "according-submenu"}`} style={{ display: `${(item.children ? item.children.map((innerItem) => ActiveNavLinkUrl(innerItem.path)).includes(true) : ActiveNavLinkUrl(item.path)) || activeMenu[level] === item.title ? "block" : "none"}` }}>
-              <Menulist menu={item.children} activeMenu={activeMenu} setActiveMenu={setActiveMenu} level={level + 1} />
+          {item.children && (
+            <ul
+              className={` simple-list ${
+                level / 2 === 0 ? "sidebar-submenu" : "according-submenu"
+              }`}
+              style={{
+                display: `${
+                  (item.children
+                    ? item.children
+                        .map((innerItem) => ActiveNavLinkUrl(innerItem.path))
+                        .includes(true)
+                    : ActiveNavLinkUrl(item.path)) ||
+                  activeMenu[level] === item.title
+                    ? "block"
+                    : "none"
+                }`,
+              }}
+            >
+              <Menulist
+                menu={item.children}
+                activeMenu={activeMenu}
+                setActiveMenu={setActiveMenu}
+                level={level + 1}
+              />
             </ul>
           )}
         </li>
