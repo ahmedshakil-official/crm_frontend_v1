@@ -18,7 +18,7 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
               value={formData.sale_type}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             >
-              <option value="">Select Sale Type</option>
+              <option value="">Select...</option>
               <option value="UNKNOWN">Unknown</option>
               <option value="FACE_TO_FACE">Face to Face</option>
               <option value="TELEPHONE">Telephone</option>
@@ -37,7 +37,7 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
               value={formData.introduction_type}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             >
-              <option value="">Select Introduction Type</option>
+              <option value="">Select...</option>
               <option value="DIRECT">Direct</option>
               <option value="RDI">RDI</option>
             </Input>
@@ -55,7 +55,7 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
               value={formData.lead_source}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             >
-              <option value="">Select Lead Source</option>
+              <option value="">Select...</option>
               <option value="FACEBOOK">Facebook</option>
               <option value="ESTATE_AGENTS">Estate Agents</option>
               <option value="TV3">TV3</option>
@@ -78,7 +78,7 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
               value={formData.introducer_payment_terms}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             >
-              <option value="">Select Payment Terms</option>
+              <option value="">Select...</option>
               <option value="NOT_APPLICABLE">Not Applicable</option>
               <option value="ON_APPLICATION">On Application</option>
               <option value="ON_OFFER">On Offer</option>
@@ -131,7 +131,7 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
                 onChange={(e) =>
                   handleFormChange(e.target.name, e.target.value === "true")
                 }
-              />{" "}
+              />
               Yes
               <Input
                 type="radio"
@@ -142,7 +142,7 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
                   handleFormChange(e.target.name, e.target.value === "true")
                 }
                 className="ms-2"
-              />{" "}
+              />
               No
             </div>
           </FormGroup>
