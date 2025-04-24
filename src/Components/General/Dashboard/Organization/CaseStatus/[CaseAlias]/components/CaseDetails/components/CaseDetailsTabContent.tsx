@@ -3,10 +3,12 @@ import { TabContent } from "reactstrap";
 import { AdverseTab } from "./Adverse/AdverseTab";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
 import BudgetPlanner from "./BudgetPlanner/BudgetPlanner";
+import { ComplianceTab } from "./Compliance/ComplianceTab";
 import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
 import DIPHistoryTab from "./DIPHistory/DIPHistoryTab";
 import { EmploymentTab } from "./Employment/EmploymentTab";
 import ExistingProtectionTab from "./ExistingProtection/ExistingProtectionTab";
+import FeesTab from "./Fees/FeesTab";
 import { LoanDetailsTab } from "./LoanDetails/LoanDetailsTab";
 import MortgageYourNeedsContent from "./MortgageYourNeeds/MortgageYourNeedsContent";
 import { NotesTab } from "./Notes/NotesTab";
@@ -14,8 +16,7 @@ import PortfolioContent from "./Portfolio/PortfolioContent";
 import ProductContent from "./Product/ProductContent";
 import PropertyDetails from "./PropertyDetails/PropertyDetails";
 import SolicitorsAndAccountantsTab from "./SolicitorsAndAccountants/SolicitorsAndAccountantsTab";
-import FeesTab from "./Fees/FeesTab";
-import { ComplianceTab } from "./Compliance/ComplianceTab";
+import SuitabilityContent from "./Suitability/SuitabilityContent";
 
 // Define a mapping of tab names to components
 const tabComponents: Record<string, React.FC> = {
@@ -34,6 +35,7 @@ const tabComponents: Record<string, React.FC> = {
   Notes: NotesTab,
   Product: ProductContent,
   "DIP History": DIPHistoryTab,
+  Suitability: SuitabilityContent,
   Fees: FeesTab,
   Compliance: ComplianceTab,
 };
