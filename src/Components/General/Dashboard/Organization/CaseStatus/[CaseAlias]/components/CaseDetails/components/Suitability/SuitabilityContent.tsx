@@ -1,4 +1,5 @@
-import React from "react";
+import { defaultAnswersData } from "@/Data/Organization/Case/CaseDetails/SuitabilityData";
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -12,7 +13,15 @@ import {
 } from "reactstrap";
 
 const SuitabilityContent: React.FC = () => {
-  const handleChange = (field: string, value: string) => {};
+  const [defaultAnswers, setDefaultAnswers] = useState(defaultAnswersData);
+  const [selectedType, setSelectedType] = useState("GENERAl");
+
+  const handleChange = (field: string, value: string) => {
+    setDefaultAnswers((prev: any) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   return (
     <Form>
@@ -24,8 +33,12 @@ const SuitabilityContent: React.FC = () => {
           </Col>
           <Col md={4}>
             <FormGroup>
-              <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
+              <Input
+                type="select"
+                name="select"
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+              >
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -33,18 +46,89 @@ const SuitabilityContent: React.FC = () => {
           </Col>
         </CardHeader>
         <CardBody>
-          <FormGroup>
-            <Label>Answer 1</Label>
-            <Input type="textarea" name="aims" rows="3" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Answer 2</Label>
-            <Input type="textarea" name="aims" rows="3" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Answer 3</Label>
-            <Input type="textarea" name="aims" rows="3" />
-          </FormGroup>
+          {selectedType === "GENERAl" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="circumstancesAndObjectives_G_A1"
+                  rows="3"
+                  value={defaultAnswers.circumstancesAndObjectives_G_A1}
+                  onChange={(e) =>
+                    handleChange(
+                      "circumstancesAndObjectives_G_A1",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="circumstancesAndObjectives_G_A2"
+                  rows="3"
+                  value={defaultAnswers.circumstancesAndObjectives_G_A2}
+                  onChange={(e) =>
+                    handleChange(
+                      "circumstancesAndObjectives_G_A2",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 3</Label>
+                <Input
+                  type="textarea"
+                  name="circumstancesAndObjectives_G_A3"
+                  rows="5"
+                  value={defaultAnswers.circumstancesAndObjectives_G_A3}
+                  onChange={(e) =>
+                    handleChange(
+                      "circumstancesAndObjectives_G_A3",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          {selectedType === "SHARIA" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="circumstancesAndObjectives_G_A3"
+                  rows="6"
+                  value={defaultAnswers.circumstancesAndObjectives_S_A1}
+                  onChange={(e) =>
+                    handleChange(
+                      "circumstancesAndObjectives_S_A1",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="circumstancesAndObjectives_G_A3"
+                  rows="6"
+                  value={defaultAnswers.circumstancesAndObjectives_S_A2}
+                  onChange={(e) =>
+                    handleChange(
+                      "circumstancesAndObjectives_S_A2",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
           <div className="d-flex justify-content-start align-items-center">
             <Button color="success">Add More Answer</Button>
           </div>
@@ -59,7 +143,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -93,7 +176,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -123,7 +205,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -165,7 +246,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -203,7 +283,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -229,7 +308,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -263,7 +341,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -297,7 +374,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -331,7 +407,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -389,7 +464,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -419,7 +493,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -457,7 +530,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
@@ -496,7 +568,6 @@ const SuitabilityContent: React.FC = () => {
           <Col md={4}>
             <FormGroup>
               <Input type="select" name="select" id="exampleSelect">
-                <option value="">Select...</option>
                 <option value="GENERAl">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
