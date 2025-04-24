@@ -97,7 +97,6 @@ const MortgageYourNeedsContent: React.FC = () => {
               </Label>
               <Row>
                 <Col md={4}>
-                  {" "}
                   <FormGroup className="mb-3">
                     <Label className="d-block">
                       No up-front costs (Free Legals, Free Lender Fees and Free
@@ -195,7 +194,6 @@ const MortgageYourNeedsContent: React.FC = () => {
                   </FormGroup>
                 </Col>
                 <Col md={4}>
-                  {" "}
                   <FormGroup className="mb-3">
                     <Label className="d-block">
                       The ability to add fees to the mortgage
@@ -307,7 +305,6 @@ const MortgageYourNeedsContent: React.FC = () => {
               </Row>
               <Row>
                 <Col md={4}>
-                  {" "}
                   <FormGroup className="mb-3">
                     <Label className="d-block">Offset Mortgage</Label>
                     <div className="d-flex gap-4">
@@ -493,7 +490,6 @@ const MortgageYourNeedsContent: React.FC = () => {
               <Row>
                 <Col md={12}>
                   <Row>
-                    {" "}
                     <h6 className="text-secondary mb-2">
                       Applicant 1 Existing Protection
                     </h6>
@@ -520,7 +516,6 @@ const MortgageYourNeedsContent: React.FC = () => {
                       </FormGroup>
                     </Col>
                     <Col md={3}>
-                      {" "}
                       <FormGroup className="mb-2">
                         <Label className="d-block">Critical Illness</Label>
                         <div className="d-flex gap-4">
@@ -856,9 +851,9 @@ const MortgageYourNeedsContent: React.FC = () => {
                     <div className="d-flex gap-4">
                       {yesNoOptions.map((option) => (
                         <FormGroup key={`buildings-${option}`} check inline>
-                          <Input 
-                            type="radio" 
-                            name="buildings" 
+                          <Input
+                            type="radio"
+                            name="buildings"
                             id={`buildings-${option}`}
                           />
                           <Label check for={`buildings-${option}`}>
@@ -875,9 +870,9 @@ const MortgageYourNeedsContent: React.FC = () => {
                     <div className="d-flex gap-4">
                       {yesNoOptions.map((option) => (
                         <FormGroup key={`contents-${option}`} check inline>
-                          <Input 
-                            type="radio" 
-                            name="contents" 
+                          <Input
+                            type="radio"
+                            name="contents"
                             id={`contents-${option}`}
                           />
                           <Label check for={`contents-${option}`}>
@@ -893,10 +888,14 @@ const MortgageYourNeedsContent: React.FC = () => {
                     <Label className="d-block">Accidental Damage</Label>
                     <div className="d-flex gap-4">
                       {yesNoOptions.map((option) => (
-                        <FormGroup key={`accidentalDamage-${option}`} check inline>
-                          <Input 
-                            type="radio" 
-                            name="accidentalDamage" 
+                        <FormGroup
+                          key={`accidentalDamage-${option}`}
+                          check
+                          inline
+                        >
+                          <Input
+                            type="radio"
+                            name="accidentalDamage"
                             id={`accidentalDamage-${option}`}
                           />
                           <Label check for={`accidentalDamage-${option}`}>
@@ -914,10 +913,14 @@ const MortgageYourNeedsContent: React.FC = () => {
                     <Label className="d-block">Landlords cover</Label>
                     <div className="d-flex gap-4">
                       {yesNoOptions.map((option) => (
-                        <FormGroup key={`landlordsCover-${option}`} check inline>
-                          <Input 
-                            type="radio" 
-                            name="landlordsCover" 
+                        <FormGroup
+                          key={`landlordsCover-${option}`}
+                          check
+                          inline
+                        >
+                          <Input
+                            type="radio"
+                            name="landlordsCover"
                             id={`landlordsCover-${option}`}
                           />
                           <Label check for={`landlordsCover-${option}`}>
@@ -934,9 +937,9 @@ const MortgageYourNeedsContent: React.FC = () => {
                     <div className="d-flex gap-4">
                       {yesNoOptions.map((option) => (
                         <FormGroup key={`homeEmergency-${option}`} check inline>
-                          <Input 
-                            type="radio" 
-                            name="homeEmergency" 
+                          <Input
+                            type="radio"
+                            name="homeEmergency"
                             id={`homeEmergency-${option}`}
                           />
                           <Label check for={`homeEmergency-${option}`}>
@@ -949,13 +952,19 @@ const MortgageYourNeedsContent: React.FC = () => {
                 </Col>
                 <Col md={4}>
                   <FormGroup className="mb-2">
-                    <Label className="d-block">Personal Possessions Cover</Label>
+                    <Label className="d-block">
+                      Personal Possessions Cover
+                    </Label>
                     <div className="d-flex gap-4">
                       {yesNoOptions.map((option) => (
-                        <FormGroup key={`personalPossessions-${option}`} check inline>
-                          <Input 
-                            type="radio" 
-                            name="personalPossessions" 
+                        <FormGroup
+                          key={`personalPossessions-${option}`}
+                          check
+                          inline
+                        >
+                          <Input
+                            type="radio"
+                            name="personalPossessions"
                             id={`personalPossessions-${option}`}
                           />
                           <Label check for={`personalPossessions-${option}`}>
@@ -970,16 +979,25 @@ const MortgageYourNeedsContent: React.FC = () => {
               <Row>
                 <Col md={12}>
                   <FormGroup className="mb-2">
-                    <Label className="d-block">If Personal possessions, confirm items and amount of cover</Label>
+                    <Label className="d-block">
+                      If Personal possessions, confirm items and amount of cover
+                    </Label>
                     <div className="d-flex gap-4">
                       {yesNoOptions.map((option) => (
-                        <FormGroup key={`confirmPersonalPossessions-${option}`} check inline>
-                          <Input 
-                            type="radio" 
-                            name="confirmPersonalPossessions" 
+                        <FormGroup
+                          key={`confirmPersonalPossessions-${option}`}
+                          check
+                          inline
+                        >
+                          <Input
+                            type="radio"
+                            name="confirmPersonalPossessions"
                             id={`confirmPersonalPossessions-${option}`}
                           />
-                          <Label check for={`confirmPersonalPossessions-${option}`}>
+                          <Label
+                            check
+                            for={`confirmPersonalPossessions-${option}`}
+                          >
                             {option.charAt(0).toUpperCase() + option.slice(1)}
                           </Label>
                         </FormGroup>

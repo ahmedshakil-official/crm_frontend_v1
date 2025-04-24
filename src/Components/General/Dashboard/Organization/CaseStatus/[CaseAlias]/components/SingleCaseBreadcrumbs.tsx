@@ -56,7 +56,7 @@ const SingleCaseBreadcrumbs: React.FC<PropsTypes & SingleCaseProps> = ({
                 AllCase
               </Link>
             </BreadcrumbItem>
-            <BreadcrumbItem className="active">case</BreadcrumbItem>
+            <BreadcrumbItem className="active">Case</BreadcrumbItem>
           </Breadcrumb>
         </Col>
       </Row>
