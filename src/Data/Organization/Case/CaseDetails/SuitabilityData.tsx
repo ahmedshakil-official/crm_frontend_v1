@@ -3,7 +3,7 @@ export const defaultAnswersData = {
 1. 
 2.`,
   circumstancesAndObjectives_G_A2: `Consolidating debts You have accumulated a significant level of debt and you wished to reduce the overall cost of repaying this over the long termreduce your monthly payments reduce your monthly expenditure reduce the interest rates that you are paying in order to insert reason for consolidating debt.
-  1. `,
+1. `,
   circumstancesAndObjectives_G_A3: `Remortgage Your current mortgage is with {current-lender} . You have an outstanding balance of approximately £{current-balance} on a {repayment-method} basis, over a remaining term of {mortgage-term}{term-months}. Early repayment charges may apply to your current mortgage and we have taken these into consideration when recommending your new deal. We have decided to pay the early repayment charge because: 
 1. 
 There are no early repayment charges connected to your existing mortgage, however your lender may charge you an administration fee which you have confirmed you are happy to pay.`,
