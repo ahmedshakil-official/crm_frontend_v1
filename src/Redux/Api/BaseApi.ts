@@ -49,6 +49,7 @@ export const baseApi = createApi({
     "BudgetPlanner",
     "ProductDetails",
     "DIPHistoryDetails",
+    "Suitability",
     "Fees",
     //Organization end
   ],
