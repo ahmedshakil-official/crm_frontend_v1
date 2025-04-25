@@ -1,5 +1,6 @@
 import { defaultAnswersData } from "@/Data/Organization/Case/CaseDetails/SuitabilityData";
 import { useUpdateSuitabilityMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Suitability/SuitabilityApi";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import {
   Button,
@@ -12,8 +13,11 @@ import {
   Input,
   Label,
 } from "reactstrap";
+import Temp from "./temp";
 
 const SuitabilityContent: React.FC = () => {
+  const { casealias } = useParams();
+  // state
   const [defaultAnswers, setDefaultAnswers] = useState(defaultAnswersData);
   const [selectedType, setSelectedType] = useState("GENERAl");
 
@@ -87,7 +91,7 @@ const SuitabilityContent: React.FC = () => {
                 <Input
                   type="textarea"
                   name="circumstancesAndObjectives_G_A3"
-                  rows="5"
+                  rows="3"
                   value={defaultAnswers.circumstancesAndObjectives_G_A3}
                   onChange={(e) =>
                     handleChange(
@@ -121,7 +125,7 @@ const SuitabilityContent: React.FC = () => {
                 <Input
                   type="textarea"
                   name="circumstancesAndObjectives_G_A3"
-                  rows="6"
+                  rows="3"
                   value={defaultAnswers.circumstancesAndObjectives_S_A2}
                   onChange={(e) =>
                     handleChange(
@@ -139,7 +143,7 @@ const SuitabilityContent: React.FC = () => {
         </CardBody>
       </Card>
       {/* Budget and affordability  */}
-
+      <Temp />
       {/* Button for save changes  */}
       <div className="d-flex justify-content-end mt-3 mb-0">
         <Button color="primary">Save Changes</Button>
