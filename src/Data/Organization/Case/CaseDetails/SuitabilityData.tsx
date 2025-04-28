@@ -269,15 +269,15 @@ This product is not portable due to the lenders interest in the property as you 
 
 If your repayment vehicle is insufficient to repay the finance, the property may have to be sold or other capital used to repay the finance agreement at the end of the term. If you convert to an Ijara with Diminishing Musharakah finance agreement in the future, there may be a reduced term to repay the loan. This means that your monthly payments will increase.  If you extend the term of your finance agreement to reduce the monthly payments, the overall cost will be higher as you will be paying more rent on the finance agreement for a longer period of time.`,
   // What is the cost of our advice
-  costOfOurAdvice_G_A1: `The costs in relation to our advice are included in your Mortgage Illustration and I detailed in the fee agreement that we discussed and you signed at our initial meeting.
+  costAdvice_G_A1: `The costs in relation to our advice are included in your Mortgage Illustration and I detailed in the fee agreement that we discussed and you signed at our initial meeting.
 
 You have the right to ask us for information about the levels of commission payable to us by the lenders whose products we offer. I provided you with this information following your request. Please contact me if you would like this information`,
-  costOfOurAdvice_G_A2: `I will not be charging a fee for my services; however I will receive commission from the lender.
+  costAdvice_G_A2: `I will not be charging a fee for my services; however I will receive commission from the lender.
 You have the right to ask us for information about the levels of commission payable to us by the lenders whose products we offer. I provided you with this information following your request. Please contact me if you would like this information`,
-  costOfOurAdvice_S_A1: `The costs in relation to our advice are included in your terms of business and fee agreement that we discussed and you signed at our initial meeting.
+  costAdvice_S_A1: `The costs in relation to our advice are included in your terms of business and fee agreement that we discussed and you signed at our initial meeting.
 
 You have the right to ask us for information about the levels of commission payable to us by the bank/financier whose products we offer. Please contact me if you would like this information.`,
-  costOfOurAdvice_S_A2: `I will not be charging a fee for my services; however I will receive commission from the bank/financier.
+  costAdvice_S_A2: `I will not be charging a fee for my services; however I will receive commission from the bank/financier.
 You have the right to ask us for information about the levels of commission payable to us by the lenders whose products we offer. Please contact me if you would like this information`,
   // Protection
   protection_G_A1: `We discussed your protection / personal insurance requirements.
