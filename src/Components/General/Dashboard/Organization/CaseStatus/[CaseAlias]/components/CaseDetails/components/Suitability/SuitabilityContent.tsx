@@ -111,6 +111,17 @@ const SuitabilityContent: React.FC = () => {
       question_one_sharia: "",
       question_two_sharia: "",
     },
+    protection: {
+      protection: "",
+      question_one_answer: "",
+      question_two_answer: "",
+      question_three_answer: "",
+      question_four_answer: "",
+      question_one_sharia: "",
+      question_two: "",
+      question_three_sharia: "",
+      question_four_sharia: "",
+    },
   });
 
   // RTK hooks
@@ -133,7 +144,8 @@ const SuitabilityContent: React.FC = () => {
       suitabilityData?.recommending_mortgage_amount ||
       suitabilityData?.costs_fees ||
       suitabilityData?.disadvantage_risks ||
-      suitabilityData?.cost_advice
+      suitabilityData?.cost_advice ||
+      suitabilityData?.protection
     ) {
       setFormValue({
         ...formValue,
@@ -356,6 +368,33 @@ const SuitabilityContent: React.FC = () => {
             suitabilityData.cost_advice.question_two_sharia ||
             defaultAnswers.costAdvice_S_A2,
         },
+        protection: {
+          protection: suitabilityData.protection.protection || "GENERAL",
+          question_one_answer:
+            suitabilityData.protection.question_one_answer ||
+            defaultAnswers.protection_G_A1,
+          question_two_answer:
+            suitabilityData.protection.question_two_answer ||
+            defaultAnswers.protection_G_A2,
+          question_three_answer:
+            suitabilityData.protection.question_three_answer ||
+            defaultAnswers.protection_G_A3,
+          question_four_answer:
+            suitabilityData.protection.question_four_answer ||
+            defaultAnswers.protection_G_A4,
+          question_one_sharia:
+            suitabilityData.protection.question_one_sharia ||
+            defaultAnswers.protection_S_A1,
+          question_two:
+            suitabilityData.protection.question_two ||
+            defaultAnswers.protection_S_A2,
+          question_three_sharia:
+            suitabilityData.protection.question_three_sharia ||
+            defaultAnswers.protection_S_A3,
+          question_four_sharia:
+            suitabilityData.protection.question_four_sharia ||
+            defaultAnswers.protection_S_A4,
+        },
       });
     }
   }, [suitabilityData]);
@@ -412,6 +451,9 @@ const SuitabilityContent: React.FC = () => {
       },
       cost_advice: {
         ...formValue.cost_advice,
+      },
+      protection: {
+        ...formValue.protection,
       },
     };
     try {
@@ -1790,6 +1832,166 @@ const SuitabilityContent: React.FC = () => {
           )}
           <div className="d-flex justify-content-start align-items-center">
             <Button color="success">Add More Answer</Button>
+          </div>
+        </CardBody>
+      </Card>
+      {/* protection */}
+      <Card className="border-1 border-secondary mt-3">
+        <CardHeader className="d-flex justify-content-between align-items-center">
+          <Col md={6}>
+            <h4>What is the protection?</h4>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Input
+                type="select"
+                name="protection_type"
+                value={formValue.protection.protection}
+                onChange={(e) =>
+                  handleChange("protection", "protection", e.target.value)
+                }
+              >
+                <option value="GENERAL">General</option>
+                <option value="SHARIA">Sharia</option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </CardHeader>
+        <CardBody>
+          {formValue.protection.protection === "GENERAL" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_answer"
+                  rows="3"
+                  value={formValue.protection.question_one_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "protection",
+                      "question_one_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_answer"
+                  rows="3"
+                  value={formValue.protection.question_two_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "protection",
+                      "question_two_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 3</Label>
+                <Input
+                  type="textarea"
+                  name="question_three_answer"
+                  rows="3"
+                  value={formValue.protection.question_three_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "protection",
+                      "question_three_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 4</Label>
+                <Input
+                  type="textarea"
+                  name="question_four_answer"
+                  rows="3"
+                  value={formValue.protection.question_four_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "protection",
+                      "question_four_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          {formValue.protection.protection === "SHARIA" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_sharia"
+                  rows="3"
+                  value={formValue.protection.question_one_sharia}
+                  onChange={(e) =>
+                    handleChange(
+                      "protection",
+                      "question_one_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_sharia"
+                  rows="3"
+                  value={formValue.protection.question_two}
+                  onChange={(e) =>
+                    handleChange("protection", "question_two", e.target.value)
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 3</Label>
+                <Input
+                  type="textarea"
+                  name="question_three_sharia"
+                  rows="3"
+                  value={formValue.protection.question_three_sharia}
+                  onChange={(e) =>
+                    handleChange(
+                      "protection",
+                      "question_three_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 4</Label>
+                <Input
+                  type="textarea"
+                  name="question_four_sharia"
+                  rows="3"
+                  value={formValue.protection.question_four_sharia}
+                  onChange={(e) =>
+                    handleChange(
+                      "protection",
+                      "question_four_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          <div className="d-flex justify-content-start align-items-center">
+            <Button color="secondary">Add More Answer</Button>
           </div>
         </CardBody>
       </Card>
