@@ -83,6 +83,13 @@ const SuitabilityContent: React.FC = () => {
       question_three_answer: "",
       question_one_sharia: "",
     },
+    costs_fees: {
+      costs_fees: "",
+      question_one_answer: "",
+      question_two_answer: "",
+      question_three_answer: "",
+      question_one_sharia: "",
+    },
   });
 
   // RTK hooks
@@ -102,7 +109,8 @@ const SuitabilityContent: React.FC = () => {
       suitabilityData?.recommending_mortgage_type ||
       suitabilityData?.recommending_term ||
       suitabilityData?.recommending_mortgage_lender ||
-      suitabilityData?.recommending_mortgage_amount
+      suitabilityData?.recommending_mortgage_amount ||
+      suitabilityData?.costs_fees
     ) {
       setFormValue({
         ...formValue,
@@ -258,6 +266,21 @@ const SuitabilityContent: React.FC = () => {
             suitabilityData.recommending_mortgage_amount.question_one_sharia ||
             defaultAnswers.recommendingMortgageAmount_S_A1,
         },
+        costs_fees: {
+          costs_fees: suitabilityData.costs_fees.costs_fees_type || "GENERAL",
+          question_one_answer:
+            suitabilityData.costs_fees.question_one_answer ||
+            defaultAnswers.costsAndFees_G_A1,
+          question_two_answer:
+            suitabilityData.costs_fees.question_two_answer ||
+            defaultAnswers.costsAndFees_G_A2,
+          question_three_answer:
+            suitabilityData.costs_fees.question_three_answer ||
+            defaultAnswers.costsAndFees_G_A3,
+          question_one_sharia:
+            suitabilityData.costs_fees.question_one_sharia ||
+            defaultAnswers.costsAndFees_S_A1,
+        },
       });
     }
   }, [suitabilityData]);
@@ -305,6 +328,9 @@ const SuitabilityContent: React.FC = () => {
       },
       recommending_mortgage_amount: {
         ...formValue.recommending_mortgage_amount,
+      },
+      costs_fees: {
+       ...formValue.costs_fees,
       },
     };
     try {
@@ -1268,6 +1294,108 @@ const SuitabilityContent: React.FC = () => {
           )}
           <div className="d-flex justify-content-start align-items-center">
             <Button color="secondary">Add More Answer</Button>
+          </div>
+        </CardBody>
+      </Card>
+      {/* costs_fees */}
+      <Card className="border-1 border-success mt-3">
+        <CardHeader className="d-flex justify-content-between align-items-center">
+          <Col md={6}>
+            <h4>What are the costs and fees?</h4>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Input
+                type="select"
+                name="costs_fees_type"
+                value={formValue.costs_fees.costs_fees}
+                onChange={(e) =>
+                  handleChange(
+                    "costs_fees",
+                    "costs_fees",
+                    e.target.value
+                  )
+                }
+              >
+                <option value="GENERAL">General</option>
+                <option value="SHARIA">Sharia</option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </CardHeader>
+        <CardBody>
+          {formValue.costs_fees.costs_fees === "GENERAL" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_answer"
+                  rows="3"
+                  value={formValue.costs_fees.question_one_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "costs_fees",
+                      "question_one_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_answer"
+                  rows="3"
+                  value={formValue.costs_fees.question_two_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "costs_fees",
+                      "question_two_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 3</Label>
+                <Input
+                  type="textarea"
+                  name="question_three_answer"
+                  rows="3"
+                  value={formValue.costs_fees.question_three_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "costs_fees",
+                      "question_three_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          {formValue.costs_fees.costs_fees === "SHARIA" && (
+            <FormGroup>
+              <Label>Answer 1</Label>
+              <Input
+                type="textarea"
+                name="question_one_sharia"
+                rows="3"
+                value={formValue.costs_fees.question_one_sharia}
+                onChange={(e) =>
+                  handleChange(
+                    "costs_fees",
+                    "question_one_sharia",
+                    e.target.value
+                  )
+                }
+              />
+            </FormGroup>
+          )}
+          <div className="d-flex justify-content-start align-items-center">
+            <Button color="success">Add More Answer</Button>
           </div>
         </CardBody>
       </Card>
