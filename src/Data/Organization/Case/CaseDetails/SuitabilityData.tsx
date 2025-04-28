@@ -200,12 +200,12 @@ You should be aware that interest will be charged on these for the term of the l
   costsAndFees_G_A3: `There was a deal with (LENDER) with no lender arrangement fee which was X.XX% and £XXX.XX per month. When comparing the difference in monthly cost to this deal, it was a difference of £XX.XX per month. Over (months of fixed deal, e.g 24) months this equates to £XXX.XX in extra payments. You saw the benefit of paying £(LENDER ARR FEE) to save £XXX.XX in extra payments.`,
   costsAndFees_S_A1: `Any associated fees and charges, which you are happy to pay upfront as the bank/financier will not allow to add this to the finance application.`,
   // What are the disadvantages and risks
-  disadvantagesAndRisks_G_A1: `No Portability Option
+  disadvantageAndRisks_G_A1: `No Portability Option
 This mortgage product is not portable. This means that you will incur the early repayment charges shown on your Mortgage Illustration if you move during the period where early repayment charges would apply. You have confirmed that you do not intend to move during this period and are therefore comfortable to have a mortgage product that has early repayment charges`,
-  disadvantagesAndRisks_G_A2: `Interest-Only
+  disadvantageAndRisks_G_A2: `Interest-Only
 
 If your repayment vehicle is insufficient to repay the mortgage, the property may have to be sold or other capital used to repay the mortgage at the end of the term. If you convert to a repayment mortgage in the future, there will be a reduced term to repay the loan. This means that your monthly payments will increase.  If you extend the term of your mortgage to reduce the monthly payments, the overall cost will be higher as you will be paying interest on the loan for a longer period of time.`,
-  disadvantagesAndRisks_G_A3: `Lending Into Retirement
+  disadvantageAndRisks_G_A3: `Lending Into Retirement
 
 The mortgage is due to be repaid after your selected retirement age(s) as recorded within our factfind. The reason for recommending a mortgage term into retirement is because
 
@@ -220,14 +220,14 @@ In addition you stated that you expect to receive other income from insert sourc
 It is important to note, your actual pension income could be higher or lower than any projections produced by your pension providers. These are not guaranteed.
 
 You stated you believe you will be able to afford the mortgage payments in retirement and to the end of the term. As part of your application you have supplied information about your projected income in retirement to the lender. I recommended you contact your existing provider(s) periodically, to establish your pension arrangement(s) are on track to meet your needs.`,
-  disadvantagesAndRisks_G_A4: `Debt Consolidation 
+  disadvantageAndRisks_G_A4: `Debt Consolidation 
 
 I made you aware of the impact of consolidating the debts identified into the new mortgage.  I also made you aware of increasing the term of the interest over a longer period and the implications of securing a previously unsecured loan and the risks of doing so. 
 
 We have discussed you adopting a new strict approach to managing your debts. In doing so you should not be tempted by the availability of easy credit as the focus needs to be on getting rid of debt, rather than adding to it.  If you still hold credit cards it is advisable to cancel them.
 
 Once you consolidate your debt, don’t borrow more until you are sure you can afford it.`,
-  disadvantagesAndRisks_G_A5: `Shared Equity – including Help-to-Buy
+  disadvantageAndRisks_G_A5: `Shared Equity – including Help-to-Buy
 
 You are making use of a shared equity scheme. I have not provided you with advice on the shared equity scheme itself. I have, however, explained the basic operation of the scheme and its risks. 
 
@@ -238,7 +238,7 @@ The equity loan represents xx% of the purchase price. You will have the option t
 The scheme will usually charge administration fees if you want to repay your loan or make alterations or improvements to your property. 
 
 Please refer to the Scheme Details for further information and the full terms and conditions of the scheme. If you are still unsure about any elements of the scheme, you should discuss these with your solicitor before you proceed.`,
-  disadvantagesAndRisks_G_A6: `Help to Buy Further Information
+  disadvantageAndRisks_G_A6: `Help to Buy Further Information
 
 This Help to Buy Mortgage is only available on a repayment basis.  This means each monthly repayment you make to the lender will contain an element of capital in addition to the interest payable on the loan.  The proportion of capital repaid increases with each monthly repayment.  As long as all the repayments due to the lender are made in full and on time, the mortgage will be repaid at the end of the term.
 
@@ -246,7 +246,7 @@ You don’t pay any interest or fees on the government’s equity loan for the f
 
 The equity loan must be repaid after 25 years or earlier if you sell your home. You must repay the same percentage of the proceeds of the sale as the initial equity loan (i.e. if you received an equity loan for 20% of the purchase price of your home, you must repay 20% of the proceeds of the sale).  Please refer to your Loan Agreement from the Agency.                                                                                                                       
 I have discussed the features of the Help to Buy scheme. However I have not given you any advice as to the suitability of the scheme.  You should discuss the scheme with your Legal Adviser if you are in any doubt about the features or its suitability for you.  `,
-  disadvantagesAndRisks_G_A7: `Shared Ownership
+  disadvantageAndRisks_G_A7: `Shared Ownership
 
 You are making use of a shared ownership scheme. This means that you will only own a share of the property. The remainder will be owned by a housing association or similar body, who will charge you rent on their share.
 
@@ -259,13 +259,13 @@ The amount of rent initially payable will be £xx. This this will be reviewed on
 You will not own the property outright at the end of the mortgage term if you do not increase your ownership to 100% during the term of the mortgage. The scheme will usually charge administration fees if you want to increase your ownership share or make alterations or improvements to your property. 
 
 Please refer to the Scheme Details for further information and the full terms and conditions relating to the amount of the share payable. If you are still unsure about any elements of the scheme, you should discuss these with your solicitor before you proceed.`,
-  disadvantagesAndRisks_G_A8: `Right to Buy
+  disadvantageAndRisks_G_A8: `Right to Buy
 
 (Details the risks to entitlement to benefits, the repossession risk, and the risk of being considered intentionally homeless.)`,
-  disadvantagesAndRisks_G_A9: `(IF NONE APPLY - DELETE THIS TEXT AND SELECT ANSWER SO FORMATTING IS CORRECT)`,
-  disadvantagesAndRisks_S_A1: `No Portability Option
+  disadvantageAndRisks_G_A9: `(IF NONE APPLY - DELETE THIS TEXT AND SELECT ANSWER SO FORMATTING IS CORRECT)`,
+  disadvantageAndRisks_S_A1: `No Portability Option
 This product is not portable due to the lenders interest in the property as you have undertaken Sharia Compliant finance. You have confirmed that you do not intend to move during this period. As a feature of this finance product, there are no early repayment charges associated with this finance agreement like traditional mortgages.`,
-  disadvantagesAndRisks_S_A2: `Ijara Only (Rent Only)
+  disadvantageAndRisks_S_A2: `Ijara Only (Rent Only)
 
 If your repayment vehicle is insufficient to repay the finance, the property may have to be sold or other capital used to repay the finance agreement at the end of the term. If you convert to an Ijara with Diminishing Musharakah finance agreement in the future, there may be a reduced term to repay the loan. This means that your monthly payments will increase.  If you extend the term of your finance agreement to reduce the monthly payments, the overall cost will be higher as you will be paying more rent on the finance agreement for a longer period of time.`,
   // What is the cost of our advice

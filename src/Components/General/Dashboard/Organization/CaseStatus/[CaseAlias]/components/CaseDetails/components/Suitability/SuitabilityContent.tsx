@@ -90,6 +90,20 @@ const SuitabilityContent: React.FC = () => {
       question_three_answer: "",
       question_one_sharia: "",
     },
+    disadvantage_risks: {
+      disadvantage_risks: "",
+      question_one_answer: "",
+      question_two_answer: "",
+      question_three_answer: "",
+      question_four_answer: "",
+      question_five_answer: "",
+      question_six_answer: "",
+      question_seven_answer: "",
+      question_eight_answer: "",
+      question_nine_answer: "",
+      question_one_sharia: "",
+      question_two: "",
+    },
   });
 
   // RTK hooks
@@ -110,7 +124,8 @@ const SuitabilityContent: React.FC = () => {
       suitabilityData?.recommending_term ||
       suitabilityData?.recommending_mortgage_lender ||
       suitabilityData?.recommending_mortgage_amount ||
-      suitabilityData?.costs_fees
+      suitabilityData?.costs_fees ||
+      suitabilityData?.disadvantage_risks
     ) {
       setFormValue({
         ...formValue,
@@ -281,6 +296,43 @@ const SuitabilityContent: React.FC = () => {
             suitabilityData.costs_fees.question_one_sharia ||
             defaultAnswers.costsAndFees_S_A1,
         },
+        disadvantage_risks: {
+          disadvantage_risks:
+            suitabilityData.disadvantage_risks.disadvantage_risks || "GENERAL",
+          question_one_answer:
+            suitabilityData.disadvantage_risks.question_one_answer ||
+            defaultAnswers.disadvantageAndRisks_G_A1,
+          question_two_answer:
+            suitabilityData.disadvantage_risks.question_two_answer ||
+            defaultAnswers.disadvantageAndRisks_G_A2,
+          question_three_answer:
+            suitabilityData.disadvantage_risks.question_three_answer ||
+            defaultAnswers.disadvantageAndRisks_G_A3,
+          question_four_answer:
+            suitabilityData.disadvantage_risks.question_four_answer ||
+            defaultAnswers.disadvantageAndRisks_G_A4,
+          question_five_answer:
+            suitabilityData.disadvantage_risks.question_five_answer ||
+            defaultAnswers.disadvantageAndRisks_G_A5,
+          question_six_answer:
+            suitabilityData.disadvantage_risks.question_six_answer ||
+            defaultAnswers.disadvantageAndRisks_G_A6,
+          question_seven_answer:
+            suitabilityData.disadvantage_risks.question_seven_answer ||
+            defaultAnswers.disadvantageAndRisks_G_A7,
+          question_eight_answer:
+            suitabilityData.disadvantage_risks.question_eight_answer ||
+            defaultAnswers.disadvantageAndRisks_G_A8,
+          question_nine_answer:
+            suitabilityData.disadvantage_risks.question_nine_answer ||
+            defaultAnswers.disadvantageAndRisks_G_A9,
+          question_one_sharia:
+            suitabilityData.disadvantage_risks.question_one_sharia ||
+            defaultAnswers.disadvantageAndRisks_S_A1,
+          question_two:
+            suitabilityData.disadvantage_risks.question_two ||
+            defaultAnswers.disadvantageAndRisks_S_A2,
+        },
       });
     }
   }, [suitabilityData]);
@@ -330,7 +382,7 @@ const SuitabilityContent: React.FC = () => {
         ...formValue.recommending_mortgage_amount,
       },
       costs_fees: {
-       ...formValue.costs_fees,
+        ...formValue.costs_fees,
       },
     };
     try {
@@ -1310,11 +1362,7 @@ const SuitabilityContent: React.FC = () => {
                 name="costs_fees_type"
                 value={formValue.costs_fees.costs_fees}
                 onChange={(e) =>
-                  handleChange(
-                    "costs_fees",
-                    "costs_fees",
-                    e.target.value
-                  )
+                  handleChange("costs_fees", "costs_fees", e.target.value)
                 }
               >
                 <option value="GENERAL">General</option>
@@ -1396,6 +1444,223 @@ const SuitabilityContent: React.FC = () => {
           )}
           <div className="d-flex justify-content-start align-items-center">
             <Button color="success">Add More Answer</Button>
+          </div>
+        </CardBody>
+      </Card>
+      {/* disadvantage_risks  */}
+      <Card className="border-1 border-secondary mt-3">
+        <CardHeader className="d-flex justify-content-between align-items-center">
+          <Col md={6}>
+            <h4>What are the disadvantages and risks?</h4>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Input
+                type="select"
+                name="disadvantageAndRisks_type"
+                value={formValue.disadvantage_risks.disadvantage_risks}
+                onChange={(e) =>
+                  handleChange(
+                    "disadvantage_risks",
+                    "disadvantage_risks",
+                    e.target.value
+                  )
+                }
+              >
+                <option value="GENERAL">General</option>
+                <option value="SHARIA">Sharia</option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </CardHeader>
+        <CardBody>
+          {formValue.disadvantage_risks.disadvantage_risks === "GENERAL" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_answer"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_one_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_one_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_answer"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_two_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_two_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 3</Label>
+                <Input
+                  type="textarea"
+                  name="question_three_answer"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_three_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_three_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 4</Label>
+                <Input
+                  type="textarea"
+                  name="question_four_answer"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_four_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_four_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 5</Label>
+                <Input
+                  type="textarea"
+                  name="question_five_answer"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_five_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_five_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 6</Label>
+                <Input
+                  type="textarea"
+                  name="question_six_answer"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_six_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_six_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 7</Label>
+                <Input
+                  type="textarea"
+                  name="question_seven_answer"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_seven_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_seven_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 8</Label>
+                <Input
+                  type="textarea"
+                  name="question_eight_answer"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_eight_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_eight_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 9</Label>
+                <Input
+                  type="textarea"
+                  name="question_nine_answer"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_nine_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_nine_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          {formValue.disadvantage_risks.disadvantage_risks === "SHARIA" && (
+            <>
+              {" "}
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_sharia"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_one_sharia}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_one_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_sharia"
+                  rows="3"
+                  value={formValue.disadvantage_risks.question_two}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "question_two",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          <div className="d-flex justify-content-start align-items-center">
+            <Button color="secondary">Add More Answer</Button>
           </div>
         </CardBody>
       </Card>
