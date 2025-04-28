@@ -133,6 +133,13 @@ const SuitabilityContent: React.FC = () => {
       question_three_sharia: "",
       question_five_sharia: "",
     },
+    wills: {
+      wills: "",
+      question_one_answer: "",
+      question_two_answer: "",
+      question_three_answer: "",
+      question_one: "",
+    },
   });
 
   // RTK hooks
@@ -157,7 +164,8 @@ const SuitabilityContent: React.FC = () => {
       suitabilityData?.disadvantage_risks ||
       suitabilityData?.cost_advice ||
       suitabilityData?.protection ||
-      suitabilityData?.buildings_insurance
+      suitabilityData?.buildings_insurance ||
+      suitabilityData?.wills
     ) {
       setFormValue({
         ...formValue,
@@ -436,6 +444,20 @@ const SuitabilityContent: React.FC = () => {
             suitabilityData.buildings_insurance.question_five_sharia ||
             defaultAnswers.buildingsInsurance_S_A4,
         },
+        wills: {
+          wills: suitabilityData.wills.wills || "GENERAL",
+          question_one_answer:
+            suitabilityData.wills.question_one_answer ||
+            defaultAnswers.wills_G_A1,
+          question_two_answer:
+            suitabilityData.wills.question_two_answer ||
+            defaultAnswers.wills_G_A2,
+          question_three_answer:
+            suitabilityData.wills.question_three_answer ||
+            defaultAnswers.wills_G_A3,
+          question_one:
+            suitabilityData.wills.question_one || defaultAnswers.wills_S_A1,
+        },
       });
     }
   }, [suitabilityData]);
@@ -498,6 +520,9 @@ const SuitabilityContent: React.FC = () => {
       },
       buildings_insurance: {
         ...formValue.buildings_insurance,
+      },
+      wills: {
+        ...formValue.wills,
       },
     };
     try {
@@ -2204,6 +2229,90 @@ const SuitabilityContent: React.FC = () => {
           )}
           <div className="d-flex justify-content-start align-items-center">
             <Button color="success">Add More Answer</Button>
+          </div>
+        </CardBody>
+      </Card>
+      {/* wills  */}
+      <Card className="border-1 border-secondary mt-3">
+        <CardHeader className="d-flex justify-content-between align-items-center">
+          <Col md={6}>
+            <h4>What is the wills?</h4>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Input
+                type="select"
+                name="wills_type"
+                value={formValue.wills.wills}
+                onChange={(e) => handleChange("wills", "wills", e.target.value)}
+              >
+                <option value="GENERAL">General</option>
+                <option value="SHARIA">Sharia</option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </CardHeader>
+        <CardBody>
+          {formValue.wills.wills === "GENERAL" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_answer"
+                  rows="3"
+                  value={formValue.wills.question_one_answer}
+                  onChange={(e) =>
+                    handleChange("wills", "question_one_answer", e.target.value)
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_answer"
+                  rows="3"
+                  value={formValue.wills.question_two_answer}
+                  onChange={(e) =>
+                    handleChange("wills", "question_two_answer", e.target.value)
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 3</Label>
+                <Input
+                  type="textarea"
+                  name="question_three_answer"
+                  rows="3"
+                  value={formValue.wills.question_three_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "wills",
+                      "question_three_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          {formValue.wills.wills === "SHARIA" && (
+            <FormGroup>
+              <Label>Answer 1</Label>
+              <Input
+                type="textarea"
+                name="question_one_sharia"
+                rows="3"
+                value={formValue.wills.question_one}
+                onChange={(e) =>
+                  handleChange("wills", "question_one", e.target.value)
+                }
+              />
+            </FormGroup>
+          )}
+          <div className="d-flex justify-content-start align-items-center">
+            <Button color="secondary">Add More Answer</Button>
           </div>
         </CardBody>
       </Card>
