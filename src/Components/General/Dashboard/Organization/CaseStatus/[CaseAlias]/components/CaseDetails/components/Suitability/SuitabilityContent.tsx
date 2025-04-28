@@ -13,7 +13,6 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import Temp from "./temp";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
@@ -143,7 +142,6 @@ const SuitabilityContent: React.FC = () => {
         </CardBody>
       </Card>
       {/* Budget and affordability  */}
-      <Temp />
       {/* Button for save changes  */}
       <div className="d-flex justify-content-end mt-3 mb-0">
         <Button color="primary">Save Changes</Button>
