@@ -45,13 +45,22 @@ const SuitabilityContent: React.FC = () => {
       question_one_sharia: "",
       question_two_sharia: "",
     },
+    recommending_repayment_method: {
+      recommending_repayment_method_type: "",
+      question_one_answer: "",
+      question_two_answer: "",
+      question_three_answer: "",
+      question_four_answer: "",
+      question_five_answer: "",
+      question_one_sharia: "",
+      question_two_sharia: "",
+    },
   });
 
   // RTK hooks
   const { data: suitabilityData, isLoading } = useGetSuitabilityQuery({
     case_alias: casealias,
   });
-
   const [updateSuitability, { isLoading: isUpdating }] =
     useUpdateSuitabilityMutation();
 
@@ -60,7 +69,8 @@ const SuitabilityContent: React.FC = () => {
     if (
       suitabilityData?.circumstances_objectives ||
       suitabilityData?.budget_affordability ||
-      suitabilityData?.new_mortgage_details
+      suitabilityData?.new_mortgage_details ||
+      suitabilityData?.recommending_repayment_method
     ) {
       setFormValue({
         ...formValue,
@@ -118,6 +128,35 @@ const SuitabilityContent: React.FC = () => {
             suitabilityData.new_mortgage_details.question_two_sharia ||
             defaultAnswers.newMortgageDetails_S_A2,
         },
+        recommending_repayment_method: {
+          recommending_repayment_method_type:
+            suitabilityData.recommending_repayment_method
+              .recommending_repayment_method_type || "GENERAL",
+          question_one_answer:
+            suitabilityData.recommending_repayment_method.question_one_answer ||
+            defaultAnswers.recommendingRepaymentMethod_G_A1,
+          question_two_answer:
+            suitabilityData.recommending_repayment_method.question_two_answer ||
+            defaultAnswers.recommendingRepaymentMethod_G_A2,
+          question_three_answer:
+            suitabilityData.recommending_repayment_method
+              .question_three_answer ||
+            defaultAnswers.recommendingRepaymentMethod_G_A3,
+          question_four_answer:
+            suitabilityData.recommending_repayment_method
+              .question_four_answer ||
+            defaultAnswers.recommendingRepaymentMethod_G_A4,
+          question_five_answer:
+            suitabilityData.recommending_repayment_method
+              .question_five_answer ||
+            defaultAnswers.recommendingRepaymentMethod_G_A5,
+          question_one_sharia:
+            suitabilityData.recommending_repayment_method.question_one_sharia ||
+            defaultAnswers.recommendingRepaymentMethod_S_A1,
+          question_two_sharia:
+            suitabilityData.recommending_repayment_method.question_two_sharia ||
+            defaultAnswers.recommendingRepaymentMethod_S_A2,
+        },
       });
     }
   }, [suitabilityData]);
@@ -150,6 +189,9 @@ const SuitabilityContent: React.FC = () => {
       },
       new_mortgage_details: {
         ...formValue.new_mortgage_details,
+      },
+      recommending_repayment_method: {
+        ...formValue.recommending_repayment_method,
       },
     };
     try {
@@ -401,7 +443,7 @@ const SuitabilityContent: React.FC = () => {
             </>
           )}
           <div className="d-flex justify-content-start align-items-center">
-            <Button color="success">Add More Answer</Button>
+            <Button color="secondary">Add More Answer</Button>
           </div>
         </CardBody>
       </Card>
@@ -508,6 +550,161 @@ const SuitabilityContent: React.FC = () => {
           )}
           <div className="d-flex justify-content-start align-items-center">
             <Button color="success">Add More Answer</Button>
+          </div>
+        </CardBody>
+      </Card>
+      {/* Recommending repayment method */}
+      <Card className="border-1 border-secondary mt-3">
+        <CardHeader className="d-flex justify-content-between align-items-center">
+          <Col md={6}>
+            <h4>Recommending repayment method</h4>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Input
+                type="select"
+                name="recommending_repayment_method_type"
+                value={
+                  formValue.recommending_repayment_method
+                   .recommending_repayment_method_type
+                }
+                onChange={(e) =>
+                  handleChange(
+                    "recommending_repayment_method",
+                    "recommending_repayment_method_type",
+                    e.target.value
+                  )
+                }
+              >
+                <option value="GENERAL">General</option>
+                <option value="SHARIA">Sharia</option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </CardHeader>
+        <CardBody>
+          {formValue.recommending_repayment_method
+           .recommending_repayment_method_type === "GENERAL" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_answer"
+                  rows="3"
+                  value={
+                    formValue.recommending_repayment_method.question_one_answer
+                  }
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_repayment_method",
+                      "question_one_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_answer"
+                  rows="3"
+                  value={
+                    formValue.recommending_repayment_method.question_two_answer
+                  }
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_repayment_method",
+                      "question_two_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 3</Label>
+                <Input
+                  type="textarea"
+                  name="question_three_answer"
+                  rows="3"
+                  value={
+                    formValue.recommending_repayment_method.question_three_answer
+                  }
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_repayment_method",
+                      "question_three_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 4</Label>
+                <Input
+                  type="textarea"
+                  name="question_four_answer"
+                  rows="3"
+                  value={
+                    formValue.recommending_repayment_method.question_four_answer
+                  }
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_repayment_method",
+                      "question_four_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+           )
+          }
+          {formValue.recommending_repayment_method
+          .recommending_repayment_method_type === "SHARIA" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_sharia"
+                  rows="3"
+                  value={
+                    formValue.recommending_repayment_method.question_one_sharia
+                  }
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_repayment_method",
+                      "question_one_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_sharia"
+                  rows="3"
+                  value={
+                    formValue.recommending_repayment_method.question_two_sharia
+                  }
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_repayment_method",
+                      "question_two_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )
+          }
+          <div className="d-flex justify-content-start align-items-center">
+            <Button color="secondary">Add More Answer</Button>
           </div>
         </CardBody>
       </Card>

@@ -52,10 +52,10 @@ You provided evidence of the source of the deposit through your savings account 
 You provided evidence of the source of the deposit by providing your personal bank statement/gift declaration form along with giftors 6 months bank statement insert other, as appropriate.`,
   newMortgageDetails_S_A2: `You confirmed the deposit for the new finance agreement is coming from equity within your current property.`,
   // Why are we recommending this repayment method
-  recommendingThisRepaymentMethod_G_A1: `REPAYMENT MORTGAGE
+  recommendingRepaymentMethod_G_A1: `REPAYMENT MORTGAGE
 
 I explained the different repayment methods to you. You told me that you want to be certain that your entire mortgage is repaid by the end of the mortgage term.  Therefore I have recommended that your mortgage is arranged on a capital and interest repayment basis. This will give you the certainty of your mortgage being repaid by the end of its term provided that you make the required monthly payments when due.`,
-  recommendingThisRepaymentMethod_G_A2: `Residential interest-only 
+  recommendingRepaymentMethod_G_A2: `Residential interest-only 
 I provided you with two Key Facts Illustrations, one for the mortgage on a capital and interest repayment basis and one for interest-only. We discussed the differences in cost. It is your intention to use (insert details to repay your mortgage balance at the end of the term). Based on this, I have recommended an interest-only mortgage.
 
 As part of the application, you will have to demonstrate to the lender that you have a clearly understood and credible repayment strategy in place.
@@ -63,7 +63,7 @@ As part of the application, you will have to demonstrate to the lender that you 
 If your circumstances change you must review your mortgage repayment strategy immediately to ensure your home is not at risk.
 
 It is important to note, lenders may change their acceptance criteria for interest-only repayment strategies, which may impact on your ability to switch your mortgage in the future.`,
-  recommendingThisRepaymentMethod_G_A3: `Interest Only 
+  recommendingRepaymentMethod_G_A3: `Interest Only 
 I explained that your monthly payments to the lender will only consist of interest. The amount of your loan will not go down and the outstanding amount will be repayable in full at the end of the mortgage term.
 
 It is your responsibility to ensure that your mortgage is repaid at the end of the term. You are aware that you will need to show the lender that you have a clearly understood and credible strategy in place to ensure that you can repay the loan.
@@ -73,7 +73,7 @@ As part of the application, you will have to demonstrate to the lender that you 
 If your circumstances change you must review your mortgage repayment strategy immediately to ensure your home is not at risk.
 
 It is important to note, lenders may change their acceptance criteria for interest-only repayment strategies, which may impact on your ability to switch your mortgage in the future.`,
-  recommendingThisRepaymentMethod_G_A4: `Part Interest Only, Part Repayment Mortgage
+  recommendingRepaymentMethod_G_A4: `Part Interest Only, Part Repayment Mortgage
 
 I provided you with two Key Facts Illustrations, one for the whole mortgage on a capital and interest repayment basis and one part repayment and part interest-only. We discussed the differences in the cost. Based on our discussion I have recommended a combination of repayment methods because you intend to repay part of the loan with insert details of repayment vehicle. 
 
@@ -88,12 +88,12 @@ As part of the application, you will have to demonstrate to the lender that you 
 If your circumstances change you must review your mortgage repayment strategy immediately to ensure your home is not at risk.
 
 It is important to note, lenders may change their acceptance criteria for interest-only repayment strategies, which may impact on your ability to switch your mortgage in the future.`,
-  recommendingThisRepaymentMethod_G_A5: `Retirement Interest Only
+  recommendingRepaymentMethod_G_A5: `Retirement Interest Only
 In taking out a retirement interest-only mortgage, unless it carries a term like a regular mortgage, you accept that you must repay the outstanding capital when any one of the three specified life events occurs. This can be when you decide to sell the property, when you move into care, or on your death.`,
-  recommendingThisRepaymentMethod_S_A1: `Diminishing Musharakah (acquisition) and Ijara (rent)
+  recommendingRepaymentMethod_S_A1: `Diminishing Musharakah (acquisition) and Ijara (rent)
 
 I explained the different repayment methods to you. You told me that you want to be certain that your entire finance contract is repaid by the end of the term.  Therefore I have recommended that your finance contract is arranged on an Ijara and Diminishing Musharakah (capital and rent repayment basis). This will give you the certainty of your finance is repaid by the end of its term provided that you make the required monthly payments when due.`,
-  recommendingThisRepaymentMethod_S_A2: `Ijara Only
+  recommendingRepaymentMethod_S_A2: `Ijara Only
 
 I explained that your monthly payments to the bank / financier will only consist of rent only. The amount of your finance will not go down and the outstanding amount will be repayable in full at the end of the finance  term.
 
