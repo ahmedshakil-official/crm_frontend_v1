@@ -147,24 +147,24 @@ Please note that an exit fee/redemption fee will usually be chargeable. Please r
   recommendingTerm_G_A1: `I have recommended the term of XX  years because this fits within your chosen monthly budget.`,
   recommendingTerm_S_A1: `I have recommended the term of XX  years because this fits within your chosen monthly budget.`,
   // Why are we recommending this mortgage Lender
-  recommendingThisMortgageLender_G_A1: `We are recommending {lender-name} because XXXXX`,
-  recommendingThisMortgageLender_G_A2: `Mortgage Packager
+  recommendingMortgageLender_G_A1: `We are recommending {lender-name} because XXXXX`,
+  recommendingMortgageLender_G_A2: `Mortgage Packager
 
 We are recommending that your mortgage application is submitted via PACKAGER NAME. This is a mortgage packaging company which processes applications on behalf of {lender-name} . 
 
 I am recommending we submit this application via the use of a mortgage packager because`,
-  recommendingThisMortgageLender_G_A3: `Where second change mortgage recommended
+  recommendingMortgageLender_G_A3: `Where second change mortgage recommended
 
 I have recommended a second charge mortgage because 
 
 I am recommending a loan which will be secured on the same property as your existing mortgage from XXXX.  The second lender will notify the first lender of the existence of a second loan and will create a charge on the property. If you fail to make the payments required under the terms of the mortgage and the mortgage goes into default the lender has the right to take action to recover the debt. In this situation the first lender would take what was legally due to it and the balance of any monies would be passed to the second lender who would take what was due to it. When the amounts payable to all lenders have been satisfied, the balance, if any, would be passed to the borrower.`,
-  recommendingThisMortgageLender_S_A1: `We are recommending {lender-name} because
+  recommendingMortgageLender_S_A1: `We are recommending {lender-name} because
 1. Your main preference was for a Sharia Compliant Finance
 2. No Early Repayment Charges
 3. Allowing you to make additional lump sum payments after initial 2/5 years without any penalties (small admin charge may apply).`,
   // Why are we recommending this mortgage amount
-  recommendingThisMortgageAmount_G_A1: `This is the amount you need in order to complete on your property transaction taking into account the deposit you have put towards this transaction.`,
-  recommendingThisMortgageAmount_G_A2: `This mortgage application has an element of debt consolidation
+  recommendingMortgageAmount_G_A1: `This is the amount you need in order to complete on your property transaction taking into account the deposit you have put towards this transaction.`,
+  recommendingMortgageAmount_G_A2: `This mortgage application has an element of debt consolidation
 
 I have carefully considered your position prior to the further advance/remortgage/ second charge mortgage, fully reviewing your expenditure and bank statements. To meet your needs I recommended you consolidate the debts described below into your mortgage. Based on the information provided by you the total value of these outstanding debts is approximately £xxx.
 
@@ -176,7 +176,7 @@ Your lender may require these debts to be repaid as a condition of the loan agre
 
 THINK CAREFULLY BEFORE SECURING OTHER DEBTS AGAINST YOUR HOME. YOUR HOME MAY BE REPOSSESSED IF YOU DO NOT KEEP UP REPAYMENTS ON YOUR MORTGAGE OR ANY OTHER DEBTS SECURED ON IT.
 `,
-  recommendingThisMortgageAmount_G_A3: `Debt Consolidation on a Buy to Let transaction
+  recommendingMortgageAmount_G_A3: `Debt Consolidation on a Buy to Let transaction
 
 I have carefully considered your position prior to the further advance/remortgage/ second charge mortgage, fully reviewing your expenditure and bank statements. To meet your needs I recommended you consolidate the debts described below into your mortgage. Based on the information provided by you the total value of these outstanding debts is approximately £xxx.
 
@@ -187,7 +187,7 @@ I have provided you with a copy of the debt consolidation calculator and also pr
 Your lender may require these debts to be repaid as a condition of the loan agreement. They may also instruct the appointed conveyancing solicitor to repay the outstanding balances directly to the creditor(s).
 
 THINK CAREFULLY BEFORE SECURING OTHER DEBTS AGAINST YOUR PROPERTY. YOUR PROPERTY MAY BE REPOSSESSED IF YOU DO NOT KEEP UP REPAYMENTS ON YOUR MORTGAGE OR ANY OTHER DEBTS SECURED ON IT`,
-  recommendingThisMortgageAmount_S_A1: `We are recommending the finance amount of £{loan-amount} because your income/rental income allows you to support this or it falls within your budget of xx and xx amount.`,
+  recommendingMortgageAmount_S_A1: `We are recommending the finance amount of £{loan-amount} because your income/rental income allows you to support this or it falls within your budget of xx and xx amount.`,
   // What are the costs and fees?
   costsAndFees_G_A1: `The costs in relation to your mortgage application are included in your Mortgage Illustration.
 
