@@ -122,6 +122,17 @@ const SuitabilityContent: React.FC = () => {
       question_three_sharia: "",
       question_four_sharia: "",
     },
+    buildings_insurance: {
+      buildings_insurance: "",
+      question_one_answer: "",
+      question_two_answer: "",
+      question_three_answer: "",
+      question_four_answer: "",
+      question_one: "",
+      question_two: "",
+      question_three_sharia: "",
+      question_five_sharia: "",
+    },
   });
 
   // RTK hooks
@@ -145,7 +156,8 @@ const SuitabilityContent: React.FC = () => {
       suitabilityData?.costs_fees ||
       suitabilityData?.disadvantage_risks ||
       suitabilityData?.cost_advice ||
-      suitabilityData?.protection
+      suitabilityData?.protection ||
+      suitabilityData?.buildings_insurance
     ) {
       setFormValue({
         ...formValue,
@@ -395,6 +407,35 @@ const SuitabilityContent: React.FC = () => {
             suitabilityData.protection.question_four_sharia ||
             defaultAnswers.protection_S_A4,
         },
+        buildings_insurance: {
+          buildings_insurance:
+            suitabilityData.buildings_insurance.buildings_insurance ||
+            "GENERAL",
+          question_one_answer:
+            suitabilityData.buildings_insurance.question_one_answer ||
+            defaultAnswers.buildingsInsurance_G_A1,
+          question_two_answer:
+            suitabilityData.buildings_insurance.question_two_answer ||
+            defaultAnswers.buildingsInsurance_G_A2,
+          question_three_answer:
+            suitabilityData.buildings_insurance.question_three_answer ||
+            defaultAnswers.buildingsInsurance_G_A3,
+          question_four_answer:
+            suitabilityData.buildings_insurance.question_four_answer ||
+            defaultAnswers.buildingsInsurance_G_A4,
+          question_one:
+            suitabilityData.buildings_insurance.question_one ||
+            defaultAnswers.buildingsInsurance_S_A1,
+          question_two:
+            suitabilityData.buildings_insurance.question_two ||
+            defaultAnswers.buildingsInsurance_S_A2,
+          question_three_sharia:
+            suitabilityData.buildings_insurance.question_three_sharia ||
+            defaultAnswers.buildingsInsurance_S_A3,
+          question_five_sharia:
+            suitabilityData.buildings_insurance.question_five_sharia ||
+            defaultAnswers.buildingsInsurance_S_A4,
+        },
       });
     }
   }, [suitabilityData]);
@@ -454,6 +495,9 @@ const SuitabilityContent: React.FC = () => {
       },
       protection: {
         ...formValue.protection,
+      },
+      buildings_insurance: {
+        ...formValue.buildings_insurance,
       },
     };
     try {
@@ -1992,6 +2036,174 @@ const SuitabilityContent: React.FC = () => {
           )}
           <div className="d-flex justify-content-start align-items-center">
             <Button color="secondary">Add More Answer</Button>
+          </div>
+        </CardBody>
+      </Card>
+      {/* buildings_insurance */}
+      <Card className="border-1 border-success mt-3">
+        <CardHeader className="d-flex justify-content-between align-items-center">
+          <Col md={6}>
+            <h4>What is the buildings insurance?</h4>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Input
+                type="select"
+                name="buildings_insurance_type"
+                value={formValue.buildings_insurance.buildings_insurance}
+                onChange={(e) =>
+                  handleChange(
+                    "buildings_insurance",
+                    "buildings_insurance",
+                    e.target.value
+                  )
+                }
+              >
+                <option value="GENERAL">General</option>
+                <option value="SHARIA">Sharia</option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </CardHeader>
+        <CardBody>
+          {formValue.buildings_insurance.buildings_insurance === "GENERAL" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_answer"
+                  rows="3"
+                  value={formValue.buildings_insurance.question_one_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "buildings_insurance",
+                      "question_one_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_answer"
+                  rows="3"
+                  value={formValue.buildings_insurance.question_two_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "buildings_insurance",
+                      "question_two_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 3</Label>
+                <Input
+                  type="textarea"
+                  name="question_three_answer"
+                  rows="3"
+                  value={formValue.buildings_insurance.question_three_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "buildings_insurance",
+                      "question_three_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 4</Label>
+                <Input
+                  type="textarea"
+                  name="question_four_answer"
+                  rows="3"
+                  value={formValue.buildings_insurance.question_four_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "buildings_insurance",
+                      "question_four_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          {formValue.buildings_insurance.buildings_insurance === "SHARIA" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_sharia"
+                  rows="3"
+                  value={formValue.buildings_insurance.question_one}
+                  onChange={(e) =>
+                    handleChange(
+                      "buildings_insurance",
+                      "question_one",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_sharia"
+                  rows="3"
+                  value={formValue.buildings_insurance.question_two}
+                  onChange={(e) =>
+                    handleChange(
+                      "buildings_insurance",
+                      "question_two",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 3</Label>
+                <Input
+                  type="textarea"
+                  name="question_three_sharia"
+                  rows="3"
+                  value={formValue.buildings_insurance.question_three_sharia}
+                  onChange={(e) =>
+                    handleChange(
+                      "buildings_insurance",
+                      "question_three_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 4</Label>
+                <Input
+                  type="textarea"
+                  name="question_four_sharia"
+                  rows="3"
+                  value={formValue.buildings_insurance.question_five_sharia}
+                  onChange={(e) =>
+                    handleChange(
+                      "buildings_insurance",
+                      "question_five_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          <div className="d-flex justify-content-start align-items-center">
+            <Button color="success">Add More Answer</Button>
           </div>
         </CardBody>
       </Card>

@@ -305,28 +305,28 @@ You have received my recommendation(s) for Life Protection/Critical Illness/Inco
 
 I am not recommending you take out any new policies because`,
   // Buildings and Insurance
-  buildingsAndInsurance_G_A1: `We discussed your buildings insurance requirements.
+  buildingsInsurance_G_A1: `We discussed your buildings insurance requirements.
 
 I recommended you seek separate advice from an adviser who specialises in this area.`,
-  buildingsAndInsurance_G_A2: `We discussed your buildings insurance requirements.
+  buildingsInsurance_G_A2: `We discussed your buildings insurance requirements.
 
 We will arrange a meeting to review this after your mortgage application has been processed.`,
-  buildingsAndInsurance_G_A3: `We discussed your buildings insurance requirements.
+  buildingsInsurance_G_A3: `We discussed your buildings insurance requirements.
 
 You have received my recommendation(s) for buildings insurance but you have decided not to accept my recommendation(s) because:`,
-  buildingsAndInsurance_G_A4: `We discussed your buildings insurance requirements.
+  buildingsInsurance_G_A4: `We discussed your buildings insurance requirements.
 
 You have confirmed that you are going to arrange your own cover and do not need my advice with regard to this matter.`,
-  buildingsAndInsurance_S_A1: `We discussed your buildings insurance requirements.
+  buildingsInsurance_S_A1: `We discussed your buildings insurance requirements.
 
 I recommended you seek separate advice from an adviser who specialises in this area.`,
-  buildingsAndInsurance_S_A2: `We discussed your buildings insurance requirements.
+  buildingsInsurance_S_A2: `We discussed your buildings insurance requirements.
 
 We will arrange a meeting to review this after your mortgage application has been processed.`,
-  buildingsAndInsurance_S_A3: `We discussed your buildings insurance requirements.
+  buildingsInsurance_S_A3: `We discussed your buildings insurance requirements.
 
 You have received my recommendation(s) for buildings insurance but you have decided not to accept my recommendation(s) because:`,
-  buildingsAndInsurance_S_A4: `We discussed your buildings insurance requirements.
+  buildingsInsurance_S_A4: `We discussed your buildings insurance requirements.
 
 You have confirmed that you are going to arrange your own cover and do not need my advice with regard to this matter.`,
   // Wills
