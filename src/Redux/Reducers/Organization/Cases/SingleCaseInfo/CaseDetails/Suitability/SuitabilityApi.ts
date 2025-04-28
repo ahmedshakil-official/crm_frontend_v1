@@ -2,16 +2,16 @@ import { baseApi } from "@/Redux/Api/BaseApi";
 
 export const SuitabilityApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // getProperties: builder.query({
-    //   query: ({ case_alias }) => ({
-    //     url: `/cases/${case_alias}/property/details/`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["PropertyDetails"],
-    // }),
+    getSuitability: builder.query({
+      query: ({ case_alias }) => ({
+        url: `/cases/${case_alias}/suitability/`,
+        method: "GET",
+      }),
+      providesTags: ["Suitability"],
+    }),
     updateSuitability: builder.mutation({
       query: ({ case_alias, suitability_alias, payload }) => ({
-        url: `/cases/${case_alias}/suitability/${suitability_alias}/`,
+        url: `/cases/${case_alias}/suitability/`,
         method: "PUT",
         body: payload,
       }),
@@ -20,4 +20,7 @@ export const SuitabilityApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useUpdateSuitabilityMutation } = SuitabilityApi;
+export const {
+  useGetSuitabilityQuery,
+  useUpdateSuitabilityMutation,
+} = SuitabilityApi;
