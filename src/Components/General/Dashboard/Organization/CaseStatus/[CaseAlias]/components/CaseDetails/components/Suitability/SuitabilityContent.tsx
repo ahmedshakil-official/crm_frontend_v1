@@ -38,6 +38,13 @@ const SuitabilityContent: React.FC = () => {
       question_one_sharia: "",
       question_two_sharia: "",
     },
+    new_mortgage_details: {
+      new_mortgage_details_type: "",
+      question_one_answer: "",
+      question_two_answer: "",
+      question_one_sharia: "",
+      question_two_sharia: "",
+    },
   });
 
   // RTK hooks
@@ -50,7 +57,11 @@ const SuitabilityContent: React.FC = () => {
 
   // Set initial form data when API data is available
   useEffect(() => {
-    if (suitabilityData?.circumstances_objectives || suitabilityData?.budget_affordability) {
+    if (
+      suitabilityData?.circumstances_objectives ||
+      suitabilityData?.budget_affordability ||
+      suitabilityData?.new_mortgage_details
+    ) {
       setFormValue({
         ...formValue,
         circumstances_objectives: {
@@ -90,6 +101,23 @@ const SuitabilityContent: React.FC = () => {
             suitabilityData.budget_affordability.question_two_sharia ||
             defaultAnswers.budgetAndAffordability_S_A2,
         },
+        new_mortgage_details: {
+          new_mortgage_details_type:
+            suitabilityData.new_mortgage_details.new_mortgage_details_type ||
+            "GENERAL",
+          question_one_answer:
+            suitabilityData.new_mortgage_details.question_one_answer ||
+            defaultAnswers.newMortgageDetails_G_A1,
+          question_two_answer:
+            suitabilityData.new_mortgage_details.question_two_answer ||
+            defaultAnswers.newMortgageDetails_G_A2,
+          question_one_sharia:
+            suitabilityData.new_mortgage_details.question_one_sharia ||
+            defaultAnswers.newMortgageDetails_S_A1,
+          question_two_sharia:
+            suitabilityData.new_mortgage_details.question_two_sharia ||
+            defaultAnswers.newMortgageDetails_S_A2,
+        },
       });
     }
   }, [suitabilityData]);
@@ -119,6 +147,9 @@ const SuitabilityContent: React.FC = () => {
       },
       budget_affordability: {
         ...formValue.budget_affordability,
+      },
+      new_mortgage_details: {
+        ...formValue.new_mortgage_details,
       },
     };
     try {
@@ -269,7 +300,7 @@ const SuitabilityContent: React.FC = () => {
       </Card>
 
       {/* Budget and affordability */}
-      <Card className="border-1 border-success mt-3">
+      <Card className="border-1 border-secondary mt-3">
         <CardHeader className="d-flex justify-content-between align-items-center">
           <Col md={6}>
             <h4>Budget and affordability</h4>
@@ -279,9 +310,7 @@ const SuitabilityContent: React.FC = () => {
               <Input
                 type="select"
                 name="budget_affordability_type"
-                value={
-                  formValue.budget_affordability.budget_affordability_type
-                }
+                value={formValue.budget_affordability.budget_affordability_type}
                 onChange={(e) =>
                   handleChange(
                     "budget_affordability",
@@ -342,7 +371,7 @@ const SuitabilityContent: React.FC = () => {
                 <Input
                   type="textarea"
                   name="question_one_sharia"
-                  rows="6"
+                  rows="3"
                   value={formValue.budget_affordability.question_one_sharia}
                   onChange={(e) =>
                     handleChange(
@@ -363,6 +392,112 @@ const SuitabilityContent: React.FC = () => {
                   onChange={(e) =>
                     handleChange(
                       "budget_affordability",
+                      "question_two_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          <div className="d-flex justify-content-start align-items-center">
+            <Button color="success">Add More Answer</Button>
+          </div>
+        </CardBody>
+      </Card>
+      {/* New mortgage details */}
+      <Card className="border-1 border-success mt-3">
+        <CardHeader className="d-flex justify-content-between align-items-center">
+          <Col md={6}>
+            <h4>New mortgage details</h4>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Input
+                type="select"
+                name="new_mortgage_details_type"
+                value={formValue.new_mortgage_details.new_mortgage_details_type}
+                onChange={(e) =>
+                  handleChange(
+                    "new_mortgage_details",
+                    "new_mortgage_details_type",
+                    e.target.value
+                  )
+                }
+              >
+                <option value="GENERAL">General</option>
+                <option value="SHARIA">Sharia</option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </CardHeader>
+        <CardBody>
+          {formValue.new_mortgage_details.new_mortgage_details_type ===
+            "GENERAL" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_answer"
+                  rows="3"
+                  value={formValue.new_mortgage_details.question_one_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "new_mortgage_details",
+                      "question_one_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_answer"
+                  rows="3"
+                  value={formValue.new_mortgage_details.question_two_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "new_mortgage_details",
+                      "question_two_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            </>
+          )}
+          {formValue.new_mortgage_details.new_mortgage_details_type ===
+            "SHARIA" && (
+            <>
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_sharia"
+                  rows="3"
+                  value={formValue.new_mortgage_details.question_one_sharia}
+                  onChange={(e) =>
+                    handleChange(
+                      "new_mortgage_details",
+                      "question_one_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label>Answer 2</Label>
+                <Input
+                  type="textarea"
+                  name="question_two_sharia"
+                  rows="3"
+                  value={formValue.new_mortgage_details.question_two_sharia}
+                  onChange={(e) =>
+                    handleChange(
+                      "new_mortgage_details",
                       "question_two_sharia",
                       e.target.value
                     )
