@@ -64,6 +64,11 @@ const SuitabilityContent: React.FC = () => {
       question_one_sharia: "",
       question_two_sharia: "",
     },
+    recommending_term: {
+      recommending_term: "",
+      question_one_answer: "",
+      question_one: "",
+    },
   });
 
   // RTK hooks
@@ -80,7 +85,8 @@ const SuitabilityContent: React.FC = () => {
       suitabilityData?.budget_affordability ||
       suitabilityData?.new_mortgage_details ||
       suitabilityData?.recommending_repayment_method ||
-      suitabilityData?.recommending_mortgage_type
+      suitabilityData?.recommending_mortgage_type ||
+      suitabilityData?.recommending_term
     ) {
       setFormValue({
         ...formValue,
@@ -190,6 +196,16 @@ const SuitabilityContent: React.FC = () => {
             suitabilityData.recommending_mortgage_type.question_two_sharia ||
             defaultAnswers.recommendingMortgageType_S_A2,
         },
+        recommending_term: {
+          recommending_term:
+            suitabilityData.recommending_term.recommending_term || "GENERAL",
+          question_one_answer:
+            suitabilityData.recommending_term.question_one_answer ||
+            defaultAnswers.recommendingTerm_G_A1,
+          question_one:
+            suitabilityData.recommending_term.question_one ||
+            defaultAnswers.recommendingTerm_S_A1,
+        },
       });
     }
   }, [suitabilityData]);
@@ -228,6 +244,9 @@ const SuitabilityContent: React.FC = () => {
       },
       recommending_mortgage_type: {
         ...formValue.recommending_mortgage_type,
+      },
+      recommending_term: {
+        ...formValue.recommending_term,
       },
     };
     try {
@@ -893,6 +912,77 @@ const SuitabilityContent: React.FC = () => {
           )}
           <div className="d-flex justify-content-start align-items-center">
             <Button color="success">Add More Answer</Button>
+          </div>
+        </CardBody>
+      </Card>
+      {/* recommending_term */}
+      <Card className="border-1 border-secondary mt-3">
+        <CardHeader className="d-flex justify-content-between align-items-center">
+          <Col md={6}>
+            <h4>Recommending term</h4>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Input
+                type="select"
+                name="recommending_term_type"
+                value={formValue.recommending_term.recommending_term}
+                onChange={(e) =>
+                  handleChange(
+                    "recommending_term",
+                    "recommending_term",
+                    e.target.value
+                  )
+                }
+              >
+                <option value="GENERAL">General</option>
+                <option value="SHARIA">Sharia</option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </CardHeader>
+        <CardBody>
+          {formValue.recommending_term.recommending_term === "GENERAL" && (
+          
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_answer"
+                  rows="3"
+                  value={formValue.recommending_term.question_one_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_term",
+                      "question_one_answer",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+              
+          )}
+          {formValue.recommending_term.recommending_term === "SHARIA" && (
+
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_sharia"
+                  rows="3"
+                  value={formValue.recommending_term.question_one}
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_term",
+                      "question_one",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+          )}
+          <div className="d-flex justify-content-start align-items-center">
+            <Button color="secondary">Add More Answer</Button>
           </div>
         </CardBody>
       </Card>

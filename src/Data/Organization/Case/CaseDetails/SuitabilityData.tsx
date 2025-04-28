@@ -144,8 +144,8 @@ Please note your monthly payments are subject to fluctuation in line with the le
 Early repayment charges are not applicable to the finance product I recommended. This means that if you wish to repay all of the loan at any time, your bank/financier  will not charge you for doing so. It was important for you to have a finance with no early repayment charges because your finance needs to be Sharia Compliant.  
 Please note that an exit fee/redemption fee will usually be chargeable. Please refer to your Key Facts Illustration (KFI) for full details.`,
   // Why are you recommending this term
-  recommendingThisTerm_G_A1: `I have recommended the term of XX  years because this fits within your chosen monthly budget.`,
-  recommendingThisTerm_S_A1: `I have recommended the term of XX  years because this fits within your chosen monthly budget.`,
+  recommendingTerm_G_A1: `I have recommended the term of XX  years because this fits within your chosen monthly budget.`,
+  recommendingTerm_S_A1: `I have recommended the term of XX  years because this fits within your chosen monthly budget.`,
   // Why are we recommending this mortgage Lender
   recommendingThisMortgageLender_G_A1: `We are recommending {lender-name} because XXXXX`,
   recommendingThisMortgageLender_G_A2: `Mortgage Packager
