@@ -101,11 +101,11 @@ It is your responsibility to ensure that your finance contract is repaid at the 
 
 As part of the application, you have mentioned that on maturity you will be either selling the property or you will refinance with a different lender to clear the balance.`,
   // Why are we recommending this mortgage type
-  recommendingThisMortgageType_G_A1: `Fixed Rate
+  recommendingMortgageType_G_A1: `Fixed Rate
 Having discussed the interest rate options available, I recommended a fixed rate product. A fixed rate mortgage provides you with the certainty of knowing exactly what your monthly repayments will be during the fixed rate period and that they will not vary or increase. I recommended you take out a  mortgage with a fixed period of {product-initial-rate-period} months. 
 
 I have recommended a fixed rate because a fixed rate will protect you from increases in interest rates and enables you to budget effectively, however if interest rates fall during your fixed period, your payment will stay the same and not reduce. I recommend that you contact me before the initial rate ends to review your mortgage arrangements.`,
-  recommendingThisMortgageType_G_A2: `Tracker Rate
+  recommendingMortgageType_G_A2: `Tracker Rate
 Having discussed the interest rate options available, I recommended a tracker rate product.
 
 With this type of mortgage, the interest rate that you will be charged by your lender is linked to the Bank of England base rate during the scheme period. Therefore your monthly repayments are subject to fluctuation in line with the base rate. This means your monthly repayments will reduce if the base rate drops but, will increase if it rises. A tracker mortgage usually provide some of the lowest rates available, but they come with the risk that your payments might increase.
@@ -115,16 +115,16 @@ I recommend a tracker period of {product-initial-rate-period}  years.
 I have recommended a tracker rate because
 
 I recommend that you contact me before the initial interest rate period ends to review your mortgage arrangements.`,
-  recommendingThisMortgageType_G_A3: `Variable Rate
+  recommendingMortgageType_G_A3: `Variable Rate
 Having discussed the interest rate options available, I recommended a variable rate product
 
 I have recommended a variable rate because 
 
 Please note your monthly payments are subject to fluctuation in line with the lender’s standard variable rate. This means your payments could increase as well as reduce.`,
-  recommendingThisMortgageType_G_A4: `If recommending no ERC product
+  recommendingMortgageType_G_A4: `If recommending no ERC product
 
 Early repayment charges are not applicable to the mortgage product I recommended. This means that if you wish to repay all or part of the loan at any time, your lender will not charge you for doing so. It was important for you to have a loan with no early repayment charges because insert reasons. Please note that an exit fee/redemption fee will usually be chargeable. Please refer to your Mortgage Illustration for full details.`,
-  recommendingThisMortgageType_S_A1: `Fixed Rate
+  recommendingMortgageType_S_A1: `Fixed Rate
 Having discussed the rental rate options available, I recommended a fixed rate product. A fixed rate provides you with the certainty of knowing exactly what your monthly repayments will be during the fixed rate period and that they will not vary or increase. I recommended you take out a finance contract with a fixed period of {product-initial-rate-period} years. 
 
 I have recommended a fixed rate because 
@@ -134,7 +134,7 @@ A fixed rate will protect you from increases in rental rates and enables you to 
 Early repayment charges are not applicable to the finance product I recommended. This means that if you wish to repay all of the loan at any time, your bank/financier will not charge you for doing so. It was important for you to have a finance with no early repayment charges because your finance needs to be Sharia Compliant. 
 
 Please note that an exit fee/redemption fee will usually be chargeable. Please refer to your Key Facts Illustration (KFI) for full details.`,
-  recommendingThisMortgageType_S_A2: `Variable Rate
+  recommendingMortgageType_S_A2: `Variable Rate
 Having discussed the rental rate options available, I recommended a variable rate product.
 
 I have recommended a variable rate because 
