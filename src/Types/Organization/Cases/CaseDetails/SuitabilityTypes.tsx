@@ -40,3 +40,8 @@ export interface DisadvantageRisksAnswerModalProps {
   isOpen: boolean;
   toggle: () => void;
 }
+
+export interface CostAdviceAnswerModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+}

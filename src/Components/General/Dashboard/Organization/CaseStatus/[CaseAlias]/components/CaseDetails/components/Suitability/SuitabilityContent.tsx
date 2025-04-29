@@ -20,6 +20,7 @@ import {
 } from "reactstrap";
 import BudgetAffordabilityAnswerModal from "./Modals/BudgetAffordabilityAnswerModal";
 import CircumstancesObjectivesAnswerModal from "./Modals/CircumstancesObjectivesAnswerModal";
+import CostAdviceAnswerModal from "./Modals/CostAdviceAnswerModal";
 import CostsFeesAnswerModal from "./Modals/CostsFeesAnswerModal";
 import DisadvantageRisksAnswerModal from "./Modals/DisadvantageRisksAnswerModal";
 import NewMortgageDetailsAnswerModal from "./Modals/NewMortgageDetailsAnswerModal";
@@ -43,6 +44,7 @@ const SuitabilityContent: React.FC = () => {
   const [isRMAModalOpen, setIsRMAModalOpen] = useState(false);
   const [isCFModalOpen, setIsCFModalOpen] = useState(false);
   const [isDRModalOpen, setIsDRModalOpen] = useState(false);
+  const [isCAModalOpen, setIsCAModalOpen] = useState(false);
 
   // Form State
   const [formValue, setFormValue] = useState({
@@ -195,6 +197,9 @@ const SuitabilityContent: React.FC = () => {
   };
   const toggleDRModal = () => {
     setIsDRModalOpen(!isDRModalOpen);
+  };
+  const toggleCAModal = () => {
+    setIsCAModalOpen(!isCAModalOpen);
   };
 
   // RTK hooks
@@ -1995,7 +2000,9 @@ const SuitabilityContent: React.FC = () => {
               </>
             )}
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="success">Add More Answer</Button>
+              <Button color="success" onClick={toggleCAModal}>
+                Add More Answer
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -2468,6 +2475,7 @@ const SuitabilityContent: React.FC = () => {
         isOpen={isDRModalOpen}
         toggle={toggleDRModal}
       />
+      <CostAdviceAnswerModal isOpen={isCAModalOpen} toggle={toggleCAModal} />
     </>
   );
 };
