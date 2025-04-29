@@ -18,10 +18,41 @@ import {
   Input,
   Label,
 } from "reactstrap";
+import BudgetAffordabilityAnswerModal from "./Modals/BudgetAffordabilityAnswerModal";
+import BuildingsInsuranceAnswerModal from "./Modals/BuildingsInsuranceAnswerModal";
+import CircumstancesObjectivesAnswerModal from "./Modals/CircumstancesObjectivesAnswerModal";
+import CostAdviceAnswerModal from "./Modals/CostAdviceAnswerModal";
+import CostsFeesAnswerModal from "./Modals/CostsFeesAnswerModal";
+import DisadvantageRisksAnswerModal from "./Modals/DisadvantageRisksAnswerModal";
+import NewMortgageDetailsAnswerModal from "./Modals/NewMortgageDetailsAnswerModal";
+import ProtectionAnswerModal from "./Modals/ProtectionAnswerModal";
+import RecommendingMortgageAmountAnswerModal from "./Modals/RecommendingMortgageAmountAnswerModal";
+import RecommendingMortgageLenderAnswerModal from "./Modals/RecommendingMortgageLenderAnswerModal";
+import RecommendingMortgageTypeAnswerModal from "./Modals/RecommendingMortgageTypeAnswerModal";
+import RecommendingRepaymentMethodAnswerModal from "./Modals/RecommendingRepaymentMethodAnswerModal";
+import RecommendingTermAnswerModal from "./Modals/RecommendingTermAnswerModal";
+import WillsAnswerModal from "./Modals/WillsAnswerModal";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
   const [defaultAnswers, setDefaultAnswers] = useState(defaultAnswersData);
+  // Modal State
+  const [isCOModalOpen, setIsCOModalOpen] = useState(false);
+  const [isBAModalOpen, setIsBAModalOpen] = useState(false);
+  const [isNMDModalOpen, setIsNMDModalOpen] = useState(false);
+  const [isRRMModalOpen, setIsRRMModalOpen] = useState(false);
+  const [isRMTModalOpen, setIsRMTModalOpen] = useState(false);
+  const [isRTModalOpen, setIsRTModalOpen] = useState(false);
+  const [isRMLModalOpen, setIsRMLModalOpen] = useState(false);
+  const [isRMAModalOpen, setIsRMAModalOpen] = useState(false);
+  const [isCFModalOpen, setIsCFModalOpen] = useState(false);
+  const [isDRModalOpen, setIsDRModalOpen] = useState(false);
+  const [isCAModalOpen, setIsCAModalOpen] = useState(false);
+  const [isPModalOpen, setIsPModalOpen] = useState(false);
+  const [isBIModalOpen, setIsBIModalOpen] = useState(false);
+  const [isWModalOpen, setIsWModalOpen] = useState(false);
+
+  // Form State
   const [formValue, setFormValue] = useState({
     circumstances_objectives: {
       circumstances_type: "",
@@ -141,6 +172,50 @@ const SuitabilityContent: React.FC = () => {
       question_one: "",
     },
   });
+
+  // Handle modal change
+  const toggleCOModal = () => {
+    setIsCOModalOpen(!isCOModalOpen);
+  };
+  const toggleBAModal = () => {
+    setIsBAModalOpen(!isBAModalOpen);
+  };
+  const toggleNMDModal = () => {
+    setIsNMDModalOpen(!isNMDModalOpen);
+  };
+  const toggleRRMModal = () => {
+    setIsRRMModalOpen(!isRRMModalOpen);
+  };
+  const toggleRMTModal = () => {
+    setIsRMTModalOpen(!isRMTModalOpen);
+  };
+  const toggleRTModal = () => {
+    setIsRTModalOpen(!isRTModalOpen);
+  };
+  const toggleRMLModal = () => {
+    setIsRMLModalOpen(!isRMLModalOpen);
+  };
+  const toggleRMAModal = () => {
+    setIsRMAModalOpen(!isRMAModalOpen);
+  };
+  const toggleCFModal = () => {
+    setIsCFModalOpen(!isCFModalOpen);
+  };
+  const toggleDRModal = () => {
+    setIsDRModalOpen(!isDRModalOpen);
+  };
+  const toggleCAModal = () => {
+    setIsCAModalOpen(!isCAModalOpen);
+  };
+  const togglePModal = () => {
+    setIsPModalOpen(!isPModalOpen);
+  };
+  const toggleBIModal = () => {
+    setIsBIModalOpen(!isBIModalOpen);
+  };
+  const toggleWModal = () => {
+    setIsWModalOpen(!isWModalOpen);
+  };
 
   // RTK hooks
   const { data: suitabilityData, isLoading } = useGetSuitabilityQuery({
@@ -546,1784 +621,1889 @@ const SuitabilityContent: React.FC = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      {/* Your circumstances and objectives */}
-      <Card className="border-1 border-success">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>Your circumstances and objectives</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="circumstances_type"
-                value={formValue.circumstances_objectives.circumstances_type}
-                onChange={(e) =>
-                  handleChange(
-                    "circumstances_objectives",
-                    "circumstances_type",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.circumstances_objectives.circumstances_type ===
-            "GENERAL" && (
-            <>
+    <>
+      <Form onSubmit={handleSubmit}>
+        {/* Your circumstances and objectives */}
+        <Card className="border-1 border-success">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>Your circumstances and objectives</h4>
+            </Col>
+            <Col md={4}>
               <FormGroup>
-                <Label>Answer 1</Label>
                 <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={formValue.circumstances_objectives.question_one_answer}
+                  type="select"
+                  name="circumstances_type"
+                  value={formValue.circumstances_objectives.circumstances_type}
                   onChange={(e) =>
                     handleChange(
                       "circumstances_objectives",
-                      "question_one_answer",
+                      "circumstances_type",
                       e.target.value
                     )
                   }
-                />
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
               </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={formValue.circumstances_objectives.question_two_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "circumstances_objectives",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
-                  value={
-                    formValue.circumstances_objectives.question_three_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "circumstances_objectives",
-                      "question_three_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.circumstances_objectives.circumstances_type ===
-            "SHARIA" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_sharia"
-                  rows="6"
-                  value={formValue.circumstances_objectives.question_one_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "circumstances_objectives",
-                      "question_one_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_sharia"
-                  rows="3"
-                  value={formValue.circumstances_objectives.question_two_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "circumstances_objectives",
-                      "question_two_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="success">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.circumstances_objectives.circumstances_type ===
+              "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={
+                      formValue.circumstances_objectives.question_one_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "circumstances_objectives",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={
+                      formValue.circumstances_objectives.question_two_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "circumstances_objectives",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={
+                      formValue.circumstances_objectives.question_three_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "circumstances_objectives",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.circumstances_objectives.circumstances_type ===
+              "SHARIA" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_sharia"
+                    rows="6"
+                    value={
+                      formValue.circumstances_objectives.question_one_sharia
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "circumstances_objectives",
+                        "question_one_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_sharia"
+                    rows="3"
+                    value={
+                      formValue.circumstances_objectives.question_two_sharia
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "circumstances_objectives",
+                        "question_two_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="success" onClick={toggleCOModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
 
-      {/* Budget and affordability */}
-      <Card className="border-1 border-secondary mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>Budget and affordability</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="budget_affordability_type"
-                value={formValue.budget_affordability.budget_affordability_type}
-                onChange={(e) =>
-                  handleChange(
-                    "budget_affordability",
-                    "budget_affordability_type",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.budget_affordability.budget_affordability_type ===
-            "GENERAL" && (
-            <>
+        {/* Budget and affordability */}
+        <Card className="border-1 border-secondary mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>Budget and affordability</h4>
+            </Col>
+            <Col md={4}>
               <FormGroup>
-                <Label>Answer 1</Label>
                 <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={formValue.budget_affordability.question_one_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "budget_affordability",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={formValue.budget_affordability.question_two_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "budget_affordability",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.budget_affordability.budget_affordability_type ===
-            "SHARIA" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_sharia"
-                  rows="3"
-                  value={formValue.budget_affordability.question_one_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "budget_affordability",
-                      "question_one_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_sharia"
-                  rows="3"
-                  value={formValue.budget_affordability.question_two_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "budget_affordability",
-                      "question_two_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="secondary">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* New mortgage details */}
-      <Card className="border-1 border-success mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>New mortgage details</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="new_mortgage_details_type"
-                value={formValue.new_mortgage_details.new_mortgage_details_type}
-                onChange={(e) =>
-                  handleChange(
-                    "new_mortgage_details",
-                    "new_mortgage_details_type",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.new_mortgage_details.new_mortgage_details_type ===
-            "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={formValue.new_mortgage_details.question_one_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "new_mortgage_details",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={formValue.new_mortgage_details.question_two_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "new_mortgage_details",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.new_mortgage_details.new_mortgage_details_type ===
-            "SHARIA" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_sharia"
-                  rows="3"
-                  value={formValue.new_mortgage_details.question_one_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "new_mortgage_details",
-                      "question_one_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_sharia"
-                  rows="3"
-                  value={formValue.new_mortgage_details.question_two_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "new_mortgage_details",
-                      "question_two_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="success">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* Recommending repayment method */}
-      <Card className="border-1 border-secondary mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>Why are we recommending this repayment method?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="recommending_repayment_method_type"
-                value={
-                  formValue.recommending_repayment_method
-                    .recommending_repayment_method_type
-                }
-                onChange={(e) =>
-                  handleChange(
-                    "recommending_repayment_method",
-                    "recommending_repayment_method_type",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.recommending_repayment_method
-            .recommending_repayment_method_type === "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
+                  type="select"
+                  name="budget_affordability_type"
                   value={
-                    formValue.recommending_repayment_method.question_one_answer
+                    formValue.budget_affordability.budget_affordability_type
                   }
                   onChange={(e) =>
                     handleChange(
-                      "recommending_repayment_method",
-                      "question_one_answer",
+                      "budget_affordability",
+                      "budget_affordability_type",
                       e.target.value
                     )
                   }
-                />
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
               </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.budget_affordability.budget_affordability_type ===
+              "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={formValue.budget_affordability.question_one_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "budget_affordability",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={formValue.budget_affordability.question_two_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "budget_affordability",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.budget_affordability.budget_affordability_type ===
+              "SHARIA" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_sharia"
+                    rows="3"
+                    value={formValue.budget_affordability.question_one_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "budget_affordability",
+                        "question_one_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_sharia"
+                    rows="3"
+                    value={formValue.budget_affordability.question_two_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "budget_affordability",
+                        "question_two_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="secondary" onClick={toggleBAModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* New mortgage details */}
+        <Card className="border-1 border-success mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>New mortgage details</h4>
+            </Col>
+            <Col md={4}>
               <FormGroup>
-                <Label>Answer 2</Label>
                 <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
+                  type="select"
+                  name="new_mortgage_details_type"
                   value={
-                    formValue.recommending_repayment_method.question_two_answer
+                    formValue.new_mortgage_details.new_mortgage_details_type
                   }
                   onChange={(e) =>
                     handleChange(
-                      "recommending_repayment_method",
-                      "question_two_answer",
+                      "new_mortgage_details",
+                      "new_mortgage_details_type",
                       e.target.value
                     )
                   }
-                />
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
               </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.new_mortgage_details.new_mortgage_details_type ===
+              "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={formValue.new_mortgage_details.question_one_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "new_mortgage_details",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={formValue.new_mortgage_details.question_two_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "new_mortgage_details",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.new_mortgage_details.new_mortgage_details_type ===
+              "SHARIA" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_sharia"
+                    rows="3"
+                    value={formValue.new_mortgage_details.question_one_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "new_mortgage_details",
+                        "question_one_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_sharia"
+                    rows="3"
+                    value={formValue.new_mortgage_details.question_two_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "new_mortgage_details",
+                        "question_two_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="success" onClick={toggleNMDModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* Recommending repayment method */}
+        <Card className="border-1 border-secondary mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>Why are we recommending this repayment method?</h4>
+            </Col>
+            <Col md={4}>
               <FormGroup>
-                <Label>Answer 3</Label>
                 <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
+                  type="select"
+                  name="recommending_repayment_method_type"
                   value={
                     formValue.recommending_repayment_method
-                      .question_three_answer
+                      .recommending_repayment_method_type
                   }
                   onChange={(e) =>
                     handleChange(
                       "recommending_repayment_method",
-                      "question_three_answer",
+                      "recommending_repayment_method_type",
                       e.target.value
                     )
                   }
-                />
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
               </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.recommending_repayment_method
+              .recommending_repayment_method_type === "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_repayment_method
+                        .question_one_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_repayment_method",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_repayment_method
+                        .question_two_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_repayment_method",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_repayment_method
+                        .question_three_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_repayment_method",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 4</Label>
+                  <Input
+                    type="textarea"
+                    name="question_four_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_repayment_method
+                        .question_four_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_repayment_method",
+                        "question_four_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.recommending_repayment_method
+              .recommending_repayment_method_type === "SHARIA" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_sharia"
+                    rows="3"
+                    value={
+                      formValue.recommending_repayment_method
+                        .question_one_sharia
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_repayment_method",
+                        "question_one_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_sharia"
+                    rows="3"
+                    value={
+                      formValue.recommending_repayment_method
+                        .question_two_sharia
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_repayment_method",
+                        "question_two_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="secondary" onClick={toggleRRMModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* recommending_mortgage_type */}
+        <Card className="border-1 border-success mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>Why are we recommending this mortgage type?</h4>
+            </Col>
+            <Col md={4}>
               <FormGroup>
-                <Label>Answer 4</Label>
                 <Input
-                  type="textarea"
-                  name="question_four_answer"
-                  rows="3"
+                  type="select"
+                  name="recommending_mortgage_type_type"
                   value={
-                    formValue.recommending_repayment_method.question_four_answer
+                    formValue.recommending_mortgage_type
+                      .recommending_mortgage_type
                   }
                   onChange={(e) =>
                     handleChange(
-                      "recommending_repayment_method",
-                      "question_four_answer",
+                      "recommending_mortgage_type",
+                      "recommending_mortgage_type",
+                      e.target.value
+                    )
+                  }
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.recommending_mortgage_type.recommending_mortgage_type ===
+              "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_type.question_one_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_type",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_type.question_two_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_type",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_type.question_three_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_type",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 4</Label>
+                  <Input
+                    type="textarea"
+                    name="question_four_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_type.question_four_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_type",
+                        "question_four_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.recommending_mortgage_type.recommending_mortgage_type ===
+              "SHARIA" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_sharia"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_type.question_one_sharia
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_type",
+                        "question_one_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_sharia"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_type.question_two_sharia
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_type",
+                        "question_two_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="success" onClick={toggleRMTModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* recommending_term */}
+        <Card className="border-1 border-secondary mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>Why are you recommending this term?</h4>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="recommending_term_type"
+                  value={formValue.recommending_term.recommending_term}
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_term",
+                      "recommending_term",
+                      e.target.value
+                    )
+                  }
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.recommending_term.recommending_term === "GENERAL" && (
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_answer"
+                  rows="3"
+                  value={formValue.recommending_term.question_one_answer}
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_term",
+                      "question_one_answer",
                       e.target.value
                     )
                   }
                 />
               </FormGroup>
-            </>
-          )}
-          {formValue.recommending_repayment_method
-            .recommending_repayment_method_type === "SHARIA" && (
-            <>
+            )}
+            {formValue.recommending_term.recommending_term === "SHARIA" && (
               <FormGroup>
                 <Label>Answer 1</Label>
                 <Input
                   type="textarea"
                   name="question_one_sharia"
                   rows="3"
-                  value={
-                    formValue.recommending_repayment_method.question_one_sharia
-                  }
+                  value={formValue.recommending_term.question_one}
                   onChange={(e) =>
                     handleChange(
-                      "recommending_repayment_method",
-                      "question_one_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_sharia"
-                  rows="3"
-                  value={
-                    formValue.recommending_repayment_method.question_two_sharia
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_repayment_method",
-                      "question_two_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="secondary">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* recommending_mortgage_type */}
-      <Card className="border-1 border-success mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>Why are we recommending this mortgage type?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="recommending_mortgage_type_type"
-                value={
-                  formValue.recommending_mortgage_type
-                    .recommending_mortgage_type
-                }
-                onChange={(e) =>
-                  handleChange(
-                    "recommending_mortgage_type",
-                    "recommending_mortgage_type",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.recommending_mortgage_type.recommending_mortgage_type ===
-            "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_type.question_one_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_type",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_type.question_two_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_type",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_type.question_three_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_type",
-                      "question_three_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 4</Label>
-                <Input
-                  type="textarea"
-                  name="question_four_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_type.question_four_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_type",
-                      "question_four_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.recommending_mortgage_type.recommending_mortgage_type ===
-            "SHARIA" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_sharia"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_type.question_one_sharia
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_type",
-                      "question_one_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_sharia"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_type.question_two_sharia
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_type",
-                      "question_two_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="success">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* recommending_term */}
-      <Card className="border-1 border-secondary mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>Why are you recommending this term?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="recommending_term_type"
-                value={formValue.recommending_term.recommending_term}
-                onChange={(e) =>
-                  handleChange(
-                    "recommending_term",
-                    "recommending_term",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.recommending_term.recommending_term === "GENERAL" && (
-            <FormGroup>
-              <Label>Answer 1</Label>
-              <Input
-                type="textarea"
-                name="question_one_answer"
-                rows="3"
-                value={formValue.recommending_term.question_one_answer}
-                onChange={(e) =>
-                  handleChange(
-                    "recommending_term",
-                    "question_one_answer",
-                    e.target.value
-                  )
-                }
-              />
-            </FormGroup>
-          )}
-          {formValue.recommending_term.recommending_term === "SHARIA" && (
-            <FormGroup>
-              <Label>Answer 1</Label>
-              <Input
-                type="textarea"
-                name="question_one_sharia"
-                rows="3"
-                value={formValue.recommending_term.question_one}
-                onChange={(e) =>
-                  handleChange(
-                    "recommending_term",
-                    "question_one",
-                    e.target.value
-                  )
-                }
-              />
-            </FormGroup>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="secondary">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* recommending_mortgage_lender  */}
-      <Card className="border-1 border-success mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>Why are we recommending this mortgage Lender?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="recommending_mortgage_lender_type"
-                value={
-                  formValue.recommending_mortgage_lender
-                    .recommending_mortgage_lender_type
-                }
-                onChange={(e) =>
-                  handleChange(
-                    "recommending_mortgage_lender",
-                    "recommending_mortgage_lender_type",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.recommending_mortgage_lender
-            .recommending_mortgage_lender_type === "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_lender.question_one_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_lender",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_lender.question_two_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_lender",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_lender.question_three_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_lender",
-                      "question_three_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.recommending_mortgage_lender
-            .recommending_mortgage_lender_type === "SHARIA" && (
-            <FormGroup>
-              <Label>Answer 1</Label>
-              <Input
-                type="textarea"
-                name="question_one_sharia"
-                rows="3"
-                value={
-                  formValue.recommending_mortgage_lender.question_one_sharia
-                }
-                onChange={(e) =>
-                  handleChange(
-                    "recommending_mortgage_lender",
-                    "question_one_sharia",
-                    e.target.value
-                  )
-                }
-              />
-            </FormGroup>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="success">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* recommending_mortgage_amount  */}
-      <Card className="border-1 border-secondary mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>Why are we recommending this mortgage amount?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="recommending_mortgage_amount_type"
-                value={
-                  formValue.recommending_mortgage_amount
-                    .recommending_mortgage_amount
-                }
-                onChange={(e) =>
-                  handleChange(
-                    "recommending_mortgage_amount",
-                    "recommending_mortgage_amount",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.recommending_mortgage_amount
-            .recommending_mortgage_amount === "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_amount.question_one_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_amount",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_amount.question_two_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_amount",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
-                  value={
-                    formValue.recommending_mortgage_amount.question_three_answer
-                  }
-                  onChange={(e) =>
-                    handleChange(
-                      "recommending_mortgage_amount",
-                      "question_three_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.recommending_mortgage_amount
-            .recommending_mortgage_amount === "SHARIA" && (
-            <FormGroup>
-              <Label>Answer 1</Label>
-              <Input
-                type="textarea"
-                name="question_one_sharia"
-                rows="3"
-                value={
-                  formValue.recommending_mortgage_amount.question_one_sharia
-                }
-                onChange={(e) =>
-                  handleChange(
-                    "recommending_mortgage_amount",
-                    "question_one_sharia",
-                    e.target.value
-                  )
-                }
-              />
-            </FormGroup>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="secondary">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* costs_fees */}
-      <Card className="border-1 border-success mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>What are the costs and fees?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="costs_fees_type"
-                value={formValue.costs_fees.costs_fees}
-                onChange={(e) =>
-                  handleChange("costs_fees", "costs_fees", e.target.value)
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.costs_fees.costs_fees === "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={formValue.costs_fees.question_one_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "costs_fees",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={formValue.costs_fees.question_two_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "costs_fees",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
-                  value={formValue.costs_fees.question_three_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "costs_fees",
-                      "question_three_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.costs_fees.costs_fees === "SHARIA" && (
-            <FormGroup>
-              <Label>Answer 1</Label>
-              <Input
-                type="textarea"
-                name="question_one_sharia"
-                rows="3"
-                value={formValue.costs_fees.question_one_sharia}
-                onChange={(e) =>
-                  handleChange(
-                    "costs_fees",
-                    "question_one_sharia",
-                    e.target.value
-                  )
-                }
-              />
-            </FormGroup>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="success">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* disadvantage_risks  */}
-      <Card className="border-1 border-secondary mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>What are the disadvantages and risks?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="disadvantageAndRisks_type"
-                value={formValue.disadvantage_risks.disadvantage_risks}
-                onChange={(e) =>
-                  handleChange(
-                    "disadvantage_risks",
-                    "disadvantage_risks",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.disadvantage_risks.disadvantage_risks === "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_one_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_two_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_three_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_three_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 4</Label>
-                <Input
-                  type="textarea"
-                  name="question_four_answer"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_four_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_four_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 5</Label>
-                <Input
-                  type="textarea"
-                  name="question_five_answer"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_five_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_five_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 6</Label>
-                <Input
-                  type="textarea"
-                  name="question_six_answer"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_six_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_six_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 7</Label>
-                <Input
-                  type="textarea"
-                  name="question_seven_answer"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_seven_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_seven_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 8</Label>
-                <Input
-                  type="textarea"
-                  name="question_eight_answer"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_eight_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_eight_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 9</Label>
-                <Input
-                  type="textarea"
-                  name="question_nine_answer"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_nine_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_nine_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.disadvantage_risks.disadvantage_risks === "SHARIA" && (
-            <>
-              {" "}
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_sharia"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_one_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_one_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_sharia"
-                  rows="3"
-                  value={formValue.disadvantage_risks.question_two}
-                  onChange={(e) =>
-                    handleChange(
-                      "disadvantage_risks",
-                      "question_two",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="secondary">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* cost_advice */}
-      <Card className="border-1 border-success mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>What is the cost of our advice?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="cost_advice_type"
-                value={formValue.cost_advice.cost_advice}
-                onChange={(e) =>
-                  handleChange("cost_advice", "cost_advice", e.target.value)
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.cost_advice.cost_advice === "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={formValue.cost_advice.question_one_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "cost_advice",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={formValue.cost_advice.question_two_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "cost_advice",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.cost_advice.cost_advice === "SHARIA" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_sharia"
-                  rows="3"
-                  value={formValue.cost_advice.question_one_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "cost_advice",
-                      "question_one_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_sharia"
-                  rows="3"
-                  value={formValue.cost_advice.question_two_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "cost_advice",
-                      "question_two_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="success">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* protection */}
-      <Card className="border-1 border-secondary mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>What is the protection?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="protection_type"
-                value={formValue.protection.protection}
-                onChange={(e) =>
-                  handleChange("protection", "protection", e.target.value)
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.protection.protection === "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={formValue.protection.question_one_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "protection",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={formValue.protection.question_two_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "protection",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
-                  value={formValue.protection.question_three_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "protection",
-                      "question_three_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 4</Label>
-                <Input
-                  type="textarea"
-                  name="question_four_answer"
-                  rows="3"
-                  value={formValue.protection.question_four_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "protection",
-                      "question_four_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.protection.protection === "SHARIA" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_sharia"
-                  rows="3"
-                  value={formValue.protection.question_one_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "protection",
-                      "question_one_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_sharia"
-                  rows="3"
-                  value={formValue.protection.question_two}
-                  onChange={(e) =>
-                    handleChange("protection", "question_two", e.target.value)
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_sharia"
-                  rows="3"
-                  value={formValue.protection.question_three_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "protection",
-                      "question_three_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 4</Label>
-                <Input
-                  type="textarea"
-                  name="question_four_sharia"
-                  rows="3"
-                  value={formValue.protection.question_four_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "protection",
-                      "question_four_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="secondary">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* buildings_insurance */}
-      <Card className="border-1 border-success mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>What is the buildings insurance?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="buildings_insurance_type"
-                value={formValue.buildings_insurance.buildings_insurance}
-                onChange={(e) =>
-                  handleChange(
-                    "buildings_insurance",
-                    "buildings_insurance",
-                    e.target.value
-                  )
-                }
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.buildings_insurance.buildings_insurance === "GENERAL" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_answer"
-                  rows="3"
-                  value={formValue.buildings_insurance.question_one_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "buildings_insurance",
-                      "question_one_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={formValue.buildings_insurance.question_two_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "buildings_insurance",
-                      "question_two_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
-                  value={formValue.buildings_insurance.question_three_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "buildings_insurance",
-                      "question_three_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 4</Label>
-                <Input
-                  type="textarea"
-                  name="question_four_answer"
-                  rows="3"
-                  value={formValue.buildings_insurance.question_four_answer}
-                  onChange={(e) =>
-                    handleChange(
-                      "buildings_insurance",
-                      "question_four_answer",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          {formValue.buildings_insurance.buildings_insurance === "SHARIA" && (
-            <>
-              <FormGroup>
-                <Label>Answer 1</Label>
-                <Input
-                  type="textarea"
-                  name="question_one_sharia"
-                  rows="3"
-                  value={formValue.buildings_insurance.question_one}
-                  onChange={(e) =>
-                    handleChange(
-                      "buildings_insurance",
+                      "recommending_term",
                       "question_one",
                       e.target.value
                     )
                   }
                 />
               </FormGroup>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="secondary" onClick={toggleRTModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* recommending_mortgage_lender  */}
+        <Card className="border-1 border-success mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>Why are we recommending this mortgage Lender?</h4>
+            </Col>
+            <Col md={4}>
               <FormGroup>
-                <Label>Answer 2</Label>
                 <Input
-                  type="textarea"
-                  name="question_two_sharia"
-                  rows="3"
-                  value={formValue.buildings_insurance.question_two}
+                  type="select"
+                  name="recommending_mortgage_lender_type"
+                  value={
+                    formValue.recommending_mortgage_lender
+                      .recommending_mortgage_lender_type
+                  }
                   onChange={(e) =>
                     handleChange(
-                      "buildings_insurance",
-                      "question_two",
+                      "recommending_mortgage_lender",
+                      "recommending_mortgage_lender_type",
                       e.target.value
                     )
                   }
-                />
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
               </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_sharia"
-                  rows="3"
-                  value={formValue.buildings_insurance.question_three_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "buildings_insurance",
-                      "question_three_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 4</Label>
-                <Input
-                  type="textarea"
-                  name="question_four_sharia"
-                  rows="3"
-                  value={formValue.buildings_insurance.question_five_sharia}
-                  onChange={(e) =>
-                    handleChange(
-                      "buildings_insurance",
-                      "question_five_sharia",
-                      e.target.value
-                    )
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="success">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* wills  */}
-      <Card className="border-1 border-secondary mt-3">
-        <CardHeader className="d-flex justify-content-between align-items-center">
-          <Col md={6}>
-            <h4>What is the wills?</h4>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Input
-                type="select"
-                name="wills_type"
-                value={formValue.wills.wills}
-                onChange={(e) => handleChange("wills", "wills", e.target.value)}
-              >
-                <option value="GENERAL">General</option>
-                <option value="SHARIA">Sharia</option>
-              </Input>
-            </FormGroup>
-          </Col>
-        </CardHeader>
-        <CardBody>
-          {formValue.wills.wills === "GENERAL" && (
-            <>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.recommending_mortgage_lender
+              .recommending_mortgage_lender_type === "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_lender.question_one_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_lender",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_lender.question_two_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_lender",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_lender
+                        .question_three_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_lender",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.recommending_mortgage_lender
+              .recommending_mortgage_lender_type === "SHARIA" && (
               <FormGroup>
                 <Label>Answer 1</Label>
                 <Input
                   type="textarea"
-                  name="question_one_answer"
+                  name="question_one_sharia"
                   rows="3"
-                  value={formValue.wills.question_one_answer}
-                  onChange={(e) =>
-                    handleChange("wills", "question_one_answer", e.target.value)
+                  value={
+                    formValue.recommending_mortgage_lender.question_one_sharia
                   }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 2</Label>
-                <Input
-                  type="textarea"
-                  name="question_two_answer"
-                  rows="3"
-                  value={formValue.wills.question_two_answer}
-                  onChange={(e) =>
-                    handleChange("wills", "question_two_answer", e.target.value)
-                  }
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>Answer 3</Label>
-                <Input
-                  type="textarea"
-                  name="question_three_answer"
-                  rows="3"
-                  value={formValue.wills.question_three_answer}
                   onChange={(e) =>
                     handleChange(
-                      "wills",
-                      "question_three_answer",
+                      "recommending_mortgage_lender",
+                      "question_one_sharia",
                       e.target.value
                     )
                   }
                 />
               </FormGroup>
-            </>
-          )}
-          {formValue.wills.wills === "SHARIA" && (
-            <FormGroup>
-              <Label>Answer 1</Label>
-              <Input
-                type="textarea"
-                name="question_one_sharia"
-                rows="3"
-                value={formValue.wills.question_one}
-                onChange={(e) =>
-                  handleChange("wills", "question_one", e.target.value)
-                }
-              />
-            </FormGroup>
-          )}
-          <div className="d-flex justify-content-start align-items-center">
-            <Button color="secondary">Add More Answer</Button>
-          </div>
-        </CardBody>
-      </Card>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="success" onClick={toggleRMLModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* recommending_mortgage_amount  */}
+        <Card className="border-1 border-secondary mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>Why are we recommending this mortgage amount?</h4>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="recommending_mortgage_amount_type"
+                  value={
+                    formValue.recommending_mortgage_amount
+                      .recommending_mortgage_amount
+                  }
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_mortgage_amount",
+                      "recommending_mortgage_amount",
+                      e.target.value
+                    )
+                  }
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.recommending_mortgage_amount
+              .recommending_mortgage_amount === "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_amount.question_one_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_amount",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_amount.question_two_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_amount",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={
+                      formValue.recommending_mortgage_amount
+                        .question_three_answer
+                    }
+                    onChange={(e) =>
+                      handleChange(
+                        "recommending_mortgage_amount",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.recommending_mortgage_amount
+              .recommending_mortgage_amount === "SHARIA" && (
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_sharia"
+                  rows="3"
+                  value={
+                    formValue.recommending_mortgage_amount.question_one_sharia
+                  }
+                  onChange={(e) =>
+                    handleChange(
+                      "recommending_mortgage_amount",
+                      "question_one_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="secondary" onClick={toggleRMAModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* costs_fees */}
+        <Card className="border-1 border-success mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>What are the costs and fees?</h4>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="costs_fees_type"
+                  value={formValue.costs_fees.costs_fees}
+                  onChange={(e) =>
+                    handleChange("costs_fees", "costs_fees", e.target.value)
+                  }
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.costs_fees.costs_fees === "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={formValue.costs_fees.question_one_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "costs_fees",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={formValue.costs_fees.question_two_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "costs_fees",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={formValue.costs_fees.question_three_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "costs_fees",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.costs_fees.costs_fees === "SHARIA" && (
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_sharia"
+                  rows="3"
+                  value={formValue.costs_fees.question_one_sharia}
+                  onChange={(e) =>
+                    handleChange(
+                      "costs_fees",
+                      "question_one_sharia",
+                      e.target.value
+                    )
+                  }
+                />
+              </FormGroup>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="success" onClick={toggleCFModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* disadvantage_risks  */}
+        <Card className="border-1 border-secondary mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>What are the disadvantages and risks?</h4>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="disadvantageAndRisks_type"
+                  value={formValue.disadvantage_risks.disadvantage_risks}
+                  onChange={(e) =>
+                    handleChange(
+                      "disadvantage_risks",
+                      "disadvantage_risks",
+                      e.target.value
+                    )
+                  }
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.disadvantage_risks.disadvantage_risks === "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_one_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_two_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_three_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 4</Label>
+                  <Input
+                    type="textarea"
+                    name="question_four_answer"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_four_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_four_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 5</Label>
+                  <Input
+                    type="textarea"
+                    name="question_five_answer"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_five_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_five_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 6</Label>
+                  <Input
+                    type="textarea"
+                    name="question_six_answer"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_six_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_six_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 7</Label>
+                  <Input
+                    type="textarea"
+                    name="question_seven_answer"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_seven_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_seven_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 8</Label>
+                  <Input
+                    type="textarea"
+                    name="question_eight_answer"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_eight_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_eight_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 9</Label>
+                  <Input
+                    type="textarea"
+                    name="question_nine_answer"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_nine_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_nine_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.disadvantage_risks.disadvantage_risks === "SHARIA" && (
+              <>
+                {" "}
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_sharia"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_one_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_one_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_sharia"
+                    rows="3"
+                    value={formValue.disadvantage_risks.question_two}
+                    onChange={(e) =>
+                      handleChange(
+                        "disadvantage_risks",
+                        "question_two",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="secondary" onClick={toggleDRModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* cost_advice */}
+        <Card className="border-1 border-success mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>What is the cost of our advice?</h4>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="cost_advice_type"
+                  value={formValue.cost_advice.cost_advice}
+                  onChange={(e) =>
+                    handleChange("cost_advice", "cost_advice", e.target.value)
+                  }
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.cost_advice.cost_advice === "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={formValue.cost_advice.question_one_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "cost_advice",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={formValue.cost_advice.question_two_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "cost_advice",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.cost_advice.cost_advice === "SHARIA" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_sharia"
+                    rows="3"
+                    value={formValue.cost_advice.question_one_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "cost_advice",
+                        "question_one_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_sharia"
+                    rows="3"
+                    value={formValue.cost_advice.question_two_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "cost_advice",
+                        "question_two_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="success" onClick={toggleCAModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* protection */}
+        <Card className="border-1 border-secondary mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>What is the protection?</h4>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="protection_type"
+                  value={formValue.protection.protection}
+                  onChange={(e) =>
+                    handleChange("protection", "protection", e.target.value)
+                  }
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.protection.protection === "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={formValue.protection.question_one_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "protection",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={formValue.protection.question_two_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "protection",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={formValue.protection.question_three_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "protection",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 4</Label>
+                  <Input
+                    type="textarea"
+                    name="question_four_answer"
+                    rows="3"
+                    value={formValue.protection.question_four_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "protection",
+                        "question_four_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.protection.protection === "SHARIA" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_sharia"
+                    rows="3"
+                    value={formValue.protection.question_one_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "protection",
+                        "question_one_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_sharia"
+                    rows="3"
+                    value={formValue.protection.question_two}
+                    onChange={(e) =>
+                      handleChange("protection", "question_two", e.target.value)
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_sharia"
+                    rows="3"
+                    value={formValue.protection.question_three_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "protection",
+                        "question_three_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 4</Label>
+                  <Input
+                    type="textarea"
+                    name="question_four_sharia"
+                    rows="3"
+                    value={formValue.protection.question_four_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "protection",
+                        "question_four_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="secondary" onClick={togglePModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* buildings_insurance */}
+        <Card className="border-1 border-success mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>What is the buildings insurance?</h4>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="buildings_insurance_type"
+                  value={formValue.buildings_insurance.buildings_insurance}
+                  onChange={(e) =>
+                    handleChange(
+                      "buildings_insurance",
+                      "buildings_insurance",
+                      e.target.value
+                    )
+                  }
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.buildings_insurance.buildings_insurance ===
+              "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={formValue.buildings_insurance.question_one_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "buildings_insurance",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={formValue.buildings_insurance.question_two_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "buildings_insurance",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={formValue.buildings_insurance.question_three_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "buildings_insurance",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 4</Label>
+                  <Input
+                    type="textarea"
+                    name="question_four_answer"
+                    rows="3"
+                    value={formValue.buildings_insurance.question_four_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "buildings_insurance",
+                        "question_four_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.buildings_insurance.buildings_insurance === "SHARIA" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_sharia"
+                    rows="3"
+                    value={formValue.buildings_insurance.question_one}
+                    onChange={(e) =>
+                      handleChange(
+                        "buildings_insurance",
+                        "question_one",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_sharia"
+                    rows="3"
+                    value={formValue.buildings_insurance.question_two}
+                    onChange={(e) =>
+                      handleChange(
+                        "buildings_insurance",
+                        "question_two",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_sharia"
+                    rows="3"
+                    value={formValue.buildings_insurance.question_three_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "buildings_insurance",
+                        "question_three_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 4</Label>
+                  <Input
+                    type="textarea"
+                    name="question_four_sharia"
+                    rows="3"
+                    value={formValue.buildings_insurance.question_five_sharia}
+                    onChange={(e) =>
+                      handleChange(
+                        "buildings_insurance",
+                        "question_five_sharia",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="success" onClick={toggleBIModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+        {/* wills  */}
+        <Card className="border-1 border-secondary mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <Col md={6}>
+              <h4>What is the wills?</h4>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="wills_type"
+                  value={formValue.wills.wills}
+                  onChange={(e) =>
+                    handleChange("wills", "wills", e.target.value)
+                  }
+                >
+                  <option value="GENERAL">General</option>
+                  <option value="SHARIA">Sharia</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </CardHeader>
+          <CardBody>
+            {formValue.wills.wills === "GENERAL" && (
+              <>
+                <FormGroup>
+                  <Label>Answer 1</Label>
+                  <Input
+                    type="textarea"
+                    name="question_one_answer"
+                    rows="3"
+                    value={formValue.wills.question_one_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "wills",
+                        "question_one_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 2</Label>
+                  <Input
+                    type="textarea"
+                    name="question_two_answer"
+                    rows="3"
+                    value={formValue.wills.question_two_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "wills",
+                        "question_two_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label>Answer 3</Label>
+                  <Input
+                    type="textarea"
+                    name="question_three_answer"
+                    rows="3"
+                    value={formValue.wills.question_three_answer}
+                    onChange={(e) =>
+                      handleChange(
+                        "wills",
+                        "question_three_answer",
+                        e.target.value
+                      )
+                    }
+                  />
+                </FormGroup>
+              </>
+            )}
+            {formValue.wills.wills === "SHARIA" && (
+              <FormGroup>
+                <Label>Answer 1</Label>
+                <Input
+                  type="textarea"
+                  name="question_one_sharia"
+                  rows="3"
+                  value={formValue.wills.question_one}
+                  onChange={(e) =>
+                    handleChange("wills", "question_one", e.target.value)
+                  }
+                />
+              </FormGroup>
+            )}
+            <div className="d-flex justify-content-start align-items-center">
+              <Button color="secondary" onClick={toggleWModal}>
+                Add More Answer
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
 
-      {/* Button for save changes */}
-      <div className="d-flex justify-content-end mt-3 mb-0">
-        <Button color="primary" type="submit" disabled={isUpdating}>
-          {isUpdating ? "Saving..." : "Save Changes"}
-        </Button>
-      </div>
-    </Form>
+        {/* Button for save changes */}
+        <div className="d-flex justify-content-end mt-3 mb-0">
+          <Button color="primary" type="submit" disabled={isUpdating}>
+            {isUpdating ? "Saving..." : "Save Changes"}
+          </Button>
+        </div>
+      </Form>
+      {/* Modal Components */}
+      <CircumstancesObjectivesAnswerModal
+        isOpen={isCOModalOpen}
+        toggle={toggleCOModal}
+      />
+      <BudgetAffordabilityAnswerModal
+        isOpen={isBAModalOpen}
+        toggle={toggleBAModal}
+      />
+      <NewMortgageDetailsAnswerModal
+        isOpen={isNMDModalOpen}
+        toggle={toggleNMDModal}
+      />
+      <RecommendingRepaymentMethodAnswerModal
+        isOpen={isRRMModalOpen}
+        toggle={toggleRRMModal}
+      />
+      <RecommendingMortgageTypeAnswerModal
+        isOpen={isRMTModalOpen}
+        toggle={toggleRMTModal}
+      />
+      <RecommendingTermAnswerModal
+        isOpen={isRTModalOpen}
+        toggle={toggleRTModal}
+      />
+      <RecommendingMortgageLenderAnswerModal
+        isOpen={isRMLModalOpen}
+        toggle={toggleRMLModal}
+      />
+      <RecommendingMortgageAmountAnswerModal
+        isOpen={isRMAModalOpen}
+        toggle={toggleRMAModal}
+      />
+      <CostsFeesAnswerModal isOpen={isCFModalOpen} toggle={toggleCFModal} />
+      <DisadvantageRisksAnswerModal
+        isOpen={isDRModalOpen}
+        toggle={toggleDRModal}
+      />
+      <CostAdviceAnswerModal isOpen={isCAModalOpen} toggle={toggleCAModal} />
+      <ProtectionAnswerModal isOpen={isPModalOpen} toggle={togglePModal} />
+      <BuildingsInsuranceAnswerModal
+        isOpen={isBIModalOpen}
+        toggle={toggleBIModal}
+      />
+      <WillsAnswerModal isOpen={isWModalOpen} toggle={toggleWModal} />
+    </>
   );
 };
 
