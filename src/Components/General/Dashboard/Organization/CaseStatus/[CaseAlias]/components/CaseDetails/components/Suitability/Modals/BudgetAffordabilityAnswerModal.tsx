@@ -1,3 +1,4 @@
+import { BudgetAffordabilityAnswerModalProps } from "@/Types/Organization/Cases/CaseDetails/SuitabilityTypes";
 import React, { useState } from "react";
 import {
   Button,
@@ -10,11 +11,6 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
-
-interface BudgetAffordabilityAnswerModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
 
 const BudgetAffordabilityAnswerModal: React.FC<
   BudgetAffordabilityAnswerModalProps
@@ -31,7 +27,7 @@ const BudgetAffordabilityAnswerModal: React.FC<
     <Modal isOpen={isOpen} toggle={toggle} size="xl">
       <Form onSubmit={handleSubmit}>
         <ModalHeader toggle={toggle}>
-            <h4 className="text-secondary">Add Budget Affordability Answer</h4>
+          <h4 className="text-secondary">Add Budget Affordability Answer</h4>
         </ModalHeader>
         <ModalBody>
           <FormGroup>

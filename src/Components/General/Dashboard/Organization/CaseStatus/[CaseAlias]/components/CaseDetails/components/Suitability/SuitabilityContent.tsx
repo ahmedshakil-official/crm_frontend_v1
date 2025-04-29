@@ -19,12 +19,15 @@ import {
   Label,
 } from "reactstrap";
 import BudgetAffordabilityAnswerModal from "./Modals/BudgetAffordabilityAnswerModal";
+import CircumstancesObjectivesAnswerModal from "./Modals/CircumstancesObjectivesAnswerModal";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
   const [defaultAnswers, setDefaultAnswers] = useState(defaultAnswersData);
   // Modal State
+  const [isCOModalOpen, setIsCOModalOpen] = useState(false);
   const [isBAModalOpen, setIsBAModalOpen] = useState(false);
+
   // Form State
   const [formValue, setFormValue] = useState({
     circumstances_objectives: {
@@ -147,6 +150,9 @@ const SuitabilityContent: React.FC = () => {
   });
 
   // Handle modal change
+  const toggleCOModal = () => {
+    setIsCOModalOpen(!isCOModalOpen);
+  };
   const toggleBAModal = () => {
     setIsBAModalOpen(!isBAModalOpen);
   };
@@ -685,7 +691,9 @@ const SuitabilityContent: React.FC = () => {
               </>
             )}
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="success">Add More Answer</Button>
+              <Button color="success" onClick={toggleCOModal}>
+                Add More Answer
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -2367,6 +2375,10 @@ const SuitabilityContent: React.FC = () => {
         </div>
       </Form>
       {/* Modal Component */}
+      <CircumstancesObjectivesAnswerModal
+        isOpen={isCOModalOpen}
+        toggle={toggleCOModal}
+      />
       <BudgetAffordabilityAnswerModal
         isOpen={isBAModalOpen}
         toggle={toggleBAModal}
