@@ -20,6 +20,7 @@ import {
 } from "reactstrap";
 import BudgetAffordabilityAnswerModal from "./Modals/BudgetAffordabilityAnswerModal";
 import CircumstancesObjectivesAnswerModal from "./Modals/CircumstancesObjectivesAnswerModal";
+import NewMortgageDetailsAnswerModal from "./Modals/NewMortgageDetailsAnswerModal";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
@@ -27,6 +28,7 @@ const SuitabilityContent: React.FC = () => {
   // Modal State
   const [isCOModalOpen, setIsCOModalOpen] = useState(false);
   const [isBAModalOpen, setIsBAModalOpen] = useState(false);
+  const [isNMDModalOpen, setIsNMDModalOpen] = useState(false);
 
   // Form State
   const [formValue, setFormValue] = useState({
@@ -155,6 +157,9 @@ const SuitabilityContent: React.FC = () => {
   };
   const toggleBAModal = () => {
     setIsBAModalOpen(!isBAModalOpen);
+  };
+  const toggleNMDModal = () => {
+    setIsNMDModalOpen(!isNMDModalOpen);
   };
 
   // RTK hooks
@@ -912,7 +917,9 @@ const SuitabilityContent: React.FC = () => {
               </>
             )}
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="success">Add More Answer</Button>
+              <Button color="success" onClick={toggleNMDModal}>
+                Add More Answer
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -2374,7 +2381,7 @@ const SuitabilityContent: React.FC = () => {
           </Button>
         </div>
       </Form>
-      {/* Modal Component */}
+      {/* Modal Components */}
       <CircumstancesObjectivesAnswerModal
         isOpen={isCOModalOpen}
         toggle={toggleCOModal}
@@ -2382,6 +2389,10 @@ const SuitabilityContent: React.FC = () => {
       <BudgetAffordabilityAnswerModal
         isOpen={isBAModalOpen}
         toggle={toggleBAModal}
+      />
+      <NewMortgageDetailsAnswerModal
+        isOpen={isNMDModalOpen}
+        toggle={toggleNMDModal}
       />
     </>
   );
