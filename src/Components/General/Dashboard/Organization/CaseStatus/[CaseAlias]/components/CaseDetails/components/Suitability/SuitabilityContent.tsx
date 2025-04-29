@@ -24,6 +24,7 @@ import CostAdviceAnswerModal from "./Modals/CostAdviceAnswerModal";
 import CostsFeesAnswerModal from "./Modals/CostsFeesAnswerModal";
 import DisadvantageRisksAnswerModal from "./Modals/DisadvantageRisksAnswerModal";
 import NewMortgageDetailsAnswerModal from "./Modals/NewMortgageDetailsAnswerModal";
+import ProtectionAnswerModal from "./Modals/ProtectionAnswerModal";
 import RecommendingMortgageAmountAnswerModal from "./Modals/RecommendingMortgageAmountAnswerModal";
 import RecommendingMortgageLenderAnswerModal from "./Modals/RecommendingMortgageLenderAnswerModal";
 import RecommendingMortgageTypeAnswerModal from "./Modals/RecommendingMortgageTypeAnswerModal";
@@ -45,6 +46,7 @@ const SuitabilityContent: React.FC = () => {
   const [isCFModalOpen, setIsCFModalOpen] = useState(false);
   const [isDRModalOpen, setIsDRModalOpen] = useState(false);
   const [isCAModalOpen, setIsCAModalOpen] = useState(false);
+  const [isPModalOpen, setIsPModalOpen] = useState(false);
 
   // Form State
   const [formValue, setFormValue] = useState({
@@ -200,6 +202,9 @@ const SuitabilityContent: React.FC = () => {
   };
   const toggleCAModal = () => {
     setIsCAModalOpen(!isCAModalOpen);
+  };
+  const togglePModal = () => {
+    setIsPModalOpen(!isPModalOpen);
   };
 
   // RTK hooks
@@ -2162,7 +2167,9 @@ const SuitabilityContent: React.FC = () => {
               </>
             )}
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary">Add More Answer</Button>
+              <Button color="secondary" onClick={togglePModal}>
+                Add More Answer
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -2476,6 +2483,7 @@ const SuitabilityContent: React.FC = () => {
         toggle={toggleDRModal}
       />
       <CostAdviceAnswerModal isOpen={isCAModalOpen} toggle={toggleCAModal} />
+      <ProtectionAnswerModal isOpen={isPModalOpen} toggle={togglePModal} />
     </>
   );
 };
