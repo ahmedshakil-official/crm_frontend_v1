@@ -10,13 +10,14 @@ export const SuitabilityApi = baseApi.injectEndpoints({
       providesTags: ["Suitability"],
     }),
     updateSuitability: builder.mutation({
-      query: ({ case_alias, suitability_alias, payload }) => ({
+      query: ({ case_alias, payload }) => ({
         url: `/cases/${case_alias}/suitability/`,
         method: "PUT",
         body: payload,
       }),
       invalidatesTags: ["Suitability"],
     }),
+    // Modals endpoints start here
   }),
 });
 
