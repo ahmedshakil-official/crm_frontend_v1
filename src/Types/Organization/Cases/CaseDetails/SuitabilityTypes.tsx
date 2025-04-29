@@ -36,3 +36,7 @@ export interface CostsFeesAnswerModalProps {
   isOpen: boolean;
   toggle: () => void;
 }
+export interface DisadvantageRisksAnswerModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+}
