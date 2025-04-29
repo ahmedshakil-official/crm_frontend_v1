@@ -27,3 +27,7 @@ export interface RecommendingMortgageLenderAnswerModalProps {
   isOpen: boolean;
   toggle: () => void;
 }
+export interface RecommendingMortgageAmountAnswerModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+}

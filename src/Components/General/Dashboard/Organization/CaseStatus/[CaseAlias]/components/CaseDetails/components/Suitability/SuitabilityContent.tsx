@@ -21,10 +21,11 @@ import {
 import BudgetAffordabilityAnswerModal from "./Modals/BudgetAffordabilityAnswerModal";
 import CircumstancesObjectivesAnswerModal from "./Modals/CircumstancesObjectivesAnswerModal";
 import NewMortgageDetailsAnswerModal from "./Modals/NewMortgageDetailsAnswerModal";
+import RecommendingMortgageAmountAnswerModal from "./Modals/RecommendingMortgageAmountAnswerModal";
+import RecommendingMortgageLenderAnswerModal from "./Modals/RecommendingMortgageLenderAnswerModal";
 import RecommendingMortgageTypeAnswerModal from "./Modals/RecommendingMortgageTypeAnswerModal";
 import RecommendingRepaymentMethodAnswerModal from "./Modals/RecommendingRepaymentMethodAnswerModal";
 import RecommendingTermAnswerModal from "./Modals/RecommendingTermAnswerModal";
-import RecommendingMortgageLenderAnswerModal from "./Modals/RecommendingMortgageLenderAnswerModal";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
@@ -37,6 +38,7 @@ const SuitabilityContent: React.FC = () => {
   const [isRMTModalOpen, setIsRMTModalOpen] = useState(false);
   const [isRTModalOpen, setIsRTModalOpen] = useState(false);
   const [isRMLModalOpen, setIsRMLModalOpen] = useState(false);
+  const [isRMAModalOpen, setIsRMAModalOpen] = useState(false);
 
   // Form State
   const [formValue, setFormValue] = useState({
@@ -180,6 +182,9 @@ const SuitabilityContent: React.FC = () => {
   };
   const toggleRMLModal = () => {
     setIsRMLModalOpen(!isRMLModalOpen);
+  };
+  const toggleRMAModal = () => {
+    setIsRMAModalOpen(!isRMAModalOpen);
   };
 
   // RTK hooks
@@ -1559,7 +1564,9 @@ const SuitabilityContent: React.FC = () => {
               </FormGroup>
             )}
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary">Add More Answer</Button>
+              <Button color="secondary" onClick={toggleRMAModal}>
+                Add More Answer
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -2437,6 +2444,10 @@ const SuitabilityContent: React.FC = () => {
       <RecommendingMortgageLenderAnswerModal
         isOpen={isRMLModalOpen}
         toggle={toggleRMLModal}
+      />
+      <RecommendingMortgageAmountAnswerModal
+        isOpen={isRMAModalOpen}
+        toggle={toggleRMAModal}
       />
     </>
   );
