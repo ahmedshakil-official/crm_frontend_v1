@@ -50,3 +50,8 @@ export interface ProtectionAnswerModalProps {
   isOpen: boolean;
   toggle: () => void;
 }
+
+export interface BuildingsInsuranceAnswerModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+}
