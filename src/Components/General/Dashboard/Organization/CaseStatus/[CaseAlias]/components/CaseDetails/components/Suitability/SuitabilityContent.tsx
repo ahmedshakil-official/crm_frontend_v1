@@ -24,6 +24,7 @@ import NewMortgageDetailsAnswerModal from "./Modals/NewMortgageDetailsAnswerModa
 import RecommendingMortgageTypeAnswerModal from "./Modals/RecommendingMortgageTypeAnswerModal";
 import RecommendingRepaymentMethodAnswerModal from "./Modals/RecommendingRepaymentMethodAnswerModal";
 import RecommendingTermAnswerModal from "./Modals/RecommendingTermAnswerModal";
+import RecommendingMortgageLenderAnswerModal from "./Modals/RecommendingMortgageLenderAnswerModal";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
@@ -35,6 +36,7 @@ const SuitabilityContent: React.FC = () => {
   const [isRRMModalOpen, setIsRRMModalOpen] = useState(false);
   const [isRMTModalOpen, setIsRMTModalOpen] = useState(false);
   const [isRTModalOpen, setIsRTModalOpen] = useState(false);
+  const [isRMLModalOpen, setIsRMLModalOpen] = useState(false);
 
   // Form State
   const [formValue, setFormValue] = useState({
@@ -175,6 +177,9 @@ const SuitabilityContent: React.FC = () => {
   };
   const toggleRTModal = () => {
     setIsRTModalOpen(!isRTModalOpen);
+  };
+  const toggleRMLModal = () => {
+    setIsRMLModalOpen(!isRMLModalOpen);
   };
 
   // RTK hooks
@@ -1436,7 +1441,9 @@ const SuitabilityContent: React.FC = () => {
               </FormGroup>
             )}
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="success">Add More Answer</Button>
+              <Button color="success" onClick={toggleRMLModal}>
+                Add More Answer
+              </Button>
             </div>
           </CardBody>
         </Card>
@@ -2426,6 +2433,10 @@ const SuitabilityContent: React.FC = () => {
       <RecommendingTermAnswerModal
         isOpen={isRTModalOpen}
         toggle={toggleRTModal}
+      />
+      <RecommendingMortgageLenderAnswerModal
+        isOpen={isRMLModalOpen}
+        toggle={toggleRMLModal}
       />
     </>
   );

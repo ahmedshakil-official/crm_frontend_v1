@@ -22,3 +22,8 @@ export interface RecommendingTermAnswerModalProps {
   isOpen: boolean;
   toggle: () => void;
 }
+
+export interface RecommendingMortgageLenderAnswerModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+}
