@@ -31,3 +31,8 @@ export interface RecommendingMortgageAmountAnswerModalProps {
   isOpen: boolean;
   toggle: () => void;
 }
+
+export interface CostsFeesAnswerModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+}
