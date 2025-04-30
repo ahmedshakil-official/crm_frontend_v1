@@ -91,34 +91,6 @@ export const MenuList: MenuItem[] | undefined = [
     title: "Components",
     Items: [
       {
-        title: "Ui Kits",
-        icon: "Folder",
-        id: 19,
-        type: "sub",
-        active: false,
-        children: [
-          { path: "/ui_kits/typography", title: "Typography", type: "link" },
-          { path: "/ui_kits/avatars", title: "Avatars", type: "link" },
-          { path: "/ui_kits/alert", title: "Alert", type: "link" },
-          {
-            path: "/ui_kits/helper_classes",
-            title: "Helper Classes",
-            type: "link",
-          },
-          { path: "/ui_kits/grid", title: "Grid", type: "link" },
-          { path: "/ui_kits/accordion", title: "Accordion", type: "link" },
-          { path: "/ui_kits/tag_pills", title: "Tag & Pills", type: "link" },
-          { path: "/ui_kits/modal", title: "Modal", type: "link" },
-          { path: "/ui_kits/popover", title: "Popover", type: "link" },
-          { path: "/ui_kits/progress", title: "Progress Bar", type: "link" },
-          { path: "/ui_kits/tabs", title: "Tabs", type: "link" },
-          { path: "/ui_kits/tooltip", title: "Tooltip", type: "link" },
-          { path: "/ui_kits/dropdown", title: "Dropdown", type: "link" },
-          { path: "/ui_kits/lists", title: "List", type: "link" },
-        ],
-      },
-
-      {
         title: "Bonus-Ui",
         icon: "Ticket-star",
         id: 20,
