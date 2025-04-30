@@ -67,7 +67,7 @@ export const authoption: NextAuthOptions = {
           }
           return null;
         } catch (error) {
-          console.error("Login error:", error);
+          // console.error("Login error:", error);
           throw new Error("Invalid email or password.");
         }
       },
@@ -99,7 +99,7 @@ export const authoption: NextAuthOptions = {
         ...session.user,
         accessToken: token.accessToken as string | undefined,
       };
-      console.log("Session Callback User:", session.user);
+      // console.log("Session Callback User:", session.user);
       return session;
     },
     // Handle redirects after sign-in or sign-out
