@@ -36,13 +36,12 @@ export const MenuList: MenuItem[] | undefined = [
         badge: "1",
         lanClass: "lan-3",
         children: [
-          {
-            path: "/dashboard/default",
-            title: "Default",
-            type: "link",
-            lanClass: "lan-4",
-          },
-          // { path: "/dashboard/organization", title: "Organization", type: "link", lanClass: "lan-4" },
+          // {
+          //   path: "/dashboard/default",
+          //   title: "Default",
+          //   type: "link",
+          //   lanClass: "lan-4",
+          // },
           {
             title: "Organization",
             type: "link",
@@ -87,7 +86,7 @@ export const MenuList: MenuItem[] | undefined = [
     ],
   },
   {
-    title: "Pages",
+    title: "Demo Pages",
     Items: [
       {
         title: "Others",
