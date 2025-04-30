@@ -10,14 +10,12 @@ import budgetPlannerReducer from "./Reducers/Organization/Cases/SingleCaseInfo/C
 import CaseDetailsTabIndicatorReducer from "./Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import propertyFormReducer from "./Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import ThemeCustomizerReducer from "./Reducers/ThemeCustomizerReducer";
-import ToDoSlice from "./Reducers/ToDoSlice";
 
 const Store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     layout: LayoutSlice,
     contact: ContactReducer,
-    todo: ToDoSlice,
     chat: ChatSlice,
     twoFactor: TwoFactorSlice,
     formWizardTwo: FormWizardTwoSlice,

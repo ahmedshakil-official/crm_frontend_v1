@@ -88,29 +88,8 @@ export const MenuList: MenuItem[] | undefined = [
     ],
   },
   {
-    title: "Applications",
-    lanClass: "lan-8",
-    Items: [
-      { path: "/app/todo", icon: "Edit", type: "link", title: "To-Do" },
-      {
-        path: "/app/search_result",
-        icon: "Search",
-        type: "link",
-        title: "Search Result",
-      },
-    ],
-  },
-  {
     title: "Components",
     Items: [
-      {
-        title: "Buttons",
-        icon: "More-box",
-        id: 22,
-        type: "link",
-        active: false,
-        path: `/buttons`,
-      },
       {
         title: "Ui Kits",
         icon: "Folder",
