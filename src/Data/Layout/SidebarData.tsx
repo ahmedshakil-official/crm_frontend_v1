@@ -82,7 +82,6 @@ export const MenuList: MenuItem[] | undefined = [
             type: "link",
             lanClass: "lan-4",
           },
-          { path: "/dashboard/education", title: "Education", type: "link" },
         ],
       },
     ],

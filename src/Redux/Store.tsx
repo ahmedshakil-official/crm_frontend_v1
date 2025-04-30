@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./Api/BaseApi";
-import ChatSlice from "./Reducers/ChatSlice";
 import FormWizardOne from "./Reducers/FormLayout/FormWizardOneSlice";
 import FormWizardTwoSlice from "./Reducers/FormLayout/FormWizardTwoSlice";
 import TwoFactorSlice from "./Reducers/FormLayout/TwoFactorSlice";
@@ -14,7 +13,6 @@ const Store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     layout: LayoutSlice,
-    chat: ChatSlice,
     twoFactor: TwoFactorSlice,
     formWizardTwo: FormWizardTwoSlice,
     formWizardOne: FormWizardOne,
