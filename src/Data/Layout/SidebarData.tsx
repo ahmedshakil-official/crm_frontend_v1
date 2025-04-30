@@ -91,30 +91,6 @@ export const MenuList: MenuItem[] | undefined = [
     title: "Components",
     Items: [
       {
-        title: "Icons",
-        icon: "Activity",
-        id: 21,
-        type: "sub",
-        active: false,
-        children: [
-          { path: `/icons/flag_icons`, title: "Flag Icon", type: "link" },
-          {
-            path: "/icons/font_awesome_icon",
-            title: "Fontawesome Icon",
-            type: "link",
-          },
-          { path: "/icons/feather_icon", title: "Feather Icon", type: "link" },
-          {
-            path: `/icons/iconly_sprite`,
-            title: "Iconly Sprite",
-            type: "link",
-          },
-          { path: "/icons/ico_icon", title: "Ico Icon", type: "link" },
-          { path: "/icons/themify_icon", title: "Themify Icon", type: "link" },
-          { path: `/icons/wheather_icon`, title: "Weather Icon", type: "link" },
-        ],
-      },
-      {
         title: "Charts",
         icon: "Chart",
         type: "sub",
