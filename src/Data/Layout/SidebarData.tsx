@@ -33,7 +33,7 @@ export const MenuList: MenuItem[] | undefined = [
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
-        badge: "5",
+        badge: "1",
         lanClass: "lan-3",
         children: [
           {
