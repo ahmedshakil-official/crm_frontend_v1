@@ -91,52 +91,6 @@ export const MenuList: MenuItem[] | undefined = [
     title: "Components",
     Items: [
       {
-        title: "Bonus-Ui",
-        icon: "Ticket-star",
-        id: 20,
-        type: "sub",
-        active: false,
-        children: [
-          { path: "/bonus_ui/scrollable", title: "Scrollable", type: "link" },
-          { path: "/bonus_ui/tree_view", title: "Tree View", type: "link" },
-          { path: "/bonus_ui/toasts", title: "Toasts", type: "link" },
-          { path: "/bonus_ui/rating", title: "Rating", type: "link" },
-          { path: "/bonus_ui/dropzone", title: "Dropzone", type: "link" },
-          { path: "/bonus_ui/tour", title: "Tour", type: "link" },
-          {
-            path: "/bonus_ui/sweetalert_2",
-            title: "SweetAlert2",
-            type: "link",
-          },
-          {
-            path: "/bonus_ui/reactstrap_carousel",
-            title: "Reactstrap Carousel",
-            type: "link",
-          },
-          { path: "/bonus_ui/ribbons", title: "Ribbons", type: "link" },
-          { path: "/bonus_ui/pagination", title: "Pagination", type: "link" },
-          { path: "/bonus_ui/breadcrumb", title: "Breadcrumb", type: "link" },
-          {
-            path: "/bonus_ui/range_slider",
-            title: "Range Slider",
-            type: "link",
-          },
-          {
-            path: "/bonus_ui/image_cropper",
-            title: "Image Cropper",
-            type: "link",
-          },
-          { path: "/bonus_ui/basic_cards", title: "Basic Card", type: "link" },
-          {
-            path: "/bonus_ui/creative_cards",
-            title: "Creative Card",
-            type: "link",
-          },
-          { path: "/bonus_ui/timeline", title: "Timeline", type: "link" },
-        ],
-      },
-
-      {
         title: "Icons",
         icon: "Activity",
         id: 21,
