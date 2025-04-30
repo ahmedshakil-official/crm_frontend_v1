@@ -98,25 +98,6 @@ export const MenuList: MenuItem[] | undefined = [
     lanClass: "lan-8",
     Items: [
       {
-        title: "Project",
-        id: 3,
-        icon: "Info-circle",
-        type: "sub",
-        active: false,
-        children: [
-          {
-            path: "/project/project_list",
-            type: "link",
-            title: "Project list",
-          },
-          {
-            path: "/project/project_create",
-            type: "link",
-            title: "Project create",
-          },
-        ],
-      },
-      {
         path: "/app/file_manager",
         icon: "Paper",
         title: "File Manager",

@@ -16,7 +16,6 @@ import LetterBoxSlice from "./Reducers/LetterBoxSlice";
 import budgetPlannerReducer from "./Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 import CaseDetailsTabIndicatorReducer from "./Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import propertyFormReducer from "./Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
-import ProjectSlice from "./Reducers/ProjectSlice";
 import TaskSlice from "./Reducers/TaskSlice";
 import ThemeCustomizerReducer from "./Reducers/ThemeCustomizerReducer";
 import ToDoSlice from "./Reducers/ToDoSlice";
@@ -31,7 +30,6 @@ const Store = configureStore({
     product: ProductSlice,
     cartData: CartSlice,
     letterBox: LetterBoxSlice,
-    project: ProjectSlice,
     contact: ContactReducer,
     task: TaskSlice,
     bookmarkTab: BookmarkTabSlice,
