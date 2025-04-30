@@ -91,18 +91,6 @@ export const MenuList: MenuItem[] | undefined = [
           { path: "/dashboard/education", title: "Education", type: "link" },
         ],
       },
-      {
-        title: "Widgets",
-        id: 2,
-        icon: "Pie",
-        type: "sub",
-        lanClass: "lan-6",
-        active: false,
-        children: [
-          { path: "/widgets/general", title: "General", type: "link" },
-          { path: "/widgets/chart", title: "Chart", type: "link" },
-        ],
-      },
     ],
   },
   {
