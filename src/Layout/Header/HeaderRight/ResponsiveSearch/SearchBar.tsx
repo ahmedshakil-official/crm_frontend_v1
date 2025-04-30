@@ -1,4 +1,4 @@
-import { Loading, SearchCRMTheme } from "@/Constant";
+import { Loading, SearchQOPTheme } from "@/Constant";
 import { MenuList } from "@/Data/Layout/SidebarData";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { MenuItem, SearchSuggestionItem } from "@/Types/LayoutTypes";
@@ -66,7 +66,7 @@ export const SearchBar = () => {
               <Input
                 className="demo-input Typeahead-input form-control-plaintext border-0 w-100"
                 type="text"
-                placeholder={SearchCRMTheme}
+                placeholder={SearchQOPTheme}
                 value={searchedWord}
                 onChange={(e) => handleSearch(e)}
               />

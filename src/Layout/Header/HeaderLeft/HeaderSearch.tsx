@@ -1,4 +1,4 @@
-import { SearchCRM } from "@/Constant";
+import { SearchQOP } from "@/Constant";
 import { MenuList } from "@/Data/Layout/SidebarData";
 import { useAppDispatch } from "@/Redux/Hooks";
 
@@ -60,7 +60,7 @@ const HeaderSearch = () => {
               value={searchedWord}
               className="demo-input py-0 Typeahead-input form-control-plaintext w-100"
               type="text"
-              placeholder={SearchCRM}
+              placeholder={SearchQOP}
             />
             <i className="search-bg iconly-Search icli" />
           </div>
