@@ -4,10 +4,6 @@ import BookmarkHeaderSlice from "./Reducers/BookmarkHeaderSlice";
 import BookmarkTabSlice from "./Reducers/BookmarkTabSlice";
 import ChatSlice from "./Reducers/ChatSlice";
 import ContactReducer from "./Reducers/ContactReducer";
-import AddProductSlice from "./Reducers/Ecommerce/AddProductSlice";
-import CartSlice from "./Reducers/Ecommerce/CartSlice";
-import FilterSlice from "./Reducers/Ecommerce/FilterSlice";
-import ProductSlice from "./Reducers/Ecommerce/ProductSlice";
 import FormWizardOne from "./Reducers/FormLayout/FormWizardOneSlice";
 import FormWizardTwoSlice from "./Reducers/FormLayout/FormWizardTwoSlice";
 import TwoFactorSlice from "./Reducers/FormLayout/TwoFactorSlice";
@@ -25,10 +21,6 @@ const Store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     layout: LayoutSlice,
     bookmarkHeader: BookmarkHeaderSlice,
-    addProduct: AddProductSlice,
-    filterData: FilterSlice,
-    product: ProductSlice,
-    cartData: CartSlice,
     letterBox: LetterBoxSlice,
     contact: ContactReducer,
     task: TaskSlice,

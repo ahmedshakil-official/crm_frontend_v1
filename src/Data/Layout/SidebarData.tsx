@@ -82,12 +82,6 @@ export const MenuList: MenuItem[] | undefined = [
             type: "link",
             lanClass: "lan-4",
           },
-          {
-            path: "/dashboard/ecommerce",
-            title: "Ecommerce",
-            type: "link",
-            lanClass: "lan-5",
-          },
           { path: "/dashboard/education", title: "Education", type: "link" },
         ],
       },
@@ -97,92 +91,6 @@ export const MenuList: MenuItem[] | undefined = [
     title: "Applications",
     lanClass: "lan-8",
     Items: [
-      {
-        path: "/app/file_manager",
-        icon: "Paper",
-        title: "File Manager",
-        type: "link",
-      },
-      {
-        title: "Ecommerce",
-        id: 6,
-        icon: "Bag",
-        type: "sub",
-        active: false,
-        children: [
-          {
-            path: "/ecommerce/add_product",
-            title: "Add Product",
-            type: "link",
-          },
-          { path: "/ecommerce/product", title: "Product", type: "link" },
-          {
-            path: "/ecommerce/product_page",
-            title: "Product Page",
-            type: "link",
-          },
-          {
-            path: "/ecommerce/category_page",
-            title: "Category Page",
-            type: "link",
-          },
-          {
-            path: "/ecommerce/product_list",
-            title: "Product List",
-            type: "link",
-          },
-          {
-            path: "/ecommerce/payment_details",
-            title: "Payment Details",
-            type: "link",
-          },
-          {
-            path: "/ecommerce/order_history",
-            title: "Order History",
-            type: "link",
-          },
-          {
-            title: "Invoice",
-            type: "sub",
-            children: [
-              {
-                path: "/ecommerce/invoice/invoice_1",
-                title: "Invoice-1",
-                type: "link",
-              },
-              {
-                path: "/ecommerce/invoice/invoice_2",
-                title: "Invoice-2",
-                type: "link",
-              },
-              {
-                path: "/ecommerce/invoice/invoice_3",
-                title: "Invoice-3",
-                type: "link",
-              },
-              {
-                path: "/ecommerce/invoice/invoice_4",
-                title: "Invoice-4",
-                type: "link",
-              },
-              {
-                path: "/ecommerce/invoice/invoice_5",
-                title: "Invoice-5",
-                type: "link",
-              },
-              {
-                path: "/ecommerce/invoice/invoice_6",
-                title: "Invoice-6",
-                type: "link",
-              },
-            ],
-          },
-          { path: "/ecommerce/cart", title: "Cart", type: "link" },
-          { path: "/ecommerce/wishlist", title: "Wishlist", type: "link" },
-          { path: "/ecommerce/checkout", title: "Checkout", type: "link" },
-          { path: "/ecommerce/pricing", title: "Pricing", type: "link" },
-        ],
-      },
       {
         path: "/app/letter_box",
         icon: "Message",

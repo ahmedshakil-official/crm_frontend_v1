@@ -1,16 +1,15 @@
 import SVG from "@/CommonComponent/SVG";
-import { SliderProps } from "@/Types/EcommerceType";
 import { Badge, Input, InputGroup, InputGroupText } from "reactstrap";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const SwiperSlideCommon: React.FC<SliderProps> = ({ sliderData }) => {
+const SwiperSlideCommon: React.FC = ({ sliderData }:any) => {
   return (
     <div className="items-slider">
       <div className="swiper mySwiper1">
         <div className="swiper-wrapper">
           <Swiper navigation={true} modules={[Pagination, Autoplay, Navigation]} centeredSlides={true} className="mySwiper" autoplay>
-            {sliderData.map((data, index) => (
+            {sliderData.map((data:any, index:any) => (
               <SwiperSlide key={index}>
                 <div className={`slider-box bg-light-${data.color}`}>
                   <div className="header-top">

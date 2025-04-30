@@ -129,8 +129,8 @@ export const BasicDropdownData = [
   {
     class: "secondary",
     bodyClass: "dropdown-block",
-    text: "Ecommerce",
-    menulist: ["Product", "Product details", "Cart"],
+    text: "Organization",
+    menulist: ["My Organization", "Cases"],
   },
   {
     class: "warning",
