@@ -18,10 +18,18 @@ export const SuitabilityApi = baseApi.injectEndpoints({
       invalidatesTags: ["Suitability"],
     }),
     // Modals endpoints start here
+    AddCircumstancesObjectivesAnswer: builder.mutation({
+      query: ({ case_alias, payload }) => ({
+        url: `/cases/${case_alias}/suitability/circumstances_objectives/`,
+        method: "POST",
+        body: payload,
+      }),
+    })
   }),
 });
 
 export const {
   useGetSuitabilityQuery,
   useUpdateSuitabilityMutation,
+  useAddCircumstancesObjectivesAnswerMutation,
 } = SuitabilityApi;
