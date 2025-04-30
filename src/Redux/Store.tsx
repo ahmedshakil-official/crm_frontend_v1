@@ -8,7 +8,6 @@ import FormWizardOne from "./Reducers/FormLayout/FormWizardOneSlice";
 import FormWizardTwoSlice from "./Reducers/FormLayout/FormWizardTwoSlice";
 import TwoFactorSlice from "./Reducers/FormLayout/TwoFactorSlice";
 import LayoutSlice from "./Reducers/LayoutSlice";
-import LetterBoxSlice from "./Reducers/LetterBoxSlice";
 import budgetPlannerReducer from "./Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 import CaseDetailsTabIndicatorReducer from "./Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import propertyFormReducer from "./Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
@@ -21,7 +20,6 @@ const Store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     layout: LayoutSlice,
     bookmarkHeader: BookmarkHeaderSlice,
-    letterBox: LetterBoxSlice,
     contact: ContactReducer,
     task: TaskSlice,
     bookmarkTab: BookmarkTabSlice,

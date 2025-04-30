@@ -92,35 +92,6 @@ export const MenuList: MenuItem[] | undefined = [
     lanClass: "lan-8",
     Items: [
       {
-        path: "/app/letter_box",
-        icon: "Message",
-        title: "Letter Box",
-        type: "link",
-        id: 7,
-      },
-      {
-        title: "Chat",
-        id: 8,
-        icon: "Chat",
-        type: "sub",
-        active: false,
-        children: [
-          { path: "/chat/private_chat", type: "link", title: "Private Chat" },
-          { path: "/chat/group_chat", type: "link", title: "Group Chat" },
-        ],
-      },
-      {
-        title: "Users",
-        icon: "Profile",
-        type: "sub",
-        active: false,
-        children: [
-          { path: "/users/user_profile", type: "link", title: "User Profile" },
-          { path: "/users/edit_profile", type: "link", title: "User Edit" },
-          { path: "/users/user_cards", type: "link", title: "User Cards" },
-        ],
-      },
-      {
         path: "/app/bookmarks",
         icon: "Bookmark",
         type: "link",
