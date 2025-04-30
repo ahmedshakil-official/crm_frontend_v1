@@ -88,27 +88,6 @@ export const MenuList: MenuItem[] | undefined = [
     ],
   },
   {
-    title: "Components",
-    Items: [
-      {
-        title: "Charts",
-        icon: "Chart",
-        type: "sub",
-        id: 23,
-        active: false,
-        children: [
-          { path: "/charts/apex_chart", type: "link", title: "Apex Chart" },
-          { path: "/charts/google_chart", type: "link", title: "Google Chart" },
-          {
-            path: "/charts/chart_js_chart",
-            type: "link",
-            title: "Chart JS Chart",
-          },
-        ],
-      },
-    ],
-  },
-  {
     title: "Forms & Table",
     Items: [
       {
