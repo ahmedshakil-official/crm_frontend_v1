@@ -9,8 +9,6 @@ export const SearchCRMTheme: string = "Search CRM ..";
 export const Cart: string = "Cart";
 export const Notifications: string = "Notifications";
 export const LogIn: string = "Log In";
-export const Bookmarks: string = "Bookmark";
-export const AddNewBookmark: string = "Add New Bookmark";
 export const Back: string = "Back";
 export const Pinned: string = "Pinned";
 

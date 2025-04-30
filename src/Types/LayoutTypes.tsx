@@ -58,19 +58,6 @@ export interface SearchSuggestionItem {
   bookmarked?: boolean;
   id?: number;
 }
-export interface BookmarkedDataType {
-  icon?: string;
-  path?: string;
-  title?: string;
-  color?: string;
-  id?: number | undefined;
-  bookmarked?: boolean;
-}
-
-export interface BookmarkSliceType {
-  linkItemsArray: BookmarkedDataType[] | [];
-  bookmarkedData: BookmarkedDataType[];
-}
 
 export interface PropsTypes {
   mainTitle: string;

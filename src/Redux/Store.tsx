@@ -1,7 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./Api/BaseApi";
-import BookmarkHeaderSlice from "./Reducers/BookmarkHeaderSlice";
-import BookmarkTabSlice from "./Reducers/BookmarkTabSlice";
 import ChatSlice from "./Reducers/ChatSlice";
 import ContactReducer from "./Reducers/ContactReducer";
 import FormWizardOne from "./Reducers/FormLayout/FormWizardOneSlice";
@@ -19,10 +17,8 @@ const Store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     layout: LayoutSlice,
-    bookmarkHeader: BookmarkHeaderSlice,
     contact: ContactReducer,
     task: TaskSlice,
-    bookmarkTab: BookmarkTabSlice,
     todo: ToDoSlice,
     chat: ChatSlice,
     twoFactor: TwoFactorSlice,
