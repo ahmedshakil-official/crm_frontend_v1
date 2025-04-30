@@ -237,41 +237,6 @@ export const MenuList: MenuItem[] | undefined = [
     title: "Miscellaneous",
     Items: [
       {
-        title: "Gallery",
-        icon: "Gallery",
-        id: 26,
-        type: "sub",
-        active: false,
-        children: [
-          {
-            path: "/gallery/gallery_grids",
-            title: "Gallery Grids",
-            type: "link",
-          },
-          {
-            path: "/gallery/gallery_grid_with_description",
-            title: "Gallery Grid Desc",
-            type: "link",
-          },
-          {
-            path: "/gallery/masonry_gallery",
-            title: "Masonry Gallery",
-            type: "link",
-          },
-          {
-            path: "/gallery/masonry_gallery_with_description",
-            title: "Masonry With Desc",
-            type: "link",
-          },
-          {
-            path: "/gallery/hover_effect",
-            title: "Hover Effect",
-            type: "link",
-          },
-        ],
-      },
-
-      {
         title: "Blog",
         icon: "Game",
         id: 27,
