@@ -92,12 +92,6 @@ export const MenuList: MenuItem[] | undefined = [
     lanClass: "lan-8",
     Items: [
       {
-        path: "/app/calendar",
-        icon: "Calendar",
-        type: "link",
-        title: "Calendar",
-      },
-      {
         path: "/app/social_app",
         icon: "Camera",
         type: "link",
