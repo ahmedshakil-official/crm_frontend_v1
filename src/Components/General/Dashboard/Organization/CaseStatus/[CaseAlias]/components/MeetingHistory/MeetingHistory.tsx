@@ -1,6 +1,4 @@
-import { RecentOrdersData } from "@/Data/General/Dashboard/Ecommerce/EcommerceData";
-
-import { Button, Card, CardBody, CardHeader, Col, Table } from "reactstrap";
+import { Card, CardBody, CardHeader, Col, Table } from "reactstrap";
 
 const MeetingHistory = () => {
   return (
@@ -28,31 +26,29 @@ const MeetingHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {RecentOrdersData.slice(0, 4).map((data, index) => (
-                  <tr key={index}>
-                    <td>
-                      <div className="d-flex align-items-center gap-3">
-                        <div className="flex-shrink-0 comman-round">
-                          <h3 className="bg-success rounded-circle p-2">AA</h3>
-                        </div>
-                        <div className="flex-grow-1">
-                          <h6>{data.title}</h6>
-                        </div>
+                <tr>
+                  <td>
+                    <div className="d-flex align-items-center gap-3">
+                      <div className="flex-shrink-0 comman-round">
+                        <h3 className="bg-success rounded-circle p-2">AA</h3>
                       </div>
-                    </td>
-                    <td className="f-w-600">{data.product}</td>
-                    <td className="font-primary f-w-600">{data.amount}</td>
-                    <td className="f-w-600">{data.vendor}</td>
-                    <td>
-                      <div className="status-showcase">
-                        <p>{data.status}%</p>
+                      <div className="flex-grow-1">
+                        <h6>Test</h6>
                       </div>
-                    </td>
-                    <td className="text-end">
-                      <h6>{data.rating}</h6>
-                    </td>
-                  </tr>
-                ))}
+                    </div>
+                  </td>
+                  <td className="f-w-600">dfdf</td>
+                  <td className="font-primary f-w-600">3</td>
+                  <td className="f-w-600">dd</td>
+                  <td>
+                    <div className="status-showcase">
+                      <p>4%</p>
+                    </div>
+                  </td>
+                  <td className="text-end">
+                    <h6>44</h6>
+                  </td>
+                </tr>
               </tbody>
             </Table>
           </div>

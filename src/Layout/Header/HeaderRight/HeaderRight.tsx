@@ -1,6 +1,4 @@
-import Bookmark from "./Bookmark/Bookmark";
 import CartHeader from "./CartHeader/CartHeader";
-import CloudDesign from "./CloudDesign/CloudDesign";
 import DarkMode from "./DarkMode/DarkMode";
 import Languages from "./Languages/Languages";
 import MaximizeScreen from "./MaximizeScreen/MaximizeScreen";
@@ -12,16 +10,14 @@ const HeaderRight = () => {
   return (
     <div className="nav-right">
       <ul className="header-right">
-        <Languages/>
+        <Languages />
         <ResponsiveSearch />
         <DarkMode />
         <CartHeader />
         <NotificationHeader />
         <MaximizeScreen />
-        <Bookmark />
-        <CloudDesign />
-        <Profile/>
-        </ul>
+        <Profile />
+      </ul>
     </div>
   );
 };

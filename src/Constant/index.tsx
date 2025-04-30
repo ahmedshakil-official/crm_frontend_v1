@@ -9,8 +9,6 @@ export const SearchCRMTheme: string = "Search CRM ..";
 export const Cart: string = "Cart";
 export const Notifications: string = "Notifications";
 export const LogIn: string = "Log In";
-export const Bookmarks: string = "Bookmark";
-export const AddNewBookmark: string = "Add New Bookmark";
 export const Back: string = "Back";
 export const Pinned: string = "Pinned";
 
@@ -115,7 +113,6 @@ export const MonthlySale: string = "Monthly Sales";
 export const Uses: string = "Uses";
 export const GeneralTitle: string = "General";
 //E-commerce Dashboard
-export const EcommerceTitle: string = "Welcome back! Continue your journey.";
 export const SalesAnalyticsHeading: string = "Sales Analytics";
 export const UserStatusHeading: string = "User Status";
 export const TopSellingProductsHeading: string = "Top Selling Products";
@@ -195,7 +192,6 @@ export const Height: string = "Height[h]";
 export const WeightKg: string = "Weight (kg)";
 export const City: string = "City";
 export const ZipCode: string = "Zip Code";
-export const Ecommerce: string = "Ecommerce";
 export const Product: string = "Product";
 export const Filters: string = "Filters";
 export const Featured: string = "Featured";

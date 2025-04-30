@@ -97,11 +97,11 @@ const Menulist: React.FC<MenuListType> = ({
                 {t(item.title)}
               </h6>
             )}
-            {item.badge && (
+            {/* {item.badge && (
               <Badge pill color="primary">
                 {item.badge}
               </Badge>
-            )}
+            )} */}
             {item.children && (
               <i
                 className={`iconly-Arrow-Right-2 icli ${
