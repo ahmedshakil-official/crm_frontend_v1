@@ -1,5 +1,4 @@
 import CartHeader from "./CartHeader/CartHeader";
-import CloudDesign from "./CloudDesign/CloudDesign";
 import DarkMode from "./DarkMode/DarkMode";
 import Languages from "./Languages/Languages";
 import MaximizeScreen from "./MaximizeScreen/MaximizeScreen";
@@ -17,7 +16,6 @@ const HeaderRight = () => {
         <CartHeader />
         <NotificationHeader />
         <MaximizeScreen />
-        <CloudDesign />
         <Profile />
       </ul>
     </div>
