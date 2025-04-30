@@ -19,7 +19,7 @@ const nunito = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "CRM",
+  title: "QOP",
 };
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const lng = await detectLanguage();
