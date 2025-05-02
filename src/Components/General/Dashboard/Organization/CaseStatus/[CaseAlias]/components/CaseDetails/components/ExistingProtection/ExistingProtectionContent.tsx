@@ -346,7 +346,7 @@ const ExistingProtectionContent: React.FC<
                         <Input
                           type="date"
                           id="cancelled_lapsed_date"
-                          value={formValues?.cancelled_lapsed_date || null}
+                          value={formValues?.cancelled_lapsed_date || ""}
                           onChange={(e) =>
                             handleInputChange(
                               "cancelled_lapsed_date",
@@ -364,7 +364,7 @@ const ExistingProtectionContent: React.FC<
                         <Input
                           type="date"
                           id="date_policy_started"
-                          value={formValues?.date_policy_started || null}
+                          value={formValues?.date_policy_started || ""}
                           onChange={(e) =>
                             handleInputChange(
                               "date_policy_started",

@@ -205,7 +205,7 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                   type="select"
                   id="flat_type"
                   name="flat_type"
-                  value={propertyState.flat_type || null}
+                  value={propertyState.flat_type || ""}
                   onChange={handleChange}
                 >
                   <option value="">Select...</option>

@@ -15,7 +15,7 @@ const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
             <Input
               type="date"
               name="dip_accept_date"
-              value={formData.dip_accept_date}
+              value={formData.dip_accept_date || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>

@@ -58,7 +58,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
             <Input
               type="number"
               name="ltv"
-              value={formData.ltv}
+              value={formData.ltv || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
@@ -95,7 +95,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
             <Input
               type="number"
               name="interest_only_amount"
-              value={formData.interest_only_amount}
+              value={formData.interest_only_amount || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
@@ -106,7 +106,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
             <Input
               type="number"
               name="outstanding_balance"
-              value={formData.outstanding_balance}
+              value={formData.outstanding_balance || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
@@ -117,7 +117,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
             <Input
               type="number"
               name="current_monthly_payment"
-              value={formData.current_monthly_payment}
+              value={formData.current_monthly_payment || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
@@ -147,7 +147,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
             <Input
               type="number"
               name="date_of_purchase"
-              value={formData.date_of_purchase}
+              value={formData.date_of_purchase || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>
