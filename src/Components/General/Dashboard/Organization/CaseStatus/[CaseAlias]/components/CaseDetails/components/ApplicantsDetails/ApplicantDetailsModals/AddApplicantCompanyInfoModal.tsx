@@ -6,7 +6,7 @@ import {
 import {
   AddCompanyDetailsFormModalProps,
   ApplicantCompanyProps,
-} from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
+} from "@/Types/Organization/Cases/CaseDetails/ApplicantsDetailsTypes";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -145,7 +145,7 @@ const AddCompanyDetailsFormModal: React.FC<AddCompanyDetailsFormModalProps> = ({
                 <Input
                   type="date"
                   name="date_of_incorporation"
-                  value={formData.date_of_incorporation}
+                  value={formData.date_of_incorporation || ""}
                   onChange={handleChange}
                 />
               </FormGroup>

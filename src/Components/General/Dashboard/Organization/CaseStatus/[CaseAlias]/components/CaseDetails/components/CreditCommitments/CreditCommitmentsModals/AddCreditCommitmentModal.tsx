@@ -230,7 +230,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
                   <Input
                     type="number"
                     name="account_no"
-                    value={formData.account_no || null}
+                    value={formData.account_no || ""}
                     onChange={handleInputChange}
                   />
                 </FormGroup>
