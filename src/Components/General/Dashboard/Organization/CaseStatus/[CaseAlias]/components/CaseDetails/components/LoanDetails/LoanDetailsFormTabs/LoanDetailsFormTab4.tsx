@@ -95,7 +95,7 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
             <Input
               type="text"
               name="introducer_fee"
-              value={formData.introducer_fee}
+              value={formData.introducer_fee || ""}
               onChange={(e) => handleFormChange(e.target.name, e.target.value)}
             />
           </FormGroup>

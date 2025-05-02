@@ -8,7 +8,6 @@ import ProfileGreet from "./components/ProfileGreet";
 import SuccessFulCase from "./components/SuccessFulCase";
 
 const AllCaseContainer: React.FC = ({}) => {
-  const [isFetchedLead, setIsFetchedLead] = useState(false);
   return (
     <>
       <AllCaseBreadcrumbs
@@ -23,10 +22,7 @@ const AllCaseContainer: React.FC = ({}) => {
           <CaseHistory />
         </Row>
         <Row>
-          <CasesTable
-            setIsFetchedLead={setIsFetchedLead}
-            isFetchedLead={isFetchedLead}
-          />
+          <CasesTable />
         </Row>
       </Container>
     </>

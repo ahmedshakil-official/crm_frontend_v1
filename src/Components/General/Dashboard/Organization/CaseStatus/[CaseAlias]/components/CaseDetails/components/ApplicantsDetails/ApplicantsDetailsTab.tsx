@@ -1,5 +1,4 @@
 import { useGetApplicantsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
-import { ApplicantProps } from "@/Types/Organization/CaseDetails/ApplicantsDetailsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import {
   NavLink,
 } from "reactstrap";
 import ApplicantsDetailsTabContent from "./ApplicantsDetailsTabContent";
+import { ApplicantProps } from "@/Types/Organization/Cases/CaseDetails/ApplicantsDetailsTypes";
 
 export const ApplicantsDetailsTab = () => {
   const [basicTab, setBasicTab] = useState<string | null>(null);
