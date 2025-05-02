@@ -1,4 +1,3 @@
-import SVG from "@/CommonComponent/SVG";
 import { Col, Container, Row } from "reactstrap";
 
 const Footer = () => {
@@ -13,10 +12,7 @@ const Footer = () => {
             </p>
           </Col>
           <Col md="6">
-            <p className="float-end mb-0">
-              Hand crafted &amp; made with
-              <SVG className="svg-color footer-icon" iconId="heart" />
-            </p>
+            <p className="float-end mb-0">Beta Version 1.0.0</p>
           </Col>
         </Row>
       </Container>
