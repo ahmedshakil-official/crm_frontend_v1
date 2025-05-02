@@ -1387,7 +1387,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                       type="date"
                       id="other_income_start_date"
                       className="border-secondary"
-                      value={formValues?.other_income_start_date || 0}
+                      value={formValues?.other_income_start_date}
                       onChange={(e) =>
                         handleInputChange(
                           "other_income_start_date",
@@ -1428,7 +1428,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                       type="date"
                       id="current_contract_start"
                       className="border-dark"
-                      value={formValues?.current_contract_start || 0}
+                      value={formValues?.current_contract_start }
                       onChange={(e) =>
                         handleInputChange(
                           "current_contract_start",
@@ -1448,7 +1448,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
                       type="date"
                       id="current_contract_end"
                       className="border-dark"
-                      value={formValues?.current_contract_end || 0}
+                      value={formValues?.current_contract_end}
                       onChange={(e) =>
                         handleInputChange(
                           "current_contract_end",

@@ -33,7 +33,7 @@ const AddNewLenderHistoryModal: React.FC<AddNewLenderHistoryModalProps> = ({
   const [formData, setFormData] = useState({
     is_this_application_had_a_decision_in_principle: true,
     lender: "",
-    dip_date: "" || null,
+    dip_date: "",
     dip_decision: "",
     dip_reference_number: "",
     notes: "",
@@ -60,7 +60,7 @@ const AddNewLenderHistoryModal: React.FC<AddNewLenderHistoryModalProps> = ({
       setFormData({
         is_this_application_had_a_decision_in_principle: true,
         lender: "",
-        dip_date: "" || null,
+        dip_date: "",
         dip_decision: "",
         dip_reference_number: "",
         notes: "",
@@ -272,7 +272,7 @@ const AddNewLenderHistoryModal: React.FC<AddNewLenderHistoryModalProps> = ({
                 <Input
                   type="date"
                   name="dip_date"
-                  value={formData.dip_date}
+                  value={formData.dip_date || ""}
                   onChange={handleInputChange}
                 />
               </FormGroup>
