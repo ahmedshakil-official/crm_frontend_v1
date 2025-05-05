@@ -79,7 +79,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     uploadData.append("file", files as File);
     uploadData.append("file_type", formData.fileType);
     uploadData.append("file_owner", formData.fileOwner.toString());
-    uploadData.append("name", formData.fileName || "N/A");
+    uploadData.append("name", formData.fileName);
     uploadData.append("description", formData.description);
     uploadData.append("special_notes", formData.specialNotes);
 

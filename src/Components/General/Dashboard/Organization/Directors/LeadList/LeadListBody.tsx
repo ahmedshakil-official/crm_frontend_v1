@@ -173,7 +173,7 @@ const LeadListBody: React.FC = () => {
                     {lead?.user?.first_name} {lead?.user?.last_name}
                   </td>
                   <td>{lead?.official_email}</td>
-                  <td>{lead?.official_phone || "N/A"}</td>
+                  <td>{lead?.official_phone || "-"}</td>
                   <td>{lead?.role}</td>
                   <td>
                     {lead?.created_by?.first_name} {lead?.created_by?.last_name}

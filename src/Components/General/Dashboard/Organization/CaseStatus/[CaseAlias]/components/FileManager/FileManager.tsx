@@ -156,7 +156,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                       currentFiles.map((file, index) => (
                         <tr key={index}>
                           <td>{indexOfFirstFile + index + 1}</td>
-                          <td>{file.name || "N/A"}</td>
+                          <td>{file.name || "-"}</td>
                           <td>
                             {file?.file_owner_info?.first_name}{" "}
                             {file?.file_owner_info?.last_name}

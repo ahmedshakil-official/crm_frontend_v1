@@ -110,7 +110,7 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
                           )
                           .join(" ")}
                       </td>
-                      <td>{userInfo?.relationship || "N/A"}</td>
+                      <td>{userInfo?.relationship || "-"}</td>
                       <td>
                         <div className="d-flex justify-content-center gap-2 align-items-center">
                           <Button

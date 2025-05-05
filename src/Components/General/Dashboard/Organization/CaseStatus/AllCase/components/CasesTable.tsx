@@ -256,9 +256,9 @@ const CaseTable: React.FC = () => {
                     <td>
                       {caseItem?.lead_user
                         ? `${caseItem?.lead_user.first_name} ${caseItem?.lead_user.last_name}`
-                        : "N/A"}
+                        : "-"}
                     </td>
-                    <td>{caseItem?.lead_user?.phone || "N/A"}</td>
+                    <td>{caseItem?.lead_user?.phone || "-"}</td>
                     <td>
                       {caseItem?.case_category
                         .split("_")

@@ -180,7 +180,7 @@ const IntroducerListBody: React.FC = () => {
                     {introducer?.user?.first_name} {introducer?.user?.last_name}
                   </td>
                   <td>{introducer?.official_email}</td>
-                  <td>{introducer?.official_phone || "N/A"}</td>
+                  <td>{introducer?.official_phone || "-"}</td>
                   <td>{introducer?.role}</td>
                   <td>
                     {introducer?.created_by?.first_name}{" "}
