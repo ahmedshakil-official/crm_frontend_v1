@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { DisclosureItem } from "../CompianceTabContents/components/DisclosureItem";
+import { DisclosureItem } from "./components/DisclosureItem";
 
 const applicationData = [
   {
@@ -8,7 +8,7 @@ const applicationData = [
     answer: null,
   },
   {
-    reference: "7.2", 
+    reference: "7.2",
     title: "Does the employment and income details match the factfind?",
     answer: null,
   },
@@ -19,9 +19,10 @@ const applicationData = [
   },
   {
     reference: "7.4",
-    title: "Does the mortgage application confirm who submitted the application?",
+    title:
+      "Does the mortgage application confirm who submitted the application?",
     answer: null,
-  }
+  },
 ];
 
 const ComplianceApplicationTabContent: FC = () => {

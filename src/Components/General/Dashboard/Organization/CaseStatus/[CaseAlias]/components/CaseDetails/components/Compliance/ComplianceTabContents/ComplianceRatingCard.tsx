@@ -1,15 +1,8 @@
 import React, { useState } from "react";
-import {
-  Col,
-  Container,
-  Row,
-  FormGroup,
-  Label,
-  Input,
-} from "reactstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FaCalendarAlt } from 'react-icons/fa';
+import { FaCalendarAlt } from "react-icons/fa";
+import { Col, Container, FormGroup, Input, Label, Row } from "reactstrap";
 
 // ComplianceForm component (inlined for simplicity, can be imported if separate)
 interface FormData {
@@ -66,30 +59,35 @@ export const ComplianceRatingCard: React.FC = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const CustomInput = React.forwardRef(({ value, onClick, id }: any, ref: any) => (
-    <div className="position-relative">
-      <input
-        id={id}
-        value={value}
-        className="form-control form-control-sm pe-4"
-        onClick={onClick}
-        readOnly
-        ref={ref}
-      />
-      <FaCalendarAlt 
-        className="position-absolute text-muted cursor-pointer" 
-        style={{ right: '10px', top: '50%', transform: 'translateY(-50%)' }}
-        onClick={onClick}
-      />
-    </div>
-  ));
+  const CustomInput = React.forwardRef(
+    ({ value, onClick, id }: any, ref: any) => (
+      <div className="position-relative">
+        <input
+          id={id}
+          value={value}
+          className="form-control form-control-sm pe-4"
+          onClick={onClick}
+          readOnly
+          ref={ref}
+        />
+        <FaCalendarAlt
+          className="position-absolute text-muted cursor-pointer"
+          style={{ right: "10px", top: "50%", transform: "translateY(-50%)" }}
+          onClick={onClick}
+        />
+      </div>
+    )
+  );
 
   return (
     <Container fluid className="p-4 bg-white shadow rounded">
       <Row className="align-items-end g-3">
         <Col xs={12} lg={2}>
           <FormGroup>
-            <Label for="dateChecked" className="fw-medium text-muted small mb-1">
+            <Label
+              for="dateChecked"
+              className="fw-medium text-muted small mb-1"
+            >
               Date File Checked
             </Label>
             <DatePicker
@@ -103,7 +101,10 @@ export const ComplianceRatingCard: React.FC = () => {
         </Col>
         <Col xs={12} lg={2}>
           <FormGroup>
-            <Label for="dateRechecked" className="fw-medium text-muted small mb-1">
+            <Label
+              for="dateRechecked"
+              className="fw-medium text-muted small mb-1"
+            >
               Date File Rechecked
             </Label>
             <DatePicker
@@ -117,7 +118,10 @@ export const ComplianceRatingCard: React.FC = () => {
         </Col>
         <Col xs={12} lg={3}>
           <FormGroup>
-            <Label for="checkedById" className="fw-medium text-muted small mb-1">
+            <Label
+              for="checkedById"
+              className="fw-medium text-muted small mb-1"
+            >
               File Checked By
             </Label>
             <Input
@@ -140,28 +144,20 @@ export const ComplianceRatingCard: React.FC = () => {
             <Label className="fw-medium text-muted small mb-1">
               Remedial Actions Required
             </Label>
-            <div className="d-flex gap-4">
-              <FormGroup check className="mb-0">
-                <Input
-                  type="radio"
-                  name="remedialActionsRequired"
-                  checked={formData.remedialActionsRequired}
-                  onChange={() => handleChange("remedialActionsRequired", true)}
-                  className="mt-0"
-                />
-                <Label check className="small">Yes</Label>
-              </FormGroup>
-              <FormGroup check className="mb-0">
-                <Input
-                  type="radio"
-                  name="remedialActionsRequired"
-                  checked={!formData.remedialActionsRequired}
-                  onChange={() => handleChange("remedialActionsRequired", false)}
-                  className="mt-0"
-                />
-                <Label check className="small">No</Label>
-              </FormGroup>
-            </div>
+            <Input
+              type="select"
+              bsSize="sm"
+              value={formData.remedialActionsRequired ? "yes" : "no"}
+              onChange={(e) =>
+                handleChange(
+                  "remedialActionsRequired",
+                  e.target.value === "yes"
+                )
+              }
+            >
+              <option value="YES">Yes</option>
+              <option value="NO">No</option>
+            </Input>
           </FormGroup>
         </Col>
         <Col xs={12} lg={2}>
@@ -169,37 +165,27 @@ export const ComplianceRatingCard: React.FC = () => {
             <Label className="fw-medium text-muted small mb-1">
               Remedial Actions Complete
             </Label>
-            <div className="d-flex gap-4">
-              <FormGroup check className="mb-0">
-                <Input
-                  type="radio"
-                  name="remedialActionsComplete"
-                  checked={formData.remedialActionsComplete}
-                  onChange={() => handleChange("remedialActionsComplete", true)}
-                  className="mt-0"
-                />
-                <Label check className="small">Yes</Label>
-              </FormGroup>
-              <FormGroup check className="mb-0">
-                <Input
-                  type="radio"
-                  name="remedialActionsComplete"
-                  checked={!formData.remedialActionsComplete}
-                  onChange={() => handleChange("remedialActionsComplete", false)}
-                  className="mt-0"
-                />
-                <Label check className="small">No</Label>
-              </FormGroup>
-            </div>
+            <Input
+              type="select"
+              bsSize="sm"
+              value={formData.remedialActionsComplete ? "yes" : "no"}
+              onChange={(e) =>
+                handleChange(
+                  "remedialActionsComplete",
+                  e.target.value === "yes"
+                )
+              }
+            >
+              <option value="YES">Yes</option>
+              <option value="NO">No</option>
+            </Input>
           </FormGroup>
         </Col>
       </Row>
 
       <Row className="mt-4">
         <Col xs={12}>
-          <h3 className="fw-semibold pb-2 mb-4">
-            Rating
-          </h3>
+          <h3 className="fw-semibold pb-2 mb-4">Rating</h3>
         </Col>
       </Row>
 

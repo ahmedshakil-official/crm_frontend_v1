@@ -1,15 +1,17 @@
 import { FC } from "react";
-import { DisclosureItem } from "../CompianceTabContents/components/DisclosureItem";
+import { DisclosureItem } from "./components/DisclosureItem";
 
 const mandatoryDocData = [
   {
     reference: "4.1",
-    title: "Proof of Income (Latest 3 months Payslips + P60 / 2 Years SA302 and TYO)",
+    title:
+      "Proof of Income (Latest 3 months Payslips + P60 / 2 Years SA302 and TYO)",
     answer: null,
   },
   {
     reference: "4.2",
-    title: "Proof of Deposit (Latest mortgage statement for Remo / Gifted Deposit / Bank Statement)",
+    title:
+      "Proof of Deposit (Latest mortgage statement for Remo / Gifted Deposit / Bank Statement)",
     answer: null,
   },
   {
@@ -29,7 +31,8 @@ const mandatoryDocData = [
   },
   {
     reference: "4.6",
-    title: "Evidence of Research (Showing Selected Lender) + Mortgage Illustration(/s)",
+    title:
+      "Evidence of Research (Showing Selected Lender) + Mortgage Illustration(/s)",
     answer: null,
   },
   {
@@ -69,9 +72,10 @@ const mandatoryDocData = [
   },
   {
     reference: "4.95",
-    title: "Proof of Repayment Vehicle (for Resi Int only OR BTL int only unless sale of security property)",
+    title:
+      "Proof of Repayment Vehicle (for Resi Int only OR BTL int only unless sale of security property)",
     answer: null,
-  }
+  },
 ];
 
 const MandatoryDocumentationTabContent: FC = () => {

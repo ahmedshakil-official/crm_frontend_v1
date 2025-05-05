@@ -52,6 +52,7 @@ export const baseApi = createApi({
     "DIPHistoryDetails",
     "Suitability",
     "Fees",
+    "Compliance",
     //Organization end
   ],
   endpoints: () => ({}),

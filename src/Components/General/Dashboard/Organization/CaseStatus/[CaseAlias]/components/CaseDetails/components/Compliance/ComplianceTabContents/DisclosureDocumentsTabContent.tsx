@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { DisclosureItem } from "../CompianceTabContents/components/DisclosureItem";
+import { DisclosureItem } from "./components/DisclosureItem";
 
 const disclosureData = [
   {
