@@ -30,8 +30,8 @@ const Profile = () => {
         </div>
         <div className="user-content" onClick={() => setShow(!show)}>
           <h6>{session?.user?.email}</h6>
-          <p className="mb-0">
-            {session?.user?.name || "Admin"}
+          <p className="mb-0 text-primary">
+            {session?.user?.name || "User Name"}
             <i className="fa-solid fa-chevron-down" />
           </p>
         </div>

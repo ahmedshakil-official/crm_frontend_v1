@@ -60,7 +60,7 @@ export const authoption: NextAuthOptions = {
           if (response.data?.access) {
             return {
               id: response.data.user_id || "default_id",
-              name: response.data.user.first_name || credentials.email,
+              name: `${response.data.user.first_name || ''} ${response.data.user.last_name || ''}` || credentials.email,
               email: credentials.email,
               token: response.data.access, // Attach JWT token
             };
