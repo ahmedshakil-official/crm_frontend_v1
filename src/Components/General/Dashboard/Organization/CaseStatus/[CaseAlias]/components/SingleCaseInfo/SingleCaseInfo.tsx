@@ -79,7 +79,8 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                           </>
                         ) : (
                           <>
-                            <strong>Phone:</strong> N/A
+                            <strong>Phone:</strong>{" "}
+                            <span className="text-muted opacity-50">Not Found</span>
                           </>
                         )}
                       </h6>
@@ -122,7 +123,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       </h6>
                       <h6 className="pt-1">
                         <strong>Case Category:</strong>{" "}
-                        <span>
+                        <span className="bg-primary p-1 rounded-1">
                           {caseInfo?.case_category
                             ? caseInfo.case_category
                                 .split("_")

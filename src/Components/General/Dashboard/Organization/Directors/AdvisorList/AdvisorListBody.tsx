@@ -182,7 +182,7 @@ const AdvisorListBody: React.FC = () => {
                     {advisor?.user?.first_name} {advisor?.user?.last_name}
                   </td>
                   <td>{advisor?.official_email}</td>
-                  <td>{advisor?.official_phone || "N/A"}</td>
+                  <td>{advisor?.official_phone || "-"}</td>
                   <td>{advisor?.role}</td>
                   <td>
                     {advisor?.created_by?.first_name}{" "}

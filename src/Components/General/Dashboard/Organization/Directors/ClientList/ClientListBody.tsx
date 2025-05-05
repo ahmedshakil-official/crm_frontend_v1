@@ -183,7 +183,7 @@ const ClientListBody: React.FC = () => {
                     {client?.user?.first_name} {client?.user?.last_name}
                   </td>
                   <td>{client.official_email}</td>
-                  <td>{client.official_phone || "N/A"}</td>
+                  <td>{client.official_phone || "-"}</td>
                   <td>{client.role}</td>
                   <td>
                     {client?.created_by?.first_name}{" "}
