@@ -1,45 +1,54 @@
 import SVG from "@/CommonComponent/SVG";
-import { Href, ImagePath, LogIn } from "@/Constant";
+import { Href, ImagePath } from "@/Constant";
 import { UserListData } from "@/Data/Layout/SidebarData";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Profile = () => {
   const [show, setShow] = useState(false);
   const { data: session } = useSession();
+  const router = useRouter();
 
-  const handleLogout = () => {
-    signOut();
+  const handleLogout = async () => {
+    // signOut();
+    await signOut({ redirect: false });
+    router.push("/auth/login");
   };
   return (
-    <li className='profile-nav custom-dropdown'>
-      <div className='user-wrap'>
-        <div className='user-img'>
-          <Image width={64} height={59} src={session?.user?.image || `${ImagePath}/profile.png`} alt='user' />
+    <li className="profile-nav custom-dropdown">
+      <div className="user-wrap">
+        <div className="user-img">
+          <Image
+            width={64}
+            height={59}
+            src={session?.user?.image || `${ImagePath}/profile.png`}
+            alt="user"
+          />
         </div>
-        <div className='user-content' onClick={() => setShow(!show)}>
+        <div className="user-content" onClick={() => setShow(!show)}>
           <h6>{session?.user?.email}</h6>
-          <p className='mb-0'>
-          {session?.user?.name || 'Admin'} 
-            <i className='fa-solid fa-chevron-down' />
+          <p className="mb-0 text-primary">
+            {session?.user?.name || "User Name"}
+            <i className="fa-solid fa-chevron-down" />
           </p>
         </div>
         <div className={`custom-menu overflow-hidden ${show ? "show" : ""}`}>
-          <ul className='profile-body'>
+          <ul className="profile-body">
             {UserListData.map((item, index) => (
-              <li className='d-flex' key={index}>
-                <SVG className='svg-color' iconId={item.icon} />
-                <Link className='ms-2' href={item.href}>
+              <li className="d-flex" key={index}>
+                <SVG className="svg-color" iconId={item.icon} />
+                <Link className="ms-2" href={item.href}>
                   {item.text}
                 </Link>
               </li>
             ))}
-            <li className='d-flex' onClick={handleLogout}>
-              <SVG className='svg-color' iconId='Login' />
-              <Link className='ms-2' href={Href}>
-                {'Logout'}
+            <li className="d-flex" onClick={handleLogout}>
+              <SVG className="svg-color" iconId="Login" />
+              <Link className="ms-2" href={Href}>
+                {"Logout"}
               </Link>
             </li>
           </ul>
