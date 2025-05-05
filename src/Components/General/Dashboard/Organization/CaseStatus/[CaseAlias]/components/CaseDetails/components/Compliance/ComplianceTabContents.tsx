@@ -1,4 +1,9 @@
+import {
+  useGetComplianceQuery,
+  useUpdateComplianceMutation,
+} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 import { FeesTabContentProps } from "@/Types/Organization/Cases/CaseDetails/FeeTypes";
+import { useParams } from "next/navigation";
 import { FC } from "react";
 import AntiMoneyLaunderingTabContent from "./ComplianceTabContents/AntiMoneyLaunderingTabContent";
 import ComplianceApplicationTabContent from "./ComplianceTabContents/ComplianceApplicationTabContent";
@@ -15,6 +20,14 @@ export const ComplianceTabContents: FC<FeesTabContentProps> = ({
   setTabId,
 }) => {
   const renderTabContent = () => {
+    const { casealias } = useParams();
+    // rtk hooks
+    const { data: complianceData, isLoading } = useGetComplianceQuery({
+      case_alias: casealias,
+    });
+    const [updateCompliance, { isLoading: isUpdating }] =
+      useUpdateComplianceMutation();
+
     switch (tabId) {
       case "1":
         return <DisclosureDocumentsTabContent />;

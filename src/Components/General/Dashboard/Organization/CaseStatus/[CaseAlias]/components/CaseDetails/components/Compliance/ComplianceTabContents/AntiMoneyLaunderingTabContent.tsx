@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { DisclosureItem } from "../CompianceTabContents/components/DisclosureItem";
+import { DisclosureItem } from "./components/DisclosureItem";
 
 const amlData = [
   {
@@ -9,7 +9,8 @@ const amlData = [
   },
   {
     reference: "3.2",
-    title: "Financial Sanctions checked and copy on file (dated prior to research)",
+    title:
+      "Financial Sanctions checked and copy on file (dated prior to research)",
     answer: null,
   },
   {
@@ -21,7 +22,7 @@ const amlData = [
     reference: "3.4",
     title: "Proof of Address (In Date & Certified)",
     answer: null,
-  }
+  },
 ];
 
 const AntiMoneyLaunderingTabContent: FC = () => {

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { DisclosureItem } from "../CompianceTabContents/components/DisclosureItem";
+import { DisclosureItem } from "./components/DisclosureItem";
 
 const dataProtectionData = [
   {
@@ -7,7 +7,6 @@ const dataProtectionData = [
     title: "Factfind Filled",
     answer: null,
   },
-
 ];
 
 const DataProtectionTabContent: FC = () => {
