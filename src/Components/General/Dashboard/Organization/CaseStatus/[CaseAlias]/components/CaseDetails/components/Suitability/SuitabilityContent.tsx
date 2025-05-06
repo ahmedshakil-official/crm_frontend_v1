@@ -18,7 +18,7 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import CircumstancesObjectivesAnswerModal from "./Modals/ExtraAnswerModal";
+import ExtraAnswerModal from "./Modals/ExtraAnswerModal";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
@@ -2318,11 +2318,17 @@ const SuitabilityContent: React.FC = () => {
         {/* Extra question answer  */}
         <Card className="border-1 border-info mt-3">
           <CardHeader className="d-flex justify-content-between align-items-center">
-            <h4>Extra Question Answers</h4>
+            <h4>
+              Extra Question Answers(
+              <small className="text-danger opacity-75">
+                These fields are read-only
+              </small>
+              )
+            </h4>
           </CardHeader>
           <CardBody>
             <FormGroup>
-              <Label>Answer 1</Label>
+              <Label>Question Name: </Label>
               <Input
                 type="textarea"
                 readOnly
@@ -2331,7 +2337,7 @@ const SuitabilityContent: React.FC = () => {
               />
             </FormGroup>
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleExtraAnswerModal}>
+              <Button color="info" onClick={toggleExtraAnswerModal}>
                 Add More Answer
               </Button>
             </div>
@@ -2346,7 +2352,7 @@ const SuitabilityContent: React.FC = () => {
         </div>
       </Form>
       {/* Modal Components */}
-      <CircumstancesObjectivesAnswerModal
+      <ExtraAnswerModal
         isOpen={isExtraAnswerModalOpen}
         toggle={toggleExtraAnswerModal}
       />

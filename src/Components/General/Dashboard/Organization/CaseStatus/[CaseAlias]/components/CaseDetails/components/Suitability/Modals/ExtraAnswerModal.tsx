@@ -18,7 +18,7 @@ const ExtraAnswerModal: React.FC<ExtraAnswerModalProps> = ({
   toggle,
 }) => {
   const [answer, setAnswer] = useState("");
-  const [selectedType, setSelectedType] = useState("GENERAL");
+  const [selectedType, setSelectedType] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,49 +30,36 @@ const ExtraAnswerModal: React.FC<ExtraAnswerModalProps> = ({
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <Form onSubmit={handleSubmit}>
         <ModalHeader toggle={toggle}>
-          <h4 className="text-success">Add Circumstances Objectives Answer</h4>
+          <h4 className="text-info">Add Extra Answer</h4>
         </ModalHeader>
         <ModalBody>
-          <Col md={4}>
-            <Label for="circumstances_type">Circumstances Type</Label>
+          <Col md={8}>
+            <Label for="question_type">Question Type</Label>
             <FormGroup>
               <Input
                 type="select"
-                name="circumstances_type"
+                name="question_type"
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
               >
+                <option value="">Select...</option>
                 <option value="GENERAL">General</option>
                 <option value="SHARIA">Sharia</option>
               </Input>
             </FormGroup>
           </Col>
-          {selectedType === "GENERAL" && (
-            <FormGroup>
-              <Label for="answer">Answer(General)</Label>
-              <Input
-                type="textarea"
-                id="answer"
-                rows={8}
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-                placeholder="Enter your answer here..."
-              />
-            </FormGroup>
-          )}
-          {selectedType === "SHARIA" && (
-            <FormGroup>
-              <Label for="answer">Answer(Sharia)</Label>
-              <Input
-                type="textarea"
-                id="answer"
-                rows={8}
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-                placeholder="Enter your answer here..."
-              />
-            </FormGroup>
-          )}
+
+          <FormGroup>
+            <Label for="answer">Answer</Label>
+            <Input
+              type="textarea"
+              id="answer"
+              rows={8}
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              placeholder="Enter your answer here..."
+            />
+          </FormGroup>
         </ModalBody>
         <ModalFooter>
           <Button color="danger" onClick={toggle}>
