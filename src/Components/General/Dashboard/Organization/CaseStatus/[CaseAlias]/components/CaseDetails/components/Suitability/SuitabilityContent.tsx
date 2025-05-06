@@ -1,5 +1,6 @@
 import { defaultAnswersData } from "@/Data/Organization/Case/CaseDetails/SuitabilityData";
 import {
+  useGetExtraAnswerQuery,
   useGetSuitabilityQuery,
   useUpdateSuitabilityMutation,
 } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Suitability/SuitabilityApi";
@@ -18,39 +19,13 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import BudgetAffordabilityAnswerModal from "./Modals/BudgetAffordabilityAnswerModal";
-import BuildingsInsuranceAnswerModal from "./Modals/BuildingsInsuranceAnswerModal";
-import CircumstancesObjectivesAnswerModal from "./Modals/CircumstancesObjectivesAnswerModal";
-import CostAdviceAnswerModal from "./Modals/CostAdviceAnswerModal";
-import CostsFeesAnswerModal from "./Modals/CostsFeesAnswerModal";
-import DisadvantageRisksAnswerModal from "./Modals/DisadvantageRisksAnswerModal";
-import NewMortgageDetailsAnswerModal from "./Modals/NewMortgageDetailsAnswerModal";
-import ProtectionAnswerModal from "./Modals/ProtectionAnswerModal";
-import RecommendingMortgageAmountAnswerModal from "./Modals/RecommendingMortgageAmountAnswerModal";
-import RecommendingMortgageLenderAnswerModal from "./Modals/RecommendingMortgageLenderAnswerModal";
-import RecommendingMortgageTypeAnswerModal from "./Modals/RecommendingMortgageTypeAnswerModal";
-import RecommendingRepaymentMethodAnswerModal from "./Modals/RecommendingRepaymentMethodAnswerModal";
-import RecommendingTermAnswerModal from "./Modals/RecommendingTermAnswerModal";
-import WillsAnswerModal from "./Modals/WillsAnswerModal";
+import ExtraAnswerModal from "./Modals/ExtraAnswerModal";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
   const [defaultAnswers, setDefaultAnswers] = useState(defaultAnswersData);
   // Modal State
-  const [isCOModalOpen, setIsCOModalOpen] = useState(false);
-  const [isBAModalOpen, setIsBAModalOpen] = useState(false);
-  const [isNMDModalOpen, setIsNMDModalOpen] = useState(false);
-  const [isRRMModalOpen, setIsRRMModalOpen] = useState(false);
-  const [isRMTModalOpen, setIsRMTModalOpen] = useState(false);
-  const [isRTModalOpen, setIsRTModalOpen] = useState(false);
-  const [isRMLModalOpen, setIsRMLModalOpen] = useState(false);
-  const [isRMAModalOpen, setIsRMAModalOpen] = useState(false);
-  const [isCFModalOpen, setIsCFModalOpen] = useState(false);
-  const [isDRModalOpen, setIsDRModalOpen] = useState(false);
-  const [isCAModalOpen, setIsCAModalOpen] = useState(false);
-  const [isPModalOpen, setIsPModalOpen] = useState(false);
-  const [isBIModalOpen, setIsBIModalOpen] = useState(false);
-  const [isWModalOpen, setIsWModalOpen] = useState(false);
+  const [isExtraAnswerModalOpen, setIsExtraAnswerModalOpen] = useState(false);
 
   // Form State
   const [formValue, setFormValue] = useState({
@@ -174,47 +149,8 @@ const SuitabilityContent: React.FC = () => {
   });
 
   // Handle modal change
-  const toggleCOModal = () => {
-    setIsCOModalOpen(!isCOModalOpen);
-  };
-  const toggleBAModal = () => {
-    setIsBAModalOpen(!isBAModalOpen);
-  };
-  const toggleNMDModal = () => {
-    setIsNMDModalOpen(!isNMDModalOpen);
-  };
-  const toggleRRMModal = () => {
-    setIsRRMModalOpen(!isRRMModalOpen);
-  };
-  const toggleRMTModal = () => {
-    setIsRMTModalOpen(!isRMTModalOpen);
-  };
-  const toggleRTModal = () => {
-    setIsRTModalOpen(!isRTModalOpen);
-  };
-  const toggleRMLModal = () => {
-    setIsRMLModalOpen(!isRMLModalOpen);
-  };
-  const toggleRMAModal = () => {
-    setIsRMAModalOpen(!isRMAModalOpen);
-  };
-  const toggleCFModal = () => {
-    setIsCFModalOpen(!isCFModalOpen);
-  };
-  const toggleDRModal = () => {
-    setIsDRModalOpen(!isDRModalOpen);
-  };
-  const toggleCAModal = () => {
-    setIsCAModalOpen(!isCAModalOpen);
-  };
-  const togglePModal = () => {
-    setIsPModalOpen(!isPModalOpen);
-  };
-  const toggleBIModal = () => {
-    setIsBIModalOpen(!isBIModalOpen);
-  };
-  const toggleWModal = () => {
-    setIsWModalOpen(!isWModalOpen);
+  const toggleExtraAnswerModal = () => {
+    setIsExtraAnswerModalOpen(!isExtraAnswerModalOpen);
   };
 
   // RTK hooks
@@ -223,6 +159,10 @@ const SuitabilityContent: React.FC = () => {
   });
   const [updateSuitability, { isLoading: isUpdating }] =
     useUpdateSuitabilityMutation();
+  const { data: extraAnswersData, isLoading: isExtraAnswerLoading } =
+    useGetExtraAnswerQuery({
+      case_alias: casealias,
+    });
 
   // Set initial form data when API data is available
   useEffect(() => {
@@ -612,7 +552,7 @@ const SuitabilityContent: React.FC = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isExtraAnswerLoading) {
     return (
       <div>
         <LoadingSpinner />
@@ -750,11 +690,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleCOModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
 
@@ -861,11 +796,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleBAModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* New mortgage details */}
@@ -971,11 +901,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleNMDModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* Recommending repayment method */}
@@ -1132,11 +1057,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleRRMModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* recommending_mortgage_type */}
@@ -1287,11 +1207,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleRMTModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* recommending_term */}
@@ -1357,11 +1272,6 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleRTModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* recommending_mortgage_lender  */}
@@ -1475,11 +1385,6 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleRMLModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* recommending_mortgage_amount  */}
@@ -1593,11 +1498,6 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleRMAModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* costs_fees */}
@@ -1693,11 +1593,6 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleCFModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* disadvantage_risks  */}
@@ -1912,11 +1807,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleDRModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* cost_advice */}
@@ -2014,11 +1904,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleCAModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* protection */}
@@ -2176,11 +2061,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={togglePModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* buildings_insurance */}
@@ -2347,11 +2227,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleBIModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* wills  */}
@@ -2443,8 +2318,75 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
+          </CardBody>
+        </Card>
+        {/* Extra question answer  */}
+        <Card className="border-1 border-info mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <h4>
+              Extra Question Answers(
+              <small className="text-danger opacity-75">
+                These fields are read-only
+              </small>
+              )
+            </h4>
+          </CardHeader>
+          <CardBody>
+            {extraAnswersData?.length > 0 ? (
+              extraAnswersData.map((extraAnswer: any) => (
+                <FormGroup key={extraAnswer?.alias}>
+                  <Label>
+                    <strong>Question Name:</strong>{" "}
+                    {extraAnswer?.section_choices ===
+                      "YOUR_CIRCUMSTANCES_AND_OBJECTIVES" &&
+                      "Your circumstances and objectives"}
+                    {extraAnswer?.section_choices ===
+                      "BUDGET_AND_AFFORDABILITY" && "Budget and affordability"}
+                    {extraAnswer?.section_choices === "NEW_MORTGAGE_DETAILS" &&
+                      "New mortgage details"}
+                    {extraAnswer?.section_choices ===
+                      "RECOMMENDED_REPAYMENT_METHOD" &&
+                      "Why are we recommending this repayment method?"}
+                    {extraAnswer?.section_choices ===
+                      "RECOMMENDED_MORTGAGE_TYPE" &&
+                      "Why are we recommending this mortgage type?"}
+                    {extraAnswer?.section_choices === "RECOMMENDED_TERM" &&
+                      "Why are we recommending this term?"}
+                    {extraAnswer?.section_choices === "RECOMMENDED_LENDER" &&
+                      "Why are we recommending this mortgage lender?"}
+                    {extraAnswer?.section_choices === "RECOMMENDED_AMOUNT" &&
+                      "Why are we recommending this mortgage amount?"}
+                    {extraAnswer?.section_choices === "COSTS_AND_FEES" &&
+                      "What are the costs and fees?"}
+                    {extraAnswer?.section_choices ===
+                      "DISADVANTAGES_AND_RISKS" &&
+                      "What are the disadvantages and risks?"}
+                    {extraAnswer?.section_choices === "COST_OF_ADVICE" &&
+                      "What is the cost of our advice?"}
+                    {extraAnswer?.section_choices === "PROTECTION" &&
+                      "What is the protection?"}
+                    {extraAnswer?.section_choices === "BUILDINGS_INSURANCE" &&
+                      "What is the buildings insurance?"}
+                    {extraAnswer?.section_choices === "WILLS" &&
+                      "What is the wills?"}
+                  </Label>
+                  <Input
+                    type="textarea"
+                    readOnly
+                    name="question_one_answer"
+                    rows="5"
+                    value={extraAnswer?.answer}
+                  />
+                </FormGroup>
+              ))
+            ) : (
+              <div className="text-center text-muted">
+                No extra answers found
+              </div>
+            )}
+
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleWModal}>
+              <Button color="info" onClick={toggleExtraAnswerModal}>
                 Add More Answer
               </Button>
             </div>
@@ -2459,50 +2401,10 @@ const SuitabilityContent: React.FC = () => {
         </div>
       </Form>
       {/* Modal Components */}
-      <CircumstancesObjectivesAnswerModal
-        isOpen={isCOModalOpen}
-        toggle={toggleCOModal}
+      <ExtraAnswerModal
+        isOpen={isExtraAnswerModalOpen}
+        toggle={toggleExtraAnswerModal}
       />
-      <BudgetAffordabilityAnswerModal
-        isOpen={isBAModalOpen}
-        toggle={toggleBAModal}
-      />
-      <NewMortgageDetailsAnswerModal
-        isOpen={isNMDModalOpen}
-        toggle={toggleNMDModal}
-      />
-      <RecommendingRepaymentMethodAnswerModal
-        isOpen={isRRMModalOpen}
-        toggle={toggleRRMModal}
-      />
-      <RecommendingMortgageTypeAnswerModal
-        isOpen={isRMTModalOpen}
-        toggle={toggleRMTModal}
-      />
-      <RecommendingTermAnswerModal
-        isOpen={isRTModalOpen}
-        toggle={toggleRTModal}
-      />
-      <RecommendingMortgageLenderAnswerModal
-        isOpen={isRMLModalOpen}
-        toggle={toggleRMLModal}
-      />
-      <RecommendingMortgageAmountAnswerModal
-        isOpen={isRMAModalOpen}
-        toggle={toggleRMAModal}
-      />
-      <CostsFeesAnswerModal isOpen={isCFModalOpen} toggle={toggleCFModal} />
-      <DisadvantageRisksAnswerModal
-        isOpen={isDRModalOpen}
-        toggle={toggleDRModal}
-      />
-      <CostAdviceAnswerModal isOpen={isCAModalOpen} toggle={toggleCAModal} />
-      <ProtectionAnswerModal isOpen={isPModalOpen} toggle={togglePModal} />
-      <BuildingsInsuranceAnswerModal
-        isOpen={isBIModalOpen}
-        toggle={toggleBIModal}
-      />
-      <WillsAnswerModal isOpen={isWModalOpen} toggle={toggleWModal} />
     </>
   );
 };

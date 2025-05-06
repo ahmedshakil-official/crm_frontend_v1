@@ -18,18 +18,27 @@ export const SuitabilityApi = baseApi.injectEndpoints({
       invalidatesTags: ["Suitability"],
     }),
     // Modals endpoints start here
-    AddCircumstancesObjectivesAnswer: builder.mutation({
+    getExtraAnswer: builder.query({
+      query: ({ case_alias }) => ({
+        url: `/cases/${case_alias}/answers/`,
+        method: "GET",
+      }),
+      providesTags: ["Suitability"],
+    }),
+    AddExtraAnswer: builder.mutation({
       query: ({ case_alias, payload }) => ({
-        url: `/cases/${case_alias}/suitability/circumstances_objectives/`,
+        url: `/cases/${case_alias}/answers/`,
         method: "POST",
         body: payload,
       }),
-    })
+      invalidatesTags: ["Suitability"],
+    }),
   }),
 });
 
 export const {
   useGetSuitabilityQuery,
   useUpdateSuitabilityMutation,
-  useAddCircumstancesObjectivesAnswerMutation,
+  useGetExtraAnswerQuery,
+  useAddExtraAnswerMutation,
 } = SuitabilityApi;
