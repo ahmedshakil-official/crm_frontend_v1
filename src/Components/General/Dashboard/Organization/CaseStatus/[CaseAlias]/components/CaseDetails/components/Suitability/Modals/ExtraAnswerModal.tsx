@@ -1,4 +1,4 @@
-import { CircumstancesObjectivesAnswerModalProps } from "@/Types/Organization/Cases/CaseDetails/SuitabilityTypes";
+import { ExtraAnswerModalProps } from "@/Types/Organization/Cases/CaseDetails/SuitabilityTypes";
 import React, { useState } from "react";
 import {
   Button,
@@ -13,9 +13,10 @@ import {
   ModalHeader,
 } from "reactstrap";
 
-const CircumstancesObjectivesAnswerModal: React.FC<
-  CircumstancesObjectivesAnswerModalProps
-> = ({ isOpen, toggle }) => {
+const ExtraAnswerModal: React.FC<ExtraAnswerModalProps> = ({
+  isOpen,
+  toggle,
+}) => {
   const [answer, setAnswer] = useState("");
   const [selectedType, setSelectedType] = useState("GENERAL");
 
@@ -86,4 +87,4 @@ const CircumstancesObjectivesAnswerModal: React.FC<
   );
 };
 
-export default CircumstancesObjectivesAnswerModal;
+export default ExtraAnswerModal;

@@ -18,39 +18,13 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import BudgetAffordabilityAnswerModal from "./Modals/BudgetAffordabilityAnswerModal";
-import BuildingsInsuranceAnswerModal from "./Modals/BuildingsInsuranceAnswerModal";
-import CircumstancesObjectivesAnswerModal from "./Modals/CircumstancesObjectivesAnswerModal";
-import CostAdviceAnswerModal from "./Modals/CostAdviceAnswerModal";
-import CostsFeesAnswerModal from "./Modals/CostsFeesAnswerModal";
-import DisadvantageRisksAnswerModal from "./Modals/DisadvantageRisksAnswerModal";
-import NewMortgageDetailsAnswerModal from "./Modals/NewMortgageDetailsAnswerModal";
-import ProtectionAnswerModal from "./Modals/ProtectionAnswerModal";
-import RecommendingMortgageAmountAnswerModal from "./Modals/RecommendingMortgageAmountAnswerModal";
-import RecommendingMortgageLenderAnswerModal from "./Modals/RecommendingMortgageLenderAnswerModal";
-import RecommendingMortgageTypeAnswerModal from "./Modals/RecommendingMortgageTypeAnswerModal";
-import RecommendingRepaymentMethodAnswerModal from "./Modals/RecommendingRepaymentMethodAnswerModal";
-import RecommendingTermAnswerModal from "./Modals/RecommendingTermAnswerModal";
-import WillsAnswerModal from "./Modals/WillsAnswerModal";
+import CircumstancesObjectivesAnswerModal from "./Modals/ExtraAnswerModal";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
   const [defaultAnswers, setDefaultAnswers] = useState(defaultAnswersData);
   // Modal State
-  const [isCOModalOpen, setIsCOModalOpen] = useState(false);
-  const [isBAModalOpen, setIsBAModalOpen] = useState(false);
-  const [isNMDModalOpen, setIsNMDModalOpen] = useState(false);
-  const [isRRMModalOpen, setIsRRMModalOpen] = useState(false);
-  const [isRMTModalOpen, setIsRMTModalOpen] = useState(false);
-  const [isRTModalOpen, setIsRTModalOpen] = useState(false);
-  const [isRMLModalOpen, setIsRMLModalOpen] = useState(false);
-  const [isRMAModalOpen, setIsRMAModalOpen] = useState(false);
-  const [isCFModalOpen, setIsCFModalOpen] = useState(false);
-  const [isDRModalOpen, setIsDRModalOpen] = useState(false);
-  const [isCAModalOpen, setIsCAModalOpen] = useState(false);
-  const [isPModalOpen, setIsPModalOpen] = useState(false);
-  const [isBIModalOpen, setIsBIModalOpen] = useState(false);
-  const [isWModalOpen, setIsWModalOpen] = useState(false);
+  const [isExtraAnswerModalOpen, setIsExtraAnswerModalOpen] = useState(false);
 
   // Form State
   const [formValue, setFormValue] = useState({
@@ -174,47 +148,8 @@ const SuitabilityContent: React.FC = () => {
   });
 
   // Handle modal change
-  const toggleCOModal = () => {
-    setIsCOModalOpen(!isCOModalOpen);
-  };
-  const toggleBAModal = () => {
-    setIsBAModalOpen(!isBAModalOpen);
-  };
-  const toggleNMDModal = () => {
-    setIsNMDModalOpen(!isNMDModalOpen);
-  };
-  const toggleRRMModal = () => {
-    setIsRRMModalOpen(!isRRMModalOpen);
-  };
-  const toggleRMTModal = () => {
-    setIsRMTModalOpen(!isRMTModalOpen);
-  };
-  const toggleRTModal = () => {
-    setIsRTModalOpen(!isRTModalOpen);
-  };
-  const toggleRMLModal = () => {
-    setIsRMLModalOpen(!isRMLModalOpen);
-  };
-  const toggleRMAModal = () => {
-    setIsRMAModalOpen(!isRMAModalOpen);
-  };
-  const toggleCFModal = () => {
-    setIsCFModalOpen(!isCFModalOpen);
-  };
-  const toggleDRModal = () => {
-    setIsDRModalOpen(!isDRModalOpen);
-  };
-  const toggleCAModal = () => {
-    setIsCAModalOpen(!isCAModalOpen);
-  };
-  const togglePModal = () => {
-    setIsPModalOpen(!isPModalOpen);
-  };
-  const toggleBIModal = () => {
-    setIsBIModalOpen(!isBIModalOpen);
-  };
-  const toggleWModal = () => {
-    setIsWModalOpen(!isWModalOpen);
+  const toggleExtraAnswerModal = () => {
+    setIsExtraAnswerModalOpen(!isExtraAnswerModalOpen);
   };
 
   // RTK hooks
@@ -750,11 +685,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleCOModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
 
@@ -861,11 +791,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleBAModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* New mortgage details */}
@@ -971,11 +896,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleNMDModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* Recommending repayment method */}
@@ -1132,11 +1052,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleRRMModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* recommending_mortgage_type */}
@@ -1287,11 +1202,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleRMTModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* recommending_term */}
@@ -1357,11 +1267,6 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleRTModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* recommending_mortgage_lender  */}
@@ -1475,11 +1380,6 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleRMLModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* recommending_mortgage_amount  */}
@@ -1593,11 +1493,6 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleRMAModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* costs_fees */}
@@ -1693,11 +1588,6 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleCFModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* disadvantage_risks  */}
@@ -1912,11 +1802,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleDRModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* cost_advice */}
@@ -2014,11 +1899,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleCAModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* protection */}
@@ -2176,11 +2056,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={togglePModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* buildings_insurance */}
@@ -2347,11 +2222,6 @@ const SuitabilityContent: React.FC = () => {
                 </FormGroup>
               </>
             )}
-            <div className="d-flex justify-content-start align-items-center">
-              <Button color="success" onClick={toggleBIModal}>
-                Add More Answer
-              </Button>
-            </div>
           </CardBody>
         </Card>
         {/* wills  */}
@@ -2443,8 +2313,25 @@ const SuitabilityContent: React.FC = () => {
                 />
               </FormGroup>
             )}
+          </CardBody>
+        </Card>
+        {/* Extra question answer  */}
+        <Card className="border-1 border-info mt-3">
+          <CardHeader className="d-flex justify-content-between align-items-center">
+            <h4>Extra Question Answers</h4>
+          </CardHeader>
+          <CardBody>
+            <FormGroup>
+              <Label>Answer 1</Label>
+              <Input
+                type="textarea"
+                readOnly
+                name="question_one_answer"
+                rows="5"
+              />
+            </FormGroup>
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="secondary" onClick={toggleWModal}>
+              <Button color="success" onClick={toggleExtraAnswerModal}>
                 Add More Answer
               </Button>
             </div>
@@ -2460,49 +2347,9 @@ const SuitabilityContent: React.FC = () => {
       </Form>
       {/* Modal Components */}
       <CircumstancesObjectivesAnswerModal
-        isOpen={isCOModalOpen}
-        toggle={toggleCOModal}
+        isOpen={isExtraAnswerModalOpen}
+        toggle={toggleExtraAnswerModal}
       />
-      <BudgetAffordabilityAnswerModal
-        isOpen={isBAModalOpen}
-        toggle={toggleBAModal}
-      />
-      <NewMortgageDetailsAnswerModal
-        isOpen={isNMDModalOpen}
-        toggle={toggleNMDModal}
-      />
-      <RecommendingRepaymentMethodAnswerModal
-        isOpen={isRRMModalOpen}
-        toggle={toggleRRMModal}
-      />
-      <RecommendingMortgageTypeAnswerModal
-        isOpen={isRMTModalOpen}
-        toggle={toggleRMTModal}
-      />
-      <RecommendingTermAnswerModal
-        isOpen={isRTModalOpen}
-        toggle={toggleRTModal}
-      />
-      <RecommendingMortgageLenderAnswerModal
-        isOpen={isRMLModalOpen}
-        toggle={toggleRMLModal}
-      />
-      <RecommendingMortgageAmountAnswerModal
-        isOpen={isRMAModalOpen}
-        toggle={toggleRMAModal}
-      />
-      <CostsFeesAnswerModal isOpen={isCFModalOpen} toggle={toggleCFModal} />
-      <DisadvantageRisksAnswerModal
-        isOpen={isDRModalOpen}
-        toggle={toggleDRModal}
-      />
-      <CostAdviceAnswerModal isOpen={isCAModalOpen} toggle={toggleCAModal} />
-      <ProtectionAnswerModal isOpen={isPModalOpen} toggle={togglePModal} />
-      <BuildingsInsuranceAnswerModal
-        isOpen={isBIModalOpen}
-        toggle={toggleBIModal}
-      />
-      <WillsAnswerModal isOpen={isWModalOpen} toggle={toggleWModal} />
     </>
   );
 };
