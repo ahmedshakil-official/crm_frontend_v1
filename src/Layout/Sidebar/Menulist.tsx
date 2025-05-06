@@ -72,22 +72,22 @@ const Menulist: React.FC<MenuListType> = ({
         return (
           <li
             key={index}
-            className={`${level === 0 ? "sidebar-list" : ""} ${
+            className={`nav-item ${level === 0 ? "sidebar-list" : ""} ${
               pinedMenu.includes(item.title) ? "pined" : ""
             } ${isCurrentActive ? "active" : ""}`}
           >
             {level === 0 && (
               <i
-                className="fa-solid fa-thumbtack"
+                className="fa-solid fa-thumbtack position-absolute"
                 onClick={() => dispatch(handlePined(item.title))}
               ></i>
             )}
 
             <Link
               href={item.path || "#"}
-              className={`${level === 0 ? "sidebar-link" : ""} ${
-                isCurrentActive ? "active" : ""
-              }`}
+              className={`nav-link d-flex align-items-center ${
+                level === 0 ? "sidebar-link" : ""
+              } ${isCurrentActive ? "active" : ""}`}
               onClick={(e) => {
                 if (!item.path) e.preventDefault();
                 const newActive = [...activeMenu];
@@ -96,21 +96,23 @@ const Menulist: React.FC<MenuListType> = ({
                 setActiveMenu(newActive);
               }}
             >
-              {item.icon && <SVG className="stroke-icon" iconId={item.icon} />}
+              {item.icon && (
+                <SVG className="stroke-icon me-2" iconId={item.icon} />
+              )}
               {!item.icon ? (
-                t(item.title)
+                <span className="flex-grow-1">{t(item.title)}</span>
               ) : (
-                <h6 className={item.lanClass}>{t(item.title)}</h6>
+                <h6 className={`mb-0 ${item.lanClass}`}>{t(item.title)}</h6>
               )}
               {item.badge && (
-                <Badge pill color="primary">
+                <Badge pill color="primary" className="ms-auto">
                   {item.badge}
                 </Badge>
               )}
               {hasChildren && (
                 <i
-                  className={`iconly-Arrow-Right-2 icli ${
-                    level !== 0 ? "custom-menu-arrow" : ""
+                  className={`iconly-Arrow-Right-2 icli ms-auto ${
+                    isCurrentActive ? "custom-menu-arrow" : ""
                   }`}
                 ></i>
               )}
@@ -118,11 +120,11 @@ const Menulist: React.FC<MenuListType> = ({
 
             {hasChildren && (
               <ul
-                className={`simple-list ${
+                className={`nav flex-column ${
                   level === 0 ? "sidebar-submenu" : "according-submenu"
                 }`}
                 style={{
-                  display: isCurrentActive ? "block" : "none",
+                  display: "block",
                 }}
               >
                 <Menulist
