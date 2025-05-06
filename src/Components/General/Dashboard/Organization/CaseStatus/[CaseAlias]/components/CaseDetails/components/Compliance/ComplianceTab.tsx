@@ -12,12 +12,47 @@ import { ComplianceRatingCard } from "./ComplianceTabContents/ComplianceRatingCa
 import { ComplianceTabContents } from "./ComplianceTabContents";
 import { useAppSelector } from "@/Redux/Hooks";
 import { RootState } from "@/Redux/Store";
+import { useUpdateComplianceMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 export const ComplianceTab = () => {
+  const { casealias } = useParams();
   const [basicTab, setBasicTab] = useState("1");
   const complianceState = useAppSelector(
     (state: RootState) => state.compliance
   );
+  const [updateCompliance, { isLoading: isUpdating }] =
+    useUpdateComplianceMutation();
+
+  // Update this to use the Redux state
+  const handleUpdateAll = async () => {
+    try {
+      const changedFields = Object.entries(complianceState).reduce(
+        (acc, [key, value]) => {
+          if (value !== null) {
+            (acc as Record<string, any>)[key] = value;
+          }
+          return acc;
+        },
+        {}
+      );
+
+      if (Object.keys(changedFields).length > 0) {
+        const res = await updateCompliance({
+          case_alias: casealias,
+          payload: changedFields,
+        });
+        if (res.data) {
+          toast.success("Compliance data updated successfully");
+        } else {
+          toast.error("Failed to update compliance data");
+        }
+      }
+    } catch (error) {
+      console.error("Failed to update compliance data:", error);
+    }
+  };
 
   return (
     <Col xxl="12" className="px-5">
@@ -59,12 +94,10 @@ export const ComplianceTab = () => {
             <div className="d-flex justify-content-end mb-3">
               <button
                 className="btn btn-primary"
-                onClick={() => {
-                  // Add your update logic here
-                  console.log("Updated data", complianceState);
-                }}
+                onClick={handleUpdateAll}
+                disabled={isUpdating}
               >
-                Update
+                {isUpdating ? "Updating..." : "Update"}
               </button>
             </div>
           </CardBody>

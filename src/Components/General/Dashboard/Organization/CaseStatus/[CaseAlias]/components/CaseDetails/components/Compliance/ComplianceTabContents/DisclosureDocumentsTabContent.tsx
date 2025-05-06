@@ -27,7 +27,9 @@ const DisclosureDocumentsTabContent: FC = () => {
       name: "terms_of_business",
       textName: "terms_of_business_text",
       answer: updatedComplianceData?.terms_of_business || complianceData?.terms_of_business || null,
-      comment: updatedComplianceData?.terms_of_business_text || complianceData?.terms_of_business_text || null,
+      comment: updatedComplianceData?.terms_of_business_text !== undefined 
+        ? updatedComplianceData.terms_of_business_text 
+        : complianceData?.terms_of_business_text || null,
     },
     {
       reference: "1.2",
@@ -54,7 +56,7 @@ const DisclosureDocumentsTabContent: FC = () => {
     );
   };
 
-  const handleCommentChange = (name: string, value: string) => {
+  const handleCommentChange = (name: string, value: string|null) => {
     dispatch(
       updateComplianeComment({ field: name as keyof ComplianceState, value })
     );

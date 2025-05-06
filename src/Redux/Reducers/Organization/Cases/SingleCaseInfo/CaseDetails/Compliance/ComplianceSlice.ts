@@ -24,14 +24,14 @@ const complianceSlice = createSlice({
   reducers: {
     updateComplianeAnswer: (
       state,
-      action: PayloadAction<{ field: keyof ComplianceState; value: string }>
+      action: PayloadAction<{ field: keyof ComplianceState; value: string | null }>
     ) => {
       const { field, value } = action.payload;
       state[field] = value;
     },
     updateComplianeComment: (
       state,
-      action: PayloadAction<{ field: keyof ComplianceState; value: string }>
+      action: PayloadAction<{ field: keyof ComplianceState; value: string | null }>
     ) => {
       const { field, value } = action.payload;
       state[field] = value;
