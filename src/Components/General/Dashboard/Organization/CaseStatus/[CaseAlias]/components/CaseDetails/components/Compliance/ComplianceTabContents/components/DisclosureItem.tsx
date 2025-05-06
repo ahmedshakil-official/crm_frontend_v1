@@ -2,17 +2,27 @@ import { FC } from "react";
 import { Button, Col, FormGroup, Input, Row } from "reactstrap";
 
 interface DisclosureItemProps {
-  reference: string; // Changed from 'ref' to 'reference' to avoid conflicts with React's ref
+  name: string;
+  textName: string;
+  reference: string;
   title: string;
   answer: string | null;
+  comment: string | null;
   index: number;
+  onAnswerChange: (name: string, value: string) => void;
+  onCommentChange: (name: string, value: string) => void;
 }
 
 export const DisclosureItem: FC<DisclosureItemProps> = ({
+  name,
+  textName,
   reference,
   title,
   answer,
+  comment,
   index,
+  onAnswerChange,
+  onCommentChange,
 }) => {
   return (
     <Row
@@ -34,13 +44,15 @@ export const DisclosureItem: FC<DisclosureItemProps> = ({
           <FormGroup check className="rounded-2">
             <Input
               type="select"
-              name={`answer-${reference}`}
-              id={`answer-${reference}`}
+              name={`answer-${name}`}
+              id={`answer-${name}`}
               className="me-2 border-success"
+              value={answer || ""}
+              onChange={(e) => onAnswerChange(name, e.target.value)}
             >
               <option value="YES">Yes</option>
               <option value="NO">No</option>
-              <option value="NA">Not Applicable</option>
+              <option value="N/A">Not Applicable</option>
             </Input>
           </FormGroup>
         </div>
@@ -53,7 +65,7 @@ export const DisclosureItem: FC<DisclosureItemProps> = ({
       >
         <Button
           color="primary"
-          id={`documentsButton-${reference}`}
+          id={`documentsButton-${name}`}
           className="px-3 py-2 rounded-2 text-nowrap w-100 w-md-auto"
           outline
         >
@@ -65,10 +77,12 @@ export const DisclosureItem: FC<DisclosureItemProps> = ({
       <Col xs={12} className="mt-3">
         <Input
           type="textarea"
-          name={`comment-${reference}`}
-          id={`comment-${reference}`}
+          name={`comment-${textName}`}
+          id={`comment-${textName}`}
           placeholder="Add your comments here..."
           className="form-control border"
+          value={comment || ""}
+          onChange={(e) => onCommentChange(textName, e.target.value)}
           style={{
             minHeight: "80px",
             resize: "none",

@@ -19,15 +19,13 @@ export const ComplianceTabContents: FC<FeesTabContentProps> = ({
   tabId,
   setTabId,
 }) => {
-  const renderTabContent = () => {
-    const { casealias } = useParams();
-    // rtk hooks
-    const { data: complianceData, isLoading } = useGetComplianceQuery({
-      case_alias: casealias,
-    });
-    const [updateCompliance, { isLoading: isUpdating }] =
-      useUpdateComplianceMutation();
+  const { casealias } = useParams();
+  // rtk hooks
+  const { data: complianceData, isLoading } = useGetComplianceQuery({
+    case_alias: casealias,
+  });
 
+  const renderTabContent = () => {
     switch (tabId) {
       case "1":
         return <DisclosureDocumentsTabContent />;
@@ -52,5 +50,9 @@ export const ComplianceTabContents: FC<FeesTabContentProps> = ({
     }
   };
 
-  return <div className="p-4">{renderTabContent()}</div>;
+  return (
+    <div className="p-4">
+      {renderTabContent()}
+    </div>
+  );
 };
