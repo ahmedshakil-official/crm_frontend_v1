@@ -6,7 +6,7 @@ import { useAppSelector } from "@/Redux/Hooks"
 import { useTranslation } from "react-i18next"
 
 const SidebarMenuList = () => {
-  const [activeMenu, setActiveMenu] = useState([]);
+  const [activeMenu, setActiveMenu] = useState<string[]>(["", "", ""]);
   const { pinedMenu } = useAppSelector((state) => state.layout);
   const shouldHideMenu = (mainMenu: MenuItem) => {return mainMenu?.Items?.map((data) => data.title).every((titles) =>pinedMenu.includes(titles || ""));};
   const { t } = useTranslation("common");

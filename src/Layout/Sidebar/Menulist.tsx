@@ -1,143 +1,141 @@
 import SVG from "@/CommonComponent/SVG";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { handlePined } from "@/Redux/Reducers/LayoutSlice";
-import { MenuListType, SidebarItemTypes } from "@/Types/LayoutTypes";
+import { MenuListType } from "@/Types/LayoutTypes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "reactstrap";
 
 const Menulist: React.FC<MenuListType> = ({
   menu,
-  setActiveMenu,
   activeMenu,
-  level,
+  setActiveMenu,
+  level = 0,
 }) => {
   const { pinedMenu } = useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const { t } = useTranslation("common");
-  const ActiveNavLinkUrl = (path?: string, active?: boolean) => {
-    return pathname === path ? (active ? active : true) : "";
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  // Utility to check if current path matches the menu item
+  const isActive = (item: any): boolean => {
+    if (item.path && pathname === item.path) return true;
+    if (item.children) {
+      return item.children.some((child: any) => isActive(child));
+    }
+    return false;
   };
 
-  const shouldSetActive = ({ item }: SidebarItemTypes) => {
-    var returnValue = false;
-    if (item?.path === pathname) {
-      returnValue = true;
-    }
-    if (!returnValue && item?.children) {
-      item?.children.every((subItem) => {
-        returnValue = shouldSetActive({ item: subItem });
-        return !returnValue;
-      });
-    }
-    return returnValue;
-  };
-
+  // Set active menu items recursively on mount and route change
   useEffect(() => {
-    menu?.forEach((item: any) => {
-      let gotValue = shouldSetActive({ item });
-      if (gotValue) {
-        let temp = [...activeMenu];
-        temp[level] = t(item.title);
-        setActiveMenu(temp);
-      }
-    });
-    ActiveNavLinkUrl();
-  }, []);
+    if (initialLoad || pathname) {
+      const newActiveMenu = [...activeMenu];
+
+      const findActiveTrail = (items: any[], depth: number): boolean => {
+        for (const item of items) {
+          if (isActive(item)) {
+            newActiveMenu[depth] = item.title;
+            return true;
+          }
+
+          if (item.children) {
+            const foundInChildren = findActiveTrail(item.children, depth + 1);
+            if (foundInChildren) {
+              newActiveMenu[depth] = item.title;
+              return true;
+            }
+          }
+        }
+        return false;
+      };
+
+      menu && findActiveTrail(menu, level);
+      setActiveMenu(newActiveMenu);
+      setInitialLoad(false);
+    }
+  }, [pathname, menu, initialLoad]);
 
   return (
     <>
-      {menu?.map((item, index) => (
-        <li
-          key={index}
-          className={`${level === 0 ? "sidebar-list" : ""} ${
-            pinedMenu.includes(item.title || "") ? "pined" : ""
-          } ${
-            (item.children
-              ? item.children
-                  .map((innerItem) => ActiveNavLinkUrl(innerItem.path))
-                  .includes(true)
-              : ActiveNavLinkUrl(item.path)) || activeMenu[level] === item.title
-              ? "active"
-              : ""
-          } `}
-        >
-          {level === 0 && (
-            <i
-              className="fa-solid fa-thumbtack"
-              onClick={() => dispatch(handlePined(item.title))}
-            ></i>
-          )}
-          <Link
-            className={`${level / 2 === 0 ? "sidebar-link" : ""} ${
-              (item.children
-                ? item.children
-                    .map((innerItem) => ActiveNavLinkUrl(innerItem.path))
-                    .includes(true)
-                : ActiveNavLinkUrl(item.path)) ||
-              activeMenu[level] === item.title
-                ? "active"
-                : ""
-            }`}
-            href={item?.path ? item?.path : ""}
-            onClick={() => {
-              const temp = activeMenu;
-              temp[level] = item.title !== temp[level] && item.title;
-              setActiveMenu([...temp]);
-            }}
+      {menu?.map((item: any, index) => {
+        const hasChildren = !!item.children;
+        const isCurrentActive =
+          initialLoad ||
+          (hasChildren &&
+            item.children?.some((child: any) => isActive(child))) ||
+          item.path === pathname ||
+          activeMenu[level] === item.title;
+
+        return (
+          <li
+            key={index}
+            className={`${level === 0 ? "sidebar-list" : ""} ${
+              pinedMenu.includes(item.title) ? "pined" : ""
+            } ${isCurrentActive ? "active" : ""}`}
           >
-            {item.icon && <SVG className={`stroke-icon`} iconId={item.icon} />}
-            {!item.icon ? (
-              t(item.title)
-            ) : (
-              <h6 className={item.lanClass && item.lanClass}>
-                {t(item.title)}
-              </h6>
-            )}
-            {/* {item.badge && (
-              <Badge pill color="primary">
-                {item.badge}
-              </Badge>
-            )} */}
-            {item.children && (
+            {level === 0 && (
               <i
-                className={`iconly-Arrow-Right-2 icli ${
-                  level / 2 !== 0 ? "custom-menu-arrow" : ""
-                }`}
+                className="fa-solid fa-thumbtack"
+                onClick={() => dispatch(handlePined(item.title))}
               ></i>
             )}
-          </Link>
-          {item.children && (
-            <ul
-              className={` simple-list ${
-                level / 2 === 0 ? "sidebar-submenu" : "according-submenu"
+
+            <Link
+              href={item.path || "#"}
+              className={`${level === 0 ? "sidebar-link" : ""} ${
+                isCurrentActive ? "active" : ""
               }`}
-              style={{
-                display: `${
-                  (item.children
-                    ? item.children
-                        .map((innerItem) => ActiveNavLinkUrl(innerItem.path))
-                        .includes(true)
-                    : ActiveNavLinkUrl(item.path)) ||
-                  activeMenu[level] === item.title
-                    ? "block"
-                    : "none"
-                }`,
+              onClick={(e) => {
+                if (!item.path) e.preventDefault();
+                const newActive = [...activeMenu];
+                newActive[level] =
+                  newActive[level] === item.title ? "" : item.title;
+                setActiveMenu(newActive);
               }}
             >
-              <Menulist
-                menu={item.children}
-                activeMenu={activeMenu}
-                setActiveMenu={setActiveMenu}
-                level={level + 1}
-              />
-            </ul>
-          )}
-        </li>
-      ))}
+              {item.icon && <SVG className="stroke-icon" iconId={item.icon} />}
+              {!item.icon ? (
+                t(item.title)
+              ) : (
+                <h6 className={item.lanClass}>{t(item.title)}</h6>
+              )}
+              {item.badge && (
+                <Badge pill color="primary">
+                  {item.badge}
+                </Badge>
+              )}
+              {hasChildren && (
+                <i
+                  className={`iconly-Arrow-Right-2 icli ${
+                    level !== 0 ? "custom-menu-arrow" : ""
+                  }`}
+                ></i>
+              )}
+            </Link>
+
+            {hasChildren && (
+              <ul
+                className={`simple-list ${
+                  level === 0 ? "sidebar-submenu" : "according-submenu"
+                }`}
+                style={{
+                  display: isCurrentActive ? "block" : "none",
+                }}
+              >
+                <Menulist
+                  menu={item.children || []}
+                  activeMenu={activeMenu}
+                  setActiveMenu={setActiveMenu}
+                  level={level + 1}
+                />
+              </ul>
+            )}
+          </li>
+        );
+      })}
     </>
   );
 };
