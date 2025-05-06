@@ -111,9 +111,12 @@ const Menulist: React.FC<MenuListType> = ({
               )}
               {hasChildren && (
                 <i
-                  className={`iconly-Arrow-Right-2 icli ms-auto ${
-                    isCurrentActive ? "custom-menu-arrow" : ""
-                  }`}
+                  className="fa fa-chevron-right ms-auto"
+                  style={{
+                    transform: isCurrentActive ? "rotate(90deg)" : "rotate(0)",
+                    transition: "transform 0.3s ease",
+                    marginLeft: "8px",
+                  }}
                 ></i>
               )}
             </Link>
