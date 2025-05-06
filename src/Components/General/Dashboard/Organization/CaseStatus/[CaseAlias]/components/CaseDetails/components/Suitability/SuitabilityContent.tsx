@@ -1,5 +1,6 @@
 import { defaultAnswersData } from "@/Data/Organization/Case/CaseDetails/SuitabilityData";
 import {
+  useGetExtraAnswerQuery,
   useGetSuitabilityQuery,
   useUpdateSuitabilityMutation,
 } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Suitability/SuitabilityApi";
@@ -158,6 +159,10 @@ const SuitabilityContent: React.FC = () => {
   });
   const [updateSuitability, { isLoading: isUpdating }] =
     useUpdateSuitabilityMutation();
+  const { data: extraAnswersData, isLoading: isExtraAnswerLoading } =
+    useGetExtraAnswerQuery({
+      case_alias: casealias,
+    });
 
   // Set initial form data when API data is available
   useEffect(() => {
@@ -547,7 +552,7 @@ const SuitabilityContent: React.FC = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isExtraAnswerLoading) {
     return (
       <div>
         <LoadingSpinner />
@@ -2327,15 +2332,59 @@ const SuitabilityContent: React.FC = () => {
             </h4>
           </CardHeader>
           <CardBody>
-            <FormGroup>
-              <Label>Question Name: </Label>
-              <Input
-                type="textarea"
-                readOnly
-                name="question_one_answer"
-                rows="5"
-              />
-            </FormGroup>
+            {extraAnswersData?.length > 0 ? (
+              extraAnswersData.map((extraAnswer: any) => (
+                <FormGroup key={extraAnswer?.alias}>
+                  <Label>
+                    <strong>Question Name:</strong>{" "}
+                    {extraAnswer?.section_choices ===
+                      "YOUR_CIRCUMSTANCES_AND_OBJECTIVES" &&
+                      "Your circumstances and objectives"}
+                    {extraAnswer?.section_choices ===
+                      "BUDGET_AND_AFFORDABILITY" && "Budget and affordability"}
+                    {extraAnswer?.section_choices === "NEW_MORTGAGE_DETAILS" &&
+                      "New mortgage details"}
+                    {extraAnswer?.section_choices ===
+                      "RECOMMENDED_REPAYMENT_METHOD" &&
+                      "Why are we recommending this repayment method?"}
+                    {extraAnswer?.section_choices ===
+                      "RECOMMENDED_MORTGAGE_TYPE" &&
+                      "Why are we recommending this mortgage type?"}
+                    {extraAnswer?.section_choices === "RECOMMENDED_TERM" &&
+                      "Why are we recommending this term?"}
+                    {extraAnswer?.section_choices === "RECOMMENDED_LENDER" &&
+                      "Why are we recommending this mortgage lender?"}
+                    {extraAnswer?.section_choices === "RECOMMENDED_AMOUNT" &&
+                      "Why are we recommending this mortgage amount?"}
+                    {extraAnswer?.section_choices === "COSTS_AND_FEES" &&
+                      "What are the costs and fees?"}
+                    {extraAnswer?.section_choices ===
+                      "DISADVANTAGES_AND_RISKS" &&
+                      "What are the disadvantages and risks?"}
+                    {extraAnswer?.section_choices === "COST_OF_ADVICE" &&
+                      "What is the cost of our advice?"}
+                    {extraAnswer?.section_choices === "PROTECTION" &&
+                      "What is the protection?"}
+                    {extraAnswer?.section_choices === "BUILDINGS_INSURANCE" &&
+                      "What is the buildings insurance?"}
+                    {extraAnswer?.section_choices === "WILLS" &&
+                      "What is the wills?"}
+                  </Label>
+                  <Input
+                    type="textarea"
+                    readOnly
+                    name="question_one_answer"
+                    rows="5"
+                    value={extraAnswer?.answer}
+                  />
+                </FormGroup>
+              ))
+            ) : (
+              <div className="text-center text-muted">
+                No extra answers found
+              </div>
+            )}
+
             <div className="d-flex justify-content-start align-items-center">
               <Button color="info" onClick={toggleExtraAnswerModal}>
                 Add More Answer
