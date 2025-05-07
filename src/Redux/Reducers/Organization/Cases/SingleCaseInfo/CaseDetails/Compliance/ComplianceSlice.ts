@@ -105,6 +105,7 @@ const initialState: ComplianceState = {
   has_budget_planner_been_completed_text: undefined,
   has_all_direct_debits_been_recorded: undefined,
   has_all_direct_debits_been_recorded_text: undefined,
+  // 
   has_adviser_sourced_mortgage_requirements: undefined,
   has_adviser_sourced_mortgage_requirement_text: undefined,
   does_figures_stated_in_mortgage_requirements: undefined,

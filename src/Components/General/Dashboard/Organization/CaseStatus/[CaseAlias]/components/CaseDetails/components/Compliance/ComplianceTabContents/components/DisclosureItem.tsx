@@ -66,7 +66,7 @@ export const DisclosureItem: FC<DisclosureItemProps> = ({
         <Button
           color="primary"
           id={`documentsButton-${name}`}
-          className="px-3 py-2 rounded-2 text-nowrap w-100 w-md-auto"
+          className="px-3 py-2 rounded-2 w-100 w-md-auto"
           outline
         >
           <i className="fas fa-file-alt me-2"></i>
