@@ -55,13 +55,14 @@ export const authoption: NextAuthOptions = {
             email: credentials.email,
             password: credentials.password,
           });
-          console.log("API response:", response);
+          // console.log("API response:", response);
 
           if (response.data?.access) {
             return {
               id: response.data.user_id || "default_id",
               name: `${response.data.user.first_name || ''} ${response.data.user.last_name || ''}` || credentials.email,
               email: credentials.email,
+              profile_image: response.data.user.profile_image || null,
               token: response.data.access, // Attach JWT token
             };
           }
