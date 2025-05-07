@@ -344,8 +344,8 @@ const CaseTable: React.FC = () => {
             <PaginationLink last onClick={() => setCurrentPage(pageCount)} />
           </PaginationItem>
         </Pagination>
-        <div className="px-2 pb-4">
-          <p className="text-danger opacity-75">Maximum Showing Result 20 Per Page.</p>
+        <div className="px-2 pt-0 pb-4">
+          <p className="text-danger opacity-75">Showing up to 20 results per page.</p>
         </div>
       </CardBody>
 
