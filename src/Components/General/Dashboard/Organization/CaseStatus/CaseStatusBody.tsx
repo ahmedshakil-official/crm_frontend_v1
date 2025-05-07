@@ -114,6 +114,9 @@ const CaseStatusBody: React.FC = () => {
           </tbody>
         </Table>
       </Row>
+      <div className="px-2">
+        <p className="text-danger opacity-75">Maximum Showing Result 5.</p>
+      </div>
     </div>
   );
 };

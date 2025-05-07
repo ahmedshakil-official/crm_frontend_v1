@@ -34,7 +34,7 @@ const CaseTable: React.FC = () => {
   const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [casesPerPage] = useState(10);
+  const [casesPerPage] = useState(20);
   const [filterIcon, setFilterIcon] = useState(false);
   const [isDeleteCaseModalOpen, setIsDeleteCaseModalOpen] = useState(false);
 
@@ -315,7 +315,8 @@ const CaseTable: React.FC = () => {
             </tbody>
           </Table>
         </Row>
-
+        
+        {/* Pagination */}
         <Pagination className="d-flex justify-content-end p-2">
           <PaginationItem disabled={currentPage === 1}>
             <PaginationLink first onClick={() => setCurrentPage(1)} />
@@ -343,6 +344,9 @@ const CaseTable: React.FC = () => {
             <PaginationLink last onClick={() => setCurrentPage(pageCount)} />
           </PaginationItem>
         </Pagination>
+        <div className="px-2 pb-4">
+          <p className="text-danger opacity-75">Maximum Showing Result 20 Per Page.</p>
+        </div>
       </CardBody>
 
       <AddNewCaseModal
