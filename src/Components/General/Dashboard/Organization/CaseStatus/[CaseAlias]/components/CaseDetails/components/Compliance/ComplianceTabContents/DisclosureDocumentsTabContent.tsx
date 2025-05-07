@@ -5,10 +5,10 @@ import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { RootState } from "@/Redux/Store";
 import {
-  ComplianceState,
   updateComplianceAnswer,
   updateComplianceComment,
 } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
+import { ComplianceState } from "@/Types/Organization/Cases/CaseDetails/ComplianceTypes";
 
 const DisclosureDocumentsTabContent: FC = () => {
   const { casealias } = useParams();
