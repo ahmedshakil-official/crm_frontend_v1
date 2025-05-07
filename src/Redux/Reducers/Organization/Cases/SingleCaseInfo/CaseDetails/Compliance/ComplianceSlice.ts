@@ -55,6 +55,7 @@ const initialState: ComplianceState = {
   proof_of_lending_text: undefined,
   proof_of_repayment: undefined,
   proof_of_repayment_text: undefined,
+  // 
   loan_details_fully_completed: undefined,
   loan_details_fully_completed_text: undefined,
   has_source_of_lead_been_recorded: undefined,
@@ -93,6 +94,7 @@ const initialState: ComplianceState = {
   has_adviser_completed_calculator_text: undefined,
   has_accountant_solicitor_details_confirmed: undefined,
   has_accountant_solicitor_details_confirmed_text: undefined,
+  // 
   has_credit_commitments_fully_completed: undefined,
   has_credit_commitments_fully_completed_text: undefined,
   is_any_credit_commitments: undefined,
