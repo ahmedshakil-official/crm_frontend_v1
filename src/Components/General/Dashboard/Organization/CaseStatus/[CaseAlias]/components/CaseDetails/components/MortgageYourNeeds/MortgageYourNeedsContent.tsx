@@ -74,6 +74,20 @@ const MortgageYourNeedsContent: React.FC = () => {
       any_incentives: formData.any_incentives,
       considering_debt_consolidation: formData.considering_debt_consolidation,
       anticipate_any_changes_notes: formData.anticipate_any_changes_notes,
+      app_one_life_cover: formData.app_one_life_cover,
+      app_one_critical_illness: formData.app_one_critical_illness,
+      app_one_income_protection: formData.app_one_income_protection,
+      app_one_asu: formData.app_one_asu,
+      app_one_pmi: formData.app_one_pmi,
+      app_one_family_income_benefit: formData.app_one_family_income_benefit,
+      app_one_buildings_and_contents: formData.app_one_buildings_and_contents,
+      app_two_life_cover: formData.app_two_life_cover,
+      app_two_critical_illness: formData.app_two_critical_illness,
+      app_two_income_protection: formData.app_two_income_protection,
+      app_two_asu: formData.app_two_asu,
+      app_two_pmi: formData.app_two_pmi,
+      app_two_family_income_benefit: formData.app_two_family_income_benefit,
+      app_two_buildings_and_contents: formData.app_two_buildings_and_contents,
       anticipate_any_changes: formData.anticipate_any_changes,
       buildings: formData.buildings,
       contents: formData.contents,
@@ -803,13 +817,24 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <Label className="d-block">Life Cover</Label>
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
-                            <FormGroup key={`lifeCover-${option}`} check inline>
+                            <FormGroup
+                              key={`app_one_life_cover-${option}`}
+                              check
+                              inline
+                            >
                               <Input
                                 type="radio"
-                                name="lifeCover"
-                                id={`lifeCover-${option}`}
+                                name="app_one_life_cover"
+                                id={`app_one_life_cover-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_one_life_cover
+                                    : !formData?.app_one_life_cover
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`lifeCover-${option}`}>
+                              <Label check for={`app_one_life_cover-${option}`}>
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -824,16 +849,26 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
                             <FormGroup
-                              key={`criticalIllness-${option}`}
+                              key={`app_one_critical_illness-${option}`}
                               check
                               inline
                             >
                               <Input
                                 type="radio"
-                                name="criticalIllness"
-                                id={`criticalIllness-${option}`}
+                                name="app_one_critical_illness"
+                                id={`app_one_critical_illness-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_one_critical_illness
+                                    : !formData?.app_one_critical_illness
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`criticalIllness-${option}`}>
+                              <Label
+                                check
+                                for={`app_one_critical_illness-${option}`}
+                              >
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -848,16 +883,26 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
                             <FormGroup
-                              key={`incomeProtection-${option}`}
+                              key={`app_one_income_protection-${option}`}
                               check
                               inline
                             >
                               <Input
                                 type="radio"
-                                name="incomeProtection"
-                                id={`incomeProtection-${option}`}
+                                name="app_one_income_protection"
+                                id={`app_one_income_protection-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_one_income_protection
+                                    : !formData?.app_one_income_protection
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`incomeProtection-${option}`}>
+                              <Label
+                                check
+                                for={`app_one_income_protection-${option}`}
+                              >
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -871,13 +916,24 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <Label className="d-block">ASU</Label>
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
-                            <FormGroup key={`asu-${option}`} check inline>
+                            <FormGroup
+                              key={`app_one_asu-${option}`}
+                              check
+                              inline
+                            >
                               <Input
                                 type="radio"
-                                name="asu"
-                                id={`asu-${option}`}
+                                name="app_one_asu"
+                                id={`app_one_asu-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_one_asu
+                                    : !formData?.app_one_asu
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`asu-${option}`}>
+                              <Label check for={`app_one_asu-${option}`}>
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -893,13 +949,24 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <Label className="d-block">PMI</Label>
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
-                            <FormGroup key={`pmi-${option}`} check inline>
+                            <FormGroup
+                              key={`app_one_pmi-${option}`}
+                              check
+                              inline
+                            >
                               <Input
                                 type="radio"
-                                name="pmi"
-                                id={`pmi-${option}`}
+                                name="app_one_pmi"
+                                id={`app_one_pmi-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_one_pmi
+                                    : !formData?.app_one_pmi
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`pmi-${option}`}>
+                              <Label check for={`app_one_pmi-${option}`}>
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -914,18 +981,25 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
                             <FormGroup
-                              key={`familyIncomeBenefit-${option}`}
+                              key={`app_one_family_income_benefit-${option}`}
                               check
                               inline
                             >
                               <Input
                                 type="radio"
-                                name="familyIncomeBenefit"
-                                id={`familyIncomeBenefit-${option}`}
+                                name="app_one_family_income_benefit"
+                                id={`app_one_family_income_benefit-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_one_family_income_benefit
+                                    : !formData?.app_one_family_income_benefit
+                                }
+                                onChange={handleInputChange}
                               />
                               <Label
                                 check
-                                for={`familyIncomeBenefit-${option}`}
+                                for={`app_one_family_income_benefit-${option}`}
                               >
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
@@ -943,16 +1017,26 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
                             <FormGroup
-                              key={`buildingsContents-${option}`}
+                              key={`app_one_buildings_and_contents-${option}`}
                               check
                               inline
                             >
                               <Input
                                 type="radio"
-                                name="buildingsContents"
-                                id={`buildingsContents-${option}`}
+                                name="app_one_buildings_and_contents"
+                                id={`app_one_buildings_and_contents-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_one_buildings_and_contents
+                                    : !formData?.app_one_buildings_and_contents
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`buildingsContents-${option}`}>
+                              <Label
+                                check
+                                for={`app_one_buildings_and_contents-${option}`}
+                              >
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -976,16 +1060,23 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
                             <FormGroup
-                              key={`lifeCover2-${option}`}
+                              key={`app_two_life_cover-${option}`}
                               check
                               inline
                             >
                               <Input
                                 type="radio"
-                                name="lifeCover2"
-                                id={`lifeCover2-${option}`}
+                                name="app_two_life_cover"
+                                id={`app_two_life_cover-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_two_life_cover
+                                    : !formData?.app_two_life_cover
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`lifeCover2-${option}`}>
+                              <Label check for={`app_two_life_cover-${option}`}>
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -1000,16 +1091,26 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
                             <FormGroup
-                              key={`criticalIllness2-${option}`}
+                              key={`app_two_critical_illness-${option}`}
                               check
                               inline
                             >
                               <Input
                                 type="radio"
-                                name="criticalIllness2"
-                                id={`criticalIllness2-${option}`}
+                                name="app_two_critical_illness"
+                                id={`app_two_critical_illness-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_two_critical_illness
+                                    : !formData?.app_two_critical_illness
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`criticalIllness2-${option}`}>
+                              <Label
+                                check
+                                for={`app_two_critical_illness-${option}`}
+                              >
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -1024,16 +1125,26 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
                             <FormGroup
-                              key={`incomeProtection2-${option}`}
+                              key={`app_two_income_protection-${option}`}
                               check
                               inline
                             >
                               <Input
                                 type="radio"
-                                name="incomeProtection2"
-                                id={`incomeProtection2-${option}`}
+                                name="app_two_income_protection"
+                                id={`app_two_income_protection-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_two_income_protection
+                                    : !formData?.app_two_income_protection
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`incomeProtection2-${option}`}>
+                              <Label
+                                check
+                                for={`app_two_income_protection-${option}`}
+                              >
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -1047,13 +1158,24 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <Label className="d-block">ASU</Label>
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
-                            <FormGroup key={`asu2-${option}`} check inline>
+                            <FormGroup
+                              key={`app_two_asu-${option}`}
+                              check
+                              inline
+                            >
                               <Input
                                 type="radio"
-                                name="asu2"
-                                id={`asu2-${option}`}
+                                name="app_two_asu"
+                                id={`app_two_asu-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                    ? formData?.app_two_asu
+                                    : !formData?.app_two_asu
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`asu2-${option}`}>
+                              <Label check for={`app_two_asu-${option}`}>
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -1069,13 +1191,20 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <Label className="d-block">PMI</Label>
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
-                            <FormGroup key={`pmi2-${option}`} check inline>
+                            <FormGroup key={`app_two_pmi-${option}`} check inline>
                               <Input
                                 type="radio"
-                                name="pmi2"
-                                id={`pmi2-${option}`}
+                                name="app_two_pmi"
+                                id={`app_two_pmi-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                   ? formData?.app_two_pmi
+                                    :!formData?.app_two_pmi
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`pmi2-${option}`}>
+                              <Label check for={`app_two_pmi-${option}`}>
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
@@ -1090,18 +1219,25 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
                             <FormGroup
-                              key={`familyIncomeBenefit2-${option}`}
+                              key={`app_two_family_income_benefit-${option}`}
                               check
                               inline
                             >
                               <Input
                                 type="radio"
-                                name="familyIncomeBenefit2"
-                                id={`familyIncomeBenefit2-${option}`}
+                                name="app_two_family_income_benefit"
+                                id={`app_two_family_income_benefit-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                  ? formData?.app_two_family_income_benefit
+                                    :!formData?.app_two_family_income_benefit
+                                }
+                                onChange={handleInputChange}
                               />
                               <Label
                                 check
-                                for={`familyIncomeBenefit2-${option}`}
+                                for={`app_two_family_income_benefit-${option}`}
                               >
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
@@ -1119,16 +1255,23 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
                             <FormGroup
-                              key={`buildingsContents2-${option}`}
+                              key={`app_two_buildings_and_contents-${option}`}
                               check
                               inline
                             >
                               <Input
                                 type="radio"
-                                name="buildingsContents2"
-                                id={`buildingsContents2-${option}`}
+                                name="app_two_buildings_and_contents"
+                                id={`app_two_buildings_and_contents-${option}`}
+                                value={option}
+                                checked={
+                                  option === "yes"
+                                   ? formData?.app_two_buildings_and_contents
+                                    :!formData?.app_two_buildings_and_contents
+                                }
+                                onChange={handleInputChange}
                               />
-                              <Label check for={`buildingsContents2-${option}`}>
+                              <Label check for={`app_two_buildings_and_contents-${option}`}>
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>
