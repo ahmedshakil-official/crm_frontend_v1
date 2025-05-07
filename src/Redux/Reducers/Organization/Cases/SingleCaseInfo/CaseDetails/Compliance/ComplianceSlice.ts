@@ -130,6 +130,7 @@ const initialState: ComplianceState = {
   interest_only_text: undefined,
   has_product_been_fully_completed: undefined,
   has_product_been_fully_completed_text: undefined,
+  // 
   personal_details_match_the_factfind: undefined,
   personal_details_match_the_factfind_text: undefined,
   does_employment_and_income_details_match: undefined,
