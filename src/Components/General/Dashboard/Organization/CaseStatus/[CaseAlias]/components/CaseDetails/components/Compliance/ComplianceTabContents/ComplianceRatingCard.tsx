@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, { FC } from "react";
+import { useGetComplianceQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
+import { useParams } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { RootState } from "@/Redux/Store";
+import {
+  updateComplianceAnswer,
+  updateComplianceComment,
+} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
+import { ComplianceState } from "@/Types/Organization/Cases/CaseDetails/ComplianceTypes";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Col, Container, FormGroup, Input, Label, Row } from "reactstrap";
-
-// ComplianceForm component (inlined for simplicity, can be imported if separate)
-interface FormData {
-  dateChecked: Date | null;
-  dateRechecked: Date | null;
-  checkedById: string;
-  remedialActionsRequired: boolean;
-  remedialActionsComplete: boolean;
-  rating: "green" | "amber" | "red" | null;
-  ratingComments: string;
-}
 
 interface Checker {
   id: string;
@@ -44,19 +42,68 @@ const ratingCriteria = {
   red: "(Grades 1-4) Serious weaknesses in fact find/record keeping and/or suitability letter. Significant doubts or difficult to prove whether customer has received suitable advice or been treated fairly.",
 };
 
-export const ComplianceRatingCard: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    dateChecked: null,
-    dateRechecked: null,
-    checkedById: "0",
-    remedialActionsRequired: false,
-    remedialActionsComplete: false,
-    rating: null,
-    ratingComments: "",
+export const ComplianceRatingCard: FC = () => {
+  const { casealias } = useParams();
+  const { data: complianceData } = useGetComplianceQuery({
+    case_alias: casealias,
   });
+  const dispatch = useAppDispatch();
+  const updatedComplianceData = useAppSelector(
+    (state: RootState) => state.compliance
+  );
 
-  const handleChange = (field: keyof FormData, value: any) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const formData: Partial<ComplianceState> = {
+    date_file_checked:
+      updatedComplianceData.date_file_checked !== undefined
+        ? updatedComplianceData.date_file_checked
+        : complianceData?.date_file_checked || "",
+    date_file_rechecked:
+      updatedComplianceData.date_file_rechecked !== undefined
+        ? updatedComplianceData.date_file_rechecked
+        : complianceData?.date_file_rechecked || "",
+    file_checked:
+      updatedComplianceData.file_checked !== undefined
+        ? updatedComplianceData.file_checked
+        : complianceData?.file_checked || "0",
+    remedial_actions_required:
+      updatedComplianceData.remedial_actions_required !== undefined
+        ? updatedComplianceData.remedial_actions_required
+        : complianceData?.remedial_actions_required || false,
+    remedial_actions_complete:
+      updatedComplianceData.remedial_actions_complete !== undefined
+        ? updatedComplianceData.remedial_actions_complete
+        : complianceData?.remedial_actions_complete || false,
+    comments:
+      updatedComplianceData.comments !== undefined
+        ? updatedComplianceData.comments
+        : complianceData?.comments || "",
+    rating_a:
+      updatedComplianceData.rating_a !== undefined
+        ? updatedComplianceData.rating_a
+        : complianceData?.rating_a || false,
+    rating_b:
+      updatedComplianceData.rating_b !== undefined
+        ? updatedComplianceData.rating_b
+        : complianceData?.rating_b || false,
+    rating_c:
+      updatedComplianceData.rating_c !== undefined
+        ? updatedComplianceData.rating_c
+        : complianceData?.rating_c || false,
+  };
+
+  const handleAnswerChange = (field: keyof ComplianceState, value: any) => {
+    if (field === "date_file_checked" || field === "date_file_rechecked") {
+      // Convert Date object to YYYY-MM-DD format
+      const formattedDate =
+        value instanceof Date ? value.toISOString().split("T")[0] : value;
+      dispatch(updateComplianceAnswer({ field, value: formattedDate }));
+    } else {
+      dispatch(updateComplianceAnswer({ field, value }));
+    }
+  };
+
+  const handleCommentChange = (field: keyof ComplianceState, value: string) => {
+    dispatch(updateComplianceComment({ field, value }));
   };
 
   const CustomInput = React.forwardRef(
@@ -85,15 +132,21 @@ export const ComplianceRatingCard: React.FC = () => {
         <Col xs={12} lg={2}>
           <FormGroup>
             <Label
-              for="dateChecked"
+              for="date_file_checked"
               className="fw-medium text-muted small mb-1"
             >
               Date File Checked
             </Label>
             <DatePicker
-              id="dateChecked"
-              selected={formData.dateChecked}
-              onChange={(date: Date) => handleChange("dateChecked", date)}
+              id="date_file_checked"
+              selected={
+                formData.date_file_checked
+                  ? new Date(formData.date_file_checked)
+                  : null
+              }
+              onChange={(date: Date) =>
+                handleAnswerChange("date_file_checked", date)
+              }
               dateFormat="dd/MM/yyyy"
               customInput={<CustomInput />}
             />
@@ -102,15 +155,21 @@ export const ComplianceRatingCard: React.FC = () => {
         <Col xs={12} lg={2}>
           <FormGroup>
             <Label
-              for="dateRechecked"
+              for="date_file_rechecked"
               className="fw-medium text-muted small mb-1"
             >
               Date File Rechecked
             </Label>
             <DatePicker
-              id="dateRechecked"
-              selected={formData.dateRechecked}
-              onChange={(date: Date) => handleChange("dateRechecked", date)}
+              id="date_file_rechecked"
+              selected={
+                formData.date_file_rechecked
+                  ? new Date(formData.date_file_rechecked)
+                  : null
+              }
+              onChange={(date: Date) =>
+                handleAnswerChange("date_file_rechecked", date)
+              }
               dateFormat="dd/MM/yyyy"
               customInput={<CustomInput />}
             />
@@ -119,7 +178,7 @@ export const ComplianceRatingCard: React.FC = () => {
         <Col xs={12} lg={3}>
           <FormGroup>
             <Label
-              for="checkedById"
+              for="file_checked"
               className="fw-medium text-muted small mb-1"
             >
               File Checked By
@@ -127,9 +186,11 @@ export const ComplianceRatingCard: React.FC = () => {
             <Input
               type="select"
               bsSize="sm"
-              id="checkedById"
-              value={formData.checkedById}
-              onChange={(e) => handleChange("checkedById", e.target.value)}
+              id="file_checked"
+              value={formData.file_checked ?? ""}
+              onChange={(e) =>
+                handleAnswerChange("file_checked", e.target.value)
+              }
             >
               {checkers.map((checker) => (
                 <option key={checker.id} value={checker.id}>
@@ -147,12 +208,11 @@ export const ComplianceRatingCard: React.FC = () => {
             <Input
               type="select"
               bsSize="sm"
-              value={formData.remedialActionsRequired ? "yes" : "no"}
+              value={
+                formData.remedial_actions_required === "YES" ? "YES" : "NO"
+              }
               onChange={(e) =>
-                handleChange(
-                  "remedialActionsRequired",
-                  e.target.value === "yes"
-                )
+                handleAnswerChange("remedial_actions_required", e.target.value)
               }
             >
               <option value="YES">Yes</option>
@@ -168,12 +228,11 @@ export const ComplianceRatingCard: React.FC = () => {
             <Input
               type="select"
               bsSize="sm"
-              value={formData.remedialActionsComplete ? "yes" : "no"}
+              value={
+                formData.remedial_actions_complete === "YES" ? "YES" : "NO"
+              }
               onChange={(e) =>
-                handleChange(
-                  "remedialActionsComplete",
-                  e.target.value === "yes"
-                )
+                handleAnswerChange("remedial_actions_complete", e.target.value)
               }
             >
               <option value="YES">Yes</option>
@@ -191,7 +250,11 @@ export const ComplianceRatingCard: React.FC = () => {
 
       <Row>
         <Col xs={12} md={8}>
-          {["green", "amber", "red"].map((rating) => (
+          {[
+            { rating: "green", field: "rating_a" },
+            { rating: "amber", field: "rating_b" },
+            { rating: "red", field: "rating_c" },
+          ].map(({ rating, field }) => (
             <div key={rating} className="d-flex align-items-start mb-4">
               <div
                 className={`d-flex align-items-center justify-content-center text-white fw-bold fs-4 me-3 rounded ${
@@ -210,8 +273,12 @@ export const ComplianceRatingCard: React.FC = () => {
                   <Input
                     type="radio"
                     name="rating"
-                    checked={formData.rating === rating}
-                    onChange={() => handleChange("rating", rating)}
+                    checked={formData[field as keyof ComplianceState] === true}
+                    onChange={() => {
+                      handleAnswerChange("rating_a", rating === "green");
+                      handleAnswerChange("rating_b", rating === "amber");
+                      handleAnswerChange("rating_c", rating === "red");
+                    }}
                   />
                 </FormGroup>
                 <p className="mb-0 mt-1" style={{ fontSize: "0.9rem" }}>
@@ -228,9 +295,9 @@ export const ComplianceRatingCard: React.FC = () => {
             </Label>
             <Input
               type="textarea"
-              id="ratingComments"
-              value={formData.ratingComments}
-              onChange={(e) => handleChange("ratingComments", e.target.value)}
+              id="comments"
+              value={formData.comments ?? ""}
+              onChange={(e) => handleCommentChange("comments", e.target.value)}
               className="form-control"
               style={{ minHeight: "190px" }}
               placeholder="Enter comments here..."
@@ -241,3 +308,5 @@ export const ComplianceRatingCard: React.FC = () => {
     </Container>
   );
 };
+
+export default ComplianceRatingCard;

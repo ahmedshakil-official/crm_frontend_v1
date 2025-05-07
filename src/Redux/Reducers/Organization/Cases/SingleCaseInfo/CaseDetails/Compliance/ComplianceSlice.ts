@@ -11,6 +11,7 @@ const initialState: ComplianceState = {
   rating_a: undefined,
   rating_b: undefined,
   rating_c: undefined,
+  // 
   terms_of_business: undefined,
   terms_of_business_text: undefined,
   privacy_notice: undefined,
@@ -198,21 +199,21 @@ const complianceSlice = createSlice({
       state,
       action: PayloadAction<{
         field: keyof ComplianceState;
-        value: string | null;
+        value: string | null | boolean;
       }>
     ) => {
       const { field, value } = action.payload;
-      (state[field] as string | null | undefined) = value;
+      (state[field] as string | null | undefined | boolean) = value;
     },
     updateComplianceComment: (
       state,
       action: PayloadAction<{
         field: keyof ComplianceState;
-        value: string | null;
+        value: string | null | boolean;
       }>
     ) => {
       const { field, value } = action.payload;
-      (state[field] as string | null | undefined) = value;
+      (state[field] as string | null | undefined | boolean) = value;
     },
     setComplianceData: (state, action: PayloadAction<ComplianceState>) => {
       return action.payload;
