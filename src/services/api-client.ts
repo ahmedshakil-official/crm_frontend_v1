@@ -9,28 +9,28 @@ const apiClient = axios.create({
   },
 });
 
-console.log("inside intercepto r  filessss", {
-  res: apiClient.defaults,
-});
+// console.log("inside intercepto r  filessss", {
+//   res: apiClient.defaults,
+// });
 
 apiClient.interceptors.request.use(
   async (config) => {
     const session = await getSession();
-    console.log("Session Data:", session); // Add detailed logging
+    // console.log("Session Data:", session); // Add detailed logging
 
     const token = session?.user?.accessToken;
-    console.log("Token:", token); // Check if the token is retrieved correctly
+    // console.log("Token:", token); // Check if the token is retrieved correctly
 
     if (token) {
       config.headers.Authorization = `JWT ${token}`;
     } else {
-      console.warn("No token found in session!");
+      // console.warn("No token found in session!");
     }
 
     return config;
   },
   (error) => {
-    console.error("Request Interceptor Error:", error);
+    // console.error("Request Interceptor Error:", error);
     return Promise.reject(error);
   }
 );
