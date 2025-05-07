@@ -6,8 +6,8 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { RootState } from "@/Redux/Store";
 import {
   ComplianceState,
-  updateComplianeAnswer,
-  updateComplianeComment,
+  updateComplianceAnswer,
+  updateComplianceComment,
 } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
 
 const DisclosureDocumentsTabContent: FC = () => {
@@ -26,18 +26,28 @@ const DisclosureDocumentsTabContent: FC = () => {
       title: "Terms of Business (Signed & Dated)",
       name: "terms_of_business",
       textName: "terms_of_business_text",
-      answer: updatedComplianceData?.terms_of_business || complianceData?.terms_of_business || null,
-      comment: updatedComplianceData?.terms_of_business_text !== undefined 
-        ? updatedComplianceData.terms_of_business_text 
-        : complianceData?.terms_of_business_text || null,
+      answer:
+        updatedComplianceData.terms_of_business !== undefined
+          ? updatedComplianceData.terms_of_business
+          : complianceData?.terms_of_business || null,
+      comment:
+        updatedComplianceData.terms_of_business_text !== undefined
+          ? updatedComplianceData.terms_of_business_text
+          : complianceData?.terms_of_business_text || null,
     },
     {
       reference: "1.2",
       title: "Privacy Notice (Signed & Dated)",
       name: "privacy_notice",
       textName: "privacy_notice_text",
-      answer: updatedComplianceData?.privacy_notice || complianceData?.privacy_notice || null,
-      comment: updatedComplianceData?.privacy_notice_text || complianceData?.privacy_notice_text || null,
+      answer:
+        updatedComplianceData.privacy_notice !== undefined
+          ? updatedComplianceData.privacy_notice
+          : complianceData?.privacy_notice || null,
+      comment:
+        updatedComplianceData.privacy_notice_text !== undefined
+          ? updatedComplianceData.privacy_notice_text
+          : complianceData?.privacy_notice_text || null,
     },
     {
       reference: "1.3",
@@ -45,20 +55,27 @@ const DisclosureDocumentsTabContent: FC = () => {
         "Fee Agreement (Signed & Dated) - are fees reasonable and in line with approved fee statement?",
       name: "fee_agreement",
       textName: "fee_agreement_text",
-      answer: updatedComplianceData?.fee_agreement || complianceData?.fee_agreement || null,
-      comment: updatedComplianceData?.fee_agreement_text || complianceData?.fee_agreement_text || null,
+      answer:
+        updatedComplianceData.fee_agreement !== undefined
+          ? updatedComplianceData.fee_agreement
+          : complianceData?.fee_agreement || null,
+      comment:
+        updatedComplianceData.fee_agreement_text !== undefined
+          ? updatedComplianceData.fee_agreement_text
+          : complianceData?.fee_agreement_text || null,
     },
   ];
 
+
   const handleAnswerChange = (name: string, value: string) => {
     dispatch(
-      updateComplianeAnswer({ field: name as keyof ComplianceState, value })
+      updateComplianceAnswer({ field: name as keyof ComplianceState, value })
     );
   };
 
   const handleCommentChange = (name: string, value: string|null) => {
     dispatch(
-      updateComplianeComment({ field: name as keyof ComplianceState, value })
+      updateComplianceComment({ field: name as keyof ComplianceState, value })
     );
   };
 
