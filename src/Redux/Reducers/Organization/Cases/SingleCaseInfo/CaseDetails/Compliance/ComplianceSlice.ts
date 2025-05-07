@@ -139,6 +139,7 @@ const initialState: ComplianceState = {
   does_property_loan_details_match_text: undefined,
   does_mortgage_application_confirm: undefined,
   does_mortgage_application_confirm_text: undefined,
+  // 
   has_suitability_letter_been_generated: undefined,
   has_suitability_letter_been_generated_text: undefined,
   post_application_changes: undefined,
