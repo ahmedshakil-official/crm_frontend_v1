@@ -1,4 +1,3 @@
-import CartHeader from "./CartHeader/CartHeader";
 import DarkMode from "./DarkMode/DarkMode";
 import Languages from "./Languages/Languages";
 import MaximizeScreen from "./MaximizeScreen/MaximizeScreen";
@@ -13,7 +12,6 @@ const HeaderRight = () => {
         <Languages />
         <ResponsiveSearch />
         <DarkMode />
-        <CartHeader />
         <NotificationHeader />
         <MaximizeScreen />
         <Profile />

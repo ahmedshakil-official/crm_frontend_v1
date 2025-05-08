@@ -1,11 +1,5 @@
 export const cartHeaderData = [
   {
-    image: "dashboard-2/1.png",
-    title: "Watch multicolor",
-    price: 500,
-    value: 1,
-  },
-  {
     image: "dashboard-2/2.png",
     title: "Microwave",
     price: 500,

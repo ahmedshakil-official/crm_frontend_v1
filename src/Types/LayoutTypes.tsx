@@ -65,13 +65,6 @@ export interface PropsTypes {
   title?: string;
 }
 
-export interface CartHeaderDataType {
-  image: string;
-  title: string;
-  price: number;
-  value: number;
-}
-
 export interface TabCustomizerType {
   toggle: () => void;
 }
