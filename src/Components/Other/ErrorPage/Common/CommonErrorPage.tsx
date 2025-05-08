@@ -12,7 +12,7 @@ const CommonErrorPage: React.FC<CommonErrorPageProps> = ({ errorIcon, title }) =
           <Col md="8" className="offset-md-2">
             <h3>{title}</h3>
             <p className="sub-content">{"The page you are attempting to reach is currently not available. This may be because the page does not exist or has been moved."}</p>
-            <Link href={`/dashboard/default`} className="btn btn-primary">
+            <Link href={`/dashboard/organization`} className="btn btn-primary">
               {"BACK TO HOME PAGE"}
             </Link>
           </Col>

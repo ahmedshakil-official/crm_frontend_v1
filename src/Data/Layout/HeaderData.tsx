@@ -42,27 +42,6 @@ export const notificationData = [
   },
 ];
 
-export const bookMarkData = [
-  {
-    icon: "cube",
-    title: "Dashboard",
-    path: "/dashboard/default",
-    color: "btn-activity-primary",
-  },
-  {
-    icon: "check",
-    title: "To-do",
-    path: "/app/todo",
-    color: "btn-activity-secondary",
-  },
-  {
-    icon: "pie",
-    title: "Chart",
-    path: "/widgets/chart",
-    color: "btn-activity-danger",
-  },
-];
-
 export const LanguagesData = [
   {
     icon: "en",

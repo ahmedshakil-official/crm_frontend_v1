@@ -30,12 +30,12 @@ export const UserForm = () => {
       email,
       password,
       redirect: false,
-      callbackUrl: "/dashboard/default",
+      callbackUrl: "/dashboard/organization",
     });
     setIsLoading(false);
     if (result?.ok) {
       toast.success("successfully Logged in Rediract......");
-      router.push(result.url || "/dashboard/default");
+      router.push(result.url || "/dashboard/organization");
     } else {
       toast.error("Invalid Credentaial...");
     }
@@ -43,7 +43,7 @@ export const UserForm = () => {
   return (
     <div>
       <div>
-        <Link className="logo" href="/dashboard/default">
+        <Link className="logo" href="/dashboard/organization">
           <Image
             width={91}
             height={27}
