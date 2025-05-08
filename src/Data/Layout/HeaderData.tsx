@@ -1,11 +1,5 @@
 export const cartHeaderData = [
   {
-    image: "dashboard-2/1.png",
-    title: "Watch multicolor",
-    price: 500,
-    value: 1,
-  },
-  {
     image: "dashboard-2/2.png",
     title: "Microwave",
     price: 500,
@@ -45,27 +39,6 @@ export const notificationData = [
     fontColor: "secondary",
     name: "Fenter Jessy",
     message: "Sometimes the simplest things are the most profound.",
-  },
-];
-
-export const bookMarkData = [
-  {
-    icon: "cube",
-    title: "Dashboard",
-    path: "/dashboard/default",
-    color: "btn-activity-primary",
-  },
-  {
-    icon: "check",
-    title: "To-do",
-    path: "/app/todo",
-    color: "btn-activity-secondary",
-  },
-  {
-    icon: "pie",
-    title: "Chart",
-    path: "/widgets/chart",
-    color: "btn-activity-danger",
   },
 ];
 

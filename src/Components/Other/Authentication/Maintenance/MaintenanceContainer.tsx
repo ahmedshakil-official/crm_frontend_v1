@@ -20,7 +20,7 @@ const MaintenanceContainer = () => {
                 <br />
                 {"Thank You For Patience"}
               </h4>
-              <Link href={`/dashboard/default`}> 
+              <Link href={`/dashboard/organization`}> 
                 <Button color="primary">{"BACK TO HOME PAGE"}</Button>
               </Link>
             </Col>

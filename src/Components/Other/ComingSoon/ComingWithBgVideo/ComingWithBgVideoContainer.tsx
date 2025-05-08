@@ -14,7 +14,7 @@ const ComingWithBgVideoContainer = () => {
             <source src={"/assets/video/auth-bg.mp4"} type="video/mp4" />
           </video>
           <div className="comingsoon-inner text-center">
-            <Link href={`/dashboard/default`}>
+            <Link href={`/dashboard/organization`}>
               <Image width={104} height={62} priority className="for-light" src={`${ImagePath}/other-images/logo-login.png`} alt="logo" />
               <Image width={104} height={62} priority className="for-dark" src={`${ImagePath}/other-images/dark-logo-login.png`} alt="logo" />
             </Link>

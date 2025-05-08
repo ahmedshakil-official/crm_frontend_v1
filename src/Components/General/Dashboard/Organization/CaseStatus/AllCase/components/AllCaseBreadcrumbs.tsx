@@ -16,7 +16,7 @@ const AllCaseBreadcrumbs: React.FC<PropsTypes> = ({ mainTitle, parent }) => {
         <Col sm="6">
           <Breadcrumb className="justify-content-sm-end align-items-center">
             <BreadcrumbItem>
-              <Link href={`/dashboard/default`}>
+              <Link href={`/dashboard/organization`}>
                 <i className="iconly-Home icli svg-color" />
               </Link>
             </BreadcrumbItem>

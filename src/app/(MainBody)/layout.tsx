@@ -3,20 +3,23 @@ import Footer from "@/Layout/Footer";
 import Header from "@/Layout/Header";
 import Sidebar from "@/Layout/Sidebar";
 import TapTop from "@/Layout/TapTop";
-import ThemeCustomizer from "@/Layout/ThemeCustomizer/ThemeCustomizerContainer";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { addSidebarTypes, setSideBarToggle } from "@/Redux/Reducers/ThemeCustomizerReducer";
+import {
+  addSidebarTypes,
+  setSideBarToggle,
+} from "@/Redux/Reducers/ThemeCustomizerReducer";
 import Store from "@/Redux/Store";
 import { useEffect } from "react";
 import { Provider } from "react-redux";
- 
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { sidebar_types, sideBarToggle } = useAppSelector((state) => state.themeCustomizer);
+  const { sidebar_types, sideBarToggle } = useAppSelector(
+    (state) => state.themeCustomizer
+  );
   const dispatch = useAppDispatch();
 
   const updateSidebarBasedOnWidth = () => {
@@ -46,16 +49,20 @@ export default function RootLayout({
 
   return (
     <Provider store={Store}>
-        <div className={`page-wrapper ${sideBarToggle ? "compact-wrapper" : sidebar_types} ${sideBarToggle ? "sidebar-open" : ""}`} id="pageWrapper">
-          <Header />
-          <div className="page-body-wrapper">
-            <Sidebar />
-            <div className="page-body">{children}</div>
-            <Footer />
-          </div>
+      <div
+        className={`page-wrapper ${
+          sideBarToggle ? "compact-wrapper" : sidebar_types
+        } ${sideBarToggle ? "sidebar-open" : ""}`}
+        id="pageWrapper"
+      >
+        <Header />
+        <div className="page-body-wrapper">
+          <Sidebar />
+          <div className="page-body">{children}</div>
+          <Footer />
         </div>
-        <TapTop />
-        <ThemeCustomizer />
+      </div>
+      <TapTop />
     </Provider>
   );
 }
