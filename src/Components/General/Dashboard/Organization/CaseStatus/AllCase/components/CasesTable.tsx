@@ -345,7 +345,10 @@ const CaseTable: React.FC = () => {
           </PaginationItem>
         </Pagination>
         <div className="px-2 pt-0 pb-4">
-          <p className="text-danger opacity-75">Showing up to 20 results per page.</p>
+          <p className="text-danger opacity-75">
+            {/* Showing {caseData?.total ? ((currentPage - 1) * casesPerPage + 1) : 0} to {Math.min(currentPage * casesPerPage, caseData?.total || 0)} of {caseData?.total || 0} cases */}
+            Showing 1 to {caseData?.length || 0} of {caseData?.length || 0} cases
+          </p>
         </div>
       </CardBody>
 
