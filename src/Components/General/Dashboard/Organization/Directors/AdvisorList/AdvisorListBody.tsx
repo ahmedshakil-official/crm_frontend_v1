@@ -17,7 +17,6 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./AdvisorList.css";
 import AddAdvisorModal from "./Modals/AddAdvisorModal";
 import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
 import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";

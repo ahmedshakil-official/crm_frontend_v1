@@ -17,7 +17,6 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./LeadList.css";
 import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";

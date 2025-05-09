@@ -17,7 +17,6 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";

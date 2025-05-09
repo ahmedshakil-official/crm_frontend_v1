@@ -17,7 +17,6 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./IntroducerList.css";
 import AddIntroducerModal from "./Modals/AddIntroducerModal";
 import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
 import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";

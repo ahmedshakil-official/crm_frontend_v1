@@ -15,7 +15,7 @@
 
 /* CSS class for the blinking eye effect */
 .eye-btn:hover i {
-  animation: blink-eye 1s ease-in-out infinite;
+  animation: blink-eye 1.5s ease-in-out infinite;
 }
 
 @keyframes blink-eye {
