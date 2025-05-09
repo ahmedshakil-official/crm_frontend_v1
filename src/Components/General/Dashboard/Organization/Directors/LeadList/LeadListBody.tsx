@@ -195,7 +195,10 @@ const LeadListBody: React.FC = () => {
                       "-"
                     )}
                   </td>
-                  <td>{lead?.role}</td>
+                  <td>
+                    {lead?.role?.charAt(0)?.toUpperCase() +
+                      lead?.role?.slice(1)?.toLowerCase()}
+                  </td>
                   <td>
                     {lead?.created_by?.first_name} {lead?.created_by?.last_name}
                   </td>

@@ -205,7 +205,10 @@ const ClientListBody: React.FC = () => {
                       "-"
                     )}
                   </td>
-                  <td>{client.role}</td>
+                  <td>
+                    {client?.role?.charAt(0)?.toUpperCase() +
+                      client?.role?.slice(1)?.toLowerCase()}
+                  </td>
                   <td>
                     {client?.created_by?.first_name}{" "}
                     {client?.created_by?.last_name}

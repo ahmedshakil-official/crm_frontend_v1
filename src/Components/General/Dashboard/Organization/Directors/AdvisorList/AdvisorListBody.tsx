@@ -204,7 +204,10 @@ const AdvisorListBody: React.FC = () => {
                       "-"
                     )}
                   </td>
-                  <td>{advisor?.role}</td>
+                  <td>
+                    {advisor?.role?.charAt(0)?.toUpperCase() +
+                      advisor?.role?.slice(1)?.toLowerCase()}
+                  </td>
                   <td>
                     {advisor?.created_by?.first_name}{" "}
                     {advisor?.created_by?.last_name}

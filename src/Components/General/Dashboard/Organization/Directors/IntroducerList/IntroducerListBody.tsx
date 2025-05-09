@@ -202,7 +202,10 @@ const IntroducerListBody: React.FC = () => {
                       "-"
                     )}
                   </td>
-                  <td>{introducer?.role}</td>
+                  <td>
+                    {introducer?.role?.charAt(0)?.toUpperCase() +
+                      introducer?.role?.slice(1)?.toLowerCase()}
+                  </td>
                   <td>
                     {introducer?.created_by?.first_name}{" "}
                     {introducer?.created_by?.last_name}
