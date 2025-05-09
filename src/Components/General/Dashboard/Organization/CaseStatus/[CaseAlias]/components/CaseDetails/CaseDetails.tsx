@@ -62,18 +62,21 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
         </CardHeader>
         {/* Tabs for Case Details */}
         <CardBody>
-          <CardHeader className="">
-            <Nav className="nav-success d-flex justify-content-center align-items-center flex-wrap gap-1 pb-2 p-0" pills>
+          <CardHeader className="p-0">
+            <Nav className="nav-success d-flex justify-content-center align-items-center flex-wrap gap-1 pb-2" pills>
               {currentTabData.map((item, index) => (
-                <NavItem key={index}>
+                <NavItem 
+                  key={index} 
+                  className="d-flex justify-content-center"
+                  style={{ flex: '1 1 auto', maxWidth: '300px' }}
+                >
                   <NavLink
                     outline
-                    style={{ width: "16rem", cursor: "pointer" }}
                     className={`${
                       basicTab === item.nav ? "active" : ""
-                    } m-2 border border-success rounded p-3 text-center`}
+                    } m-2 border border-success rounded p-3 text-center w-100`}
                     onClick={() => {
-                      dispatch(basicTabIndicator(item.nav)); // Dispatch the tab change action
+                      dispatch(basicTabIndicator(item.nav));
                     }}
                   >
                     {item.nav}
