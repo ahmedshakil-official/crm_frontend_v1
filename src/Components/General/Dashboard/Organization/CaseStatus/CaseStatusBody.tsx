@@ -96,7 +96,12 @@ const CaseStatusBody: React.FC = () => {
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Link href={`/dashboard/organization/${caseItem?.alias}`}>
-                        <Button color="primary" size="sm" title="View">
+                        <Button
+                          color="primary"
+                          size="sm"
+                          title="View"
+                          className="eye-btn"
+                        >
                           <i className="fa-regular fa-eye"></i>
                         </Button>
                       </Link>

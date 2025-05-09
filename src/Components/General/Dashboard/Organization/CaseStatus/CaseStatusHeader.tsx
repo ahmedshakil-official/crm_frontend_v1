@@ -81,7 +81,7 @@ const CaseStatusHeader: React.FC<CaseSearchProps> = ({
           <Link href="/dashboard/organization/allcase" passHref>
             <Button
               color="success"
-              className="d-flex justify-content-center align-items-center gap-1"
+              className="d-flex justify-content-center align-items-center gap-1 eye-btn"
             >
               <span>View All Case</span>
               <span>
