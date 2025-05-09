@@ -178,8 +178,30 @@ const IntroducerListBody: React.FC = () => {
                   <td>
                     {introducer?.user?.first_name} {introducer?.user?.last_name}
                   </td>
-                  <td>{introducer?.official_email}</td>
-                  <td>{introducer?.official_phone || "-"}</td>
+                  <td>
+                    {introducer?.official_email ? (
+                      <a
+                        href={`mailto:${introducer.official_email}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {introducer.official_email}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {introducer?.official_phone ? (
+                      <a
+                        href={`tel:${introducer?.official_phone}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {introducer?.official_phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
                   <td>{introducer?.role}</td>
                   <td>
                     {introducer?.created_by?.first_name}{" "}

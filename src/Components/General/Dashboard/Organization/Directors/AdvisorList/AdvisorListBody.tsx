@@ -180,8 +180,30 @@ const AdvisorListBody: React.FC = () => {
                   <td>
                     {advisor?.user?.first_name} {advisor?.user?.last_name}
                   </td>
-                  <td>{advisor?.official_email}</td>
-                  <td>{advisor?.official_phone || "-"}</td>
+                  <td>
+                    {advisor?.official_email ? (
+                      <a
+                        href={`mailto:${advisor.official_email}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {advisor.official_email}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {advisor?.official_phone ? (
+                      <a
+                        href={`tel:${advisor?.official_phone}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {advisor?.official_phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
                   <td>{advisor?.role}</td>
                   <td>
                     {advisor?.created_by?.first_name}{" "}

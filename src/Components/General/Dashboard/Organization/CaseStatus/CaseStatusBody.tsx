@@ -67,7 +67,15 @@ const CaseStatusBody: React.FC = () => {
                       ? `${caseItem?.lead_user.first_name} ${caseItem?.lead_user.last_name}`
                       : "-"}
                   </td>
-                  <td>{caseItem?.lead_user.phone || "-"}</td>
+                  <td>
+                    {caseItem?.lead_user.phone ? (
+                      <a href={`tel:${caseItem.lead_user.phone}`} className="text-primary text_decoration_hover">
+                        {caseItem.lead_user.phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
                   <td>
                     {caseItem?.case_category
                       .split("_")

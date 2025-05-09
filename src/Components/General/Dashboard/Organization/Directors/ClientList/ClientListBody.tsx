@@ -181,8 +181,30 @@ const ClientListBody: React.FC = () => {
                   <td>
                     {client?.user?.first_name} {client?.user?.last_name}
                   </td>
-                  <td>{client.official_email}</td>
-                  <td>{client.official_phone || "-"}</td>
+                  <td>
+                    {client?.official_email ? (
+                      <a
+                        href={`mailto:${client.official_email}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {client.official_email}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {client?.official_phone ? (
+                      <a
+                        href={`tel:${client?.official_phone}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {client?.official_phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
                   <td>{client.role}</td>
                   <td>
                     {client?.created_by?.first_name}{" "}

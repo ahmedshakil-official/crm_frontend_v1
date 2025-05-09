@@ -171,8 +171,30 @@ const LeadListBody: React.FC = () => {
                   <td>
                     {lead?.user?.first_name} {lead?.user?.last_name}
                   </td>
-                  <td>{lead?.official_email}</td>
-                  <td>{lead?.official_phone || "-"}</td>
+                  <td>
+                    {lead?.official_email ? (
+                      <a
+                        href={`mailto:${lead.official_email}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {lead.official_email}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {lead?.official_phone ? (
+                      <a
+                        href={`tel:${lead?.official_phone}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {lead?.official_phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
                   <td>{lead?.role}</td>
                   <td>
                     {lead?.created_by?.first_name} {lead?.created_by?.last_name}
