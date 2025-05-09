@@ -56,7 +56,7 @@ const CaseStatusBody: React.FC = () => {
                 <tr key={index}>
                   <td>
                     <Link
-                      className="custom_hover"
+                      className="text_decoration_hover"
                       href={`/dashboard/organization/${caseItem?.alias}`}
                     >
                       {caseItem?.name}
