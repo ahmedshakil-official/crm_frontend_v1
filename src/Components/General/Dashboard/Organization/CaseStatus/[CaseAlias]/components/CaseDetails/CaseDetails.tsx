@@ -63,12 +63,19 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
         {/* Tabs for Case Details */}
         <CardBody>
           <CardHeader className="p-0">
-            <Nav className="nav-success d-flex justify-content-center align-items-center flex-wrap gap-1 pb-2" pills>
+            <Nav
+              className="nav-success d-flex justify-content-center align-items-center flex-wrap gap-1 pb-2"
+              pills
+            >
               {currentTabData.map((item, index) => (
-                <NavItem 
-                  key={index} 
+                <NavItem
+                  key={index}
                   className="d-flex justify-content-center"
-                  style={{ flex: '1 1 auto', maxWidth: '300px' }}
+                  style={{
+                    flex: "1 1 auto",
+                    maxWidth: "300px",
+                    cursor: "pointer",
+                  }}
                 >
                   <NavLink
                     outline
