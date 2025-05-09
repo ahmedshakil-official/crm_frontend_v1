@@ -17,7 +17,6 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./IntroducerList.css";
 import AddIntroducerModal from "./Modals/AddIntroducerModal";
 import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
 import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
@@ -138,7 +137,7 @@ const IntroducerListBody: React.FC = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md="3" xs="12" className="d-flex justify-content-end">
+        <Col md="3" xs="12" className="d-flex justify-content-end mt-sm-0 mt-2">
           <Button
             color="primary"
             onClick={openAddModal}
@@ -179,9 +178,34 @@ const IntroducerListBody: React.FC = () => {
                   <td>
                     {introducer?.user?.first_name} {introducer?.user?.last_name}
                   </td>
-                  <td>{introducer?.official_email}</td>
-                  <td>{introducer?.official_phone || "-"}</td>
-                  <td>{introducer?.role}</td>
+                  <td>
+                    {introducer?.official_email ? (
+                      <a
+                        href={`mailto:${introducer.official_email}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {introducer.official_email}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {introducer?.official_phone ? (
+                      <a
+                        href={`tel:${introducer?.official_phone}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {introducer?.official_phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {introducer?.role?.charAt(0)?.toUpperCase() +
+                      introducer?.role?.slice(1)?.toLowerCase()}
+                  </td>
                   <td>
                     {introducer?.created_by?.first_name}{" "}
                     {introducer?.created_by?.last_name}

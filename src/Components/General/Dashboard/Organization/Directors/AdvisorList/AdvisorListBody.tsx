@@ -17,7 +17,6 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./AdvisorList.css";
 import AddAdvisorModal from "./Modals/AddAdvisorModal";
 import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
 import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
@@ -140,7 +139,7 @@ const AdvisorListBody: React.FC = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md="3" xs="12" className="d-flex justify-content-end">
+        <Col md="3" xs="12" className="d-flex justify-content-end mt-sm-0 mt-2">
           <Button
             color="primary"
             onClick={openAddModal}
@@ -181,9 +180,34 @@ const AdvisorListBody: React.FC = () => {
                   <td>
                     {advisor?.user?.first_name} {advisor?.user?.last_name}
                   </td>
-                  <td>{advisor?.official_email}</td>
-                  <td>{advisor?.official_phone || "-"}</td>
-                  <td>{advisor?.role}</td>
+                  <td>
+                    {advisor?.official_email ? (
+                      <a
+                        href={`mailto:${advisor.official_email}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {advisor.official_email}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {advisor?.official_phone ? (
+                      <a
+                        href={`tel:${advisor?.official_phone}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {advisor?.official_phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {advisor?.role?.charAt(0)?.toUpperCase() +
+                      advisor?.role?.slice(1)?.toLowerCase()}
+                  </td>
                   <td>
                     {advisor?.created_by?.first_name}{" "}
                     {advisor?.created_by?.last_name}

@@ -12,20 +12,35 @@
     transform: rotate(360deg);
   }
 }
-.custom_hover {
-  text-decoration: none;
-  color: #308e87;
+
+/* CSS class for the blinking eye effect */
+.eye-btn:hover i {
+  animation: blink-eye 1.5s ease-in-out infinite;
 }
 
-.custom_hover:hover {
-  text-decoration: underline;
+@keyframes blink-eye {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-.pagination .page-item.active .page-link {
-  background-color: #308e87 !important; /* Change active color to red */
-  color: white !important; /* Text color */
-  border-color: #308e87 !important; /* Border color */
+/* .pagination .page-item.active .page-link {
+  background-color: #308e87 !important; 
+  color: white !important; 
+  border-color: #308e87 !important; 
 }
 .pagination .page-item .page-link {
-  color: #308e87 !important; /* Text color */
-}
+  color: #308e87 !important; 
+} */

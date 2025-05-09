@@ -156,7 +156,11 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                       currentFiles.map((file, index) => (
                         <tr key={index}>
                           <td>{indexOfFirstFile + index + 1}</td>
-                          <td>{file.name || "-"}</td>
+                          <td>
+                            {file?.name
+                              ? file.name
+                              : file.file?.split("/").pop() || "-"}
+                          </td>
                           <td>
                             {file?.file_owner_info?.first_name}{" "}
                             {file?.file_owner_info?.last_name}
@@ -174,7 +178,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                           <td>
                             <div className="d-flex justify-content-center gap-2 align-items-center">
                               <a
-                                href={file.file}
+                                href={file?.file}
                                 className="btn btn-success btn-sm"
                                 target="_blank"
                                 rel="noopener noreferrer"

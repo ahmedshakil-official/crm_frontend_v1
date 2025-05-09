@@ -17,7 +17,6 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./ClientList.css";
 import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
@@ -140,7 +139,7 @@ const ClientListBody: React.FC = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md="3" xs="12" className="d-flex justify-content-end">
+        <Col md="3" xs="12" className="d-flex justify-content-end mt-sm-0 mt-2">
           <Button
             color="primary"
             onClick={openAddModal}
@@ -182,9 +181,34 @@ const ClientListBody: React.FC = () => {
                   <td>
                     {client?.user?.first_name} {client?.user?.last_name}
                   </td>
-                  <td>{client.official_email}</td>
-                  <td>{client.official_phone || "-"}</td>
-                  <td>{client.role}</td>
+                  <td>
+                    {client?.official_email ? (
+                      <a
+                        href={`mailto:${client.official_email}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {client.official_email}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {client?.official_phone ? (
+                      <a
+                        href={`tel:${client?.official_phone}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {client?.official_phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {client?.role?.charAt(0)?.toUpperCase() +
+                      client?.role?.slice(1)?.toLowerCase()}
+                  </td>
                   <td>
                     {client?.created_by?.first_name}{" "}
                     {client?.created_by?.last_name}

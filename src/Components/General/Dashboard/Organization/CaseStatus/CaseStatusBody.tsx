@@ -56,7 +56,7 @@ const CaseStatusBody: React.FC = () => {
                 <tr key={index}>
                   <td>
                     <Link
-                      className="custom_hover"
+                      className="text_decoration_hover"
                       href={`/dashboard/organization/${caseItem?.alias}`}
                     >
                       {caseItem?.name}
@@ -67,7 +67,18 @@ const CaseStatusBody: React.FC = () => {
                       ? `${caseItem?.lead_user.first_name} ${caseItem?.lead_user.last_name}`
                       : "-"}
                   </td>
-                  <td>{caseItem?.lead_user.phone || "-"}</td>
+                  <td>
+                    {caseItem?.lead_user.phone ? (
+                      <a
+                        href={`tel:${caseItem.lead_user.phone}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {caseItem.lead_user.phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
                   <td>
                     {caseItem?.case_category
                       .split("_")
@@ -96,7 +107,12 @@ const CaseStatusBody: React.FC = () => {
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Link href={`/dashboard/organization/${caseItem?.alias}`}>
-                        <Button color="primary" size="sm" title="View">
+                        <Button
+                          color="primary"
+                          size="sm"
+                          title="View"
+                          className="eye-btn"
+                        >
                           <i className="fa-regular fa-eye"></i>
                         </Button>
                       </Link>
@@ -115,7 +131,7 @@ const CaseStatusBody: React.FC = () => {
         </Table>
       </Row>
       <div className="px-2">
-        <p className="text-danger opacity-75">
+        <p className="text-success">
           Showing 1 to {Math.min(5, caseData?.length || 0)} of{" "}
           {caseData?.length || 0} cases
         </p>

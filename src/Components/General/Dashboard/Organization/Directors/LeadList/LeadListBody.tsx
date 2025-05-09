@@ -17,7 +17,6 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import "./LeadList.css";
 import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
@@ -131,7 +130,7 @@ const LeadListBody: React.FC = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md="3" xs="12" className="d-flex justify-content-end">
+        <Col md="3" xs="12" className="d-flex justify-content-end mt-sm-0 mt-2">
           <Button
             color="primary"
             onClick={openAddModal}
@@ -172,9 +171,34 @@ const LeadListBody: React.FC = () => {
                   <td>
                     {lead?.user?.first_name} {lead?.user?.last_name}
                   </td>
-                  <td>{lead?.official_email}</td>
-                  <td>{lead?.official_phone || "-"}</td>
-                  <td>{lead?.role}</td>
+                  <td>
+                    {lead?.official_email ? (
+                      <a
+                        href={`mailto:${lead.official_email}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {lead.official_email}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {lead?.official_phone ? (
+                      <a
+                        href={`tel:${lead?.official_phone}`}
+                        className="text-black text_decoration_hover"
+                      >
+                        {lead?.official_phone}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {lead?.role?.charAt(0)?.toUpperCase() +
+                      lead?.role?.slice(1)?.toLowerCase()}
+                  </td>
                   <td>
                     {lead?.created_by?.first_name} {lead?.created_by?.last_name}
                   </td>
