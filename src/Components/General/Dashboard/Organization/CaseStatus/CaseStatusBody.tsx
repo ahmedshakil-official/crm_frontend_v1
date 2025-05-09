@@ -69,7 +69,10 @@ const CaseStatusBody: React.FC = () => {
                   </td>
                   <td>
                     {caseItem?.lead_user.phone ? (
-                      <a href={`tel:${caseItem.lead_user.phone}`} className="text-primary text_decoration_hover">
+                      <a
+                        href={`tel:${caseItem.lead_user.phone}`}
+                        className="text-black text_decoration_hover"
+                      >
                         {caseItem.lead_user.phone}
                       </a>
                     ) : (

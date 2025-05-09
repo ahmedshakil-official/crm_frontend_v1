@@ -62,8 +62,8 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
         </CardHeader>
         {/* Tabs for Case Details */}
         <CardBody>
-          <CardHeader className="d-flex align-items-center flex-wrap gap-2 pb-2 p-0">
-            <Nav className="nav-success justify-content-center" pills>
+          <CardHeader className="">
+            <Nav className="nav-success d-flex justify-content-center align-items-center flex-wrap gap-1 pb-2 p-0" pills>
               {currentTabData.map((item, index) => (
                 <NavItem key={index}>
                   <NavLink

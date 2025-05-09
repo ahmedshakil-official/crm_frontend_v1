@@ -262,7 +262,7 @@ const CaseTable: React.FC = () => {
                       {caseItem?.lead_user.phone ? (
                         <a
                           href={`tel:${caseItem.lead_user.phone}`}
-                          className="text-primary text_decoration_hover"
+                          className="text-black text_decoration_hover"
                         >
                           {caseItem.lead_user.phone}
                         </a>

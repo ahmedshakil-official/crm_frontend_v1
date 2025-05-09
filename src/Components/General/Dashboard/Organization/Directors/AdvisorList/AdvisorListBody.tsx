@@ -139,7 +139,7 @@ const AdvisorListBody: React.FC = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md="3" xs="12" className="d-flex justify-content-end">
+        <Col md="3" xs="12" className="d-flex justify-content-end mt-sm-0 mt-2">
           <Button
             color="primary"
             onClick={openAddModal}
