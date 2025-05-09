@@ -120,7 +120,7 @@ const CaseStatusBody: React.FC = () => {
         </Table>
       </Row>
       <div className="px-2">
-        <p className="text-danger opacity-75">
+        <p className="text-success">
           Showing 1 to {Math.min(5, caseData?.length || 0)} of{" "}
           {caseData?.length || 0} cases
         </p>

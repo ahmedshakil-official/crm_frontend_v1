@@ -315,41 +315,50 @@ const CaseTable: React.FC = () => {
             </tbody>
           </Table>
         </Row>
-        
-        {/* Pagination */}
-        <Pagination className="d-flex justify-content-end p-2">
-          <PaginationItem disabled={currentPage === 1}>
-            <PaginationLink first onClick={() => setCurrentPage(1)} />
-          </PaginationItem>
-          <PaginationItem disabled={currentPage === 1}>
-            <PaginationLink
-              previous
-              onClick={() => setCurrentPage(currentPage - 1)}
-            />
-          </PaginationItem>
-          {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
-            <PaginationItem key={page} active={page === currentPage}>
-              <PaginationLink onClick={() => setCurrentPage(page)}>
-                {page}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          <PaginationItem disabled={currentPage === pageCount}>
-            <PaginationLink
-              next
-              onClick={() => setCurrentPage(currentPage + 1)}
-            />
-          </PaginationItem>
-          <PaginationItem disabled={currentPage === pageCount}>
-            <PaginationLink last onClick={() => setCurrentPage(pageCount)} />
-          </PaginationItem>
-        </Pagination>
-        <div className="px-2 pt-0 pb-4">
-          <p className="text-danger opacity-75">
-            {/* Showing {caseData?.total ? ((currentPage - 1) * casesPerPage + 1) : 0} to {Math.min(currentPage * casesPerPage, caseData?.total || 0)} of {caseData?.total || 0} cases */}
-            Showing 1 to {caseData?.length || 0} of {caseData?.length || 0} cases
-          </p>
-        </div>
+        <Row>
+          <div className="d-flex justify-content-between p-3">
+            <div>
+              <p className="text-success">
+                {/* Showing {caseData?.total ? ((currentPage - 1) * casesPerPage + 1) : 0} to {Math.min(currentPage * casesPerPage, caseData?.total || 0)} of {caseData?.total || 0} cases */}
+                Showing 1 to {caseData?.length || 0} of {caseData?.length || 0}{" "}
+                cases
+              </p>
+            </div>
+            <Pagination>
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink first onClick={() => setCurrentPage(1)} />
+              </PaginationItem>
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink
+                  previous
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                />
+              </PaginationItem>
+              {Array.from({ length: pageCount }, (_, i) => i + 1).map(
+                (page) => (
+                  <PaginationItem key={page} active={page === currentPage}>
+                    <PaginationLink onClick={() => setCurrentPage(page)}>
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              )}
+              <PaginationItem disabled={currentPage === pageCount}>
+                <PaginationLink
+                  next
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                />
+              </PaginationItem>
+              <PaginationItem disabled={currentPage === pageCount}>
+                <PaginationLink
+                  last
+                  onClick={() => setCurrentPage(pageCount)}
+                />
+              </PaginationItem>
+            </Pagination>
+          </div>
+          {/* Pagination */}
+        </Row>
       </CardBody>
 
       <AddNewCaseModal
