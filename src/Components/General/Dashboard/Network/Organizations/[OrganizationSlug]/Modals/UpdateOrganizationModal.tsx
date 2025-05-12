@@ -188,9 +188,9 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
                     <Image
                       src={organizationData.logo}
                       alt="Profile"
-                      className="rounded-3 border-1 border-success"
-                      width={100}
+                      width={80}
                       height={80}
+                      className="rounded-circle w-25 h-25 border-1 border-success"
                     />
                   </div>
                 ) : (
@@ -246,7 +246,7 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
               </FormGroup>{" "}
               {/* Profile Image Upload */}
               <FormGroup>
-                <Label for="profile_image">Profile Image</Label>
+                <Label for="profile_image">Banner Image</Label>
                 <Input
                   type="file"
                   id="profile_image"
@@ -259,9 +259,9 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
                     <Image
                       src={organizationData.profile_image}
                       alt="Profile"
-                      className="rounded-3 border border-success"
                       width={100}
                       height={80}
+                      className="rounded-2 w-50 border border-success"
                     />
                   </div>
                 ) : (
