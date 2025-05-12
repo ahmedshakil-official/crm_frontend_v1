@@ -181,12 +181,14 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                                 href={file?.file}
                                 className="btn btn-success btn-sm"
                                 target="_blank"
+                                title="Download"
                                 rel="noopener noreferrer"
                               >
                                 <i className="fa-solid fa-download"></i>
                               </a>
                               <button
                                 className="btn btn-danger btn-sm"
+                                title="Delete"
                                 onClick={() => handleDeleteClick(file)}
                               >
                                 <i className="fa-regular fa-trash-can"></i>
