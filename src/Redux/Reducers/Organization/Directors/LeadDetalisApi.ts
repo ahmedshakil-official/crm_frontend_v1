@@ -18,7 +18,7 @@ export const LeadDetailsApi = baseApi.injectEndpoints({
       invalidatesTags: ["LeadDetails"],
     }),
     updateLeadDetails: builder.mutation({
-      query: ({leadAlias, payload}) => ({
+      query: ({ leadAlias, payload }) => ({
         url: `/director/leads/${leadAlias}/`,
         method: "PUT",
         body: payload,

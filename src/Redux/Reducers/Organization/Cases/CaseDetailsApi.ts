@@ -8,7 +8,7 @@ export const CaseDetailsApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: ["CaseDetails"],
+      providesTags: ["CaseDetails", "LeadDetails"],
     }),
     getSingleCaseDetails: builder.query({
       query: ({ case_alias }) => ({
