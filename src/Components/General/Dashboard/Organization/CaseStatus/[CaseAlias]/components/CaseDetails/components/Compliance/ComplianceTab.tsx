@@ -97,7 +97,7 @@ export const ComplianceTab = () => {
                 onClick={handleUpdateAll}
                 disabled={isUpdating}
               >
-                {isUpdating ? "Updating..." : "Update"}
+                {isUpdating ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </CardBody>

@@ -63,16 +63,16 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
                 alt="Profile"
                 className="profile-pic object-fit-cover"
               />
-              <div className="edit-icon">
+              <div className="edit_icon">
                 <Button onClick={toggleUpdateModal}>
-                  <i className="fa fa-pencil"></i>
+                  <i className="iconly-Edit icli"></i>
                 </Button>
               </div>
             </div>
             <CardTitle tag="h3" className="mt-5 text-primary">
               {organizationInfo?.name}
             </CardTitle>
-            <CardText className="text-muted">
+            <CardText className="text-success">
               <strong>Network: </strong>{" "}
               {organizationInfo?.network?.name || "Not Avaiable"}
             </CardText>
@@ -82,7 +82,16 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
               <Col md={4}>
                 <p>
                   <strong>Email:</strong>{" "}
-                  {organizationInfo?.email || "Not Avaiable"}
+                  {organizationInfo?.email ? (
+                    <a
+                      className="text-dark text_decoration_hover"
+                      href={`mailto:${organizationInfo.email}`}
+                    >
+                      {organizationInfo.email}
+                    </a>
+                  ) : (
+                    "Not Available"
+                  )}
                 </p>
               </Col>
               <Col md={4}>
@@ -94,7 +103,16 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
               <Col md={4}>
                 <p>
                   <strong>Phone:</strong>{" "}
-                  {organizationInfo?.primary_mobile || "Not Avaiable"}
+                  {organizationInfo?.primary_mobile ? (
+                    <a
+                      className="text-dark text_decoration_hover"
+                      href={`tel:${organizationInfo.primary_mobile}`}
+                    >
+                      {organizationInfo.primary_mobile}
+                    </a>
+                  ) : (
+                    "Not Available"
+                  )}
                 </p>
               </Col>
             </Row>

@@ -301,6 +301,7 @@ const CaseTable: React.FC = () => {
                           size="sm"
                           color="success"
                           className="me-2"
+                          title="Edit Case"
                           onClick={() => openUpdateCaseModal(caseItem)}
                         >
                           <i className="icon-pencil-alt"></i>
@@ -308,6 +309,7 @@ const CaseTable: React.FC = () => {
                         <Button
                           size="sm"
                           color="danger"
+                          title="Delete Case"
                           onClick={() => openDeleteCaseModal(caseItem)}
                         >
                           <i className="icon-trash"></i>

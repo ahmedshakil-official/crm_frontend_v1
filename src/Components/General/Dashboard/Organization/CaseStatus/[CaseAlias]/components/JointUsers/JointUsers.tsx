@@ -95,10 +95,20 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
                         </div>
                       </td>
                       <td className="f-w-600">
-                        {userInfo.joint_user_details?.email}
+                        <a
+                          href={`mailto:${userInfo.joint_user_details?.email}`}
+                          className="text-dark text_decoration_hover"
+                        >
+                          {userInfo.joint_user_details?.email}
+                        </a>
                       </td>
                       <td className="font-primary f-w-600">
-                        {userInfo.joint_user_details?.phone}
+                        <a
+                          href={`tel:${userInfo.joint_user_details?.phone}`}
+                          className="text-dark text_decoration_hover"
+                        >
+                          {userInfo.joint_user_details?.phone}
+                        </a>
                       </td>
                       <td className="f-w-600">
                         {userInfo.joint_user_details?.user_type
