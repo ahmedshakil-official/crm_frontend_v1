@@ -84,7 +84,7 @@ const OrganizationCards = () => {
               className="col-ed-4 box-col-4"
               key={item.slug}
             >
-              <Card className="text-center bg-light">
+              <Card className="text-center bg-light organization_card">
                 <CardBody>
                   <div className="social-img-wrap">
                     <div className="social-img">
@@ -103,13 +103,18 @@ const OrganizationCards = () => {
                   <div className="social-details">
                     <h5 className="mb-1 ">
                       <Link
-                        className="custom-hover"
+                        className="text-primary text_decoration_hover"
                         href={`/dashboard/network/organization/${item.slug}`}
                       >
                         {item.name}
                       </Link>
                     </h5>
-                    <span className="f-light">{item.email}</span>
+                    <Link
+                      href={`mailto:${item.email}`}
+                      className="text-dark text_decoration_hover"
+                    >
+                      {item.email}
+                    </Link>
                     <ul className="card-social">
                       <li>
                         <Link href={item?.website || "#"} target="_blank">
