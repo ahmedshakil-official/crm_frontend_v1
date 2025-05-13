@@ -50,11 +50,7 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
         </CardHeader>
         <CardBody className="pt-0 recent-order">
           <div className="table-responsive theme-scrollbar">
-            <Table
-              className="display table-bordernone mt-0"
-              id="recent-order"
-              style={{ width: "100%" }}
-            >
+            <Table hover responsive>
               <thead>
                 <tr className="text-center">
                   <th>#</th>

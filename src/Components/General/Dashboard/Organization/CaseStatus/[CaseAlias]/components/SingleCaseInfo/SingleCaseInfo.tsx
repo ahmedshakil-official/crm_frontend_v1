@@ -70,17 +70,31 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                         {caseInfo?.lead_user?.last_name}
                       </h6>
                       <h6 className="pt-1">
-                        <strong>Email:</strong> {caseInfo?.lead_user?.email}
+                        <strong>Email:</strong>{" "}
+                        <a
+                          className="text-dark text_decoration_hover"
+                          href={`mailto:${caseInfo?.lead_user?.email}`}
+                        >
+                          {caseInfo?.lead_user?.email}
+                        </a>
                       </h6>
                       <h6 className="pt-1">
                         {caseInfo?.lead_user?.phone ? (
                           <>
-                            <strong>Phone:</strong> {caseInfo?.lead_user?.phone}
+                            <strong>Phone:</strong>{" "}
+                            <a
+                              className="text-dark text_decoration_hover"
+                              href={`tel:${caseInfo?.lead_user?.phone}`}
+                            >
+                              {caseInfo?.lead_user?.phone}
+                            </a>
                           </>
                         ) : (
                           <>
                             <strong>Phone:</strong>{" "}
-                            <span className="text-muted opacity-50">Not Found</span>
+                            <span className="text-muted opacity-50">
+                              Not Found
+                            </span>
                           </>
                         )}
                       </h6>
@@ -215,7 +229,13 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                         {caseInfo?.created_by?.last_name}
                       </h6>
                       <h6 className="pt-1">
-                        <strong>Email:</strong> {caseInfo?.created_by?.email}
+                        <strong>Email:</strong>{" "}
+                        <a
+                          className="text-dark text_decoration_hover"
+                          href={`mailto:${caseInfo?.created_by?.email}`}
+                        >
+                          {caseInfo?.created_by?.email}
+                        </a>
                       </h6>
                       <h6 className="pt-1">
                         <strong>User Type:</strong>{" "}
@@ -244,7 +264,10 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             <h4 className="pb-2">Notes:</h4>
             <div className="px-3">
               <p className="border border-primary p-2 rounded-1">
-                {caseInfo?.notes ? caseInfo.notes : "Notes not available"}
+                {caseInfo?.notes
+                  ? caseInfo.notes.charAt(0).toUpperCase() +
+                    caseInfo.notes.slice(1).toLowerCase()
+                  : "Notes not available"}
               </p>
             </div>
           </div>
