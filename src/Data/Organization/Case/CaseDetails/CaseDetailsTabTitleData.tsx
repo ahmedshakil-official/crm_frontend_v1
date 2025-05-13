@@ -1,11 +1,8 @@
 export const InqueryTabTitleData = [
   { id: "1", nav: "Applicant(s) Details" },
-  { id: "2", nav: "Additional Details" },
-  { id: "3", nav: "Details" },
-  { id: "4", nav: "Portfolio" },
-  { id: "5", nav: "Notes" },
-  { id: "6", nav: "Source Product" },
-  { id: "7", nav: "Product" },
+  { id: "2", nav: "Portfolio" },
+  { id: "3", nav: "Notes" },
+  { id: "4", nav: "Product" },
 ];
 
 export const FFDTabTitleData = [
@@ -21,13 +18,12 @@ export const FFDTabTitleData = [
   { id: "10", nav: "Existing Protection" },
   { id: "11", nav: "Mortgage Your Needs" },
   { id: "12", nav: "Notes" },
-  { id: "13", nav: "Sourced Products" },
-  { id: "14", nav: "Product" },
-  { id: "15", nav: "DIP History" },
-  { id: "16", nav: "Suitability" },
-  { id: "17", nav: "Insurance Health Check" },
-  { id: "18", nav: "Fees" },
-  { id: "19", nav: "Compliance" },
+  { id: "13", nav: "Product" },
+  { id: "14", nav: "DIP History" },
+  { id: "15", nav: "Suitability" },
+  { id: "16", nav: "Insurance Health" },
+  { id: "17", nav: "Fees" },
+  { id: "18", nav: "Compliance" },
 ];
 
 export const RCCTabTitleData = [
@@ -43,13 +39,12 @@ export const RCCTabTitleData = [
   { id: "10", nav: "Existing Protection" },
   { id: "11", nav: "Mortgage Your Needs" },
   { id: "12", nav: "Notes" },
-  { id: "13", nav: "Sourced Products" },
-  { id: "14", nav: "Product" },
-  { id: "15", nav: "DIP History" },
-  { id: "16", nav: "Suitability" },
-  { id: "17", nav: "Insurance Health Check" },
-  { id: "18", nav: "Fees" },
-  { id: "19", nav: "Compliance" },
+  { id: "13", nav: "Product" },
+  { id: "14", nav: "DIP History" },
+  { id: "15", nav: "Suitability" },
+  { id: "16", nav: "Insurance Health" },
+  { id: "17", nav: "Fees" },
+  { id: "18", nav: "Compliance" },
 ];
 
 export const DIPTabTitleData = [
@@ -65,13 +60,12 @@ export const DIPTabTitleData = [
   { id: "10", nav: "Existing Protection" },
   { id: "11", nav: "Mortgage Your Needs" },
   { id: "12", nav: "Notes" },
-  { id: "13", nav: "Sourced Products" },
-  { id: "14", nav: "Product" },
-  { id: "15", nav: "DIP History" },
-  { id: "16", nav: "Suitability" },
-  { id: "17", nav: "Insurance Health Check" },
-  { id: "18", nav: "Fees" },
-  { id: "19", nav: "Compliance" },
+  { id: "13", nav: "Product" },
+  { id: "14", nav: "DIP History" },
+  { id: "15", nav: "Suitability" },
+  { id: "16", nav: "Insurance Health" },
+  { id: "17", nav: "Fees" },
+  { id: "18", nav: "Compliance" },
 ];
 
 export const FMATabTitleData = [
@@ -90,12 +84,10 @@ export const FMATabTitleData = [
   { id: "13", nav: "Product" },
   { id: "14", nav: "DIP History" },
   { id: "15", nav: "Suitability" },
-  { id: "16", nav: "Insurance Health Questions" },
+  { id: "16", nav: "Insurance Health" },
   { id: "17", nav: "Fees" },
-  { id: "18", nav: "Old Fees" },
-  { id: "19", nav: "Compliance" },
-  { id: "20", nav: "Sourcing" },
-  { id: "21", nav: "Client Survey" },
+  { id: "18", nav: "Compliance" },
+  { id: "19", nav: "Client Survey" },
 ];
 
 export const OFBTabTitleData = [
@@ -114,12 +106,10 @@ export const OFBTabTitleData = [
   { id: "13", nav: "Product" },
   { id: "14", nav: "DIP History" },
   { id: "15", nav: "Suitability" },
-  { id: "16", nav: "Insurance Health Questions" },
+  { id: "16", nav: "Insurance Health" },
   { id: "17", nav: "Fees" },
-  { id: "18", nav: "Old Fees" },
-  { id: "19", nav: "Compliance" },
-  { id: "20", nav: "Sourcing" },
-  { id: "21", nav: "Client Survey" },
+  { id: "18", nav: "Compliance" },
+  { id: "19", nav: "Client Survey" },
 ];
 
 export const LegalTabTitleData = [
@@ -138,12 +128,10 @@ export const LegalTabTitleData = [
   { id: "13", nav: "Product" },
   { id: "14", nav: "DIP History" },
   { id: "15", nav: "Suitability" },
-  { id: "16", nav: "Insurance Health Questions" },
+  { id: "16", nav: "Insurance Health" },
   { id: "17", nav: "Fees" },
-  { id: "18", nav: "Old Fees" },
-  { id: "19", nav: "Compliance" },
-  { id: "20", nav: "Sourcing" },
-  { id: "21", nav: "Client Survey" },
+  { id: "18", nav: "Compliance" },
+  { id: "19", nav: "Client Survey" },
 ];
 
 export const CompletionTabTitleData = [
@@ -162,12 +150,10 @@ export const CompletionTabTitleData = [
   { id: "13", nav: "Product" },
   { id: "14", nav: "DIP History" },
   { id: "15", nav: "Suitability" },
-  { id: "16", nav: "Insurance Health Questions" },
+  { id: "16", nav: "Insurance Health" },
   { id: "17", nav: "Fees" },
-  { id: "18", nav: "Old Fees" },
-  { id: "19", nav: "Compliance" },
-  { id: "20", nav: "Sourcing" },
-  { id: "21", nav: "Client Survey" },
+  { id: "18", nav: "Compliance" },
+  { id: "19", nav: "Client Survey" },
 ];
 
 export const FOPTabTitleData = [
@@ -186,12 +172,10 @@ export const FOPTabTitleData = [
   { id: "13", nav: "Product" },
   { id: "14", nav: "DIP History" },
   { id: "15", nav: "Suitability" },
-  { id: "16", nav: "Insurance Health Questions" },
+  { id: "16", nav: "Insurance Health" },
   { id: "17", nav: "Fees" },
-  { id: "18", nav: "Old Fees" },
-  { id: "19", nav: "Compliance" },
-  { id: "20", nav: "Sourcing" },
-  { id: "21", nav: "Client Survey" },
+  { id: "18", nav: "Compliance" },
+  { id: "19", nav: "Client Survey" },
 ];
 
 export const NPDTabTitleData = [
@@ -210,10 +194,8 @@ export const NPDTabTitleData = [
   { id: "13", nav: "Product" },
   { id: "14", nav: "DIP History" },
   { id: "15", nav: "Suitability" },
-  { id: "16", nav: "Insurance Health Questions" },
+  { id: "16", nav: "Insurance Health" },
   { id: "17", nav: "Fees" },
-  { id: "18", nav: "Old Fees" },
-  { id: "19", nav: "Compliance" },
-  { id: "20", nav: "Sourcing" },
-  { id: "21", nav: "Client Survey" },
+  { id: "18", nav: "Compliance" },
+  { id: "19", nav: "Client Survey" },
 ];
