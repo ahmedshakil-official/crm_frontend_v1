@@ -1,10 +1,8 @@
 export const InqueryTabTitleData = [
   { id: "1", nav: "Applicant(s) Details" },
-  { id: "2", nav: "Additional Details" },
-  { id: "3", nav: "Details" },
-  { id: "4", nav: "Portfolio" },
-  { id: "5", nav: "Notes" },
-  { id: "6", nav: "Product" },
+  { id: "2", nav: "Portfolio" },
+  { id: "3", nav: "Notes" },
+  { id: "4", nav: "Product" },
 ];
 
 export const FFDTabTitleData = [
