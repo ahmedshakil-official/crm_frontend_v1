@@ -26,7 +26,7 @@ const ViewDefaultsModal: React.FC<ViewDefaultsModalProps> = ({
   });
 
   const formatDate = (date: string | null) => {
-    if (!date) return "N/A";
+    if (!date) return "-";
     return new Date(date).toLocaleDateString();
   };
 
@@ -66,7 +66,7 @@ const ViewDefaultsModal: React.FC<ViewDefaultsModalProps> = ({
                 {data.map((item: any, index: number) => (
                   <tr key={index}>
                     <td>{formatAmount(item.amount)}</td>
-                    <td>{item.loan_company_name || "N/A"}</td>
+                    <td>{item.loan_company_name || "-"}</td>
                     <td>{formatDate(item.date_registered)}</td>
                     <td>
                       <span

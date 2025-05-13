@@ -43,9 +43,9 @@ const ViewPropertiesRepossessedModal: React.FC<
             <tbody>
               {data?.map((item: any, index: number) => (
                 <tr key={index}>
-                  <td>{item.lender}</td>
-                  <td>{item.date_of_registration || "N/A"}</td>
-                  <td>{item.date_of_satisfaction || "N/A"}</td>
+                  <td>{item.lender || "-"}</td>
+                  <td>{item.date_of_registration || "-"}</td>
+                  <td>{item.date_of_satisfaction || "-"}</td>
                 </tr>
               ))}
               {!data?.length && (

@@ -24,16 +24,8 @@ const ViewCommitmentPaymentsMissedModal: React.FC<
   });
 
   const formatDate = (date: string | null) => {
-    if (!date) return "N/A";
+    if (!date) return "-";
     return new Date(date).toLocaleDateString();
-  };
-
-  const formatCommitmentType = (type: string | undefined) => {
-    if (!type) return "N/A";
-    return type
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
   };
 
   return (
@@ -68,8 +60,17 @@ const ViewCommitmentPaymentsMissedModal: React.FC<
               <tbody>
                 {data.map((item: any, index: number) => (
                   <tr key={index}>
-                    <td>{formatCommitmentType(item?.commitment_type)}</td>
-                    <td>{item?.loan_company_name || "N/A"}</td>
+                    <td>
+                      {item?.commitment_type
+                        ?.split("_")
+                        .map(
+                          (word: any) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                        )
+                        .join(" ")}
+                    </td>
+                    <td>{item?.loan_company_name || "-"}</td>
                     <td>{item?.cleared ? "Cleared" : "Not Cleared"}</td>
                     <td>{formatDate(item?.date_cleared)}</td>
                     <td>

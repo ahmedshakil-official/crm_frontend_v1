@@ -51,8 +51,8 @@ const ViewDMPsModal: React.FC<ViewDMPsModalProps> = ({
               dmpsData.map((dmp: DMPItemProps, index: number) => (
                 <tr key={index}>
                   <td>{dmp.plan === "DIRECT" ? "Direct" : "3rd Party"}</td>
-                  <td>{dmp.loan_company_name || "N/A"}</td>
-                  <td>{dmp.date_registered || "N/A"}</td>
+                  <td>{dmp.loan_company_name || "-"}</td>
+                  <td>{dmp.date_registered || "-"}</td>
                   <td>
                     {dmp.outstanding_balance
                       ? `£${parseFloat(dmp.outstanding_balance).toLocaleString(
@@ -62,10 +62,10 @@ const ViewDMPsModal: React.FC<ViewDMPsModalProps> = ({
                             maximumFractionDigits: 2,
                           }
                         )}`
-                      : "N/A"}
+                      : "-"}
                   </td>
                   <td>{dmp.satisfied ? "Yes" : "No"}</td>
-                  <td>{dmp.satisfied ? dmp.date_satisfied || "N/A" : "N/A"}</td>
+                  <td>{dmp.satisfied ? dmp.date_satisfied || "-" : "-"}</td>
                 </tr>
               ))
             ) : (

@@ -66,13 +66,13 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
               <tbody>
                 {isLoading ? (
                   <tr>
-                    <td colSpan={6} className="text-center">
+                    <td colSpan={7} className="text-center">
                       <Spinner color="primary" />
                     </td>
                   </tr>
                 ) : jointUserInfo?.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center">
+                    <td colSpan={7} className="text-center">
                       <p>No joint users available</p>
                     </td>
                   </tr>

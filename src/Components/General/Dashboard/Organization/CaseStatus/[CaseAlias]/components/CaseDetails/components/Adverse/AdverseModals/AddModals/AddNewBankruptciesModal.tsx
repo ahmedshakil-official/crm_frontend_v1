@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import {
   Button,
   Col,
+  Form,
   FormGroup,
   Input,
   Label,
@@ -27,7 +28,8 @@ const AddNewBankruptciesModal: React.FC<AddNewBankruptciesModalProps> = ({
 
   const [date_discharged, setDateDischarged] = useState<string>("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     const value = {
       date_discharged: date_discharged || null,
     };
@@ -52,32 +54,35 @@ const AddNewBankruptciesModal: React.FC<AddNewBankruptciesModalProps> = ({
         <h2>Add New Bankruptcies</h2>
       </ModalHeader>
 
-      <ModalBody className="p-5">
-        <Row className="justify-content-center">
-          <Col sm={12}>
-            <FormGroup>
-              <Label for="date_discharged">Date Discharged</Label>
-              <Input
-                id="date_discharged"
-                name="date_discharged"
-                type="date"
-                value={date_discharged}
-                onChange={(e) => setDateDischarged(e.target.value)}
-                className="form-control w-100"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-      </ModalBody>
+      <Form onSubmit={handleSubmit}>
+        <ModalBody className="p-5">
+          <Row className="justify-content-center">
+            <Col sm={12}>
+              <FormGroup>
+                <Label for="date_discharged">Date Discharged*</Label>
+                <Input
+                  id="date_discharged"
+                  name="date_discharged"
+                  type="date"
+                  value={date_discharged}
+                  onChange={(e) => setDateDischarged(e.target.value)}
+                  className="form-control w-100"
+                  required
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        </ModalBody>
 
-      <ModalFooter>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-        <Button color="primary" onClick={handleSubmit} disabled={isLoading}>
-          {isLoading ? "Submitting..." : "Submit"}
-        </Button>
-      </ModalFooter>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary" type="submit" disabled={isLoading}>
+            {isLoading ? "Submitting..." : "Submit"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };

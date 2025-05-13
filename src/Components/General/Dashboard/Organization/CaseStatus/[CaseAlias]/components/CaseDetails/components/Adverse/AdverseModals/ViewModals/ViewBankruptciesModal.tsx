@@ -26,7 +26,7 @@ const ViewBankruptciesModal: React.FC<ViewBankruptciesModalProps> = ({
   });
 
   const formatDate = (date: string | null) => {
-    if (!date) return "N/A";
+    if (!date) return "-";
     return new Date(date).toLocaleDateString();
   };
 

@@ -369,7 +369,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
                 {/* Submit Button */}
                 <div className="d-flex justify-content-end mt-4">
                   <Button color="primary" onClick={handleSubmit}>
-                    Submit
+                    {isAdverseUpdating ? "Saving..." : "Save Changes"}
                   </Button>
                 </div>
               </Form>
