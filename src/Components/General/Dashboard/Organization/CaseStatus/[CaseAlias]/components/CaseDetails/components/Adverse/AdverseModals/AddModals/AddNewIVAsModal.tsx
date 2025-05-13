@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import {
   Button,
   Col,
+  Form,
   FormGroup,
   Input,
   InputGroup,
@@ -32,7 +33,8 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
   const [satisfied, setSatisfied] = useState<boolean>(false);
   const [date_satisfied, setDateSatisfied] = useState<string>("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e:React.FormEvent) => {
+    e.preventDefault();
     const value = {
       date_registered: date_registered || null,
       outstanding_balance: outstanding_balance || null,
@@ -61,11 +63,12 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
         <h2>Add New IVAs</h2>
       </ModalHeader>
 
+      <Form onSubmit={handleSubmit}>
       <ModalBody className="p-5">
         <Row>
           <Col sm={12} className="mb-3">
             <FormGroup>
-              <Label for="date_registered">Date Registered</Label>
+              <Label for="date_registered">Date Registered*</Label>
               <Input
                 id="date_registered"
                 name="date_registered"
@@ -73,6 +76,7 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
                 value={date_registered}
                 onChange={(e) => setDateRegistered(e.target.value)}
                 className="form-control w-100"
+                required
               />
             </FormGroup>
           </Col>
@@ -131,10 +135,11 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
         <Button color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button color="primary" onClick={handleSubmit} disabled={isLoading}>
+        <Button color="primary" type="submit" disabled={isLoading}>
           {isLoading ? "Submitting..." : "Submit"}
         </Button>
       </ModalFooter>
+      </Form>
     </Modal>
   );
 };

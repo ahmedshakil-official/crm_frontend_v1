@@ -58,18 +58,18 @@ const ViewPayDayLoansModal: React.FC<ViewPayDayLoansModalProps> = ({
                             maximumFractionDigits: 2,
                           }
                         )}`
-                      : "N/A"}
+                      : "-"}
                   </td>
-                  <td>{loan.loan_date || "N/A"}</td>
+                  <td>{loan.loan_date || "-"}</td>
                   <td>
                     {loan.has_the_pay_day_loan_been_repaid ? "Yes" : "No"}
                   </td>
                   <td>
                     {loan.has_the_pay_day_loan_been_repaid
-                      ? loan.date_repaid || "N/A"
-                      : "N/A"}
+                      ? loan.date_repaid || "-"
+                      : "-"}
                   </td>
-                  <td>{loan.lender_name || "N/A"}</td>
+                  <td>{loan.lender_name || "-"}</td>
                 </tr>
               ))
             ) : (

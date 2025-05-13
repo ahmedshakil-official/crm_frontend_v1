@@ -48,7 +48,7 @@ const ViewIVAsModal: React.FC<ViewIVAsModalProps> = ({
             {ivasData && ivasData.length > 0 ? (
               ivasData.map((iva: IVAItemProps, index: number) => (
                 <tr key={index}>
-                  <td>{iva.date_registered || "N/A"}</td>
+                  <td>{iva.date_registered || "-"}</td>
                   <td>
                     {iva.outstanding_balance
                       ? `£${parseFloat(iva.outstanding_balance).toLocaleString(
@@ -58,10 +58,10 @@ const ViewIVAsModal: React.FC<ViewIVAsModalProps> = ({
                             maximumFractionDigits: 2,
                           }
                         )}`
-                      : "N/A"}
+                      : "-"}
                   </td>
                   <td>{iva.satisfied ? "Yes" : "No"}</td>
-                  <td>{iva.satisfied ? iva.date_satisfied || "N/A" : "N/A"}</td>
+                  <td>{iva.satisfied ? iva.date_satisfied || "-" : "-"}</td>
                 </tr>
               ))
             ) : (

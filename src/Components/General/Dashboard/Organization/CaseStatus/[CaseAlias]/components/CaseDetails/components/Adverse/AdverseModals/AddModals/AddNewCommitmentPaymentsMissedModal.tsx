@@ -1,11 +1,13 @@
 import { useAddCommitmentPaymentsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import { AddNewCommitmentPaymentsMissedModalProps } from "@/Types/Organization/Cases/CaseDetails/AdverseTypes";
+import { Rect } from "@fullcalendar/core/internal";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
   Col,
+  Form,
   FormGroup,
   Input,
   Label,
@@ -50,7 +52,8 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
   const [addCommitmentPayments, { isLoading }] =
     useAddCommitmentPaymentsMutation();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e:React.FormEvent) => {
+    e.preventDefault();
     const value = {
       commitment_type,
       loan_company_name,
@@ -88,12 +91,13 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
         <h2>Add New Commitment Payments Missed</h2>
       </ModalHeader>
 
+      <Form onSubmit={handleSubmit}>
       {/* Modal Body */}
       <ModalBody className="p-5">
         <Row>
           <Col sm={6}>
             <FormGroup>
-              <Label for="commitment_type">Commitment Type</Label>
+              <Label for="commitment_type">Commitment Type*</Label>
               <Input
                 id="commitment_type"
                 name="commitment_type"
@@ -101,31 +105,33 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
                 value={commitment_type}
                 onChange={(e) => setCommitmentType(e.target.value)}
                 className="form-control"
+                required
               >
-                <option value="credit_card">Credit Card</option>
-                <option value="store_card">Store Card</option>
-                <option value="loan">Loan</option>
-                <option value="hp">HP</option>
-                <option value="overdraft">Overdraft</option>
-                <option value="student_loan">Student Loan</option>
-                <option value="maintenance">Maintenance</option>
-                <option value="lease">Lease</option>
-                <option value="unsecured">Unsecured</option>
-                <option value="mortgage_or_rent">Mortgage / Rent</option>
-                <option value="public_utility">Public Utility</option>
-                <option value="communications">Communications</option>
-                <option value="insurance">Insurance</option>
-                <option value="secured">Secured</option>
-                <option value="pcp">PCP</option>
-                <option value="mail_order">Mail Order</option>
-                <option value="childcare">Childcare</option>
-                <option value="car_finance">Car Finance</option>
-                <option value="buy_now_pay_later">
+                <option value="">Select...</option>
+                <option value="CREDIT_CARD">Credit Card</option>
+                <option value="STORE_CARD">Store Card</option>
+                <option value="LOAN">Loan</option>
+                <option value="HP">HP</option>
+                <option value="OVERDRAFT">Overdraft</option>
+                <option value="STUDENT_LOAN">Student Loan</option>
+                <option value="MAINTENANCE">Maintenance</option>
+                <option value="LEASE">Lease</option>
+                <option value="UNSECURED">Unsecured</option>
+                <option value="MORTGAGE_OR_RENT">Mortgage / Rent</option>
+                <option value="PUBLIC_UTILITY">Public Utility</option>
+                <option value="COMMUNICATIONS">Communications</option>
+                <option value="INSURANCE">Insurance</option>
+                <option value="SECURED">Secured</option>
+                <option value="PCP">PCP</option>
+                <option value="MAIL_ORDER">Mail Order</option>
+                <option value="CHILDCARE">Childcare</option>
+                <option value="CAR_FINANCE">Car Finance</option>
+                <option value="BUY_NOW_PAY_LATER">
                   Buy Now Pay Later (BNPL)
                 </option>
-                <option value="credit_commitment">Credit Commitment</option>
-                <option value="debt_management_plan">DMP</option>
-                <option value="unknown">Unknown</option>
+                <option value="CREDIT_COMMITMENT">Credit Commitment</option>
+                <option value="DEBT_MANAGEMENT_PLAN">DMP</option>
+                <option value="UNKNOWN">Unknown</option>
               </Input>
             </FormGroup>
           </Col>
@@ -281,10 +287,11 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
         <Button color="secondary" onClick={toggle}>
           Cancel
         </Button>
-        <Button color="primary" onClick={handleSubmit}>
-          Submit
+        <Button color="primary" type="submit" disabled={isLoading}>
+          {isLoading ? "Submitting..." : "Submit"}
         </Button>
       </ModalFooter>
+    </Form>
     </Modal>
   );
 };

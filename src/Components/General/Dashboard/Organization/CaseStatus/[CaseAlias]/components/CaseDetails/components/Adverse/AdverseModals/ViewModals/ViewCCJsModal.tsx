@@ -55,13 +55,13 @@ const ViewCCJsModal: React.FC<ViewCCJsModalProps> = ({
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
                         })}`
-                      : "N/A"}
+                      : "-"}
                   </td>
-                  <td>{ccj.loan_company_name || "N/A"}</td>
-                  <td>{ccj.date_registered || "N/A"}</td>
+                  <td>{ccj.loan_company_name || "-"}</td>
+                  <td>{ccj.date_registered || "-"}</td>
                   <td>{ccj.has_satisfied ? "Yes" : "No"}</td>
                   <td>
-                    {ccj.has_satisfied ? ccj.date_satisfied || "N/A" : "N/A"}
+                    {ccj.has_satisfied ? ccj.date_satisfied || "-" : "-"}
                   </td>
                 </tr>
               ))

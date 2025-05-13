@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import {
   Button,
   Col,
+  Form,
   FormGroup,
   Input,
   Label,
@@ -38,7 +39,8 @@ const AddNewDefaultsModal: React.FC<AddNewDefaultsModalProps> = ({
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     const value = {
       amount: amount || "0.00",
       loan_company_name,
@@ -66,119 +68,123 @@ const AddNewDefaultsModal: React.FC<AddNewDefaultsModalProps> = ({
       <ModalHeader toggle={toggle}>
         <h2>Add New Defaults</h2>
       </ModalHeader>
-
-      <ModalBody className="p-5">
-        <Row>
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="amount">Amount</Label>
-              <div className="input-group">
-                <Input
-                  id="amount"
-                  name="amount"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="form-control"
-                  placeholder="Enter amount"
-                />
-              </div>
-            </FormGroup>
-          </Col>
-
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="loan_company_name">Loan Company Name</Label>
-              <Input
-                id="loan_company_name"
-                name="loan_company_name"
-                type="text"
-                value={loan_company_name}
-                onChange={(e) => setLoanCompanyName(e.target.value)}
-                className="form-control"
-                placeholder="Enter loan company name"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="date_registered">Date Registered</Label>
-              <Input
-                id="date_registered"
-                name="date_registered"
-                type="date"
-                value={date_registered}
-                onChange={(e) => setDateRegistered(e.target.value)}
-                className="form-control"
-              />
-            </FormGroup>
-          </Col>
-
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="has_satisfied">
-                Has the Default been satisfied?*
-              </Label>
-              <div className="d-flex align-items-center">
-                <div>
-                  <Input
-                    id="has_satisfied_yes"
-                    name="has_satisfied"
-                    type="radio"
-                    onChange={() => handleRadioChange(true)}
-                    checked={has_satisfied === true}
-                    className="me-2"
-                  />
-                  Yes
-                </div>
-                <div className="ms-3">
-                  <Input
-                    id="has_satisfied_no"
-                    name="has_satisfied"
-                    type="radio"
-                    onChange={() => handleRadioChange(false)}
-                    checked={has_satisfied === false}
-                    className="me-2"
-                  />
-                  No
-                </div>
-              </div>
-            </FormGroup>
-          </Col>
-        </Row>
-
-        {has_satisfied && (
+      <Form onSubmit={handleSubmit}>
+        <ModalBody className="p-5">
           <Row>
             <Col sm={6}>
               <FormGroup>
-                <Label for="date_satisfied">Date Satisfied</Label>
+                <Label for="amount">Amount*</Label>
+                <div className="input-group">
+                  <Input
+                    id="amount"
+                    name="amount"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="form-control"
+                    placeholder="Enter amount"
+                    required
+                  />
+                </div>
+              </FormGroup>
+            </Col>
+
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="loan_company_name">Loan Company Name</Label>
                 <Input
-                  id="date_satisfied"
-                  name="date_satisfied"
-                  type="date"
-                  value={date_satisfied}
-                  onChange={(e) => setDateSatisfied(e.target.value)}
+                  id="loan_company_name"
+                  name="loan_company_name"
+                  type="text"
+                  value={loan_company_name}
+                  onChange={(e) => setLoanCompanyName(e.target.value)}
                   className="form-control"
+                  placeholder="Enter loan company name"
                 />
               </FormGroup>
             </Col>
           </Row>
-        )}
-      </ModalBody>
 
-      <ModalFooter>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-        <Button color="primary" onClick={handleSubmit} disabled={isLoading}>
-          {isLoading ? "Submitting..." : "Submit"}
-        </Button>
-      </ModalFooter>
+          <Row>
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="date_registered">Date Registered</Label>
+                <Input
+                  id="date_registered"
+                  name="date_registered"
+                  type="date"
+                  value={date_registered}
+                  onChange={(e) => setDateRegistered(e.target.value)}
+                  className="form-control"
+                />
+              </FormGroup>
+            </Col>
+
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="has_satisfied">
+                  Has the Default been satisfied?*
+                </Label>
+                <div className="d-flex align-items-center">
+                  <div>
+                    <Input
+                      id="has_satisfied_yes"
+                      name="has_satisfied"
+                      type="radio"
+                      onChange={() => handleRadioChange(true)}
+                      checked={has_satisfied === true}
+                      className="me-2"
+                      required
+                    />
+                    Yes
+                  </div>
+                  <div className="ms-3">
+                    <Input
+                      id="has_satisfied_no"
+                      name="has_satisfied"
+                      type="radio"
+                      onChange={() => handleRadioChange(false)}
+                      checked={has_satisfied === false}
+                      className="me-2"
+                      required
+                    />
+                    No
+                  </div>
+                </div>
+              </FormGroup>
+            </Col>
+          </Row>
+
+          {has_satisfied && (
+            <Row>
+              <Col sm={6}>
+                <FormGroup>
+                  <Label for="date_satisfied">Date Satisfied</Label>
+                  <Input
+                    id="date_satisfied"
+                    name="date_satisfied"
+                    type="date"
+                    value={date_satisfied}
+                    onChange={(e) => setDateSatisfied(e.target.value)}
+                    className="form-control"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+          )}
+        </ModalBody>
+
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary" disabled={isLoading}>
+            {isLoading ? "Submitting..." : "Submit"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };

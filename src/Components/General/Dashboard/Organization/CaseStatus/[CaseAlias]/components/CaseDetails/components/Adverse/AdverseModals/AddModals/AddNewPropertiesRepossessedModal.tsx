@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import {
   Button,
   Col,
+  Form,
   FormGroup,
   Input,
   Label,
@@ -28,7 +29,8 @@ const AddNewPropertiesRepossessedModal: React.FC<
   const [addPropertyRepossessed, { isLoading }] =
     useAddPropertyRepossessedMutation();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     const value = {
       lender,
       date_of_registration: date_of_registration || null,
@@ -55,72 +57,75 @@ const AddNewPropertiesRepossessedModal: React.FC<
         <h2>Add New Properties Repossessed</h2>
       </ModalHeader>
 
-      {/* Modal Body */}
-      <ModalBody className="p-5">
-        <Row>
-          {/* Lender Name Field */}
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="LenderName">Lender</Label>
-              <Input
-                id="LenderName"
-                name="LenderName"
-                type="text"
-                value={lender}
-                onChange={(e) => setLender(e.target.value as string)}
-                className="form-control"
-                placeholder="Enter lender name"
-              />
-            </FormGroup>
-          </Col>
+      <Form onSubmit={handleSubmit}>
+        {/* Modal Body */}
+        <ModalBody className="p-5">
+          <Row>
+            {/* Lender Name Field */}
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="LenderName">Lender*</Label>
+                <Input
+                  id="LenderName"
+                  name="LenderName"
+                  type="text"
+                  value={lender}
+                  onChange={(e) => setLender(e.target.value as string)}
+                  className="form-control"
+                  placeholder="Enter lender name"
+                  required
+                />
+              </FormGroup>
+            </Col>
 
-          {/* Registered Date Field */}
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="RegisteredDate">Date of Registration</Label>
-              <Input
-                id="RegisteredDate"
-                name="RegisteredDate"
-                type="date"
-                value={date_of_registration}
-                onChange={(e) =>
-                  setDateOfRegistration(e.target.value as string)
-                }
-                className="form-control"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
+            {/* Registered Date Field */}
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="RegisteredDate">Date of Registration</Label>
+                <Input
+                  id="RegisteredDate"
+                  name="RegisteredDate"
+                  type="date"
+                  value={date_of_registration}
+                  onChange={(e) =>
+                    setDateOfRegistration(e.target.value as string)
+                  }
+                  className="form-control"
+                />
+              </FormGroup>
+            </Col>
+          </Row>
 
-        <Row>
-          {/* Satisfied Date Field */}
-          <Col sm={6}>
-            <FormGroup>
-              <Label for="SatisfiedDate">Date of Satisfaction</Label>
-              <Input
-                id="SatisfiedDate"
-                name="SatisfiedDate"
-                type="date"
-                value={date_of_satisfaction}
-                onChange={(e) =>
-                  setDateOfSatisfaction(e.target.value as string)
-                }
-                className="form-control"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-      </ModalBody>
+          <Row>
+            {/* Satisfied Date Field */}
+            <Col sm={6}>
+              <FormGroup>
+                <Label for="SatisfiedDate">Date of Satisfaction</Label>
+                <Input
+                  id="SatisfiedDate"
+                  name="SatisfiedDate"
+                  type="date"
+                  value={date_of_satisfaction}
+                  onChange={(e) =>
+                    setDateOfSatisfaction(e.target.value as string)
+                  }
+                  className="form-control"
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+        </ModalBody>
 
-      {/* Modal Footer */}
-      <ModalFooter>
-        <Button color="secondary" onClick={toggle}>
-          Cancel
-        </Button>
-        <Button color="primary" onClick={handleSubmit}>
-          {isLoading ? "Submitting.." : "Submit"}
-        </Button>
-      </ModalFooter>
+        {/* Modal Footer */}
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary" type="submit">
+            {isLoading ? "Submitting.." : "Submit"}
+          </Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };
