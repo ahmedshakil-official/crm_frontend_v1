@@ -1,7 +1,9 @@
+import Link from "next/link";
 import React from "react";
 import { Card, CardBody, CardHeader, Table } from "reactstrap";
 
 interface Application {
+  caseAlias: string;
   caseId: string;
   createDate: string;
   propertyAddress: string;
@@ -14,6 +16,7 @@ const MyApplications: React.FC = () => {
   // Example data - replace with actual data from your API
   const applications: Application[] = [
     {
+      caseAlias: "f84c8ecd-0e79-4215-b1c2-3c3f11681d09",
       caseId: "DIP01011256",
       createDate: "13/05/2025",
       propertyAddress: "",
@@ -46,7 +49,10 @@ const MyApplications: React.FC = () => {
             <tbody>
               {applications.map((app) => (
                 <tr key={app.caseId}>
-                  <td>{app.caseId}</td>
+                  <td>
+                    {" "}
+                    <Link href={`client/${app.caseAlias}`}>{app.caseId}</Link>
+                  </td>
                   <td>{app.createDate}</td>
                   <td>{app.propertyAddress}</td>
                   <td>{app.purchasePrice}</td>
