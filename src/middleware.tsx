@@ -1,27 +1,31 @@
 import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 import { pagesOptions } from "./app/api/auth/[...nextauth]/pages-options";
 
-export default withAuth({
-  pages: {
-    ...pagesOptions,
-  },
-});
+export default withAuth(
+  function middleware(req) {
+    const token = req.nextauth.token;
+    const path = req.nextUrl.pathname;
 
-export const config = {
-  // restricted routes
-  // matcher: [
-  //   "/:path*"
-  // ],
-  matcher: [
-    // Protect all dashboard routes
-    "/dashboard/:path*",
-    // Protect dashboard organization routes
-    "/dashboard/organization/:path*",
-    // Protect dashboard client routes
-    "/dashboard/client/:path*",
-    // Protect dashboard network routes
-    "/dashboard/network/:path*",
-    // Protect specific user-related routes
-    "/users/:path*",
-  ],
-};
+    // Role-based path protection
+    if (path.startsWith("/dashboard/admin") && token?.user_type !== "ADMIN") {
+      return NextResponse.redirect(new URL("/auth/login", req.url));
+    }
+
+    if (path.startsWith("/dashboard/client") && token?.user_type !== "LEAD") {
+      return NextResponse.redirect(new URL("/auth/login", req.url));
+    }
+    if (path.startsWith("/dashboard/organization") && token?.user_type !== "ADVISOR") {
+      return NextResponse.redirect(new URL("/auth/login", req.url));
+    }
+
+    return NextResponse.next();
+  },
+  {
+    pages: {
+      ...pagesOptions,
+    },
+  }
+);
+
+// ... existing code ...

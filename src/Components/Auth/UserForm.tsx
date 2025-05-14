@@ -30,7 +30,7 @@ export const UserForm = () => {
       email,
       password,
       redirect: false,
-      callbackUrl: "/dashboard/organization",
+      callbackUrl: "/",
     });
     setIsLoading(false);
     if (result?.ok) {
@@ -43,7 +43,7 @@ export const UserForm = () => {
   return (
     <div>
       <div>
-        <Link className="logo" href="/dashboard/organization">
+        <Link className="logo" href="/">
           <Image
             width={91}
             height={27}
