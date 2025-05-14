@@ -34,8 +34,8 @@ export const UserForm = () => {
     });
     setIsLoading(false);
     if (result?.ok) {
-      toast.success("successfully Logged in Rediract......");
-      router.push(result.url || "/dashboard/organization");
+      toast.success("Successfully Logged in Rediract......");
+      // router.push(result.url || "/dashboard/organization");
     } else {
       toast.error("Invalid Credentaial...");
     }

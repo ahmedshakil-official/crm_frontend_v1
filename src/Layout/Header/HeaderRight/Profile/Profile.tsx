@@ -24,7 +24,7 @@ const Profile = () => {
           <Image
             width={64}
             height={59}
-            src={session?.user?.image || `${ImagePath}/profile.png`}
+            src={session?.user?.profile_image || `${ImagePath}/profile.png`}
             alt="user"
           />
         </div>
