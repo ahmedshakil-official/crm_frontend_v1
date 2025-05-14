@@ -1,5 +1,4 @@
 import apiClient from "@/services/api-client";
-import axios from "axios";
 import { NextAuthOptions, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
@@ -17,6 +16,8 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
+      type?: string | null;
+      profile_image?: string | null;
       accessToken?: string; // Add the accessToken here
     };
   }
@@ -60,8 +61,12 @@ export const authoption: NextAuthOptions = {
           if (response.data?.access) {
             return {
               id: response.data.user_id || "default_id",
-              name: `${response.data.user.first_name || ''} ${response.data.user.last_name || ''}` || credentials.email,
+              name:
+                `${response.data.user.first_name || ""} ${
+                  response.data.user.last_name || ""
+                }` || credentials.email,
               email: credentials.email,
+              type: response.data.user.user_type || "",
               profile_image: response.data.user.profile_image || null,
               token: response.data.access, // Attach JWT token
             };
