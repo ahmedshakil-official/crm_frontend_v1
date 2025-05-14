@@ -1,12 +1,12 @@
 import apiClient from "@/services/api-client";
 import { NextAuthOptions, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import Github from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
 
 // Extend NextAuth's user type to include the JWT token
 interface UserWithToken extends NextAuthUser {
-  token?: string; // Custom field for storing the JWT token
+  token?: string;
+  user_type?: string;
+  profile_image?: string | null;
 }
 
 // TypeScript Declaration Module for Custom Session and User Properties
@@ -16,24 +16,33 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
-      type?: string | null;
+      user_type?: string | null;
       profile_image?: string | null;
-      accessToken?: string; // Add the accessToken here
+      accessToken?: string;
     };
   }
+
   interface User {
-    accessToken?: string; // Ensure compatibility with user object
+    accessToken?: string;
+    user_type?: string;
+    profile_image?: string | null;
+  }
+
+  interface JWT {
+    accessToken?: string;
+    user_type?: string;
+    profile_image?: string | null;
   }
 }
 
 export const authoption: NextAuthOptions = {
   session: {
-    strategy: "jwt", // Use JWT strategy for managing sessions
-    maxAge: 12 * 60 * 60, // 43,200 seconds/12h
+    strategy: "jwt",
+    maxAge: 12 * 60 * 60, // 12 hours
   },
   pages: {
-    signIn: "/auth/login", // Custom login page
-    signOut: "/auth/login", // Redirect here after signing out
+    signIn: "/auth/login",
+    signOut: "/auth/login",
   },
   providers: [
     CredentialsProvider({
@@ -44,74 +53,65 @@ export const authoption: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // console.log("Attempting to authorize with credentials:", credentials); // Log credentials
         try {
           if (!credentials) {
             throw new Error("No credentials provided");
           }
 
-          // Make API call to obtain JWT token
-          // console.log("Sending credentials to API:", credentials);
           const response = await apiClient.post("/auth/jwt/create/", {
             email: credentials.email,
             password: credentials.password,
           });
-          // console.log("API response:", response);
 
           if (response.data?.access) {
             return {
               id: response.data.user_id || "default_id",
               name:
-                `${response.data.user.first_name || ""} ${
-                  response.data.user.last_name || ""
-                }` || credentials.email,
+                `${response.data.user.first_name || ""} ${response.data.user.last_name || ""}`.trim() ||
+                credentials.email,
               email: credentials.email,
-              type: response.data.user.user_type || "",
+              user_type: response.data.user.user_type || "",
               profile_image: response.data.user.profile_image || null,
-              token: response.data.access, // Attach JWT token
+              token: response.data.access,
             };
           }
           return null;
         } catch (error) {
-          // console.error("Login error:", error);
           throw new Error("Invalid email or password.");
         }
       },
     }),
-    Github({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
-    }),
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
   ],
   callbacks: {
-    // Add token from user to the JWT payload
     async jwt({ token, user }) {
       if (user) {
         const userWithToken = user as UserWithToken;
         if (userWithToken.token) {
-          token.accessToken = userWithToken.token; // Assign the token here
+          token.accessToken = userWithToken.token;
+        }
+        if (userWithToken.user_type) {
+          token.user_type = userWithToken.user_type;
+        }
+        if (userWithToken.profile_image) {
+          token.profile_image = userWithToken.profile_image;
         }
       }
       return token;
     },
 
-    // Add the JWT token to the session object
     async session({ session, token }) {
       session.user = {
         ...session.user,
         accessToken: token.accessToken as string | undefined,
+        user_type: token.user_type as string | undefined,
+        profile_image: token.profile_image as string | null | undefined,
       };
-      // console.log("Session Callback User:", session.user);
       return session;
     },
-    // Handle redirects after sign-in or sign-out
+
     async redirect({ url, baseUrl }) {
       return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
-  debug: true, // Enable debugging in development
+  debug: true,
 };

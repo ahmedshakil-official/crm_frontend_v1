@@ -21,12 +21,9 @@ const Menulist: React.FC<MenuListType> = ({
   const { t } = useTranslation("common");
   const [initialLoad, setInitialLoad] = useState(true);
   const { data: session } = useSession();
-  console.log("Name:", session?.user?.name)
-  console.log("Token:", session?.user?.accessToken)
-  console.log("Type:", session?.user?.type)
 
   // Filter menu items based on user type
-  const filteredMenu = session?.user?.type === "LEAD" 
+  const filteredMenu = session?.user?.user_type === "LEAD" 
     ? menu?.filter((item: any) => item.title === "Dashboards")
     : menu;
 
