@@ -2,6 +2,7 @@ import SVG from "@/CommonComponent/SVG";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { handlePined } from "@/Redux/Reducers/LayoutSlice";
 import { MenuListType } from "@/Types/LayoutTypes";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,6 +20,15 @@ const Menulist: React.FC<MenuListType> = ({
   const dispatch = useAppDispatch();
   const { t } = useTranslation("common");
   const [initialLoad, setInitialLoad] = useState(true);
+  const { data: session } = useSession();
+  console.log("Name:", session?.user?.name)
+  console.log("Token:", session?.user?.accessToken)
+  console.log("Type:", session?.user?.type)
+
+  // Filter menu items based on user type
+  const filteredMenu = session?.user?.type === "LEAD" 
+    ? menu?.filter((item: any) => item.title === "Dashboards")
+    : menu;
 
   // Utility to check if current path matches the menu item
   const isActive = (item: any): boolean => {
@@ -60,7 +70,7 @@ const Menulist: React.FC<MenuListType> = ({
 
   return (
     <>
-      {menu?.map((item: any, index) => {
+      {filteredMenu?.map((item: any, index) => {
         const hasChildren = !!item.children;
         const isCurrentActive =
           initialLoad ||
