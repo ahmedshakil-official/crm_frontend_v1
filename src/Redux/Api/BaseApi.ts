@@ -54,6 +54,8 @@ export const baseApi = createApi({
     "Fees",
     "Compliance",
     //Organization end
+    // Client start
+    "CLientApplicationDetails",
   ],
   endpoints: () => ({}),
 });
