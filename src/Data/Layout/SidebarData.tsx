@@ -1,28 +1,5 @@
 import { MenuItem } from "@/Types/LayoutTypes";
 
-export const UserListData = [
-  {
-    icon: "Profile",
-    text: "Account",
-    href: "/users/user_profile",
-  },
-  {
-    icon: "Message",
-    text: "Inbox",
-    href: "/app/letter_box",
-  },
-  {
-    icon: "Document",
-    text: "Task",
-    href: "/app/todo",
-  },
-  {
-    icon: "Edit",
-    text: "Add User",
-    href: "/others/authentication/registersimple",
-  },
-];
-
 export const MenuList: MenuItem[] | undefined = [
   {
     title: "General",

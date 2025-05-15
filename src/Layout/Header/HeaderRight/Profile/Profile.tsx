@@ -1,6 +1,5 @@
 import SVG from "@/CommonComponent/SVG";
 import { Href, ImagePath } from "@/Constant";
-import { UserListData } from "@/Data/Layout/SidebarData";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,14 +36,14 @@ const Profile = () => {
         </div>
         <div className={`custom-menu overflow-hidden ${show ? "show" : ""}`}>
           <ul className="profile-body">
-            {UserListData.map((item, index) => (
-              <li className="d-flex" key={index}>
-                <SVG className="svg-color" iconId={item.icon} />
-                <Link className="ms-2" href={item.href}>
-                  {item.text}
-                </Link>
-              </li>
-            ))}
+            <li className="d-flex gap-2">
+            <i className="fa-solid fa-user-gear"></i>
+              Profile
+            </li>
+            <li className="d-flex gap-2">
+              <i className="fa-solid fa-circle-user"></i>
+              Add User
+            </li>
             <li className="d-flex" onClick={handleLogout}>
               <SVG className="svg-color" iconId="Login" />
               <Link className="ms-2" href={Href}>
