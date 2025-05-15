@@ -64,16 +64,16 @@ const CaseStatusBody: React.FC = () => {
                   </td>
                   <td>
                     {caseItem?.lead_user
-                      ? `${caseItem?.lead_user.first_name} ${caseItem?.lead_user.last_name}`
+                      ? `${caseItem?.lead_user?.first_name} ${caseItem?.lead_user?.last_name}`
                       : "-"}
                   </td>
                   <td>
                     {caseItem?.lead_user.phone ? (
                       <a
-                        href={`tel:${caseItem.lead_user.phone}`}
+                        href={`tel:${caseItem?.lead_user.phone}`}
                         className="text-black text_decoration_hover"
                       >
-                        {caseItem.lead_user.phone}
+                        {caseItem?.lead_user.phone}
                       </a>
                     ) : (
                       "-"
@@ -101,8 +101,8 @@ const CaseStatusBody: React.FC = () => {
                   </td>
                   <td>{formatDateToDMYAndTime(caseItem?.created_at)}</td>
                   <td>
-                    {caseItem?.created_by.first_name}{" "}
-                    {caseItem?.created_by.last_name}
+                    {caseItem?.created_by?.first_name}{" "}
+                    {caseItem?.created_by?.last_name}
                   </td>
                   <td className="text-center">
                     <div className="d-flex justify-content-center gap-2 align-items-center">
