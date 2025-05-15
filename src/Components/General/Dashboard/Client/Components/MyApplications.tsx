@@ -1,30 +1,20 @@
+import LoadingSpinner from "@/app/loading";
+import { useGetSingleClientApplicationQuery } from "@/Redux/Reducers/Client/SingleCLientApplication/SingleCLientApplicationApi";
+import { SingleClientApplicationProps } from "@/Types/Client/SingleClientApplicationTypes";
 import Link from "next/link";
 import React from "react";
 import { Card, CardBody, CardHeader, Table } from "reactstrap";
 
-interface Application {
-  caseAlias: string;
-  caseId: string;
-  createDate: string;
-  propertyAddress: string;
-  purchasePrice: string;
-  loanAmount: string;
-  stage: string;
-}
-
 const MyApplications: React.FC = () => {
-  // Example data - replace with actual data from your API
-  const applications: Application[] = [
-    {
-      caseAlias: "f84c8ecd-0e79-4215-b1c2-3c3f11681d09",
-      caseId: "DIP01011256",
-      createDate: "13/05/2025",
-      propertyAddress: "",
-      purchasePrice: "£0.00",
-      loanAmount: "£0.00",
-      stage: "Fact Find",
-    },
-  ];
+  const { data: applications, isLoading } =
+    useGetSingleClientApplicationQuery(undefined);
+
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
 
   return (
     <Card className="mb-4">
@@ -39,27 +29,34 @@ const MyApplications: React.FC = () => {
               <tr>
                 <th>Case #</th>
                 <th>Create Date</th>
-                <th>Property Address</th>
-                <th>Purchase Price</th>
-                <th>Loan Amount</th>
+                <th>Case Category</th>
                 <th>Stage</th>
+                <th>Lead</th>
+                <th>Phone Number</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {applications.map((app) => (
-                <tr key={app.caseId}>
+              {applications?.map((app: SingleClientApplicationProps) => (
+                <tr key={app.name}>
                   <td>
-                    {" "}
-                    <Link href={`client/${app.caseAlias}`}>{app.caseId}</Link>
+                    <Link href={`client/${app.alias}`}>{app.name}</Link>
                   </td>
-                  <td>{app.createDate}</td>
-                  <td>{app.propertyAddress}</td>
-                  <td>{app.purchasePrice}</td>
-                  <td>{app.loanAmount}</td>
-                  <td>{app.stage}</td>
                   <td>
-                    <button className="btn btn-primary btn-sm">Continue</button>
+                    {new Date(app.created_at).toLocaleDateString("en-GB")}
+                  </td>
+                  <td>{app.case_category}</td>
+                  <td>{app.case_stage}</td>
+                  <td>
+                    {app.lead_user.first_name + " " + app.lead_user.last_name}
+                  </td>
+                  <td>{app.lead_user.phone}</td>
+                  <td>
+                    <Link href={`client/${app.alias}`}>
+                      <button className="btn btn-primary btn-sm">
+                        Continue
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
