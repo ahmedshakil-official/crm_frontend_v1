@@ -1,3 +1,4 @@
+"use client";
 import { CommonErrorPageProps } from "@/Types/PagesType";
 import { useSession } from "next-auth/react";
 import React from "react";

@@ -1,6 +1,7 @@
 import { Button, Col, Container, NavLink, Row } from "reactstrap";
 
 const UnderDevelopment = () => {
+
   return (
     <Container className="text-center mt-5">
       <Row>
@@ -11,7 +12,7 @@ const UnderDevelopment = () => {
           ></i>
           <h1 className="text-danger mt-3">Sorry!</h1>
           <h5 className="text-primary mt-2">This page is Under Development.</h5>
-          <NavLink href={"/dashboard/organization/"}>
+          <NavLink href={"/auth/login"}>
             <Button
               className="mt-2"
               style={{
