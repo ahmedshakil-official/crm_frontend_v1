@@ -30,12 +30,10 @@ export const UserForm = () => {
       email,
       password,
       redirect: false,
-      callbackUrl: "/",
     });
     setIsLoading(false);
     if (result?.ok) {
       toast.success("Successfully Logged in Rediract......");
-      // router.push(result.url || "/dashboard/organization");
     } else {
       toast.error("Invalid Credentaial...");
     }

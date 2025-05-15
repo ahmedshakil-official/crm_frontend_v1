@@ -28,4 +28,12 @@ export default withAuth(
   }
 );
 
-// ... existing code ...
+export const config = {
+  matcher: [
+    "/dashboard/:path*",
+    "/dashboard/organization/:path*",
+    "/dashboard/client/:path*",
+    "/dashboard/network/:path*",
+    "/users/:path*"
+  ]
+};
