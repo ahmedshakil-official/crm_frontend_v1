@@ -33,7 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <link rel='shortcut icon' href='/assets/images/favicon.png' type='image/x-icon' />
           <link rel='preconnect' href='https://fonts.googleapis.com' />
           <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='' />
-          <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAjeJEPREBQFvAIqDSZliF0WjQrCld-Mh0'></script>
+          {/* <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAjeJEPREBQFvAIqDSZliF0WjQrCld-Mh0'></script> */}
         </head>
         <body suppressHydrationWarning={true} className={`${nunito.variable}`}>
           <NoSsr>
