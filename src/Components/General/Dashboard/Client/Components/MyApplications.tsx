@@ -11,20 +11,20 @@ const MyApplications: React.FC = () => {
 
   if (isLoading)
     return (
-      <div>
+      <div className="p-4">
         <LoadingSpinner />
       </div>
     );
 
   return (
-    <Card className="mb-4">
+    <Card className="mb-4 p-0">
       <CardHeader className="bg-primary text-white d-flex align-items-center">
         <i className="fa fa-file-text me-2"></i>
         <h5 className="mb-0">My Applications</h5>
       </CardHeader>
       <CardBody className="p-0">
         <div className="table-responsive">
-          <Table hover bordered className="mb-0">
+          <Table hover borderedd className="mb-0 text-center">
             <thead>
               <tr>
                 <th>Case #</th>
@@ -40,17 +40,34 @@ const MyApplications: React.FC = () => {
               {applications?.map((app: SingleClientApplicationProps) => (
                 <tr key={app.name}>
                   <td>
-                    <Link href={`client/${app.alias}`}>{app.name}</Link>
+                    <Link
+                      className="text_decoration_hover"
+                      href={`client/${app.alias}`}
+                    >
+                      {app.name}
+                    </Link>
                   </td>
                   <td>
                     {new Date(app.created_at).toLocaleDateString("en-GB")}
                   </td>
-                  <td>{app.case_category}</td>
-                  <td>{app.case_stage}</td>
+                  <td>
+                    {app.case_category?.charAt(0).toUpperCase() +
+                      app.case_category?.slice(1).toLocaleLowerCase()}
+                  </td>
+                  <td>
+                    {app.case_stage
+                      ?.split("_")
+                      .map(
+                        (word) =>
+                          word.charAt(0).toUpperCase() +
+                          word.slice(1).toLowerCase()
+                      )
+                      .join(" ")}
+                  </td>
                   <td>
                     {app.lead_user.first_name + " " + app.lead_user.last_name}
                   </td>
-                  <td>{app.lead_user.phone}</td>
+                  <td>{app.lead_user.phone || "-"}</td>
                   <td>
                     <Link href={`client/${app.alias}`}>
                       <button className="btn btn-primary btn-sm">
