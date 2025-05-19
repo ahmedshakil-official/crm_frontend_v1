@@ -25,12 +25,12 @@ const DeleteCaseModal: React.FC<DeleteCaseModalProps> = ({
   };
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Confirm Case Deletion</ModalHeader>
+      <ModalHeader toggle={toggle} className="text-danger">Confirm Case Deletion</ModalHeader>
       <ModalBody>
         {caseData ? (
           <p>
-            Are you sure you want to delete the case named{" "}
-            <strong>{caseData.name}</strong>? This action cannot be undone.
+            Are you sure you want to delete the case number{" "}
+            <strong className="text-danger">{caseData.name}</strong>? This action cannot be undone.
           </p>
         ) : (
           <p>No case selected for deletion.</p>
