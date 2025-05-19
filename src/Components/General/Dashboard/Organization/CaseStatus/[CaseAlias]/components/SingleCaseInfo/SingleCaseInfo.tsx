@@ -46,7 +46,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
 
         <Row className="px-3 mt-3">
           {/* 1st card */}
-          <Col lg="6" md="12">
+          <Col lg="4" md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-primary">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -105,7 +105,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 2nd card */}
-          <Col lg="6" md="12">
+          <Col lg="4" md="12">
             <Card className="ecommerce-widget rounded-4">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-warning">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -125,19 +125,8 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                   <Row className="pt-2">
                     <Col xs="12">
                       <h6 className="pt-1">
-                        <strong>Case Id:</strong>{" "}
-                        {caseInfo?.alias
-                          ? `${caseInfo.alias.substring(
-                              0,
-                              8
-                            )}...${caseInfo.alias.substring(
-                              caseInfo.alias.length - 8
-                            )}`
-                          : "No alias available"}
-                      </h6>
-                      <h6 className="pt-1">
                         <strong>Case Category:</strong>{" "}
-                        <span className="bg-primary p-1 rounded-1">
+                        <span>
                           {caseInfo?.case_category
                             ? caseInfo.case_category
                                 .split("_")
@@ -150,37 +139,13 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                             : "N/A"}
                         </span>
                       </h6>
-                    </Col>
-                  </Row>
-                )}
-              </CardBody>
-            </Card>
-          </Col>
-          {/* 3rd card */}
-          <Col lg="6" md="12">
-            <Card className="ecommerce-widget rounded-4">
-              <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-success">
-                <CardHeader className="pt-0 pb-1 m-0 text-center">
-                  <h4 className="fw-bold">Current Status</h4>
-                </CardHeader>
-                {isLoading ? (
-                  <Row className="pt-2">
-                    <Col xs="12" className="text-center">
-                      <Spinner
-                        animation="border"
-                        role="status"
-                        color="success"
-                      />
-                    </Col>
-                  </Row>
-                ) : (
-                  <Row className="pt-2">
-                    <Col xs="12">
                       <h6 className="pt-1">
                         <strong>Active Status:</strong>{" "}
                         <span
-                          className={`p-1 rounded-1 ${
-                            caseInfo?.is_removed ? "bg-danger" : "bg-success"
+                          className={`${
+                            caseInfo?.is_removed
+                              ? "text-danger"
+                              : "text-success"
                           }`}
                         >
                           {caseInfo?.is_removed ? "Removed" : "Active"}
@@ -188,7 +153,7 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       </h6>
                       <h6 className="pt-1">
                         <strong>Case Stage:</strong>{" "}
-                        <span className="bg-info p-1 rounded-1">
+                        <span>
                           {caseInfo?.case_stage
                             ? caseInfo.case_stage
                                 .split("_")
@@ -207,17 +172,21 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
               </CardBody>
             </Card>
           </Col>
-          {/* 4th card */}
-          <Col lg="6" md="12">
+          {/* 3rd card */}
+          <Col lg="4" md="12">
             <Card className="ecommerce-widget rounded-4">
-              <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-info">
+              <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-success">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
                   <h4 className="fw-bold">Assigned Advisor</h4>
                 </CardHeader>
                 {isLoading ? (
                   <Row className="pt-2">
                     <Col xs="12" className="text-center">
-                      <Spinner animation="border" role="status" color="info" />
+                      <Spinner
+                        animation="border"
+                        role="status"
+                        color="success"
+                      />
                     </Col>
                   </Row>
                 ) : (
