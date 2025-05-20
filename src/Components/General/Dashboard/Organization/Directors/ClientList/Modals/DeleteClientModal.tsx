@@ -33,8 +33,14 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Delete Client</ModalHeader>
-      <ModalBody>Are you sure you want to delete {clientName}?</ModalBody>
+      <ModalHeader toggle={toggle}>
+        <h3 className="text-danger">Delete Client</h3>
+      </ModalHeader>
+      <ModalBody>
+        Are you sure you want to delete the client{" "}
+        <strong className="text-danger">{clientName}</strong>? This action
+        cannot be undone.
+      </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={handleDelete} disabled={isLoading}>
           {isLoading ? "Deleting..." : "Delete"}

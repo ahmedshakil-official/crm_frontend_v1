@@ -30,10 +30,13 @@ const DeleteAdvisorModal: React.FC<DeleteAdvisorModalProps> = ({
   };
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Delete Advisor</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        <h3 className="text-danger">Delete Advisor</h3>
+      </ModalHeader>
       <ModalBody>
         Are you sure you want to delete the advisor{" "}
-        <strong>{advisorName}</strong>? This action cannot be undone.
+        <strong className="text-danger">{advisorName}</strong>? This action
+        cannot be undone.
       </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={handleDelete} disabled={isLoading}>
