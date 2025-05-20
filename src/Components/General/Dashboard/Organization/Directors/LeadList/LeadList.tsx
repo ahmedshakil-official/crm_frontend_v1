@@ -106,7 +106,7 @@ const LeadList: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div>
+      <div className="p-4">
         <LoadingSpinner />
       </div>
     );
