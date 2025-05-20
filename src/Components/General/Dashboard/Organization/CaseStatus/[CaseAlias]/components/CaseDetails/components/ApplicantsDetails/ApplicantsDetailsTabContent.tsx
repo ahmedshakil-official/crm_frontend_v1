@@ -1,8 +1,9 @@
 "use client";
-import { countries } from "@/utils/Countries";
 import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { ApplicantProps } from "@/Types/Organization/Cases/CaseDetails/ApplicantsDetailsTypes";
 import { ApplicantsUsersProps } from "@/Types/Organization/Cases/CaseDetails/ApplicantsUserTypes";
+import { countries } from "@/utils/Countries";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -24,6 +25,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   applicantsData,
   basicTab,
 }) => {
+  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
@@ -102,6 +104,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     tenure: "",
     year_built: 0,
     notes: "",
+    updated_by: "",
   });
 
   // Find the selected applicant based on the `basicTab` value
@@ -1507,7 +1510,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           </Row>
           {/* Submit Button */}
           <div className="d-flex justify-content-end">
-            <Button type="submit" color="primary" disabled={isLoading}>
+            <Button
+              type="submit"
+              color="primary"
+              disabled={
+                isLoading ||
+                (session?.user?.user_type === "LEAD" &&
+                  selectedApplicant?.updated_by !== null)
+              }
+            >
               {isUpdatingApplicant ? "Updating..." : "Update Applicant"}
             </Button>
           </div>

@@ -6,6 +6,7 @@ import {
 import { LoanDetailsTabContentProps } from "@/Types/Organization/Cases/CaseDetails/LoanDetailsTypes";
 import LoadingSpinner from "@/app/loading";
 import { skipToken } from "@reduxjs/toolkit/query";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -19,6 +20,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   tabId,
   setTabId,
 }) => {
+  const { data: session } = useSession();
   const { casealias } = useParams();
   const { data, isLoading, isError } = useGetCaseLoanDetailsQuery(casealias);
 
@@ -232,7 +234,18 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
             formData={formDataTab4}
             handleFormChange={(name, value) => handleFormChange(4, name, value)}
           />
-          <Button color="primary" onClick={handleSave} className="float-end">
+          <Button
+            type="submit"
+            color="primary"
+            onClick={handleSave}
+            className="float-end"
+            disabled={
+              isLoading ||
+              isUpdating ||
+              (session?.user?.user_type === "LEAD" &&
+                loandetailsData?.updated_by !== null)
+            }
+          >
             {isUpdating ? "Saving..." : "Save Details"}
           </Button>
         </TabPane>

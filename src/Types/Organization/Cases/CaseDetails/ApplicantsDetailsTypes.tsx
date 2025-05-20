@@ -66,6 +66,7 @@ export interface ApplicantProps {
   year_built: number;
   notes: string;
   marketing_preferences?: string;
+  updated_by?: any;
 }
 
 export interface ApplicantDependantsViewModalProps {
