@@ -115,7 +115,7 @@ const AdvisorList = () => {
 
   if (isLoading) {
     return (
-      <div>
+      <div className="p-4">
         <LoadingSpinner />
       </div>
     );
@@ -251,7 +251,7 @@ const AdvisorList = () => {
           <div className="px-2">
             <p className="text-success">
               Showing 1 to {Math.min(5, currentAdvisors?.length || 0)} of{" "}
-              {currentAdvisors?.length || 0} Advisors
+              {advisorData?.length || 0} Advisors
             </p>
           </div>
           <Pagination>

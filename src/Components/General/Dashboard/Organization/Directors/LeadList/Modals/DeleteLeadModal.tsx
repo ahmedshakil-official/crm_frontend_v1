@@ -32,10 +32,13 @@ const DeleteLeadModal: React.FC<DeleteLeadModalProps> = ({
   };
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Delete Lead</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        <h3 className="text-danger">Delete Lead</h3>
+      </ModalHeader>
       <ModalBody>
-        Are you sure you want to delete the lead <strong>{leadName}</strong>?
-        This action cannot be undone.
+        Are you sure you want to delete the lead{" "}
+        <strong className="text-danger">{leadName}</strong>? This action cannot
+        be undone.
       </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={handleDelete}>
