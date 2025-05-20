@@ -39,80 +39,80 @@ export const UserForm = () => {
     }
   };
   return (
-    <div>
-      <div>
-        <Link className="logo" href="/">
-          <Image
-            width={91}
-            height={27}
-            className="img-fluid for-light"
-            src={imageOne}
-            alt="login page"
-            priority
-          />
-          <Image
-            width={91}
-            height={27}
-            className="img-fluid for-dark"
-            src={imageTwo}
-            alt="login page"
-            priority
-          />
-        </Link>
-      </div>
-      <div className="login-main">
-        <Form
-          className="theme-form"
-          onSubmit={(event) => formSubmitHandle(event)}
-        >
-          <h2 className="text-center">{SignInToAccount}</h2>
-          <p className="text-center">Enter your email & password to login</p>
-          <FormGroup>
-            <Label className="col-form-label">{EmailAddressLogIn}</Label>
-            <Input
-              type="email"
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="Enter Your Registered Email"
+    <div className="login-main">
+      <Form
+        className="theme-form"
+        onSubmit={(event) => formSubmitHandle(event)}
+      >
+        <div>
+          <Link className="logo mb-2" href="/">
+            <Image
+              width={91}
+              height={27}
+              className="img-fluid for-light"
+              src={imageOne}
+              alt="login page"
+              priority
             />
-          </FormGroup>
-          <FormGroup>
-            <Label className="col-form-label">{Password}</Label>
-            <div className="position-relative form-input">
-              <Input
-                type={show ? "text" : "password"}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="Enter Password"
-              />
-              <div className="show-hide" onClick={() => setShow(!show)}>
-                <span className="show"> </span>
-              </div>
+            <Image
+              width={91}
+              height={27}
+              className="img-fluid for-dark"
+              src={imageTwo}
+              alt="login page"
+              priority
+            />
+          </Link>
+        </div>
+        <h2 className="text-center">{SignInToAccount}</h2>
+        <p className="text-center">Enter your email & password to login</p>
+        <FormGroup>
+          <Label className="col-form-label">{EmailAddressLogIn}</Label>
+          <Input
+            type="email"
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="Enter Your Registered Email"
+            required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label className="col-form-label">{Password}</Label>
+          <div className="position-relative form-input">
+            <Input
+              type={show ? "text" : "password"}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Enter Password"
+              required
+            />
+            <div className="show-hide" onClick={() => setShow(!show)}>
+              <span className="show"> </span>
             </div>
+          </div>
+        </FormGroup>
+        <FormGroup className="mb-0 checkbox-checked">
+          <FormGroup className="checkbox-solid-info" check>
+            <Input id="checkbox1" type="checkbox" />
+            <Label className="text-muted" htmlFor="checkbox1">
+              {RememberPassword}
+            </Label>
           </FormGroup>
-          <FormGroup className="mb-0 checkbox-checked">
-            <FormGroup className="checkbox-solid-info" check>
-              <Input id="checkbox1" type="checkbox" />
-              <Label className="text-muted" htmlFor="checkbox1">
-                {RememberPassword}
-              </Label>
-            </FormGroup>
-            <Link className="link" href={`/authentication/forget_password`}>
-              {ForgotPassword}
-            </Link>
-            <div className="text-end mt-3">
-              <Button type="submit" color="primary" block disabled={isLoading}>
-                {isLoading ? <Spinner size="sm" /> : `${SignIn}`}
-              </Button>
-            </div>
-          </FormGroup>
-          {/* <div className="login-social-title">
+          <Link className="link" href={`/authentication/forget_password`}>
+            {ForgotPassword}
+          </Link>
+          <div className="text-end mt-3">
+            <Button type="submit" color="primary" block disabled={isLoading}>
+              {isLoading ? <Spinner size="sm" /> : `${SignIn}`}
+            </Button>
+          </div>
+        </FormGroup>
+        {/* <div className="login-social-title">
             <h6>{OrSignInWith}</h6>
           </div>
           <UserSocialApp /> */}
-          {/* <p className="mt-4 mb-0 text-center">{DontHaveAccount}
+        {/* <p className="mt-4 mb-0 text-center">{DontHaveAccount}
             <Link className="ms-2" href="/others/authentication/registersimple">{CreateAccount}</Link>
           </p> */}
-        </Form>
-      </div>
+      </Form>
     </div>
   );
 };
