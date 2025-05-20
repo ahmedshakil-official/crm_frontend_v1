@@ -10,6 +10,7 @@ const DeleteIntroducerModal: React.FC<DeleteIntroducerModalProps> = ({
   introducerName,
   introducerAlias,
 }) => {
+  // rtk hooks
   const [deleteIntroducerDetails, { isLoading }] =
     useDeleteIntroducerDetailsMutation();
 
@@ -31,10 +32,13 @@ const DeleteIntroducerModal: React.FC<DeleteIntroducerModalProps> = ({
   };
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Delete Introducer</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        <h3 className="text-danger">Delete Introducer</h3>
+      </ModalHeader>
       <ModalBody>
         Are you sure you want to delete the introducer{" "}
-        <strong>{introducerName}</strong>? This action cannot be undone.
+        <strong className="text-danger">{introducerName}</strong>? This action
+        cannot be undone.
       </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={handleDelete}>
