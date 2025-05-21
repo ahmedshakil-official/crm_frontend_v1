@@ -43,12 +43,12 @@
 }
 
 .organization_card {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+  /* background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important; */
   transition: all 0.3s ease;
 }
 
 .organization_card:hover {
-  background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%) !important;
+  /* background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%) !important; */
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }

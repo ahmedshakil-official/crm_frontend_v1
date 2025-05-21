@@ -1,6 +1,6 @@
-import SvgIcon from "@/CommonComponent/SVG/IconSvg";
 import { useGetOrganizationListQuery } from "@/Redux/Reducers/Network/Organization/OrganizationListApi";
 import { OrganizationsProps } from "@/Types/Network/OrganizationsTypes";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -84,58 +84,66 @@ const OrganizationCards = () => {
               className="col-ed-4 box-col-4"
               key={item.slug}
             >
-              <Card className="text-center bg-light organization_card">
-                <CardBody>
-                  <div className="social-img-wrap">
-                    <div className="social-img">
-                      <img
-                        width="68"
-                        height="68"
+              <Card className="bg-white border organization_card opacity-100 p-3 position-relative">
+                <Link
+                  href={item?.website || "#"}
+                  target="_blank"
+                  className="text-muted position-absolute top-0 end-0 p-3"
+                >
+                  <i
+                    style={{ fontSize: "10px" }}
+                    className="fa-solid fa-up-right-from-square"
+                  ></i>
+                </Link>
+
+                <CardBody className="p-0 ">
+                  <div className="d-flex gap-2">
+                    <div className="mt-0 rounded-circle overflow-hidden border-1 border-primary">
+                      <Image
+                        width="28"
+                        height="28"
                         className="img-fluid object-fit-cover"
                         src={item.logo || "/assets/images/network/logo.jpg"}
                         alt="Organization"
                       />
                     </div>
-                    <div className="edit-icon">
-                      <SvgIcon iconId="profile-check" />
-                    </div>
-                  </div>
-                  <div className="social-details">
-                    <h5 className="mb-1 ">
+                    <h5 className="mb-1">
                       <Link
-                        className="text-primary text_decoration_hover"
+                        className="text-black text_decoration_hover"
                         href={`/dashboard/network/organization/${item.slug}`}
                       >
                         {item.name}
                       </Link>
                     </h5>
+                  </div>
+                  <div className="mt-2">
                     <Link
                       href={`mailto:${item.email}`}
-                      className="text-dark text_decoration_hover"
+                      className="fs-6 text_decoration_hover mb-2"
                     >
-                      {item.email}
+                      <small> {item.email}</small>
                     </Link>
-                    <ul className="card-social">
-                      <li>
-                        <Link href={item?.website || "#"} target="_blank">
-                          <i className="fa-solid fa-earth-americas"></i>
-                        </Link>
-                      </li>
-                    </ul>
-                    <ul className="social-follow">
-                      <li>
-                        <h5 className="mb-0 text-secondary">15</h5>
-                        <span className="f-light">Cases</span>
-                      </li>
-                      <li>
-                        <h5 className="mb-0 text-secondary">10</h5>
-                        <span className="f-light">Employees</span>
-                      </li>
-                      <li>
-                        <h5 className="mb-0 text-secondary">14</h5>
-                        <span className="f-light">Clients</span>
-                      </li>
-                    </ul>
+                  </div>
+
+                  <div className="d-flex justify-content-between mt-3 pt-2 border-top">
+                    <Col className="border-end">
+                      <div className="text-center ">
+                        <h5 className="mb-0">15</h5>
+                        <span className="text-primary small">Cases</span>
+                      </div>
+                    </Col>
+                    <Col className="border-end">
+                      <div className="text-center ">
+                        <h5 className="mb-0">10</h5>
+                        <span className="text-primary small">Employees</span>
+                      </div>
+                    </Col>
+                    <Col className="">
+                      <div className="text-center">
+                        <h5 className="mb-0">14</h5>
+                        <span className="text-primary small">Clients</span>
+                      </div>
+                    </Col>
                   </div>
                 </CardBody>
               </Card>
