@@ -84,94 +84,47 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
     }
   };
 
-  // Helper function to determine the color based on employment status
-  const getStatusColor = (status: any) => {
-    switch (status) {
-      case "EMPLOYED":
-        return "info";
-      case "SELF_EMPLOYED":
-        return "warning";
-      case "RETIRED":
-        return "primary";
-      case "OTHER":
-        return "secondary";
-      case "CONTRACTOR":
-        return "dark";
-      default:
-        return "info";
-    }
-  };
-
   return (
     <CardBody className="px-0 pb-0">
-      <h4 className="text-primary pb-2 fs-4 mb-4 mt-2">Employment Details</h4>
+      <h4 className="text-primary pb-0 fs-4 mb-4 mt-2">Employment Details</h4>
       <Form onSubmit={handleSaveClick}>
-        <Row>
-          <FormGroup>
-            <Label for="employmentStatus" className="fs-5">
-              Employment Status
-            </Label>
-            <Input
-              type="select"
-              id="employmentStatus"
-              value={formValues?.employment_status || ""}
-              onChange={(e) =>
-                handleInputChange("employment_status", e.target.value)
-              }
-              className={
-                formValues?.employment_status === "EMPLOYED"
-                  ? "text-info border-info"
-                  : formValues?.employment_status === "SELF_EMPLOYED"
-                  ? "text-warning border-warning"
-                  : formValues?.employment_status === "RETIRED"
-                  ? "text-primary border-primary"
-                  : formValues?.employment_status === "OTHER"
-                  ? "text-secondary border-secondary"
-                  : formValues?.employment_status === "UNEMPLOYED"
-                  ? "text-danger border-danger"
-                  : formValues?.employment_status === "HOUSEPERSON"
-                  ? "text-secondary border-secondary"
-                  : formValues?.employment_status === "CONTRACTOR"
-                  ? "text-dark border-dark"
-                  : "text-dark border-dark" // Default fallback
-              }
-            >
-              <option value="">Select...</option>
-              <option className="text-info" value="EMPLOYED">
-                Employed
-              </option>
-              <option className="text-warning" value="SELF_EMPLOYED">
-                Self Employed
-              </option>
-              <option className="text-primary" value="RETIRED">
-                Retired
-              </option>
-              <option className="text-secondary" value="OTHER">
-                Other
-              </option>
-              <option className="text-danger" value="UNEMPLOYED">
-                Unemployed
-              </option>
-              <option className="text-secondary" value="HOUSEPERSON">
-                Houseperson
-              </option>
-              <option className="text-dark" value="CONTRACTOR">
-                Contractor
-              </option>
-            </Input>
-          </FormGroup>
+        <Row className="d-flex justify-content-center align-items-center">
+          <Col md={6}>
+            <FormGroup>
+              <Label for="employmentStatus" className="fs-5">
+                Employment Status*
+              </Label>
+              <Input
+                type="select"
+                id="employmentStatus"
+                className="border-primary"
+                value={formValues?.employment_status || ""}
+                onChange={(e) =>
+                  handleInputChange("employment_status", e.target.value)
+                }
+                required
+              >
+                <option value="">Select...</option>
+                <option value="EMPLOYED">Employed</option>
+                <option value="SELF_EMPLOYED">Self Employed</option>
+                <option value="RETIRED">Retired</option>
+                <option value="OTHER">Other</option>
+                <option value="UNEMPLOYED">Unemployed</option>
+                <option value="HOUSEPERSON">Houseperson</option>
+                <option value="CONTRACTOR">Contractor</option>
+              </Input>
+            </FormGroup>
+          </Col>
         </Row>
+        <hr className="border-secondary" />
         <Row>
           {formValues?.employment_status === "EMPLOYED" && (
             <Col md={6}>
               <FormGroup>
-                <Label for="employmentType" className="text-info">
-                  Employment Type
-                </Label>
+                <Label for="employmentType">Employment Type</Label>
                 <Input
                   type="select"
                   id="employmentType"
-                  className="border-info"
                   value={formValues?.employment_type || ""}
                   onChange={(e) =>
                     handleInputChange("employment_type", e.target.value)
@@ -192,20 +145,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             formValues?.employment_status === "CONTRACTOR") && (
             <Col md={6}>
               <FormGroup>
-                <Label
-                  for="occupation"
-                  className={`text-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
-                >
-                  Occupation*
-                </Label>
+                <Label for="occupation">Occupation*</Label>
                 <Input
                   type="text"
                   id="occupation"
-                  className={`border-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
                   value={formValues?.occupation || ""}
                   onChange={(e) =>
                     handleInputChange("occupation", e.target.value)
@@ -219,20 +162,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             formValues?.employment_status === "SELF_EMPLOYED") && (
             <Col md={6}>
               <FormGroup>
-                <Label
-                  for="industry"
-                  className={`text-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
-                >
-                  Industry
-                </Label>
+                <Label for="industry">Industry</Label>
                 <Input
                   type="text"
                   id="industry"
-                  className={`border-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
                   value={formValues?.industry || ""}
                   onChange={(e) =>
                     handleInputChange("industry", e.target.value)
@@ -247,20 +180,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             formValues?.employment_status === "CONTRACTOR") && (
             <Col md={6}>
               <FormGroup>
-                <Label
-                  for="employerName"
-                  className={`text-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
-                >
-                  Employer Name*
-                </Label>
+                <Label for="employerName">Employer Name*</Label>
                 <Input
                   type="text"
                   id="employerName"
-                  className={`border-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
                   value={formValues?.employer_name || ""}
                   onChange={(e) =>
                     handleInputChange("employer_name", e.target.value)
@@ -274,20 +197,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             formValues?.employment_status === "CONTRACTOR") && (
             <Col md={6}>
               <FormGroup>
-                <Label
-                  for="employerTelephone"
-                  className={`text-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
-                >
-                  Employer's Telephone
-                </Label>
+                <Label for="employerTelephone">Employer's Telephone</Label>
                 <Input
                   type="text"
                   id="employerTelephone"
-                  className={`border-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
                   value={formValues?.employer_telephone || ""}
                   onChange={(e) =>
                     handleInputChange("employer_telephone", e.target.value)
@@ -301,20 +214,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
           {formValues?.employment_status === "EMPLOYED" && (
             <Col md={6}>
               <FormGroup>
-                <Label
-                  for="employers_name_for_reference"
-                  className={`text-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
-                >
+                <Label for="employers_name_for_reference">
                   Employer's Name for Reference
                 </Label>
                 <Input
                   type="text"
                   id="employers_name_for_reference"
-                  className={`border-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
                   value={formValues?.employers_name_for_reference || ""}
                   onChange={(e) =>
                     handleInputChange(
@@ -329,20 +234,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
           {formValues?.employment_status === "EMPLOYED" && (
             <Col md={6}>
               <FormGroup>
-                <Label
-                  for="employerEmail"
-                  className={`text-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
-                >
+                <Label for="employerEmail">
                   Employer's Email for Reference
                 </Label>
                 <Input
                   type="email"
                   id="employerEmail"
-                  className={`border-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
                   value={formValues?.employer_email_for_reference || ""}
                   onChange={(e) =>
                     handleInputChange(
@@ -361,20 +258,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={6}>
                 <FormGroup>
-                  <Label
-                    for="employerPostcode"
-                    className={`text-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
-                  >
-                    Employer's Postcode
-                  </Label>
+                  <Label for="employerPostcode">Employer's Postcode</Label>
                   <Input
                     type="text"
                     id="employerPostcode"
-                    className={`border-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
                     value={formValues?.employer_postcode || ""}
                     onChange={(e) =>
                       handleInputChange("employer_postcode", e.target.value)
@@ -384,20 +271,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label
-                    for="employerHouseNumber"
-                    className={`text-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
-                  >
+                  <Label for="employerHouseNumber">
                     Employer's House Name or Number
                   </Label>
                   <Input
                     type="text"
                     id="employerHouseNumber"
-                    className={`border-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
                     value={formValues?.employer_house_name_or_number || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -417,20 +296,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={6}>
                 <FormGroup>
-                  <Label
-                    for="employerAddressLine1"
-                    className={`text-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
-                  >
+                  <Label for="employerAddressLine1">
                     Employer's Address Line 1
                   </Label>
                   <Input
                     type="text"
                     id="employerAddressLine1"
-                    className={`border-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
                     value={formValues?.employer_address_line_1 || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -443,20 +314,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label
-                    for="employerAddressLine2"
-                    className={`text-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
-                  >
+                  <Label for="employerAddressLine2">
                     Employer's Address Line 2
                   </Label>
                   <Input
                     type="text"
                     id="employerAddressLine2"
-                    className={`border-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
                     value={formValues?.employer_address_line_2 || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -476,20 +339,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={4}>
                 <FormGroup>
-                  <Label
-                    for="employerCity"
-                    className={`text-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
-                  >
-                    Employer's City
-                  </Label>
+                  <Label for="employerCity">Employer's City</Label>
                   <Input
                     type="text"
                     id="employerCity"
-                    className={`border-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
                     value={formValues?.employer_city || ""}
                     onChange={(e) =>
                       handleInputChange("employer_city", e.target.value)
@@ -499,20 +352,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label
-                    for="employerCounty"
-                    className={`text-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
-                  >
-                    Employer's County
-                  </Label>
+                  <Label for="employerCounty">Employer's County</Label>
                   <Input
                     type="text"
                     id="employerCounty"
-                    className={`border-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
                     value={formValues?.employer_county || ""}
                     onChange={(e) =>
                       handleInputChange("employer_county", e.target.value)
@@ -522,20 +365,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label
-                    for="employerCountry"
-                    className={`text-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
-                  >
-                    Employer's Country
-                  </Label>
+                  <Label for="employerCountry">Employer's Country</Label>
                   <Input
                     type="text"
                     id="employerCountry"
-                    className={`border-${getStatusColor(
-                      formValues?.employment_status
-                    )}`}
                     value={formValues?.employer_country || ""}
                     onChange={(e) =>
                       handleInputChange("employer_country", e.target.value)
@@ -551,13 +384,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="employmentCommenced" className="text-info">
-                    Employment Commenced*
-                  </Label>
+                  <Label for="employmentCommenced">Employment Commenced*</Label>
                   <Input
                     type="date"
                     id="employmentCommenced"
-                    className="border-info"
                     value={formValues?.employment_commenced || ""}
                     onChange={(e) =>
                       handleInputChange("employment_commenced", e.target.value)
@@ -568,13 +398,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="employmentEnded" className="text-info">
-                    Employment Ended
-                  </Label>
+                  <Label for="employmentEnded">Employment Ended</Label>
                   <Input
                     type="date"
                     id="employmentEnded"
-                    className="border-info"
                     value={formValues?.employment_ended || ""}
                     onChange={(e) =>
                       handleInputChange("employment_ended", e.target.value)
@@ -595,20 +422,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             formValues?.employment_status === "RETIRED") && (
             <Col md={6}>
               <FormGroup>
-                <Label
-                  for="grossAnnualIncome"
-                  className={`text-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
-                >
-                  Gross Annual Income*
-                </Label>
+                <Label for="grossAnnualIncome">Gross Annual Income*</Label>
                 <Input
                   type="number"
                   id="grossAnnualIncome"
-                  className={`border-${getStatusColor(
-                    formValues?.employment_status
-                  )}`}
                   value={formValues?.gross_annual_income || 0}
                   onChange={(e) =>
                     handleInputChange("gross_annual_income", e.target.value)
@@ -621,13 +438,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
           {formValues?.employment_status === "EMPLOYED" && (
             <Col md={6}>
               <FormGroup>
-                <Label for="netAnnualIncome" className="text-info">
-                  Net Annual Income
-                </Label>
+                <Label for="netAnnualIncome">Net Annual Income</Label>
                 <Input
                   type="number"
                   id="netAnnualIncome"
-                  className="border-info"
                   value={formValues?.net_annual_income || 0}
                   onChange={(e) =>
                     handleInputChange("net_annual_income", e.target.value)
@@ -639,13 +453,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
           {formValues?.employment_status === "RETIRED" && (
             <Col md={6}>
               <FormGroup>
-                <Label for="income_source" className="text-primary">
-                  Income Source
-                </Label>
+                <Label for="income_source">Income Source</Label>
                 <Input
                   type="text"
                   id="income_source"
-                  className="border-primary"
                   value={formValues?.income_source || ""}
                   onChange={(e) =>
                     handleInputChange("income_source", e.target.value)
@@ -663,11 +474,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="checkbox"
                     name="probationaryPeriod"
-                    className={
-                      formValues.is_probationary_period
-                        ? "bg-info border-info"
-                        : "border-info"
-                    }
                     checked={formValues?.is_probationary_period || false}
                     onChange={(e) =>
                       setFormValues((prevValues) => ({
@@ -695,17 +501,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                     <Input
                       type="checkbox"
                       name="foreignCurrency"
-                      className={
-                        formValues?.is_income_in_foreign_currency
-                          ? `bg-${getStatusColor(
-                              formValues?.employment_status
-                            )} border-${getStatusColor(
-                              formValues?.employment_status
-                            )}`
-                          : `border-${getStatusColor(
-                              formValues?.employment_status
-                            )}`
-                      }
                       checked={
                         formValues?.is_income_in_foreign_currency || false
                       }
@@ -723,20 +518,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               <Col md={6}>
                 {formValues?.is_income_in_foreign_currency && (
                   <FormGroup>
-                    <Label
-                      for="further_details"
-                      className={`text-${getStatusColor(
-                        formValues?.employment_status
-                      )}`}
-                    >
-                      Further Details*
-                    </Label>
+                    <Label for="further_details">Further Details*</Label>
                     <Input
                       type="textarea"
                       id="further_details"
-                      className={`border-${getStatusColor(
-                        formValues?.employment_status
-                      )}`}
                       value={formValues?.further_details || ""}
                       onChange={(e) =>
                         handleInputChange("further_details", e.target.value)
@@ -754,13 +539,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Row className="d-flex justify-content-between">
               <Col md={4}>
                 <FormGroup>
-                  <Label for="bonus" className="text-info">
-                    Bonus*
-                  </Label>
+                  <Label for="bonus">Bonus*</Label>
                   <Input
                     type="number"
                     id="bonus"
-                    className="border-info"
                     value={formValues?.bonus || 0}
                     onChange={(e) => handleInputChange("bonus", e.target.value)}
                   />
@@ -771,15 +553,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   check
                   className="d-flex justify-content-center align-content-center"
                 >
-                  <Label check className="text-info">
+                  <Label check>
                     <Input
                       type="checkbox"
                       name="is_bonus_guaranteed"
-                      className={
-                        formValues?.is_bonus_guaranteed
-                          ? "bg-info border-info"
-                          : "border-info"
-                      }
                       checked={formValues?.is_bonus_guaranteed || false}
                       onChange={(e) =>
                         setFormValues((prevValues) => ({
@@ -794,9 +571,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="bonusFrequency" className="text-info">
-                    Bonus Frequency
-                  </Label>
+                  <Label for="bonusFrequency">Bonus Frequency</Label>
                   <Input
                     type="select"
                     id="bonusFrequency"
@@ -821,13 +596,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Row className="d-flex justify-content-between">
               <Col md={4}>
                 <FormGroup>
-                  <Label for="overtime" className="text-info">
-                    Overtime*
-                  </Label>
+                  <Label for="overtime">Overtime*</Label>
                   <Input
                     type="number"
                     id="overtime"
-                    className="border-info"
                     value={formValues?.overtime || 0}
                     onChange={(e) =>
                       handleInputChange("overtime", e.target.value)
@@ -840,15 +612,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   check
                   className="d-flex justify-content-center align-content-center"
                 >
-                  <Label check className="text-info">
+                  <Label check>
                     <Input
                       type="checkbox"
                       name="is_overtime_guaranteed"
-                      className={
-                        formValues?.is_overtime_guaranteed
-                          ? "bg-info border-info"
-                          : "border-info"
-                      }
                       checked={formValues?.is_overtime_guaranteed || false}
                       onChange={(e) =>
                         setFormValues((prevValues) => ({
@@ -863,13 +630,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="overtimeFrequency" className="text-info">
-                    Overtime Frequency
-                  </Label>
+                  <Label for="overtimeFrequency">Overtime Frequency</Label>
                   <Input
                     type="select"
                     id="overtimeFrequency"
-                    className="border-info"
                     value={formValues?.overtime_frequency || ""}
                     onChange={(e) =>
                       handleInputChange("overtime_frequency", e.target.value)
@@ -891,13 +655,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Row className="d-flex justify-content-between">
               <Col md={4}>
                 <FormGroup>
-                  <Label for="allowance" className="text-info">
-                    Allowance*
-                  </Label>
+                  <Label for="allowance">Allowance*</Label>
                   <Input
                     type="number"
                     id="allowance"
-                    className="border-info"
                     value={formValues?.allowance || 0}
                     onChange={(e) =>
                       handleInputChange("allowance", e.target.value)
@@ -910,15 +671,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   check
                   className="d-flex justify-content-center align-content-center"
                 >
-                  <Label check className="text-info">
+                  <Label check>
                     <Input
                       type="checkbox"
                       name="is_allowance_guaranteed"
-                      className={
-                        formValues?.is_allowance_guaranteed
-                          ? "bg-info border-info"
-                          : "border-info"
-                      }
                       checked={formValues?.is_allowance_guaranteed || false}
                       onChange={(e) =>
                         setFormValues((prevValues) => ({
@@ -933,13 +689,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="allowanceFrequency" className="text-info">
-                    Allowance Frequency
-                  </Label>
+                  <Label for="allowanceFrequency">Allowance Frequency</Label>
                   <Input
                     type="select"
                     id="allowanceFrequency"
-                    className="border-info"
                     value={formValues?.allowance_frequency || ""}
                     onChange={(e) =>
                       handleInputChange("allowance_frequency", e.target.value)
@@ -964,16 +717,13 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
           {formValues?.employment_status === "SELF_EMPLOYED" && (
             <>
               <Col md={6}>
-                <Label for="employmentTime" className="text-warning">
-                  Employment Time
-                </Label>
+                <Label for="employmentTime">Employment Time</Label>
                 <Row>
                   <Col md={6}>
                     <FormGroup>
                       <Input
                         type="number"
                         id="employment_time_year"
-                        className="border-warning"
                         placeholder="Years"
                         value={formValues?.employment_time_year || 0}
                         onChange={(e) =>
@@ -990,7 +740,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                       <Input
                         type="number"
                         id="employment_time_month"
-                        className="border-warning"
                         placeholder="Months"
                         value={formValues?.employment_time_month || 0}
                         onChange={(e) =>
@@ -1006,13 +755,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="business_telephone" className="text-warning">
-                    Business Telephone
-                  </Label>
+                  <Label for="business_telephone">Business Telephone</Label>
                   <Input
                     type="text"
                     id="business_telephone"
-                    className="border-warning"
                     value={formValues?.business_telephone || ""}
                     onChange={(e) =>
                       handleInputChange("business_telephone", e.target.value)
@@ -1028,13 +774,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="business_address_line_1" className="text-warning">
+                  <Label for="business_address_line_1">
                     Business Address Line 1
                   </Label>
                   <Input
                     type="text"
                     id="business_address_line_1"
-                    className="border-warning"
                     value={formValues?.business_address_line_1 || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -1047,13 +792,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="business_address_line_2" className="text-warning">
+                  <Label for="business_address_line_2">
                     Business Address Line 2
                   </Label>
                   <Input
                     type="text"
                     id="business_address_line_2"
-                    className="border-warning"
                     value={formValues?.business_address_line_2 || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -1072,13 +816,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="business_city" className="text-warning">
-                    Business City
-                  </Label>
+                  <Label for="business_city">Business City</Label>
                   <Input
                     type="text"
                     id="business_city"
-                    className="border-warning"
                     value={formValues?.business_city || ""}
                     onChange={(e) =>
                       handleInputChange("business_city", e.target.value)
@@ -1088,13 +829,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="business_county" className="text-warning">
-                    Business County
-                  </Label>
+                  <Label for="business_county">Business County</Label>
                   <Input
                     type="text"
                     id="business_county"
-                    className="border-warning"
                     value={formValues?.business_county || ""}
                     onChange={(e) =>
                       handleInputChange("business_county", e.target.value)
@@ -1104,13 +842,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="business_country" className="text-warning">
-                    Business Country
-                  </Label>
+                  <Label for="business_country">Business Country</Label>
                   <Input
                     type="text"
                     id="business_country"
-                    className="border-warning"
                     value={formValues?.business_country || ""}
                     onChange={(e) =>
                       handleInputChange("business_country", e.target.value)
@@ -1126,13 +861,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="job_title" className="text-warning">
-                    Job Title
-                  </Label>
+                  <Label for="job_title">Job Title</Label>
                   <Input
                     type="text"
                     id="job_title"
-                    className="border-warning"
                     value={formValues?.job_title || ""}
                     onChange={(e) =>
                       handleInputChange("job_title", e.target.value)
@@ -1142,13 +874,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="business_name" className="text-warning">
-                    Business Name
-                  </Label>
+                  <Label for="business_name">Business Name</Label>
                   <Input
                     type="text"
                     id="business_name"
-                    className="border-warning"
                     value={formValues?.business_name || ""}
                     onChange={(e) =>
                       handleInputChange("business_name", e.target.value)
@@ -1164,13 +893,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="company_type" className="text-warning">
-                    Company Type
-                  </Label>
+                  <Label for="company_type">Company Type</Label>
                   <Input
                     type="select"
                     id="company_type"
-                    className="border-warning"
                     value={formValues?.company_type || ""}
                     onChange={(e) =>
                       handleInputChange("company_type", e.target.value)
@@ -1187,16 +913,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label
-                    for="percentage_of_business_owned"
-                    className="text-warning"
-                  >
+                  <Label for="percentage_of_business_owned">
                     Percentage Of Business Owned(%)
                   </Label>
                   <Input
                     type="text"
                     id="percentage_of_business_owned"
-                    className="border-warning"
                     value={formValues?.percentage_of_business_owned || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -1218,11 +940,6 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="checkbox"
                     name="is_accounts_available"
-                    className={
-                      formValues?.is_accounts_available
-                        ? "bg-warning border-warning"
-                        : "border-warning"
-                    }
                     checked={formValues?.is_accounts_available || false}
                     onChange={(e) =>
                       setFormValues((prevValues) => ({
@@ -1242,13 +959,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="accountant_name" className="text-warning">
-                    Accountant Name
-                  </Label>
+                  <Label for="accountant_name">Accountant Name</Label>
                   <Input
                     type="text"
                     id="accountant_name"
-                    className="border-warning"
                     value={formValues?.accountant_name || ""}
                     onChange={(e) =>
                       handleInputChange("accountant_name", e.target.value)
@@ -1258,16 +972,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label
-                    for="accountant_qualifications"
-                    className="text-warning"
-                  >
+                  <Label for="accountant_qualifications">
                     Accountant Qualifications
                   </Label>
                   <Input
                     type="text"
                     id="accountant_qualifications"
-                    className="border-warning"
                     value={formValues?.accountant_qualifications || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -1286,13 +996,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="salary" className="text-warning">
-                    Salary*
-                  </Label>
+                  <Label for="salary">Salary*</Label>
                   <Input
                     type="number"
                     id="salary"
-                    className="border-warning"
                     value={formValues?.salary || 0}
                     onChange={(e) =>
                       handleInputChange("salary", e.target.value)
@@ -1303,13 +1010,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="dividends" className="text-warning">
-                    Dividends*
-                  </Label>
+                  <Label for="dividends">Dividends*</Label>
                   <Input
                     type="number"
                     id="dividends"
-                    className="border-warning"
                     value={formValues?.dividends || 0}
                     onChange={(e) =>
                       handleInputChange("dividends", e.target.value)
@@ -1320,13 +1024,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="turnover" className="text-warning">
-                    turnover
-                  </Label>
+                  <Label for="turnover">turnover</Label>
                   <Input
                     type="number"
                     id="turnover"
-                    className="border-warning"
                     value={formValues?.turnover || 0}
                     onChange={(e) =>
                       handleInputChange("turnover", e.target.value)
@@ -1342,13 +1043,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Row>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="other_income" className="text-secondary">
-                    Other Income
-                  </Label>
+                  <Label for="other_income">Other Income</Label>
                   <Input
                     type="text"
                     id="other_income"
-                    className="border-secondary"
                     value={formValues?.other_income || ""}
                     onChange={(e) =>
                       handleInputChange("other_income", e.target.value)
@@ -1358,13 +1056,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="other_income_source" className="text-secondary">
-                    Other Income Source
-                  </Label>
+                  <Label for="other_income_source">Other Income Source</Label>
                   <Input
                     type="text"
                     id="other_income_source"
-                    className="border-secondary"
                     value={formValues?.other_income_source || ""}
                     onChange={(e) =>
                       handleInputChange("other_income_source", e.target.value)
@@ -1374,16 +1069,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label
-                    for="other_income_start_date"
-                    className="text-secondary"
-                  >
+                  <Label for="other_income_start_date">
                     Other income start date
                   </Label>
                   <Input
                     type="date"
                     id="other_income_start_date"
-                    className="border-secondary"
                     value={formValues?.other_income_start_date || 0}
                     onChange={(e) =>
                       handleInputChange(
@@ -1402,13 +1093,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Row>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="contractor_industry" className="text-dark">
-                    Contractor Industry
-                  </Label>
+                  <Label for="contractor_industry">Contractor Industry</Label>
                   <Input
                     type="text"
                     id="contractor_industry"
-                    className="border-dark"
                     value={formValues?.contractor_industry || ""}
                     onChange={(e) =>
                       handleInputChange("contractor_industry", e.target.value)
@@ -1418,13 +1106,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="current_contract_start" className="text-dark">
+                  <Label for="current_contract_start">
                     Current Contract Start*
                   </Label>
                   <Input
                     type="date"
                     id="current_contract_start"
-                    className="border-dark"
                     value={formValues?.current_contract_start || 0}
                     onChange={(e) =>
                       handleInputChange(
@@ -1438,13 +1125,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="current_contract_end" className="text-dark">
+                  <Label for="current_contract_end">
                     Current Contract End*
                   </Label>
                   <Input
                     type="date"
                     id="current_contract_end"
-                    className="border-dark"
                     value={formValues?.current_contract_end || 0}
                     onChange={(e) =>
                       handleInputChange("current_contract_end", e.target.value)
@@ -1457,13 +1143,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <Row>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="time_contracting" className="text-dark">
-                    Time contracting*
-                  </Label>
+                  <Label for="time_contracting">Time contracting*</Label>
                   <Input
                     type="text"
                     id="time_contracting"
-                    className="border-dark"
                     value={formValues?.time_contracting || ""}
                     onChange={(e) =>
                       handleInputChange("time_contracting", e.target.value)
@@ -1474,13 +1157,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="day_rate" className="text-dark">
-                    Day Rate*
-                  </Label>
+                  <Label for="day_rate">Day Rate*</Label>
                   <Input
                     type="number"
                     id="day_rate"
-                    className="border-dark"
                     value={formValues?.day_rate || 0}
                     onChange={(e) =>
                       handleInputChange("day_rate", e.target.value)
@@ -1491,13 +1171,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="hourly_rate" className="text-dark">
-                    Hourly Rate
-                  </Label>
+                  <Label for="hourly_rate">Hourly Rate</Label>
                   <Input
                     type="number"
                     id="hourly_rate"
-                    className="border-dark"
                     value={formValues?.hourly_rate || 0}
                     onChange={(e) =>
                       handleInputChange("hourly_rate", e.target.value)
@@ -1517,7 +1194,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               Add New
             </Button>
             <Button color="primary" type="submit">
-              {isUpdateEmploymentDetailsLoading ? "Updating..." : "Update"}
+              {isUpdateEmploymentDetailsLoading ? "Saving..." : "Save Changes"}
             </Button>
           </Col>
         </Row>
