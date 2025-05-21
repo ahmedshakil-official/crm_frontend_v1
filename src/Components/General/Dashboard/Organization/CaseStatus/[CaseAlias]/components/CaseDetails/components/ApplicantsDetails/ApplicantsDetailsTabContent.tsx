@@ -389,13 +389,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             {formValues.is_dual_nationality && (
               <Col md={6}>
                 <FormGroup>
-                  <Label for="dual_nationality" className="text-info">
-                    Dual Nationality
-                  </Label>
+                  <Label for="dual_nationality">Dual Nationality</Label>
                   <Input
                     id="dual_nationality"
                     type="select"
-                    className="border-info"
                     value={formValues.dual_nationality}
                     onChange={(e) =>
                       handleInputChange("dual_nationality", e.target.value)
@@ -419,12 +416,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             <Row>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="date_of_arrival_uk" className="text-secondary">
-                    Date of Arrival in UK
-                  </Label>
+                  <Label for="date_of_arrival_uk">Date of Arrival in UK</Label>
                   <Input
                     id="date_of_arrival_uk"
-                    className="border-secondary"
                     type="date"
                     value={formValues.date_of_arrival_uk || ""}
                     onChange={(e) =>
@@ -435,19 +429,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label
-                    for="indefinite_right_to_reside"
-                    className="text-secondary"
-                  >
+                  <Label for="indefinite_right_to_reside">
                     Indefinite Right To Reside?
                   </Label>
                   {["yes", "no"].map((option) => (
                     <div key={option}>
-                      <Label className="me-2 text-secondary">
+                      <Label className="me-2">
                         <Input
                           type="radio"
                           name="indefinite_right_to_reside"
-                          className="bg-secondary border-secondary me-1"
+                          className="me-1"
                           value={option}
                           checked={
                             formValues.indefinite_right_to_reside ===
@@ -475,13 +466,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="visa_details" className="text-info">
-                      Visa Details
-                    </Label>
+                    <Label for="visa_details">Visa Details</Label>
                     <Input
                       id="visa_details"
                       type="text"
-                      className="border-info"
                       value={formValues.visa_details || ""}
                       onChange={(e) =>
                         handleInputChange("visa_details", e.target.value)
@@ -491,12 +479,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="visa_expiry_date" className="text-info">
-                      Visa Expiry Date
-                    </Label>
+                    <Label for="visa_expiry_date">Visa Expiry Date</Label>
                     <Input
                       id="visa_expiry_date"
-                      className="border-info"
                       type="date"
                       value={formValues.visa_expiry_date || ""}
                       onChange={(e) =>
