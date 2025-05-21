@@ -10,6 +10,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import "./home.css"
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,30 +38,30 @@ const NavBar = () => {
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="ms-auto" navbar sticky>
+          <Nav className="ms-auto gap-3" navbar sticky>
             <NavItem>
-              <NavLink href="/" className="text-white ">
+              <NavLink href="/" className=" menu_hover">
                 Home
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/about" className="text-white">
-                About
+              <NavLink href="#" className="menu_hover">
+                About Us
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/services" className="text-white">
+              <NavLink href="#" className="">
+                Blog
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#" className="">
                 Services
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/contact" className="text-white">
+              <NavLink href="#" className="">
                 Contact
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/dashboard/organization" className="text-white">
-                Dashboard
               </NavLink>
             </NavItem>
           </Nav>
