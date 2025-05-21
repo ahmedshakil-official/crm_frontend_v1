@@ -389,13 +389,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             {formValues.is_dual_nationality && (
               <Col md={6}>
                 <FormGroup>
-                  <Label for="dual_nationality" className="text-info">
-                    Dual Nationality
-                  </Label>
+                  <Label for="dual_nationality">Dual Nationality</Label>
                   <Input
                     id="dual_nationality"
                     type="select"
-                    className="border-info"
                     value={formValues.dual_nationality}
                     onChange={(e) =>
                       handleInputChange("dual_nationality", e.target.value)
@@ -419,12 +416,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             <Row>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="date_of_arrival_uk" className="text-secondary">
-                    Date of Arrival in UK
-                  </Label>
+                  <Label for="date_of_arrival_uk">Date of Arrival in UK</Label>
                   <Input
                     id="date_of_arrival_uk"
-                    className="border-secondary"
                     type="date"
                     value={formValues.date_of_arrival_uk || ""}
                     onChange={(e) =>
@@ -435,19 +429,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label
-                    for="indefinite_right_to_reside"
-                    className="text-secondary"
-                  >
+                  <Label for="indefinite_right_to_reside">
                     Indefinite Right To Reside?
                   </Label>
                   {["yes", "no"].map((option) => (
                     <div key={option}>
-                      <Label className="me-2 text-secondary">
+                      <Label className="me-2">
                         <Input
                           type="radio"
                           name="indefinite_right_to_reside"
-                          className="bg-secondary border-secondary me-1"
+                          className="me-1"
                           value={option}
                           checked={
                             formValues.indefinite_right_to_reside ===
@@ -475,13 +466,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               <Row>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="visa_details" className="text-info">
-                      Visa Details
-                    </Label>
+                    <Label for="visa_details">Visa Details</Label>
                     <Input
                       id="visa_details"
                       type="text"
-                      className="border-info"
                       value={formValues.visa_details || ""}
                       onChange={(e) =>
                         handleInputChange("visa_details", e.target.value)
@@ -491,12 +479,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="visa_expiry_date" className="text-info">
-                      Visa Expiry Date
-                    </Label>
+                    <Label for="visa_expiry_date">Visa Expiry Date</Label>
                     <Input
                       id="visa_expiry_date"
-                      className="border-info"
                       type="date"
                       value={formValues.visa_expiry_date || ""}
                       onChange={(e) =>
@@ -853,43 +838,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   type="select"
                   value={formValues.residential_status || ""}
                   onChange={(e) => {
-                    const select = e.target as unknown as HTMLSelectElement;
-                    const option = select.options[select.selectedIndex];
-                    select.className = `form-select ${
-                      option.value === "OWNER"
-                        ? "text-success"
-                        : option.value === "RENTING_PRIVATE"
-                        ? "text-info"
-                        : option.value === "RENTING_LOCAL_AUTHORITY"
-                        ? "text-primary"
-                        : option.value === "TIED_ACCOMMODATION"
-                        ? "text-warning"
-                        : option.value === "LIVING_WITH_PARENTS"
-                        ? "text-success"
-                        : option.value === "LIVING_WITH_FRIENDS_FAMILY"
-                        ? "text-info"
-                        : ""
-                    }`;
                     handleInputChange("residential_status", e.target.value);
                   }}
                   required
-                  className={`form-select ${
-                    formValues.residential_status === "OWNER"
-                      ? "text-success"
-                      : formValues.residential_status === "RENTING_PRIVATE"
-                      ? "text-info"
-                      : formValues.residential_status ===
-                        "RENTING_LOCAL_AUTHORITY"
-                      ? "text-primary"
-                      : formValues.residential_status === "TIED_ACCOMMODATION"
-                      ? "text-warning"
-                      : formValues.residential_status === "LIVING_WITH_PARENTS"
-                      ? "text-success"
-                      : formValues.residential_status ===
-                        "LIVING_WITH_FRIENDS_FAMILY"
-                      ? "text-info"
-                      : ""
-                  }`}
                 >
                   <option value="">Select...</option>
                   <option value="OWNER">Owner</option>
@@ -913,16 +864,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               <>
                 <Col md={6}>
                   <FormGroup>
-                    <Label
-                      for="current_mortgage_balance"
-                      className="text-success"
-                    >
+                    <Label for="current_mortgage_balance">
                       Current Mortgage Balance
                     </Label>
                     <Input
                       id="current_mortgage_balance"
                       type="number"
-                      className="border-success"
                       value={formValues.current_mortgage_balance || ""}
                       onChange={(e) =>
                         handleInputChange(
@@ -935,13 +882,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="property_value" className="text-success">
-                      Property Value
-                    </Label>
+                    <Label for="property_value">Property Value</Label>
                     <Input
                       id="property_value"
                       type="number"
-                      className="border-success"
                       value={formValues.property_value || ""}
                       onChange={(e) =>
                         handleInputChange("property_value", e.target.value)
@@ -951,13 +895,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="owner_monthly_payment" className="text-success">
+                    <Label for="owner_monthly_payment">
                       Owner Monthly Payment
                     </Label>
                     <Input
                       id="owner_monthly_payment"
                       type="number"
-                      className="border-success"
                       value={formValues.owner_monthly_payment || ""}
                       onChange={(e) =>
                         handleInputChange(
@@ -970,13 +913,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="lender" className="text-success">
-                      Lender
-                    </Label>
+                    <Label for="lender">Lender</Label>
                     <Input
                       id="lender"
                       type="text"
-                      className="border-success"
                       value={formValues.lender || ""}
                       onChange={(e) =>
                         handleInputChange("lender", e.target.value)
@@ -986,13 +926,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="current_interest_rate" className="text-success">
+                    <Label for="current_interest_rate">
                       Current Interest Rate
                     </Label>
                     <Input
                       id="current_interest_rate"
                       type="number"
-                      className="border-success"
                       value={formValues.current_interest_rate || ""}
                       onChange={(e) =>
                         handleInputChange(
@@ -1005,13 +944,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="mortgage_start_date" className="text-success">
-                      Mortgage Start Date
-                    </Label>
+                    <Label for="mortgage_start_date">Mortgage Start Date</Label>
                     <Input
                       id="mortgage_start_date"
                       type="date"
-                      className="border-success"
                       value={formValues.mortgage_start_date || ""}
                       onChange={(e) =>
                         handleInputChange("mortgage_start_date", e.target.value)
@@ -1021,13 +957,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="remaining_term" className="text-success">
-                      Remaining Term
-                    </Label>
+                    <Label for="remaining_term">Remaining Term</Label>
                     <Input
                       id="remaining_term"
                       type="number"
-                      className="border-success"
                       value={formValues.remaining_term || ""}
                       onChange={(e) =>
                         handleInputChange("remaining_term", e.target.value)
@@ -1037,13 +970,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="mortgage_type" className="text-success">
-                      Mortgage Type
-                    </Label>
+                    <Label for="mortgage_type">Mortgage Type</Label>
                     <Input
                       id="mortgage_type"
                       type="select"
-                      className="border-success"
                       value={formValues.mortgage_type || ""}
                       onChange={(e) =>
                         handleInputChange("mortgage_type", e.target.value)
@@ -1073,13 +1003,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="repayment_type" className="text-success">
-                      Repayment Type
-                    </Label>
+                    <Label for="repayment_type">Repayment Type</Label>
                     <Input
                       id="repayment_type"
                       type="select"
-                      className="border-success"
                       value={formValues.repayment_type || ""}
                       onChange={(e) =>
                         handleInputChange("repayment_type", e.target.value)
@@ -1100,13 +1027,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="current_interest_type" className="text-success">
+                    <Label for="current_interest_type">
                       Current Interest Type
                     </Label>
                     <Input
                       id="current_interest_type"
                       type="select"
-                      className="border-success"
                       value={formValues.current_interest_type || ""}
                       onChange={(e) =>
                         handleInputChange(
@@ -1130,19 +1056,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label
-                      for="early_repayment_charge_applies"
-                      className="text-success"
-                    >
+                    <Label for="early_repayment_charge_applies">
                       Does an early repayment charge apply?
                     </Label>
                     {["yes", "no"].map((value) => (
                       <div key={value}>
-                        <Label className="me-2 text-success">
+                        <Label className="me-2">
                           <Input
                             type="radio"
                             name="early_repayment_charge_applies"
-                            className="border-success me-1"
+                            className="me-1"
                             value={value}
                             checked={
                               formValues.early_repayment_charge_applies ===
@@ -1165,13 +1088,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   <>
                     <Col md={6}>
                       <FormGroup>
-                        <Label for="erc_expiry_date" className="text-success">
-                          ERC Expiry Date
-                        </Label>
+                        <Label for="erc_expiry_date">ERC Expiry Date</Label>
                         <Input
                           id="early_repayment_charge"
                           type="number"
-                          className="border-success"
                           value={formValues.erc_expiry_date || ""}
                           onChange={(e) =>
                             handleInputChange("erc_expiry_date", e.target.value)
@@ -1181,16 +1101,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     </Col>
                     <Col md={6}>
                       <FormGroup>
-                        <Label
-                          for="mortgage_not_to_complete_until_erc_ended"
-                          className="text-success"
-                        >
+                        <Label for="mortgage_not_to_complete_until_erc_ended">
                           Mortgage not to complete until ERC ended
                         </Label>
                         <Input
                           id="mortgage_not_to_complete_until_erc_ended"
                           type="select"
-                          className="border-success"
                           value={
                             formValues.mortgage_not_to_complete_until_erc_ended ||
                             ""
@@ -1211,13 +1127,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     </Col>
                     <Col md={6}>
                       <FormGroup>
-                        <Label for="erc_amount" className="text-success">
-                          ERC Amount
-                        </Label>
+                        <Label for="erc_amount">ERC Amount</Label>
                         <Input
                           id="erc_amount"
                           type="number"
-                          className="border-success"
                           value={formValues.erc_amount || ""}
                           onChange={(e) =>
                             handleInputChange("erc_amount", e.target.value)
@@ -1227,7 +1140,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     </Col>
                     <Col md={6}>
                       <FormGroup>
-                        <Label for="erc_being_paid" className="text-success">
+                        <Label for="erc_being_paid">
                           Is The ERC Being Paid?
                         </Label>
                         {["yes", "no"].map((value) => (
@@ -1259,16 +1172,14 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 )}
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="being_redeemed" className="text-success">
-                      Being Redeemed?
-                    </Label>
+                    <Label for="being_redeemed">Being Redeemed?</Label>
                     {["yes", "no"].map((value) => (
                       <div key={value}>
-                        <Label className="me-2 text-success">
+                        <Label className="me-2">
                           <Input
                             type="radio"
                             name="being_redeemed"
-                            className="border-success me-1"
+                            className="me-1"
                             value={value}
                             checked={
                               formValues.being_redeemed === (value === "yes")
@@ -1288,16 +1199,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="is_mortgage_portable" className="text-success">
+                    <Label for="is_mortgage_portable">
                       Is The Mortgage Portable?
                     </Label>
                     {["yes", "no"].map((value) => (
                       <div key={value}>
-                        <Label className="me-2 text-success">
+                        <Label className="me-2">
                           <Input
                             type="radio"
                             name="is_mortgage_portable"
-                            className="border-success me-1"
+                            className="me-1"
                             value={value}
                             checked={
                               formValues.is_mortgage_portable ===
@@ -1320,10 +1231,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   <>
                     <Col md={6}>
                       <FormGroup>
-                        <Label
-                          for="is_mortgage_being_ported"
-                          className="text-success"
-                        >
+                        <Label for="is_mortgage_being_ported">
                           Is The Mortgage Being Ported?
                         </Label>
                         {["yes", "no"].map((value) => (
@@ -1355,16 +1263,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 )}
                 <Col md={6}>
                   <FormGroup>
-                    <Label
-                      for="mortgage_account_number"
-                      className="text-success"
-                    >
+                    <Label for="mortgage_account_number">
                       Mortgage Account Number
                     </Label>
                     <Input
                       id="mortgage_account_number"
                       type="text"
-                      className="border-success"
                       value={formValues.mortgage_account_number || ""}
                       onChange={(e) =>
                         handleInputChange(
@@ -1377,19 +1281,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label
-                      for="mortgage_charter_scheme"
-                      className="text-success"
-                    >
+                    <Label for="mortgage_charter_scheme">
                       Are you in a Mortgage Charter Scheme?
                     </Label>
                     {["yes", "no"].map((value) => (
                       <div key={value}>
-                        <Label className="me-2 text-success">
+                        <Label className="me-2">
                           <Input
                             type="radio"
                             name="mortgage_charter_scheme"
-                            className="border-success me-1"
+                            className="me-1"
                             value={value}
                             checked={
                               formValues.mortgage_charter_scheme ===
@@ -1410,13 +1311,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="property_type" className="text-success">
-                      Property Type
-                    </Label>
+                    <Label for="property_type">Property Type</Label>
                     <Input
                       id="property_type"
                       type="select"
-                      className="border-success"
                       value={formValues.property_type || ""}
                       onChange={(e) =>
                         handleInputChange("property_type", e.target.value)
@@ -1440,13 +1338,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="bedrooms" className="text-success">
-                      Bedrooms
-                    </Label>
+                    <Label for="bedrooms">Bedrooms</Label>
                     <Input
                       id="bedrooms"
                       type="number"
-                      className="border-success"
                       value={formValues.bedrooms || ""}
                       onChange={(e) =>
                         handleInputChange("bedrooms", e.target.value)
@@ -1456,13 +1351,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="tenure" className="text-success">
-                      Tenure
-                    </Label>
+                    <Label for="tenure">Tenure</Label>
                     <Input
                       id="tenure"
                       type="select"
-                      className="border-success"
                       value={formValues.tenure || ""}
                       onChange={(e) =>
                         handleInputChange("tenure", e.target.value)
@@ -1478,13 +1370,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="year_built" className="text-success">
-                      Year Built
-                    </Label>
+                    <Label for="year_built">Year Built</Label>
                     <Input
                       id="mortgage_not_to_complete_until_erc_ended"
                       type="number"
-                      className="border-success"
                       value={formValues.year_built || ""}
                       onChange={(e) =>
                         handleInputChange("year_built", e.target.value)
