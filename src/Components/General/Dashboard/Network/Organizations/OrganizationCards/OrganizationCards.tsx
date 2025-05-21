@@ -84,7 +84,7 @@ const OrganizationCards = () => {
               className="col-ed-4 box-col-4"
               key={item.slug}
             >
-              <Card className="bg-white border organization_card  opacity-100 p-3 position-relative">
+              <Card className="bg-white border organization_card opacity-100 p-3 position-relative">
                 <Link
                   href={item?.website || "#"}
                   target="_blank"
@@ -116,10 +116,10 @@ const OrganizationCards = () => {
                       </Link>
                     </h5>
                   </div>
-                  <div className="mt-3">
+                  <div className="mt-2">
                     <Link
                       href={`mailto:${item.email}`}
-                      className="fs-6 text-dark text_decoration_hover mb-2"
+                      className="fs-6 text_decoration_hover mb-2"
                     >
                       <small> {item.email}</small>
                     </Link>
