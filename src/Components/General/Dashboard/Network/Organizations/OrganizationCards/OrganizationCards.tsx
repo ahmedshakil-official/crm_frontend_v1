@@ -110,7 +110,7 @@ const OrganizationCards = () => {
                       </div>
                       <h5 className="mb-1">
                         <Link
-                          className="text-black text_decoration_hover"
+                          className="text-black fw-bold text_decoration_hover"
                           href={`/dashboard/network/organization/${item.slug}`}
                         >
                           {item.name}
