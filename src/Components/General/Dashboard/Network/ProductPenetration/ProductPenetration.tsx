@@ -80,7 +80,10 @@ const ProductPenetration = () => {
               General Insurance
             </Badge>
           </div>
-          <Link href="#" className="text-primary text-decoration-none ms-3">
+          <Link
+            href="#"
+            className="text-primary text-decoration-none ms-3 text_decoration_hover"
+          >
             View full report
           </Link>
         </div>

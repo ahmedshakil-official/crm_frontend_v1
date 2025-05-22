@@ -5,6 +5,7 @@ import NetworkPerformance from "./NetworkPerformance/NetworkPerformance";
 import OrganizationCards from "./Organizations/OrganizationCards/OrganizationCards";
 import PerformanceOverview from "./PerformanceOverview/PerformanceOverview";
 import ProductPenetration from "./ProductPenetration/ProductPenetration";
+import RecentActivity from "./RecentActivity/RecentActivity";
 
 const ContainerNetwork = () => {
   return (
@@ -17,6 +18,7 @@ const ContainerNetwork = () => {
         <OrganizationCards />
         <Row>
           <ProductPenetration />
+          <RecentActivity />
         </Row>
       </Container>
     </>
