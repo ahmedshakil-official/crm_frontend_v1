@@ -1,37 +1,25 @@
 import { Container, Row } from "reactstrap";
-import CaseStatus from "../Organization/CaseStatus/CaseStatus";
-import AdvisorList from "../Organization/Directors/AdvisorList/AdvisorList";
-import ClientList from "../Organization/Directors/ClientList/ClientList";
-import IntroducerList from "../Organization/Directors/IntroducerList/IntroducerList";
-import LeadList from "../Organization/Directors/LeadList/LeadList";
+import Charts from "./Charts/Charts";
 import NetworkBreadcrumbs from "./NetworkBreadcrumbs/Breadcrumbs";
+import NetworkPerformance from "./NetworkPerformance/NetworkPerformance";
 import OrganizationCards from "./Organizations/OrganizationCards/OrganizationCards";
+import PerformanceOverview from "./PerformanceOverview/PerformanceOverview";
+import ProductPenetration from "./ProductPenetration/ProductPenetration";
+import RecentActivity from "./RecentActivity/RecentActivity";
 
 const ContainerNetwork = () => {
   return (
     <>
       <NetworkBreadcrumbs />
-      <Container fluid className="default-dashboard">
+      <Container fluid>
+        <PerformanceOverview />
+        <Charts />
+        <NetworkPerformance />
+        <OrganizationCards />
         <Row>
-          <OrganizationCards />
+          <ProductPenetration />
+          <RecentActivity />
         </Row>
-        {/* load Organization dashboard data  */}
-        <Row>
-          <CaseStatus />
-        </Row>
-        <Row>
-          <LeadList />
-        </Row>
-        <Row>
-          <ClientList />
-        </Row>
-        <Row>
-          <AdvisorList />
-        </Row>
-        <Row>
-          <IntroducerList />
-        </Row>
-        {/* load Organization dashboard data end */}
       </Container>
     </>
   );

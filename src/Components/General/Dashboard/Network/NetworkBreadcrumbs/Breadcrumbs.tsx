@@ -6,9 +6,9 @@ const NetworkBreadcrumbs = () => {
     <Container fluid>
       <Row className="page-title">
         <Col sm="6">
-          <h2>Network</h2>
+          <h2>Company Performance</h2>
           <p className="mb-0 text-title-gray">
-            Welcome back! Let’s start from where you left.
+          Here are your company stats for the period
           </p>
         </Col>
         <Col sm="6">
