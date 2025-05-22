@@ -1,4 +1,5 @@
 import { Container } from "reactstrap";
+import Charts from "./Charts/Charts";
 import NetworkBreadcrumbs from "./NetworkBreadcrumbs/Breadcrumbs";
 import OrganizationCards from "./Organizations/OrganizationCards/OrganizationCards";
 import PerformanceOverview from "./PerformanceOverview/PerformanceOverview";
@@ -9,6 +10,7 @@ const ContainerNetwork = () => {
       <NetworkBreadcrumbs />
       <Container fluid>
         <PerformanceOverview />
+        <Charts />
         <OrganizationCards />
       </Container>
     </>
