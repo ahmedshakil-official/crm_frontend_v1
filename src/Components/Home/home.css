@@ -2,6 +2,7 @@
   text-decoration: none;
   color: #ffffff;
   position: relative;
+  font-weight: 700;
 }
 
 .menu_hover::after {
@@ -19,4 +20,5 @@
 
 .menu_hover:hover::after {
   transform: scaleX(1);
+  
 }
