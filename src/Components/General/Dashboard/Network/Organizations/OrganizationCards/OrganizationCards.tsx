@@ -49,7 +49,7 @@ const OrganizationCards = () => {
       <Card>
         <Row className="flex justify-content-between py-4">
           <Col md="3">
-            <h2>Organization</h2>
+            <h2>Organizations</h2>
           </Col>
           <Col>
             <InputGroup>
