@@ -6,7 +6,7 @@ const RecentActivity: React.FC = () => {
     <Col md={4} xs={12}>
       <Card className="shadow-sm rounded-4">
         <CardHeader className="bg-white border-bottom">
-          <h5 className="mb-0">Recent Activity</h5>
+          <h4 className="mb-0 fw-bold">Recent Activity</h4>
         </CardHeader>
         <CardBody className="p-0">
           <div className="p-3 border-bottom">
