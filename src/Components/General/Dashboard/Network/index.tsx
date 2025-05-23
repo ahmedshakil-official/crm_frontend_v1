@@ -6,6 +6,7 @@ import OrganizationCards from "./Organizations/OrganizationCards/OrganizationCar
 import PerformanceOverview from "./PerformanceOverview/PerformanceOverview";
 import ProductPenetration from "./ProductPenetration/ProductPenetration";
 import RecentActivity from "./RecentActivity/RecentActivity";
+import TopPerformingBrokers from "./TopPerformingBrokers/TopPerformingBrokers";
 
 const ContainerNetwork = () => {
   return (
@@ -19,6 +20,7 @@ const ContainerNetwork = () => {
         <Row>
           <ProductPenetration />
           <RecentActivity />
+          <TopPerformingBrokers />
         </Row>
       </Container>
     </>
