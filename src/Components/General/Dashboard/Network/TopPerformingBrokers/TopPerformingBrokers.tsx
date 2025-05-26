@@ -73,7 +73,7 @@ const TopPerformingBrokers: React.FC = () => {
           ))}
         </div>
         <div className="text-center mt-4">
-          <a href="#" className="text-success text_decoration_hover">
+          <a href="#" className="text_decoration_hover">
             View all brokers
           </a>
         </div>
