@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { Card, CardBody, CardHeader, Col } from "reactstrap";
 
@@ -77,9 +78,9 @@ const RecentActivity: React.FC = () => {
           </div>
 
           <div className="p-3 text-center">
-            <a href="#" className="text-success text_decoration_hover">
+            <Link href="#" className="text_decoration_hover">
               View all activity
-            </a>
+            </Link>
           </div>
         </CardBody>
       </Card>

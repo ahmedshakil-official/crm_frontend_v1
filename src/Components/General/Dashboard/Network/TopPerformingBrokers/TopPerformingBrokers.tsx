@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Card, Col, Progress } from "reactstrap";
 
 interface BrokerData {
@@ -73,9 +74,9 @@ const TopPerformingBrokers: React.FC = () => {
           ))}
         </div>
         <div className="text-center mt-4">
-          <a href="#" className="text-success text_decoration_hover">
+          <Link href="#" className="text_decoration_hover">
             View all brokers
-          </a>
+          </Link>
         </div>
       </Card>
     </Col>
