@@ -12,6 +12,9 @@ import {
   Input,
   InputGroup,
   InputGroupText,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
   Row,
   Spinner,
 } from "reactstrap";
@@ -22,6 +25,8 @@ const OrganizationCards = () => {
   const [organizations, setOrganizations] = useState<OrganizationsProps[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   //RTK Hooks
   const { data: organizationList, isLoading } = useGetOrganizationListQuery({
@@ -43,6 +48,19 @@ const OrganizationCards = () => {
       console.error("Error fetching organizations:", error);
     }
   }, [organizationList]);
+
+  // Pagination logic
+  const totalPages = Math.ceil(organizations.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentOrganizations = organizations.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <Row>
@@ -75,8 +93,8 @@ const OrganizationCards = () => {
             <Row className="pb-4 d-flex justify-content-center">
               <Spinner color="primary" />
             </Row>
-          ) : organizations.length > 0 ? (
-            organizations.map((item) => (
+          ) : currentOrganizations.length > 0 ? (
+            currentOrganizations.map((item) => (
               <Col
                 sm="6"
                 xxl="3"
@@ -156,6 +174,108 @@ const OrganizationCards = () => {
             </Row>
           )}
         </Row>
+        {/* Pagination and total organizations */}
+        <Row>
+          <div className="d-flex justify-content-between align-items-center p-3">
+            <div className="px-2">
+              <p className="text-success">
+                Showing 1 to {Math.min(8, currentOrganizations?.length || 0)} of{" "}
+                {organizations?.length || 0} Organizations
+              </p>
+            </div>
+
+            {organizations.length > itemsPerPage && (
+              <Pagination className="d-flex justify-content-end align-items-center">
+                <PaginationItem disabled={currentPage === 1}>
+                  <PaginationLink first onClick={() => setCurrentPage(1)} />
+                </PaginationItem>
+                <PaginationItem disabled={currentPage === 1}>
+                  <PaginationLink
+                    previous
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                  />
+                </PaginationItem>
+
+                {totalPages <= 5 ? (
+                  Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (pageNumber) => (
+                      <PaginationItem
+                        key={pageNumber}
+                        active={pageNumber === currentPage}
+                      >
+                        <PaginationLink
+                          onClick={() => setCurrentPage(pageNumber)}
+                        >
+                          {pageNumber}
+                        </PaginationLink>
+                      </PaginationItem>
+                    )
+                  )
+                ) : (
+                  <>
+                    <PaginationItem active={currentPage === 1}>
+                      <PaginationLink onClick={() => setCurrentPage(1)}>
+                        1
+                      </PaginationLink>
+                    </PaginationItem>
+
+                    {currentPage > 3 && (
+                      <PaginationItem disabled>
+                        <PaginationLink>...</PaginationLink>
+                      </PaginationItem>
+                    )}
+
+                    {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
+                      .filter(
+                        (pageNumber) =>
+                          pageNumber > 1 && pageNumber < totalPages
+                      )
+                      .map((pageNumber) => (
+                        <PaginationItem
+                          key={pageNumber}
+                          active={pageNumber === currentPage}
+                        >
+                          <PaginationLink
+                            onClick={() => setCurrentPage(pageNumber)}
+                          >
+                            {pageNumber}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+
+                    {currentPage < totalPages - 2 && (
+                      <PaginationItem disabled>
+                        <PaginationLink>...</PaginationLink>
+                      </PaginationItem>
+                    )}
+
+                    <PaginationItem active={currentPage === totalPages}>
+                      <PaginationLink
+                        onClick={() => setCurrentPage(totalPages)}
+                      >
+                        {totalPages}
+                      </PaginationLink>
+                    </PaginationItem>
+                  </>
+                )}
+
+                <PaginationItem disabled={currentPage === totalPages}>
+                  <PaginationLink
+                    next
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                  />
+                </PaginationItem>
+                <PaginationItem disabled={currentPage === totalPages}>
+                  <PaginationLink
+                    last
+                    onClick={() => setCurrentPage(totalPages)}
+                  />
+                </PaginationItem>
+              </Pagination>
+            )}
+          </div>
+        </Row>
+
         {/* Add Organization Modal */}
         <AddOrganizationModal isOpen={isModalOpen} toggleModal={toggleModal} />
       </Card>
