@@ -82,7 +82,7 @@ const ProductPenetration = () => {
           </div>
           <Link
             href="#"
-            className="text-primary text-decoration-none ms-3 text_decoration_hover"
+            className="ms-3 text_decoration_hover"
           >
             View full report
           </Link>
