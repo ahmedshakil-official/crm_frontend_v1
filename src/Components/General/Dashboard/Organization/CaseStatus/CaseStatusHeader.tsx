@@ -1,8 +1,7 @@
 import { CaseSearchProps } from "@/Types/Organization/Cases/CaseTypes";
-
 import Link from "next/link";
 import { useState } from "react";
-import { FaClock, FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import {
   Button,
   CardHeader,
@@ -41,7 +40,7 @@ const CaseStatusHeader: React.FC<CaseSearchProps> = ({
         <Col lg={3} sm={12} className="mt-1">
           <div className="d-flex align-items-center">
             <h3 className="mb-1">Case Status</h3>
-            <FaClock className="fs-6 text-success rotate-animation" />
+            <i className="fa-solid fa-arrows-spin fs-6 ms-1 rotate-animation"></i>
           </div>
           <p className="mb-0">
             {day} {date},{" "}
