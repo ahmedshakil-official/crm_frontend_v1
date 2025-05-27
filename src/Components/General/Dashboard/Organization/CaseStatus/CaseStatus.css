@@ -1,10 +1,10 @@
 /* Continuous rotation animation */
 .rotate-animation {
-  animation: rotate-clock 10s linear infinite; /* Spins in 2 seconds infinitely */
+  animation: rotate 10s linear infinite; /* Spins in 2 seconds infinitely */
   display: inline-block; /* Ensures proper alignment */
 }
 
-@keyframes rotate-clock {
+@keyframes rotate {
   from {
     transform: rotate(0deg);
   }
@@ -12,6 +12,7 @@
     transform: rotate(360deg);
   }
 }
+/* Continuous rotation animation end */
 
 /* CSS class for the blinking eye effect */
 .eye-btn:hover i {
@@ -35,12 +36,4 @@
     opacity: 1;
   }
 }
-
-/* .pagination .page-item.active .page-link {
-  background-color: #308e87 !important; 
-  color: white !important; 
-  border-color: #308e87 !important; 
-}
-.pagination .page-item .page-link {
-  color: #308e87 !important; 
-} */
+/* CSS class for the blinking eye effect end*/
