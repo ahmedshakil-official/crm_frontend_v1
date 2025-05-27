@@ -33,6 +33,7 @@ const ExtraAnswerModal: React.FC<ExtraAnswerModalProps> = ({
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    e.preventDefault();
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -72,13 +73,14 @@ const ExtraAnswerModal: React.FC<ExtraAnswerModalProps> = ({
         </ModalHeader>
         <ModalBody>
           <Col md={8}>
-            <Label for="section_choices">Question Type</Label>
+            <Label for="section_choices">Question Type*</Label>
             <FormGroup>
               <Input
                 type="select"
                 name="section_choices"
                 value={formData.section_choices}
                 onChange={handleChange}
+                required
               >
                 <option value="">Select...</option>
                 <option value="YOUR_CIRCUMSTANCES_AND_OBJECTIVES">
@@ -124,7 +126,7 @@ const ExtraAnswerModal: React.FC<ExtraAnswerModalProps> = ({
           </Col>
 
           <FormGroup>
-            <Label for="answer">Answer</Label>
+            <Label for="answer">Answer*</Label>
             <Input
               type="textarea"
               id="answer"
@@ -133,6 +135,7 @@ const ExtraAnswerModal: React.FC<ExtraAnswerModalProps> = ({
               value={formData.answer}
               onChange={handleChange}
               placeholder="Enter your answer here..."
+              required
             />
           </FormGroup>
         </ModalBody>
