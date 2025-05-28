@@ -48,10 +48,39 @@ export const MenuList: MenuItem[] | undefined = [
           },
           {
             path: "/dashboard/network",
-            title: "Network",
+            title: "Home(Network)",
             type: "link",
             lanClass: "lan-4",
           },
+        ],
+      },
+      {
+        title: "User Management",
+        type: "link",
+        icon: "Setting",
+        lanClass: "lan-4",
+        children: [
+          {
+            path: "/dashboard/network/usermanagement",
+            title: "Home",
+            type: "link",
+          },
+          {
+            path: "/dashboard/network/systemreports",
+            title: "System Reports",
+            type: "link",
+          },
+          {
+            path: "/dashboard/network/auditlog",
+            title: "Audit Log",
+            type: "link",
+          },
+          {
+            path: "/dashboard/network/securitypolicy",
+            title: "Security Policy",
+            type: "link",
+          },
+
         ],
       },
     ],
