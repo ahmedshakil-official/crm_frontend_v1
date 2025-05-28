@@ -3,23 +3,28 @@ import { OrganizationsProps } from "@/Types/Network/OrganizationsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Container, Row } from "reactstrap";
 import DangerZone from "./DangerZone/DangerZone";
 import Employee from "./Employee/Employee";
 import OrganizationBreadcrumbs from "./OrganizationBreadcrumbs/OrganizationBreadcrumbs";
 import OrganizationBanner from "./OrganizationProfile/OrganizationBanner";
-import { toast } from "react-toastify";
 
 const OrganizationContainer: React.FC = () => {
-  const [organizationInfo, setOrganizationInfo] = useState<OrganizationsProps>();
+  const [organizationInfo, setOrganizationInfo] =
+    useState<OrganizationsProps>();
   const { organizationslug } = useParams();
   const router = useRouter();
-  
+
   // rtk hooks
-  const { data: organizationData, isLoading, isError } = useGetSingleOrganizationQuery(
+  const {
+    data: organizationData,
+    isLoading,
+    isError,
+  } = useGetSingleOrganizationQuery(
     { organizationslug },
     {
-      skip: !organizationslug
+      skip: !organizationslug,
     }
   );
 

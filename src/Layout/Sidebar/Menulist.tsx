@@ -92,7 +92,7 @@ const Menulist: React.FC<MenuListType> = ({
 
             <Link
               href={item.path || "#"}
-              className={`nav-link d-flex align-items-center ${
+              className={`nav-link d-flex align-items-center gap-1 ${
                 level === 0 ? "sidebar-link" : ""
               } ${isCurrentActive ? "active" : ""}`}
               onClick={(e) => {

@@ -5,7 +5,6 @@ import DeleteOrganizationModal from "../Modals/DeleteOrganizationModal";
 
 const DangerZone: React.FC<FetchSingleOrganizationProps> = ({
   organizationInfo,
-  fetchsetOrganizationInfo,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Toggle modal state

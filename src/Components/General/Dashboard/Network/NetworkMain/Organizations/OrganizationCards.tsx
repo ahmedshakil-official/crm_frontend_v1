@@ -18,8 +18,8 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import AddOrganizationModal from "../Modals/AddOrganizationModal";
-import "../Organization.css";
+import AddOrganizationModal from "./Modals/AddOrganizationModal";
+import "./Organization.css";
 
 const OrganizationCards = () => {
   const [organizations, setOrganizations] = useState<OrganizationsProps[]>([]);
