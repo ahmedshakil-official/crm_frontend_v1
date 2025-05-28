@@ -66,17 +66,17 @@ export const MenuList: MenuItem[] | undefined = [
             type: "link",
           },
           {
-            path: "/dashboard/network/systemreports",
+            path: "/dashboard/network/usermanagement/systemreports",
             title: "System Reports",
             type: "link",
           },
           {
-            path: "/dashboard/network/auditlog",
+            path: "/dashboard/network/usermanagement/auditlog",
             title: "Audit Log",
             type: "link",
           },
           {
-            path: "/dashboard/network/securitypolicy",
+            path: "/dashboard/network/usermanagement/securitypolicy",
             title: "Security Policy",
             type: "link",
           },
