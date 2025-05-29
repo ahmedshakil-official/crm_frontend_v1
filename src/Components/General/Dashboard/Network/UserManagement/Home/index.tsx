@@ -1,7 +1,9 @@
-import { Container } from "reactstrap";
+import { Container, Row } from "reactstrap";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import QuickActions from "./QuickActions/QuickActions";
+import SystemAlerts from "./SystemAlerts/SystemAlerts";
+import WeeklyActivity from "./WeeklyActivity/WeeklyActivity";
 
 const UserManagementContainer: React.FC = () => {
   return (
@@ -9,7 +11,11 @@ const UserManagementContainer: React.FC = () => {
       <Breadcrumbs />
       <Container fluid>
         <DashboardOverview />
-        <QuickActions/>
+        <QuickActions />
+        <Row>
+          <WeeklyActivity />
+          <SystemAlerts />
+        </Row>
       </Container>
     </>
   );
