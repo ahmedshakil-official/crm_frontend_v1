@@ -63,7 +63,12 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ isOpen, toggle }) => {
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary">Create User</Button>
+        <div className="d-flex gap-2">
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="primary">Create User</Button>
+        </div>
       </ModalFooter>
     </Modal>
   );

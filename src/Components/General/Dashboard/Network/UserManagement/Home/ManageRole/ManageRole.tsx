@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaUser } from "react-icons/fa"; // Icons
-import { Button, Card, CardBody, Table } from "reactstrap";
+import { Button, Card, CardBody, Col, Row, Table } from "reactstrap";
+import CreateRoleModal from "./Modals/CreateRoleModal";
 
 // Sample data for roles
 const roles = [
@@ -40,7 +41,13 @@ const roles = [
     name: "Compliance Officer",
     description: "Compliance monitoring and audit access",
     usersCount: 8,
-    permissions: ["audit logs", "compliance reports", "user monitoring", "compliance reports", "compliance reports"],
+    permissions: [
+      "audit logs",
+      "compliance reports",
+      "user monitoring",
+      "compliance reports",
+      "compliance reports",
+    ],
   },
 ];
 
@@ -64,58 +71,80 @@ const Permissions = ({ permissions }: { permissions: string[] }) => {
 
 // Main component
 const ManageRole: React.FC = () => {
-  return (
-    <Card className="shadow-sm mb-4">
-      <CardBody>
-        {/* Header */}
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <div className="d-flex align-items-center">
-            <span className="me-1">
-              <i className="fa-solid fa-shield fs-5 text-primary"></i>
-            </span>
-            <h3 className="mb-0">Manage Role</h3>
-          </div>
-          <Button color="primary" className="px-5 py-2">
-            Create Role<i className="fa-solid fa-circle-plus ms-1"></i>
-          </Button>
-        </div>
+  // State for modal visibility
+  const [isCreateRoleOpen, setIsCreateRoleOpen] = useState(false);
 
-        {/* Table */}
-        <Table bordered hover responsive>
-          <thead className="text-center">
-            <tr>
-              <th>Role Name</th>
-              <th>Description</th>
-              <th>Users</th>
-              <th>Permissions</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            {roles.map((role) => (
-              <tr key={role.id}>
-                <td>{role.name}</td>
-                <td>{role.description}</td>
-                <td>
-                  <span className="me-1">
-                    <FaUser />
-                  </span>
-                  {role.usersCount}
-                </td>
-                <td>
-                  <Permissions permissions={role.permissions} />
-                </td>
-                <td>
-                  <Button color="success" size="sm" title="Update User">
-                    <i className="icon-pencil-alt"></i>
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </CardBody>
-    </Card>
+  // Toggle modal
+  const toggleCreateRoleModal = () => {
+    setIsCreateRoleOpen(!isCreateRoleOpen);
+  };
+  return (
+    <Row>
+      <Col>
+        <Card className="shadow-sm mb-4">
+          <CardBody>
+            {/* Header */}
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <div className="d-flex align-items-center">
+                <span className="me-1">
+                  <i className="fa-solid fa-shield fs-5 text-primary"></i>
+                </span>
+                <h3 className="mb-0">Manage Role</h3>
+              </div>
+              <Button
+                color="primary"
+                className="px-5 py-2"
+                onClick={toggleCreateRoleModal}
+              >
+                Create Role
+                <i className="fa-solid fa-circle-plus ms-1"></i>
+              </Button>
+            </div>
+
+            {/* Table */}
+            <Table bordered hover responsive>
+              <thead className="text-center">
+                <tr>
+                  <th>Role Name</th>
+                  <th>Description</th>
+                  <th>Users</th>
+                  <th>Permissions</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody className="text-center">
+                {roles.map((role) => (
+                  <tr key={role.id}>
+                    <td>{role.name}</td>
+                    <td>{role.description}</td>
+                    <td>
+                      <span className="me-1">
+                        <FaUser />
+                      </span>
+                      {role.usersCount}
+                    </td>
+                    <td>
+                      <Permissions permissions={role.permissions} />
+                    </td>
+                    <td>
+                      <Button color="success" size="sm" title="Update User">
+                        <i className="icon-pencil-alt"></i>
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </CardBody>
+        </Card>
+      </Col>
+      {/*Modal Component */}
+      <CreateRoleModal
+        isOpen={isCreateRoleOpen}
+        toggle={toggleCreateRoleModal}
+      />
+      {/*Modal Component end */}
+    </Row>
   );
 };
 

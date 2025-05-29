@@ -15,11 +15,11 @@ import AddUserModal from "./Modals/AddUserModal";
 
 const ManageUser: React.FC = () => {
   // State for modal visibility
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAddUserOpen, setIsAddUserOpen] = useState(false);
 
   // Toggle modal
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
+  const toggleAddUserModal = () => {
+    setIsAddUserOpen(!isAddUserOpen);
   };
 
   return (
@@ -72,7 +72,7 @@ const ManageUser: React.FC = () => {
                   <Button
                     color="primary"
                     className="px-5 py-2"
-                    onClick={toggleModal}
+                    onClick={toggleAddUserModal}
                   >
                     Add User
                     <i className="fa-solid fa-circle-plus ms-1"></i>
@@ -197,9 +197,9 @@ const ManageUser: React.FC = () => {
           </CardBody>
         </Card>
       </Col>
-      {/* AddUserModal Component */}
-      <AddUserModal isOpen={isOpen} toggle={toggleModal} />
-      {/* AddUserModal Component end */}
+      {/*Modal Component */}
+      <AddUserModal isOpen={isAddUserOpen} toggle={toggleAddUserModal} />
+      {/*Modal Component end */}
     </Row>
   );
 };
