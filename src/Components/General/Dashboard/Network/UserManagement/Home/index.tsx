@@ -5,6 +5,7 @@ import QuickActions from "./QuickActions/QuickActions";
 import RecentSystemActivity from "./RecentSystemActivity/RecentSystemActivity";
 import SystemAlerts from "./SystemAlerts/SystemAlerts";
 import WeeklyActivity from "./WeeklyActivity/WeeklyActivity";
+import ManageUser from "./ManageUser/MangageUser";
 
 const UserManagementContainer: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const UserManagementContainer: React.FC = () => {
           <SystemAlerts />
         </Row>
         <RecentSystemActivity />
+        <ManageUser />
       </Container>
     </>
   );
