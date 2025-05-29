@@ -1,11 +1,12 @@
 import { Container, Row } from "reactstrap";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
+import ManageRole from "./ManageRole/ManageRole";
+import ManageUser from "./ManageUser/MangageUser";
 import QuickActions from "./QuickActions/QuickActions";
 import RecentSystemActivity from "./RecentSystemActivity/RecentSystemActivity";
 import SystemAlerts from "./SystemAlerts/SystemAlerts";
 import WeeklyActivity from "./WeeklyActivity/WeeklyActivity";
-import ManageUser from "./ManageUser/MangageUser";
 
 const UserManagementContainer: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const UserManagementContainer: React.FC = () => {
         </Row>
         <RecentSystemActivity />
         <ManageUser />
+        <ManageRole />
       </Container>
     </>
   );

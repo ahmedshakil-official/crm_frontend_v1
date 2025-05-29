@@ -66,9 +66,6 @@ const ManageUser: React.FC = () => {
                   </Button>
                 </div>
               </Col>
-
-              {/* Add User Button */}
-              <Col md="2"></Col>
             </div>
 
             {/* User Table */}
