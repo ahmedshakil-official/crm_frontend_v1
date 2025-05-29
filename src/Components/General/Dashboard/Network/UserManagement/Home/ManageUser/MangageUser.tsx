@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch, FaUser } from "react-icons/fa"; // For icons
 import {
   Button,
@@ -11,8 +11,17 @@ import {
   Row,
   Table,
 } from "reactstrap";
+import AddUserModal from "./Modals/AddUserModal";
 
 const ManageUser: React.FC = () => {
+  // State for modal visibility
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Toggle modal
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <Row>
       {/* Card Container */}
@@ -60,7 +69,11 @@ const ManageUser: React.FC = () => {
                   </Input>
                 </div>
                 <div>
-                  <Button color="primary" className="px-5 py-2">
+                  <Button
+                    color="primary"
+                    className="px-5 py-2"
+                    onClick={toggleModal}
+                  >
                     Add User
                     <i className="fa-solid fa-circle-plus ms-1"></i>
                   </Button>
@@ -184,6 +197,9 @@ const ManageUser: React.FC = () => {
           </CardBody>
         </Card>
       </Col>
+      {/* AddUserModal Component */}
+      <AddUserModal isOpen={isOpen} toggle={toggleModal} />
+      {/* AddUserModal Component end */}
     </Row>
   );
 };
