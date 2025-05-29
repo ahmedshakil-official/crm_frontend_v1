@@ -12,11 +12,13 @@ const UserLogin = () => {
   useEffect(() => {
     if (session?.user?.user_type === "ADMIN") {
       router.push("/dashboard/admin");
+    } else if (session?.user?.user_type === "NETWORK_ADMIN") {
+      router.push("/dashboard/network");
     } else if (session?.user?.user_type === "LEAD") {
       router.push("/dashboard/client");
     } else if (session?.user?.user_type === "ADVISOR") {
       router.push("/dashboard/organization");
-    }else{
+    } else {
       router.push("/auth/login");
     }
   }, [session, router]);

@@ -10,11 +10,22 @@ const QuickActions: React.FC = () => {
           <h2 className="mb-0">Quick Actions</h2>
         </div>
         <Row>
-          <Col md={12} className="d-flex justify-content-center align-items-center gap-5">
-            <Button outline color="primary" className="px-5 py-2">Add New User</Button>
-            <Button outline color="secondary" className="px-5 py-2">Generate Report</Button>
-            <Button outline color="success" className="px-5 py-2">View Audit Logs</Button>
-            <Button outline color="info" className="px-5 py-2">System Settings</Button>
+          <Col
+            md={12}
+            className="d-flex justify-content-center align-items-center gap-5"
+          >
+            <Button outline color="primary" className="px-5 py-2">
+              Add New User
+            </Button>
+            <Button outline color="secondary" className="px-5 py-2">
+              Generate Report
+            </Button>
+            <Button outline color="success" className="px-5 py-2">
+              View Audit Logs
+            </Button>
+            <Button outline color="info" className="px-5 py-2">
+              System Settings
+            </Button>
           </Col>
         </Row>
       </CardBody>
