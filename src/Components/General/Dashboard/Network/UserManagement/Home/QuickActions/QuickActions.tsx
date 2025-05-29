@@ -7,7 +7,7 @@ const QuickActions: React.FC = () => {
       <CardBody>
         <div className="d-flex align-items-center gap-2 mb-4">
           <TbChecks className="text-success fs-5" />
-          <h2 className="mb-0">Quick Actions</h2>
+          <h3 className="mb-0">Quick Actions</h3>
         </div>
         <Row>
           <Col

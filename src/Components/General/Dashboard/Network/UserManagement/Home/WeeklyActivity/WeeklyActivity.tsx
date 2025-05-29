@@ -72,7 +72,7 @@ const WeeklyActivity: React.FC = () => {
     <Col md="6" sm="12">
       <Card>
         <CardBody className="p-4">
-          <h2 className="mb-3">Daily Activity Overview</h2>
+          <h3 className="mb-3">Daily Activity Overview</h3>
           <div>
             <ReactApexChart
               options={options}

@@ -14,6 +14,8 @@ export const CommonLogo: React.FC<LoginFormProp> = ({ logoClass }) => {
         return "/dashboard/client";
       case "ADMIN":
         return "/dashboard/admin";
+      case "NETWORK_ADMIN":
+        return "/dashboard/network";
       case "ADVISOR":
         return "/dashboard/organization";
       default:

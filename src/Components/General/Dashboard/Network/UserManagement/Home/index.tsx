@@ -2,6 +2,7 @@ import { Container, Row } from "reactstrap";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import QuickActions from "./QuickActions/QuickActions";
+import RecentSystemActivity from "./RecentSystemActivity/RecentSystemActivity";
 import SystemAlerts from "./SystemAlerts/SystemAlerts";
 import WeeklyActivity from "./WeeklyActivity/WeeklyActivity";
 
@@ -16,6 +17,7 @@ const UserManagementContainer: React.FC = () => {
           <WeeklyActivity />
           <SystemAlerts />
         </Row>
+        <RecentSystemActivity />
       </Container>
     </>
   );
