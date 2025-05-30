@@ -51,22 +51,22 @@ const NetworkAdminMenu: MenuItem[] = [
         lanClass: "lan-4",
         children: [
           {
-            path: "/dashboard/network/usermanagement",
+            path: "/dashboard/network/usersettings/usermanagement",
             title: "User Management",
             type: "link",
           },
           {
-            path: "/dashboard/network/usermanagement/systemreports",
+            path: "/dashboard/network/usersettings/systemreports",
             title: "System Reports",
             type: "link",
           },
           {
-            path: "/dashboard/network/usermanagement/auditlog",
+            path: "/dashboard/network/usersettings/auditlog",
             title: "Audit Log",
             type: "link",
           },
           {
-            path: "/dashboard/network/usermanagement/securitypolicy",
+            path: "/dashboard/network/usersettings/securitypolicy",
             title: "Security Policy",
             type: "link",
           },

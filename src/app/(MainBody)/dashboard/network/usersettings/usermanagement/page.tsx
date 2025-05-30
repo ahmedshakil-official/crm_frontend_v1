@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { FunctionComponent, useEffect, useState } from "react";
 
 const NetworkUserManagement = () => {
@@ -6,7 +6,11 @@ const NetworkUserManagement = () => {
   useEffect(() => {
     (async () => {
       if (typeof window !== "undefined") {
-        const newClient = (await import("@/Components/General/Dashboard/Network/UserManagement/Home")).default;
+        const newClient = (
+          await import(
+            "@/Components/General/Dashboard/Network/UserSettings/UserManagement"
+          )
+        ).default;
         setClient(() => newClient);
       }
     })();
