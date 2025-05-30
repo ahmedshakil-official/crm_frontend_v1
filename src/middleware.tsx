@@ -11,13 +11,19 @@ export default withAuth(
     if (path.startsWith("/dashboard/admin") && token?.user_type !== "ADMIN") {
       return NextResponse.redirect(new URL("/auth/login", req.url));
     }
-    if (path.startsWith("/dashboard/network") && token?.user_type!== "NETWORK_ADMIN") {
+    if (
+      path.startsWith("/dashboard/network") &&
+      token?.user_type !== "NETWORK_ADMIN"
+    ) {
       return NextResponse.redirect(new URL("/auth/login", req.url));
     }
     if (path.startsWith("/dashboard/client") && token?.user_type !== "LEAD") {
       return NextResponse.redirect(new URL("/auth/login", req.url));
     }
-    if (path.startsWith("/dashboard/organization") && token?.user_type !== "ADVISOR") {
+    if (
+      path.startsWith("/dashboard/organization") &&
+      token?.user_type !== "ADVISOR"
+    ) {
       return NextResponse.redirect(new URL("/auth/login", req.url));
     }
 
@@ -36,6 +42,6 @@ export const config = {
     "/dashboard/organization/:path*",
     "/dashboard/client/:path*",
     "/dashboard/network/:path*",
-    "/dashboard/network/usermanagement/:path*",
-  ]
+    "/dashboard/network/usersettings/:path*",
+  ],
 };
