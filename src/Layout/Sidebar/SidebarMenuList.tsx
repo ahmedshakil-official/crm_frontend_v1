@@ -1,4 +1,4 @@
-import { MenuList } from "@/Data/Layout/SidebarData";
+import { getMenuByRole } from "@/Data/Layout/SidebarData";
 import { useAppSelector } from "@/Redux/Hooks";
 import { MenuItem } from "@/Types/LayoutTypes";
 import { useSession } from "next-auth/react";
@@ -12,56 +12,50 @@ const SidebarMenuList = () => {
   const { data: session } = useSession();
   const { t } = useTranslation("common");
 
-  // Check if user has access to menu item based on their role
-  const hasAccess = (item: MenuItem): boolean => {
-    if (!item.allowedRoles || !session?.user?.user_type) return false;
-    return item.allowedRoles.includes(session.user.user_type);
-  };
-
-  // Check if any items in the menu section are accessible
-  const hasAccessibleItems = (mainMenu: MenuItem): boolean => {
-    return mainMenu.Items?.some((item) => hasAccess(item)) || false;
-  };
+  // Get role-specific menu
+  const roleBasedMenu = session?.user?.user_type
+    ? getMenuByRole(session.user.user_type)
+    : [];
 
   const shouldHideMenu = (mainMenu: MenuItem) => {
-    return (
-      mainMenu?.Items?.map((data) => data.title).every((titles) =>
-        pinedMenu.includes(titles || "")
-      ) || !hasAccessibleItems(mainMenu)
+    return mainMenu?.Items?.map((data) => data.title).every((titles) =>
+      pinedMenu.includes(titles || "")
     );
   };
 
+  if (!session?.user?.user_type) {
+    return null;
+  }
+
   return (
     <>
-      {MenuList &&
-        MenuList.map(
-          (mainMenu: MenuItem, index) =>
-            hasAccess(mainMenu) && (
-              <Fragment key={index}>
-                <li
-                  className={`sidebar-main-title ${
-                    shouldHideMenu(mainMenu) ? "d-none" : ""
-                  }`}
+      {roleBasedMenu && roleBasedMenu.length > 0 ? (
+        roleBasedMenu.map((mainMenu: MenuItem, index: number) => (
+          <Fragment key={index}>
+            <li
+              className={`sidebar-main-title ${
+                shouldHideMenu(mainMenu) ? "d-none" : ""
+              }`}
+            >
+              <div>
+                <h5
+                  className={`f-w-700 sidebar-title ${mainMenu.lanClass || ""}`}
                 >
-                  <div>
-                    <h5
-                      className={`f-w-700 sidebar-title ${
-                        mainMenu.lanClass && mainMenu.lanClass
-                      }`}
-                    >
-                      {t(mainMenu.title)}
-                    </h5>
-                  </div>
-                </li>
-                <Menulist
-                  menu={mainMenu.Items}
-                  activeMenu={activeMenu}
-                  setActiveMenu={setActiveMenu}
-                  level={0}
-                />
-              </Fragment>
-            )
-        )}
+                  {t(mainMenu.title)}
+                </h5>
+              </div>
+            </li>
+            <Menulist
+              menu={mainMenu.Items}
+              activeMenu={activeMenu}
+              setActiveMenu={setActiveMenu}
+              level={0}
+            />
+          </Fragment>
+        ))
+      ) : (
+        <div>No menu items available for your role</div>
+      )}
     </>
   );
 };
