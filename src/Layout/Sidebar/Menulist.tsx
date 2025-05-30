@@ -148,7 +148,8 @@ const Menulist: React.FC<MenuListType> = ({
                   level === 0 ? "sidebar-submenu" : "according-submenu"
                 }`}
                 style={{
-                  display: isCurrentActive ? "block" : "none",
+                  display: "block",
+                  // display: isCurrentActive ? "block" : "none",
                 }}
               >
                 <Menulist
