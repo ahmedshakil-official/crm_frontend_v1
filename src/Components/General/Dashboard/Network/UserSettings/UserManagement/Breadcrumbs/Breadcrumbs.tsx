@@ -7,9 +7,7 @@ const Breadcrumbs = () => {
       <Row className="page-title">
         <Col sm="6">
           <h2>User Management</h2>
-          <p className="mb-0 text-title-gray">
-            Here are your company stats for the period
-          </p>
+          <p className="mb-0 text-title-gray">Hello there!</p>
         </Col>
         <Col sm="6">
           <Breadcrumb className="justify-content-sm-end align-items-center">
@@ -19,8 +17,7 @@ const Breadcrumbs = () => {
               </Link>
             </BreadcrumbItem>
             <BreadcrumbItem>Dashboard</BreadcrumbItem>
-            <BreadcrumbItem>User Management</BreadcrumbItem>
-            <BreadcrumbItem className="active">Home</BreadcrumbItem>
+            <BreadcrumbItem className="active">User Management</BreadcrumbItem>
           </Breadcrumb>
         </Col>
       </Row>
