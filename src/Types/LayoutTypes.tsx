@@ -10,6 +10,7 @@ export interface MenuItem {
   children?: MenuItem[];
   path?: string;
   mainTitle?: string;
+  allowedRoles?: string[];
 }
 
 export interface MenuListType {

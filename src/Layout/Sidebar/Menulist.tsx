@@ -1,9 +1,9 @@
 import SVG from "@/CommonComponent/SVG";
+import { getMenuByRole } from "@/Data/Layout/SidebarData";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { handlePined } from "@/Redux/Reducers/LayoutSlice";
 import { MenuListType } from "@/Types/LayoutTypes";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,10 +22,13 @@ const Menulist: React.FC<MenuListType> = ({
   const [initialLoad, setInitialLoad] = useState(true);
   const { data: session } = useSession();
 
-  // Filter menu items based on user type
-  const filteredMenu = session?.user?.user_type === "LEAD" 
-    ? menu?.filter((item: any) => item.title === "Dashboards")
-    : menu;
+  // Get role-specific menu
+  const roleBasedMenu = session?.user?.user_type
+    ? getMenuByRole(session.user.user_type)
+    : [];
+
+  // Use role-based menu instead of passed menu prop
+  const menuToUse = level === 0 ? roleBasedMenu : menu;
 
   // Utility to check if current path matches the menu item
   const isActive = (item: any): boolean => {
@@ -34,6 +37,20 @@ const Menulist: React.FC<MenuListType> = ({
       return item.children.some((child: any) => isActive(child));
     }
     return false;
+  };
+
+  const handleClick = (e: React.MouseEvent, item: any) => {
+    e.preventDefault();
+
+    // Update active menu state
+    const newActive = [...activeMenu];
+    newActive[level] = newActive[level] === item.title ? "" : item.title;
+    setActiveMenu(newActive);
+
+    // Navigate if it's a link
+    if (item.path) {
+      window.location.href = item.path;
+    }
   };
 
   // Set active menu items recursively on mount and route change
@@ -59,22 +76,22 @@ const Menulist: React.FC<MenuListType> = ({
         return false;
       };
 
-      menu && findActiveTrail(menu, level);
+      menuToUse && findActiveTrail(menuToUse, level);
       setActiveMenu(newActiveMenu);
       setInitialLoad(false);
     }
-  }, [pathname, menu, initialLoad]);
+  }, [pathname, menuToUse, initialLoad]);
+
+  if (!menu || !Array.isArray(menu)) {
+    return null;
+  }
 
   return (
     <>
-      {filteredMenu?.map((item: any, index) => {
-        const hasChildren = !!item.children;
+      {menu.map((item, index) => {
+        const hasChildren = item.children && item.children.length > 0;
         const isCurrentActive =
-          initialLoad ||
-          (hasChildren &&
-            item.children?.some((child: any) => isActive(child))) ||
-          item.path === pathname ||
-          activeMenu[level] === item.title;
+          initialLoad || isActive(item) || activeMenu[level] === item.title;
 
         return (
           <li
@@ -90,18 +107,13 @@ const Menulist: React.FC<MenuListType> = ({
               ></i>
             )}
 
-            <Link
+            <a
               href={item.path || "#"}
               className={`nav-link d-flex align-items-center gap-1 ${
                 level === 0 ? "sidebar-link" : ""
               } ${isCurrentActive ? "active" : ""}`}
-              onClick={(e) => {
-                if (!item.path) e.preventDefault();
-                const newActive = [...activeMenu];
-                newActive[level] =
-                  newActive[level] === item.title ? "" : item.title;
-                setActiveMenu(newActive);
-              }}
+              onClick={(e) => handleClick(e, item)}
+              style={{ cursor: "pointer" }}
             >
               {item.icon && (
                 <SVG className="stroke-icon me-2" iconId={item.icon} />
@@ -109,7 +121,9 @@ const Menulist: React.FC<MenuListType> = ({
               {!item.icon ? (
                 <span className="flex-grow-1">{t(item.title)}</span>
               ) : (
-                <h6 className={`mb-0 ${item.lanClass}`}>{t(item.title)}</h6>
+                <h6 className={`mb-0 ${item.lanClass || ""}`}>
+                  {t(item.title)}
+                </h6>
               )}
               {item.badge && (
                 <Badge pill color="primary" className="ms-auto">
@@ -126,7 +140,7 @@ const Menulist: React.FC<MenuListType> = ({
                   }}
                 ></i>
               )}
-            </Link>
+            </a>
 
             {hasChildren && (
               <ul
@@ -135,10 +149,11 @@ const Menulist: React.FC<MenuListType> = ({
                 }`}
                 style={{
                   display: "block",
+                  // display: isCurrentActive ? "block" : "none",
                 }}
               >
                 <Menulist
-                  menu={item.children || []}
+                  menu={item.children}
                   activeMenu={activeMenu}
                   setActiveMenu={setActiveMenu}
                   level={level + 1}

@@ -1,9 +1,11 @@
 import { MenuItem } from "@/Types/LayoutTypes";
 
-export const MenuList: MenuItem[] | undefined = [
+// Network Admin Menu
+const NetworkAdminMenu: MenuItem[] = [
   {
     title: "General",
     lanClass: "lan-1",
+    type: "group",
     Items: [
       {
         title: "Dashboards",
@@ -14,39 +16,6 @@ export const MenuList: MenuItem[] | undefined = [
         lanClass: "lan-3",
         children: [
           {
-            title: "Organization",
-            type: "link",
-            children: [
-              {
-                path: "/dashboard/organization",
-                title: "My Organization",
-                type: "link",
-              },
-              {
-                // path: "/dashboard/organization/allcase",
-                title: "Cases",
-                type: "link",
-                children: [
-                  {
-                    path: "/dashboard/organization/allcase",
-                    title: "All Case",
-                    type: "link",
-                  },
-                  {
-                    path: "/dashboard/organization/activecase",
-                    title: "Active Case",
-                    type: "link",
-                  },
-                  {
-                    path: "/dashboard/organization/closedcase",
-                    title: "Closed Case",
-                    type: "link",
-                  },
-                ],
-              },
-            ],
-          },
-          {
             path: "/dashboard/network",
             title: "Home(Network)",
             type: "link",
@@ -56,7 +25,7 @@ export const MenuList: MenuItem[] | undefined = [
       },
       {
         title: "User Management",
-        type: "link",
+        type: "sub",
         icon: "Setting",
         lanClass: "lan-4",
         children: [
@@ -80,155 +49,107 @@ export const MenuList: MenuItem[] | undefined = [
             title: "Security Policy",
             type: "link",
           },
-
         ],
       },
     ],
   },
-  // {
-  //   title: "Demo Pages",
-  //   Items: [
-  //     {
-  //       title: "Others",
-  //       icon: "Password",
-  //       id: 25,
-  //       type: "sub",
-  //       children: [
-  //         {
-  //           title: "Error Pages",
-  //           type: "sub",
-  //           children: [
-  //             {
-  //               path: "/others/error_pages/error_page1",
-  //               title: "Error Page 1",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/error_pages/error_page2",
-  //               title: "Error Page 2",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/error_pages/error_page3",
-  //               title: "Error Page 3",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/error_pages/error_page4",
-  //               title: "Error Page 4",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/error_pages/error_page5",
-  //               title: "Error Page 5",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/error_pages/error_page6",
-  //               title: "Error Page 6",
-  //               type: "link",
-  //             },
-  //           ],
-  //         },
-  //         {
-  //           title: "Authentication",
-  //           type: "sub",
-  //           children: [
-  //             {
-  //               path: "/others/authentication/loginsimple",
-  //               title: "Login Simple",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/loginbgimage",
-  //               title: "Login With Bg Image",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/loginbgimagetwo",
-  //               title: "Login With Image Two",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/loginvalidation",
-  //               title: "Login With Validation",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/logintooltip",
-  //               title: "Login With Tooltip",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/loginsweetalert",
-  //               title: "Login With Sweetalert",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/registersimple",
-  //               title: "Register Simple",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/registerbgimage",
-  //               title: "Register With Bg Image",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/registerbgimagetwo",
-  //               title: "Register With Bg Two",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/registerwizard",
-  //               title: "Register Wizard",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/unlockuser",
-  //               title: "Unlock User",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/forgetpassword",
-  //               title: "Forget Password",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/createpassword",
-  //               title: "Reset Password",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/authentication/maintenance",
-  //               title: "Maintenance",
-  //               type: "link",
-  //             },
-  //           ],
-  //         },
-  //         {
-  //           title: "Coming Soon",
-  //           type: "sub",
-  //           children: [
-  //             {
-  //               path: "/others/coming_soon/comingsoonsimple",
-  //               title: "Coming Simple",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/coming_soon/comingbgvideo",
-  //               title: "Coming With Bg Video",
-  //               type: "link",
-  //             },
-  //             {
-  //               path: "/others/coming_soon/comingbgimg",
-  //               title: "Coming With Bg Image",
-  //               type: "link",
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
 ];
+
+// Advisor Menu
+const AdvisorMenu: MenuItem[] = [
+  {
+    title: "General",
+    lanClass: "lan-1",
+    type: "group",
+    Items: [
+      {
+        title: "Dashboards",
+        id: 1,
+        icon: "Home-dashboard",
+        type: "sub",
+        badge: "",
+        lanClass: "lan-3",
+        children: [
+          {
+            title: "Organization",
+            type: "sub",
+            children: [
+              {
+                path: "/dashboard/organization",
+                title: "My Organization",
+                type: "link",
+              },
+              {
+                title: "Cases",
+                type: "sub",
+                children: [
+                  {
+                    path: "/dashboard/organization/allcase",
+                    title: "All Case",
+                    type: "link",
+                  },
+                  {
+                    path: "/dashboard/organization/activecase",
+                    title: "Active Case",
+                    type: "link",
+                  },
+                  {
+                    path: "/dashboard/organization/closedcase",
+                    title: "Closed Case",
+                    type: "link",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
+
+// Lead Menu
+const LeadMenu: MenuItem[] = [
+  {
+    title: "General",
+    lanClass: "lan-1",
+    type: "group",
+    Items: [
+      {
+        title: "Dashboards",
+        id: 1,
+        icon: "Home-dashboard",
+        type: "sub",
+        badge: "",
+        lanClass: "lan-3",
+        children: [
+          {
+            path: "/dashboard/client",
+            title: "Main Menu",
+            type: "link",
+          },
+        ],
+      },
+    ],
+  },
+];
+
+// Function to get menu based on role
+export const getMenuByRole = (role?: string): MenuItem[] => {
+  switch (role) {
+    case "NETWORK_ADMIN":
+      return NetworkAdminMenu;
+    case "ADVISOR":
+      return AdvisorMenu;
+    case "LEAD":
+      return LeadMenu;
+    default:
+      return [];
+  }
+};
+
+// Export the legacy MenuList for backward compatibility
+export const MenuList = NetworkAdminMenu;
+
+// Export the role-specific menus if needed elsewhere
+export { AdvisorMenu, LeadMenu, NetworkAdminMenu };
