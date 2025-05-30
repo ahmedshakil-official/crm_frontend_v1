@@ -8,7 +8,7 @@ const NetworkAdminMenu: MenuItem[] = [
     type: "group",
     Items: [
       {
-        title: "Dashboards",
+        title: "Network",
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
@@ -17,21 +17,42 @@ const NetworkAdminMenu: MenuItem[] = [
         children: [
           {
             path: "/dashboard/network",
-            title: "Home(Network)",
+            title: "Dashboard",
             type: "link",
             lanClass: "lan-4",
+          },
+          {
+            title: "Cases",
+            type: "sub",
+            children: [
+              {
+                path: "/dashboard/network/cases",
+                title: "All Case",
+                type: "link",
+              },
+              {
+                path: "/dashboard/network/activecase",
+                title: "Active Case",
+                type: "link",
+              },
+              {
+                path: "/dashboard/network/closedcase",
+                title: "Closed Case",
+                type: "link",
+              },
+            ],
           },
         ],
       },
       {
-        title: "User Management",
+        title: "User Settings",
         type: "sub",
         icon: "Setting",
         lanClass: "lan-4",
         children: [
           {
             path: "/dashboard/network/usermanagement",
-            title: "Home",
+            title: "User Management",
             type: "link",
           },
           {
