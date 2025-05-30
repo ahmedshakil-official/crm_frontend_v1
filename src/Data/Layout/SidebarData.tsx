@@ -4,6 +4,7 @@ export const MenuList: MenuItem[] | undefined = [
   {
     title: "General",
     lanClass: "lan-1",
+    allowedRoles: ["NETWORK_ADMIN", "ADVISOR", "LEAD"],
     Items: [
       {
         title: "Dashboards",
@@ -12,35 +13,41 @@ export const MenuList: MenuItem[] | undefined = [
         type: "sub",
         badge: "",
         lanClass: "lan-3",
+        allowedRoles: ["NETWORK_ADMIN", "ADVISOR", "LEAD"],
         children: [
           {
             title: "Organization",
             type: "link",
+            allowedRoles: ["ADVISOR"],
             children: [
               {
                 path: "/dashboard/organization",
                 title: "My Organization",
                 type: "link",
+                allowedRoles: ["ADVISOR"],
               },
               {
-                // path: "/dashboard/organization/allcase",
                 title: "Cases",
                 type: "link",
+                allowedRoles: ["ADVISOR"],
                 children: [
                   {
                     path: "/dashboard/organization/allcase",
                     title: "All Case",
                     type: "link",
+                    allowedRoles: ["ADVISOR"],
                   },
                   {
                     path: "/dashboard/organization/activecase",
                     title: "Active Case",
                     type: "link",
+                    allowedRoles: ["ADVISOR"],
                   },
                   {
                     path: "/dashboard/organization/closedcase",
                     title: "Closed Case",
                     type: "link",
+                    allowedRoles: ["ADVISOR"],
                   },
                 ],
               },
@@ -51,6 +58,13 @@ export const MenuList: MenuItem[] | undefined = [
             title: "Home(Network)",
             type: "link",
             lanClass: "lan-4",
+            allowedRoles: ["NETWORK_ADMIN"],
+          },
+          {
+            path: "/dashboard/client",
+            title: "Main Menu",
+            type: "link",
+            allowedRoles: ["LEAD"],
           },
         ],
       },
@@ -59,28 +73,32 @@ export const MenuList: MenuItem[] | undefined = [
         type: "link",
         icon: "Setting",
         lanClass: "lan-4",
+        allowedRoles: ["NETWORK_ADMIN"],
         children: [
           {
             path: "/dashboard/network/usermanagement",
             title: "Home",
             type: "link",
+            allowedRoles: ["NETWORK_ADMIN"],
           },
           {
             path: "/dashboard/network/usermanagement/systemreports",
             title: "System Reports",
             type: "link",
+            allowedRoles: ["NETWORK_ADMIN"],
           },
           {
             path: "/dashboard/network/usermanagement/auditlog",
             title: "Audit Log",
             type: "link",
+            allowedRoles: ["NETWORK_ADMIN"],
           },
           {
             path: "/dashboard/network/usermanagement/securitypolicy",
             title: "Security Policy",
             type: "link",
+            allowedRoles: ["NETWORK_ADMIN"],
           },
-
         ],
       },
     ],
