@@ -108,7 +108,7 @@ const Organizations = () => {
                   className="col-ed-4 box-col-4"
                   key={item.slug}
                 >
-                  <Card className="bg-white border organization_card opacity-100 p-3 position-relative">
+                  <Card className="bg-white border organization_card opacity-100 rounded-3 p-3 position-relative">
                     <Link
                       href={item?.website || "#"}
                       target="_blank"

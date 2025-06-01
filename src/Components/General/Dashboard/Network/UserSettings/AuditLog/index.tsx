@@ -1,9 +1,15 @@
+import { Container } from "reactstrap";
+import AuditLogsAndActivityTracking from "./AuditLogsAndActivityTracking/AuditLogsAndActivityTracking";
+import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
+
 const AuditLogContainer: React.FC = () => {
   return (
-    <div>
-      {/* JSX here */}
-      <h1>Audit Log</h1>
-    </div>
+    <>
+      <Breadcrumbs />
+      <Container fluid>
+        <AuditLogsAndActivityTracking />
+      </Container>
+    </>
   );
 };
 
