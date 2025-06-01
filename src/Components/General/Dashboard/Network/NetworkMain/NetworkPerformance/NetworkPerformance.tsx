@@ -4,7 +4,7 @@ import { Card, Col, Row } from "reactstrap";
 const NetworkPerformance: React.FC = () => {
   return (
     <Card>
-      <Row className="p-4 pb-0 mt-2">
+      <Row className="px-2 py-4 pb-0 mt-2">
         <Col xl="3" md="6">
           <Card className="bg-light-success bg-opacity-10 border-0 p-3">
             <div className="d-flex flex-column">
