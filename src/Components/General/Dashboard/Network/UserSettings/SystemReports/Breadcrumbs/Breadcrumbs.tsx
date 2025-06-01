@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Breadcrumb, BreadcrumbItem, Col, Container, Row } from "reactstrap";
 
-const NetworkBreadcrumbs = () => {
+const Breadcrumbs = () => {
   return (
     <Container fluid>
       <Row className="page-title">
         <Col sm="6">
-          <h2>Network Performance</h2>
+          <h2>System Reports</h2>
           <p className="mb-0 text-title-gray">Hello there!</p>
         </Col>
         <Col sm="6">
@@ -17,7 +17,7 @@ const NetworkBreadcrumbs = () => {
               </Link>
             </BreadcrumbItem>
             <BreadcrumbItem>Dashboard</BreadcrumbItem>
-            <BreadcrumbItem className="active">Network</BreadcrumbItem>
+            <BreadcrumbItem className="active">System Reports</BreadcrumbItem>
           </Breadcrumb>
         </Col>
       </Row>
@@ -25,4 +25,4 @@ const NetworkBreadcrumbs = () => {
   );
 };
 
-export default NetworkBreadcrumbs;
+export default Breadcrumbs;

@@ -2,7 +2,7 @@ import { Container, Row } from "reactstrap";
 import NetworkBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
 import Charts from "./Charts/Charts";
 import NetworkPerformance from "./NetworkPerformance/NetworkPerformance";
-import OrganizationCards from "./Organizations/OrganizationCards";
+import Organizations from "./Organizations/Organizations";
 import PerformanceOverview from "./PerformanceOverview/PerformanceOverview";
 import ProductPenetration from "./ProductPenetration/ProductPenetration";
 import RecentActivity from "./RecentActivity/RecentActivity";
@@ -16,7 +16,7 @@ const ContainerNetwork = () => {
         <PerformanceOverview />
         <Charts />
         <NetworkPerformance />
-        <OrganizationCards />
+        <Organizations />
         <Row>
           <ProductPenetration />
           <RecentActivity />
