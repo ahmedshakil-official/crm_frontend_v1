@@ -1,9 +1,15 @@
+import { Container } from "reactstrap";
+import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import SecurityPoliciesManagement from "./SecurityPoliciesManagement/SecurityPoliciesManagement";
+
 const SecurityPolicyContainer: React.FC = () => {
   return (
-    <div>
-      {/* JSX here */}
-      <h1>Security Policy</h1>
-    </div>
+    <>
+      <Breadcrumbs />
+      <Container fluid>
+        <SecurityPoliciesManagement />
+      </Container>
+    </>
   );
 };
 
