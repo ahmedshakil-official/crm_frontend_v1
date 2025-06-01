@@ -1,5 +1,6 @@
-import { Container } from "reactstrap";
+import { Container, Row } from "reactstrap";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import CaseAdviserActivityTrends from "./CaseAdviserActivityTrends/CaseAdviserActivityTrends";
 import SystemReportsAnalytics from "./SystemReportsAnalytics/SystemReportsAnalytics";
 
 const SystemReportsContainer: React.FC = () => {
@@ -8,6 +9,9 @@ const SystemReportsContainer: React.FC = () => {
       <Breadcrumbs />
       <Container fluid>
         <SystemReportsAnalytics />
+        <Row>
+          <CaseAdviserActivityTrends />
+        </Row>
       </Container>
     </>
   );
