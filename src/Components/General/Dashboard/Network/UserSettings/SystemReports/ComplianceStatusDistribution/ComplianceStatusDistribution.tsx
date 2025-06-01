@@ -88,7 +88,7 @@ const ComplianceStatusDistribution: React.FC = () => {
 
   return (
     <Col md="6">
-      <Card className="h-100 shadow-sm">
+      <Card className="shadow-sm">
         <CardBody>
           <ReactApexChart
             options={chartData.options}

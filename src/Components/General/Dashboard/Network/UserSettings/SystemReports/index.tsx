@@ -1,8 +1,9 @@
 import { Container, Row } from "reactstrap";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
 import CaseAdviserActivityTrends from "./CaseAdviserActivityTrends/CaseAdviserActivityTrends";
-import SystemReportsAnalytics from "./SystemReportsAnalytics/SystemReportsAnalytics";
 import ComplianceStatusDistribution from "./ComplianceStatusDistribution/ComplianceStatusDistribution";
+import KeyPerformanceMetrics from "./KeyPerformanceMetrics/KeyPerformanceMetrics";
+import SystemReportsAnalytics from "./SystemReportsAnalytics/SystemReportsAnalytics";
 
 const SystemReportsContainer: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const SystemReportsContainer: React.FC = () => {
           <CaseAdviserActivityTrends />
           <ComplianceStatusDistribution />
         </Row>
+        <KeyPerformanceMetrics />
       </Container>
     </>
   );

@@ -99,7 +99,7 @@ const CaseAdviserActivityTrends: React.FC = () => {
 
   return (
     <Col md={6}>
-      <Card className="border">
+      <Card className="shadow-sm">
         <CardBody>
           <ReactApexChart
             options={chartOptions}
