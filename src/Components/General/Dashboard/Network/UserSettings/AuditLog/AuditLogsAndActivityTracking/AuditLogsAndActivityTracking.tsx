@@ -87,9 +87,8 @@ const AuditLogsAndActivityTracking: React.FC = () => {
         </div>
 
         {/* Search and Filters */}
-        {/* 1st Row  */}
         <Row className="d-flex justify-content-between mb-4">
-          <Col sm="6" md="4" className="position-relative">
+          <Col sm="6" md="2" className="position-relative">
             <FaSearch
               className="position-absolute text-muted"
               style={{
@@ -105,7 +104,7 @@ const AuditLogsAndActivityTracking: React.FC = () => {
             />
           </Col>
 
-          <Col sm="6" md="4" className="position-relative">
+          <Col sm="6" md="2" className="position-relative">
             <Input type="select" className="form-select">
               <option>All Severities</option>
               <option>Low</option>
@@ -113,7 +112,7 @@ const AuditLogsAndActivityTracking: React.FC = () => {
               <option>High</option>
             </Input>
           </Col>
-          <Col sm="6" md="4" className="position-relative">
+          <Col sm="6" md="2" className="position-relative">
             <Input type="select" className="form-select">
               <option>All Modules</option>
               <option>Authentication</option>
@@ -123,11 +122,7 @@ const AuditLogsAndActivityTracking: React.FC = () => {
               <option>Reporting</option>
             </Input>
           </Col>
-        </Row>
-
-        {/* 2nd Row  */}
-        <Row className="d-flex justify-content-center mb-4">
-          <Col sm="6" md="4" className="position-relative">
+          <Col sm="6" md="2" className="position-relative">
             <Input type="select" className="form-select">
               <option>All Firms</option>
               <option>ABC Mortgages Ltd</option>
@@ -137,7 +132,7 @@ const AuditLogsAndActivityTracking: React.FC = () => {
             </Input>
           </Col>
 
-          <Col sm="6" md="4" className="position-relative">
+          <Col sm="6" md="2" className="position-relative">
             <Input
               type="date"
               placeholder="From"
@@ -145,7 +140,7 @@ const AuditLogsAndActivityTracking: React.FC = () => {
             />
           </Col>
 
-          <Col sm="6" md="4" className="position-relative">
+          <Col sm="6" md="2" className="position-relative">
             <Input type="date" placeholder="To" className="form-control p-2" />
           </Col>
         </Row>
