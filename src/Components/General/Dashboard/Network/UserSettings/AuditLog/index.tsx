@@ -1,4 +1,5 @@
-import { Col, Container, Row } from "reactstrap";
+import { Container } from "reactstrap";
+import AuditLogsAndActivityTracking from "./AuditLogsAndActivityTracking/AuditLogsAndActivityTracking";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
 
 const AuditLogContainer: React.FC = () => {
@@ -6,11 +7,7 @@ const AuditLogContainer: React.FC = () => {
     <>
       <Breadcrumbs />
       <Container fluid>
-        <Row>
-          <Col>
-            <h1>Audit Log</h1>
-          </Col>
-        </Row>
+        <AuditLogsAndActivityTracking />
       </Container>
     </>
   );
