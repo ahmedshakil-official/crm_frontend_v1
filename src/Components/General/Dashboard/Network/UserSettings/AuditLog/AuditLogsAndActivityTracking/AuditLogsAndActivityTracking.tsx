@@ -149,25 +149,25 @@ const AuditLogsAndActivityTracking: React.FC = () => {
         {/* Summary Cards */}
         <Row>
           <Col sm="6" md="3">
-            <Card className="bg-primary text-center bg-opacity-10 p-3">
+            <Card className="bg-primary text-center bg-opacity-10 rounded-3 p-3">
               <h2 className="fw-bold mb-1">2,847</h2>
               <p className="text-muted fw-medium">Total Events Today</p>
             </Card>
           </Col>
           <Col sm="6" md="3">
-            <Card className="bg-success text-center bg-opacity-10 p-3">
+            <Card className="bg-success text-center bg-opacity-10 rounded-3 p-3">
               <h2 className="fw-bold mb-1">156</h2>
               <p className="text-muted fw-medium">User Actions</p>
             </Card>
           </Col>
           <Col sm="6" md="3">
-            <Card className="bg-warning text-center bg-opacity-10 p-3">
+            <Card className="bg-warning text-center bg-opacity-10 rounded-3 p-3">
               <h2 className="fw-bold mb-1">23</h2>
               <p className="text-muted fw-medium">Security Events</p>
             </Card>
           </Col>
           <Col sm="6" md="3">
-            <Card className="bg-info text-center bg-opacity-10 p-3">
+            <Card className="bg-info text-center bg-opacity-10 rounded-3 p-3">
               <h2 className="fw-bold mb-1">89</h2>
               <p className="text-muted fw-medium">System Events</p>
             </Card>
