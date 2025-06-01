@@ -11,10 +11,10 @@ const SystemReportsAnalytics: React.FC = () => {
   return (
     <Card className="shadow-sm">
       <CardHeader className="bg-white border-bottom">
-        <h4 className="mb-0 d-flex align-items-center">
+        <h3 className="mb-0 d-flex align-items-center">
           <i className="fas fa-chart-line me-2"></i>
           System Reports & Analytics
-        </h4>
+        </h3>
       </CardHeader>
       <CardBody>
         <Row className="mb-4 g-3">
