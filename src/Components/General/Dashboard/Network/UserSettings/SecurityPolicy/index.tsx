@@ -1,16 +1,13 @@
-import { Col, Container, Row } from "reactstrap";
+import { Container } from "reactstrap";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import SecurityPoliciesManagement from "./SecurityPoliciesManagement/SecurityPoliciesManagement";
 
 const SecurityPolicyContainer: React.FC = () => {
   return (
     <>
       <Breadcrumbs />
       <Container fluid>
-        <Row>
-          <Col>
-            <h1>Security Policy</h1>
-          </Col>
-        </Row>
+        <SecurityPoliciesManagement />
       </Container>
     </>
   );
