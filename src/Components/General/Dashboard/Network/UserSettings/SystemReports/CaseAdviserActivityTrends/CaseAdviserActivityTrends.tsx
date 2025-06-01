@@ -35,7 +35,7 @@ const CaseAdviserActivityTrends: React.FC = () => {
       align: "left",
       style: {
         fontSize: "18px",
-        fontWeight: "500",
+        fontWeight: "700",
       },
     },
     grid: {
