@@ -177,7 +177,7 @@ const AuditLogsAndActivityTracking: React.FC = () => {
         {/* Table */}
         <Table hover responsive className="align-middle">
           <thead className="bg-light">
-            <tr>
+            <tr className="text-center">
               <th>Timestamp</th>
               <th>User</th>
               <th>Action</th>
@@ -189,7 +189,7 @@ const AuditLogsAndActivityTracking: React.FC = () => {
           </thead>
           <tbody>
             {auditData.map((log, index) => (
-              <tr key={index}>
+              <tr key={index} className="text-center">
                 <td>{log.timestamp}</td>
                 <td>{log.user}</td>
                 <td>{log.action}</td>
