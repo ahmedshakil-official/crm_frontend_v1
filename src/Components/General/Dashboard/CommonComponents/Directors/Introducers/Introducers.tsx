@@ -1,5 +1,8 @@
-import { useGetIntroducerDetailsQuery } from "@/Redux/Reducers/Organization/Directors/IntroducerDetailsApi";
-import { IntroducerInfoProps } from "@/Types/CommonComponents/Directors/IntroducerTypes";
+import { useGetIntroducerDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/IntroducerDetailsApi";
+import {
+  IntroducerInfoProps,
+  IntroducersProps,
+} from "@/Types/CommonComponents/Directors/IntroducerTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
@@ -22,11 +25,12 @@ import AddIntroducerModal from "./Modals/AddIntroducerModal";
 import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
 import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
 
-const IntroducerList = () => {
+const Introducers: React.FC<IntroducersProps> = ({
+  introducersPerPage = 20,
+}) => {
   const [introducers, setIntroducers] = useState<IntroducerInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [introducersPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -248,8 +252,9 @@ const IntroducerList = () => {
         <div className="d-flex justify-content-between align-items-center p-3">
           <div className="px-2">
             <p className="text-success">
-              Showing 1 to {Math.min(5, currentIntroducers?.length || 0)} of{" "}
-              {introduceData?.length || 0} Introducers
+              Showing {indexOfFirstIntroducer + 1} to{" "}
+              {Math.min(indexOfLastIntroducer, filteredIntroducers.length)} of{" "}
+              {filteredIntroducers.length} Introducers
             </p>
           </div>
           <Pagination className="d-flex justify-content-end p-2">
@@ -263,7 +268,7 @@ const IntroducerList = () => {
               />
             </PaginationItem>
 
-            {totalPages <= 5 ? (
+            {totalPages <= introducersPerPage ? (
               Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (pageNumber) => (
                   <PaginationItem
@@ -355,4 +360,4 @@ const IntroducerList = () => {
   );
 };
 
-export default IntroducerList;
+export default Introducers;

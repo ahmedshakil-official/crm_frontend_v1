@@ -259,7 +259,7 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 20 }) => {
               />
             </PaginationItem>
 
-            {totalPages <= 5 ? (
+            {totalPages <= leadsPerPage ? (
               Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (pageNumber) => (
                   <PaginationItem

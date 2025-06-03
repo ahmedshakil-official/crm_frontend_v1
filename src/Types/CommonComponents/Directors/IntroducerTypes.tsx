@@ -28,6 +28,9 @@ export interface IntroducerInfoProps {
   };
   created_at: string;
 }
+export interface IntroducersProps {
+  introducersPerPage?: number;
+}
 export interface AddIntroducerModalProps {
   isOpen: boolean;
   toggle: () => void;
