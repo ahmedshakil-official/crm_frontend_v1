@@ -28,7 +28,10 @@ const SecurityPoliciesManagement: React.FC = () => {
               <FaLock className="text-primary fs-4" />
               <h3 className="mb-0">Security Policies Management</h3>
             </div>
-            <Button color="primary">+ Create Policy</Button>
+            <Button color="primary">
+              Create Policy
+              <i className="fa-solid fa-circle-plus ms-1"></i>
+            </Button>
           </div>
         </CardHeader>
         <CardBody>

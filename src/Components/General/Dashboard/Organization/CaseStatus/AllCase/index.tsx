@@ -11,7 +11,7 @@ const AllCaseContainer: React.FC = ({}) => {
       <OrganizationBreadcrumbs
         mainTitle="Organization Case Status"
         title="Hello there!"
-        parent="Cases Status"
+        parent="Organization"
         activePage="Cases"
       />
       <Container fluid className="default-dashboard">

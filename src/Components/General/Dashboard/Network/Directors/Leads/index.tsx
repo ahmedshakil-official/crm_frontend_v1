@@ -1,10 +1,15 @@
 import Leads from "../../../CommonComponents/Directors/Leads/Leads";
-import NetworkDirectorsBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import NetworkBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
 const NetworkLeadsContainer: React.FC = () => {
   return (
     <>
-      <NetworkDirectorsBreadcrumbs title="Leads" />
+      <NetworkBreadcrumbs
+        mainTitle="Network Leads"
+        title="Hello there!"
+        parent="Directors"
+        activePage="Leads"
+      />
       <Leads />
     </>
   );

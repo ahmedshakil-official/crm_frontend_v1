@@ -1,5 +1,5 @@
 import { Container, Row } from "reactstrap";
-import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import NetworkBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 import CaseAdviserActivityTrends from "./CaseAdviserActivityTrends/CaseAdviserActivityTrends";
 import ComplianceStatusDistribution from "./ComplianceStatusDistribution/ComplianceStatusDistribution";
 import KeyPerformanceMetrics from "./KeyPerformanceMetrics/KeyPerformanceMetrics";
@@ -8,7 +8,12 @@ import SystemReportsAnalytics from "./SystemReportsAnalytics/SystemReportsAnalyt
 const SystemReportsContainer: React.FC = () => {
   return (
     <>
-      <Breadcrumbs />
+      <NetworkBreadcrumbs
+        mainTitle="Network System Reports"
+        title="Hello there!"
+        parent="User Settings"
+        activePage="System Reports"
+      />
       <Container fluid>
         <SystemReportsAnalytics />
         <Row>

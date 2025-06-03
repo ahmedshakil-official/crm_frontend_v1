@@ -1,5 +1,5 @@
 import { Container, Row } from "reactstrap";
-import NetworkBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import NetworkBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import Charts from "./Charts/Charts";
 import NetworkPerformance from "./NetworkPerformance/NetworkPerformance";
 import Organizations from "./Organizations/Organizations";
@@ -11,7 +11,11 @@ import TopPerformingBrokers from "./TopPerformingBrokers/TopPerformingBrokers";
 const ContainerNetwork = () => {
   return (
     <>
-      <NetworkBreadcrumbs />
+      <NetworkBreadcrumbs
+        mainTitle="Network Dashboard"
+        title="Hello there!"
+        activePage="Network"
+      />
       <Container fluid>
         <PerformanceOverview />
         <Charts />

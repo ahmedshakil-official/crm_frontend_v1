@@ -1,11 +1,16 @@
 import { Container } from "reactstrap";
-import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import NetworkBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 import SecurityPoliciesManagement from "./SecurityPoliciesManagement/SecurityPoliciesManagement";
 
 const SecurityPolicyContainer: React.FC = () => {
   return (
     <>
-      <Breadcrumbs />
+      <NetworkBreadcrumbs
+        mainTitle="Network Security Policy"
+        title="Hello there!"
+        parent="User Settings"
+        activePage="Security Policy"
+      />
       <Container fluid>
         <SecurityPoliciesManagement />
       </Container>
