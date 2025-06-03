@@ -1,4 +1,5 @@
 import Leads from "@/Components/General/Dashboard/CommonComponents/Directors/Leads/Leads";
+import { Container } from "reactstrap";
 import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
 const OrganizationLeadsContainer: React.FC = () => {
@@ -10,7 +11,9 @@ const OrganizationLeadsContainer: React.FC = () => {
         parent="Directors"
         activePage="Leads"
       />
-      <Leads />
+      <Container fluid>
+        <Leads />
+      </Container>
     </>
   );
 };

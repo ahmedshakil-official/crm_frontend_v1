@@ -1,3 +1,4 @@
+import { Container } from "reactstrap";
 import Clients from "../../../CommonComponents/Directors/Clients/Clients";
 import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
@@ -10,7 +11,9 @@ const OrganizationClientsContainer: React.FC = () => {
         parent="Directors"
         activePage="Clients"
       />
-      <Clients />
+      <Container fluid>
+        <Clients />
+      </Container>
     </>
   );
 };

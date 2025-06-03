@@ -1,3 +1,4 @@
+import { Container } from "reactstrap";
 import Introducers from "../../../CommonComponents/Directors/Introducers/Introducers";
 import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
@@ -10,7 +11,9 @@ const OrganizationIntroducersContainer: React.FC = () => {
         parent="Directors"
         activePage="Introducers"
       />
-      <Introducers />
+      <Container fluid>
+        <Introducers />
+      </Container>
     </>
   );
 };

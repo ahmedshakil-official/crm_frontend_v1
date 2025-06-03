@@ -1,3 +1,4 @@
+import { Container } from "reactstrap";
 import Advisers from "../../../CommonComponents/Directors/Advisers/Advisers";
 import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
@@ -10,7 +11,9 @@ const OrganizationAdvisersContainer: React.FC = () => {
         parent="Directors"
         activePage="Advisers"
       />
-      <Advisers />
+      <Container fluid>
+        <Advisers />
+      </Container>
     </>
   );
 };
