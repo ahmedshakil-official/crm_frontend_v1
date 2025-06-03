@@ -1,11 +1,16 @@
 import { Container, Row } from "reactstrap";
 import CaseTable from "../../Organization/CaseStatus/AllCase/components/CasesTable";
-import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import NetworkBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const NetworkCaseContainer: React.FC = () => {
   return (
     <>
-      <Breadcrumbs />
+      <NetworkBreadcrumbs
+        mainTitle="Network Cases Status"
+        title="Hello there!"
+        parent="Network"
+        activePage="Cases"
+      />
       <Container fluid>
         <Row>
           <CaseTable />

@@ -1,12 +1,12 @@
 import { Container } from "reactstrap";
 import Clients from "../../../CommonComponents/Directors/Clients/Clients";
-import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import NetworkBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
-const OrganizationClientsContainer: React.FC = () => {
+const ClientsContainer: React.FC = () => {
   return (
     <>
-      <OrganizationBreadcrumbs
-        mainTitle="Organization Clients"
+      <NetworkBreadcrumbs
+        mainTitle="Network Clients"
         title="Hello there!"
         parent="Directors"
         activePage="Clients"
@@ -18,4 +18,4 @@ const OrganizationClientsContainer: React.FC = () => {
   );
 };
 
-export default OrganizationClientsContainer;
+export default ClientsContainer;
