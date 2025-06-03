@@ -1,21 +1,21 @@
 import { Container } from "reactstrap";
-import Leads from "../../../CommonComponents/Directors/Leads/Leads";
+import Introducers from "../../../CommonComponents/Directors/Introducers/Introducers";
 import NetworkBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
-const NetworkLeadsContainer: React.FC = () => {
+const IntroducersContainer: React.FC = () => {
   return (
     <>
       <NetworkBreadcrumbs
-        mainTitle="Network Leads"
+        mainTitle="Network Introducers"
         title="Hello there!"
         parent="Directors"
-        activePage="Leads"
+        activePage="Introducers"
       />
       <Container fluid>
-        <Leads />
+        <Introducers />
       </Container>
     </>
   );
 };
 
-export default NetworkLeadsContainer;
+export default IntroducersContainer;
