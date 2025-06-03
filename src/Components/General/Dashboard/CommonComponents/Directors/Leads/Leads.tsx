@@ -119,7 +119,7 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 20 }) => {
     <Card className="container mt-1">
       <Row className="d-flex justify-content-between py-4">
         <Col md="3" xs="12">
-          <h2>Lead List</h2>
+          <h2>Leads</h2>
         </Col>
         <Col md={6} xs="12">
           <InputGroup>

@@ -1,8 +1,8 @@
-import { useUpdateClientDetailsMutation } from "@/Redux/Reducers/Organization/Directors/ClientDetailsApi";
+import { useUpdateClientDetailsMutation } from "@/Redux/Reducers/CommonComponents/Directors/ClientDetailsApi";
 import {
   ClientInfoProps,
   UpdateClientModalProps,
-} from "@/Types/Organization/Directors/ClientTypes";
+} from "@/Types/CommonComponents/Directors/ClientTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {

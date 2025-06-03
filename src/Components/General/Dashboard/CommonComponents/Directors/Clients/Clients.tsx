@@ -1,5 +1,5 @@
-import { useGetClientDetailsQuery } from "@/Redux/Reducers/Organization/Directors/ClientDetailsApi";
-import { ClientInfoProps } from "@/Types/Organization/Directors/ClientTypes";
+import { useGetClientDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/ClientDetailsApi";
+import { ClientInfoProps } from "@/Types/CommonComponents/Directors/ClientTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
@@ -22,11 +22,14 @@ import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
 
-const ClientList = () => {
+interface ClientsProps {
+  clientsPerPage?: number;
+}
+
+const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 20 }) => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [clientsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -125,7 +128,7 @@ const ClientList = () => {
     <Card className="container mt-1">
       <Row className="flex justify-content-between py-4">
         <Col md="3">
-          <h2>Client List</h2>
+          <h2>Clients</h2>
         </Col>
         <Col md={6}>
           <InputGroup>
@@ -251,8 +254,9 @@ const ClientList = () => {
         <div className="d-flex justify-content-between align-items-center p-3">
           <div className="px-2">
             <p className="text-success">
-              Showing 1 to {Math.min(5, currentClients?.length || 0)} of{" "}
-              {clientData?.length || 0} Clients
+              Showing {indexOfFirstClient + 1} to{" "}
+              {Math.min(indexOfLastClient, filteredClients.length)} of{" "}
+              {filteredClients.length} Clients
             </p>
           </div>
           <Pagination className="d-flex justify-content-end p-2">
@@ -266,7 +270,7 @@ const ClientList = () => {
               />
             </PaginationItem>
 
-            {totalPages <= 5 ? (
+            {totalPages <= clientsPerPage ? (
               Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (pageNumber) => (
                   <PaginationItem
@@ -358,4 +362,4 @@ const ClientList = () => {
   );
 };
 
-export default ClientList;
+export default Clients;
