@@ -1,43 +1,43 @@
 import { baseApi } from "@/Redux/Api/BaseApi";
 
-export const AdvisorDetailsApi = baseApi.injectEndpoints({
+export const AdviserDetailsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAdvisorDetails: builder.query({
+    getAdviserDetails: builder.query({
       query: () => ({
         url: `/director/advisors/`,
         method: "GET",
       }),
-      providesTags: ["AdvisorDetails"],
+      providesTags: ["AdviserDetails"],
     }),
-    addAdvisorDetails: builder.mutation({
+    addAdviserDetails: builder.mutation({
       query: ({ payload }) => ({
         url: `/director/advisors/`,
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["AdvisorDetails"],
+      invalidatesTags: ["AdviserDetails"],
     }),
-    updateAdvisorDetails: builder.mutation({
+    updateAdviserDetails: builder.mutation({
       query: ({ advisorAlias, payload }) => ({
         url: `/director/advisors/${advisorAlias}/`,
         method: "PUT",
         body: payload,
       }),
-      invalidatesTags: ["AdvisorDetails"],
+      invalidatesTags: ["AdviserDetails"],
     }),
-    deleteAdvisorDetails: builder.mutation({
+    deleteAdviserDetails: builder.mutation({
       query: ({ advisorAlias }) => ({
         url: `/director/advisors/${advisorAlias}/`,
         method: "DELETE",
       }),
-      invalidatesTags: ["AdvisorDetails"],
+      invalidatesTags: ["AdviserDetails"],
     }),
   }),
 });
 
 export const {
-  useGetAdvisorDetailsQuery,
-  useAddAdvisorDetailsMutation,
-  useUpdateAdvisorDetailsMutation,
-  useDeleteAdvisorDetailsMutation,
-} = AdvisorDetailsApi;
+  useGetAdviserDetailsQuery,
+  useAddAdviserDetailsMutation,
+  useUpdateAdviserDetailsMutation,
+  useDeleteAdviserDetailsMutation,
+} = AdviserDetailsApi;

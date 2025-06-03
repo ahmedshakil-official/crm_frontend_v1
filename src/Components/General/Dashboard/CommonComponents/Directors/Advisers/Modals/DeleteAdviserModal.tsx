@@ -1,41 +1,41 @@
-import { useDeleteAdvisorDetailsMutation } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
-import { DeleteAdvisorModalProps } from "@/Types/Organization/Directors/AdvisorTypes";
+import { useDeleteAdviserDetailsMutation } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
+import { DeleteAdviserModalProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
 import React from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
-const DeleteAdvisorModal: React.FC<DeleteAdvisorModalProps> = ({
+const DeleteAdviserModal: React.FC<DeleteAdviserModalProps> = ({
   isOpen,
   toggle,
-  advisorName,
-  advisorAlias,
+  adviserName,
+  adviserAlias,
 }) => {
-  const [deleteAdvisorDetails, { isLoading }] =
-    useDeleteAdvisorDetailsMutation();
+  const [deleteAdviserDetails, { isLoading }] =
+    useDeleteAdviserDetailsMutation();
   const handleDelete = async () => {
-    if (!advisorAlias) return;
+    if (!adviserAlias) return;
     try {
-      const response = await deleteAdvisorDetails({ advisorAlias });
+      const response = await deleteAdviserDetails({ adviserAlias });
       if ("data" in response) {
-        toast.success("Advisor deleted successfully.");
+        toast.success("Adviser deleted successfully.");
         toggle();
       } else if ("error" in response) {
         const errorMessage =
           (response.error as any)?.data?.message || "Invalid Request...";
         toast.error(errorMessage);
-      } else toast.error("Failed to delete advisor.");
+      } else toast.error("Failed to delete adviser.");
     } catch (error) {
-      toast.error("Failed to delete advisor.");
+      toast.error("Failed to delete adviser.");
     }
   };
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>
-        <h3 className="text-danger">Delete Advisor</h3>
+        <h3 className="text-danger">Delete Adviser</h3>
       </ModalHeader>
       <ModalBody>
-        Are you sure you want to delete the advisor{" "}
-        <strong className="text-danger">{advisorName}</strong>? This action
+        Are you sure you want to delete the adviser{" "}
+        <strong className="text-danger">{adviserName}</strong>? This action
         cannot be undone.
       </ModalBody>
       <ModalFooter>
@@ -50,4 +50,4 @@ const DeleteAdvisorModal: React.FC<DeleteAdvisorModalProps> = ({
   );
 };
 
-export default DeleteAdvisorModal;
+export default DeleteAdviserModal;

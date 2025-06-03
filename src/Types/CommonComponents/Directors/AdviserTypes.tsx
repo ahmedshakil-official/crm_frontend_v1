@@ -1,4 +1,4 @@
-export interface AdvisorInfoProps {
+export interface AdviserInfoProps {
   alias: string;
   user: {
     id: number;
@@ -29,19 +29,22 @@ export interface AdvisorInfoProps {
   };
   created_at: string;
 }
-export interface AddAdvisorModalProps {
+export interface AdvisersProps {
+  advisersPerPage?: number;
+}
+export interface AddAdviserModalProps {
   isOpen: boolean;
   toggle: () => void;
 }
-export interface UpdateAdvisorModalProps {
+export interface UpdateAdviserModalProps {
   isOpen: boolean;
   toggle: () => void;
-  onSave: (AdvisorData: Partial<AdvisorInfoProps>) => void;
-  selectedAdvisor: Partial<AdvisorInfoProps>;
+  onSave: (AdviserData: Partial<AdviserInfoProps>) => void;
+  selectedAdviser: Partial<AdviserInfoProps>;
 }
-export interface DeleteAdvisorModalProps {
+export interface DeleteAdviserModalProps {
   isOpen: boolean;
   toggle: () => void;
-  advisorName: string;
-  advisorAlias: string;
+  adviserName: string;
+  adviserAlias: string;
 }

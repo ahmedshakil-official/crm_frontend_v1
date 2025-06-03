@@ -1,8 +1,8 @@
-import { useUpdateAdvisorDetailsMutation } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
+import { useUpdateAdviserDetailsMutation } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
 import {
-  AdvisorInfoProps,
-  UpdateAdvisorModalProps,
-} from "@/Types/Organization/Directors/AdvisorTypes";
+  AdviserInfoProps,
+  UpdateAdviserModalProps,
+} from "@/Types/CommonComponents/Directors/AdviserTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -19,28 +19,28 @@ import {
   Row,
 } from "reactstrap";
 
-const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
+const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
   isOpen,
   toggle,
   onSave,
-  selectedAdvisor,
+  selectedAdviser,
 }) => {
-  const [advisorData, setAdvisorData] =
-    useState<Partial<AdvisorInfoProps>>(selectedAdvisor);
+  const [advisorData, setAdviserData] =
+    useState<Partial<AdviserInfoProps>>(selectedAdviser);
   const [isModified, setIsModified] = useState(false);
-  const [updateAdvisorDetails, { isLoading }] =
-    useUpdateAdvisorDetailsMutation();
+  const [updateAdviserDetails, { isLoading }] =
+    useUpdateAdviserDetailsMutation();
 
   useEffect(() => {
-    setAdvisorData(selectedAdvisor);
+    setAdviserData(selectedAdviser);
     setIsModified(false);
-  }, [selectedAdvisor]);
+  }, [selectedAdviser]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
     const keys = name.split(".");
-    setAdvisorData((prev) => {
+    setAdviserData((prev) => {
       const updatedData = JSON.parse(JSON.stringify(prev));
       let current: any = updatedData;
       for (let i = 0; i < keys.length - 1; i++) {
@@ -48,23 +48,23 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
         current = current[keys[i]];
       }
       current[keys[keys.length - 1]] = value;
-      return updatedData as Partial<AdvisorInfoProps>;
+      return updatedData as Partial<AdviserInfoProps>;
     });
     setIsModified(true); // Set the form as modified
   };
 
-  const handleUpdateAdvisor = async (
-    advisorData: Partial<AdvisorInfoProps>
+  const handleUpdateAdviser = async (
+    advisorData: Partial<AdviserInfoProps>
   ) => {
     try {
       if (advisorData.alias) {
-        const result = await updateAdvisorDetails({
+        const result = await updateAdviserDetails({
           payload: advisorData,
           advisorAlias: advisorData.alias,
         });
 
         if (result.data) {
-          toast.success("Advisor update successfully.");
+          toast.success("Adviser update successfully.");
         } else if ("error" in result) {
           const errorMessage =
             (result.error as any)?.data?.user?.email?.[0] ||
@@ -82,7 +82,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleUpdateAdvisor(advisorData); // Pass the updated data to the server
+    handleUpdateAdviser(advisorData); // Pass the updated data to the server
     onSave(advisorData); // Pass the updated data to the parent component
     toggle();
   };
@@ -90,7 +90,7 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>
-        <span className="fs-4 text-primary">Update Advisor</span>
+        <span className="fs-4 text-primary">Update Adviser</span>
       </ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
@@ -414,4 +414,4 @@ const UpdateAdvisorModal: React.FC<UpdateAdvisorModalProps> = ({
     </Modal>
   );
 };
-export default UpdateAdvisorModal;
+export default UpdateAdviserModal;

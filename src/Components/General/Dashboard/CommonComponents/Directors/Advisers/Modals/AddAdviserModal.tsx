@@ -1,5 +1,5 @@
-import { useAddAdvisorDetailsMutation } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
-import { AddAdvisorModalProps } from "@/Types/Organization/Directors/AdvisorTypes";
+import { useAddAdviserDetailsMutation } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
+import { AddAdviserModalProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -16,11 +16,11 @@ import {
   Row,
 } from "reactstrap";
 
-const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
+const AddAdviserModal: React.FC<AddAdviserModalProps> = ({
   isOpen,
   toggle,
 }) => {
-  const [addAdvisorDetails, { isLoading }] = useAddAdvisorDetailsMutation();
+  const [addAdviserDetails, { isLoading }] = useAddAdviserDetailsMutation();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -45,7 +45,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     }));
   };
 
-  const handleSaveAdvisor = async (e: React.FormEvent) => {
+  const handleSaveAdviser = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const payload = {
@@ -67,9 +67,9 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
     };
 
     try {
-      const result = await addAdvisorDetails({ payload });
+      const result = await addAdviserDetails({ payload });
       if (result.data) {
-        toast.success("Advisor added successfully.");
+        toast.success("Adviser added successfully.");
         // Reset form and close modal
         setFormData({
           firstName: "",
@@ -103,9 +103,9 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>
-        <span className="fs-4 text-primary">Add Advisor</span>
+        <span className="fs-4 text-primary">Add Adviser</span>
       </ModalHeader>
-      <Form onSubmit={handleSaveAdvisor}>
+      <Form onSubmit={handleSaveAdviser}>
         <ModalBody>
           <Row>
             <Col md={6}>
@@ -300,7 +300,7 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
             Cancel
           </Button>
           <Button color="primary">
-            {isLoading ? "Saving..." : "Save Advisor"}
+            {isLoading ? "Saving..." : "Save Adviser"}
           </Button>
         </ModalFooter>
       </Form>
@@ -308,4 +308,4 @@ const AddAdvisorModal: React.FC<AddAdvisorModalProps> = ({
   );
 };
 
-export default AddAdvisorModal;
+export default AddAdviserModal;

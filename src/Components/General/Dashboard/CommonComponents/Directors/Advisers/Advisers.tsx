@@ -1,5 +1,8 @@
-import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
-import { AdvisorInfoProps } from "@/Types/Organization/Directors/AdvisorTypes";
+import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
+import {
+  AdviserInfoProps,
+  AdvisersProps,
+} from "@/Types/CommonComponents/Directors/AdviserTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
@@ -18,25 +21,24 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import AddAdvisorModal from "./Modals/AddAdvisorModal";
-import DeleteAdvisorModal from "./Modals/DeleteAdvisorModal";
-import UpdateAdvisorModal from "./Modals/UpdateAdvisorModal";
+import AddAdviserModal from "./Modals/AddAdviserModal";
+import DeleteAdviserModal from "./Modals/DeleteAdviserModal";
+import UpdateAdviserModal from "./Modals/UpdateAdviserModal";
 
-const AdvisorList = () => {
-  const [advisors, setAdvisors] = useState<AdvisorInfoProps[]>([]);
+const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 20 }) => {
+  const [advisers, setAdvisers] = useState<AdviserInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [advisorsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [advisorToDelete, setAdvisorToDelete] =
-    useState<AdvisorInfoProps | null>(null);
+  const [adviserToDelete, setAdviserToDelete] =
+    useState<AdviserInfoProps | null>(null);
 
-  const { data: advisorData, isLoading } = useGetAdvisorDetailsQuery(undefined);
+  const { data: adviserData, isLoading } = useGetAdviserDetailsQuery(undefined);
 
-  const [selectedAdvisor, setSelectedAdvisor] = useState<
-    Partial<AdvisorInfoProps>
+  const [selectedAdviser, setSelectedAdviser] = useState<
+    Partial<AdviserInfoProps>
   >({
     user: {
       id: 0,
@@ -68,50 +70,50 @@ const AdvisorList = () => {
 
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
-  const openDeleteModal = (advisor: AdvisorInfoProps) => {
-    setAdvisorToDelete(advisor);
+  const openDeleteModal = (Adviser: AdviserInfoProps) => {
+    setAdviserToDelete(Adviser);
     toggleDeleteModal();
   };
 
   useEffect(() => {
-    if (advisorData) {
-      const advisorsArray: AdvisorInfoProps[] = Array.isArray(advisorData)
-        ? advisorData
-        : advisorData.advisors;
-      setAdvisors(advisorsArray || []);
+    if (adviserData) {
+      const advisersArray: AdviserInfoProps[] = Array.isArray(adviserData)
+        ? adviserData
+        : adviserData.advisers;
+      setAdvisers(advisersArray || []);
     }
-  }, [advisorData]);
+  }, [adviserData]);
 
   // openmodals
   const openAddModal = () => {
     toggleModal();
   };
 
-  const openUpdateModal = (advisor: AdvisorInfoProps) => {
-    setSelectedAdvisor(advisor);
+  const openUpdateModal = (Adviser: AdviserInfoProps) => {
+    setSelectedAdviser(Adviser);
     toggleUpdateModal();
   };
   // openmodals end
 
-  const filteredAdvisors = advisors.filter((advisor) => {
-    const fullName = `${advisor?.user?.first_name || ""} ${
-      advisor?.user?.last_name || ""
+  const filteredAdvisers = advisers.filter((Adviser) => {
+    const fullName = `${Adviser?.user?.first_name || ""} ${
+      Adviser?.user?.last_name || ""
     }`.toLowerCase();
 
     return (
       fullName.includes(searchQuery.toLowerCase()) ||
-      advisor?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
+      Adviser?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
 
-  const indexOfLastAdvisor = currentPage * advisorsPerPage;
-  const indexOfFirstAdvisor = indexOfLastAdvisor - advisorsPerPage;
-  const currentAdvisors = filteredAdvisors.slice(
-    indexOfFirstAdvisor,
-    indexOfLastAdvisor
+  const indexOfLastAdviser = currentPage * advisersPerPage;
+  const indexOfFirstAdviser = indexOfLastAdviser - advisersPerPage;
+  const currentAdvisers = filteredAdvisers.slice(
+    indexOfFirstAdviser,
+    indexOfLastAdviser
   );
 
-  const totalPages = Math.ceil(filteredAdvisors.length / advisorsPerPage);
+  const totalPages = Math.ceil(filteredAdvisers.length / advisersPerPage);
 
   if (isLoading) {
     return (
@@ -125,7 +127,7 @@ const AdvisorList = () => {
     <Card className="container mt-1">
       <Row className="flex justify-content-between py-4">
         <Col md="3">
-          <h2>Advisor List</h2>
+          <h2>Advisers</h2>
         </Col>
         <Col md={6}>
           <InputGroup>
@@ -146,7 +148,7 @@ const AdvisorList = () => {
             onClick={openAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
-            <span>Add Advisor</span>
+            <span>Add Adviser</span>
             <span>
               <i className="fa-solid fa-circle-plus"></i>
             </span>
@@ -175,52 +177,52 @@ const AdvisorList = () => {
                   </div>
                 </td>
               </tr>
-            ) : currentAdvisors.length > 0 ? (
-              currentAdvisors.map((advisor) => (
-                <tr key={advisor.alias} className="text-center">
+            ) : currentAdvisers.length > 0 ? (
+              currentAdvisers.map((Adviser) => (
+                <tr key={Adviser.alias} className="text-center">
                   <td>
-                    {advisor?.user?.first_name} {advisor?.user?.last_name}
+                    {Adviser?.user?.first_name} {Adviser?.user?.last_name}
                   </td>
                   <td>
-                    {advisor?.official_email ? (
+                    {Adviser?.official_email ? (
                       <a
-                        href={`mailto:${advisor.official_email}`}
+                        href={`mailto:${Adviser.official_email}`}
                         className="text-black text_decoration_hover"
                       >
-                        {advisor.official_email}
+                        {Adviser.official_email}
                       </a>
                     ) : (
                       "-"
                     )}
                   </td>
                   <td>
-                    {advisor?.official_phone ? (
+                    {Adviser?.official_phone ? (
                       <a
-                        href={`tel:${advisor?.official_phone}`}
+                        href={`tel:${Adviser?.official_phone}`}
                         className="text-black text_decoration_hover"
                       >
-                        {advisor?.official_phone}
+                        {Adviser?.official_phone}
                       </a>
                     ) : (
                       "-"
                     )}
                   </td>
                   <td>
-                    {advisor?.role?.charAt(0)?.toUpperCase() +
-                      advisor?.role?.slice(1)?.toLowerCase()}
+                    {Adviser?.role?.charAt(0)?.toUpperCase() +
+                      Adviser?.role?.slice(1)?.toLowerCase()}
                   </td>
                   <td>
-                    {advisor?.created_by?.first_name}{" "}
-                    {advisor?.created_by?.last_name}
+                    {Adviser?.created_by?.first_name}{" "}
+                    {Adviser?.created_by?.last_name}
                   </td>
-                  <td>{formatDateToDMYAndTime(advisor?.created_at)}</td>
+                  <td>{formatDateToDMYAndTime(Adviser?.created_at)}</td>
                   <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"
                         size="sm"
                         title="Update User"
-                        onClick={() => openUpdateModal(advisor)}
+                        onClick={() => openUpdateModal(Adviser)}
                       >
                         <i className="icon-pencil-alt"></i>
                       </Button>
@@ -228,7 +230,7 @@ const AdvisorList = () => {
                         color="danger"
                         size="sm"
                         title="Delete User"
-                        onClick={() => openDeleteModal(advisor)}
+                        onClick={() => openDeleteModal(Adviser)}
                       >
                         <i className="icon-trash"></i>
                       </Button>
@@ -239,7 +241,7 @@ const AdvisorList = () => {
             ) : (
               <tr>
                 <td colSpan={7} className="text-center">
-                  No advisors available.
+                  No advisers available.
                 </td>
               </tr>
             )}
@@ -250,8 +252,9 @@ const AdvisorList = () => {
         <div className="d-flex justify-content-between align-items-center p-3">
           <div className="px-2">
             <p className="text-success">
-              Showing 1 to {Math.min(5, currentAdvisors?.length || 0)} of{" "}
-              {advisorData?.length || 0} Advisors
+              Showing {indexOfFirstAdviser + 1} to{" "}
+              {Math.min(indexOfLastAdviser, filteredAdvisers.length)} of{" "}
+              {filteredAdvisers.length} Advisers
             </p>
           </div>
           <Pagination>
@@ -265,7 +268,7 @@ const AdvisorList = () => {
               />
             </PaginationItem>
 
-            {totalPages <= 5 ? (
+            {totalPages <= advisersPerPage ? (
               Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (pageNumber) => (
                   <PaginationItem
@@ -337,24 +340,24 @@ const AdvisorList = () => {
       </Row>
 
       {/* modals */}
-      <AddAdvisorModal isOpen={isModalOpen} toggle={toggleModal} />
-      <UpdateAdvisorModal
+      <AddAdviserModal isOpen={isModalOpen} toggle={toggleModal} />
+      <UpdateAdviserModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
         onSave={() => {
           toggleUpdateModal();
         }}
-        selectedAdvisor={selectedAdvisor}
+        selectedAdviser={selectedAdviser}
       />
-      <DeleteAdvisorModal
+      <DeleteAdviserModal
         isOpen={isDeleteModalOpen}
         toggle={toggleDeleteModal}
-        advisorAlias={advisorToDelete?.alias || ""}
-        advisorName={`${advisorToDelete?.user?.first_name} ${advisorToDelete?.user?.last_name}`}
+        adviserAlias={adviserToDelete?.alias || ""}
+        adviserName={`${adviserToDelete?.user?.first_name} ${adviserToDelete?.user?.last_name}`}
       />
       {/* modals end */}
     </Card>
   );
 };
 
-export default AdvisorList;
+export default Advisers;
