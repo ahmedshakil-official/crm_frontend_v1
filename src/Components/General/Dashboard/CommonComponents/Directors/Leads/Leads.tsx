@@ -1,6 +1,9 @@
 import LoadingSpinner from "@/app/loading";
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
-import { LeadsInfo } from "@/Types/CommonComponents/Directors/LeadTypes";
+import {
+  LeadsInfo,
+  LeadsProps,
+} from "@/Types/CommonComponents/Directors/LeadTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -21,10 +24,6 @@ import {
 import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
-
-interface LeadsProps {
-  leadsPerPage?: number;
-}
 
 const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 20 }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);

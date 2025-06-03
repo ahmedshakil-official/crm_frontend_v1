@@ -29,6 +29,9 @@ export interface LeadsInfo {
   };
   created_at: string;
 }
+export interface LeadsProps {
+  leadsPerPage?: number;
+}
 
 export interface AddLeadModalProps {
   isOpen: boolean;

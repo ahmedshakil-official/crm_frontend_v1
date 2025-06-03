@@ -28,6 +28,9 @@ export interface ClientInfoProps {
   };
   created_at: string;
 }
+export interface ClientsProps {
+  clientsPerPage?: number;
+}
 export interface AddClientModalProps {
   isOpen: boolean;
   toggle: () => void;

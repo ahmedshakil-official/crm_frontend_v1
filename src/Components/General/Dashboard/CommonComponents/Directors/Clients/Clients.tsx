@@ -1,5 +1,8 @@
 import { useGetClientDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/ClientDetailsApi";
-import { ClientInfoProps } from "@/Types/CommonComponents/Directors/ClientTypes";
+import {
+  ClientInfoProps,
+  ClientsProps,
+} from "@/Types/CommonComponents/Directors/ClientTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
@@ -21,10 +24,6 @@ import {
 import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
-
-interface ClientsProps {
-  clientsPerPage?: number;
-}
 
 const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 20 }) => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
