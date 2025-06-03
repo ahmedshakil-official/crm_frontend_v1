@@ -1,13 +1,13 @@
 import Introducers from "../../../CommonComponents/Directors/Introducers/Introducers";
-import IntroducerBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import OrganizationIntroducersBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
 
-const IntroducersContainer: React.FC = () => {
+const OrganizationIntroducersContainer: React.FC = () => {
   return (
     <>
-      <IntroducerBreadcrumbs />
+      <OrganizationIntroducersBreadcrumbs />
       <Introducers />
     </>
   );
 };
 
-export default IntroducersContainer;
+export default OrganizationIntroducersContainer;

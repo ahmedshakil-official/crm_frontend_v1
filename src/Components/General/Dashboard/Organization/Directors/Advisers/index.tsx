@@ -1,13 +1,13 @@
 import Advisers from "../../../CommonComponents/Directors/Advisers/Advisers";
-import AdvisersBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import OrganizationAdvisersBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
 
-const AdvisersContainer: React.FC = () => {
+const OrganizationAdvisersContainer: React.FC = () => {
   return (
     <>
-      <AdvisersBreadcrumbs />
+      <OrganizationAdvisersBreadcrumbs />
       <Advisers />
     </>
   );
 };
 
-export default AdvisersContainer;
+export default OrganizationAdvisersContainer;

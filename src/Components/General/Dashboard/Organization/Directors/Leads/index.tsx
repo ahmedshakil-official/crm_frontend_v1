@@ -1,13 +1,13 @@
 import Leads from "@/Components/General/Dashboard/CommonComponents/Directors/Leads/Leads";
-import LeadsBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import OrganizationLeadsBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
 
-const LeadsContainer: React.FC = () => {
+const OrganizationLeadsContainer: React.FC = () => {
   return (
     <>
-      <LeadsBreadcrumbs />
+      <OrganizationLeadsBreadcrumbs />
       <Leads />
     </>
   );
 };
 
-export default LeadsContainer;
+export default OrganizationLeadsContainer;

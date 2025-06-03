@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Breadcrumb, BreadcrumbItem, Col, Container, Row } from "reactstrap";
 
-const ClientsBreadcrumbs = () => {
+const OrganizationClientsBreadcrumbs = () => {
   return (
     <Container fluid>
       <Row className="page-title">
@@ -25,4 +25,4 @@ const ClientsBreadcrumbs = () => {
   );
 };
 
-export default ClientsBreadcrumbs;
+export default OrganizationClientsBreadcrumbs;
