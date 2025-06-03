@@ -1,19 +1,18 @@
-import { Dashboard, Organization, OrganizationTitle } from "@/Constant";
+import LoadingSpinner from "@/app/loading";
 import { useGetSingleCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
 import { useGetJointUserInfoQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/JointUser/JointUserDetailsApi";
 import { CaseInfo } from "@/Types/Organization/Cases/CaseTypes";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Container, Row } from "reactstrap";
+import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 import CalenderContainer from "./components/Calender/CalenderContainer";
 import CaseDetails from "./components/CaseDetails/CaseDetails";
 import FileManager from "./components/FileManager/FileManager";
 import JointUsers from "./components/JointUsers/JointUsers";
 import MeetingHistory from "./components/MeetingHistory/MeetingHistory";
-import SingleCaseBreadcrumbs from "./components/SingleCaseBreadcrumbs";
 import SingleCaseInfo from "./components/SingleCaseInfo/SingleCaseInfo";
-import LoadingSpinner from "@/app/loading";
-import { toast } from "react-toastify";
 
 const CaseContainer: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
@@ -22,12 +21,14 @@ const CaseContainer: React.FC = () => {
   const router = useRouter();
 
   // rtk hooks
-  const { data: jointUserInfo, isLoading: isJointUserFetcing } = useGetJointUserInfoQuery(
-    { case_alias: casealias },
-    { skip: !casealias }
-  );
+  const { data: jointUserInfo, isLoading: isJointUserFetcing } =
+    useGetJointUserInfoQuery({ case_alias: casealias }, { skip: !casealias });
 
-  const { data: caseData, isLoading, isError } = useGetSingleCaseDetailsQuery(
+  const {
+    data: caseData,
+    isLoading,
+    isError,
+  } = useGetSingleCaseDetailsQuery(
     { case_alias: casealias },
     { skip: !casealias }
   );
@@ -64,12 +65,11 @@ const CaseContainer: React.FC = () => {
 
   return (
     <>
-      <SingleCaseBreadcrumbs
-        mainTitle={Organization}
-        parent={Dashboard}
-        title={OrganizationTitle}
-        caseInfo={caseInfo}
-        isLoading={isLoading}
+      <OrganizationBreadcrumbs
+        mainTitle="Organization Case Status"
+        title="Hello there!"
+        parent="Cases Status"
+        activePage="Case"
       />
       <Container fluid>
         <Row>

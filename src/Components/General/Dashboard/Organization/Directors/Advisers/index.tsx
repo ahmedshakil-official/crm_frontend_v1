@@ -1,10 +1,15 @@
 import Advisers from "../../../CommonComponents/Directors/Advisers/Advisers";
-import OrganizationAdvisersBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
 const OrganizationAdvisersContainer: React.FC = () => {
   return (
     <>
-      <OrganizationAdvisersBreadcrumbs />
+      <OrganizationBreadcrumbs
+        mainTitle="Organization Advisers"
+        title="Hello there!"
+        parent="Directors"
+        activePage="Advisers"
+      />
       <Advisers />
     </>
   );

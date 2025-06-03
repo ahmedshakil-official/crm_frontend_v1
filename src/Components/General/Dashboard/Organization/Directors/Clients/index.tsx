@@ -1,10 +1,15 @@
 import Clients from "../../../CommonComponents/Directors/Clients/Clients";
-import OrganizationClientsBreadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
 const OrganizationClientsContainer: React.FC = () => {
   return (
     <>
-      <OrganizationClientsBreadcrumbs />
+      <OrganizationBreadcrumbs
+        mainTitle="Organization Clients"
+        title="Hello there!"
+        parent="Directors"
+        activePage="Clients"
+      />
       <Clients />
     </>
   );
