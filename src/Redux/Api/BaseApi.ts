@@ -19,15 +19,18 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQuery,
   tagTypes: [
+    //Common components start
+    "LeadDetails",
+    "ClientDetails",
+    "AdviserDetails",
+    //Common components end
+    
     //Network start
     "OrganizationList",
     "SingleOrganization",
     //Network start
 
     //Organization start
-    "LeadDetails",
-    "ClientDetails",
-    "AdvisorDetails",
     "IntroducerDetails",
     "CaseFilesDetails",
     "OrganizationDetails",

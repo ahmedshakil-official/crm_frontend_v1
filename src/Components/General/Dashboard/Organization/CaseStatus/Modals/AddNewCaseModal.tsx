@@ -1,7 +1,7 @@
+import { useGetLeadDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
 import { useAddCaseDetailsMutation } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
-import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Organization/Directors/LeadDetalisApi";
+import { LeadsInfo } from "@/Types/CommonComponents/Directors/LeadTypes";
 import { AddNewCaseModalProps } from "@/Types/Organization/Cases/CaseTypes";
-import { LeadsInfo } from "@/Types/Organization/Directors/LeadTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {

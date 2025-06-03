@@ -18,10 +18,10 @@ import {
   Table,
 } from "reactstrap";
 
+import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
 import { useGetCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
-import { useGetAdvisorDetailsQuery } from "@/Redux/Reducers/Organization/Directors/AdvisorDetailsApi";
+import { AdviserInfoProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
 import { CaseInfo } from "@/Types/Organization/Cases/CaseTypes";
-import { AdvisorInfoProps } from "@/Types/Organization/Directors/AdvisorTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import "../../CaseStatus.css";
 import AddNewCaseModal from "../../Modals/AddNewCaseModal";
@@ -48,8 +48,8 @@ const CaseTable: React.FC = () => {
   };
   const [filters, setFilters] = useState(defaultFilters);
 
-  const { data: advisorData, isLoading: isAdvisorLoading } =
-    useGetAdvisorDetailsQuery(undefined);
+  const { data: adviserData, isLoading: isAdviserLoading } =
+    useGetAdviserDetailsQuery(undefined);
   const { data: caseData, isLoading: isCaseLoading } = useGetCaseDetailsQuery({
     search: searchQuery,
     ...filters,
@@ -57,7 +57,7 @@ const CaseTable: React.FC = () => {
     limit: casesPerPage,
   });
 
-  const isLoading = isAdvisorLoading || isCaseLoading;
+  const isLoading = isAdviserLoading || isCaseLoading;
 
   const toggleFilterIcon = () => setFilterIcon(!filterIcon);
   const toggleAddNewCaseModal = () =>
@@ -154,9 +154,9 @@ const CaseTable: React.FC = () => {
                   }
                 >
                   <option value="">Select Employee...</option>
-                  {advisorData?.map((advisor: AdvisorInfoProps) => (
-                    <option key={advisor.alias} value={advisor.user.id}>
-                      {advisor.user.first_name} {advisor.user.last_name}
+                  {adviserData?.map((adviser: AdviserInfoProps) => (
+                    <option key={adviser.alias} value={adviser.user.id}>
+                      {adviser.user.first_name} {adviser.user.last_name}
                     </option>
                   ))}
                 </Input>
