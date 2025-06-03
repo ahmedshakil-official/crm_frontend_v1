@@ -1,8 +1,8 @@
-import { useUpdateLeadDetailsMutation } from "@/Redux/Reducers/Organization/Directors/LeadDetalisApi";
+import { useUpdateLeadDetailsMutation } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
 import {
   LeadsInfo,
   UpdateLeadModalProps,
-} from "@/Types/Organization/Directors/LeadTypes";
+} from "@/Types/CommonComponents/Directors/LeadTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {

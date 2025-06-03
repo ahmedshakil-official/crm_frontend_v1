@@ -1,6 +1,6 @@
-import { useGetLeadDetailsQuery } from "@/Redux/Reducers/Organization/Directors/LeadDetalisApi";
-import { LeadsInfo } from "@/Types/Organization/Directors/LeadTypes";
 import LoadingSpinner from "@/app/loading";
+import { useGetLeadDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
+import { LeadsInfo } from "@/Types/CommonComponents/Directors/LeadTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -22,11 +22,14 @@ import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
 
-const LeadList: React.FC = () => {
+interface LeadsProps {
+  leadsPerPage?: number;
+}
+
+const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 20 }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [leadsPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -241,8 +244,9 @@ const LeadList: React.FC = () => {
         <div className="d-flex justify-content-between align-items-center p-3">
           <div className="px-2">
             <p className="text-success">
-              Showing 1 to {Math.min(5, currentLeads?.length || 0)} of{" "}
-              {leadData?.length || 0} Leads
+              Showing {indexOfFirstLead + 1} to{" "}
+              {Math.min(indexOfLastLead, filteredLeads.length)} of{" "}
+              {filteredLeads.length} Leads
             </p>
           </div>{" "}
           <Pagination className="d-flex justify-content-end p-2">
@@ -350,4 +354,4 @@ const LeadList: React.FC = () => {
   );
 };
 
-export default LeadList;
+export default Leads;
