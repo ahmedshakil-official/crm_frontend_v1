@@ -292,8 +292,25 @@ const CaseTable: React.FC = () => {
                     </td>
                     <td>{formatDateToDMYAndTime(caseItem?.created_at)}</td>
                     <td>
-                      {caseItem?.created_by?.first_name}{" "}
-                      {caseItem?.created_by?.last_name}
+                      <p className="m-0">
+                        {caseItem?.created_by?.first_name}{" "}
+                        {caseItem?.created_by?.last_name}
+                      </p>
+                      <p
+                        className="text-success m-0 "
+                        style={{ fontSize: "8px" }}
+                      >
+                        (
+                        {caseItem?.created_by?.user_type
+                          ?.split("_")
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() +
+                              word.slice(1).toLowerCase()
+                          )
+                          .join(" ")}
+                        )
+                      </p>
                     </td>
                     <td>
                       <div className="d-flex justify-content-center align-items-center">
