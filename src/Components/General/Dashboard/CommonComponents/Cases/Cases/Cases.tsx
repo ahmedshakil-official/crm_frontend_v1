@@ -296,10 +296,7 @@ const Cases: React.FC = () => {
                         {caseItem?.created_by?.first_name}{" "}
                         {caseItem?.created_by?.last_name}
                       </p>
-                      <p
-                        className="text-success m-0 "
-                        style={{ fontSize: "8px" }}
-                      >
+                      <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
                         (
                         {caseItem?.created_by?.user_type
                           ?.split("_")
