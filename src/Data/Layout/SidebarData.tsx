@@ -21,52 +21,54 @@ const NetworkAdminMenu: MenuItem[] = [
             type: "link",
             lanClass: "lan-4",
           },
+        ],
+      },
+      {
+        title: "Directors",
+        icon: "Profile",
+        type: "sub",
+        children: [
           {
-            title: "Directors",
-            type: "sub",
-            children: [
-              {
-                path: "/dashboard/network/directors/leads",
-                title: "Leads",
-                type: "link",
-              },
-              {
-                path: "/dashboard/network/directors/clients",
-                title: "Clients",
-                type: "link",
-              },
-              {
-                path: "/dashboard/network/directors/advisers",
-                title: "Advisers",
-                type: "link",
-              },
-              {
-                path: "/dashboard/network/directors/introducers",
-                title: "Introducers",
-                type: "link",
-              },
-            ],
+            path: "/dashboard/network/directors/leads",
+            title: "Leads",
+            type: "link",
           },
           {
-            title: "Cases",
-            type: "sub",
-            children: [
-              {
-                path: "/dashboard/network/cases",
-                title: "All Case",
-                type: "link",
-              },
-              {
-                path: "/dashboard/network/activecase",
-                title: "Active Case",
-                type: "link",
-              },
-              {
-                path: "/dashboard/network/closedcase",
-                title: "Closed Case",
-                type: "link",
-              },
-            ],
+            path: "/dashboard/network/directors/clients",
+            title: "Clients",
+            type: "link",
+          },
+          {
+            path: "/dashboard/network/directors/advisers",
+            title: "Advisers",
+            type: "link",
+          },
+          {
+            path: "/dashboard/network/directors/introducers",
+            title: "Introducers",
+            type: "link",
+          },
+        ],
+      },
+      {
+        title: "Cases",
+        icon: "Pie",
+        type: "sub",
+        children: [
+          {
+            path: "/dashboard/network/cases",
+            title: "All Case",
+            type: "link",
+          },
+          {
+            path: "/dashboard/network/activecase",
+            title: "Active Case",
+            type: "link",
+          },
+          {
+            path: "/dashboard/network/closedcase",
+            title: "Closed Case",
+            type: "link",
           },
         ],
       },
@@ -122,52 +124,54 @@ const AdvisorMenu: MenuItem[] = [
             title: "Dashboard",
             type: "sub",
           },
+        ],
+      },
+      {
+        title: "Directors",
+        icon: "Profile",
+        type: "sub",
+        children: [
           {
-            title: "Directors",
-            type: "sub",
-            children: [
-              {
-                path: "/dashboard/organization/directors/leads",
-                title: "Leads",
-                type: "link",
-              },
-              {
-                path: "/dashboard/organization/directors/clients",
-                title: "Clients",
-                type: "link",
-              },
-              {
-                path: "/dashboard/organization/directors/advisers",
-                title: "Advisers",
-                type: "link",
-              },
-              {
-                path: "/dashboard/organization/directors/introducers",
-                title: "Introducers",
-                type: "link",
-              },
-            ],
+            path: "/dashboard/organization/directors/leads",
+            title: "Leads",
+            type: "link",
           },
           {
-            title: "Cases",
-            type: "sub",
-            children: [
-              {
-                path: "/dashboard/organization/allcase",
-                title: "All Case",
-                type: "link",
-              },
-              {
-                path: "/dashboard/organization/activecase",
-                title: "Active Case",
-                type: "link",
-              },
-              {
-                path: "/dashboard/organization/closedcase",
-                title: "Closed Case",
-                type: "link",
-              },
-            ],
+            path: "/dashboard/organization/directors/clients",
+            title: "Clients",
+            type: "link",
+          },
+          {
+            path: "/dashboard/organization/directors/advisers",
+            title: "Advisers",
+            type: "link",
+          },
+          {
+            path: "/dashboard/organization/directors/introducers",
+            title: "Introducers",
+            type: "link",
+          },
+        ],
+      },
+      {
+        title: "Cases",
+        icon: "Pie",
+        type: "sub",
+        children: [
+          {
+            path: "/dashboard/organization/allcase",
+            title: "All Case",
+            type: "link",
+          },
+          {
+            path: "/dashboard/organization/activecase",
+            title: "Active Case",
+            type: "link",
+          },
+          {
+            path: "/dashboard/organization/closedcase",
+            title: "Closed Case",
+            type: "link",
           },
         ],
       },
