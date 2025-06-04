@@ -253,7 +253,8 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 20 }) => {
         <div className="d-flex justify-content-between align-items-center p-3">
           <div className="px-2">
             <p className="text-success">
-              Showing {indexOfFirstClient + 1} to{" "}
+              Showing{" "}
+              {filteredClients.length === 0 ? "0" : indexOfFirstClient + 1} to{" "}
               {Math.min(indexOfLastClient, filteredClients.length)} of{" "}
               {filteredClients.length} Clients
             </p>

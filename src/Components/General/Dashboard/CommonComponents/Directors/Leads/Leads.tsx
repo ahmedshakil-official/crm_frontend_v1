@@ -243,8 +243,8 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 20 }) => {
         <div className="d-flex justify-content-between align-items-center p-3">
           <div className="px-2">
             <p className="text-success">
-              Showing {indexOfFirstLead + 1} to{" "}
-              {Math.min(indexOfLastLead, filteredLeads.length)} of{" "}
+              Showing {filteredLeads.length === 0 ? "0" : indexOfFirstLead + 1}{" "}
+              to {Math.min(indexOfLastLead, filteredLeads.length)} of{" "}
               {filteredLeads.length} Leads
             </p>
           </div>{" "}

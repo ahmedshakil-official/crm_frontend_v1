@@ -252,7 +252,8 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 20 }) => {
         <div className="d-flex justify-content-between align-items-center p-3">
           <div className="px-2">
             <p className="text-success">
-              Showing {indexOfFirstAdviser + 1} to{" "}
+              Showing{" "}
+              {filteredAdvisers.length === 0 ? "0" : indexOfFirstAdviser + 1} to{" "}
               {Math.min(indexOfLastAdviser, filteredAdvisers.length)} of{" "}
               {filteredAdvisers.length} Advisers
             </p>
