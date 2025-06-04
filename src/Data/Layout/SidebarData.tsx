@@ -112,7 +112,7 @@ const AdvisorMenu: MenuItem[] = [
     type: "group",
     Items: [
       {
-        title: "Organization",
+        title: "Organisation",
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
@@ -159,17 +159,17 @@ const AdvisorMenu: MenuItem[] = [
         type: "sub",
         children: [
           {
-            path: "/dashboard/organization/allcase",
+            path: "/dashboard/organisation/cases",
             title: "All Case",
             type: "link",
           },
           {
-            path: "/dashboard/organization/activecase",
+            path: "/dashboard/organisation/activecase",
             title: "Active Case",
             type: "link",
           },
           {
-            path: "/dashboard/organization/closedcase",
+            path: "/dashboard/organisation/closedcase",
             title: "Closed Case",
             type: "link",
           },
