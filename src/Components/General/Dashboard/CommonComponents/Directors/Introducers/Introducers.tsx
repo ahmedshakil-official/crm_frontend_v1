@@ -252,9 +252,12 @@ const Introducers: React.FC<IntroducersProps> = ({
         <div className="d-flex justify-content-between align-items-center p-3">
           <div className="px-2">
             <p className="text-success">
-              Showing {indexOfFirstIntroducer + 1} to{" "}
-              {Math.min(indexOfLastIntroducer, filteredIntroducers.length)} of{" "}
-              {filteredIntroducers.length} Introducers
+              Showing{" "}
+              {filteredIntroducers.length === 0
+                ? "0"
+                : indexOfFirstIntroducer + 1}{" "}
+              to {Math.min(indexOfLastIntroducer, filteredIntroducers.length)}{" "}
+              of {filteredIntroducers.length} Introducers
             </p>
           </div>
           <Pagination className="d-flex justify-content-end p-2">
