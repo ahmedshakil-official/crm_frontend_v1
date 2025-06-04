@@ -20,7 +20,7 @@ const CommonErrorPage: React.FC<CommonErrorPageProps> = ({
       case "NETWORK_ADMIN":
         return "/dashboard/network";
       case "ADVISOR":
-        return "/dashboard/organization";
+        return "/dashboard/organisation";
       default:
         return "/auth/login";
     }

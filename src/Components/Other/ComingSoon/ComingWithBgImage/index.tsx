@@ -18,9 +18,9 @@ const ComingWithBgImageContainer = () => {
       case "NETWORK_ADMIN":
         return "/dashboard/network";
       case "ADVISOR":
-        return "/dashboard/organization";
+        return "/dashboard/organisation";
       default:
-        return "/dashboard/organization";
+        return "/auth/login";
     }
   };
 
