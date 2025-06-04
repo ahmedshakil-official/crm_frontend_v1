@@ -21,7 +21,7 @@ export default withAuth(
       return NextResponse.redirect(new URL("/auth/login", req.url));
     }
     if (
-      path.startsWith("/dashboard/organization") &&
+      path.startsWith("/dashboard/organisation") &&
       token?.user_type !== "ADVISOR"
     ) {
       return NextResponse.redirect(new URL("/auth/login", req.url));
@@ -39,7 +39,7 @@ export default withAuth(
 export const config = {
   matcher: [
     "/dashboard/:path*",
-    "/dashboard/organization/:path*",
+    "/dashboard/organisation/:path*",
     "/dashboard/client/:path*",
     "/dashboard/network/:path*",
     "/dashboard/network/usersettings/:path*",

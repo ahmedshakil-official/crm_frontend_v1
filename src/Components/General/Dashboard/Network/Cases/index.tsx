@@ -1,5 +1,5 @@
 import { Container, Row } from "reactstrap";
-import CaseTable from "../../Organization/CaseStatus/AllCase/components/CasesTable";
+import Cases from "../../CommonComponents/Cases/Cases/Cases";
 import NetworkBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const NetworkCaseContainer: React.FC = () => {
@@ -7,13 +7,13 @@ const NetworkCaseContainer: React.FC = () => {
     <>
       <NetworkBreadcrumbs
         mainTitle="Network Cases Status"
-        title="Hello there!"
+        title="Here you can see all the cases of the network"
         parent="Network"
         activePage="Cases"
       />
       <Container fluid>
         <Row>
-          <CaseTable />
+          <Cases />
         </Row>
       </Container>
     </>

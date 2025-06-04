@@ -1,14 +1,14 @@
 "use client";
 import { FunctionComponent, useEffect, useState } from "react";
 
-const OrganizationAdvisers = () => {
+const OrganisationIntroducers = () => {
   const [MyAwesomeMap, setClient] = useState<FunctionComponent>();
   useEffect(() => {
     (async () => {
       if (typeof window !== "undefined") {
         const newClient = (
           await import(
-            "@/Components/General/Dashboard/Organization/Directors/Advisers"
+            "@/Components/General/Dashboard/Organisation/Directors/Introducers"
           )
         ).default;
         setClient(() => newClient);
@@ -18,4 +18,4 @@ const OrganizationAdvisers = () => {
   return MyAwesomeMap ? <MyAwesomeMap /> : "";
 };
 
-export default OrganizationAdvisers;
+export default OrganisationIntroducers;

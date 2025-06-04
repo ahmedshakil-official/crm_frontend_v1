@@ -120,7 +120,7 @@ const AdvisorMenu: MenuItem[] = [
         lanClass: "lan-3",
         children: [
           {
-            path: "/dashboard/organization",
+            path: "/dashboard/organisation",
             title: "Dashboard",
             type: "sub",
           },
@@ -132,22 +132,22 @@ const AdvisorMenu: MenuItem[] = [
         type: "sub",
         children: [
           {
-            path: "/dashboard/organization/directors/leads",
+            path: "/dashboard/organisation/directors/leads",
             title: "Leads",
             type: "link",
           },
           {
-            path: "/dashboard/organization/directors/clients",
+            path: "/dashboard/organisation/directors/clients",
             title: "Clients",
             type: "link",
           },
           {
-            path: "/dashboard/organization/directors/advisers",
+            path: "/dashboard/organisation/directors/advisers",
             title: "Advisers",
             type: "link",
           },
           {
-            path: "/dashboard/organization/directors/introducers",
+            path: "/dashboard/organisation/directors/introducers",
             title: "Introducers",
             type: "link",
           },

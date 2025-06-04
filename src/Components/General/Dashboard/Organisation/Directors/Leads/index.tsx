@@ -1,11 +1,11 @@
 import Leads from "@/Components/General/Dashboard/CommonComponents/Directors/Leads/Leads";
 import { Container } from "reactstrap";
-import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import OrganisationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
-const OrganizationLeadsContainer: React.FC = () => {
+const OrganisationLeadsContainer: React.FC = () => {
   return (
     <>
-      <OrganizationBreadcrumbs
+      <OrganisationBreadcrumbs
         mainTitle="Organization Leads"
         title="Hello there!"
         parent="Directors"
@@ -18,4 +18,4 @@ const OrganizationLeadsContainer: React.FC = () => {
   );
 };
 
-export default OrganizationLeadsContainer;
+export default OrganisationLeadsContainer;
