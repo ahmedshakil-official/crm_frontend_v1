@@ -1,4 +1,5 @@
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { FoundPropertyProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import {
@@ -10,11 +11,6 @@ import {
   Label,
   Row,
 } from "reactstrap";
-
-interface FoundPropertyProps {
-  onPropertyFound: (value: boolean) => void;
-  property: any;
-}
 
 const FoundProperty: React.FC<FoundPropertyProps> = ({
   onPropertyFound,

@@ -1,5 +1,5 @@
-import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Portfolio/PortfolioApi";
 import LoadingSpinner from "@/app/loading";
+import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Portfolio/PortfolioApi";
 import { formatDateToDMY } from "@/utils/dateAndTimeFormatter";
 import { useParams } from "next/navigation";
 import { useState } from "react";

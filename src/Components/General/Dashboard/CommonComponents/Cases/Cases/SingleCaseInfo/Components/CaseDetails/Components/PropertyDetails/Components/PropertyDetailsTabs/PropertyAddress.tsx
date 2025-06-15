@@ -1,8 +1,8 @@
+import { updateProperty } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { RootState } from "@/Redux/Store";
+import { AddressDetailsProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { updateProperty } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
-import { RootState } from "@/Redux/Store";
 import {
   Button,
   Col,
@@ -13,10 +13,6 @@ import {
   Label,
   Row,
 } from "reactstrap";
-
-interface AddressDetailsProps {
-  propertyData?: any;
-}
 
 const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
   const dispatch = useDispatch();

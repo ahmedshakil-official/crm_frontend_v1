@@ -1,6 +1,6 @@
-import { useGetPropertiesQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { initializeForm } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import LoadingSpinner from "@/app/loading";
+import { useGetPropertiesQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { initializeForm } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";

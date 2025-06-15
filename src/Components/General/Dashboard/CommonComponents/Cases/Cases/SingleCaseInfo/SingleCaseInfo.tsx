@@ -1,6 +1,6 @@
 import LoadingSpinner from "@/app/loading";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useGetJointUserInfoQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/JointUser/JointUserDetailsApi";
-import { useGetSingleCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
 import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,10 +27,7 @@ const SingleCaseInfo: React.FC = () => {
     data: caseData,
     isLoading,
     isError,
-  } = useGetSingleCaseDetailsQuery(
-    { case_alias: casealias },
-    { skip: !casealias }
-  );
+  } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
 
   useEffect(() => {
     if (!isLoading) {

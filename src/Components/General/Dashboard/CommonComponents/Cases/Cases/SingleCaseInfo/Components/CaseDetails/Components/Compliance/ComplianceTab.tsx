@@ -12,9 +12,9 @@ import { ComplianceRatingCard } from "./ComplianceTabContents/ComplianceRatingCa
 import { ComplianceTabContents } from "./ComplianceTabContents";
 import { useAppSelector } from "@/Redux/Hooks";
 import { RootState } from "@/Redux/Store";
-import { useUpdateComplianceMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { useUpdateComplianceMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 
 export const ComplianceTab = () => {
   const { casealias } = useParams();

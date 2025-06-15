@@ -1,5 +1,5 @@
-import { useGetNotesQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
 import LoadingSpinner from "@/app/loading";
+import { useGetNotesQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
 import { useParams } from "next/navigation";
 import React from "react";
 import { Button, TabContent, TabPane } from "reactstrap";

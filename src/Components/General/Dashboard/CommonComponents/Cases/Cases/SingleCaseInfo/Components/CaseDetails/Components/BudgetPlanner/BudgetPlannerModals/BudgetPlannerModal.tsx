@@ -1,8 +1,8 @@
 "use client";
-import { useUpdateBudgetPlannerMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
-import { initializeBudgetPlannerForm } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
-import { RootState } from "@/Redux/Store";
-import { BudgetPlannerModalProps } from "@/Types/Organization/Cases/CaseDetails/BudgetPlannerTypes";
+
+import { useUpdateBudgetPlannerMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
+import { initializeBudgetPlannerForm } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import { BudgetPlannerModalProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
 import { useParams } from "next/navigation";
 import { FC, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,9 +37,7 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
   const { casealias } = useParams();
   const dispatch = useDispatch();
   const [basicTab, setBasicTab] = useState<number>(1);
-  const budgetPlannerData = useSelector(
-    (state: RootState) => state.budgetPlanner
-  );
+  const budgetPlannerData = useSelector((state: any) => state.budgetPlanner);
   const [updateBudgetPlanner, { isLoading }] = useUpdateBudgetPlannerMutation();
   // Local state to track only the changes
   const [updatedFields, setUpdatedFields] = useState<
@@ -74,7 +72,7 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
 
   // Function to update local changes
   const updateField = (field: keyof typeof budgetPlannerData, value: any) => {
-    setUpdatedFields((prev) => ({
+    setUpdatedFields((prev: Partial<typeof budgetPlannerData>) => ({
       ...prev,
       [field]: value,
     }));

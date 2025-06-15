@@ -1,14 +1,14 @@
-import { FC } from "react";
-import { DisclosureItem } from "./components/DisclosureItem";
-import { useGetComplianceQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
-import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { RootState } from "@/Redux/Store";
+import { useGetComplianceQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 import {
   updateComplianceAnswer,
   updateComplianceComment,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
-import { ComplianceState } from "@/Types/Organization/Cases/CaseDetails/ComplianceTypes";
+} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
+import { RootState } from "@/Redux/Store";
+import { ComplianceState } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ComplianceTypes";
+import { useParams } from "next/navigation";
+import { FC } from "react";
+import { DisclosureItem } from "./components/DisclosureItem";
 
 const DataProtectionTabContent: FC = () => {
   const { casealias } = useParams();

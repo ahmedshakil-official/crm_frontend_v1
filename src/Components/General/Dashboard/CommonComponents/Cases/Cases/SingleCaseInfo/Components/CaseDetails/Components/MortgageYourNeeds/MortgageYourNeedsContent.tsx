@@ -1,8 +1,8 @@
+import LoadingSpinner from "@/app/loading";
 import {
   useGetMortgageYourNeedsQuery,
   useUpdateMortgageYourNeedsMutation,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/MortgageYourNeeds/MortgageYourNeedsApi";
-import LoadingSpinner from "@/app/loading";
+} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/MortgageYourNeeds/MortgageYourNeedsApi";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -1191,7 +1191,11 @@ const MortgageYourNeedsContent: React.FC = () => {
                         <Label className="d-block">PMI</Label>
                         <div className="d-flex gap-4">
                           {yesNoOptions.map((option) => (
-                            <FormGroup key={`app_two_pmi-${option}`} check inline>
+                            <FormGroup
+                              key={`app_two_pmi-${option}`}
+                              check
+                              inline
+                            >
                               <Input
                                 type="radio"
                                 name="app_two_pmi"
@@ -1199,8 +1203,8 @@ const MortgageYourNeedsContent: React.FC = () => {
                                 value={option}
                                 checked={
                                   option === "yes"
-                                   ? formData?.app_two_pmi
-                                    :!formData?.app_two_pmi
+                                    ? formData?.app_two_pmi
+                                    : !formData?.app_two_pmi
                                 }
                                 onChange={handleInputChange}
                               />
@@ -1230,8 +1234,8 @@ const MortgageYourNeedsContent: React.FC = () => {
                                 value={option}
                                 checked={
                                   option === "yes"
-                                  ? formData?.app_two_family_income_benefit
-                                    :!formData?.app_two_family_income_benefit
+                                    ? formData?.app_two_family_income_benefit
+                                    : !formData?.app_two_family_income_benefit
                                 }
                                 onChange={handleInputChange}
                               />
@@ -1266,12 +1270,15 @@ const MortgageYourNeedsContent: React.FC = () => {
                                 value={option}
                                 checked={
                                   option === "yes"
-                                   ? formData?.app_two_buildings_and_contents
-                                    :!formData?.app_two_buildings_and_contents
+                                    ? formData?.app_two_buildings_and_contents
+                                    : !formData?.app_two_buildings_and_contents
                                 }
                                 onChange={handleInputChange}
                               />
-                              <Label check for={`app_two_buildings_and_contents-${option}`}>
+                              <Label
+                                check
+                                for={`app_two_buildings_and_contents-${option}`}
+                              >
                                 {option.charAt(0).toUpperCase() +
                                   option.slice(1)}
                               </Label>

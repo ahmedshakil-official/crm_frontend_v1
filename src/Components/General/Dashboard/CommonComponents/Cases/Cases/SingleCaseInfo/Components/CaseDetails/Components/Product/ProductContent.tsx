@@ -1,8 +1,8 @@
+import LoadingSpinner from "@/app/loading";
 import {
   useGetProductDetailsQuery,
   useUpdateProductDetailsMutation,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ProductDetails/ProductDetailsApi";
-import LoadingSpinner from "@/app/loading";
+} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ProductDetails/ProductDetailsApi";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

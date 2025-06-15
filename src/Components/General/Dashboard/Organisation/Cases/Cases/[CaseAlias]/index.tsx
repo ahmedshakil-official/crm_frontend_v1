@@ -1,10 +1,10 @@
 import SingleCaseInfo from "@/Components/General/Dashboard/CommonComponents/Cases/Cases/SingleCaseInfo/SingleCaseInfo";
-import OrganizationBreadcrumbs from "@/Components/General/Dashboard/Organization/Breadcrumbs/Breadcrumbs";
+import OrganisationBreadcrumbs from "../../../Breadcrumbs/Breadcrumbs";
 
 const CaseContainer: React.FC = () => {
   return (
     <>
-      <OrganizationBreadcrumbs
+      <OrganisationBreadcrumbs
         mainTitle="Organization Case Status"
         title="Hello there!"
         parent="Cases Status"

@@ -1,14 +1,12 @@
 import { FC } from "react";
 import { DisclosureItem } from "./components/DisclosureItem";
 import { useParams } from "next/navigation";
-import { useGetComplianceQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { RootState } from "@/Redux/Store";
-import {
-  updateComplianceAnswer,
-  updateComplianceComment,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
-import { ComplianceState } from "@/Types/Organization/Cases/CaseDetails/ComplianceTypes";
+import { useGetComplianceQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
+import { updateComplianceAnswer, updateComplianceComment } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
+import { ComplianceState } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ComplianceTypes";
+
 
 const AntiMoneyLaunderingTabContent: FC = () => {
   const { casealias } = useParams();

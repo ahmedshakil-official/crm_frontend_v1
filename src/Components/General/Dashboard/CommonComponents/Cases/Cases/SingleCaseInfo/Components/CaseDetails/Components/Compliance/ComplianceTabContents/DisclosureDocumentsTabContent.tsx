@@ -1,14 +1,14 @@
-import { FC } from "react";
-import { DisclosureItem } from "./components/DisclosureItem";
-import { useGetComplianceQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
-import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { RootState } from "@/Redux/Store";
+import { useGetComplianceQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 import {
   updateComplianceAnswer,
   updateComplianceComment,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
-import { ComplianceState } from "@/Types/Organization/Cases/CaseDetails/ComplianceTypes";
+} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
+import { RootState } from "@/Redux/Store";
+import { ComplianceState } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ComplianceTypes";
+import { useParams } from "next/navigation";
+import { FC } from "react";
+import { DisclosureItem } from "./components/DisclosureItem";
 
 const DisclosureDocumentsTabContent: FC = () => {
   const { casealias } = useParams();
@@ -66,14 +66,13 @@ const DisclosureDocumentsTabContent: FC = () => {
     },
   ];
 
-
   const handleAnswerChange = (name: string, value: string) => {
     dispatch(
       updateComplianceAnswer({ field: name as keyof ComplianceState, value })
     );
   };
 
-  const handleCommentChange = (name: string, value: string|null) => {
+  const handleCommentChange = (name: string, value: string | null) => {
     dispatch(
       updateComplianceComment({ field: name as keyof ComplianceState, value })
     );

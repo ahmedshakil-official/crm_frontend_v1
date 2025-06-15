@@ -1,9 +1,4 @@
 import { defaultAnswersData } from "@/Data/Organization/Case/CaseDetails/SuitabilityData";
-import {
-  useGetExtraAnswerQuery,
-  useGetSuitabilityQuery,
-  useUpdateSuitabilityMutation,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Suitability/SuitabilityApi";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -20,6 +15,7 @@ import {
   Label,
 } from "reactstrap";
 import ExtraAnswerModal from "./Modals/ExtraAnswerModal";
+import { useGetSuitabilityQuery, useUpdateSuitabilityMutation, useGetExtraAnswerQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Suitability/SuitabilityApi";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();

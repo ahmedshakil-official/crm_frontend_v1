@@ -1,5 +1,5 @@
-import { useAddDIPHistoryDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
 import LoadingSpinner from "@/app/loading";
+import { useAddDIPHistoryDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";

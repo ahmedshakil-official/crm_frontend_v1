@@ -1,6 +1,10 @@
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { updateProperty } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import { RootState } from "@/Redux/Store";
+import { useParams } from "next/navigation";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -11,11 +15,6 @@ import {
   Label,
   Row,
 } from "reactstrap";
-
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { updateProperty } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
 
 const NoteForProperty: React.FC<{ property_alias: string }> = ({
   property_alias,

@@ -1,10 +1,10 @@
+import LoadingSpinner from "@/app/loading";
 import {
   useGetCaseLoanDetailsQuery,
   useGetLoanDetailsQuery,
   useUpdateLoanDetailsMutation,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/LoanDetails/LoanDetailsApi";
-import { LoanDetailsTabContentProps } from "@/Types/Organization/Cases/CaseDetails/LoanDetailsTypes";
-import LoadingSpinner from "@/app/loading";
+} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/LoanDetails/LoanDetailsApi";
+import { LoanDetailsTabContentProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/LoanDetailsTypes";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";

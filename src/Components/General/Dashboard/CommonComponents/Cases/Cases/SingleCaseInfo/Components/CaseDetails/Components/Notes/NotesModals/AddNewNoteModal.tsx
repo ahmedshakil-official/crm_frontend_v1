@@ -1,4 +1,4 @@
-import { useAddNotesMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
+import { useAddNotesMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
 import { useParams } from "next/navigation";
 import { FC, useState } from "react";
 import { X } from "react-feather";

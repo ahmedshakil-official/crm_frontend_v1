@@ -1,8 +1,8 @@
-import { useUpdateEmploymentDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
+import { useUpdateEmploymentDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 import {
   EmploymentDetailsProps,
   EmploymentTabContentProps,
-} from "@/Types/Organization/Cases/CaseDetails/EmploymentTypes";
+} from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

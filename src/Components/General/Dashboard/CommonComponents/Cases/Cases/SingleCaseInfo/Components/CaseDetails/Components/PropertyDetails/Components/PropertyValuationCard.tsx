@@ -1,20 +1,16 @@
+import { PropertyValuationCardProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails";
 import { FC } from "react";
 import {
   Card,
   CardBody,
-  Row,
   Col,
   FormGroup,
-  Label,
   Input,
   InputGroup,
   InputGroupText,
+  Label,
+  Row,
 } from "reactstrap";
-
-interface PropertyValuationCardProps {
-  propertyValue?: string;
-  estimatedValuation?: string;
-}
 
 const PropertyValuationCard: FC<PropertyValuationCardProps> = ({
   propertyValue = "0.00",

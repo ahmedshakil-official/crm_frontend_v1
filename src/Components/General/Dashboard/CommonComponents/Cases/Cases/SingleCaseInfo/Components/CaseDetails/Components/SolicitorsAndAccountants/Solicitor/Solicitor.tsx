@@ -1,10 +1,10 @@
+import LoadingSpinner from "@/app/loading";
 import {
   useAssignCaseSolicitorMutation,
   useGetCaseSolicitorDetailsQuery,
   useGetSolicitorDetailsQuery,
   useUpdateSolicitorDetailsMutation,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
-import LoadingSpinner from "@/app/loading";
+} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";

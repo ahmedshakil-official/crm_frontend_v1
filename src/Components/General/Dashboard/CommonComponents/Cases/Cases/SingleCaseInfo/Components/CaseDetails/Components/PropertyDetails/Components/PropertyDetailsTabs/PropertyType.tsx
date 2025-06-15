@@ -1,13 +1,9 @@
+import { updateProperty } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { RootState } from "@/Redux/Store";
+import { PropertyDetailsProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, FormGroup, Input, InputGroup, Label, Row } from "reactstrap";
-
-import { updateProperty } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
-import { RootState } from "@/Redux/Store";
-
-interface PropertyDetailsProps {
-  propertyData?: any;
-}
 
 const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
   const dispatch = useDispatch();

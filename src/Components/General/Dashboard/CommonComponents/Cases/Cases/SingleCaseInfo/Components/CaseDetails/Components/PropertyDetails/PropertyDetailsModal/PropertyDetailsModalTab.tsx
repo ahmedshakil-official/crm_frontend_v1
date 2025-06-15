@@ -1,20 +1,16 @@
+import { PropertyDetailsModalTabProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails";
 import { FC, useState } from "react";
 import {
+  Card,
+  CardBody,
   Modal,
-  ModalHeader,
   ModalBody,
+  ModalHeader,
   Nav,
   NavItem,
   NavLink,
-  Card,
-  CardBody,
 } from "reactstrap";
 import PropertyDetailsTabContent from "../PropertyDetailsTabContent";
-
-interface PropertyDetailsModalTabProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
 
 const PropertyDetailsModalTab: FC<PropertyDetailsModalTabProps> = ({
   isOpen,

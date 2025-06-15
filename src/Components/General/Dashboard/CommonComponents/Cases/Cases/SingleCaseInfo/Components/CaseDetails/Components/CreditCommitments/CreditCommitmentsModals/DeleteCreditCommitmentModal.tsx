@@ -1,5 +1,5 @@
-import { useDeleteCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
-import { DeleteCreditCommitmentModalProps } from "@/Types/Organization/Cases/CaseDetails/CreditCommitmentsTypes";
+import { useDeleteCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import { DeleteCreditCommitmentModalProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsTypes";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 

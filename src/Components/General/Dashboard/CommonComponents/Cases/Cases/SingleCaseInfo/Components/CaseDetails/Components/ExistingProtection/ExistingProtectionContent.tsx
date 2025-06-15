@@ -1,8 +1,8 @@
-import { useUpdateExistingProtectionDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
+import { useUpdateExistingProtectionDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
 import {
   ExistingProtectionDetailsProps,
   ExistingProtectionTabContentProps,
-} from "@/Types/Organization/Cases/CaseDetails/ExistingProtectionTypes";
+} from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ExistingProtectionTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

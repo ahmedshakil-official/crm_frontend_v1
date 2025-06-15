@@ -1,13 +1,14 @@
 import React, { FC } from "react";
-import { useGetComplianceQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
-import { useParams } from "next/navigation";
+
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { RootState } from "@/Redux/Store";
+import { useGetComplianceQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 import {
   updateComplianceAnswer,
   updateComplianceComment,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
-import { ComplianceState } from "@/Types/Organization/Cases/CaseDetails/ComplianceTypes";
+} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
+import { RootState } from "@/Redux/Store";
+import { ComplianceState } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ComplianceTypes";
+import { useParams } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";

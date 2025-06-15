@@ -1,8 +1,8 @@
-import { useAddFeesInDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
+import { useAddFeesInDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
 import {
   AddFeeInModalProps,
   FeeDataProps,
-} from "@/Types/Organization/Cases/CaseDetails/FeeTypes";
+} from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/FeeTypes";
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {

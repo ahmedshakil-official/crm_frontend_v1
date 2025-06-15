@@ -1,4 +1,4 @@
-import { LoanDetailsFormTab2Props } from "@/Types/Organization/Cases/CaseDetails/LoanDetailsTypes";
+import { LoanDetailsFormTab2Props } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/LoanDetailsTypes";
 import LenderList from "@/utils/LenderList";
 import React from "react";
 import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";

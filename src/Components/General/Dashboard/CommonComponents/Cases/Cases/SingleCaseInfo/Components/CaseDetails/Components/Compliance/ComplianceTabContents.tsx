@@ -1,9 +1,4 @@
-import {
-  useGetComplianceQuery,
-  useUpdateComplianceMutation,
-} from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
-import { FeesTabContentProps } from "@/Types/Organization/Cases/CaseDetails/FeeTypes";
-import { useParams } from "next/navigation";
+import { FeesTabContentProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/FeeTypes";
 import { FC } from "react";
 import AntiMoneyLaunderingTabContent from "./ComplianceTabContents/AntiMoneyLaunderingTabContent";
 import ComplianceApplicationTabContent from "./ComplianceTabContents/ComplianceApplicationTabContent";
@@ -15,16 +10,7 @@ import EorKfiTabContent from "./ComplianceTabContents/EorKfiTabContent";
 import FactFindTabContent from "./ComplianceTabContents/FactFindTabContent";
 import MandatoryDocumentationTabContent from "./ComplianceTabContents/MandatoryDocumentationTabContent";
 
-export const ComplianceTabContents: FC<FeesTabContentProps> = ({
-  tabId,
-  setTabId,
-}) => {
-  const { casealias } = useParams();
-  // rtk hooks
-  const { data: complianceData, isLoading } = useGetComplianceQuery({
-    case_alias: casealias,
-  });
-
+export const ComplianceTabContents: FC<FeesTabContentProps> = ({ tabId }) => {
   const renderTabContent = () => {
     switch (tabId) {
       case "1":
@@ -50,9 +36,5 @@ export const ComplianceTabContents: FC<FeesTabContentProps> = ({
     }
   };
 
-  return (
-    <div className="p-4">
-      {renderTabContent()}
-    </div>
-  );
+  return <div className="p-4">{renderTabContent()}</div>;
 };

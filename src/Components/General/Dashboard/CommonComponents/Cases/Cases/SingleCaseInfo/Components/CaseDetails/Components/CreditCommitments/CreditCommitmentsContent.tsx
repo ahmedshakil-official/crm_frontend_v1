@@ -1,5 +1,5 @@
-import { useGetCreditCommitmentsDetailsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
 import LoadingSpinner from "@/app/loading";
+import { useGetCreditCommitmentsDetailsQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import {
