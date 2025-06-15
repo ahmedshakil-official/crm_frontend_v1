@@ -6,7 +6,10 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Container, Row } from "reactstrap";
+import CalenderContainer from "./Components/Calender/CalenderContainer";
 import CaseInfo from "./Components/CaseInfo/CaseInfo";
+import FileManager from "./FileManager/FileManager";
+import MeetingHistory from "./MeetingHistory/MeetingHistory";
 const SingleCaseInfo: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfoPrpos>();
   const params = useParams();
@@ -65,15 +68,21 @@ const SingleCaseInfo: React.FC = () => {
         <Row>
           {/* <CaseDetails caseStage={caseInfo?.case_stage || ""} /> */}
         </Row>
-        <Row>{/* <FileManager /> */}</Row>
+        <Row>
+          <FileManager />
+        </Row>
         <Row>
           {/* <JointUsers
             jointUserInfo={jointUserInfo}
             isLoading={isJointUserFetcing}
           /> */}
         </Row>
-        <Row>{/* <MeetingHistory /> */}</Row>
-        <Row>{/* <CalenderContainer /> */}</Row>
+        <Row>
+          <MeetingHistory />
+        </Row>
+        <Row>
+          <CalenderContainer />
+        </Row>
       </Container>
     </>
   );

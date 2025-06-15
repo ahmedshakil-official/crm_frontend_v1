@@ -8,10 +8,9 @@ import { toast } from "react-toastify";
 import { Container, Row } from "reactstrap";
 import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 import CaseDetails from "./components/CaseDetails/CaseDetails";
-import FileManager from "./components/FileManager/FileManager";
 import JointUsers from "./components/JointUsers/JointUsers";
-import MeetingHistory from "./components/MeetingHistory/MeetingHistory";
 import SingleCaseInfo from "./components/SingleCaseInfo/SingleCaseInfo";
+import FileManager from "../../../CommonComponents/Cases/Cases/SingleCaseInfo/FileManager/FileManager";
 
 const CaseContainer: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
@@ -85,9 +84,6 @@ const CaseContainer: React.FC = () => {
             jointUserInfo={jointUserInfo}
             isLoading={isJointUserFetcing}
           />
-        </Row>
-        <Row>
-          <MeetingHistory />
         </Row>
       </Container>
     </>
