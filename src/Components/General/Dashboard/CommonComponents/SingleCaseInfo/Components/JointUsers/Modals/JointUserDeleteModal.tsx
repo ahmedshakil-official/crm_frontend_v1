@@ -1,5 +1,5 @@
-import { useDeleteJointUserInfoMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/JointUser/JointUserDetailsApi";
-import { JointUserDeleteModalProps } from "@/Types/Organization/Cases/JointUser/JointUserTypes";
+import { useDeleteJointUserInfoMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/JointUser/JointUserDetailsApi";
+import { JointUserDeleteModalProps } from "@/Types/CommonComponents/SingleCaseInfo/JointUser/JointUserTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import { toast } from "react-toastify";

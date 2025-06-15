@@ -1,6 +1,8 @@
 import UpdateCaseModal from "@/Components/General/Dashboard/CommonComponents/Cases/Cases/Modals/UpdateCaseModal";
-import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
-import { SingleCaseProps } from "@/Types/Organization/Cases/CaseTypes";
+import {
+  CaseInfoPrpos,
+  SingleCaseProps,
+} from "@/Types/CommonComponents/Cases/CaseTypes";
 import { useState } from "react";
 import {
   Button,

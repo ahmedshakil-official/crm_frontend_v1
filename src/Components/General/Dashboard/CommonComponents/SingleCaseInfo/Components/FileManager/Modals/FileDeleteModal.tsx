@@ -1,5 +1,5 @@
-import { useDeleteCaseFilesDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
-import { FileDeleteModalProps } from "@/Types/Organization/Cases/FileManager/FileManagerTypes";
+import { useDeleteCaseFilesDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/FileManager/FileManagerDetailsApi";
+import { FileDeleteModalProps } from "@/Types/CommonComponents/SingleCaseInfo/FileManager/FileManagerTypes";
 import React from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";

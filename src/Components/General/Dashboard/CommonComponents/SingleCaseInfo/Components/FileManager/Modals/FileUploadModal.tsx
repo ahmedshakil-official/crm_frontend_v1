@@ -1,10 +1,9 @@
-import { useGetCaseUsersQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
-import { useAddCaseFilesDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
+import { useGetCaseUsersQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseUsers/CaseUsersApi";
+import { useAddCaseFilesDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/FileManager/FileManagerDetailsApi";
 import {
   FileOwnerProps,
   FileUploadModalProps,
-} from "@/Types/Organization/Cases/FileManager/FileManagerTypes";
-
+} from "@/Types/CommonComponents/SingleCaseInfo/FileManager/FileManagerTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

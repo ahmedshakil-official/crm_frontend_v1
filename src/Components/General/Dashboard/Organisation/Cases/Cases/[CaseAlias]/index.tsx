@@ -1,4 +1,4 @@
-import SingleCaseInfo from "@/Components/General/Dashboard/CommonComponents/Cases/Cases/SingleCaseInfo/SingleCaseInfo";
+import SingleCaseInfo from "@/Components/General/Dashboard/CommonComponents/SingleCaseInfo/SingleCaseInfo";
 import OrganisationBreadcrumbs from "../../../Breadcrumbs/Breadcrumbs";
 
 const CaseContainer: React.FC = () => {

@@ -1,6 +1,6 @@
 import LoadingSpinner from "@/app/loading";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { useGetJointUserInfoQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/JointUser/JointUserDetailsApi";
+import { useGetJointUserInfoQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/JointUser/JointUserDetailsApi";
 import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";

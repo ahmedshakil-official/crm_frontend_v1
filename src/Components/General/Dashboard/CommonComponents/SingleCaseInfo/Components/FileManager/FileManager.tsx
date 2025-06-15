@@ -1,8 +1,8 @@
-import { useGetCaseFilesDetailsQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
+import { useGetCaseFilesDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/FileManager/FileManagerDetailsApi";
 import {
   CaseFileProps,
   FileDeleteModalProps,
-} from "@/Types/Organization/Cases/FileManager/FileManagerTypes";
+} from "@/Types/CommonComponents/SingleCaseInfo/FileManager/FileManagerTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {

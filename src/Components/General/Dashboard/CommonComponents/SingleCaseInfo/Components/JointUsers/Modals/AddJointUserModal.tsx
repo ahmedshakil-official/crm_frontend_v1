@@ -1,5 +1,5 @@
-import { useAddJointUserInfoMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/JointUser/JointUserDetailsApi";
-import { AddJointUserModalProps } from "@/Types/Organization/Cases/JointUser/JointUserTypes";
+import { useAddJointUserInfoMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/JointUser/JointUserDetailsApi";
+import { AddJointUserModalProps } from "@/Types/CommonComponents/SingleCaseInfo/JointUser/JointUserTypes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
