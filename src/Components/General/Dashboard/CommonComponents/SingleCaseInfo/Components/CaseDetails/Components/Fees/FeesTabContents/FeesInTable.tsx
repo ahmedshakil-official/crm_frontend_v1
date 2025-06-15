@@ -1,5 +1,5 @@
 import LoadingSpinner from "@/app/loading";
-import { useGetFeesInDetailsQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Fees/FeesApi";
+import { useGetFeesInDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Fees/FeesApi";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Table } from "reactstrap";

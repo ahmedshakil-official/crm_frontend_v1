@@ -1,5 +1,5 @@
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { FoundPropertyProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
+import { FoundPropertyProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetailsTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import {

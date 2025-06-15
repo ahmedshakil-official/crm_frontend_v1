@@ -1,8 +1,8 @@
-import { useGetPayDayLoansQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useGetPayDayLoansQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import {
   PayDayLoanProps,
   ViewPayDayLoansModalProps,
-} from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/AdverseTypes";
+} from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import {

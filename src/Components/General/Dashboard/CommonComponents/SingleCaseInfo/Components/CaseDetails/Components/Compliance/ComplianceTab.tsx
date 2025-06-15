@@ -1,4 +1,9 @@
+import { useAppSelector } from "@/Redux/Hooks";
+import { useUpdateComplianceMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
+import { RootState } from "@/Redux/Store";
+import { useParams } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Card,
   CardBody,
@@ -8,13 +13,8 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import { ComplianceRatingCard } from "./ComplianceTabContents/ComplianceRatingCard";
 import { ComplianceTabContents } from "./ComplianceTabContents";
-import { useAppSelector } from "@/Redux/Hooks";
-import { RootState } from "@/Redux/Store";
-import { useParams } from "next/navigation";
-import { toast } from "react-toastify";
-import { useUpdateComplianceMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
+import { ComplianceRatingCard } from "./ComplianceTabContents/ComplianceRatingCard";
 
 export const ComplianceTab = () => {
   const { casealias } = useParams();

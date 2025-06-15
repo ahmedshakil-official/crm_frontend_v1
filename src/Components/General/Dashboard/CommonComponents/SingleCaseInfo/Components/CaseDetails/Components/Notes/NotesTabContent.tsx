@@ -1,15 +1,11 @@
 import LoadingSpinner from "@/app/loading";
-import { useGetNotesQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Notes/NotesApi";
+import { useGetNotesQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Notes/NotesApi";
+import { NotesTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/NotesAndTaskTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import { Button, TabContent, TabPane } from "reactstrap";
 import NotesViewTab from "./NotesViewTabs/NotesViewTab";
 import TasksViewTab from "./NotesViewTabs/TasksViewTab";
-
-interface NotesTabContentProps {
-  tabId: string;
-  setTabId: (id: string) => void;
-}
 
 export const NotesTabContent: React.FC<NotesTabContentProps> = ({
   tabId,

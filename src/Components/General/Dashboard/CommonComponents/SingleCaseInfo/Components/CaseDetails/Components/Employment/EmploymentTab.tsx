@@ -1,6 +1,6 @@
 import LoadingSpinner from "@/app/loading";
-import { useGetEmploymentDetailsQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
-import { EmploymentDetailsProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/EmploymentTypes";
+import { useGetEmploymentDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
+import { EmploymentDetailsProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {

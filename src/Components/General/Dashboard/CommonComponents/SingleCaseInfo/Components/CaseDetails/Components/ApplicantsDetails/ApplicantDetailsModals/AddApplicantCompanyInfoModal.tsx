@@ -2,11 +2,11 @@ import LoadingSpinner from "@/app/loading";
 import {
   useAddCompanyDetailsMutation,
   useGetCompanyDetailsQuery,
-} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import {
   AddCompanyDetailsFormModalProps,
   ApplicantCompanyProps,
-} from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
+} from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";

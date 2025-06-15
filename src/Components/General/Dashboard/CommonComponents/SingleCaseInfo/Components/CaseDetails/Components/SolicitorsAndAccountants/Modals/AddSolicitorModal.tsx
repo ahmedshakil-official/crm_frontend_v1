@@ -1,4 +1,5 @@
-import { useAddSolicitorDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
+import { useAddSolicitorDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
+import { AddSolicitorModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SolicitorAndAccountantTypes";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -14,11 +15,6 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-
-interface AddSolicitorModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
 
 const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
   isOpen,

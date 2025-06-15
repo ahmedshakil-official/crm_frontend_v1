@@ -1,19 +1,16 @@
-import { FC, useState, useEffect } from "react";
+import { RootState } from "@/Redux/Store";
+import { MonthlyBudgetTabContentsProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
+  Button,
   Col,
   FormGroup,
-  Label,
   Input,
   InputGroup,
   InputGroupText,
-  Button,
+  Label,
 } from "reactstrap";
-import { RootState } from "@/Redux/Store";
-
-interface MonthlyBudgetTabContentsProps {
-  updateField: (field: string, value: any) => void;
-}
 
 const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
   updateField,

@@ -178,3 +178,22 @@ export interface BudgetPlannerTabContentProps {
   setTabId: (id: number) => void;
   updateField: (field: string, value: any) => void;
 }
+
+export interface DebtRepaymentTabContentProps {
+  updateField: (field: string, value: any) => void;
+}
+
+export interface DisclaimerTabContentsProps {
+  updateField: (field: string, value: any) => void;
+}
+
+export interface HouseHoldIncomeTabContentProps {
+  updateField: (field: string, value: any) => void;
+}
+
+export interface LivingExpensesTabContentsProps {
+  updateField: (field: string, value: any) => void;
+}
+export interface MonthlyBudgetTabContentsProps {
+  updateField: (field: string, value: any) => void;
+}

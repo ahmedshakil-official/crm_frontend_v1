@@ -3,8 +3,8 @@ import LoadingSpinner from "@/app/loading";
 import {
   useGetSingleAdverseDetailsQuery,
   useUpdateAdverseDetailsMutation,
-} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { ApplicantsUsersProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ApplicantsUserTypes";
+} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { ApplicantsUsersProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsUserTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

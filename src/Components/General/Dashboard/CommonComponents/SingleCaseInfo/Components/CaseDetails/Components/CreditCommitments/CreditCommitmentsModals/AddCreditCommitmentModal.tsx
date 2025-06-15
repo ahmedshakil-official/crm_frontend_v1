@@ -1,6 +1,6 @@
-import { useAddCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
-import { useGetCaseUsersQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
-import { AddCreditCommitmentModalProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsTypes";
+import { useAddCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import { useGetCaseUsersQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseUsers/CaseUsersApi";
+import { AddCreditCommitmentModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/CreditCommitmentsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useState } from "react";

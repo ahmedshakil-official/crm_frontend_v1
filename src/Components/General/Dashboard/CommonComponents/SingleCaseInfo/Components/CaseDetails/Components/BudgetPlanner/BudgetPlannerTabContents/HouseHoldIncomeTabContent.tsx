@@ -1,4 +1,5 @@
 import { RootState } from "@/Redux/Store";
+import { HouseHoldIncomeTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -12,10 +13,6 @@ import {
   Label,
   Row,
 } from "reactstrap";
-
-interface HouseHoldIncomeTabContentProps {
-  updateField: (field: string, value: any) => void;
-}
 
 const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
   updateField,

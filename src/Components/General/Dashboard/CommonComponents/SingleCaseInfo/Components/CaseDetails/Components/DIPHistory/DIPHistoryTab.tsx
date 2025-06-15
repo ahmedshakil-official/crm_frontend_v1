@@ -1,5 +1,5 @@
 import LoadingSpinner from "@/app/loading";
-import { useGetDIPHistoryDetailsQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+import { useGetDIPHistoryDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { Button, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";

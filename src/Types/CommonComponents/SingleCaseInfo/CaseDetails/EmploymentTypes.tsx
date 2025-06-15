@@ -76,3 +76,9 @@ export interface EmploymentTabContentProps {
   activeUser: number | null;
   groupedData: Record<number, EmploymentDetailsProps[]>;
 }
+
+export interface AddEmploymentDetailsModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  employmentData: EmploymentDetailsProps | null;
+}

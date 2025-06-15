@@ -1,5 +1,6 @@
 import LoadingSpinner from "@/app/loading";
-import { useAddDIPHistoryDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+import { useAddDIPHistoryDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+import { AddNewLenderHistoryModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/DIPHistoryTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -15,11 +16,6 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-
-interface AddNewLenderHistoryModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-}
 
 const AddNewLenderHistoryModal: React.FC<AddNewLenderHistoryModalProps> = ({
   isOpen,

@@ -1,4 +1,3 @@
-
 import {
   CompletionTabTitleData,
   DIPTabTitleData,
@@ -12,7 +11,7 @@ import {
   RCCTabTitleData,
 } from "@/Data/Organization/Case/CaseDetails/CaseDetailsTabTitleData";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useEffect } from "react";
 import {
   Card,
@@ -25,9 +24,8 @@ import {
 } from "reactstrap";
 import { CaseDetailsTabContent } from "./Components/CaseDetailsTabContent";
 
-
 const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
-  const basicTab = useAppSelector((state) => state.caseDetails.basicTabId);
+  const basicTab = useAppSelector((state: any) => state.caseDetails.basicTabId);
   const dispatch = useAppDispatch();
 
   // Map case stages to corresponding tab title data

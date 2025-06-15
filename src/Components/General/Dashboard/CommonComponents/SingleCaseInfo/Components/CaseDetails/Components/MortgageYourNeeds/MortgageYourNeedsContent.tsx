@@ -2,7 +2,7 @@ import LoadingSpinner from "@/app/loading";
 import {
   useGetMortgageYourNeedsQuery,
   useUpdateMortgageYourNeedsMutation,
-} from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/MortgageYourNeeds/MortgageYourNeedsApi";
+} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/MortgageYourNeeds/MortgageYourNeedsApi";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

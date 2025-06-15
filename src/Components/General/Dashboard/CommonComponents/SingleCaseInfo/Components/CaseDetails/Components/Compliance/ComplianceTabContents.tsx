@@ -1,4 +1,4 @@
-import { FeesTabContentProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/FeeTypes";
+import { FeesTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/FeeTypes";
 import { FC } from "react";
 import AntiMoneyLaunderingTabContent from "./ComplianceTabContents/AntiMoneyLaunderingTabContent";
 import ComplianceApplicationTabContent from "./ComplianceTabContents/ComplianceApplicationTabContent";

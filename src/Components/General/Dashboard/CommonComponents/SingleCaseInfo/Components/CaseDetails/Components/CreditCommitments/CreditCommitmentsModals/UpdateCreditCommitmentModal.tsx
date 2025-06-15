@@ -1,6 +1,6 @@
-import { useUpdateCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
-import { useGetCaseUsersQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
-import { UpdateCreditCommitmentModalProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsTypes";
+import { useUpdateCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import { useGetCaseUsersQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseUsers/CaseUsersApi";
+import { UpdateCreditCommitmentModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/CreditCommitmentsTypes";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {

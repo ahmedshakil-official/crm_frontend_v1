@@ -1,18 +1,15 @@
-import { FC, useState, useEffect } from "react";
+import { RootState } from "@/Redux/Store";
+import { DisclaimerTabContentsProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Card,
-  CardHeader,
   CardBody,
+  CardHeader,
   FormGroup,
   Input,
   Label,
 } from "reactstrap";
-import { RootState } from "@/Redux/Store";
-
-interface DisclaimerTabContentsProps {
-  updateField: (field: string, value: any) => void;
-}
 
 const DisclaimerTabContents: FC<DisclaimerTabContentsProps> = ({
   updateField,

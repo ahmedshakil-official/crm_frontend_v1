@@ -1,13 +1,10 @@
+import { NotesViewTabProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/NotesAndTaskTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { FC, useState } from "react";
 import { Trash2 } from "react-feather";
 import { Button, Col, Container, Input, Row, Table } from "reactstrap";
 import CreateTaskNoteModal from "../NotesModals/AddNewNoteModal";
 import { NoteTask } from "../NotesTabContent";
-
-interface NotesViewTabProps {
-  notes: NoteTask[];
-}
 
 // Reusable table column definitions
 const TABLE_COLUMNS = [

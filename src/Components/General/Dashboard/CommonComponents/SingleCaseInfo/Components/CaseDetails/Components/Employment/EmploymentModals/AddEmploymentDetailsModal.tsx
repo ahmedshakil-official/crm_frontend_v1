@@ -1,5 +1,8 @@
-import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
-import { EmploymentDetailsProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/EmploymentTypes";
+import { useAddEmploymentDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
+import {
+  AddEmploymentDetailsModalProps,
+  EmploymentDetailsProps,
+} from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/EmploymentTypes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -15,12 +18,6 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-
-interface AddEmploymentDetailsModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  employmentData: EmploymentDetailsProps | null;
-}
 
 const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
   isOpen,

@@ -1,5 +1,5 @@
-import { useAddExtraAnswerMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Suitability/SuitabilityApi";
-import { ExtraAnswerModalProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/SuitabilityTypes";
+import { useAddExtraAnswerMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Suitability/SuitabilityApi";
+import { ExtraAnswerModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SuitabilityTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";

@@ -1,5 +1,5 @@
-import { useAddCommitmentPaymentsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { AddNewCommitmentPaymentsMissedModalProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/AdverseTypes";
+import { useAddCommitmentPaymentsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { AddNewCommitmentPaymentsMissedModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";

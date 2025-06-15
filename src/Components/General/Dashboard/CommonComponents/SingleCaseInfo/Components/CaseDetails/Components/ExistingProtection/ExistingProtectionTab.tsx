@@ -1,6 +1,6 @@
 import LoadingSpinner from "@/app/loading";
-import { useGetExistingProtectionDetailsQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
-import { ExistingProtectionDetailsProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ExistingProtectionTypes";
+import { useGetExistingProtectionDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
+import { ExistingProtectionDetailsProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ExistingProtectionTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {

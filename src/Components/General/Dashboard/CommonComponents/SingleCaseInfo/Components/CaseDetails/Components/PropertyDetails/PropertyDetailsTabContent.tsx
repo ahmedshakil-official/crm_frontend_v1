@@ -1,5 +1,5 @@
-import { initializeForm } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
-import { PropertyData } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails";
+import { initializeForm } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { PropertyData } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetailsTypes";
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Button, TabContent, TabPane } from "reactstrap";

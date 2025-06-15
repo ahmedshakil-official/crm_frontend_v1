@@ -1,11 +1,7 @@
+import { TasksViewTabProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/NotesAndTaskTypes";
 import { FC, useState } from "react";
 import { Button, Col, Container, Row, Table } from "reactstrap";
 import CreateTaskNoteModal from "../NotesModals/AddNewNoteModal";
-import { NoteTask } from "../NotesTabContent";
-
-interface TasksViewTabProps {
-  tasks: NoteTask[];
-}
 
 const TasksViewTab: FC<TasksViewTabProps> = ({ tasks }) => {
   const [modalOpen, setModalOpen] = useState(false);

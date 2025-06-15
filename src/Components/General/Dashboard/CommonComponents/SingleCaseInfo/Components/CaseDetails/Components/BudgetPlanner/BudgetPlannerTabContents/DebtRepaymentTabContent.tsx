@@ -1,4 +1,5 @@
 import { RootState } from "@/Redux/Store";
+import { DebtRepaymentTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -12,10 +13,6 @@ import {
   Label,
   Row,
 } from "reactstrap";
-
-interface DebtRepaymentTabContentProps {
-  updateField: (field: string, value: any) => void;
-}
 
 const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
   updateField,

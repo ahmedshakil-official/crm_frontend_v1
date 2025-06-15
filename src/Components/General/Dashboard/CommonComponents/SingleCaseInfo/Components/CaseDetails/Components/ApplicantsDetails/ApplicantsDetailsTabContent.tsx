@@ -1,7 +1,7 @@
 "use client";
-import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
-import { ApplicantProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
-import { ApplicantsUsersProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ApplicantsUserTypes";
+import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { ApplicantProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
+import { ApplicantsUsersProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsUserTypes";
 import { countries } from "@/utils/Countries";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";

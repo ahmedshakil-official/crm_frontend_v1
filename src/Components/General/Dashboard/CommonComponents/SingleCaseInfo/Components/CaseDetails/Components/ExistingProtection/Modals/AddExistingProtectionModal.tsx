@@ -1,6 +1,6 @@
 import LoadingSpinner from "@/app/loading";
-import { useAddExistingProtectionDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
-import { AddExistingProtectionModalProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/ExistingProtectionTypes";
+import { useAddExistingProtectionDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
+import { AddExistingProtectionModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ExistingProtectionTypes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";

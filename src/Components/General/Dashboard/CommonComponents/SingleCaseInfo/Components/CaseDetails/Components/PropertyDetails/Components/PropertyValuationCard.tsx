@@ -1,4 +1,4 @@
-import { PropertyValuationCardProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails";
+import { PropertyValuationCardProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetailsTypes";
 import { FC } from "react";
 import {
   Card,

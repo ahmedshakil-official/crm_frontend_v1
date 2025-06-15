@@ -1,4 +1,4 @@
-import { FeesTabContentProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/FeeTypes";
+import { FeesTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/FeeTypes";
 import { FC } from "react";
 import FeeInTable from "./FeesTabContents/FeesInTable";
 import FeeOutTable from "./FeesTabContents/FeesOutTable";

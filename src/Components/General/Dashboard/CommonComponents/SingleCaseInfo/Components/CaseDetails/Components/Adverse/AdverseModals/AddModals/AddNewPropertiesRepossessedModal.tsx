@@ -1,5 +1,5 @@
-import { useAddPropertyRepossessedMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
-import { AddNewPropertiesRepossessedModalProps } from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/AdverseTypes";
+import { useAddPropertyRepossessedMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { AddNewPropertiesRepossessedModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";

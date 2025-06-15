@@ -1,8 +1,8 @@
-import { useGetIVAsQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { useGetIVAsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
 import {
   IVAItemProps,
   ViewIVAsModalProps,
-} from "@/Types/CommonComponents/Cases/SingleCaseInfo/CaseDetails/AdverseTypes";
+} from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/AdverseTypes";
 import { useParams } from "next/navigation";
 import React from "react";
 import {
