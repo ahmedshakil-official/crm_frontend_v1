@@ -5,12 +5,8 @@ import { CaseInfo } from "@/Types/Organization/Cases/CaseTypes";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Container, Row } from "reactstrap";
-import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import { Row } from "reactstrap";
 import CaseDetails from "./components/CaseDetails/CaseDetails";
-import JointUsers from "./components/JointUsers/JointUsers";
-import SingleCaseInfo from "./components/SingleCaseInfo/SingleCaseInfo";
-import FileManager from "../../../CommonComponents/Cases/Cases/SingleCaseInfo/FileManager/FileManager";
 
 const CaseContainer: React.FC = () => {
   const [caseInfo, setCaseInfo] = useState<CaseInfo>();
@@ -63,29 +59,9 @@ const CaseContainer: React.FC = () => {
 
   return (
     <>
-      <OrganizationBreadcrumbs
-        mainTitle="Organization Case Status"
-        title="Hello there!"
-        parent="Cases Status"
-        activePage="Case"
-      />
-      <Container fluid>
-        <Row>
-          <SingleCaseInfo caseInfo={caseInfo} isLoading={isLoading} />
-        </Row>
-        <Row>
-          <CaseDetails caseStage={caseInfo?.case_stage || ""} />
-        </Row>
-        <Row>
-          <FileManager />
-        </Row>
-        <Row>
-          <JointUsers
-            jointUserInfo={jointUserInfo}
-            isLoading={isJointUserFetcing}
-          />
-        </Row>
-      </Container>
+      <Row>
+        <CaseDetails caseStage={caseInfo?.case_stage || ""} />
+      </Row>
     </>
   );
 };

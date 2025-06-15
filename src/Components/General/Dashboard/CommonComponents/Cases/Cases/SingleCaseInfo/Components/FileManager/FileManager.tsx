@@ -16,8 +16,8 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import FileDeleteModal from "./Modals/FileDeleteModal";
-import FileUploadModal from "./Modals/FileUploadModal";
+import FileDeleteModal from "../../FileManager/Modals/FileDeleteModal";
+import FileUploadModal from "../../FileManager/Modals/FileUploadModal";
 
 const FileManager: React.FC<FileDeleteModalProps> = () => {
   const [currentPage, setCurrentPage] = useState(1);
