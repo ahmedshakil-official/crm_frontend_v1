@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Container, Row } from "reactstrap";
 import CalenderContainer from "./Components/Calender/CalenderContainer";
+import CaseDetails from "./Components/CaseDetails/CaseDetails";
 import CaseInfo from "./Components/CaseInfo/CaseInfo";
 import FileManager from "./Components/FileManager/FileManager";
 import JointUsers from "./Components/JointUsers/JointUsers";
@@ -68,7 +69,7 @@ const SingleCaseInfo: React.FC = () => {
           <CaseInfo caseInfo={caseInfo} isLoading={isLoading} />
         </Row>
         <Row>
-          {/* <CaseDetails caseStage={caseInfo?.case_stage || ""} /> */}
+          <CaseDetails caseStage={caseInfo?.case_stage || ""} />
         </Row>
         <Row>
           <FileManager />
