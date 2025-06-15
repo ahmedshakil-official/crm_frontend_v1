@@ -1,5 +1,5 @@
+import { useGetCaseUsersQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
 import { useAddCreditCommitmentsDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
-import { useGetCaseUsersQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/CaseUsers/CaseUsersApi";
 import { AddCreditCommitmentModalProps } from "@/Types/Organization/Cases/CaseDetails/CreditCommitmentsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";

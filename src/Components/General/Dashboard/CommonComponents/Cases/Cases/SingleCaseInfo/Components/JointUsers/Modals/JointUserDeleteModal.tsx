@@ -1,4 +1,4 @@
-import { useDeleteJointUserInfoMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/JointUser/JointUserDetailsApi";
+import { useDeleteJointUserInfoMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/JointUser/JointUserDetailsApi";
 import { JointUserDeleteModalProps } from "@/Types/Organization/Cases/JointUser/JointUserTypes";
 import { useParams } from "next/navigation";
 import React from "react";

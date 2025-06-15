@@ -1,4 +1,4 @@
-import { useGetCaseFilesDetailsQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
+import { useGetCaseFilesDetailsQuery } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
 import {
   CaseFileProps,
   FileDeleteModalProps,
@@ -16,8 +16,8 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import FileDeleteModal from "../../FileManager/Modals/FileDeleteModal";
-import FileUploadModal from "../../FileManager/Modals/FileUploadModal";
+import FileDeleteModal from "./Modals/FileDeleteModal";
+import FileUploadModal from "./Modals/FileUploadModal";
 
 const FileManager: React.FC<FileDeleteModalProps> = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,7 +26,6 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<CaseFileProps | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [filterIcon, setFilterIcon] = useState(false);
   const params = useParams();
   const { casealias } = params;

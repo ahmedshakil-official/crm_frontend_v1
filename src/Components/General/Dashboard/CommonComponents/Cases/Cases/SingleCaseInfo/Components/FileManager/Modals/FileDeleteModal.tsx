@@ -1,4 +1,4 @@
-import { useDeleteCaseFilesDetailsMutation } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
+import { useDeleteCaseFilesDetailsMutation } from "@/Redux/Reducers/CommonComponents/Cases/SingleCaseInfo/FileManager/FileManagerDetailsApi";
 import { FileDeleteModalProps } from "@/Types/Organization/Cases/FileManager/FileManagerTypes";
 import React from "react";
 import { toast } from "react-toastify";
