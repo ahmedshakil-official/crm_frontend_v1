@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -29,6 +30,7 @@ import DeleteCaseModal from "./Modals/DeleteCaseModal";
 import UpdateCaseModal from "./Modals/UpdateCaseModal";
 
 const Cases: React.FC = () => {
+  const { data: session } = useSession();
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
   const [currentCase, setCurrentCase] = useState<CaseInfoPrpos | null>(null);
@@ -89,6 +91,23 @@ const Cases: React.FC = () => {
   const pageCount = caseData?.total
     ? Math.ceil(caseData.total / casesPerPage)
     : Math.ceil((caseData?.length || 0) / casesPerPage);
+
+  // Function to generate role-based URL for case details
+  const getCaseUrl = (caseAlias: string) => {
+    const userType = session?.user?.user_type;
+    switch (userType) {
+      case "ADMIN":
+        return `/dashboard/admin/cases/${caseAlias}`;
+      case "NETWORK_ADMIN":
+        return `/dashboard/network/cases/${caseAlias}`;
+      case "LEAD":
+        return `/dashboard/client/cases/${caseAlias}`;
+      case "ADVISOR":
+        return `/dashboard/organisation/cases/${caseAlias}`;
+      default:
+        return `url not found`;
+    }
+  };
 
   return (
     <Card>
@@ -248,7 +267,7 @@ const Cases: React.FC = () => {
                     <td>
                       <Link
                         className="text_decoration_hover"
-                        href={`/dashboard/organisation/cases/${caseItem?.alias}`}
+                        href={getCaseUrl(caseItem?.alias)}
                       >
                         {caseItem?.name}
                       </Link>
