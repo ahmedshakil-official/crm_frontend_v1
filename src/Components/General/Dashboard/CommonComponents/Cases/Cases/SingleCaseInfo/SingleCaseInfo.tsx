@@ -1,20 +1,14 @@
 import LoadingSpinner from "@/app/loading";
 import { useGetSingleCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
 import { useGetJointUserInfoQuery } from "@/Redux/Reducers/Organization/Cases/SingleCaseInfo/JointUser/JointUserDetailsApi";
-import { CaseInfo } from "@/Types/Organization/Cases/CaseTypes";
+import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Container, Row } from "reactstrap";
-import OrganizationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
-import CaseDetails from "./components/CaseDetails/CaseDetails";
-import FileManager from "./components/FileManager/FileManager";
-import JointUsers from "./components/JointUsers/JointUsers";
-import MeetingHistory from "./components/MeetingHistory/MeetingHistory";
-import SingleCaseInfo from "./components/SingleCaseInfo/SingleCaseInfo";
-
-const CaseContainer: React.FC = () => {
-  const [caseInfo, setCaseInfo] = useState<CaseInfo>();
+import CaseInfo from "./Components/CaseInfo/CaseInfo";
+const SingleCaseInfo: React.FC = () => {
+  const [caseInfo, setCaseInfo] = useState<CaseInfoPrpos>();
   const params = useParams();
   const { casealias } = params;
   const router = useRouter();
@@ -64,34 +58,25 @@ const CaseContainer: React.FC = () => {
 
   return (
     <>
-      <OrganizationBreadcrumbs
-        mainTitle="Organization Case Status"
-        title="Hello there!"
-        parent="Cases Status"
-        activePage="Case"
-      />
       <Container fluid>
         <Row>
-          <SingleCaseInfo caseInfo={caseInfo} isLoading={isLoading} />
+          <CaseInfo caseInfo={caseInfo} isLoading={isLoading} />
         </Row>
         <Row>
-          <CaseDetails caseStage={caseInfo?.case_stage || ""} />
+          {/* <CaseDetails caseStage={caseInfo?.case_stage || ""} /> */}
         </Row>
+        <Row>{/* <FileManager /> */}</Row>
         <Row>
-          <FileManager />
-        </Row>
-        <Row>
-          <JointUsers
+          {/* <JointUsers
             jointUserInfo={jointUserInfo}
             isLoading={isJointUserFetcing}
-          />
+          /> */}
         </Row>
-        <Row>
-          <MeetingHistory />
-        </Row>
+        <Row>{/* <MeetingHistory /> */}</Row>
+        <Row>{/* <CalenderContainer /> */}</Row>
       </Container>
     </>
   );
 };
 
-export default CaseContainer;
+export default SingleCaseInfo;

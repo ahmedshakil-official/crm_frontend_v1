@@ -1,8 +1,6 @@
 import UpdateCaseModal from "@/Components/General/Dashboard/CommonComponents/Cases/Cases/Modals/UpdateCaseModal";
-import {
-  CaseInfo,
-  SingleCaseProps,
-} from "@/Types/Organization/Cases/CaseTypes";
+import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
+import { SingleCaseProps } from "@/Types/Organization/Cases/CaseTypes";
 import { useState } from "react";
 import {
   Button,
@@ -14,14 +12,14 @@ import {
   Spinner,
 } from "reactstrap";
 
-const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
+const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
-  const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
+  const [currentCase, setCurrentCase] = useState<CaseInfoPrpos | null>(null);
 
   const toggleUpdateCaseModal = () =>
     setIsUpdateCaseModalOpen(!isUpdateCaseModalOpen);
 
-  const openUpdateCaseModal = (caseInfo: CaseInfo) => {
+  const openUpdateCaseModal = (caseInfo: CaseInfoPrpos) => {
     setCurrentCase(caseInfo);
     toggleUpdateCaseModal();
   };
@@ -245,10 +243,10 @@ const SingleCaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
       <UpdateCaseModal
         isOpen={isUpdateCaseModalOpen}
         toggle={toggleUpdateCaseModal}
-        caseData={currentCase as CaseInfo}
+        caseData={currentCase as CaseInfoPrpos}
       />
     </Col>
   );
 };
 
-export default SingleCaseInfo;
+export default CaseInfo;

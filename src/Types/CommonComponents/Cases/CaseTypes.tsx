@@ -1,4 +1,4 @@
-export interface CaseInfo {
+export interface CaseInfoPrpos {
   alias: string;
   lead: number;
   name: string;
@@ -36,7 +36,7 @@ export interface CaseInfo {
   caseData?: any;
 }
 export interface SingleCaseProps {
-  caseInfo: CaseInfo | undefined;
+  caseInfo: CaseInfoPrpos | undefined;
   isLoading: boolean;
 }
 export interface CaseSearchProps {
@@ -53,12 +53,12 @@ export interface AddNewCaseModalProps {
 export interface UpdateCaseModalProps {
   isOpen: boolean;
   toggle: () => void;
-  caseData: CaseInfo;
+  caseData: CaseInfoPrpos;
 }
 export interface DeleteCaseModalProps {
   isOpen: boolean;
   toggle: () => void;
-  caseData: CaseInfo | null; // The case to delete
+  caseData: CaseInfoPrpos | null; // The case to delete
   onDelete: () => void; // Callback to handle deletion
   isDeleting?: any;
 }

@@ -20,7 +20,7 @@ import {
 
 import { useGetCasesQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
-import { CaseInfo } from "@/Types/CommonComponents/Cases/CaseTypes";
+import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { AdviserInfoProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import "../Cases.css";
@@ -31,7 +31,7 @@ import UpdateCaseModal from "./Modals/UpdateCaseModal";
 const Cases: React.FC = () => {
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
-  const [currentCase, setCurrentCase] = useState<CaseInfo | null>(null);
+  const [currentCase, setCurrentCase] = useState<CaseInfoPrpos | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(20);
@@ -68,11 +68,11 @@ const Cases: React.FC = () => {
     setIsDeleteCaseModalOpen(!isDeleteCaseModalOpen);
 
   const openAddNewCaseModal = () => toggleAddNewCaseModal();
-  const openUpdateCaseModal = (caseItem: CaseInfo) => {
+  const openUpdateCaseModal = (caseItem: CaseInfoPrpos) => {
     setCurrentCase(caseItem);
     toggleUpdateCaseModal();
   };
-  const openDeleteCaseModal = (caseItem: CaseInfo) => {
+  const openDeleteCaseModal = (caseItem: CaseInfoPrpos) => {
     setCurrentCase(caseItem);
     toggleDeleteCaseModal();
   };
@@ -243,12 +243,12 @@ const Cases: React.FC = () => {
                   </td>
                 </tr>
               ) : caseData?.length > 0 ? ( // Assuming caseData is an array
-                caseData.map((caseItem: CaseInfo) => (
+                caseData.map((caseItem: CaseInfoPrpos) => (
                   <tr key={caseItem?.alias}>
                     <td>
                       <Link
                         className="text_decoration_hover"
-                        href={`/dashboard/organization/${caseItem?.alias}`}
+                        href={`/dashboard/organisation/cases/${caseItem?.alias}`}
                       >
                         {caseItem?.name}
                       </Link>
@@ -343,7 +343,7 @@ const Cases: React.FC = () => {
           </Table>
         </Row>
         <Row>
-          <div className="d-flex justify-content-between p-3">
+          <div className="d-flex justify-content-between px-4 py-3">
             <div>
               <p className="text-success">
                 {/* Showing {caseData?.total ? ((currentPage - 1) * casesPerPage + 1) : 0} to {Math.min(currentPage * casesPerPage, caseData?.total || 0)} of {caseData?.total || 0} cases */}
@@ -395,7 +395,7 @@ const Cases: React.FC = () => {
       <UpdateCaseModal
         isOpen={isUpdateCaseModalOpen}
         toggle={toggleUpdateCaseModal}
-        caseData={currentCase as CaseInfo}
+        caseData={currentCase as CaseInfoPrpos}
       />
       <DeleteCaseModal
         isOpen={isDeleteCaseModalOpen}
