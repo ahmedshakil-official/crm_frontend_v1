@@ -1,8 +1,8 @@
-import { useUpdateCaseDetailsMutation } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
+import { useUpdateCaseMutation } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import {
-  CaseInfo,
+  CaseInfoPrpos,
   UpdateCaseModalProps,
-} from "@/Types/Organization/Cases/CaseTypes";
+} from "@/Types/CommonComponents/Cases/CaseTypes";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -22,10 +22,10 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
   toggle,
   caseData,
 }) => {
-  const [formData, setFormData] = useState<CaseInfo>(caseData);
+  const [formData, setFormData] = useState<CaseInfoPrpos>(caseData);
 
   const [updateCaseDetails, { isLoading: isUpdating }] =
-    useUpdateCaseDetailsMutation();
+    useUpdateCaseMutation();
 
   // Compare current data with the original data
   const hasChanges = JSON.stringify(formData) !== JSON.stringify(caseData);

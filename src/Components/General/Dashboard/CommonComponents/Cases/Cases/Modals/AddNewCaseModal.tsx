@@ -1,7 +1,8 @@
+import { useAddCaseMutation } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
-import { useAddCaseDetailsMutation } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
+import { AddNewCaseModalProps } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { LeadsInfo } from "@/Types/CommonComponents/Directors/LeadTypes";
-import { AddNewCaseModalProps } from "@/Types/Organization/Cases/CaseTypes";
+
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -24,8 +25,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   // Rtk query
   const { data: leadData, isLoading: leadDataLoading } =
     useGetLeadDetailsQuery(undefined);
-  const [addCaseDetails, { isLoading: addCaseLoading }] =
-    useAddCaseDetailsMutation();
+  const [addCaseDetails, { isLoading: addCaseLoading }] = useAddCaseMutation();
 
   const [formData, setFormData] = useState({
     lead: 0,

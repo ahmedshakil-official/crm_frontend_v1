@@ -1,5 +1,5 @@
-import { useDeleteCaseDetailsMutation } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
-import { DeleteCaseModalProps } from "@/Types/Organization/Cases/CaseTypes";
+import { useDeleteCaseMutation } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { DeleteCaseModalProps } from "@/Types/CommonComponents/Cases/CaseTypes";
 import React from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
@@ -11,7 +11,7 @@ const DeleteCaseModal: React.FC<DeleteCaseModalProps> = ({
   onDelete,
 }) => {
   const [deleteCaseDetails, { isLoading: isDeleting }] =
-    useDeleteCaseDetailsMutation();
+    useDeleteCaseMutation();
 
   const handleCaseDeletion = async (caseAlias: string) => {
     try {
@@ -25,12 +25,15 @@ const DeleteCaseModal: React.FC<DeleteCaseModalProps> = ({
   };
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle} className="text-danger">Confirm Case Deletion</ModalHeader>
+      <ModalHeader toggle={toggle} className="text-danger">
+        Confirm Case Deletion
+      </ModalHeader>
       <ModalBody>
         {caseData ? (
           <p>
             Are you sure you want to delete the case number{" "}
-            <strong className="text-danger">{caseData.name}</strong>? This action cannot be undone.
+            <strong className="text-danger">{caseData.name}</strong>? This
+            action cannot be undone.
           </p>
         ) : (
           <p>No case selected for deletion.</p>
