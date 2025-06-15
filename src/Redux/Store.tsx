@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./Api/BaseApi";
-import budgetPlannerReducer from "./Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
-import CaseDetailsTabIndicatorReducer from "./Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import ComplianceReducer from "./Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
-import propertyFormReducer from "./Reducers/CommonComponents/Cases/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import budgetPlannerReducer from "./Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import CaseDetailsTabIndicatorReducer from "./Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import ComplianceReducer from "./Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Compliance/ComplianceSlice";
+import propertyFormReducer from "./Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import FormWizardOne from "./Reducers/FormLayout/FormWizardOneSlice";
 import FormWizardTwoSlice from "./Reducers/FormLayout/FormWizardTwoSlice";
 import TwoFactorSlice from "./Reducers/FormLayout/TwoFactorSlice";
