@@ -30,7 +30,7 @@ const SingleCaseInfo: React.FC = () => {
       case "NETWORK_ADMIN":
         return `/dashboard/network/cases`;
       case "LEAD":
-        return `/dashboard/client/cases`;
+        return `/dashboard/client`;
       case "ADVISOR":
         return `/dashboard/organisation/cases`;
       default:

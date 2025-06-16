@@ -1,11 +1,11 @@
-import { useGetSingleCaseDetailsQuery } from "@/Redux/Reducers/Organization/Cases/CaseDetailsApi";
 import LoadingSpinner from "@/app/loading";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Container } from "reactstrap";
-import CaseDetails from "../../Organization/CaseStatus/[CaseAlias]/components/CaseDetails/CaseDetails";
-import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import CaseDetails from "../../CommonComponents/SingleCaseInfo/Components/CaseDetails/CaseDetails";
+import ClientBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const ClientSingleCaseContainer: React.FC = () => {
   const { casealias } = useParams();
@@ -15,10 +15,7 @@ const ClientSingleCaseContainer: React.FC = () => {
     data: caseData,
     isLoading,
     isError,
-  } = useGetSingleCaseDetailsQuery(
-    { case_alias: casealias },
-    { skip: !casealias }
-  );
+  } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
 
   useEffect(() => {
     if (!isLoading) {
@@ -50,7 +47,12 @@ const ClientSingleCaseContainer: React.FC = () => {
 
   return (
     <>
-      <Breadcrumbs />
+      <ClientBreadcrumbs
+        mainTitle="Client Dashboard"
+        title="Welcome back! Let’s start from where you left."
+        parent="Dashboard"
+        activePage="Client"
+      />
       <Container fluid>
         <CaseDetails caseStage={caseData?.case_stage || ""} />
       </Container>
