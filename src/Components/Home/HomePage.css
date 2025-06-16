@@ -20,5 +20,4 @@
 
 .menu_hover:hover::after {
   transform: scaleX(1);
-  
 }
