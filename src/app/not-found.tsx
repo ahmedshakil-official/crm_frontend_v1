@@ -1,5 +1,5 @@
-import ErrorPage1Container from "@/Components/Other/ErrorPage/ErrorPage1Container";
+import ErrorPage2Container from "@/Components/Other/ErrorPage/ErrorPage2Container";
 
 export default function NotFoundPage() {
-  return <ErrorPage1Container />;
+  return <ErrorPage2Container />;
 }
