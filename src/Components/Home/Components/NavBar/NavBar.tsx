@@ -10,7 +10,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import "./home.css";
+import "../../HomePage.css";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
