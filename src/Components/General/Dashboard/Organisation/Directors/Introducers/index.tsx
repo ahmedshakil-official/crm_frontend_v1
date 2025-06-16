@@ -6,7 +6,7 @@ const OrganisationIntroducersContainer: React.FC = () => {
   return (
     <>
       <OrganisationBreadcrumbs
-        mainTitle="Organization Introducers"
+        mainTitle="Organisation Introducers"
         title="Hello there!"
         parent="Directors"
         activePage="Introducers"

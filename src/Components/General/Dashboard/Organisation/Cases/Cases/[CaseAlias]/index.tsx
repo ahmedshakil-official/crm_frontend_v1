@@ -5,7 +5,7 @@ const CaseContainer: React.FC = () => {
   return (
     <>
       <OrganisationBreadcrumbs
-        mainTitle="Organization Case Status"
+        mainTitle="Organisation Case Status"
         title="Hello there!"
         parent="Cases Status"
         activePage="Case"
