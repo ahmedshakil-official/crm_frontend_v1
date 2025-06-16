@@ -1,4 +1,4 @@
-import { BudgetPlanner } from "@/Types/Organization/Cases/CaseDetails/BudgetPlannerTypes";
+import { BudgetPlanner } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Initial state matching your data structure

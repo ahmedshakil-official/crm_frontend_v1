@@ -1,4 +1,4 @@
-import { ComplianceState } from "@/Types/Organization/Cases/CaseDetails/ComplianceTypes";
+import { ComplianceState } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ComplianceTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: ComplianceState = {
@@ -11,7 +11,7 @@ const initialState: ComplianceState = {
   rating_a: undefined,
   rating_b: undefined,
   rating_c: undefined,
-  // 
+  //
   terms_of_business: undefined,
   terms_of_business_text: undefined,
   privacy_notice: undefined,
@@ -56,7 +56,7 @@ const initialState: ComplianceState = {
   proof_of_lending_text: undefined,
   proof_of_repayment: undefined,
   proof_of_repayment_text: undefined,
-  // 
+  //
   loan_details_fully_completed: undefined,
   loan_details_fully_completed_text: undefined,
   has_source_of_lead_been_recorded: undefined,
@@ -95,7 +95,7 @@ const initialState: ComplianceState = {
   has_adviser_completed_calculator_text: undefined,
   has_accountant_solicitor_details_confirmed: undefined,
   has_accountant_solicitor_details_confirmed_text: undefined,
-  // 
+  //
   has_credit_commitments_fully_completed: undefined,
   has_credit_commitments_fully_completed_text: undefined,
   is_any_credit_commitments: undefined,
@@ -106,7 +106,7 @@ const initialState: ComplianceState = {
   has_budget_planner_been_completed_text: undefined,
   has_all_direct_debits_been_recorded: undefined,
   has_all_direct_debits_been_recorded_text: undefined,
-  // 
+  //
   has_adviser_sourced_mortgage_requirements: undefined,
   has_adviser_sourced_mortgage_requirement_text: undefined,
   does_figures_stated_in_mortgage_requirements: undefined,
@@ -131,7 +131,7 @@ const initialState: ComplianceState = {
   interest_only_text: undefined,
   has_product_been_fully_completed: undefined,
   has_product_been_fully_completed_text: undefined,
-  // 
+  //
   personal_details_match_the_factfind: undefined,
   personal_details_match_the_factfind_text: undefined,
   does_employment_and_income_details_match: undefined,
@@ -140,7 +140,7 @@ const initialState: ComplianceState = {
   does_property_loan_details_match_text: undefined,
   does_mortgage_application_confirm: undefined,
   does_mortgage_application_confirm_text: undefined,
-  // 
+  //
   has_suitability_letter_been_generated: undefined,
   has_suitability_letter_been_generated_text: undefined,
   post_application_changes: undefined,
