@@ -1,15 +1,25 @@
 import Link from "next/link";
 import { Breadcrumb, BreadcrumbItem, Col, Container, Row } from "reactstrap";
 
-const Breadcrumbs: React.FC = () => {
+interface ClientBreadcrumbsProps {
+  mainTitle: string;
+  title: string;
+  parent?: string;
+  activePage?: string;
+}
+
+const ClientBreadcrumbs: React.FC<ClientBreadcrumbsProps> = ({
+  mainTitle,
+  title,
+  parent,
+  activePage,
+}) => {
   return (
     <Container fluid>
       <Row className="page-title">
         <Col sm="6">
-          <h2>Dashboard</h2>
-          <p className="mb-0 text-title-gray">
-            Welcome back! Let’s start from where you left.
-          </p>
+          <h2>{mainTitle}</h2>
+          <p className="mb-0 text-title-gray">{title}</p>
         </Col>
         <Col sm="6">
           <Breadcrumb className="justify-content-sm-end align-items-center">
@@ -18,8 +28,10 @@ const Breadcrumbs: React.FC = () => {
                 <i className="iconly-Home icli svg-color" />
               </Link>
             </BreadcrumbItem>
-            <BreadcrumbItem>Dashboard</BreadcrumbItem>
-            <BreadcrumbItem className="active">Client</BreadcrumbItem>
+            {parent && <BreadcrumbItem>{parent}</BreadcrumbItem>}
+            {activePage && (
+              <BreadcrumbItem className="active">{activePage}</BreadcrumbItem>
+            )}
           </Breadcrumb>
         </Col>
       </Row>
@@ -27,4 +39,4 @@ const Breadcrumbs: React.FC = () => {
   );
 };
 
-export default Breadcrumbs;
+export default ClientBreadcrumbs;

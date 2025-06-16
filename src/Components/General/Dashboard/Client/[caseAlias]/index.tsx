@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Container } from "reactstrap";
 import CaseDetails from "../../CommonComponents/SingleCaseInfo/Components/CaseDetails/CaseDetails";
-import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import ClientBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const ClientSingleCaseContainer: React.FC = () => {
   const { casealias } = useParams();
@@ -47,7 +47,12 @@ const ClientSingleCaseContainer: React.FC = () => {
 
   return (
     <>
-      <Breadcrumbs />
+      <ClientBreadcrumbs
+        mainTitle="Client Dashboard"
+        title="Welcome back! Let’s start from where you left."
+        parent="Dashboard"
+        activePage="Client"
+      />
       <Container fluid>
         <CaseDetails caseStage={caseData?.case_stage || ""} />
       </Container>
