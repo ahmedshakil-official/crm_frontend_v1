@@ -1,4 +1,4 @@
-import { PropertyFormState } from "@/Types/Organization/Cases/CaseDetails/PropertyDetails";
+import { PropertyFormState } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetailsTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: PropertyFormState = {

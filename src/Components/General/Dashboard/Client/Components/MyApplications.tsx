@@ -1,6 +1,7 @@
 import LoadingSpinner from "@/app/loading";
 import { useGetSingleClientApplicationQuery } from "@/Redux/Reducers/Client/SingleCLientApplication/SingleCLientApplicationApi";
 import { SingleClientApplicationProps } from "@/Types/Client/SingleClientApplicationTypes";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import Link from "next/link";
 import React from "react";
 import { Card, CardBody, CardHeader, Table } from "reactstrap";
@@ -46,10 +47,16 @@ const MyApplications: React.FC = () => {
                     {app.name}
                   </Link>
                 </td>
-                <td>{new Date(app.created_at).toLocaleDateString("en-GB")}</td>
+                <td>{formatDateToDMYAndTime(app.created_at)}</td>
                 <td>
-                  {app.case_category?.charAt(0).toUpperCase() +
-                    app.case_category?.slice(1).toLocaleLowerCase()}
+                  {app.case_category
+                    ?.split("_")
+                    .map(
+                      (word) =>
+                        word.charAt(0).toUpperCase() +
+                        word.slice(1).toLowerCase()
+                    )
+                    .join(" ")}
                 </td>
                 <td>
                   {app.case_stage
@@ -64,7 +71,15 @@ const MyApplications: React.FC = () => {
                 <td>
                   {app.lead_user.first_name + " " + app.lead_user.last_name}
                 </td>
-                <td>{app.lead_user.phone || "-"}</td>
+                <td>
+                  <a
+                    className="text-dark text_decoration_hover"
+                    style={{ cursor: "pointer" }}
+                    href={`tel: ${app.lead_user.phone}`}
+                  >
+                    {app.lead_user.phone || "-"}
+                  </a>
+                </td>
                 <td>
                   <Link href={`client/${app.alias}`}>
                     <button className="btn btn-primary btn-sm">Continue</button>
