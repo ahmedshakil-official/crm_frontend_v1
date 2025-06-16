@@ -1,18 +1,16 @@
 "use client";
 
-import NavBar from "@/Components/Home/Components/NavBar/NavBar";
-import UnderDevelopment from "@/Components/Other/UnderDevelopment/UnderDevelopment";
-import { Container } from "reactstrap";
+import { FunctionComponent, useEffect, useState } from "react";
 
 export default function Home() {
-  return (
-    <>
-      <main>
-        <NavBar />
-      </main>
-      <Container fluid>
-        <UnderDevelopment />
-      </Container>
-    </>
-  );
+  const [MyAwesomeMap, setClient] = useState<FunctionComponent>();
+  useEffect(() => {
+    (async () => {
+      if (typeof window !== "undefined") {
+        const newClient = (await import("@/Components/Home")).default;
+        setClient(() => newClient);
+      }
+    })();
+  }, []);
+  return MyAwesomeMap ? <MyAwesomeMap /> : "";
 }
