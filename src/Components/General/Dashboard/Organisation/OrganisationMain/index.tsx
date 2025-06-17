@@ -4,6 +4,7 @@ import CaseCompletionOverTime from "./CaseCompletionOverTime/CaseCompletionOverT
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
 import ClientGrowth from "./ClientGrowth/ClientGrowth";
+import ComplianceStatus from "./ComplianceStatus/ComplianceStatus";
 
 const OrganisationContainer = () => {
   return (
@@ -30,7 +31,7 @@ const OrganisationContainer = () => {
             <ClientGrowth />
           </Col>
           <Col md={4} sm={12}>
-            
+            <ComplianceStatus />
           </Col>
           <Col md={4} sm={12}>
            

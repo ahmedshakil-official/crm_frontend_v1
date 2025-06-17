@@ -113,7 +113,7 @@ const ClientGrowth: React.FC = () => {
 
   return (
     <Card className="bg-white p-4 shadow-sm">
-      <h3 className="mb-4 text-lg font-semibold">Client Growth</h3>
+      <h4 className="mb-4 text-lg font-semibold">Client Growth</h4>
       <Chart
         options={options as any}
         series={series}
