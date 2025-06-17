@@ -9,9 +9,9 @@ const OrganisationContainer = () => {
   return (
     <>
       <OrganisationBreadcrumbs
-        mainTitle="Organisation"
+        mainTitle="Organisation Dashboard"
         title="Hello there!"
-        activePage="Dashboard"
+        activePage="Organisation"
       />
       <Container fluid>
         <Row>

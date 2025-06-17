@@ -126,7 +126,7 @@ const Menulist: React.FC<MenuListType> = ({
                 </h6>
               )}
               {item.badge && (
-                <Badge pill color="primary" className="ms-auto">
+                <Badge pill color="primary" className="ms-0">
                   {item.badge}
                 </Badge>
               )}
