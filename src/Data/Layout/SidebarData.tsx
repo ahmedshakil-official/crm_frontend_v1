@@ -12,7 +12,7 @@ const NetworkAdminMenu: MenuItem[] = [
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
-        badge: "",
+        badge: "1",
         lanClass: "lan-3",
         children: [
           {
@@ -27,6 +27,7 @@ const NetworkAdminMenu: MenuItem[] = [
         title: "Directors",
         icon: "Profile",
         type: "sub",
+        badge: "4",
         children: [
           {
             path: "/dashboard/network/directors/leads",
@@ -54,6 +55,7 @@ const NetworkAdminMenu: MenuItem[] = [
         title: "Cases",
         icon: "Pie",
         type: "sub",
+        badge: "3",
         children: [
           {
             path: "/dashboard/network/cases",
@@ -76,6 +78,7 @@ const NetworkAdminMenu: MenuItem[] = [
         title: "User Settings",
         type: "sub",
         icon: "Setting",
+        badge: "3",
         lanClass: "lan-4",
         children: [
           {
@@ -116,7 +119,7 @@ const AdvisorMenu: MenuItem[] = [
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
-        badge: "",
+        badge: "1",
         lanClass: "lan-3",
         children: [
           {
@@ -130,6 +133,7 @@ const AdvisorMenu: MenuItem[] = [
         title: "Directors",
         icon: "Profile",
         type: "sub",
+        badge: "4",
         children: [
           {
             path: "/dashboard/organisation/directors/leads",
@@ -157,6 +161,7 @@ const AdvisorMenu: MenuItem[] = [
         title: "Cases",
         icon: "Pie",
         type: "sub",
+        badge: "3",
         children: [
           {
             path: "/dashboard/organisation/cases",
@@ -191,7 +196,7 @@ const LeadMenu: MenuItem[] = [
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
-        badge: "",
+        badge: "1",
         lanClass: "lan-3",
         children: [
           {

@@ -1,30 +1,45 @@
-import { Container, Row } from "reactstrap";
-import Advisers from "../../CommonComponents/Directors/Advisers/Advisers";
-import Clients from "../../CommonComponents/Directors/Clients/Clients";
-import Introducers from "../../CommonComponents/Directors/Introducers/Introducers";
-import Leads from "../../CommonComponents/Directors/Leads/Leads";
+import { Col, Container, Row } from "reactstrap";
 import OrganisationBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import CaseCompletionOverTime from "./CaseCompletionOverTime/CaseCompletionOverTime";
+import ClientGrowth from "./ClientGrowth/ClientGrowth";
+import ComplianceStatus from "./ComplianceStatus/ComplianceStatus";
+import DashboardOverview from "./DashboardOverview/DashboardOverview";
+import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
+import TopPerformingAdvisers from "./TopPerformingAdvisers/TopPerformingAdvisers";
 
 const OrganisationContainer = () => {
   return (
     <>
       <OrganisationBreadcrumbs
-        mainTitle="Organisation"
-        title="Hello there!"
-        activePage="Dashboard"
+        mainTitle="Organisation Dashboard"
+        title="Hello there! Welcome back"
+        activePage="Organisation"
       />
       <Container fluid>
+        {/* 1st row  */}
         <Row>
-          <Leads leadsPerPage={5} />
+          <DashboardOverview />
         </Row>
+        {/* 2nd row  */}
         <Row>
-          <Clients clientsPerPage={5} />
+          <Col md={6} sm={12}>
+            <MonthlyRevenueTrend />
+          </Col>
+          <Col md={6} sm={12}>
+            <CaseCompletionOverTime />
+          </Col>
         </Row>
+        {/* 3rd row  */}
         <Row>
-          <Advisers advisersPerPage={5} />
-        </Row>
-        <Row>
-          <Introducers introducersPerPage={5} />
+          <Col md={4} sm={12}>
+            <ClientGrowth />
+          </Col>
+          <Col md={4} sm={12}>
+            <ComplianceStatus />
+          </Col>
+          <Col md={4} sm={12}>
+            <TopPerformingAdvisers />
+          </Col>
         </Row>
       </Container>
     </>
