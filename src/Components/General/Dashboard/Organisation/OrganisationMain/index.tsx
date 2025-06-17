@@ -1,10 +1,11 @@
 import { Col, Container, Row } from "reactstrap";
 import OrganisationBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import CaseCompletionOverTime from "./CaseCompletionOverTime/CaseCompletionOverTime";
-import DashboardOverview from "./DashboardOverview/DashboardOverview";
-import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
 import ClientGrowth from "./ClientGrowth/ClientGrowth";
 import ComplianceStatus from "./ComplianceStatus/ComplianceStatus";
+import DashboardOverview from "./DashboardOverview/DashboardOverview";
+import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
+import TopPerformingAdvisers from "./TopPerformingAdvisers/TopPerformingAdvisers";
 
 const OrganisationContainer = () => {
   return (
@@ -15,9 +16,11 @@ const OrganisationContainer = () => {
         activePage="Organisation"
       />
       <Container fluid>
+        {/* 1st row  */}
         <Row>
           <DashboardOverview />
         </Row>
+        {/* 2nd row  */}
         <Row>
           <Col md={6} sm={12}>
             <MonthlyRevenueTrend />
@@ -26,6 +29,7 @@ const OrganisationContainer = () => {
             <CaseCompletionOverTime />
           </Col>
         </Row>
+        {/* 3rd row  */}
         <Row>
           <Col md={4} sm={12}>
             <ClientGrowth />
@@ -34,7 +38,7 @@ const OrganisationContainer = () => {
             <ComplianceStatus />
           </Col>
           <Col md={4} sm={12}>
-           
+            <TopPerformingAdvisers />
           </Col>
         </Row>
       </Container>

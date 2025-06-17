@@ -84,7 +84,7 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-sack-dollar bg-primary p-2 rounded-2"></i>
+                <i className="fa-solid fa-coins bg-primary p-2 rounded-2"></i>
               </div>
             </div>
           </CardBody>
