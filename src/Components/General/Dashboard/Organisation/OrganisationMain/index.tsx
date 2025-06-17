@@ -1,5 +1,6 @@
 import { Col, Container, Row } from "reactstrap";
 import OrganisationBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import CaseCompletionOverTime from "./CaseCompletionOverTime/CaseCompletionOverTime";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
 
@@ -19,7 +20,9 @@ const OrganisationContainer = () => {
           <Col md={6} sm={12}>
             <MonthlyRevenueTrend />
           </Col>
-          <Col md={6} sm={12}></Col>
+          <Col md={6} sm={12}>
+            <CaseCompletionOverTime />
+          </Col>
         </Row>
       </Container>
     </>
