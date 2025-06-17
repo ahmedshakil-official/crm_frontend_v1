@@ -1,6 +1,7 @@
-import { Container, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import OrganisationBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
+import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
 
 const OrganisationContainer = () => {
   return (
@@ -13,6 +14,12 @@ const OrganisationContainer = () => {
       <Container fluid>
         <Row>
           <DashboardOverview />
+        </Row>
+        <Row>
+          <Col md={6} sm={12}>
+            <MonthlyRevenueTrend />
+          </Col>
+          <Col md={6} sm={12}></Col>
         </Row>
       </Container>
     </>
