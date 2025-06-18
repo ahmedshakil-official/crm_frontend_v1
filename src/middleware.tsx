@@ -9,22 +9,33 @@ export default withAuth(
 
     // Role-based path protection
     if (path.startsWith("/dashboard/admin") && token?.user_type !== "ADMIN") {
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      const loginUrl = new URL("/auth/login", req.url);
+      loginUrl.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(loginUrl);
     }
+
     if (
       path.startsWith("/dashboard/network") &&
       token?.user_type !== "NETWORK_ADMIN"
     ) {
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      const loginUrl = new URL("/auth/login", req.url);
+      loginUrl.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(loginUrl);
     }
+
     if (path.startsWith("/dashboard/client") && token?.user_type !== "LEAD") {
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      const loginUrl = new URL("/auth/login", req.url);
+      loginUrl.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(loginUrl);
     }
+
     if (
       path.startsWith("/dashboard/organisation") &&
       token?.user_type !== "ADVISOR"
     ) {
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      const loginUrl = new URL("/auth/login", req.url);
+      loginUrl.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(loginUrl);
     }
 
     return NextResponse.next();
