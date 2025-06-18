@@ -6,6 +6,7 @@ import ComplianceStatus from "./ComplianceStatus/ComplianceStatus";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
 import TopPerformingAdvisers from "./TopPerformingAdvisers/TopPerformingAdvisers";
+import DocumentApprovalQueue from "./DocumentApprovalQueue/DocumentApprovalQueue";
 
 const OrganisationContainer = () => {
   return (
@@ -38,6 +39,15 @@ const OrganisationContainer = () => {
             <ComplianceStatus />
           </Col>
           <Col md={4} sm={12}>
+            <TopPerformingAdvisers />
+          </Col>
+        </Row>
+        {/* 4th row  */}
+        <Row>
+          <Col md={6} sm={12}>
+            <DocumentApprovalQueue />
+          </Col>
+          <Col md={6} sm={12}>
             <TopPerformingAdvisers />
           </Col>
         </Row>
