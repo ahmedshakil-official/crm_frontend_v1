@@ -50,7 +50,7 @@ const MonthlyRevenueTrend: React.FC = () => {
     },
     yaxis: {
       labels: {
-        formatter: (value: number) => `$${value.toLocaleString()}`,
+        formatter: (value: number) => `£${value.toLocaleString()}`,
         style: {
           colors: "#666",
           fontSize: "12px",
@@ -63,7 +63,7 @@ const MonthlyRevenueTrend: React.FC = () => {
     },
     tooltip: {
       y: {
-        formatter: (value: number) => `$${value.toLocaleString()}`,
+        formatter: (value: number) => `£${value.toLocaleString()}`,
       },
     },
     colors: ["#7c3aed"],
@@ -72,7 +72,7 @@ const MonthlyRevenueTrend: React.FC = () => {
   const series = [
     {
       name: "Revenue",
-      data: [45000, 48000, 45000, 60000, 55000, 65000],
+      data: [5000, 48000, 45000, 30000, 55000, 65000],
     },
   ];
 
