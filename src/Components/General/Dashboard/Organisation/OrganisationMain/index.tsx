@@ -4,9 +4,10 @@ import CaseCompletionOverTime from "./CaseCompletionOverTime/CaseCompletionOverT
 import ClientGrowth from "./ClientGrowth/ClientGrowth";
 import ComplianceStatus from "./ComplianceStatus/ComplianceStatus";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
-import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
-import TopPerformingAdvisers from "./TopPerformingAdvisers/TopPerformingAdvisers";
 import DocumentApprovalQueue from "./DocumentApprovalQueue/DocumentApprovalQueue";
+import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
+import RecentAuditLogs from "./RecentAuditLogs/RecentAuditLogs";
+import TopPerformingAdvisers from "./TopPerformingAdvisers/TopPerformingAdvisers";
 
 const OrganisationContainer = () => {
   return (
@@ -48,7 +49,7 @@ const OrganisationContainer = () => {
             <DocumentApprovalQueue />
           </Col>
           <Col md={6} sm={12}>
-            <TopPerformingAdvisers />
+            <RecentAuditLogs />
           </Col>
         </Row>
       </Container>
