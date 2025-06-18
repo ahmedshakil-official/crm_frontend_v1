@@ -89,7 +89,7 @@ const ProductPenetration = () => {
         </div>
         <CardBody className="p-1">
           <Table responsive hover className="rounded-3 overflow-hidden">
-            <thead className="bg-primary small text-center">
+            <thead className="bg-light-primary small text-center">
               <tr>
                 <th className="border-0 small">RANK</th>
                 <th className="border-0 small">MORTGAGE ADVISOR</th>

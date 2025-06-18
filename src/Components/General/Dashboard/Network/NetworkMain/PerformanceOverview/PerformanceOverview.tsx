@@ -29,7 +29,7 @@ const PerformanceOverview: React.FC = () => {
                 ↑ + 12%
               </span>
             </div>
-            <h2 className="mb-0 mt-4">$10,565,328</h2>
+            <h2 className="mb-0 mt-4">£10,565,328</h2>
           </CardBody>
         </Card>
       </Col>

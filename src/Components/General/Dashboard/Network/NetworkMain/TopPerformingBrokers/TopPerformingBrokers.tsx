@@ -67,7 +67,7 @@ const TopPerformingBrokers: React.FC = () => {
                 </div>
               </div>
               <div className="text-end ms-3">
-                <div className="fs-6 fw-medium mb-1">${broker.amount}M</div>
+                <div className="fs-6 fw-medium mb-1">£{broker.amount}M</div>
                 <div className="small text-muted">{broker.deals} deals</div>
               </div>
             </div>
