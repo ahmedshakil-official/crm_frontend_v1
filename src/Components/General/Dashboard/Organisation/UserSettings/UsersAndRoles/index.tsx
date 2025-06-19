@@ -1,6 +1,7 @@
 import { Container } from "reactstrap";
 import OrganisationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 import UsersAndRolesOverview from "./UsersAndRolesOverview/UsersAndRolesOverview";
+import UsersAndRolesTabs from "./UsersAndRolesTabs/UsersAndRolesTabs";
 
 const UsersAndRolesContainer: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const UsersAndRolesContainer: React.FC = () => {
       />
       <Container fluid>
         <UsersAndRolesOverview />
+        <UsersAndRolesTabs />
       </Container>
     </>
   );
