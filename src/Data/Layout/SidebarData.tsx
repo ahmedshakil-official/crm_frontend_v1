@@ -78,7 +78,7 @@ const NetworkAdminMenu: MenuItem[] = [
         title: "User Settings",
         type: "sub",
         icon: "Setting",
-        badge: "3",
+        badge: "4",
         lanClass: "lan-4",
         children: [
           {
