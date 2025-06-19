@@ -92,7 +92,7 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
         <CardBody>
           <Row>
             {filterIcon && (
-              <Card className="shadow-lg p-3 rounded-1">
+              <Card className="shadow-lg p-3 rounded-3">
                 <Row className="justify-content-center text-center g-3">
                   <Col xs="12" sm="6" md="4" lg="2">
                     <Input type="select" id="1" className="py-1">
