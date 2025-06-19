@@ -104,7 +104,7 @@ const RolesPermissionsTab: React.FC = () => {
           <Card
             key={role.name}
             className={`flex-fill text-center rounded-3 ${
-              selectedRole === role.name ? "border-primary" : ""
+              selectedRole === role.name ? `border-${role.color}` : ""
             }`}
             style={{ cursor: "pointer", minWidth: 180 }}
             onClick={() => setSelectedRole(role.name)}
