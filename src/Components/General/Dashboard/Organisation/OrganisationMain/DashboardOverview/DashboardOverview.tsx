@@ -4,7 +4,7 @@ const DashboardOverview: React.FC = () => {
   return (
     <Row>
       {/* Total Advisers */}
-      <Col md={2} sm={4} className="mb-3">
+      <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
         <Card className="border-0 rounded-3 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
@@ -26,7 +26,7 @@ const DashboardOverview: React.FC = () => {
       </Col>
 
       {/* Active Clients */}
-      <Col md={2} sm={4} className="mb-3">
+      <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
         <Card className="border-0 rounded-3 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
@@ -48,7 +48,7 @@ const DashboardOverview: React.FC = () => {
       </Col>
 
       {/* Cases In Progress */}
-      <Col md={2} sm={4} className="mb-3">
+      <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
         <Card className="border-0 rounded-3 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
@@ -70,7 +70,7 @@ const DashboardOverview: React.FC = () => {
       </Col>
 
       {/* Revenue This Month */}
-      <Col md={2} sm={4} className="mb-3">
+      <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
         <Card className="border-0 rounded-3 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
@@ -92,7 +92,7 @@ const DashboardOverview: React.FC = () => {
       </Col>
 
       {/* Compliance Status */}
-      <Col md={2} sm={4} className="mb-3">
+      <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
         <Card className="border-0 rounded-3 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
@@ -112,7 +112,7 @@ const DashboardOverview: React.FC = () => {
       </Col>
 
       {/* New Card: Employee Satisfaction */}
-      <Col md={2} sm={4} className="mb-3">
+      <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
         <Card className="border-0 rounded-3 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">

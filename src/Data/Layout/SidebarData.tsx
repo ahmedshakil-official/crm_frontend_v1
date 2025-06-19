@@ -180,6 +180,31 @@ const AdvisorMenu: MenuItem[] = [
           },
         ],
       },
+      {
+        title: "User Settings",
+        type: "sub",
+        icon: "Setting",
+        badge: "3",
+        lanClass: "lan-4",
+        children: [
+          {
+            path: "/dashboard/organisation/usersettings/usersandroles",
+            title: "User & Roles",
+            type: "link",
+          },
+          {
+            path: "/dashboard/organisation/usersettings/workflowsandintegrations",
+            title: "Workflows & Integrations",
+            type: "link",
+          },
+          {
+            path: "/dashboard/organisation/usersettings/reportsandlogs",
+            title: "Reports & Logs",
+            type: "link",
+          }
+        ],
+      },
+
     ],
   },
 ];
