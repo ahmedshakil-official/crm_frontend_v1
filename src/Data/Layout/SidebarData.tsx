@@ -189,7 +189,7 @@ const AdvisorMenu: MenuItem[] = [
         children: [
           {
             path: "/dashboard/organisation/usersettings/usersandroles",
-            title: "User & Roles",
+            title: "Users & Roles",
             type: "link",
           },
           {
