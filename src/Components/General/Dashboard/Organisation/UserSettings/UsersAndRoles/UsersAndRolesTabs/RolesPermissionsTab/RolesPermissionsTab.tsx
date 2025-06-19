@@ -98,7 +98,7 @@ const RolesPermissionsTab: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState("Principal");
 
   return (
-    <div className="mt-4">
+    <div className="mt-2">
       <div className="d-flex gap-3 mb-4">
         {mockRoles.map((role) => (
           <Card

@@ -8,7 +8,7 @@ const UsersAndRolesTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"users" | "roles">("users");
 
   return (
-    <div className="container mt-4">
+    <div> 
       <Nav tabs>
         <NavItem>
           <NavLink
