@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { Button, Card, Col, Input, Label, Row, Table } from "reactstrap";
+import {
+  Button,
+  Card,
+  Col,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Input,
+  Label,
+  Row,
+  Table,
+  UncontrolledDropdown,
+} from "reactstrap";
 
 const mockUsers = [
   {
@@ -211,9 +223,33 @@ const UsersTab: React.FC = () => {
                   <Button color="success" size="sm">
                     <i className="fa-solid fa-user-pen"></i>
                   </Button>
-                  <Button color="primary" size="sm">
-                    <i className="fa-solid fa-ellipsis"></i>
-                  </Button>
+                  <UncontrolledDropdown>
+                    <DropdownToggle color="primary" size="sm" caret={false}>
+                      <i className="fa-solid fa-ellipsis"></i>
+                    </DropdownToggle>
+                    <DropdownMenu end className="p-1 mt-1 small">
+                      <DropdownItem header className="fw-bold">
+                        User Actions
+                      </DropdownItem>
+                      <DropdownItem>
+                        <i className="fa-solid fa-shield-halved me-2"></i>
+                        Manage Permissions
+                      </DropdownItem>
+                      <DropdownItem>
+                        <i className="fa-solid fa-key me-2"></i>
+                        Reset Password
+                      </DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem className="text-warning">
+                        <i className="fa-solid fa-user-xmark me-2"></i>
+                        Deactivate User
+                      </DropdownItem>
+                      <DropdownItem className="text-danger">
+                        <i className="fa-solid fa-trash me-2"></i>
+                        Delete User
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
                 </div>
               </td>
             </tr>
