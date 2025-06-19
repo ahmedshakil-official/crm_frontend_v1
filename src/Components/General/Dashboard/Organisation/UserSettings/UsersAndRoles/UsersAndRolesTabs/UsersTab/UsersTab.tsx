@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Input, Table } from "reactstrap";
+import React, { useState } from "react";
+import { Button, Card, Col, Input, Label, Row, Table } from "reactstrap";
 
 const mockUsers = [
   {
@@ -46,6 +46,10 @@ const mockUsers = [
 ];
 
 const UsersTab: React.FC = () => {
+  const [filterIcon, setFilterIcon] = useState(false);
+  const toggleFilterIcon = () => {
+    setFilterIcon(!filterIcon);
+  };
   return (
     <div className="mt-4">
       <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
@@ -55,7 +59,64 @@ const UsersTab: React.FC = () => {
           type="text"
           style={{ padding: "10px 10px" }}
         />
-        <Button color="secondary">Filters</Button>
+        <Button onClick={toggleFilterIcon} color="success" className="me-2">
+          {filterIcon ? (
+            <i className="fa-solid fa-filter-circle-xmark"></i>
+          ) : (
+            <i className="fa-solid fa-filter"></i>
+          )}
+        </Button>
+      </div>
+      <div>
+        {filterIcon && (
+          <Card className="shadow-lg p-3 rounded-3 bg-light-success">
+            <Row className="justify-content-center g-3">
+              <Col xs="12" sm="6" md="4" lg="3">
+                <Label>Role</Label>
+                <Input type="select" id="1" className="py-1">
+                  <option value="">Select...</option>
+                  <option value="1">Principal</option>
+                  <option value="2">Adviser</option>
+                  <option value="3">Admin</option>
+                  <option value="4">Support</option>
+                </Input>
+              </Col>
+              <Col xs="12" sm="6" md="4" lg="3">
+                <Label>Status</Label>
+                <Input type="select" id="2" className="py-1">
+                  <option value="">Select...</option>
+                  <option value="1">Active</option>
+                  <option value="2">Inactive</option>
+                  <option value="3">Pending</option>
+                </Input>
+              </Col>
+              <Col xs="12" sm="6" md="4" lg="3">
+                <Label>Department</Label>
+                <Input type="select" id="3" className="py-1">
+                  <option value="">Select...</option>
+                  <option value="1">Leadership</option>
+                  <option value="2">Wealth Management</option>
+                  <option value="3">Accounting</option>
+                  <option value="4">Support</option>
+                  <option value="5">Other</option>
+                </Input>
+              </Col>
+              {/* Clear All Filters Button */}
+              <Col xs="12" sm="6" md="4" lg="3">
+                <div>
+                  <Label>Clear All Filters</Label>
+                  <Button
+                    outline
+                    className="btn btn-outline-danger w-100 d-flex justify-content-center align-items-center gap-1"
+                  >
+                    <span>Clear</span>
+                    <i className="fa-solid fa-xmark"></i>
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          </Card>
+        )}
       </div>
       <Table hover responsive className="rounded-3 overflow-hidden">
         <thead className="text-center bg-light-primary">
