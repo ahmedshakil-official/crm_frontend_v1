@@ -9,32 +9,46 @@ const UsersAndRolesTabs: React.FC = () => {
 
   return (
     <div>
-      <Nav tabs>
-        <NavItem>
-          <NavLink
-            className={classnames({
-              active: activeTab === "users",
-              "text-primary": activeTab === "users",
-            })}
-            onClick={() => setActiveTab("users")}
-            style={{ cursor: "pointer" }}
-          >
-            Users
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({
-              active: activeTab === "roles",
-              "text-primary": activeTab === "roles",
-            })}
-            onClick={() => setActiveTab("roles")}
-            style={{ cursor: "pointer" }}
-          >
-            Roles & Permissions
-          </NavLink>
-        </NavItem>
-      </Nav>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({
+                active: activeTab === "users",
+                "text-primary": activeTab === "users",
+              })}
+              onClick={() => setActiveTab("users")}
+              style={{ cursor: "pointer" }}
+            >
+              <i className="fa-solid fa-user-group me-1"></i>Users
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({
+                active: activeTab === "roles",
+                "text-primary": activeTab === "roles",
+              })}
+              onClick={() => setActiveTab("roles")}
+              style={{ cursor: "pointer" }}
+            >
+              <i className="fa-solid fa-unlock-keyhole me-1"></i>Roles &
+              Permissions
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <div className="d-flex gap-2">
+          <button className="btn btn-outline-secondary">
+            <i className="fa-solid fa-download"></i> Export
+          </button>
+          <button className="btn btn-outline-success border">
+            <i className="fa-solid fa-upload"></i> Import
+          </button>
+          <button className="btn btn-primary">
+            <i className="fa-solid fa-user-plus me-"></i> Add User
+          </button>
+        </div>
+      </div>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="users">{activeTab === "users" && <UsersTab />}</TabPane>
         <TabPane tabId="roles">
