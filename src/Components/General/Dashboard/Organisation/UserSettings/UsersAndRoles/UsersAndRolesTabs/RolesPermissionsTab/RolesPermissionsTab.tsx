@@ -235,7 +235,7 @@ const RolesPermissionsTab: React.FC = () => {
         {mockRoles.map((role) => (
           <Card
             key={role.name}
-            className={`flex-fill text-center rounded-3 ${
+            className={`mb-3 flex-fill text-center rounded-3 ${
               selectedRole === role.name ? `border-${role.color}` : ""
             }`}
             style={{ cursor: "pointer", minWidth: 180 }}
