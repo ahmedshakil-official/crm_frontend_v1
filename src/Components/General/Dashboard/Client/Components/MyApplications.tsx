@@ -37,7 +37,7 @@ const MyApplications: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {applications?.map((app: SingleClientApplicationProps) => (
+            {applications?.results?.map((app: SingleClientApplicationProps) => (
               <tr key={app.name}>
                 <td>
                   <Link

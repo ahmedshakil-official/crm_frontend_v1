@@ -1,3 +1,8 @@
+import { useGetCasesQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
+import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
+import { AdviserInfoProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
@@ -18,12 +23,6 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-
-import { useGetCasesQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
-import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
-import { AdviserInfoProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
-import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import "../Cases.css";
 import AddNewCaseModal from "./Modals/AddNewCaseModal";
 import DeleteCaseModal from "./Modals/DeleteCaseModal";
@@ -36,7 +35,7 @@ const Cases: React.FC = () => {
   const [currentCase, setCurrentCase] = useState<CaseInfoPrpos | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [casesPerPage] = useState(20);
+  const [casesPerPage] = useState(10);
   const [filterIcon, setFilterIcon] = useState(false);
   const [isDeleteCaseModalOpen, setIsDeleteCaseModalOpen] = useState(false);
 
@@ -52,6 +51,7 @@ const Cases: React.FC = () => {
 
   const { data: adviserData, isLoading: isAdviserLoading } =
     useGetAdviserDetailsQuery(undefined);
+
   const { data: caseData, isLoading: isCaseLoading } = useGetCasesQuery({
     search: searchQuery,
     ...filters,
@@ -87,10 +87,10 @@ const Cases: React.FC = () => {
     setCurrentPage(1);
   };
 
-  // Pagination Logic (assuming caseData is an array or has total)
-  const pageCount = caseData?.total
-    ? Math.ceil(caseData.total / casesPerPage)
-    : Math.ceil((caseData?.length || 0) / casesPerPage);
+  // Calculate total pages
+  const pageCount = caseData?.count
+    ? Math.ceil(caseData.count / casesPerPage)
+    : 1;
 
   // Function to generate role-based URL for case details
   const getCaseUrl = (caseAlias: string) => {
@@ -105,7 +105,7 @@ const Cases: React.FC = () => {
       case "ADVISOR":
         return `/dashboard/organisation/cases/${caseAlias}`;
       default:
-        return `url not found`;
+        return "#";
     }
   };
 
@@ -157,7 +157,6 @@ const Cases: React.FC = () => {
           </Col>
         </Row>
       </CardHeader>
-
       <CardBody className="p-0 m-0">
         {filterIcon && (
           <Card className="shadow-lg rounded-1 p-3 mt-3">
@@ -239,7 +238,6 @@ const Cases: React.FC = () => {
             </Row>
           </Card>
         )}
-
         <Row>
           <Table hover responsive className="mt-3">
             <thead className="thead-light text-center">
@@ -261,24 +259,24 @@ const Cases: React.FC = () => {
                     <Spinner color="primary" />
                   </td>
                 </tr>
-              ) : caseData?.length > 0 ? ( // Assuming caseData is an array
-                caseData.map((caseItem: CaseInfoPrpos) => (
-                  <tr key={caseItem?.alias}>
+              ) : caseData?.results?.length > 0 ? (
+                caseData.results.map((caseItem: CaseInfoPrpos) => (
+                  <tr key={caseItem.alias}>
                     <td>
                       <Link
                         className="text_decoration_hover"
-                        href={getCaseUrl(caseItem?.alias)}
+                        href={getCaseUrl(caseItem.alias)}
                       >
-                        {caseItem?.name}
+                        {caseItem.name}
                       </Link>
                     </td>
                     <td>
-                      {caseItem?.lead_user
-                        ? `${caseItem?.lead_user.first_name} ${caseItem?.lead_user.last_name}`
+                      {caseItem.lead_user
+                        ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
                         : "-"}
                     </td>
                     <td>
-                      {caseItem?.lead_user.phone ? (
+                      {caseItem.lead_user.phone ? (
                         <a
                           href={`tel:${caseItem.lead_user.phone}`}
                           className="text-black text_decoration_hover"
@@ -290,7 +288,7 @@ const Cases: React.FC = () => {
                       )}
                     </td>
                     <td>
-                      {caseItem?.case_category
+                      {caseItem.case_category
                         .split("_")
                         .map(
                           (word) =>
@@ -300,7 +298,7 @@ const Cases: React.FC = () => {
                         .join(" ")}
                     </td>
                     <td>
-                      {caseItem?.case_stage
+                      {caseItem.case_stage
                         .split("_")
                         .map(
                           (word) =>
@@ -309,15 +307,15 @@ const Cases: React.FC = () => {
                         )
                         .join(" ")}
                     </td>
-                    <td>{formatDateToDMYAndTime(caseItem?.created_at)}</td>
+                    <td>{formatDateToDMYAndTime(caseItem.created_at)}</td>
                     <td>
                       <p className="m-0">
-                        {caseItem?.created_by?.first_name}{" "}
-                        {caseItem?.created_by?.last_name}
+                        {caseItem.created_by?.first_name}{" "}
+                        {caseItem.created_by?.last_name}
                       </p>
                       <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
                         (
-                        {caseItem?.created_by?.user_type
+                        {caseItem.created_by?.user_type
                           ?.split("_")
                           .map(
                             (word) =>
@@ -365,12 +363,15 @@ const Cases: React.FC = () => {
           <div className="d-flex justify-content-between px-4 py-3">
             <div>
               <p className="text-success">
-                {/* Showing {caseData?.total ? ((currentPage - 1) * casesPerPage + 1) : 0} to {Math.min(currentPage * casesPerPage, caseData?.total || 0)} of {caseData?.total || 0} cases */}
-                Showing 1 to {caseData?.length || 0} of {caseData?.length || 0}{" "}
-                cases
+                Showing{" "}
+                {caseData?.results?.length
+                  ? (currentPage - 1) * casesPerPage + 1
+                  : 0}{" "}
+                to {Math.min(currentPage * casesPerPage, caseData?.count || 0)}{" "}
+                of {caseData?.count || 0} cases
               </p>
             </div>
-            <Pagination>
+            {/* <Pagination>
               <PaginationItem disabled={currentPage === 1}>
                 <PaginationLink first onClick={() => setCurrentPage(1)} />
               </PaginationItem>
@@ -401,12 +402,98 @@ const Cases: React.FC = () => {
                   onClick={() => setCurrentPage(pageCount)}
                 />
               </PaginationItem>
+            </Pagination> */}
+            <Pagination>
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink first onClick={() => setCurrentPage(1)} />
+              </PaginationItem>
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink
+                  previous
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                />
+              </PaginationItem>
+
+              {/* Generate visible page numbers */}
+              {(() => {
+                const pages = [];
+                const total = pageCount;
+                const currentPageNumber = currentPage;
+
+                let start = Math.max(2, currentPageNumber - 2);
+                let end = Math.min(total - 1, currentPageNumber + 2);
+
+                // Always show page 1
+                pages.push(
+                  <PaginationItem key={1} active={currentPageNumber === 1}>
+                    <PaginationLink onClick={() => setCurrentPage(1)}>
+                      1
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+
+                // Add ellipsis if needed before middle pages
+                if (start > 2) {
+                  pages.push(
+                    <PaginationItem key="ellipsis-start" disabled>
+                      <PaginationLink>...</PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+
+                // Show middle pages
+                for (let i = start; i <= end; i++) {
+                  pages.push(
+                    <PaginationItem key={i} active={currentPageNumber === i}>
+                      <PaginationLink onClick={() => setCurrentPage(i)}>
+                        {i}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+
+                // Add ellipsis if needed after middle pages
+                if (end < total - 1) {
+                  pages.push(
+                    <PaginationItem key="ellipsis-end" disabled>
+                      <PaginationLink>...</PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+
+                // Always show last page
+                if (total > 1) {
+                  pages.push(
+                    <PaginationItem
+                      key={total}
+                      active={currentPageNumber === total}
+                    >
+                      <PaginationLink onClick={() => setCurrentPage(total)}>
+                        {total}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+
+                return pages;
+              })()}
+
+              <PaginationItem disabled={currentPage === pageCount}>
+                <PaginationLink
+                  next
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                />
+              </PaginationItem>
+              <PaginationItem disabled={currentPage === pageCount}>
+                <PaginationLink
+                  last
+                  onClick={() => setCurrentPage(pageCount)}
+                />
+              </PaginationItem>
             </Pagination>
           </div>
-          {/* Pagination */}
         </Row>
       </CardBody>
-
       <AddNewCaseModal
         isOpen={isAddNewCaseModalOpen}
         toggle={toggleAddNewCaseModal}
