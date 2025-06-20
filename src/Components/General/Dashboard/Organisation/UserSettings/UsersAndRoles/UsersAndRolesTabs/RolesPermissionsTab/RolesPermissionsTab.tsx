@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardBody } from "reactstrap";
+import { Card, CardBody, Input } from "reactstrap";
 
 const mockRoles = [
   { name: "Principal", color: "primary", users: 2, icon: "fa-crown" },
@@ -15,7 +15,7 @@ const mockPermissions: Record<
   Principal: [
     {
       category: "Dashboard Access",
-      permissions: ["View dashboard", "Access analytics"],
+      permissions: ["View dashboard", "Access analytics", "Export reports"],
     },
     {
       category: "Client Management",
@@ -67,27 +67,156 @@ const mockPermissions: Record<
   Adviser: [
     {
       category: "Dashboard Access",
-      permissions: ["View dashboard", "Access analytics"],
+      permissions: ["View dashboard", "Access analytics", "Export reports"],
     },
     {
       category: "Client Management",
-      permissions: ["View all clients", "Edit client info", "Add new clients"],
+      permissions: [
+        "View all clients",
+        "Edit client info",
+        "Add new clients",
+        "Delete clients",
+      ],
     },
     {
       category: "Case Management",
-      permissions: ["View all cases", "Update case status", "Create new cases"],
+      permissions: [
+        "View all cases",
+        "Update case status",
+        "Create new cases",
+        "Assign cases",
+      ],
     },
     {
       category: "Document Management",
-      permissions: ["View documents", "Share documents", "Upload documents"],
+      permissions: [
+        "View documents",
+        "Share documents",
+        "Upload documents",
+        "Delete documents",
+      ],
     },
     {
       category: "User Management",
-      permissions: ["View users", "Edit user roles"],
+      permissions: [
+        "View users",
+        "Edit user roles",
+        "Add users",
+        "Deactivate users",
+      ],
     },
     {
       category: "System Settings",
-      permissions: ["View settings", "Manage integrations"],
+      permissions: [
+        "View settings",
+        "Manage integrations",
+        "Modify workflows",
+        "System configuration",
+      ],
+    },
+    { category: "Reports", permissions: ["Export reports"] },
+  ],
+  Admin: [
+    {
+      category: "Dashboard Access",
+      permissions: ["View dashboard", "Access analytics", "Export reports"],
+    },
+    {
+      category: "Client Management",
+      permissions: [
+        "View all clients",
+        "Edit client info",
+        "Add new clients",
+        "Delete clients",
+      ],
+    },
+    {
+      category: "Case Management",
+      permissions: [
+        "View all cases",
+        "Update case status",
+        "Create new cases",
+        "Delete cases",
+      ],
+    },
+    {
+      category: "Document Management",
+      permissions: [
+        "View documents",
+        "Share documents",
+        "Upload documents",
+        "Delete documents",
+      ],
+    },
+    {
+      category: "User Management",
+      permissions: [
+        "View users",
+        "Edit user roles",
+        "Add users",
+        "Deactivate users",
+      ],
+    },
+    {
+      category: "System Settings",
+      permissions: [
+        "View settings",
+        "Manage integrations",
+        "Modify workflows",
+        "System configuration",
+      ],
+    },
+    { category: "Reports", permissions: ["Export reports"] },
+  ],
+  Support: [
+    {
+      category: "Dashboard Access",
+      permissions: ["View dashboard", "Access analytics", "Export reports"],
+    },
+    {
+      category: "Client Management",
+      permissions: [
+        "View all clients",
+        "Edit client info",
+        "Add new clients",
+        "Delete clients",
+      ],
+    },
+    {
+      category: "Case Management",
+      permissions: [
+        "View all cases",
+        "Update case status",
+        "Create new cases",
+        "Delete cases",
+      ],
+    },
+    {
+      category: "Document Management",
+      permissions: [
+        "View documents",
+        "Share documents",
+        "Upload documents",
+        "Delete documents",
+      ],
+    },
+    {
+      category: "User Management",
+      permissions: [
+        "View users",
+        "Edit user roles",
+        "Add users",
+        "Deactivate users",
+      ],
+    },
+    {
+      category: "System Settings",
+      permissions: [
+        "View settings",
+        "Manage integrations",
+        "Modify workflows",
+        "System configuration",
+      ],
     },
     { category: "Reports", permissions: ["Export reports"] },
   ],
@@ -96,9 +225,12 @@ const mockPermissions: Record<
 
 const RolesPermissionsTab: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState("Principal");
+  const [selectedPermissions, setSelectedPermissions] = useState<{
+    [category: string]: string | null;
+  }>({});
 
   return (
-    <div className="mt-2">
+    <div className="mt-3">
       <div className="d-flex gap-3">
         {mockRoles.map((role) => (
           <Card
@@ -142,33 +274,118 @@ const RolesPermissionsTab: React.FC = () => {
           </Card>
         ))}
       </div>
-      <div>
-        <h5 className="mb-3">{selectedRole} Permissions</h5>
+
+      <Card className="p-4 rounded-3">
+        <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
+          <div>
+            <h4 className="fw-bold d-flex align-items-center gap-2">
+              {(() => {
+                const selected = mockRoles.find(
+                  (role) => role.name === selectedRole
+                );
+                if (!selected) return null;
+                return (
+                  <span
+                    className={`d-flex align-items-center justify-content-center p-2 rounded-3 bg-${selected.color}`}
+                  >
+                    <i
+                      className={`fa-solid ${selected.icon} text-white`}
+                      style={{ fontSize: "12px" }}
+                    ></i>
+                  </span>
+                );
+              })()}
+              <span>{selectedRole} Permissions</span>
+            </h4>
+          </div>
+          <div className="d-flex justify-content-end gap-1">
+            <button className="btn btn-outline-danger me-2" type="button">
+              <i className="fa-solid fa-rotate-left me-1"></i> Reset
+            </button>
+            <button
+              className="btn btn-primary d-flex align-items-center"
+              type="button"
+            >
+              <i className="fa-regular fa-floppy-disk me-1"></i> Save Changes
+            </button>
+          </div>
+        </div>
         <div className="row">
           {(mockPermissions[selectedRole] || []).map((cat, idx) => (
-            <div className="col-md-4 mb-3" key={idx}>
-              <Card>
-                <CardBody>
-                  <strong>{cat.category}</strong>
-                  <ul className="list-unstyled mt-2">
-                    {cat.permissions.map((perm, i) => (
-                      <li key={i}>
-                        <input
-                          type="checkbox"
-                          checked
-                          readOnly
-                          className="me-2"
-                        />{" "}
-                        {perm}
-                      </li>
-                    ))}
-                  </ul>
-                </CardBody>
-              </Card>
+            <div className="col-md-6 mb-2" key={idx}>
+              <div className="fw-bold mb-2">{cat.category}</div>
+              <div className="row">
+                {(() => {
+                  // Split permissions into two columns
+                  const half = Math.ceil(cat.permissions.length / 2);
+                  const left = cat.permissions.slice(0, half);
+                  const right = cat.permissions.slice(half);
+                  return (
+                    <>
+                      <div className="col-6">
+                        <ul className="list-unstyled">
+                          {left.map((perm, i) => (
+                            <li
+                              key={i}
+                              className="mb-2 d-flex align-items-center"
+                            >
+                              <Input
+                                type="radio"
+                                name={`permission-${cat.category}-${selectedRole}`}
+                                value={perm}
+                                style={{ cursor: "pointer" }}
+                                checked={
+                                  selectedPermissions[cat.category] === perm
+                                }
+                                onChange={() =>
+                                  setSelectedPermissions((prev) => ({
+                                    ...prev,
+                                    [cat.category]: perm,
+                                  }))
+                                }
+                                className="me-2"
+                              />
+                              {perm}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="col-6">
+                        <ul className="list-unstyled">
+                          {right.map((perm, i) => (
+                            <li
+                              key={i}
+                              className="mb-2 d-flex align-items-center"
+                            >
+                              <Input
+                                type="radio"
+                                name={`permission-${cat.category}-${selectedRole}`}
+                                value={perm}
+                                style={{ cursor: "pointer" }}
+                                checked={
+                                  selectedPermissions[cat.category] === perm
+                                }
+                                onChange={() =>
+                                  setSelectedPermissions((prev) => ({
+                                    ...prev,
+                                    [cat.category]: perm,
+                                  }))
+                                }
+                                className="me-2"
+                              />
+                              {perm}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
             </div>
           ))}
         </div>
-      </div>
+      </Card>
     </div>
   );
 };
