@@ -329,46 +329,54 @@ const RolesPermissionsTab: React.FC = () => {
                               key={i}
                               className="mb-2 d-flex align-items-center"
                             >
-                              <Input
-                                type="checkbox"
-                                name={`permission-${cat.category}-${selectedRole}`}
-                                value={perm}
+                              <label
+                                className="d-flex align-items-center w-100"
                                 style={{ cursor: "pointer" }}
-                                checked={
-                                  Array.isArray(
-                                    selectedPermissions[cat.category]
-                                  ) &&
-                                  selectedPermissions[cat.category].includes(
-                                    perm
-                                  )
-                                }
-                                onChange={() => {
-                                  setSelectedPermissions((prev) => {
-                                    const prevSelected = Array.isArray(
-                                      prev[cat.category]
+                              >
+                                <Input
+                                  type="checkbox"
+                                  name={`permission-${cat.category}-${selectedRole}`}
+                                  value={perm}
+                                  style={{ cursor: "pointer" }}
+                                  checked={
+                                    Array.isArray(
+                                      selectedPermissions[cat.category]
+                                    ) &&
+                                    selectedPermissions[cat.category].includes(
+                                      perm
                                     )
-                                      ? prev[cat.category]
-                                      : [];
-                                    if (prevSelected.includes(perm)) {
-                                      // Remove
-                                      return {
-                                        ...prev,
-                                        [cat.category]: prevSelected.filter(
-                                          (p) => p !== perm
-                                        ),
-                                      };
-                                    } else {
-                                      // Add
-                                      return {
-                                        ...prev,
-                                        [cat.category]: [...prevSelected, perm],
-                                      };
-                                    }
-                                  });
-                                }}
-                                className="me-2"
-                              />
-                              {perm}
+                                  }
+                                  onChange={() => {
+                                    setSelectedPermissions((prev) => {
+                                      const prevSelected = Array.isArray(
+                                        prev[cat.category]
+                                      )
+                                        ? prev[cat.category]
+                                        : [];
+                                      if (prevSelected.includes(perm)) {
+                                        // Remove
+                                        return {
+                                          ...prev,
+                                          [cat.category]: prevSelected.filter(
+                                            (p) => p !== perm
+                                          ),
+                                        };
+                                      } else {
+                                        // Add
+                                        return {
+                                          ...prev,
+                                          [cat.category]: [
+                                            ...prevSelected,
+                                            perm,
+                                          ],
+                                        };
+                                      }
+                                    });
+                                  }}
+                                  className="me-2"
+                                />
+                                {perm}
+                              </label>
                             </li>
                           ))}
                         </ul>
@@ -380,46 +388,54 @@ const RolesPermissionsTab: React.FC = () => {
                               key={i}
                               className="mb-2 d-flex align-items-center"
                             >
-                              <Input
-                                type="checkbox"
-                                name={`permission-${cat.category}-${selectedRole}`}
-                                value={perm}
+                              <label
+                                className="d-flex align-items-center w-100"
                                 style={{ cursor: "pointer" }}
-                                checked={
-                                  Array.isArray(
-                                    selectedPermissions[cat.category]
-                                  ) &&
-                                  selectedPermissions[cat.category].includes(
-                                    perm
-                                  )
-                                }
-                                onChange={() => {
-                                  setSelectedPermissions((prev) => {
-                                    const prevSelected = Array.isArray(
-                                      prev[cat.category]
+                              >
+                                <Input
+                                  type="checkbox"
+                                  name={`permission-${cat.category}-${selectedRole}`}
+                                  value={perm}
+                                  style={{ cursor: "pointer" }}
+                                  checked={
+                                    Array.isArray(
+                                      selectedPermissions[cat.category]
+                                    ) &&
+                                    selectedPermissions[cat.category].includes(
+                                      perm
                                     )
-                                      ? prev[cat.category]
-                                      : [];
-                                    if (prevSelected.includes(perm)) {
-                                      // Remove
-                                      return {
-                                        ...prev,
-                                        [cat.category]: prevSelected.filter(
-                                          (p) => p !== perm
-                                        ),
-                                      };
-                                    } else {
-                                      // Add
-                                      return {
-                                        ...prev,
-                                        [cat.category]: [...prevSelected, perm],
-                                      };
-                                    }
-                                  });
-                                }}
-                                className="me-2"
-                              />
-                              {perm}
+                                  }
+                                  onChange={() => {
+                                    setSelectedPermissions((prev) => {
+                                      const prevSelected = Array.isArray(
+                                        prev[cat.category]
+                                      )
+                                        ? prev[cat.category]
+                                        : [];
+                                      if (prevSelected.includes(perm)) {
+                                        // Remove
+                                        return {
+                                          ...prev,
+                                          [cat.category]: prevSelected.filter(
+                                            (p) => p !== perm
+                                          ),
+                                        };
+                                      } else {
+                                        // Add
+                                        return {
+                                          ...prev,
+                                          [cat.category]: [
+                                            ...prevSelected,
+                                            perm,
+                                          ],
+                                        };
+                                      }
+                                    });
+                                  }}
+                                  className="me-2"
+                                />
+                                {perm}
+                              </label>
                             </li>
                           ))}
                         </ul>
