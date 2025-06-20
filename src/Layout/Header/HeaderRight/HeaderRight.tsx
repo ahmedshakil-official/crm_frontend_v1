@@ -1,5 +1,4 @@
 import DarkMode from "./DarkMode/DarkMode";
-import Languages from "./Languages/Languages";
 import MaximizeScreen from "./MaximizeScreen/MaximizeScreen";
 import NotificationHeader from "./NotificationHeader/NotificationHeader";
 import Profile from "./Profile/Profile";
@@ -9,7 +8,6 @@ const HeaderRight = () => {
   return (
     <div className="nav-right">
       <ul className="header-right">
-        <Languages />
         <ResponsiveSearch />
         <DarkMode />
         <NotificationHeader />
