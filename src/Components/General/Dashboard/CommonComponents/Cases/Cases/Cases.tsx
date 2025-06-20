@@ -371,38 +371,6 @@ const Cases: React.FC = () => {
                 of {caseData?.count || 0} cases
               </p>
             </div>
-            {/* <Pagination>
-              <PaginationItem disabled={currentPage === 1}>
-                <PaginationLink first onClick={() => setCurrentPage(1)} />
-              </PaginationItem>
-              <PaginationItem disabled={currentPage === 1}>
-                <PaginationLink
-                  previous
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                />
-              </PaginationItem>
-              {Array.from({ length: pageCount }, (_, i) => i + 1).map(
-                (page) => (
-                  <PaginationItem key={page} active={page === currentPage}>
-                    <PaginationLink onClick={() => setCurrentPage(page)}>
-                      {page}
-                    </PaginationLink>
-                  </PaginationItem>
-                )
-              )}
-              <PaginationItem disabled={currentPage === pageCount}>
-                <PaginationLink
-                  next
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                />
-              </PaginationItem>
-              <PaginationItem disabled={currentPage === pageCount}>
-                <PaginationLink
-                  last
-                  onClick={() => setCurrentPage(pageCount)}
-                />
-              </PaginationItem>
-            </Pagination> */}
             <Pagination>
               <PaginationItem disabled={currentPage === 1}>
                 <PaginationLink first onClick={() => setCurrentPage(1)} />

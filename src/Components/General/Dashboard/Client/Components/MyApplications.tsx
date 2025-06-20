@@ -91,8 +91,8 @@ const MyApplications: React.FC = () => {
         </Table>
         <div className="px-2 pb-2">
           <p className="text-success">
-            Showing 1 to {applications?.length || 0} of{" "}
-            {applications?.length || 0} cases
+            Showing 1 to {applications?.results?.length || 0} of{" "}
+            {applications?.results?.length || 0} cases
           </p>
         </div>
       </CardBody>
