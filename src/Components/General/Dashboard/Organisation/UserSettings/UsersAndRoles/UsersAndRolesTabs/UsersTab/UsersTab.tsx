@@ -63,7 +63,7 @@ const UsersTab: React.FC = () => {
     setFilterIcon(!filterIcon);
   };
   return (
-    <div className="mt-2">
+    <div className="mt-3">
       <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
         <Input
           className="w-100"

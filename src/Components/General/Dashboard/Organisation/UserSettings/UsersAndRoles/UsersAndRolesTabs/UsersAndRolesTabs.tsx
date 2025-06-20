@@ -8,11 +8,14 @@ const UsersAndRolesTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"users" | "roles">("users");
 
   return (
-    <div> 
+    <div>
       <Nav tabs>
         <NavItem>
           <NavLink
-            className={classnames({ active: activeTab === "users" })}
+            className={classnames({
+              active: activeTab === "users",
+              "text-primary": activeTab === "users",
+            })}
             onClick={() => setActiveTab("users")}
             style={{ cursor: "pointer" }}
           >
@@ -21,7 +24,10 @@ const UsersAndRolesTabs: React.FC = () => {
         </NavItem>
         <NavItem>
           <NavLink
-            className={classnames({ active: activeTab === "roles" })}
+            className={classnames({
+              active: activeTab === "roles",
+              "text-primary": activeTab === "roles",
+            })}
             onClick={() => setActiveTab("roles")}
             style={{ cursor: "pointer" }}
           >
