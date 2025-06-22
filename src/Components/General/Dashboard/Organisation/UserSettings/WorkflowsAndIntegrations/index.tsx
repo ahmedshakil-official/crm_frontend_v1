@@ -1,6 +1,7 @@
 import { Container } from "reactstrap";
 import OrganisationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 import WorkflowsAndIntegrationsOverview from "./WorkflowsAndIntegrationsOverview/WorkflowsAndIntegrationsOverview";
+import WorkflowsAndIntegrationsTabs from "./WorkflowsAndIntegrationsTabs/WorkflowsAndIntegrationsTabs";
 
 const WorkflowsAndIntegrationContainer: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const WorkflowsAndIntegrationContainer: React.FC = () => {
       />
       <Container fluid>
         <WorkflowsAndIntegrationsOverview />
+        <WorkflowsAndIntegrationsTabs />
       </Container>
     </>
   );
