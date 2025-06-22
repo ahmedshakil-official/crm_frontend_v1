@@ -86,31 +86,31 @@ const UsersTab: React.FC = () => {
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Role</Label>
                 <Input type="select" id="1" className="py-1">
-                  <option value="">Select...</option>
-                  <option value="1">Principal</option>
-                  <option value="2">Adviser</option>
-                  <option value="3">Admin</option>
-                  <option value="4">Support</option>
+                  <option value="">All Role</option>
+                  <option value="PRINCIPAL">Principal</option>
+                  <option value="ADVISER">Adviser</option>
+                  <option value="ADMIN">Admin</option>
+                  <option value="SUPPORT">Support</option>
                 </Input>
               </Col>
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Status</Label>
                 <Input type="select" id="2" className="py-1">
-                  <option value="">Select...</option>
-                  <option value="1">Active</option>
-                  <option value="2">Inactive</option>
-                  <option value="3">Pending</option>
+                  <option value="">All Status</option>
+                  <option value="ACTIVE">Active</option>
+                  <option value="INACTIVE">Inactive</option>
+                  <option value="PENDING">Pending</option>
                 </Input>
               </Col>
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Department</Label>
                 <Input type="select" id="3" className="py-1">
-                  <option value="">Select...</option>
-                  <option value="1">Leadership</option>
-                  <option value="2">Wealth Management</option>
-                  <option value="3">Accounting</option>
-                  <option value="4">Support</option>
-                  <option value="5">Other</option>
+                  <option value="">All Department</option>
+                  <option value="LEADERSHIP">Leadership</option>
+                  <option value="WEALTH_MANAGEMENT">Wealth Management</option>
+                  <option value="ACCOUNTING">Accounting</option>
+                  <option value="SUPPORT">Support</option>
+                  <option value="OTHER">Other</option>
                 </Input>
               </Col>
               {/* Clear All Filters Button */}
