@@ -127,13 +127,9 @@ const WorkflowsTab: React.FC = () => {
             )}
             {/* Workflow Cards */}
             {workflows.map((workflow, index) => (
-              <Card
-                key={index}
-                className="mb-3 p-3 rounded-3"
-                style={{ background: "#f9f9f9" }}
-              >
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
+              <Card key={index} className="mb-3 p-3 rounded-3 bg-light-dark">
+                <Row>
+                  <Col md="10">
                     <h5 className="d-flex align-items-center gap-2">
                       {workflow.title}
                       {workflow.status === "Active" && (
@@ -174,8 +170,8 @@ const WorkflowsTab: React.FC = () => {
                     <small className="text-muted">
                       Created by {workflow.createdBy}
                     </small>
-                  </div>
-                  <div>
+                  </Col>
+                  <Col md="2" className="text-end">
                     <Button
                       outline
                       color={
@@ -195,8 +191,8 @@ const WorkflowsTab: React.FC = () => {
                     <Button outline color="dark" size="sm">
                       <i className="fa-solid fa-ellipsis-v px-2"></i>
                     </Button>
-                  </div>
-                </div>
+                  </Col>
+                </Row>
               </Card>
             ))}
           </div>
