@@ -1,11 +1,65 @@
 import { useState } from "react";
-import { Button, Card, Col, Input, Label, Row } from "reactstrap";
+import { Badge, Button, Card, Col, Input, Label, Row } from "reactstrap";
 
 const WorkflowsTab: React.FC = () => {
   const [filterIcon, setFilterIcon] = useState(false);
-  const toggleFilterIcon = () => {
-    setFilterIcon(!filterIcon);
-  };
+  const toggleFilterIcon = () => setFilterIcon(!filterIcon);
+
+  // Combined workflow data from both images
+  const workflows = [
+    {
+      title: "New Client Onboarding",
+      status: "Active",
+      description:
+        "Automated workflow for onboarding new clients with document collection and approval",
+      category: "Client Onboarding",
+      triggers: 24,
+      lastRun: "2 hours ago",
+      successRate: "99%",
+      createdBy: "Sarah Johnson",
+    },
+    {
+      title: "Document Processing",
+      status: "Active",
+      description: "Automatically process and categorize uploaded documents",
+      category: "Document Processing",
+      triggers: 156,
+      lastRun: "15 minutes ago",
+      successRate: "95%",
+      createdBy: "Michael Chen",
+    },
+    {
+      title: "Compliance Check",
+      status: "Active",
+      description: "Daily compliance verification and reporting workflow",
+      category: "Compliance",
+      triggers: 8,
+      lastRun: "1 day ago",
+      successRate: "100%",
+      createdBy: "Emma Williams",
+    },
+    {
+      title: "Client Communication",
+      status: "Inactive",
+      description: "Automated email sequences for client updates and reminders",
+      category: "Communication",
+      triggers: 42,
+      lastRun: "3 days ago",
+      successRate: "92%",
+      createdBy: "David Brown",
+    },
+    {
+      title: "Monthly Reports",
+      status: "Draft",
+      description: "Generate and distribute monthly performance reports",
+      category: "Reporting",
+      triggers: 0,
+      lastRun: "Never",
+      successRate: "0%",
+      createdBy: "Sarah Johnson",
+    },
+  ];
+
   return (
     <Row>
       <Col>
@@ -56,7 +110,6 @@ const WorkflowsTab: React.FC = () => {
                       <option value="NOTIFICATIONS">Notifications</option>
                     </Input>
                   </Col>
-                  {/* Clear All Filters Button */}
                   <Col xs="12" sm="6" md="4">
                     <div>
                       <Label>Clear All Filters</Label>
@@ -72,6 +125,80 @@ const WorkflowsTab: React.FC = () => {
                 </Row>
               </Card>
             )}
+            {/* Workflow Cards */}
+            {workflows.map((workflow, index) => (
+              <Card
+                key={index}
+                className="mb-3 p-3 rounded-3"
+                style={{ background: "#f9f9f9" }}
+              >
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5 className="d-flex align-items-center gap-2">
+                      {workflow.title}
+                      {workflow.status === "Active" && (
+                        <Badge pill color="success" className="px-2 py-1">
+                          <i className="fa-solid fa-play"></i> Active
+                        </Badge>
+                      )}
+                      {workflow.status === "Inactive" && (
+                        <Badge pill color="secondary" className="px-2 py-1">
+                          <i className="fa-solid fa-pause"></i> Inactive
+                        </Badge>
+                      )}
+                      {workflow.status === "Draft" && (
+                        <Badge pill color="warning" className="px-2 py-1">
+                          <i className="fa-solid fa-pen"></i> Draft
+                        </Badge>
+                      )}
+                    </h5>
+                    <p className="text-muted small">{workflow.description}</p>
+                    <div className="d-flex justify-content-between gap-3">
+                      <div>
+                        <p className="fw-bold mb-0">Category:</p>
+                        <p className="mb-1">{workflow.category}</p>
+                      </div>
+                      <div>
+                        <p className="fw-bold mb-0">Triggers:</p>
+                        <p className="mb-1">{workflow.triggers}</p>
+                      </div>
+                      <div>
+                        <p className="fw-bold mb-0">Last Run:</p>
+                        <p className="mb-1">{workflow.lastRun}</p>
+                      </div>
+                      <div>
+                        <p className="fw-bold mb-0">Success Rate:</p>
+                        <p className="mb-1">{workflow.successRate}</p>
+                      </div>
+                    </div>
+                    <small className="text-muted">
+                      Created by {workflow.createdBy}
+                    </small>
+                  </div>
+                  <div>
+                    <Button
+                      outline
+                      color={
+                        workflow.status === "Inactive" ||
+                        workflow.status === "Draft"
+                          ? "success"
+                          : "warning"
+                      }
+                      size="sm"
+                      className="me-2"
+                    >
+                      {workflow.status === "Inactive" ||
+                      workflow.status === "Draft"
+                        ? "Start"
+                        : "Pause"}
+                    </Button>
+                    <Button outline color="dark" size="sm">
+                      <i className="fa-solid fa-ellipsis-v px-2"></i>
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
           </div>
         </Card>
       </Col>
