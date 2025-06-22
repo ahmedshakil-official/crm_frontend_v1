@@ -161,7 +161,7 @@ const Cases: React.FC = () => {
       </CardHeader>
       <CardBody className="p-2 m-0">
         {filterIcon && (
-          <Card className="shadow-lg bg-light-success rounded-3 p-3 mt-3">
+          <Card className="shadow-lg bg-light-success rounded-3 p-3 mt-3 mb-3">
             <Row className="justify-content-center g-3">
               <Col xs="12" sm="6" md="3">
                 <Label>Select Employee</Label>
