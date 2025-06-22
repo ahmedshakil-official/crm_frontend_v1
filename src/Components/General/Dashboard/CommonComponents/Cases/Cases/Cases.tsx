@@ -271,7 +271,7 @@ const Cases: React.FC = () => {
                   <tr key={caseItem.alias}>
                     <td>
                       <Link
-                        className="text_decoration_hover"
+                        className="text_decoration_hover text-truncate"
                         href={getCaseUrl(caseItem.alias)}
                       >
                         {caseItem.name}
