@@ -16,6 +16,7 @@ import {
   Input,
   InputGroup,
   InputGroupText,
+  Label,
   Pagination,
   PaginationItem,
   PaginationLink,
@@ -126,6 +127,7 @@ const Cases: React.FC = () => {
                   setSearchQuery(e.target.value);
                   setCurrentPage(1);
                 }}
+                style={{ padding: "10px 10px" }}
               />
               <InputGroupText className="bg-success rounded-start-0 border-start-0">
                 <FaSearch />
@@ -137,7 +139,7 @@ const Cases: React.FC = () => {
             xs="12"
             className="text-md-end text-center mt-2 mt-md-0 d-flex justify-content-end align-items-center gap-2"
           >
-            <Button onClick={toggleFilterIcon} className="me-2">
+            <Button color="success" onClick={toggleFilterIcon} className="me-2">
               {filterIcon ? (
                 <i className="fa-solid fa-filter-circle-xmark"></i>
               ) : (
@@ -157,11 +159,12 @@ const Cases: React.FC = () => {
           </Col>
         </Row>
       </CardHeader>
-      <CardBody className="p-0 m-0">
+      <CardBody className="p-2 m-0">
         {filterIcon && (
-          <Card className="shadow-lg rounded-1 p-3 mt-3">
-            <Row className="justify-content-center text-center g-3">
+          <Card className="shadow-lg bg-light-success rounded-3 p-3 mt-3">
+            <Row className="justify-content-center g-3">
               <Col xs="12" sm="6" md="3">
+                <Label>Select Employee</Label>
                 <Input
                   type="select"
                   id="employeeFilter"
@@ -171,7 +174,7 @@ const Cases: React.FC = () => {
                     handleFilterChange("created_by", e.target.value)
                   }
                 >
-                  <option value="">Select Employee...</option>
+                  <option value="">All Employee</option>
                   {adviserData?.map((adviser: AdviserInfoProps) => (
                     <option key={adviser.alias} value={adviser.user.id}>
                       {adviser.user.first_name} {adviser.user.last_name}
@@ -180,6 +183,7 @@ const Cases: React.FC = () => {
                 </Input>
               </Col>
               <Col xs="12" sm="6" md="3">
+                <Label>Select Category</Label>
                 <Input
                   type="select"
                   id="caseCategory"
@@ -189,13 +193,14 @@ const Cases: React.FC = () => {
                     handleFilterChange("case_category", e.target.value)
                   }
                 >
-                  <option value="">Select Categories...</option>
+                  <option value="">All Categories</option>
                   <option value="MORTGAGE">Mortgage</option>
                   <option value="PROTECTION">Protection</option>
                   <option value="GENERAL_INSURANCE">General Insurance</option>
                 </Input>
               </Col>
               <Col xs="12" sm="6" md="3">
+                <Label>Select Stage</Label>
                 <Input
                   type="select"
                   id="caseStage"
@@ -205,7 +210,7 @@ const Cases: React.FC = () => {
                     handleFilterChange("case_stage", e.target.value)
                   }
                 >
-                  <option value="">Select Stages...</option>
+                  <option value="">All Stages</option>
                   <option value="INQUIRY">Inquiry</option>
                   <option value="FACT_FIND">Fact Find</option>
                   <option value="RESEARCH_COMPLIANCE_CHECK">
@@ -225,14 +230,16 @@ const Cases: React.FC = () => {
                 </Input>
               </Col>
               <Col xs="12" sm="6" md="3">
+                <Label>Clear All Filters</Label>
                 <Button
-                  className="btn btn-secondary w-100"
+                  outline
+                  className="btn btn-outline-danger w-100 d-flex justify-content-center align-items-center gap-1"
                   onClick={() => {
                     setFilters(defaultFilters);
                     setCurrentPage(1);
                   }}
                 >
-                  Clear All Filters
+                  Clear<i className="fa-solid fa-xmark"></i>
                 </Button>
               </Col>
             </Row>
