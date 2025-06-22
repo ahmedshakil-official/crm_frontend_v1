@@ -137,7 +137,7 @@ const ReportsTab: React.FC = () => {
           </Card>
         )}
       </div>
-      <div className=" border border-2 rounded-3 p-3">
+      <Card className=" rounded-3 p-3">
         <div className=" mb-4 mt-2">
           <h3>
             <i className="fa-solid fa-file-lines"></i> Reports (5)
@@ -229,7 +229,7 @@ const ReportsTab: React.FC = () => {
             ))}
           </tbody>
         </Table>
-      </div>
+      </Card>
     </div>
   );
 };
