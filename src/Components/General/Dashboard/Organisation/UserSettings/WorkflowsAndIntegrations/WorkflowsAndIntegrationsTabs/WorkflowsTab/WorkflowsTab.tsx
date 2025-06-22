@@ -1,5 +1,17 @@
 import { useState } from "react";
-import { Badge, Button, Card, Col, Input, Label, Row } from "reactstrap";
+import {
+  Badge,
+  Button,
+  Card,
+  Col,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Input,
+  Label,
+  Row,
+  UncontrolledDropdown,
+} from "reactstrap";
 
 const WorkflowsTab: React.FC = () => {
   const [filterIcon, setFilterIcon] = useState(false);
@@ -171,7 +183,11 @@ const WorkflowsTab: React.FC = () => {
                       Created by {workflow.createdBy}
                     </small>
                   </Col>
-                  <Col md="2" className="text-end">
+                  <Col
+                    md="2"
+                    className="text-end d-flex justify-content-end"
+                    style={{ position: "absolute", top: 10, right: 0 }}
+                  >
                     <Button
                       outline
                       color={
@@ -188,9 +204,37 @@ const WorkflowsTab: React.FC = () => {
                         ? "Start"
                         : "Pause"}
                     </Button>
-                    <Button outline color="dark" size="sm">
-                      <i className="fa-solid fa-ellipsis-v px-2"></i>
-                    </Button>
+                    <UncontrolledDropdown>
+                      <DropdownToggle
+                        outline
+                        color="dark"
+                        size="sm"
+                        caret={false}
+                      >
+                        <i className="fa-solid fa-ellipsis-v px-2"></i>
+                      </DropdownToggle>
+                      <DropdownMenu end className="p-1 mt-1 small">
+                        <DropdownItem header className="fw-bold">
+                          User Actions
+                        </DropdownItem>
+                        <DropdownItem>
+                          <i className="fa-solid fa-pen-to-square me-2"></i>
+                          Edit Workflow
+                        </DropdownItem>
+                        <DropdownItem>
+                          <i className="fa-solid fa-gear me-2"></i>
+                          Configure Workflow
+                        </DropdownItem>
+                        <DropdownItem className="text-warning">
+                          <i className="fa-solid fa-clone me-2"></i>
+                          Duplicate Workflow
+                        </DropdownItem>
+                        <DropdownItem className="text-danger">
+                          <i className="fa-solid fa-trash me-2"></i>
+                          Delete Workflow
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
                   </Col>
                 </Row>
               </Card>
