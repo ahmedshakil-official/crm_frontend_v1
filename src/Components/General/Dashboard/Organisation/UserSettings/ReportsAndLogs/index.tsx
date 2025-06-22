@@ -1,8 +1,22 @@
+import { Container } from "reactstrap";
+import OrganisationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import ReportsAndLogsOverview from "./ReportsAndLogsOverview/ReportsAndLogsOverview";
+import ReportsAndLogsTabs from "./ReportsAndLogsTabs/ReportsAndLogsTabs";
+
 const ReportsAndLogsContainer: React.FC = () => {
   return (
-    <div>
-      {/* JSX here */}ReportsAndLogsContainer
-    </div>
+    <>
+      <OrganisationBreadcrumbs
+        mainTitle="Reports & Logs"
+        title="Monitor activities and generate comprehensive reports"
+        parent="User Settings"
+        activePage="Reports & Logs"
+      />
+      <Container fluid>
+        <ReportsAndLogsOverview />
+        <ReportsAndLogsTabs />
+      </Container>
+    </>
   );
 };
 
