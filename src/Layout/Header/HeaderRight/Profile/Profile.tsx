@@ -23,7 +23,12 @@ const Profile = () => {
           <Image
             width={64}
             height={59}
-            src={session?.user?.profile_image || `${ImagePath}/profile.png`}
+            // src={session?.user?.profile_image || `${ImagePath}/profile.png`}
+            src={
+              session?.user?.profile_image
+                ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/${session.user.profile_image}`
+                : `${ImagePath}/profile.png`
+            }
             alt="user"
           />
         </div>
@@ -37,7 +42,7 @@ const Profile = () => {
         <div className={`custom-menu overflow-hidden ${show ? "show" : ""}`}>
           <ul className="profile-body">
             <li className="d-flex gap-2">
-            <i className="fa-solid fa-user-gear"></i>
+              <i className="fa-solid fa-user-gear"></i>
               Profile
             </li>
             <li className="d-flex gap-2">

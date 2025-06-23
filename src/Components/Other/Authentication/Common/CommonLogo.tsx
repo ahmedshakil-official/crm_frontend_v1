@@ -1,30 +1,12 @@
 import { ImagePath } from "@/Constant";
 import { LoginFormProp } from "@/Types/PagesType";
-import { useSession } from "next-auth/react";
+import { getRedirectPaths } from "@/utils/RedirectPaths";
 import Image from "next/image";
 import React from "react";
 
 export const CommonLogo: React.FC<LoginFormProp> = ({ logoClass }) => {
-  const { data: session } = useSession();
-
-  const getRedirectPath = () => {
-    const userType = session?.user?.user_type;
-    switch (userType) {
-      case "LEAD":
-        return "/dashboard/client";
-      case "ADMIN":
-        return "/dashboard/admin";
-      case "NETWORK_ADMIN":
-        return "/dashboard/network";
-      case "ADVISOR":
-        return "/dashboard/organisation";
-      default:
-        return "/auth/login";
-    }
-  };
-
   return (
-    <a className={`logo ${logoClass}`} href={getRedirectPath()}>
+    <a className={`logo ${logoClass}`} href={getRedirectPaths()}>
       <Image
         width={91}
         height={27}
