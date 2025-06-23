@@ -139,7 +139,7 @@ const WorkflowsTab: React.FC = () => {
             )}
             {/* Workflow Cards */}
             {workflows.map((workflow, index) => (
-              <Card key={index} className="mb-3 p-3 rounded-3 bg-light-dark">
+              <Card key={index} className="mb-3 p-3 rounded-3 shadow bg-light-dark">
                 <Row>
                   <Col md="10">
                     <h5 className="d-flex align-items-center gap-2">
