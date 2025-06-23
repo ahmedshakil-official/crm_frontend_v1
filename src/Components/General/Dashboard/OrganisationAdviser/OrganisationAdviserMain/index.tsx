@@ -1,10 +1,14 @@
-import Cases from "../../CommonComponents/Cases/Cases/Cases";
+import OrganisationAdviserBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const OrganisationAdviserContainer: React.FC = () => {
   return (
-    <div>
-      Hello
-    </div>
+    <>
+      <OrganisationAdviserBreadcrumbs
+        mainTitle="Organisation Adviser Dashboard"
+        title="Hello! there"
+        activePage="Adviser"
+      />
+    </>
   );
 };
 
