@@ -47,8 +47,8 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
         <Row className="px-3 mt-3">
           {/* 1st card */}
           <Col lg="4" md="12">
-            <Card className="ecommerce-widget rounded-4">
-              <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-primary">
+            <Card className="shadow rounded-3">
+              <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-primary">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
                   <h4 className="fw-bold">Case User</h4>
                 </CardHeader>
@@ -106,8 +106,8 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
           </Col>
           {/* 2nd card */}
           <Col lg="4" md="12">
-            <Card className="ecommerce-widget rounded-4">
-              <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-warning">
+            <Card className="shadow rounded-3">
+              <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-warning">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
                   <h4 className="fw-bold">Case Info</h4>
                 </CardHeader>
@@ -142,10 +142,10 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       <h6 className="pt-1">
                         <strong>Active Status:</strong>{" "}
                         <span
-                          className={`${
+                          className={`rounded-1 px-1 ${
                             caseInfo?.is_removed
-                              ? "text-danger"
-                              : "text-success"
+                              ? "bg-danger"
+                              : "bg-success"
                           }`}
                         >
                           {caseInfo?.is_removed ? "Removed" : "Active"}
@@ -174,8 +174,8 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
           </Col>
           {/* 3rd card */}
           <Col lg="4" md="12">
-            <Card className="ecommerce-widget rounded-4">
-              <CardBody className="support-ticket-font pt-2 border-3 rounded-4 border-b-success">
+            <Card className="shadow rounded-3">
+              <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-success">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
                   <h4 className="fw-bold">Assigned Advisor</h4>
                 </CardHeader>
