@@ -103,8 +103,10 @@ const Cases: React.FC = () => {
         return `/dashboard/network/cases/${caseAlias}`;
       case "LEAD":
         return `/dashboard/client/cases/${caseAlias}`;
-      case "ADVISOR":
+      case "ORGANIZATION_ADMIN":
         return `/dashboard/organisation/cases/${caseAlias}`;
+      case "ORGANIZATION_ADVISER":
+        return `/dashboard/orgadviser/cases/${caseAlias}`;
       default:
         return "#";
     }

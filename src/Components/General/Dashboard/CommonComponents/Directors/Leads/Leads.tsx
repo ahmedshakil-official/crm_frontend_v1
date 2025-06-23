@@ -1,9 +1,9 @@
-import LoadingSpinner from "@/app/loading";
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
 import {
   LeadsInfo,
   LeadsProps,
 } from "@/Types/CommonComponents/Directors/LeadTypes";
+import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
@@ -25,7 +25,7 @@ import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
 
-const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 20 }) => {
+const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");

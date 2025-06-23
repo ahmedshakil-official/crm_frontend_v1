@@ -108,7 +108,7 @@ const NetworkAdminMenu: MenuItem[] = [
 ];
 
 // OrganizationAdminMenu Menu
-const OrganizationAdminMenu: MenuItem[] = [
+const OrganisationAdminMenu: MenuItem[] = [
   {
     title: "General",
     lanClass: "lan-1",
@@ -201,23 +201,22 @@ const OrganizationAdminMenu: MenuItem[] = [
             path: "/dashboard/organisation/usersettings/reportsandlogs",
             title: "Reports & Logs",
             type: "link",
-          }
+          },
         ],
       },
-
     ],
   },
 ];
 
-//Advisor Menu
-const AdvisorMenu: MenuItem[]=[
+//Or Organisation Admin Menu
+const OrganisationAdviserMenu: MenuItem[] = [
   {
     title: "General",
     lanClass: "lan-1",
     type: "group",
     Items: [
       {
-        title: "Dashboards",
+        title: "Adviser",
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
@@ -225,15 +224,55 @@ const AdvisorMenu: MenuItem[]=[
         lanClass: "lan-3",
         children: [
           {
-            path: "/dashboard/advisor",
-            title: "Main Menu",
+            path: "/dashboard/orgadviser",
+            title: "Dashboards",
+            type: "link",
+          },
+        ],
+      },
+      {
+        title: "Directors",
+        id: 1,
+        icon: "Profile",
+        type: "sub",
+        badge: "1",
+        lanClass: "lan-3",
+        children: [
+          {
+            path: "/dashboard/orgadviser/clients",
+            title: "Clients",
+            type: "link",
+          },
+        ],
+      },
+      {
+        title: "Cases",
+        id: 1,
+        icon: "Pie",
+        type: "sub",
+        badge: "3",
+        lanClass: "lan-3",
+        children: [
+          {
+            path: "/dashboard/orgadviser/cases",
+            title: "All Case",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/activecases",
+            title: "Active Case",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/removedcases",
+            title: "Removed Case",
             type: "link",
           },
         ],
       },
     ],
   },
-]
+];
 
 // Lead Menu
 const LeadMenu: MenuItem[] = [
@@ -261,15 +300,22 @@ const LeadMenu: MenuItem[] = [
   },
 ];
 
-// Function to get menu based on role
+// Export all menus
+export {
+  LeadMenu,
+  NetworkAdminMenu,
+  OrganisationAdminMenu,
+  OrganisationAdviserMenu,
+};
+
 export const getMenuByRole = (role?: string): MenuItem[] => {
   switch (role) {
     case "NETWORK_ADMIN":
       return NetworkAdminMenu;
     case "ORGANIZATION_ADMIN":
-      return OrganizationAdminMenu;
-    case "ADVISOR":
-      return AdvisorMenu;
+      return OrganisationAdminMenu;
+    case "ORGANIZATION_ADVISER":
+      return OrganisationAdviserMenu;
     case "LEAD":
       return LeadMenu;
     default:
@@ -277,8 +323,4 @@ export const getMenuByRole = (role?: string): MenuItem[] => {
   }
 };
 
-// Export the legacy MenuList for backward compatibility
-export const MenuList = NetworkAdminMenu;
-
-// Export the role-specific menus if needed elsewhere
-export { AdvisorMenu, LeadMenu, NetworkAdminMenu };
+export const MenuList = (role?: string) => getMenuByRole(role);

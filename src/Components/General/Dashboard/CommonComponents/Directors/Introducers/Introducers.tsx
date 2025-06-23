@@ -26,7 +26,7 @@ import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
 import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
 
 const Introducers: React.FC<IntroducersProps> = ({
-  introducersPerPage = 20,
+  introducersPerPage = 10,
 }) => {
   const [introducers, setIntroducers] = useState<IntroducerInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);

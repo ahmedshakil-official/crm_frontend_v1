@@ -25,7 +25,7 @@ import AddAdviserModal from "./Modals/AddAdviserModal";
 import DeleteAdviserModal from "./Modals/DeleteAdviserModal";
 import UpdateAdviserModal from "./Modals/UpdateAdviserModal";
 
-const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 20 }) => {
+const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
   const [advisers, setAdvisers] = useState<AdviserInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");

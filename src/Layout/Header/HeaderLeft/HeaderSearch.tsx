@@ -1,8 +1,8 @@
 import { SearchQOP } from "@/Constant";
-import { MenuList } from "@/Data/Layout/SidebarData";
+import { getMenuByRole } from "@/Data/Layout/SidebarData";
 import { useAppDispatch } from "@/Redux/Hooks";
-
 import { MenuItem, SearchSuggestionItem } from "@/Types/LayoutTypes";
+import { useSession } from "next-auth/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import SearchSuggestionList from "./SearchSuggestionList";
 
@@ -13,6 +13,7 @@ const HeaderSearch = () => {
     []
   );
   const dispatch = useAppDispatch();
+  const { data: session } = useSession();
 
   useEffect(() => {
     const suggestionArray: SearchSuggestionItem[] = [];
@@ -33,13 +34,20 @@ const HeaderSearch = () => {
         });
       }
     };
-    MenuList?.forEach((item) => {
+
+    // Get menu based on user role
+    const roleBasedMenu = session?.user?.user_type
+      ? getMenuByRole(session.user.user_type)
+      : [];
+
+    roleBasedMenu.forEach((item) => {
       item.Items?.forEach((child) => {
         getAllLink(child, child.icon);
       });
     });
+
     setArr(suggestionArray);
-  }, []);
+  }, [session]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     if (!searchedWord) setSearchedWord("");

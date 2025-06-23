@@ -25,7 +25,7 @@ import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
 
-const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 20 }) => {
+const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
