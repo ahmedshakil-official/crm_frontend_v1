@@ -239,7 +239,7 @@ const OrganisationAdviserMenu: MenuItem[] = [
         lanClass: "lan-3",
         children: [
           {
-            path: "/dashboard/orgadviser/clients",
+            path: "/dashboard/orgadviser/directors/clients",
             title: "Clients",
             type: "link",
           },
