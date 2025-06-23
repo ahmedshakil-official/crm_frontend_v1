@@ -150,15 +150,23 @@ const IntegrationsTab: React.FC = () => {
             <Row className="g-3">
               {integrations.map((integration, index) => (
                 <Col key={index} xs="12" sm="6" md="4">
-                  <Card className="p-3 mb-3 rounded-3 bg-light-dark">
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <span
-                          className="rounded-3 bg-primary d-flex justify-content-center"
-                          style={{ width: "50px", height: "40px" }}
-                        >
+                  <Card className="p-3 mb-3 rounded-3 shadow bg-light-dark">
+                    <div>
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <span className="rounded-3 bg-light-primary p-3 d-flex justify-content-center">
                           <i className={`${integration.icon}`}></i>
                         </span>
+                        <span
+                          className={`badge ${
+                            integration.connected
+                              ? "bg-success"
+                              : "bg-secondary"
+                          }`}
+                        >
+                          {integration.connected ? "Connected" : "Disconnected"}
+                        </span>
+                      </div>
+                      <div className="d-flex align-items-center gap-2 mb-3">
                         <div>
                           <h5 className="mb-0">{integration.name}</h5>
                           <p className="text-muted mb-0 small">
@@ -166,13 +174,6 @@ const IntegrationsTab: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                      <span
-                        className={`badge ${
-                          integration.connected ? "bg-success" : "bg-secondary"
-                        }`}
-                      >
-                        {integration.connected ? "Connected" : "Disconnected"}
-                      </span>
                     </div>
                     <div className="mb-2">
                       <p className="mb-1 d-flex justify-content-between small">
