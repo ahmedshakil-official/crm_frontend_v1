@@ -1,6 +1,6 @@
 import { Container } from "reactstrap";
-import OrganisationAdviserBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 import Clients from "../../../CommonComponents/Directors/Clients/Clients";
+import OrganisationAdviserBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
 const OrganisationDirectorsClientsContainer: React.FC = () => {
   return (
@@ -8,10 +8,11 @@ const OrganisationDirectorsClientsContainer: React.FC = () => {
       <OrganisationAdviserBreadcrumbs
         mainTitle="Clients"
         title="Hello! there"
-        activePage="Adviser"
+        parent="Directors"
+        activePage="Clients"
       />
       <Container fluid>
-        <Clients/>
+        <Clients />
       </Container>
     </>
   );
