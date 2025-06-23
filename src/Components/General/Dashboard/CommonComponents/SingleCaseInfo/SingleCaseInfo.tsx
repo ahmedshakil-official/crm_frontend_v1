@@ -31,8 +31,10 @@ const SingleCaseInfo: React.FC = () => {
         return `/dashboard/network/cases`;
       case "LEAD":
         return `/dashboard/client`;
-      case "ADVISOR":
+      case "ORGANIZATION_ADMIN":
         return `/dashboard/organisation/cases`;
+      case "ORGANIZATION_ADVISER":
+        return `/dashboard/orgadviser/cases`;
       default:
         return `url not found`;
     }

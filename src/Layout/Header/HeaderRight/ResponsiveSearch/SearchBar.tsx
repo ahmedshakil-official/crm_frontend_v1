@@ -1,7 +1,8 @@
 import { Loading, SearchQOPTheme } from "@/Constant";
-import { MenuList } from "@/Data/Layout/SidebarData";
+import { getMenuByRole } from "@/Data/Layout/SidebarData";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { MenuItem, SearchSuggestionItem } from "@/Types/LayoutTypes";
+import { useSession } from "next-auth/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { X } from "react-feather";
 import { Col, Form, Input } from "reactstrap";
@@ -15,6 +16,7 @@ export const SearchBar = () => {
   );
   const { responsiveSearch } = useAppSelector((state) => state.layout);
   const dispatch = useAppDispatch();
+  const { data: session } = useSession();
 
   const handleClose = () => {
     setSearchedWord("");
@@ -36,13 +38,20 @@ export const SearchBar = () => {
         });
       }
     };
-    MenuList?.forEach((item) => {
+
+    // Get menu based on user role
+    const roleBasedMenu = session?.user?.user_type
+      ? getMenuByRole(session.user.user_type)
+      : [];
+
+    roleBasedMenu.forEach((item) => {
       item.Items?.forEach((child) => {
         getAllLink(child, child.icon);
       });
     });
+
     setArr(suggesionArray);
-  }, []);
+  }, [session]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     if (!searchedWord) setSearchedWord("");

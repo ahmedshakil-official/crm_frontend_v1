@@ -16,6 +16,8 @@ export const getRedirectPaths = () => {
       return "/dashboard/network";
     case "ORGANIZATION_ADMIN":
       return "/dashboard/organisation";
+    case "ORGANIZATION_ADVISER":
+      return "/dashboard/orgadviser";
     default:
       return "/auth/login";
   }

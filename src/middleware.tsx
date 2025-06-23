@@ -7,34 +7,47 @@ export default withAuth(
     const token = req.nextauth.token;
     const path = req.nextUrl.pathname;
 
-    // Role-based path protection
-    if (path.startsWith("/dashboard/admin") && token?.user_type !== "ADMIN") {
+    // Check if token or user_type is missing
+    if (!token || !token.user_type) {
       const loginUrl = new URL("/auth/login", req.url);
       loginUrl.searchParams.set("error", "unauthorized");
       return NextResponse.redirect(loginUrl);
     }
 
-    // Network admin can access network dashboard
+    // Role-based path protection
+    if (path.startsWith("/dashboard/admin") && token.user_type !== "ADMIN") {
+      const loginUrl = new URL("/auth/login", req.url);
+      loginUrl.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(loginUrl);
+    }
+
     if (
       path.startsWith("/dashboard/network") &&
-      token?.user_type !== "NETWORK_ADMIN"
+      token.user_type !== "NETWORK_ADMIN"
     ) {
       const loginUrl = new URL("/auth/login", req.url);
       loginUrl.searchParams.set("error", "unauthorized");
       return NextResponse.redirect(loginUrl);
     }
 
-    // Lead can access client dashboard
-    if (path.startsWith("/dashboard/client") && token?.user_type !== "LEAD") {
+    if (path.startsWith("/dashboard/client") && token.user_type !== "LEAD") {
       const loginUrl = new URL("/auth/login", req.url);
       loginUrl.searchParams.set("error", "unauthorized");
       return NextResponse.redirect(loginUrl);
     }
 
-    // ORGANIZATION_ADMIN can access organisation dashboard
     if (
       path.startsWith("/dashboard/organisation") &&
-      token?.user_type !== "ORGANIZATION_ADMIN"
+      token.user_type !== "ORGANIZATION_ADMIN"
+    ) {
+      const loginUrl = new URL("/auth/login", req.url);
+      loginUrl.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(loginUrl);
+    }
+
+    if (
+      path.startsWith("/dashboard/orgadviser") &&
+      token.user_type !== "ORGANIZATION_ADVISER"
     ) {
       const loginUrl = new URL("/auth/login", req.url);
       loginUrl.searchParams.set("error", "unauthorized");
@@ -54,8 +67,8 @@ export const config = {
   matcher: [
     "/dashboard/:path*",
     "/dashboard/organisation/:path*",
+    "/dashboard/orgadviser/:path*",
     "/dashboard/client/:path*",
     "/dashboard/network/:path*",
-    "/dashboard/network/usersettings/:path*",
   ],
 };
