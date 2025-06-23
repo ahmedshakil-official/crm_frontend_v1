@@ -1,452 +1,285 @@
 import React, { useState } from "react";
-import { Card, CardBody, Input } from "reactstrap";
+import {
+  Button,
+  Card,
+  Col,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Input,
+  Label,
+  Row,
+  Table,
+  UncontrolledDropdown,
+} from "reactstrap";
 
-const mockRoles = [
-  { name: "Principal", color: "primary", users: 2, icon: "fa-crown" },
-  { name: "Adviser", color: "secondary", users: 8, icon: "fa-user-group" },
-  { name: "Admin", color: "success", users: 3, icon: "fa-shield-halved" },
-  { name: "Support", color: "warning", users: 2, icon: "fa-gear" },
+const auditLogs = [
+  {
+    action: "User Login",
+    user: "john.smith@company.com",
+    resource: "Authentication System",
+    timestamp: "2024-01-15 14:35:22",
+    ipAddress: "192.168.1.105",
+    status: "Success",
+    severity: "Info",
+    details: "Successful login from Chrome browser",
+    auditId: "AUD-001",
+  },
+  {
+    action: "Report Generated",
+    user: "sarah.johnson@company.com",
+    resource: "Client Portfolio Report",
+    timestamp: "2024-01-15 14:30:15",
+    ipAddress: "192.168.1.112",
+    status: "Success",
+    severity: "Info",
+    details: "Monthly portfolio report generated for ABC-123",
+    auditId: "AUD-002",
+  },
+  {
+    action: "Permission Changed",
+    user: "admin@company.com",
+    resource: "User mikewilson@company.com",
+    timestamp: "2024-01-15 13:45:10",
+    ipAddress: "192.168.1.116",
+    status: "Success",
+    severity: "Warning",
+    details: "Admin role assigned to user",
+    auditId: "AUD-003",
+  },
+  {
+    action: "Failed Login Attempt",
+    user: "unknown@external.com",
+    resource: "Authentication System",
+    timestamp: "2024-01-15 13:20:33",
+    ipAddress: "203.45.67.89",
+    status: "Failed",
+    severity: "High",
+    details: "Invalid credentials provided",
+    auditId: "AUD-004",
+  },
+  {
+    action: "Data Export",
+    user: "emily.davis@company.com",
+    resource: "Client Database",
+    timestamp: "2024-01-15 12:15:45",
+    ipAddress: "192.168.1.108",
+    status: "Success",
+    severity: "Warning",
+    details: "Client list exported to CSV format",
+    auditId: "AUD-005",
+  },
+  {
+    action: "User Created",
+    user: "admin@company.com",
+    resource: "User Management",
+    timestamp: "2024-01-15 11:39:22",
+    ipAddress: "192.168.1.116",
+    status: "Success",
+    severity: "Info",
+    details: "New user account created: alex.chen@company.com",
+    auditId: "AUD-006",
+  },
+  {
+    action: "Document Accessed",
+    user: "mike.wilson@company.com",
+    resource: "Confidential Report #445",
+    timestamp: "2024-01-15 10:45:18",
+    ipAddress: "192.168.1.115",
+    status: "Success",
+    severity: "Info",
+    details: "Compliance document viewed",
+    auditId: "AUD-007",
+  },
+  {
+    action: "Settings Modified",
+    user: "sarah.johnson@company.com",
+    resource: "System Configuration",
+    timestamp: "2024-01-15 09:29:55",
+    ipAddress: "192.168.1.112",
+    status: "Success",
+    severity: "Info",
+    details: "Notification preferences updated",
+    auditId: "AUD-008",
+  },
 ];
 
-const mockPermissions: Record<
-  string,
-  { category: string; permissions: string[] }[]
-> = {
-  Principal: [
-    {
-      category: "Dashboard Access",
-      permissions: ["View dashboard", "Access analytics", "Export reports"],
-    },
-    {
-      category: "Client Management",
-      permissions: [
-        "View all clients",
-        "Edit client info",
-        "Add new clients",
-        "Delete clients",
-      ],
-    },
-    {
-      category: "Case Management",
-      permissions: [
-        "View all cases",
-        "Update case status",
-        "Create new cases",
-        "Assign cases",
-      ],
-    },
-    {
-      category: "Document Management",
-      permissions: [
-        "View documents",
-        "Share documents",
-        "Upload documents",
-        "Delete documents",
-      ],
-    },
-    {
-      category: "User Management",
-      permissions: [
-        "View users",
-        "Edit user roles",
-        "Add users",
-        "Deactivate users",
-      ],
-    },
-    {
-      category: "System Settings",
-      permissions: [
-        "View settings",
-        "Manage integrations",
-        "Modify workflows",
-        "System configuration",
-      ],
-    },
-    { category: "Reports", permissions: ["Export reports"] },
-  ],
-  Adviser: [
-    {
-      category: "Dashboard Access",
-      permissions: ["View dashboard", "Access analytics", "Export reports"],
-    },
-    {
-      category: "Client Management",
-      permissions: [
-        "View all clients",
-        "Edit client info",
-        "Add new clients",
-        "Delete clients",
-      ],
-    },
-    {
-      category: "Case Management",
-      permissions: [
-        "View all cases",
-        "Update case status",
-        "Create new cases",
-        "Assign cases",
-      ],
-    },
-    {
-      category: "Document Management",
-      permissions: [
-        "View documents",
-        "Share documents",
-        "Upload documents",
-        "Delete documents",
-      ],
-    },
-    {
-      category: "User Management",
-      permissions: [
-        "View users",
-        "Edit user roles",
-        "Add users",
-        "Deactivate users",
-      ],
-    },
-    {
-      category: "System Settings",
-      permissions: [
-        "View settings",
-        "Manage integrations",
-        "Modify workflows",
-        "System configuration",
-      ],
-    },
-    { category: "Reports", permissions: ["Export reports"] },
-  ],
-  Admin: [
-    {
-      category: "Dashboard Access",
-      permissions: ["View dashboard", "Access analytics", "Export reports"],
-    },
-    {
-      category: "Client Management",
-      permissions: [
-        "View all clients",
-        "Edit client info",
-        "Add new clients",
-        "Delete clients",
-      ],
-    },
-    {
-      category: "Case Management",
-      permissions: [
-        "View all cases",
-        "Update case status",
-        "Create new cases",
-        "Delete cases",
-      ],
-    },
-    {
-      category: "Document Management",
-      permissions: [
-        "View documents",
-        "Share documents",
-        "Upload documents",
-        "Delete documents",
-      ],
-    },
-    {
-      category: "User Management",
-      permissions: [
-        "View users",
-        "Edit user roles",
-        "Add users",
-        "Deactivate users",
-      ],
-    },
-    {
-      category: "System Settings",
-      permissions: [
-        "View settings",
-        "Manage integrations",
-        "Modify workflows",
-        "System configuration",
-      ],
-    },
-    { category: "Reports", permissions: ["Export reports"] },
-  ],
-  Support: [
-    {
-      category: "Dashboard Access",
-      permissions: ["View dashboard", "Access analytics", "Export reports"],
-    },
-    {
-      category: "Client Management",
-      permissions: [
-        "View all clients",
-        "Edit client info",
-        "Add new clients",
-        "Delete clients",
-      ],
-    },
-    {
-      category: "Case Management",
-      permissions: [
-        "View all cases",
-        "Update case status",
-        "Create new cases",
-        "Delete cases",
-      ],
-    },
-    {
-      category: "Document Management",
-      permissions: [
-        "View documents",
-        "Share documents",
-        "Upload documents",
-        "Delete documents",
-      ],
-    },
-    {
-      category: "User Management",
-      permissions: [
-        "View users",
-        "Edit user roles",
-        "Add users",
-        "Deactivate users",
-      ],
-    },
-    {
-      category: "System Settings",
-      permissions: [
-        "View settings",
-        "Manage integrations",
-        "Modify workflows",
-        "System configuration",
-      ],
-    },
-    { category: "Reports", permissions: ["Export reports"] },
-  ],
-  // ... other roles ...
-};
-
 const AuditLogsTab: React.FC = () => {
-  const [selectedRole, setSelectedRole] = useState("Principal");
-  const [selectedPermissions, setSelectedPermissions] = useState<{
-    [category: string]: string[];
-  }>({});
+  const [filterIcon, setFilterIcon] = useState(false);
+  const toggleFilterIcon = () => {
+    setFilterIcon(!filterIcon);
+  };
 
   return (
     <div className="mt-3">
-      <div className="d-flex gap-3">
-        {mockRoles.map((role) => (
-          <Card
-            key={role.name}
-            className={`mb-3 flex-fill text-center rounded-3 ${
-              selectedRole === role.name ? `border-${role.color}` : ""
-            }`}
-            style={{ cursor: "pointer", minWidth: 180 }}
-            onClick={() => setSelectedRole(role.name)}
-          >
-            <CardBody className="d-flex justify-content-between align-items-center">
-              <div className="d-flex gap-3">
-                <div
-                  className={`d-flex align-items-center justify-content-center p-2 rounded-3 bg-${role.color}`}
-                >
-                  <i className={`fa-solid ${role.icon} text-white`}></i>
-                </div>
-                <div className="text-start flex-grow-1e">
-                  <div className="fw-bold">{role.name}</div>
-                  <div className="text-muted small mb-1">
-                    {role.users} users
-                  </div>
-                </div>
-              </div>
-              <div>
-                <span
-                  className={`badge fw-normal mt-1 ${
-                    selectedRole === role.name
-                      ? `bg-light-${role.color} text-${role.color}`
-                      : ""
-                  }`}
-                  style={{
-                    visibility:
-                      selectedRole === role.name ? "visible" : "hidden",
-                  }}
-                >
-                  Selected
-                </span>
-              </div>
-            </CardBody>
-          </Card>
-        ))}
+      <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
+        <Input
+          className="w-100"
+          placeholder="Search users by name, email, or role..."
+          type="text"
+          style={{ padding: "10px 10px" }}
+        />
+        <Button onClick={toggleFilterIcon} color="success" className="me-2">
+          {filterIcon ? (
+            <i className="fa-solid fa-filter-circle-xmark"></i>
+          ) : (
+            <i className="fa-solid fa-filter"></i>
+          )}
+        </Button>
       </div>
-
-      <Card className="p-4 rounded-3">
-        <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
-          <div>
-            <h4 className="fw-bold d-flex align-items-center gap-2">
-              {(() => {
-                const selected = mockRoles.find(
-                  (role) => role.name === selectedRole
-                );
-                if (!selected) return null;
-                return (
-                  <span
-                    className={`d-flex align-items-center justify-content-center p-2 rounded-3 bg-${selected.color}`}
+      <div>
+        {filterIcon && (
+          <Card className="shadow-lg p-3 rounded-3 bg-light-success">
+            <Row className="justify-content-center g-3">
+              <Col xs="12" sm="6" md="4" lg="3">
+                <Label>Action</Label>
+                <Input type="select" id="1" className="py-1">
+                  <option value="">Select...</option>
+                  <option value="1">User Login</option>
+                  <option value="2">Report Generated</option>
+                  <option value="3">Permission Changed</option>
+                  <option value="4">Failed Login Attempt</option>
+                  <option value="5">Data Export</option>
+                  <option value="6">User Created</option>
+                  <option value="7">Document Accessed</option>
+                  <option value="8">Settings Modified</option>
+                </Input>
+              </Col>
+              <Col xs="12" sm="6" md="4" lg="3">
+                <Label>Status</Label>
+                <Input type="select" id="2" className="py-1">
+                  <option value="">Select...</option>
+                  <option value="1">Success</option>
+                  <option value="2">Failed</option>
+                </Input>
+              </Col>
+              <Col xs="12" sm="6" md="4" lg="3">
+                <Label>Date Range</Label>
+                <Input type="select" id="3" className="py-1">
+                  <option value="">
+                    <i className="fa-solid fa-calendar-days"></i> Pick a date
+                    range
+                  </option>
+                </Input>
+              </Col>
+              <Col xs="12" sm="6" md="4" lg="3">
+                <div>
+                  <Label>Clear All Filters</Label>
+                  <Button
+                    outline
+                    className="btn btn-outline-danger w-100 d-flex justify-content-center align-items-center gap-1"
                   >
-                    <i
-                      className={`fa-solid ${selected.icon} text-white`}
-                      style={{ fontSize: "12px" }}
-                    ></i>
+                    <span>Clear</span>
+                    <i className="fa-solid fa-xmark"></i>
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          </Card>
+        )}
+      </div>
+      <Card className="rounded-3 p-3">
+        <div className="mb-4 mt-2">
+          <h3>
+            <i className="fa-solid fa-file-lines"></i> Audit Logs (8)
+          </h3>
+        </div>
+        <Table hover responsive className="rounded-3 overflow-hidden">
+          <thead className="text-center bg-light-primary">
+            <tr>
+              <th className="text-start">Action</th>
+              <th>User</th>
+              <th>Resource</th>
+              <th>Timestamp</th>
+              <th>IP Address</th>
+              <th>Status</th>
+              <th>Severity</th>
+              <th>Details</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {auditLogs.map((log, idx) => (
+              <tr key={idx}>
+                <td>
+                  <div className="d-flex align-items-center">
+                    <div>
+                      <div className="fw-bold">{log.action}</div>
+                      <span className="text-muted fa-7">{log.auditId}</span>
+                    </div>
+                  </div>
+                </td>
+                <td className="text-center">{log.user}</td>
+                <td className="text-center">{log.resource}</td>
+                <td className="text-center">
+                  <i className="fa-solid fa-calendar me-1 small"></i>
+                  {log.timestamp}
+                </td>
+                <td className="text-center">{log.ipAddress}</td>
+                <td className="text-center">
+                  <span
+                    className={`badge bg-${
+                      log.status === "Success" ? "success" : "danger"
+                    }`}
+                  >
+                    {log.status}
                   </span>
-                );
-              })()}
-              <span>{selectedRole} Permissions</span>
-            </h4>
-          </div>
-          <div className="d-flex justify-content-end gap-1">
-            <button className="btn btn-outline-danger me-2" type="button">
-              <i className="fa-solid fa-rotate-left me-1"></i> Reset
-            </button>
-            <button
-              className="btn btn-primary d-flex align-items-center"
-              type="button"
-            >
-              <i className="fa-regular fa-floppy-disk me-1"></i> Save Changes
-            </button>
-          </div>
-        </div>
-        <div className="row">
-          {(mockPermissions[selectedRole] || []).map((cat, idx) => (
-            <div className="col-md-6 mb-2" key={idx}>
-              <div className="fw-bold mb-2">{cat.category}</div>
-              <div className="row">
-                {(() => {
-                  // Split permissions into two columns
-                  const half = Math.ceil(cat.permissions.length / 2);
-                  const left = cat.permissions.slice(0, half);
-                  const right = cat.permissions.slice(half);
-                  return (
-                    <>
-                      <div className="col-6">
-                        <ul className="list-unstyled">
-                          {left.map((perm, i) => (
-                            <li
-                              key={i}
-                              className="mb-2 d-flex align-items-center"
-                            >
-                              <label
-                                className="d-flex align-items-center w-100"
-                                style={{ cursor: "pointer" }}
-                              >
-                                <Input
-                                  type="checkbox"
-                                  name={`permission-${cat.category}-${selectedRole}`}
-                                  value={perm}
-                                  style={{ cursor: "pointer" }}
-                                  checked={
-                                    Array.isArray(
-                                      selectedPermissions[cat.category]
-                                    ) &&
-                                    selectedPermissions[cat.category].includes(
-                                      perm
-                                    )
-                                  }
-                                  onChange={() => {
-                                    setSelectedPermissions((prev) => {
-                                      const prevSelected = Array.isArray(
-                                        prev[cat.category]
-                                      )
-                                        ? prev[cat.category]
-                                        : [];
-                                      if (prevSelected.includes(perm)) {
-                                        // Remove
-                                        return {
-                                          ...prev,
-                                          [cat.category]: prevSelected.filter(
-                                            (p) => p !== perm
-                                          ),
-                                        };
-                                      } else {
-                                        // Add
-                                        return {
-                                          ...prev,
-                                          [cat.category]: [
-                                            ...prevSelected,
-                                            perm,
-                                          ],
-                                        };
-                                      }
-                                    });
-                                  }}
-                                  className="me-2"
-                                />
-                                {perm}
-                              </label>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="col-6">
-                        <ul className="list-unstyled">
-                          {right.map((perm, i) => (
-                            <li
-                              key={i}
-                              className="mb-2 d-flex align-items-center"
-                            >
-                              <label
-                                className="d-flex align-items-center w-100"
-                                style={{ cursor: "pointer" }}
-                              >
-                                <Input
-                                  type="checkbox"
-                                  name={`permission-${cat.category}-${selectedRole}`}
-                                  value={perm}
-                                  style={{ cursor: "pointer" }}
-                                  checked={
-                                    Array.isArray(
-                                      selectedPermissions[cat.category]
-                                    ) &&
-                                    selectedPermissions[cat.category].includes(
-                                      perm
-                                    )
-                                  }
-                                  onChange={() => {
-                                    setSelectedPermissions((prev) => {
-                                      const prevSelected = Array.isArray(
-                                        prev[cat.category]
-                                      )
-                                        ? prev[cat.category]
-                                        : [];
-                                      if (prevSelected.includes(perm)) {
-                                        // Remove
-                                        return {
-                                          ...prev,
-                                          [cat.category]: prevSelected.filter(
-                                            (p) => p !== perm
-                                          ),
-                                        };
-                                      } else {
-                                        // Add
-                                        return {
-                                          ...prev,
-                                          [cat.category]: [
-                                            ...prevSelected,
-                                            perm,
-                                          ],
-                                        };
-                                      }
-                                    });
-                                  }}
-                                  className="me-2"
-                                />
-                                {perm}
-                              </label>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </>
-                  );
-                })()}
-              </div>
-            </div>
-          ))}
-        </div>
+                </td>
+                <td className="text-center">
+                  <span
+                    className={`badge bg-${
+                      log.severity === "Info"
+                        ? "info"
+                        : log.severity === "Warning"
+                        ? "warning"
+                        : "danger"
+                    }`}
+                  >
+                    {log.severity}
+                  </span>
+                </td>
+                <td className="text-center">{log.details}</td>
+                <td>
+                  <div className="d-flex justify-content-center align-items-center gap-1">
+                    <Button color="secondary" size="sm">
+                      <i className="fa-solid fa-eye"></i>
+                    </Button>
+                    <Button color="success" size="sm">
+                      <i className="fa-solid fa-user-pen"></i>
+                    </Button>
+                    <UncontrolledDropdown>
+                      <DropdownToggle color="primary" size="sm" caret={false}>
+                        <i className="fa-solid fa-ellipsis"></i>
+                      </DropdownToggle>
+                      <DropdownMenu end className="p-1 mt-1 small">
+                        <DropdownItem header className="fw-bold">
+                          User Actions
+                        </DropdownItem>
+                        <DropdownItem>
+                          <i className="fa-solid fa-shield-halved me-2"></i>
+                          Manage Permissions
+                        </DropdownItem>
+                        <DropdownItem>
+                          <i className="fa-solid fa-key me-2"></i>
+                          Reset Password
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem className="text-warning">
+                          <i className="fa-solid fa-user-xmark me-2"></i>
+                          Deactivate User
+                        </DropdownItem>
+                        <DropdownItem className="text-danger">
+                          <i className="fa-solid fa-trash me-2"></i>
+                          Delete User
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </Card>
     </div>
   );
