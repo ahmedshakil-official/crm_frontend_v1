@@ -107,8 +107,8 @@ const NetworkAdminMenu: MenuItem[] = [
   },
 ];
 
-// Advisor Menu
-const AdvisorMenu: MenuItem[] = [
+// OrganizationAdminMenu Menu
+const OrganizationAdminMenu: MenuItem[] = [
   {
     title: "General",
     lanClass: "lan-1",
@@ -209,6 +209,32 @@ const AdvisorMenu: MenuItem[] = [
   },
 ];
 
+//Advisor Menu
+const AdvisorMenu: MenuItem[]=[
+  {
+    title: "General",
+    lanClass: "lan-1",
+    type: "group",
+    Items: [
+      {
+        title: "Dashboards",
+        id: 1,
+        icon: "Home-dashboard",
+        type: "sub",
+        badge: "1",
+        lanClass: "lan-3",
+        children: [
+          {
+            path: "/dashboard/advisor",
+            title: "Main Menu",
+            type: "link",
+          },
+        ],
+      },
+    ],
+  },
+]
+
 // Lead Menu
 const LeadMenu: MenuItem[] = [
   {
@@ -240,6 +266,8 @@ export const getMenuByRole = (role?: string): MenuItem[] => {
   switch (role) {
     case "NETWORK_ADMIN":
       return NetworkAdminMenu;
+    case "ORGANIZATION_ADMIN":
+      return OrganizationAdminMenu;
     case "ADVISOR":
       return AdvisorMenu;
     case "LEAD":

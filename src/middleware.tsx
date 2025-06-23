@@ -14,6 +14,7 @@ export default withAuth(
       return NextResponse.redirect(loginUrl);
     }
 
+    // Network admin can access network dashboard
     if (
       path.startsWith("/dashboard/network") &&
       token?.user_type !== "NETWORK_ADMIN"
@@ -23,15 +24,17 @@ export default withAuth(
       return NextResponse.redirect(loginUrl);
     }
 
+    // Lead can access client dashboard
     if (path.startsWith("/dashboard/client") && token?.user_type !== "LEAD") {
       const loginUrl = new URL("/auth/login", req.url);
       loginUrl.searchParams.set("error", "unauthorized");
       return NextResponse.redirect(loginUrl);
     }
 
+    // ORGANIZATION_ADMIN can access organisation dashboard
     if (
       path.startsWith("/dashboard/organisation") &&
-      token?.user_type !== "ADVISOR"
+      token?.user_type !== "ORGANIZATION_ADMIN"
     ) {
       const loginUrl = new URL("/auth/login", req.url);
       loginUrl.searchParams.set("error", "unauthorized");
