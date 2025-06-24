@@ -24,12 +24,14 @@ import {
 import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
+import ViewClientModal from "./Modals/ViewClientModal";
 
 const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [clientToDelete, setClientToDelete] = useState<ClientInfoProps | null>(
@@ -66,10 +68,9 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleViewModal = () => setIsViewModalOpen(!isViewModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
-
   const openDeleteModal = (client: ClientInfoProps) => {
     setClientToDelete(client);
     toggleDeleteModal();
@@ -136,6 +137,7 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
               placeholder="Search by name or email... "
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ padding: "10px 10px" }}
             />
             <InputGroupText className="bg-success rounded-start-0 border-start-0">
               <FaSearch />
@@ -182,7 +184,16 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
               currentClients.map((client: any) => (
                 <tr key={client.alias} className="text-center">
                   <td>
-                    {client?.user?.first_name} {client?.user?.last_name}
+                    <span
+                      className="text_decoration_hover"
+                      onClick={() => {
+                        setSelectedClient(client);
+                        toggleViewModal();
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {client?.user?.first_name} {client?.user?.last_name}
+                    </span>
                   </td>
                   <td>
                     {client?.official_email ? (
@@ -213,8 +224,22 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
                       client?.role?.slice(1)?.toLowerCase()}
                   </td>
                   <td>
-                    {client?.created_by?.first_name}{" "}
-                    {client?.created_by?.last_name}
+                    <p className="m-0">
+                      {client.created_by?.first_name}{" "}
+                      {client.created_by?.last_name}
+                    </p>
+                    <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
+                      (
+                      {client.created_by?.user_type
+                        ?.split("_")
+                        .map(
+                          (word: any) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                        )
+                        .join(" ")}
+                      )
+                    </p>
                   </td>
                   <td>{formatDateToDMYAndTime(client?.created_at)}</td>
                   <td>
@@ -343,6 +368,11 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
 
       {/* modals */}
       <AddClientModal isOpen={isModalOpen} toggle={toggleModal} />
+      <ViewClientModal
+        isOpen={isViewModalOpen}
+        toggle={toggleViewModal}
+        selectedClient={selectedClient}
+      />
       <UpdateClientModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}

@@ -24,12 +24,14 @@ import {
 import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
+import ViewLeadModal from "./Modals/ViewLeadModal";
 
 const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
@@ -62,8 +64,8 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleViewModal = () => setIsViewModalOpen(!isViewModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
   const openDeleteModal = (lead: LeadsInfo) => {
@@ -127,6 +129,7 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
               placeholder="Search by name or email... "
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ padding: "10px 10px" }}
             />
             <InputGroupText className="bg-success rounded-start-0 border-start-0">
               <FaSearch />
@@ -172,7 +175,16 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
               currentLeads.map((lead) => (
                 <tr key={lead.alias} className="text-center">
                   <td>
-                    {lead?.user?.first_name} {lead?.user?.last_name}
+                    <span
+                      className="text_decoration_hover"
+                      onClick={() => {
+                        setSelectedLead(lead);
+                        toggleViewModal();
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {lead?.user?.first_name} {lead?.user?.last_name}
+                    </span>
                   </td>
                   <td>
                     {lead?.official_email ? (
@@ -203,7 +215,21 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
                       lead?.role?.slice(1)?.toLowerCase()}
                   </td>
                   <td>
-                    {lead?.created_by?.first_name} {lead?.created_by?.last_name}
+                    <p className="m-0">
+                      {lead.created_by?.first_name} {lead.created_by?.last_name}
+                    </p>
+                    <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
+                      (
+                      {lead.created_by?.user_type
+                        ?.split("_")
+                        .map(
+                          (word: any) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                        )
+                        .join(" ")}
+                      )
+                    </p>
                   </td>
                   <td>{formatDateToDMYAndTime(lead?.created_at)}</td>
 
@@ -332,6 +358,11 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
 
       {/* Modals */}
       <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
+      <ViewLeadModal
+        isOpen={isViewModalOpen}
+        toggle={toggleViewModal}
+        selectedLead={selectedLead}
+      />
 
       <UpdateLeadModal
         isOpen={isUpdateModalOpen}

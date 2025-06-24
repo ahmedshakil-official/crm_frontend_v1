@@ -4,7 +4,9 @@ export interface AdviserInfoProps {
     id: number;
     first_name: string;
     last_name: string;
-    profile_image: string;
+    email?: string;
+    phone?: string;
+    profile_image?: string;
     nid: string;
     user_type: string;
     city: string;
@@ -26,6 +28,7 @@ export interface AdviserInfoProps {
   created_by: {
     first_name: string;
     last_name: string;
+    user_type: string;
   };
   created_at: string;
 }
@@ -35,6 +38,12 @@ export interface AdvisersProps {
 export interface AddAdviserModalProps {
   isOpen: boolean;
   toggle: () => void;
+}
+
+export interface ViewAdviserModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  selectedAdviser: Partial<AdviserInfoProps>;
 }
 export interface UpdateAdviserModalProps {
   isOpen: boolean;
