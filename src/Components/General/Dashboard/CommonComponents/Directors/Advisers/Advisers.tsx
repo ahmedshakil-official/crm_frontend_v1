@@ -223,22 +223,22 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                       adviser?.role?.slice(1)?.toLowerCase()}
                   </td>
                   <td>
-                  <p className="m-0">
-                        {adviser.created_by?.first_name}{" "}
-                        {adviser.created_by?.last_name}
-                      </p>
-                      <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
-                        (
-                        {adviser.created_by?.user_type
-                          ?.split("_")
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() +
-                              word.slice(1).toLowerCase()
-                          )
-                          .join(" ")}
+                    <p className="m-0">
+                      {adviser.created_by?.first_name}{" "}
+                      {adviser.created_by?.last_name}
+                    </p>
+                    <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
+                      (
+                      {adviser.created_by?.user_type
+                        ?.split("_")
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
                         )
-                      </p>
+                        .join(" ")}
+                      )
+                    </p>
                   </td>
                   <td>{formatDateToDMYAndTime(adviser?.created_at)}</td>
                   <td>

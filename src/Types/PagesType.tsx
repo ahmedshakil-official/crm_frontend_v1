@@ -1,13 +1,14 @@
 import { ChangeEvent } from "react";
 
 export interface CommonErrorPageType {
-  error: () => React.JSX.Element
+  error: () => React.JSX.Element;
   color: string;
 }
 
 export interface CommonErrorPageProps {
   errorIcon: any;
   title: string;
+  subTitle: string;
 }
 
 export interface CountdownRendererProps {
