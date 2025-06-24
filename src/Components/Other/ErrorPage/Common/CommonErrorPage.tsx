@@ -7,6 +7,7 @@ import { Col, Container } from "reactstrap";
 const CommonErrorPage: React.FC<CommonErrorPageProps> = ({
   errorIcon,
   title,
+  subTitle,
 }) => {
   return (
     <div className="page-wrapper compact-wrapper" id="pageWrapper">
@@ -15,13 +16,9 @@ const CommonErrorPage: React.FC<CommonErrorPageProps> = ({
           <div className="svg-wrraper">{errorIcon}</div>
           <Col md="8" className="offset-md-2">
             <h3>{title}</h3>
-            <p className="sub-content">
-              {
-                "The page you are attempting to reach is currently not available. This may be because the page does not exist or has been moved."
-              }
-            </p>
+            <p className="sub-content">{subTitle}</p>
             <a href={getRedirectPaths()} className="btn btn-primary">
-              {"BACK TO HOME PAGE"}
+              {"BACK TO MAIN PAGE"}
             </a>
           </Col>
         </Container>

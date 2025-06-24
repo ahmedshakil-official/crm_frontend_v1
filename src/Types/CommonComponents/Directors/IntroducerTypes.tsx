@@ -3,7 +3,9 @@ export interface IntroducerInfoProps {
   user: {
     first_name: string;
     last_name: string;
-    profile_image: string;
+    email?: string;
+    phone?: string;
+    profile_image?: string;
     nid: string;
     user_type: string;
     city: string;
@@ -25,6 +27,7 @@ export interface IntroducerInfoProps {
   created_by: {
     first_name: string;
     last_name: string;
+    user_type: string;
   };
   created_at: string;
 }
@@ -34,6 +37,11 @@ export interface IntroducersProps {
 export interface AddIntroducerModalProps {
   isOpen: boolean;
   toggle: () => void;
+}
+export interface ViewIntroducerModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  selectedIntroducer: Partial<IntroducerInfoProps>;
 }
 export interface UpdateIntroducerModalProps {
   isOpen: boolean;
