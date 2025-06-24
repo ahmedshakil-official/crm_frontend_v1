@@ -129,6 +129,7 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
               placeholder="Search by name or email... "
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ padding: "10px 10px" }}
             />
             <InputGroupText className="bg-success rounded-start-0 border-start-0">
               <FaSearch />
@@ -222,7 +223,7 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
                       {lead.created_by?.user_type
                         ?.split("_")
                         .map(
-                          (word) =>
+                          (word: any) =>
                             word.charAt(0).toUpperCase() +
                             word.slice(1).toLowerCase()
                         )
