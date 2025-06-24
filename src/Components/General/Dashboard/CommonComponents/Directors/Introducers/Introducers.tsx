@@ -224,8 +224,22 @@ const Introducers: React.FC<IntroducersProps> = ({
                       introducer?.role?.slice(1)?.toLowerCase()}
                   </td>
                   <td>
-                    {introducer?.created_by?.first_name}{" "}
-                    {introducer?.created_by?.last_name}
+                    <p className="m-0">
+                      {introducer.created_by?.first_name}{" "}
+                      {introducer.created_by?.last_name}
+                    </p>
+                    <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
+                      (
+                      {introducer.created_by?.user_type
+                        ?.split("_")
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                        )
+                        .join(" ")}
+                      )
+                    </p>
                   </td>
                   <td>{formatDateToDMYAndTime(introducer?.created_at)}</td>
                   <td>

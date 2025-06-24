@@ -180,7 +180,7 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
                         setSelectedLead(lead);
                         toggleViewModal();
                       }}
-                      style={{cursor:"pointer"}}
+                      style={{ cursor: "pointer" }}
                     >
                       {lead?.user?.first_name} {lead?.user?.last_name}
                     </span>
@@ -214,7 +214,21 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
                       lead?.role?.slice(1)?.toLowerCase()}
                   </td>
                   <td>
-                    {lead?.created_by?.first_name} {lead?.created_by?.last_name}
+                    <p className="m-0">
+                      {lead.created_by?.first_name} {lead.created_by?.last_name}
+                    </p>
+                    <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
+                      (
+                      {lead.created_by?.user_type
+                        ?.split("_")
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                        )
+                        .join(" ")}
+                      )
+                    </p>
                   </td>
                   <td>{formatDateToDMYAndTime(lead?.created_at)}</td>
 

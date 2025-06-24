@@ -72,8 +72,8 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
-  const openDeleteModal = (Adviser: AdviserInfoProps) => {
-    setAdviserToDelete(Adviser);
+  const openDeleteModal = (adviser: AdviserInfoProps) => {
+    setAdviserToDelete(adviser);
     toggleDeleteModal();
   };
 
@@ -91,20 +91,20 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
     toggleModal();
   };
 
-  const openUpdateModal = (Adviser: AdviserInfoProps) => {
-    setSelectedAdviser(Adviser);
+  const openUpdateModal = (adviser: AdviserInfoProps) => {
+    setSelectedAdviser(adviser);
     toggleUpdateModal();
   };
   // openmodals end
 
-  const filteredAdvisers = advisers.filter((Adviser) => {
-    const fullName = `${Adviser?.user?.first_name || ""} ${
-      Adviser?.user?.last_name || ""
+  const filteredAdvisers = advisers.filter((adviser) => {
+    const fullName = `${adviser?.user?.first_name || ""} ${
+      adviser?.user?.last_name || ""
     }`.toLowerCase();
 
     return (
       fullName.includes(searchQuery.toLowerCase()) ||
-      Adviser?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
+      adviser?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
 
@@ -150,7 +150,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
             onClick={openAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
-            <span>Add Adviser</span>
+            <span>Add adviser</span>
             <span>
               <i className="fa-solid fa-circle-plus"></i>
             </span>
@@ -180,60 +180,74 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                 </td>
               </tr>
             ) : currentAdvisers.length > 0 ? (
-              currentAdvisers.map((Adviser) => (
-                <tr key={Adviser.alias} className="text-center">
+              currentAdvisers.map((adviser) => (
+                <tr key={adviser.alias} className="text-center">
                   <td>
                     <span
                       className="text_decoration_hover"
                       onClick={() => {
-                        setSelectedAdviser(Adviser);
+                        setSelectedAdviser(adviser);
                         toggleViewModal();
                       }}
                       style={{ cursor: "pointer" }}
                     >
-                      {Adviser?.user?.first_name} {Adviser?.user?.last_name}
+                      {adviser?.user?.first_name} {adviser?.user?.last_name}
                     </span>
                   </td>
                   <td>
-                    {Adviser?.official_email ? (
+                    {adviser?.official_email ? (
                       <a
-                        href={`mailto:${Adviser.official_email}`}
+                        href={`mailto:${adviser.official_email}`}
                         className="text-black text_decoration_hover"
                       >
-                        {Adviser.official_email}
+                        {adviser.official_email}
                       </a>
                     ) : (
                       "-"
                     )}
                   </td>
                   <td>
-                    {Adviser?.official_phone ? (
+                    {adviser?.official_phone ? (
                       <a
-                        href={`tel:${Adviser?.official_phone}`}
+                        href={`tel:${adviser?.official_phone}`}
                         className="text-black text_decoration_hover"
                       >
-                        {Adviser?.official_phone}
+                        {adviser?.official_phone}
                       </a>
                     ) : (
                       "-"
                     )}
                   </td>
                   <td>
-                    {Adviser?.role?.charAt(0)?.toUpperCase() +
-                      Adviser?.role?.slice(1)?.toLowerCase()}
+                    {adviser?.role?.charAt(0)?.toUpperCase() +
+                      adviser?.role?.slice(1)?.toLowerCase()}
                   </td>
                   <td>
-                    {Adviser?.created_by?.first_name}{" "}
-                    {Adviser?.created_by?.last_name}
+                  <p className="m-0">
+                        {adviser.created_by?.first_name}{" "}
+                        {adviser.created_by?.last_name}
+                      </p>
+                      <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
+                        (
+                        {adviser.created_by?.user_type
+                          ?.split("_")
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() +
+                              word.slice(1).toLowerCase()
+                          )
+                          .join(" ")}
+                        )
+                      </p>
                   </td>
-                  <td>{formatDateToDMYAndTime(Adviser?.created_at)}</td>
+                  <td>{formatDateToDMYAndTime(adviser?.created_at)}</td>
                   <td>
                     <div className="d-flex justify-content-center gap-2 align-items-center">
                       <Button
                         color="success"
                         size="sm"
                         title="Update User"
-                        onClick={() => openUpdateModal(Adviser)}
+                        onClick={() => openUpdateModal(adviser)}
                       >
                         <i className="icon-pencil-alt"></i>
                       </Button>
@@ -241,7 +255,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                         color="danger"
                         size="sm"
                         title="Delete User"
-                        onClick={() => openDeleteModal(Adviser)}
+                        onClick={() => openDeleteModal(adviser)}
                       >
                         <i className="icon-trash"></i>
                       </Button>

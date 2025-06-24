@@ -223,8 +223,22 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
                       client?.role?.slice(1)?.toLowerCase()}
                   </td>
                   <td>
-                    {client?.created_by?.first_name}{" "}
-                    {client?.created_by?.last_name}
+                    <p className="m-0">
+                      {client.created_by?.first_name}{" "}
+                      {client.created_by?.last_name}
+                    </p>
+                    <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
+                      (
+                      {client.created_by?.user_type
+                        ?.split("_")
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                        )
+                        .join(" ")}
+                      )
+                    </p>
                   </td>
                   <td>{formatDateToDMYAndTime(client?.created_at)}</td>
                   <td>
