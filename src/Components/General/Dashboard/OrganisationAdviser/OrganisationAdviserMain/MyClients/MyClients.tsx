@@ -88,19 +88,19 @@ const MyClients: React.FC = () => {
                     <div className="d-flex align-items-center gap-2">
                       <h5 className="mb-1">{client.company}</h5>
                       {/* <div> */}
-                        <Badge color={getPriorityColor(client.priority)} pill>
+                        <Badge color={getPriorityColor(client.priority)}>
                           {client.priority}
                         </Badge>
                       {/* </div> */}
                     </div>
                     <p className="text-muted mb-0">{client.name}</p>
                   </div>
-                  <Badge color={getStatusColor(client.status)} pill>
+                  <Badge color={getStatusColor(client.status)} >
                     {client.status}
                   </Badge>
                 </div>
 
-                <div className="d-flex gap-4 mb-3">
+                <div className="d-flex gap-4 mb-3 ">
                   <div>
                     <small className="text-muted">Value:</small>
                     <p className="mb-0">{client.value}</p>
