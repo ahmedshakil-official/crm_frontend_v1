@@ -24,6 +24,7 @@ import {
 import AddIntroducerModal from "./Modals/AddIntroducerModal";
 import DeleteIntroducerModal from "./Modals/DeleteIntroducerModal";
 import UpdateIntroducerModal from "./Modals/UpdateIntroducerModal";
+import ViewIntroducerModal from "./Modals/ViewIntroducerModal";
 
 const Introducers: React.FC<IntroducersProps> = ({
   introducersPerPage = 10,
@@ -32,6 +33,7 @@ const Introducers: React.FC<IntroducersProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [introducerToDelete, setIntroducerToDelete] =
@@ -65,9 +67,9 @@ const Introducers: React.FC<IntroducersProps> = ({
     degree: "",
   });
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleViewModal = () => setIsViewModalOpen(!isViewModalOpen);
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
   const openDeleteModal = (introducer: IntroducerInfoProps) => {
@@ -181,7 +183,17 @@ const Introducers: React.FC<IntroducersProps> = ({
               currentIntroducers.map((introducer) => (
                 <tr key={introducer.alias} className="text-center">
                   <td>
-                    {introducer?.user?.first_name} {introducer?.user?.last_name}
+                    <span
+                      className="text_decoration_hover"
+                      onClick={() => {
+                        setSelectedIntroducer(introducer);
+                        toggleViewModal();
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {introducer?.user?.first_name}{" "}
+                      {introducer?.user?.last_name}
+                    </span>
                   </td>
                   <td>
                     {introducer?.official_email ? (
@@ -344,6 +356,11 @@ const Introducers: React.FC<IntroducersProps> = ({
 
       {/* modals */}
       <AddIntroducerModal isOpen={isModalOpen} toggle={toggleModal} />
+      <ViewIntroducerModal
+        isOpen={isViewModalOpen}
+        toggle={toggleViewModal}
+        selectedIntroducer={selectedIntroducer}
+      />
       <UpdateIntroducerModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
