@@ -3,7 +3,8 @@ export interface ClientInfoProps {
   user: {
     first_name: string;
     last_name: string;
-    profile_image: string;
+    email: string;
+    phone: string;
     nid: string;
     user_type: string;
     city: string;
@@ -25,6 +26,7 @@ export interface ClientInfoProps {
   created_by: {
     first_name: string;
     last_name: string;
+    user_type: string;
   };
   created_at: string;
 }
@@ -34,6 +36,12 @@ export interface ClientsProps {
 export interface AddClientModalProps {
   isOpen: boolean;
   toggle: () => void;
+}
+
+export interface ViewClientModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  selectedClient: Partial<ClientInfoProps>;
 }
 export interface UpdateClientModalProps {
   isOpen: boolean;
