@@ -3,8 +3,9 @@ export interface ClientInfoProps {
   user: {
     first_name: string;
     last_name: string;
-    email: string;
-    phone: string;
+    email?: string;
+    phone?: string;
+    profile_image?: string;
     nid: string;
     user_type: string;
     city: string;

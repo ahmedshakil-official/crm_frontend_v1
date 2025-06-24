@@ -42,8 +42,6 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
     user: {
       first_name: "",
       last_name: "",
-      email: "",
-      phone: "",
       profile_image: "",
       nid: "",
       user_type: "",

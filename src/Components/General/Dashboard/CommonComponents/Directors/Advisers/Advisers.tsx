@@ -24,12 +24,14 @@ import {
 import AddAdviserModal from "./Modals/AddAdviserModal";
 import DeleteAdviserModal from "./Modals/DeleteAdviserModal";
 import UpdateAdviserModal from "./Modals/UpdateAdviserModal";
+import ViewAdviserModal from "./Modals/ViewAdviserModal";
 
 const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
   const [advisers, setAdvisers] = useState<AdviserInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [adviserToDelete, setAdviserToDelete] =
@@ -66,8 +68,8 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleViewModal = () => setIsViewModalOpen(!isViewModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
   const openDeleteModal = (Adviser: AdviserInfoProps) => {
@@ -181,7 +183,16 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
               currentAdvisers.map((Adviser) => (
                 <tr key={Adviser.alias} className="text-center">
                   <td>
-                    {Adviser?.user?.first_name} {Adviser?.user?.last_name}
+                    <span
+                      className="text_decoration_hover"
+                      onClick={() => {
+                        setSelectedAdviser(Adviser);
+                        toggleViewModal();
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {Adviser?.user?.first_name} {Adviser?.user?.last_name}
+                    </span>
                   </td>
                   <td>
                     {Adviser?.official_email ? (
@@ -342,6 +353,11 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
 
       {/* modals */}
       <AddAdviserModal isOpen={isModalOpen} toggle={toggleModal} />
+      <ViewAdviserModal
+        isOpen={isViewModalOpen}
+        toggle={toggleViewModal}
+        selectedAdviser={selectedAdviser}
+      />
       <UpdateAdviserModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}

@@ -46,8 +46,7 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
     user: {
       first_name: "",
       last_name: "",
-      email: "",
-      phone: "",
+      profile_image: "",
       nid: "",
       user_type: "",
       city: "",
