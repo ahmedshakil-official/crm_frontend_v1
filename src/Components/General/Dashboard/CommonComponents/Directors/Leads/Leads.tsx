@@ -24,12 +24,14 @@ import {
 import AddLeadModal from "./Modals/AddLeadModal";
 import DeleteLeadModal from "./Modals/DeleteLeadModal";
 import UpdateLeadModal from "./Modals/UpdateLeadModal";
+import ViewLeadModal from "./Modals/ViewLeadModal";
 
 const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
@@ -40,6 +42,8 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
     user: {
       first_name: "",
       last_name: "",
+      email: "",
+      phone: "",
       profile_image: "",
       nid: "",
       user_type: "",
@@ -62,8 +66,8 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+  const toggleViewModal = () => setIsViewModalOpen(!isViewModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
-
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
 
   const openDeleteModal = (lead: LeadsInfo) => {
@@ -172,7 +176,16 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
               currentLeads.map((lead) => (
                 <tr key={lead.alias} className="text-center">
                   <td>
-                    {lead?.user?.first_name} {lead?.user?.last_name}
+                    <span
+                      className="text_decoration_hover"
+                      onClick={() => {
+                        setSelectedLead(lead);
+                        toggleViewModal();
+                      }}
+                      style={{cursor:"pointer"}}
+                    >
+                      {lead?.user?.first_name} {lead?.user?.last_name}
+                    </span>
                   </td>
                   <td>
                     {lead?.official_email ? (
@@ -332,6 +345,11 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
 
       {/* Modals */}
       <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
+      <ViewLeadModal
+        isOpen={isViewModalOpen}
+        toggle={toggleViewModal}
+        selectedLead={selectedLead}
+      />
 
       <UpdateLeadModal
         isOpen={isUpdateModalOpen}
