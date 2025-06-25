@@ -229,20 +229,12 @@
 .show-hide {
   position: absolute;
   top: 52px;
-  right: 20px;
+  right: 10px;
   transform: translateY(-50%);
   span {
     cursor: pointer;
     font-size: 13px;
     color: var(--theme-default);
-    &.show {
-      &:before {
-        content: "show";
-      }
-    }
-    &:before {
-      content: "hide";
-    }
   }
 }
 .needs-validation {
