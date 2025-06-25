@@ -2,7 +2,6 @@ import {
   EmailAddressLogIn,
   ForgotPassword,
   Password,
-  RememberPassword,
   SignIn,
   SignInToAccount,
 } from "@/Constant";
@@ -88,13 +87,7 @@ export const UserForm = () => {
           </div>
         </FormGroup>
         <FormGroup className="mb-0 checkbox-checked">
-          <FormGroup className="checkbox-solid-info" check>
-            <Input id="checkbox1" type="checkbox" />
-            <Label className="text-muted" htmlFor="checkbox1">
-              {RememberPassword}
-            </Label>
-          </FormGroup>
-          <Link className="link" href={`/authentication/forget_password`}>
+          <Link className="link" href={`/others/authentication/forgetpassword`}>
             {ForgotPassword}
           </Link>
           <div className="text-end mt-3">
@@ -103,10 +96,6 @@ export const UserForm = () => {
             </Button>
           </div>
         </FormGroup>
-        {/* <div className="login-social-title">
-            <h6>{OrSignInWith}</h6>
-          </div>
-          <UserSocialApp /> */}
         {/* <p className="mt-4 mb-0 text-center">{DontHaveAccount}
             <Link className="ms-2" href="/others/authentication/registersimple">{CreateAccount}</Link>
           </p> */}
