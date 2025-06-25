@@ -66,35 +66,42 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                   <Row className="pt-2">
                     <Col xs="12">
                       <h6 className="pt-1">
-                        <strong>Name:</strong> {caseInfo?.lead_user?.first_name}{" "}
-                        {caseInfo?.lead_user?.last_name}
+                        <small>Name:</small>{" "}
+                        <strong className="small">
+                          {caseInfo?.lead_user?.first_name}{" "}
+                          {caseInfo?.lead_user?.last_name}
+                        </strong>
                       </h6>
                       <h6 className="pt-1">
-                        <strong>Email:</strong>{" "}
-                        <a
-                          className="text-dark text_decoration_hover"
-                          href={`mailto:${caseInfo?.lead_user?.email}`}
-                        >
-                          {caseInfo?.lead_user?.email}
-                        </a>
+                        <small>Email:</small>{" "}
+                        <strong>
+                          <a
+                            className="text-dark text_decoration_hover small"
+                            href={`mailto:${caseInfo?.lead_user?.email}`}
+                          >
+                            {caseInfo?.lead_user?.email}
+                          </a>
+                        </strong>
                       </h6>
                       <h6 className="pt-1">
                         {caseInfo?.lead_user?.phone ? (
                           <>
-                            <strong>Phone:</strong>{" "}
-                            <a
-                              className="text-dark text_decoration_hover"
-                              href={`tel:${caseInfo?.lead_user?.phone}`}
-                            >
-                              {caseInfo?.lead_user?.phone}
-                            </a>
+                            <small>Phone:</small>{" "}
+                            <strong>
+                              <a
+                                className="text-dark text_decoration_hover small"
+                                href={`tel:${caseInfo?.lead_user?.phone}`}
+                              >
+                                {caseInfo?.lead_user?.phone}
+                              </a>
+                            </strong>
                           </>
                         ) : (
                           <>
-                            <strong>Phone:</strong>{" "}
-                            <span className="text-muted opacity-50">
+                            <small>Phone:</small>{" "}
+                            <strong className="text-muted opacity-50 small">
                               Not Found
-                            </span>
+                            </strong>
                           </>
                         )}
                       </h6>
@@ -125,8 +132,8 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                   <Row className="pt-2">
                     <Col xs="12">
                       <h6 className="pt-1">
-                        <strong>Case Category:</strong>{" "}
-                        <span>
+                        <small>Case Category:</small>{" "}
+                        <strong className="small">
                           {caseInfo?.case_category
                             ? caseInfo.case_category
                                 .split("_")
@@ -137,23 +144,21 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                                 )
                                 .join(" ")
                             : "N/A"}
-                        </span>
+                        </strong>
                       </h6>
                       <h6 className="pt-1">
-                        <strong>Active Status:</strong>{" "}
-                        <span
-                          className={`rounded-1 px-1 ${
-                            caseInfo?.is_removed
-                              ? "bg-danger"
-                              : "bg-success"
+                        <small>Active Status:</small>{" "}
+                        <strong
+                          className={`rounded-1 px-1 small ${
+                            caseInfo?.is_removed ? "bg-danger" : "bg-success"
                           }`}
                         >
                           {caseInfo?.is_removed ? "Removed" : "Active"}
-                        </span>
+                        </strong>
                       </h6>
                       <h6 className="pt-1">
-                        <strong>Case Stage:</strong>{" "}
-                        <span>
+                        <small>Case Stage:</small>{" "}
+                        <strong className="small">
                           {caseInfo?.case_stage
                             ? caseInfo.case_stage
                                 .split("_")
@@ -164,7 +169,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                                 )
                                 .join(" ")
                             : "N/A"}
-                        </span>
+                        </strong>
                       </h6>
                     </Col>
                   </Row>
@@ -193,22 +198,26 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                   <Row className="pt-2">
                     <Col xs="12">
                       <h6 className="pt-1">
-                        <strong>Name:</strong>{" "}
-                        {caseInfo?.created_by?.first_name}{" "}
-                        {caseInfo?.created_by?.last_name}
+                        <small>Name:</small>{" "}
+                        <strong className="small">
+                          {caseInfo?.created_by?.first_name}{" "}
+                          {caseInfo?.created_by?.last_name}
+                        </strong>
                       </h6>
                       <h6 className="pt-1">
-                        <strong>Email:</strong>{" "}
-                        <a
-                          className="text-dark text_decoration_hover"
-                          href={`mailto:${caseInfo?.created_by?.email}`}
-                        >
-                          {caseInfo?.created_by?.email}
-                        </a>
+                        <small>Email:</small>{" "}
+                        <strong>
+                          <a
+                            className="text-dark text_decoration_hover small"
+                            href={`mailto:${caseInfo?.created_by?.email}`}
+                          >
+                            {caseInfo?.created_by?.email}
+                          </a>
+                        </strong>
                       </h6>
                       <h6 className="pt-1">
-                        <strong>User Type:</strong>{" "}
-                        <span>
+                        <small>User Type:</small>{" "}
+                        <strong className="small">
                           {caseInfo?.created_by?.user_type
                             ? caseInfo.created_by?.user_type
                                 .split("_")
@@ -219,7 +228,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                                 )
                                 .join(" ")
                             : "N/A"}
-                        </span>
+                        </strong>
                       </h6>
                     </Col>
                   </Row>
