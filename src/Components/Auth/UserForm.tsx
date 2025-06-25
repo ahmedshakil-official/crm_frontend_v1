@@ -83,7 +83,7 @@ export const UserForm = () => {
               required
             />
             <div className="show-hide" onClick={() => setShow(!show)}>
-              <span className="show"> </span>
+              <span className="show fs-4">{show ? "🫣" : "🤫"}</span>
             </div>
           </div>
         </FormGroup>
