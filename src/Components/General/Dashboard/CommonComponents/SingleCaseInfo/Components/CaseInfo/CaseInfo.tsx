@@ -30,7 +30,12 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
     <Col sm="12">
       <Card>
         <CardHeader className="d-flex justify-content-between">
-          <h3 className="mb-2">Case Info</h3>
+          <h3 className="mb-2">
+            Case Info
+            <span className="small text-muted opacity-75">
+              ({caseInfo?.name})
+            </span>
+          </h3>
           <Button
             color="primary"
             onClick={() => openUpdateCaseModal(caseInfo!)}
