@@ -94,7 +94,7 @@ const ReportsTab: React.FC = () => {
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Type</Label>
                 <Input type="select" id="1" className="py-1">
-                  <option value="">Select...</option>
+                  <option value="">All Types</option>
                   <option value="1">Client Reports</option>
                   <option value="2">Performance Reports</option>
                   <option value="3">Compliance Reports</option>
@@ -105,7 +105,7 @@ const ReportsTab: React.FC = () => {
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Status</Label>
                 <Input type="select" id="2" className="py-1">
-                  <option value="">Select...</option>
+                  <option value="">All Status</option>
                   <option value="1">Active</option>
                   <option value="2">Inactive</option>
                   <option value="3">Pending</option>
@@ -113,12 +113,7 @@ const ReportsTab: React.FC = () => {
               </Col>
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Date Range</Label>
-                <Input type="select" id="3" className="py-1">
-                  <option value="">
-                    <i className="fa-solid fa-calendar-days"></i> Pick a date
-                    range
-                  </option>
-                </Input>
+                <Input type="date" id="3" className="py-2" />
               </Col>
               {/* Clear All Filters Button */}
               <Col xs="12" sm="6" md="4" lg="3">
