@@ -43,7 +43,7 @@ const ReportsAndLogsOverview: React.FC = () => {
               </div>
             </div>
             <div>
-              <i className="fa-solid fa-arrow-trend-up p-2 bg-primary rounded-3"></i>
+              <i className="fa-solid fa-arrow-trend-up p-2 bg-secondary rounded-3"></i>
             </div>
           </CardBody>
         </Card>
@@ -67,7 +67,7 @@ const ReportsAndLogsOverview: React.FC = () => {
               </div>
             </div>
             <div>
-              <i className="fa-solid fa-wave-square p-2 bg-primary rounded-3"></i>
+              <i className="fa-solid fa-wave-square p-2 bg-success rounded-3"></i>
             </div>
           </CardBody>
         </Card>
@@ -91,7 +91,7 @@ const ReportsAndLogsOverview: React.FC = () => {
               </div>
             </div>
             <div>
-              <i className="fa-solid fa-users p-2 bg-primary rounded-3"></i>
+              <i className="fa-solid fa-users p-2 bg-warning rounded-3"></i>
             </div>
           </CardBody>
         </Card>

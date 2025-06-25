@@ -134,7 +134,7 @@ const AuditLogsTab: React.FC = () => {
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Action</Label>
                 <Input type="select" id="1" className="py-1">
-                  <option value="">Select...</option>
+                  <option value="">All Actions</option>
                   <option value="1">User Login</option>
                   <option value="2">Report Generated</option>
                   <option value="3">Permission Changed</option>
@@ -148,19 +148,14 @@ const AuditLogsTab: React.FC = () => {
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Status</Label>
                 <Input type="select" id="2" className="py-1">
-                  <option value="">Select...</option>
+                  <option value="">All Status</option>
                   <option value="1">Success</option>
                   <option value="2">Failed</option>
                 </Input>
               </Col>
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Date Range</Label>
-                <Input type="select" id="3" className="py-1">
-                  <option value="">
-                    <i className="fa-solid fa-calendar-days"></i> Pick a date
-                    range
-                  </option>
-                </Input>
+                <Input type="date" id="3" className="py-2" />
               </Col>
               <Col xs="12" sm="6" md="4" lg="3">
                 <div>
