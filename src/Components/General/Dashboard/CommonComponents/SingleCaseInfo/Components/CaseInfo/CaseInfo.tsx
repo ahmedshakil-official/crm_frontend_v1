@@ -152,7 +152,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                         </strong>
                       </h6>
                       <h6 className="pt-1">
-                        <span className="small">Active Status:</span>{" "}
+                        <span className="small">Case Status:</span>{" "}
                         <strong
                           className={`rounded-1 px-1 small ${
                             caseInfo?.is_removed ? "bg-danger" : "bg-success"
