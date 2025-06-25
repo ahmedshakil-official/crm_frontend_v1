@@ -239,15 +239,13 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
         </Row>
         <Row className="px-3">
           <div>
-            <h4 className="pb-2">Notes:</h4>
-            <div className="px-3">
-              <p className="border border-primary p-2 rounded-1">
-                {caseInfo?.notes
-                  ? caseInfo.notes.charAt(0).toUpperCase() +
-                    caseInfo.notes.slice(1).toLowerCase()
-                  : "Notes not available"}
-              </p>
-            </div>
+            <h4>Notes:</h4>
+            <p className="text-muted p-1">
+              {caseInfo?.notes
+                ? caseInfo.notes.charAt(0).toUpperCase() +
+                  caseInfo.notes.slice(1).toLowerCase()
+                : "Notes not available"}
+            </p>
           </div>
         </Row>
       </Card>
