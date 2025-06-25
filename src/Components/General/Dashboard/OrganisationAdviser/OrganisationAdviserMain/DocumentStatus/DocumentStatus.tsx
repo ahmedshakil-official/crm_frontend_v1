@@ -68,7 +68,7 @@ const DocumentStatus: React.FC = () => {
             <Col xs="auto">
               <Badge 
                 color={getStatusColor(doc.status)}
-                pill
+                
                 className="px-3 py-2"
               >
                 {doc.status}

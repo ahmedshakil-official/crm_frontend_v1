@@ -5,7 +5,7 @@ const DashboardOverview: React.FC = () => {
     <Row>
       {/* New Clients This Month  */}
       <Col xl className="mb-2">
-        <Card className="border-0 rounded-2 shadow-sm bg-white">
+        <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
           <CardBody className="p-2">
             <div className="d-flex justify-content-between">
               <div>
@@ -27,7 +27,7 @@ const DashboardOverview: React.FC = () => {
 
       {/* Case Completed */}
       <Col xl className="mb-2">
-        <Card className="border-0 rounded-2 shadow-sm bg-white">
+        <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
           <CardBody className="p-2">
             <div className="d-flex justify-content-between">
               <div>
@@ -49,7 +49,7 @@ const DashboardOverview: React.FC = () => {
 
       {/*Pending Documents */}
       <Col xl className="mb-2">
-        <Card className="border-0 rounded-2 shadow-sm bg-white">
+        <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
           <CardBody className="p-2">
             <div className="d-flex justify-content-between">
               <div>
@@ -71,7 +71,7 @@ const DashboardOverview: React.FC = () => {
 
       {/* Upcoming Tasks */}
       <Col xl className="mb-2">
-        <Card className="border-0 rounded-2 shadow-sm bg-white">
+        <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
           <CardBody className="p-2">
             <div className="d-flex justify-content-between">
               <div>
@@ -93,7 +93,7 @@ const DashboardOverview: React.FC = () => {
 
       {/* Target Acheivements */}
       <Col xl className="mb-2">
-        <Card className="border-0 rounded-2 shadow-sm bg-white">
+        <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
           <CardBody className="p-2">
             <div className="d-flex justify-content-between">
               <div>

@@ -60,7 +60,7 @@ const UpcomingTasks: React.FC = () => {
                     </div>
                     <div>
                       {task.isUrgent && (
-                        <Badge color="danger" pill className="px-2">
+                        <Badge color="danger"  className="px-2">
                           Urgent
                         </Badge>
                       )}
