@@ -21,7 +21,11 @@ const UserLogin = () => {
     } else if (session?.user?.user_type === "ORGANIZATION_ADVISER") {
       router.push("/dashboard/orgadviser");
     } else {
-      router.push("/auth/login");
+      if (session?.user?.accessToken) {
+        router.push("/logout");
+      } else {
+        router.push("/auth/login");
+      }
     }
   }, [session, router]);
 
