@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Badge } from "reactstrap";
 
 const Menulist: React.FC<MenuListType> = ({
   menu,
@@ -121,15 +120,23 @@ const Menulist: React.FC<MenuListType> = ({
               {!item.icon ? (
                 <span className="flex-grow-1">{t(item.title)}</span>
               ) : (
-                <h6 className={`mb-0 ${item.lanClass || ""}`}>
+                <h6 className={`mb-0 position-relative ${item.lanClass || ""}`}>
                   {t(item.title)}
+                  {/* Badge number  */}
+                  {/* {item.badge && (
+                    <span className="badge rounded-pill bg-primary position-absolute" 
+                      style={{
+                        top: '-8px',
+                        right: '-15px',
+                        fontSize: '10px',
+                        padding: '4px 5px'
+                      }}>
+                      {item.badge}
+                    </span>
+                  )} */}
                 </h6>
               )}
-              {item.badge && (
-                <Badge pill color="primary" className="ms-0">
-                  {item.badge}
-                </Badge>
-              )}
+
               {hasChildren && (
                 <i
                   className="fa fa-chevron-right ms-auto"
