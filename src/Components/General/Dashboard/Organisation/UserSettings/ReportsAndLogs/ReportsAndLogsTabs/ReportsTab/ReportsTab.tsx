@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TbFileText } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -132,10 +133,11 @@ const ReportsTab: React.FC = () => {
           </Card>
         )}
       </div>
-      <Card className=" rounded-3 p-3">
-        <div className=" mb-4 mt-2">
+      <Card className="rounded-3 p-3">
+        <div className="mb-4 mt-2">
           <h3>
-            <i className="fa-solid fa-file-lines"></i> Reports (5)
+            <TbFileText className="me-1 fs-5" />
+            Reports(5)
           </h3>
         </div>
         <Table hover responsive className="rounded-3 overflow-hidden">
