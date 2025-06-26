@@ -1,3 +1,11 @@
+import {
+  TbBriefcase2Filled,
+  TbCoinPound,
+  TbHeartCheck,
+  TbShieldCheckFilled,
+  TbTrendingUp,
+  TbUsers,
+} from "react-icons/tb";
 import { Card, CardBody, CardTitle, Col, Row } from "reactstrap";
 
 const DashboardOverview: React.FC = () => {
@@ -18,7 +26,12 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-users bg-primary p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-primary rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbUsers className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
@@ -40,7 +53,12 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-suitcase bg-secondary p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-secondary rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbBriefcase2Filled className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
@@ -62,7 +80,12 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-arrow-trend-up bg-success p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-warning rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbTrendingUp className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
@@ -84,7 +107,12 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-coins bg-primary p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-success rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbCoinPound className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
@@ -104,7 +132,12 @@ const DashboardOverview: React.FC = () => {
                 <p className="text-success small mb-0">Above target</p>
               </div>
               <div>
-                <i className="fa-solid fa-shield bg-secondary p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-secondary rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbShieldCheckFilled className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
@@ -126,7 +159,12 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-heart-circle-check bg-success p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-success rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbHeartCheck className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
