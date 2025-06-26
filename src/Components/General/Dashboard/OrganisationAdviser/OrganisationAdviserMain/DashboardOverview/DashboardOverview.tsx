@@ -1,6 +1,6 @@
 import {
   TbAwardFilled,
-  TbCircleCheckFilled,
+  TbCheckbox,
   TbClock,
   TbFileText,
   TbUsers,
@@ -56,7 +56,7 @@ const DashboardOverview: React.FC = () => {
                   className="d-flex justify-content-center align-items-center bg-secondary rounded-3"
                   style={{ width: "30px", height: "30px" }}
                 >
-                  <TbCircleCheckFilled className="fs-6" />
+                  <TbCheckbox className="fs-6" />
                 </span>
               </div>
             </div>
@@ -107,7 +107,7 @@ const DashboardOverview: React.FC = () => {
               </div>
               <div>
                 <span
-                  className="d-flex justify-content-center align-items-center bg-success rounded-3"
+                  className="d-flex justify-content-center align-items-center bg-primary rounded-3"
                   style={{ width: "30px", height: "30px" }}
                 >
                   <TbClock className="fs-6" />

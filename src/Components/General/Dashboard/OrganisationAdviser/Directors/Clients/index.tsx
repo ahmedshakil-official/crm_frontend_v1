@@ -2,7 +2,7 @@ import { Container } from "reactstrap";
 import Clients from "../../../CommonComponents/Directors/Clients/Clients";
 import OrganisationAdviserBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
-const OrganisationDirectorsClientsContainer: React.FC = () => {
+const OrganisationAdviserClientsContainer: React.FC = () => {
   return (
     <>
       <OrganisationAdviserBreadcrumbs
@@ -18,4 +18,4 @@ const OrganisationDirectorsClientsContainer: React.FC = () => {
   );
 };
 
-export default OrganisationDirectorsClientsContainer;
+export default OrganisationAdviserClientsContainer;
