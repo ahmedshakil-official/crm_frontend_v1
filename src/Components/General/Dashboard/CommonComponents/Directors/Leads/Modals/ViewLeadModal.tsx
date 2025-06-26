@@ -25,13 +25,13 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
         {/* 1st row  */}
         <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Name:</span>
+            <span className="text-muted">Name:</span>
             <small>
               {selectedLead?.user?.first_name} {selectedLead?.user?.last_name}
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Email:</span>
+            <span className="text-muted">Email:</span>
             {selectedLead?.user?.email ? (
               <a
                 className="text-dark text_decoration_hover small"
@@ -44,7 +44,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             )}
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Official Email:</span>
+            <span className="text-muted">Official Email:</span>
             {selectedLead?.official_email ? (
               <a
                 className="text-dark text_decoration_hover small"
@@ -60,7 +60,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
         {/* 2nd row  */}
         <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Phone:</span>
+            <span className="text-muted">Phone:</span>
 
             {selectedLead?.user?.phone ? (
               <a
@@ -74,7 +74,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             )}
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Official Phone:</span>
+            <span className="text-muted">Official Phone:</span>
             {selectedLead?.official_phone ? (
               <a
                 className="text-dark text_decoration_hover small"
@@ -87,7 +87,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             )}
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Date of Birth:</span>
+            <span className="text-muted">Date of Birth:</span>
             <small>
               {selectedLead?.dob || (
                 <span className="text-muted">Not available</span>
@@ -98,7 +98,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
         {/* 3rd row  */}
         <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Gender:</span>
+            <span className="text-muted">Gender:</span>
             <small>
               {selectedLead?.gender ? (
                 selectedLead.gender.charAt(0).toUpperCase() +
@@ -109,7 +109,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>User Type:</span>
+            <span className="text-muted">User Type:</span>
             <small>
               {selectedLead?.user?.user_type ? (
                 selectedLead.user.user_type.charAt(0).toUpperCase() +
@@ -120,7 +120,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>User Role:</span>
+            <span className="text-muted">User Role:</span>
             <small>
               {selectedLead?.role ? (
                 selectedLead.role.charAt(0).toUpperCase() +
@@ -134,7 +134,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
         {/* 4th row  */}
         <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Joining Date:</span>
+            <span className="text-muted">Joining Date:</span>
             <small>
               {selectedLead?.joining_date || (
                 <span className="text-muted">Not available</span>
@@ -142,7 +142,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Registration Number:</span>
+            <span className="text-muted">Registration Number:</span>
             <small>
               {selectedLead?.registration_number || (
                 <span className="text-muted">Not available</span>
@@ -150,7 +150,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Designation:</span>
+            <span className="text-muted">Designation:</span>
             <small>
               {selectedLead?.designation || (
                 <span className="text-muted">Not available</span>
@@ -161,7 +161,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
         {/* 5th row  */}
         <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Degree:</span>
+            <span className="text-muted">Degree:</span>
             <small>
               {selectedLead?.degree || (
                 <span className="text-muted">Not available</span>
@@ -169,7 +169,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>NID:</span>
+            <span className="text-muted">NID:</span>
             <small>
               {selectedLead?.user?.nid || (
                 <span className="text-muted">Not available</span>
@@ -177,7 +177,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Created At:</span>
+            <span className="text-muted">Created At:</span>
             <small>
               {(selectedLead?.created_at &&
                 formatDateToDMYAndTime(selectedLead?.created_at)) || (
@@ -189,7 +189,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
         {/* 6th row  */}
         <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Created By:</span>
+            <span className="text-muted">Created By:</span>
             <small>
               {`${selectedLead?.created_by?.first_name} ${selectedLead?.created_by?.last_name}` || (
                 <span className="text-muted">Not available</span>
@@ -214,7 +214,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Permanent Address:</span>
+            <span className="text-muted">Permanent Address:</span>
             <small>
               {selectedLead?.permanent_address || (
                 <span className="text-muted">Not available</span>
@@ -222,7 +222,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span>Present Address:</span>
+            <span className="text-muted">Present Address:</span>
             <small>
               {selectedLead?.present_address || (
                 <span className="text-muted">Not available</span>

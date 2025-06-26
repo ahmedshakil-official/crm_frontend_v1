@@ -16,13 +16,13 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
       {/* 1st row  */}
       <Row className="d-flex justify-content-between align-items-center mb-3">
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Name:</span>
+          <span className="text-muted">Name:</span>
           <small>
             {selectedAdviser?.user?.first_name} {selectedAdviser?.user?.last_name}
           </small>
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Email:</span>
+          <span className="text-muted">Email:</span>
           {selectedAdviser?.user?.email ? (
             <a
               className="text-dark text_decoration_hover small"
@@ -35,7 +35,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           )}
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Official Email:</span>
+          <span className="text-muted">Official Email:</span>
           {selectedAdviser?.official_email ? (
             <a
               className="text-dark text_decoration_hover small"
@@ -51,7 +51,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
       {/* 2nd row  */}
       <Row className="d-flex justify-content-between align-items-center mb-3">
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Phone:</span>
+          <span className="text-muted">Phone:</span>
 
           {selectedAdviser?.user?.phone ? (
             <a
@@ -65,7 +65,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           )}
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Official Phone:</span>
+          <span className="text-muted">Official Phone:</span>
           {selectedAdviser?.official_phone ? (
             <a
               className="text-dark text_decoration_hover small"
@@ -78,7 +78,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           )}
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Date of Birth:</span>
+          <span className="text-muted">Date of Birth:</span>
           <small>
             {selectedAdviser?.dob || (
               <span className="text-muted">Not available</span>
@@ -89,7 +89,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
       {/* 3rd row  */}
       <Row className="d-flex justify-content-between align-items-center mb-3">
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Gender:</span>
+          <span className="text-muted">Gender:</span>
           <small>
             {selectedAdviser?.gender ? (
               selectedAdviser.gender.charAt(0).toUpperCase() +
@@ -100,7 +100,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           </small>
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>User Type:</span>
+          <span className="text-muted">User Type:</span>
           <small>
             {selectedAdviser?.user?.user_type ? (
               selectedAdviser.user.user_type.charAt(0).toUpperCase() +
@@ -111,7 +111,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           </small>
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>User Role:</span>
+          <span className="text-muted">User Role:</span>
           <small>
             {selectedAdviser?.role ? (
               selectedAdviser.role.charAt(0).toUpperCase() +
@@ -125,7 +125,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
       {/* 4th row  */}
       <Row className="d-flex justify-content-between align-items-center mb-3">
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Joining Date:</span>
+          <span className="text-muted">Joining Date:</span>
           <small>
             {selectedAdviser?.joining_date || (
               <span className="text-muted">Not available</span>
@@ -133,7 +133,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           </small>
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Registration Number:</span>
+          <span className="text-muted">Registration Number:</span>
           <small>
             {selectedAdviser?.registration_number || (
               <span className="text-muted">Not available</span>
@@ -141,7 +141,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           </small>
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Designation:</span>
+          <span className="text-muted">Designation:</span>
           <small>
             {selectedAdviser?.designation || (
               <span className="text-muted">Not available</span>
@@ -152,7 +152,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
       {/* 5th row  */}
       <Row className="d-flex justify-content-between align-items-center mb-3">
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Degree:</span>
+          <span className="text-muted">Degree:</span>
           <small>
             {selectedAdviser?.degree || (
               <span className="text-muted">Not available</span>
@@ -160,7 +160,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           </small>
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>NID:</span>
+          <span className="text-muted">NID:</span>
           <small>
             {selectedAdviser?.user?.nid || (
               <span className="text-muted">Not available</span>
@@ -168,7 +168,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           </small>
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Created At:</span>
+          <span className="text-muted">Created At:</span>
           <small>
             {(selectedAdviser?.created_at &&
               formatDateToDMYAndTime(selectedAdviser?.created_at)) || (
@@ -180,7 +180,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
       {/* 6th row  */}
       <Row className="d-flex justify-content-between align-items-center mb-3">
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Created By:</span>
+          <span className="text-muted">Created By:</span>
           <small>
             {`${selectedAdviser?.created_by?.first_name} ${selectedAdviser?.created_by?.last_name}` || (
               <span className="text-muted">Not available</span>
@@ -205,7 +205,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           </small>
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Permanent Address:</span>
+          <span className="text-muted">Permanent Address:</span>
           <small>
             {selectedAdviser?.permanent_address || (
               <span className="text-muted">Not available</span>
@@ -213,7 +213,7 @@ const ViewAdviserModal: React.FC<ViewAdviserModalProps> = ({
           </small>
         </Col>
         <Col md="4" sm="12" className="d-flex flex-column">
-          <span>Present Address:</span>
+          <span className="text-muted">Present Address:</span>
           <small>
             {selectedAdviser?.present_address || (
               <span className="text-muted">Not available</span>
