@@ -1,9 +1,9 @@
 import classnames from "classnames";
 import React, { useState } from "react";
+import { TbActivity, TbFileText } from "react-icons/tb";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
-import ReportsTab from "./ReportsTab/ReportsTab";
 import AuditLogsTab from "./AuditLogsTab/AuditLogsTab";
-
+import ReportsTab from "./ReportsTab/ReportsTab";
 
 const ReportsAndLogsTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"users" | "roles">("users");
@@ -21,7 +21,7 @@ const ReportsAndLogsTabs: React.FC = () => {
               onClick={() => setActiveTab("users")}
               style={{ cursor: "pointer" }}
             >
-              <i className="fa-solid fa-file-lines me-2"></i>
+              <TbFileText className="me-1 fs-6" />
               Reports
             </NavLink>
           </NavItem>
@@ -34,7 +34,8 @@ const ReportsAndLogsTabs: React.FC = () => {
               onClick={() => setActiveTab("roles")}
               style={{ cursor: "pointer" }}
             >
-              <i className="fa-solid fa-wave-square me-2"></i>Audit Logs
+              <TbActivity className="me-1 fs-6" />
+              Audit Logs
             </NavLink>
           </NavItem>
         </Nav>
