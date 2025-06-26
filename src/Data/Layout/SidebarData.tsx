@@ -307,7 +307,7 @@ const LeadMenu: MenuItem[] = [
     type: "group",
     Items: [
       {
-        title: "Dashboards",
+        title: "Client Home",
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
@@ -316,7 +316,7 @@ const LeadMenu: MenuItem[] = [
         children: [
           {
             path: "/dashboard/client",
-            title: "Main Menu",
+            title: "Dashboard",
             type: "link",
           },
         ],
