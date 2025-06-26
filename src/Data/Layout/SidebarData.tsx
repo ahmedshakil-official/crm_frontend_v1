@@ -216,16 +216,31 @@ const OrganisationAdviserMenu: MenuItem[] = [
     type: "group",
     Items: [
       {
-        title: "Adviser",
+        title: "Home",
         id: 1,
         icon: "Home-dashboard",
         type: "sub",
-        badge: "1",
+        badge: "4",
         lanClass: "lan-3",
         children: [
           {
             path: "/dashboard/orgadviser",
-            title: "Dashboards",
+            title: "Dashboard",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/calendar",
+            title: "Calendar",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/reporting",
+            title: "Reporting",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/tasksandreminders",
+            title: "Tasks & Reminders",
             type: "link",
           },
         ],
@@ -235,12 +250,22 @@ const OrganisationAdviserMenu: MenuItem[] = [
         id: 1,
         icon: "Profile",
         type: "sub",
-        badge: "1",
+        badge: "3",
         lanClass: "lan-3",
         children: [
           {
             path: "/dashboard/orgadviser/directors/clients",
             title: "Clients",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/directors/introducers",
+            title: "Introducers",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/directors/supportstaff",
+            title: "Support Staff",
             type: "link",
           },
         ],
