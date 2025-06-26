@@ -1,3 +1,9 @@
+import {
+  TbBoltFilled,
+  TbCircleCheckFilled,
+  TbGitCompare,
+  TbPlayerPlayFilled,
+} from "react-icons/tb";
 import { Card, CardBody, CardText, CardTitle, Col, Row } from "reactstrap";
 
 const WorkflowsAndIntegrationsOverview: React.FC = () => {
@@ -14,7 +20,12 @@ const WorkflowsAndIntegrationsOverview: React.FC = () => {
               </CardText>
             </div>
             <div>
-              <i className="fa-solid fa-play p-2 bg-primary rounded-3"></i>
+              <span
+                className="d-flex justify-content-center align-items-center bg-primary rounded-3"
+                style={{ width: "30px", height: "30px" }}
+              >
+                <TbPlayerPlayFilled className="fs-6" />
+              </span>
             </div>
           </CardBody>
         </Card>
@@ -31,7 +42,12 @@ const WorkflowsAndIntegrationsOverview: React.FC = () => {
               </CardText>
             </div>
             <div>
-              <i className="fa-solid fa-bolt p-2 bg-secondary rounded-3"></i>
+              <span
+                className="d-flex justify-content-center align-items-center bg-secondary rounded-3"
+                style={{ width: "30px", height: "30px" }}
+              >
+                <TbBoltFilled className="fs-6" />
+              </span>
             </div>
           </CardBody>
         </Card>
@@ -48,7 +64,12 @@ const WorkflowsAndIntegrationsOverview: React.FC = () => {
               </CardText>
             </div>
             <div>
-              <i className="fa-solid fa-code-merge p-2 bg-success rounded-3"></i>
+              <span
+                className="d-flex justify-content-center align-items-center bg-success rounded-3"
+                style={{ width: "30px", height: "30px" }}
+              >
+                <TbGitCompare className="fs-6" />
+              </span>
             </div>
           </CardBody>
         </Card>
@@ -65,7 +86,12 @@ const WorkflowsAndIntegrationsOverview: React.FC = () => {
               </CardText>
             </div>
             <div>
-              <i className="fa-solid fa-circle-check p-2 bg-warning rounded-3"></i>
+              <span
+                className="d-flex justify-content-center align-items-center bg-warning rounded-3"
+                style={{ width: "30px", height: "30px" }}
+              >
+                <TbCircleCheckFilled className="fs-6" />
+              </span>
             </div>
           </CardBody>
         </Card>

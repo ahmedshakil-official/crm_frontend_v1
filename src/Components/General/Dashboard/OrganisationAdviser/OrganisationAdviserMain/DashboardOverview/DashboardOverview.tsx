@@ -1,3 +1,10 @@
+import {
+  TbAwardFilled,
+  TbCircleCheckFilled,
+  TbClock,
+  TbFileText,
+  TbUsers,
+} from "react-icons/tb";
 import { Card, CardBody, CardTitle, Col, Row } from "reactstrap";
 
 const DashboardOverview: React.FC = () => {
@@ -18,7 +25,12 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-users bg-primary p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-primary rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbUsers className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
@@ -40,7 +52,12 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-check-to-slot bg-secondary p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-secondary rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbCircleCheckFilled className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
@@ -62,7 +79,12 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-file-lines bg-success p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-success rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbFileText className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
@@ -84,7 +106,12 @@ const DashboardOverview: React.FC = () => {
                 </p>
               </div>
               <div>
-                <i className="fa-solid fa-clock bg-primary p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-success rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbClock className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>
@@ -104,7 +131,12 @@ const DashboardOverview: React.FC = () => {
                 <p className="text-success small mb-0">Above target</p>
               </div>
               <div>
-                <i className="fa-solid fa-bullseye bg-secondary p-2 rounded-2"></i>
+                <span
+                  className="d-flex justify-content-center align-items-center bg-secondary rounded-3"
+                  style={{ width: "30px", height: "30px" }}
+                >
+                  <TbAwardFilled className="fs-6" />
+                </span>
               </div>
             </div>
           </CardBody>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TbActivity } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -176,7 +177,8 @@ const AuditLogsTab: React.FC = () => {
       <Card className="rounded-3 p-3">
         <div className="mb-4 mt-2">
           <h3>
-            <i className="fa-solid fa-file-lines"></i> Audit Logs (8)
+            <TbActivity className="me-1 fs-5" />
+            Audit Logs(8)
           </h3>
         </div>
         <Table hover responsive className="rounded-3 overflow-hidden">

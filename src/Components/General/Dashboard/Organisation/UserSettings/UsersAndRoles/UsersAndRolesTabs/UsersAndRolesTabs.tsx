@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React, { useState } from "react";
+import { TbLockOpen, TbUsers } from "react-icons/tb";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import RolesPermissionsTab from "./RolesPermissionsTab/RolesPermissionsTab";
 import UsersTab from "./UsersTab/UsersTab";
@@ -20,7 +21,8 @@ const UsersAndRolesTabs: React.FC = () => {
               onClick={() => setActiveTab("users")}
               style={{ cursor: "pointer" }}
             >
-              <i className="fa-solid fa-user-group me-1"></i>Users
+              <TbUsers className="me-1 fs-6" />
+              Users
             </NavLink>
           </NavItem>
           <NavItem>
@@ -32,8 +34,8 @@ const UsersAndRolesTabs: React.FC = () => {
               onClick={() => setActiveTab("roles")}
               style={{ cursor: "pointer" }}
             >
-              <i className="fa-solid fa-unlock-keyhole me-1"></i>Roles &
-              Permissions
+              <TbLockOpen className="me-1 fs-6" />
+              Roles & Permissions
             </NavLink>
           </NavItem>
         </Nav>

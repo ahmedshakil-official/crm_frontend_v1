@@ -1,3 +1,4 @@
+import { TbActivity, TbFileText, TbTrendingUp, TbUsers } from "react-icons/tb";
 import { Card, CardBody, CardText, CardTitle, Col, Row } from "reactstrap";
 
 const ReportsAndLogsOverview: React.FC = () => {
@@ -19,7 +20,12 @@ const ReportsAndLogsOverview: React.FC = () => {
               </div>
             </div>
             <div>
-              <i className="fa-solid fa-file-lines p-2 bg-primary rounded-3"></i>
+              <span
+                className="d-flex justify-content-center align-items-center bg-primary rounded-3"
+                style={{ width: "30px", height: "30px" }}
+              >
+                <TbFileText className="fs-6" />
+              </span>
             </div>
           </CardBody>
         </Card>
@@ -43,7 +49,12 @@ const ReportsAndLogsOverview: React.FC = () => {
               </div>
             </div>
             <div>
-              <i className="fa-solid fa-arrow-trend-up p-2 bg-secondary rounded-3"></i>
+              <span
+                className="d-flex justify-content-center align-items-center bg-secondary rounded-3"
+                style={{ width: "30px", height: "30px" }}
+              >
+                <TbTrendingUp className="fs-6" />
+              </span>
             </div>
           </CardBody>
         </Card>
@@ -67,7 +78,12 @@ const ReportsAndLogsOverview: React.FC = () => {
               </div>
             </div>
             <div>
-              <i className="fa-solid fa-wave-square p-2 bg-success rounded-3"></i>
+              <span
+                className="d-flex justify-content-center align-items-center bg-success rounded-3"
+                style={{ width: "30px", height: "30px" }}
+              >
+                <TbActivity className="fs-6" />
+              </span>
             </div>
           </CardBody>
         </Card>
@@ -91,7 +107,12 @@ const ReportsAndLogsOverview: React.FC = () => {
               </div>
             </div>
             <div>
-              <i className="fa-solid fa-users p-2 bg-warning rounded-3"></i>
+              <span
+                className="d-flex justify-content-center align-items-center bg-warning rounded-3"
+                style={{ width: "30px", height: "30px" }}
+              >
+                <TbUsers className="fs-6" />
+              </span>
             </div>
           </CardBody>
         </Card>
