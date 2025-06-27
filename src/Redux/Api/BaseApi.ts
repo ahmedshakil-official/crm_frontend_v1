@@ -33,7 +33,6 @@ export const baseApi = createApi({
     //Organization start
     "IntroducerDetails",
     "CaseFilesDetails",
-    "OrganizationDetails", //fix this
     "CaseDetails",
     "JointUserDetails",
     "LoanDetails",
