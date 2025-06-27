@@ -1,10 +1,4 @@
-export interface FileUploadModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  handleFileUpload?: any;
-}
-
-export interface FileOwnerProps {
+export interface DocumentOwnerProps {
   id: number;
   first_name: string;
   last_name: string;
@@ -32,7 +26,7 @@ export interface FileOwnerProps {
     is_removed: boolean;
   }[];
 }
-export interface CaseFileProps {
+export interface CaseDocumentProps {
   alias: string;
   file?: string;
   file_type?: string;
@@ -66,7 +60,14 @@ export interface CaseFileProps {
   created_at: string;
   updated_at: string;
 }
-export interface FileDeleteModalProps {
+
+export interface DocumentUploadModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  handleDocumentUpload?: any;
+}
+
+export interface DocumentDeleteModalProps {
   isOpen?: boolean;
   toggle?: () => void;
   file?: { name?: string; file_type?: string };

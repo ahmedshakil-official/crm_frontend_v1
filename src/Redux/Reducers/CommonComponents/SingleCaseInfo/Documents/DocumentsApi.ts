@@ -1,16 +1,16 @@
 import { baseApi } from "@/Redux/Api/BaseApi";
 
-export const CaseFilesDetailsApi = baseApi.injectEndpoints({
+export const DocumentsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCaseFilesDetails: builder.query({
+    getCaseDocuments: builder.query({
       query: ({ case_alias }) => ({
         url: `/cases/${case_alias}/files/`,
         method: "GET",
       }),
-      providesTags: ["CaseFilesDetails"],
+      providesTags: ["CaseDocuments"],
     }),
 
-    addCaseFilesDetails: builder.mutation({
+    uploadCaseDocument: builder.mutation({
       query: ({ case_alias, payload }) => {
         return {
           url: `/cases/${case_alias}/files/`,
@@ -18,21 +18,21 @@ export const CaseFilesDetailsApi = baseApi.injectEndpoints({
           body: payload,
         };
       },
-      invalidatesTags: ["CaseFilesDetails"],
+      invalidatesTags: ["CaseDocuments"],
     }),
 
-    deleteCaseFilesDetails: builder.mutation({
+    deleteCaseDocument: builder.mutation({
       query: ({ case_alias, file_alias }) => ({
         url: `/cases/${case_alias}/files/${file_alias}/`,
         method: "DELETE",
       }),
-      invalidatesTags: ["CaseFilesDetails"],
+      invalidatesTags: ["CaseDocuments"],
     }),
   }),
 });
 
 export const {
-  useGetCaseFilesDetailsQuery,
-  useAddCaseFilesDetailsMutation,
-  useDeleteCaseFilesDetailsMutation,
-} = CaseFilesDetailsApi;
+  useGetCaseDocumentsQuery,
+  useUploadCaseDocumentMutation,
+  useDeleteCaseDocumentMutation,
+} = DocumentsApi;

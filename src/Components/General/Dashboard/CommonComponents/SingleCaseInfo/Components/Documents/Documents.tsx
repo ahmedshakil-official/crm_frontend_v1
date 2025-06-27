@@ -1,8 +1,5 @@
-import { useGetCaseFilesDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/FileManager/FileManagerDetailsApi";
-import {
-  CaseFileProps,
-  FileDeleteModalProps,
-} from "@/Types/CommonComponents/SingleCaseInfo/FileManager/FileManagerTypes";
+import { useGetCaseDocumentsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/Documents/DocumentsApi";
+import { CaseDocumentProps } from "@/Types/CommonComponents/SingleCaseInfo/Documents/DocumentsTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -12,39 +9,44 @@ import {
   CardHeader,
   Col,
   Input,
+  Label,
   Row,
   Spinner,
   Table,
 } from "reactstrap";
-import FileDeleteModal from "./Modals/FileDeleteModal";
-import FileUploadModal from "./Modals/FileUploadModal";
+import DocumentDeleteModal from "./Modals/DocumentDeleteModal";
+import DocumentUploadModal from "./Modals/DocumentUploadModal";
 
-const FileManager: React.FC<FileDeleteModalProps> = () => {
+const Documents: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const filesPerPage = 5;
-  const [caseFiles, setCaseFiles] = useState<CaseFileProps[]>([]);
+  const [caseDocuments, setCaseDocuments] = useState<CaseDocumentProps[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<CaseFileProps | null>(null);
+  const [selectedDocument, setSelectedDocument] =
+    useState<CaseDocumentProps | null>(null);
   const [filterIcon, setFilterIcon] = useState(false);
   const params = useParams();
   const { casealias } = params;
 
   // RTK hooks
-  const { data: caseFilesData, isLoading } = useGetCaseFilesDetailsQuery({
+  const { data: caseDocumentsData, isLoading } = useGetCaseDocumentsQuery({
     case_alias: casealias,
   });
 
-  const totalPages = Math.ceil(caseFiles.length / filesPerPage);
-  const indexOfLastFile = currentPage * filesPerPage;
-  const indexOfFirstFile = indexOfLastFile - filesPerPage;
-  const currentFiles = caseFiles.slice(indexOfFirstFile, indexOfLastFile);
+  const totalPages = Math.ceil(caseDocuments.length / filesPerPage);
+  const indexOfLastDocument = currentPage * filesPerPage;
+  const indexOfFirstDocument = indexOfLastDocument - filesPerPage;
+  const currentDocuments = caseDocuments.slice(
+    indexOfFirstDocument,
+    indexOfLastDocument
+  );
 
   useEffect(() => {
-    if (caseFilesData) {
-      setCaseFiles(caseFilesData as CaseFileProps[]);
+    if (caseDocumentsData) {
+      setCaseDocuments(caseDocumentsData as CaseDocumentProps[]);
     }
-  }, [caseFilesData]);
+  }, [caseDocumentsData]);
 
   //filter icon toggle
   const toggleFilterIcon = () => setFilterIcon(!filterIcon);
@@ -56,8 +58,8 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
     setCurrentPage(pageNumber);
   };
 
-  const handleDeleteClick = (file: CaseFileProps) => {
-    setSelectedFile(file);
+  const handleDeleteClick = (file: CaseDocumentProps) => {
+    setSelectedDocument(file);
     toggleDeleteModal();
   };
 
@@ -66,25 +68,23 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
       <Card>
         <CardHeader className="d-flex justify-content-between">
           <Col md="3">
-            <h3>File Manager</h3>
+            <h3>Documents</h3>
           </Col>
-          <Col md="3" xs="12" className="d-flex justify-content-end">
-            <Button onClick={toggleFilterIcon} className="me-2">
+          <Col md="5" xs="12" className="d-flex justify-content-end gap-2">
+            <Button color="success" onClick={toggleFilterIcon}>
               {filterIcon ? (
                 <i className="fa-solid fa-filter-circle-xmark"></i>
               ) : (
                 <i className="fa-solid fa-filter"></i>
               )}
             </Button>
-            <Button
-              color="primary"
-              onClick={toggleModal}
-              className="d-flex justify-content-center align-items-center gap-1"
-            >
-              <span>Upload Files</span>
-              <span>
-                <i className="fa-regular fa-circle-up"></i>
-              </span>
+            <Button color="primary" onClick={toggleModal}>
+              Upload Document
+              <i className="fa-regular fa-circle-up ms-1"></i>
+            </Button>
+            <Button>
+              OCR Upload
+              <i className="fa-solid fa-eye ms-1"></i>
             </Button>
           </Col>
         </CardHeader>
@@ -92,41 +92,38 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
         <CardBody>
           <Row>
             {filterIcon && (
-              <Card className="shadow-lg p-3 rounded-3">
-                <Row className="justify-content-center text-center g-3">
-                  <Col xs="12" sm="6" md="4" lg="2">
+              <Card className="shadow-lg p-3 rounded-3 bg-light-success">
+                <Row className="g-3">
+                  <Col xs="12" sm="6" md="3">
+                    <Label>Document Name</Label>
                     <Input type="select" id="1" className="py-1">
-                      <option value="">Select 1</option>
+                      <option value="">All</option>
                       <option value="1">Select Employee</option>
                       <option value="2">Select Employee</option>
                     </Input>
                   </Col>
-                  <Col xs="12" sm="6" md="4" lg="2">
+                  <Col xs="12" sm="6" md="3">
+                    <Label>Document Owner</Label>
+                    <Input type="select" id="1" className="py-1">
+                      <option value="">All</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                    </Input>
+                  </Col>
+                  <Col xs="12" sm="6" md="3">
+                    <Label>Document Type</Label>
                     <Input type="select" id="2" className="py-1">
-                      <option value="">Select 2</option>
+                      <option value="">All</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
                     </Input>
                   </Col>
-                  <Col xs="12" sm="6" md="4" lg="2">
-                    <Input type="select" id="3" className="py-1">
-                      <option value="">Select 3</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                    </Input>
-                  </Col>
-                  <Col xs="12" sm="6" md="4" lg="2">
-                    <Input type="select" id="4" className="py-1">
-                      <option value="">Select 4</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                    </Input>
-                  </Col>
                   {/* Clear All Filters Button */}
-                  <Col xs="12" sm="6" md="4" lg="2">
-                    <Button className="btn btn-secondary w-100">
-                      Clear All Filters
+                  <Col xs="12" sm="6" md="3">
+                    <Label>Clear Filters</Label>
+                    <Button outline color="danger" className="w-100">
+                      Clear
                     </Button>
                   </Col>
                 </Row>
@@ -144,17 +141,17 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>File Name</th>
+                      <th>Document Name</th>
                       <th>Owner Name</th>
-                      <th>File Type</th>
+                      <th>Document Type</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {currentFiles.length > 0 ? (
-                      currentFiles.map((file, index) => (
+                    {currentDocuments.length > 0 ? (
+                      currentDocuments.map((file, index) => (
                         <tr key={index}>
-                          <td>{indexOfFirstFile + index + 1}</td>
+                          <td>{indexOfFirstDocument + index + 1}</td>
                           <td>
                             {file?.name
                               ? file.name
@@ -199,14 +196,14 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
                     ) : (
                       <tr>
                         <td colSpan={6} className="text-center">
-                          No Files Available
+                          No Documents Available
                         </td>
                       </tr>
                     )}
                   </tbody>
                 </Table>
 
-                {caseFiles.length > filesPerPage && (
+                {caseDocuments.length > filesPerPage && (
                   <div className="d-flex justify-content-center mt-3">
                     <Button
                       color="primary"
@@ -247,19 +244,19 @@ const FileManager: React.FC<FileDeleteModalProps> = () => {
         </CardBody>
       </Card>
       {/* Modals  */}
-      <FileUploadModal isOpen={modalOpen} toggle={toggleModal} />
+      <DocumentUploadModal isOpen={modalOpen} toggle={toggleModal} />
 
-      {selectedFile && (
-        <FileDeleteModal
+      {selectedDocument && (
+        <DocumentDeleteModal
           isOpen={deleteModalOpen}
           toggle={toggleDeleteModal}
-          file={selectedFile}
+          file={selectedDocument}
           case_alias={casealias?.toString()}
-          fileAlias={selectedFile.alias}
+          fileAlias={selectedDocument.alias}
         />
       )}
     </Col>
   );
 };
 
-export default FileManager;
+export default Documents;
