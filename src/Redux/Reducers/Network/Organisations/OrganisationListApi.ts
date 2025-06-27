@@ -1,25 +1,25 @@
 import { baseApi } from "@/Redux/Api/BaseApi";
 
-export const OrganizationListApi = baseApi.injectEndpoints({
+export const OrganisationListApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getOrganizationList: builder.query({
+    getOrganisationList: builder.query({
       query: (params) => ({
         url: `/organization/list/`,
         method: "GET",
         params,
       }),
-      providesTags: ["OrganizationList"],
+      providesTags: ["OrganisationList"],
     }),
-    addOrganization: builder.mutation({
+    addOrganisation: builder.mutation({
       query: ({ payload }) => ({
         url: `/organization/list/`,
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["OrganizationList"],
+      invalidatesTags: ["OrganisationList"],
     }),
   }),
 });
 
-export const { useGetOrganizationListQuery, useAddOrganizationMutation } =
-  OrganizationListApi;
+export const { useGetOrganisationListQuery, useAddOrganisationMutation } =
+  OrganisationListApi;

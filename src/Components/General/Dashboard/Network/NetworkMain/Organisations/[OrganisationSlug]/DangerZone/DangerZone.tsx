@@ -1,10 +1,10 @@
-import { FetchSingleOrganizationProps } from "@/Types/Network/OrganizationsTypes";
+import { FetchSingleOrganisationProps } from "@/Types/Network/OrganisationsTypes";
 import { useState } from "react";
 import { Button, Card, CardBody, CardHeader } from "reactstrap";
-import DeleteOrganizationModal from "../Modals/DeleteOrganizationModal";
+import DeleteOrganisationModal from "../Modals/DeleteOrganisationModal";
 
-const DangerZone: React.FC<FetchSingleOrganizationProps> = ({
-  organizationInfo,
+const DangerZone: React.FC<FetchSingleOrganisationProps> = ({
+  organisationInfo,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Toggle modal state
@@ -19,9 +19,9 @@ const DangerZone: React.FC<FetchSingleOrganizationProps> = ({
           {/** Change Visibility Section **/}
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <h5 className="fw-bold">Change organization visibility</h5>
+              <h5 className="fw-bold">Change organisation visibility</h5>
               <p className="mb-0 opacity-75">
-                This organization is currently public.
+                This organisation is currently public.
               </p>
             </div>
             <Button color="danger" disabled>
@@ -29,16 +29,16 @@ const DangerZone: React.FC<FetchSingleOrganizationProps> = ({
             </Button>
           </div>
           <hr />
-          {/** Disable Organization Protection Rules Section **/}
+          {/** Disable Organisation Protection Rules Section **/}
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <h5 className="fw-bold">Disable organization protection rules</h5>
+              <h5 className="fw-bold">Disable organisation protection rules</h5>
               <p className="mb-0 opacity-75">
-                Disable organization protection rules enforcement and APIs.
+                Disable organisation protection rules enforcement and APIs.
               </p>
             </div>
             <Button color="danger" disabled>
-              Disable organization protection rules
+              Disable organisation protection rules
             </Button>
           </div>
           <hr />
@@ -47,7 +47,7 @@ const DangerZone: React.FC<FetchSingleOrganizationProps> = ({
             <div>
               <h5 className="fw-bold">Transfer ownership</h5>
               <p className="mb-0 opacity-75">
-                Transfer this organization to another user or an organization
+                Transfer this organisation to another user or an organisation
                 where you have the ability to create repositories.
               </p>
             </div>
@@ -56,38 +56,38 @@ const DangerZone: React.FC<FetchSingleOrganizationProps> = ({
             </Button>
           </div>
           <hr />
-          {/** Archive Organization Section **/}
+          {/** Archive Organisation Section **/}
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <h5 className="fw-bold">Archive this organization</h5>
+              <h5 className="fw-bold">Archive this organisation</h5>
               <p className="mb-0 opacity-75">
-                Mark this organization as archived and read-only.
+                Mark this organisation as archived and read-only.
               </p>
             </div>
             <Button color="danger" disabled>
-              Archive this organization
+              Archive this organisation
             </Button>
           </div>
           <hr />
-          {/** Delete organization Section **/}
+          {/** Delete organisation Section **/}
           <div className="d-flex justify-content-between align-items-center">
             <div>
-              <h5 className="fw-bold">Delete this organization</h5>
+              <h5 className="fw-bold">Delete this organisation</h5>
               <p className="mb-0 opacity-75">
-                Once you delete a organization, there is no going back. Please
+                Once you delete a organisation, there is no going back. Please
                 be certain.
               </p>
             </div>
             <Button color="danger" onClick={toggleModal}>
-              Delete this organization
+              Delete this organisation
             </Button>
           </div>
           {/* Delete modal  */}
-          {organizationInfo?.slug && (
-            <DeleteOrganizationModal
+          {organisationInfo?.slug && (
+            <DeleteOrganisationModal
               isOpen={isModalOpen}
               toggle={toggleModal}
-              organizationInfo={organizationInfo}
+              organisationInfo={organisationInfo}
             />
           )}
         </CardBody>

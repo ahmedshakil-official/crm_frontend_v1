@@ -1,5 +1,5 @@
-import { useGetOrganizationListQuery } from "@/Redux/Reducers/Network/Organization/OrganizationListApi";
-import { OrganizationsProps } from "@/Types/Network/OrganizationsTypes";
+import { useGetOrganisationListQuery } from "@/Redux/Reducers/Network/Organisations/OrganisationListApi";
+import { OrganisationsProps } from "@/Types/Network/OrganisationsTypes";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -18,18 +18,18 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import AddOrganizationModal from "./Modals/AddOrganizationModal";
-import "./Organization.css";
+import AddOrganisationModal from "./Modals/AddOrganisationModal";
+import "./Organisations.css";
 
-const Organizations = () => {
-  const [organizations, setOrganizations] = useState<OrganizationsProps[]>([]);
+const Organisations = () => {
+  const [organisations, setOrganisations] = useState<OrganisationsProps[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
   //RTK Hooks
-  const { data: organizationList, isLoading } = useGetOrganizationListQuery({
+  const { data: organisationList, isLoading } = useGetOrganisationListQuery({
     search: searchQuery,
   });
 
@@ -38,22 +38,22 @@ const Organizations = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  // Fetch organizations when the search query changes
+  // Fetch organisations when the search query changes
   useEffect(() => {
     try {
-      if (organizationList) {
-        setOrganizations(organizationList);
+      if (organisationList) {
+        setOrganisations(organisationList);
       }
     } catch (error) {
-      console.error("Error fetching organizations:", error);
+      console.error("Error fetching organisations:", error);
     }
-  }, [organizationList]);
+  }, [organisationList]);
 
   // Pagination logic
-  const totalPages = Math.ceil(organizations.length / itemsPerPage);
+  const totalPages = Math.ceil(organisations.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentOrganizations = organizations.slice(
+  const currentOrganisations = organisations.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
@@ -68,13 +68,13 @@ const Organizations = () => {
         <Col md="12" className="px-4">
           <Row className="flex justify-content-between py-4">
             <Col md="3">
-              <h4 className="mb-4 fw-bold">Organizations</h4>
+              <h4 className="mb-4 fw-bold">Organisations</h4>
             </Col>
             <Col>
               <InputGroup>
                 <Input
                   type="text"
-                  placeholder="Search Organization..."
+                  placeholder="Search Organisation..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -89,7 +89,7 @@ const Organizations = () => {
               className="text-md-end text-center mt-2 mt-md-0"
             >
               <Button color="primary" onClick={toggleModal}>
-                Add Organization
+                Add Organisation
               </Button>
             </Col>
           </Row>
@@ -98,8 +98,8 @@ const Organizations = () => {
               <Row className="pb-4 d-flex justify-content-center">
                 <Spinner color="primary" />
               </Row>
-            ) : currentOrganizations.length > 0 ? (
-              currentOrganizations.map((item) => (
+            ) : currentOrganisations.length > 0 ? (
+              currentOrganisations.map((item) => (
                 <Col
                   sm="6"
                   xxl="3"
@@ -108,7 +108,7 @@ const Organizations = () => {
                   className="col-ed-4 box-col-4"
                   key={item.slug}
                 >
-                  <Card className="bg-white border organization_card opacity-100 rounded-3 p-3 position-relative">
+                  <Card className="bg-white border organisation_card opacity-100 rounded-3 p-3 position-relative">
                     <Link
                       href={item?.website || "#"}
                       target="_blank"
@@ -128,13 +128,13 @@ const Organizations = () => {
                             height="28"
                             className="img-fluid object-fit-cover"
                             src={item.logo || "/assets/images/network/logo.jpg"}
-                            alt="Organization"
+                            alt="Organisation"
                           />
                         </div>
                         <h5 className="mb-1">
                           <Link
                             className="text-black fw-bold text_decoration_hover"
-                            href={`/dashboard/network/organization/${item.slug}`}
+                            href={`/dashboard/network/organisations/${item.slug}`}
                           >
                             {item.name}
                           </Link>
@@ -177,21 +177,21 @@ const Organizations = () => {
               ))
             ) : (
               <Row className="text-center">
-                <p>Organization not found!</p>
+                <p>Organisation not found!</p>
               </Row>
             )}
           </Row>
-          {/* Pagination and total organizations */}
+          {/* Pagination and total organisations */}
           <Row>
             <div className="d-flex justify-content-between align-items-center px-3 pb-3">
               <div className="px-2">
                 <p className="text-success">
-                  Showing 1 to {Math.min(8, currentOrganizations?.length || 0)}{" "}
-                  of {organizations?.length || 0} Organizations
+                  Showing 1 to {Math.min(8, currentOrganisations?.length || 0)}{" "}
+                  of {organisations?.length || 0} Organisations
                 </p>
               </div>
 
-              {organizations.length > itemsPerPage && (
+              {organisations.length > itemsPerPage && (
                 <Pagination className="d-flex justify-content-end align-items-center">
                   <PaginationItem disabled={currentPage === 1}>
                     <PaginationLink first onClick={() => setCurrentPage(1)} />
@@ -283,8 +283,8 @@ const Organizations = () => {
             </div>
           </Row>
 
-          {/* Add Organization Modal */}
-          <AddOrganizationModal
+          {/* Add Organisation Modal */}
+          <AddOrganisationModal
             isOpen={isModalOpen}
             toggleModal={toggleModal}
           />
@@ -294,4 +294,4 @@ const Organizations = () => {
   );
 };
 
-export default Organizations;
+export default Organisations;

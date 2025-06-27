@@ -1,4 +1,4 @@
-import { FetchSingleOrganizationProps } from "@/Types/Network/OrganizationsTypes";
+import { FetchSingleOrganisationProps } from "@/Types/Network/OrganisationsTypes";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,11 +12,11 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import "../../Organization.css"; // Import external CSS for styling
-import UpdateOrganizationModal from "../Modals/UpdateOrganizationModal";
+import "../../Organisations.css"; // Import external CSS for styling
+import UpdateOrganisationModal from "../Modals/UpdateOrganisationModal";
 
-const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
-  organizationInfo,
+const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
+  organisationInfo,
   isLoading,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,7 +45,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
                 height={300}
                 className="rounded-top-4 w-100 object-fit-cover"
                 src={
-                  organizationInfo?.profile_image ||
+                  organisationInfo?.profile_image ||
                   "/assets/images/other-images/bg-profile.png"
                 }
                 alt="Banner"
@@ -58,7 +58,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
                 width={120}
                 height={120}
                 src={
-                  organizationInfo?.logo || "/assets/images/network/logo.jpg"
+                  organisationInfo?.logo || "/assets/images/network/logo.jpg"
                 }
                 alt="Profile"
                 className="profile-pic object-fit-cover"
@@ -70,11 +70,11 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
               </div>
             </div>
             <CardTitle tag="h3" className="mt-5 text-primary">
-              {organizationInfo?.name}
+              {organisationInfo?.name}
             </CardTitle>
             <CardText className="text-success">
               <strong>Network: </strong>{" "}
-              {organizationInfo?.network?.name || "Not Avaiable"}
+              {organisationInfo?.network?.name || "Not Avaiable"}
             </CardText>
 
             {/* Contact Details */}
@@ -82,12 +82,12 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
               <Col md={4}>
                 <p>
                   <strong>Email:</strong>{" "}
-                  {organizationInfo?.email ? (
+                  {organisationInfo?.email ? (
                     <a
                       className="text-dark text_decoration_hover"
-                      href={`mailto:${organizationInfo.email}`}
+                      href={`mailto:${organisationInfo.email}`}
                     >
-                      {organizationInfo.email}
+                      {organisationInfo.email}
                     </a>
                   ) : (
                     "Not Available"
@@ -97,18 +97,18 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
               <Col md={4}>
                 <p>
                   <strong>License No:</strong>{" "}
-                  {organizationInfo?.license_no || "Not Avaiable"}
+                  {organisationInfo?.license_no || "Not Avaiable"}
                 </p>
               </Col>
               <Col md={4}>
                 <p>
                   <strong>Phone:</strong>{" "}
-                  {organizationInfo?.primary_mobile ? (
+                  {organisationInfo?.primary_mobile ? (
                     <a
                       className="text-dark text_decoration_hover"
-                      href={`tel:${organizationInfo.primary_mobile}`}
+                      href={`tel:${organisationInfo.primary_mobile}`}
                     >
-                      {organizationInfo.primary_mobile}
+                      {organisationInfo.primary_mobile}
                     </a>
                   ) : (
                     "Not Available"
@@ -121,7 +121,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
               <Col md={12}>
                 <p>
                   <strong>Location:</strong>{" "}
-                  {organizationInfo?.location || "Not Avaiable"}
+                  {organisationInfo?.location || "Not Avaiable"}
                 </p>
               </Col>
             </Row>
@@ -138,7 +138,7 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
                   <i className="fa-brands fa-twitter"></i>
                 </Button>
               </Link>
-              <Link href={`${organizationInfo?.website}`} target="_blank">
+              <Link href={`${organisationInfo?.website}`} target="_blank">
                 <Button color="success" className="mx-2">
                   <i className="fa-solid fa-earth-americas"></i>
                 </Button>
@@ -164,14 +164,14 @@ const OrganizationBanner: React.FC<FetchSingleOrganizationProps> = ({
         </Card>
       )}
       {/* update modal  */}
-      <UpdateOrganizationModal
+      <UpdateOrganisationModal
         isOpen={isModalOpen}
         toggle={toggleUpdateModal}
-        slug={organizationInfo?.slug}
-        organizationData={organizationInfo}
+        slug={organisationInfo?.slug}
+        organisationData={organisationInfo}
       />
     </>
   );
 };
 
-export default OrganizationBanner;
+export default OrganisationBanner;
