@@ -117,7 +117,7 @@ const Cases: React.FC = () => {
   return (
     <>
       <Row>
-        // Skeleton Loading State
+        {/* // Skeleton Loading State */}
         {isLoading ? (
           <>
             {[...Array(5)].map((_, index) => (
