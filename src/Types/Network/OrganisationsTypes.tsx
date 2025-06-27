@@ -1,6 +1,6 @@
-export interface OrganizationsProps {
+export interface OrganisationsProps {
   slug?: string;
-  organizationSlug?: string | undefined;
+  organisationSlug?: string | undefined;
   network: {
     slug?: string;
     name?: string;
@@ -26,12 +26,12 @@ export interface OrganizationsProps {
   is_active?: boolean;
   is_staff?: boolean;
 }
-export interface FetchSingleOrganizationProps {
-  organizationInfo?: OrganizationsProps | undefined;
-  fetchsetOrganizationInfo?: any;
+export interface FetchSingleOrganisationProps {
+  organisationInfo?: OrganisationsProps | undefined;
+  fetchsetOrganisationInfo?: any;
   isLoading?: boolean;
 }
-export interface AddOrganizationProps {
+export interface AddOrganisationProps {
   [key: string]: string | File | null | boolean; // Allow any string key, with values being string, File, or null
   name: string;
   email: string;
@@ -48,24 +48,24 @@ export interface AddOrganizationProps {
   is_removed: boolean;
 }
 
-// Add OrganizationModal Props
-export interface AddOrganizationModalProps {
+// Add OrganisationModal Props
+export interface AddOrganisationModalProps {
   isOpen?: any;
   toggleModal?: any;
-  refreshOrganizations?: any;
+  refreshOrganisations?: any;
 }
-// delete organization modal props
-export interface DeleteOrganizationModalProps {
+// delete organisation modal props
+export interface DeleteOrganisationModalProps {
   isOpen: boolean;
   toggle: () => void;
-  organizationInfo?: any;
+  organisationInfo?: any;
 }
-// update organization modal props
-export interface UpdateOrganizationModalProps {
+// update organisation modal props
+export interface UpdateOrganisationModalProps {
   isOpen: boolean;
   toggle: () => void;
   slug: string | undefined;
-  organizationData?: any;
+  organisationData?: any;
 }
 
 export interface AddEmployeeModalProps {

@@ -1,9 +1,9 @@
-import { useAddOrganizationMutation } from "@/Redux/Reducers/Network/Organization/OrganizationListApi";
+import { useAddOrganisationMutation } from "@/Redux/Reducers/Network/Organisations/OrganisationListApi";
 import {
-  AddOrganizationModalProps,
-  AddOrganizationProps,
-} from "@/Types/Network/OrganizationsTypes";
-import React, { useState } from "react";
+  AddOrganisationModalProps,
+  AddOrganisationProps,
+} from "@/Types/Network/OrganisationsTypes";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -19,11 +19,11 @@ import {
   Row,
 } from "reactstrap";
 
-const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
+const AddOrganisationModal: React.FC<AddOrganisationModalProps> = ({
   isOpen,
   toggleModal,
 }) => {
-  const [formData, setFormData] = useState<AddOrganizationProps>({
+  const [formData, setFormData] = useState<AddOrganisationProps>({
     name: "",
     email: "",
     logo: null,
@@ -39,7 +39,7 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
     is_removed: false,
   });
   // rtk hooks
-  const [addOrganization, { isLoading }] = useAddOrganizationMutation();
+  const [addOrganisation, { isLoading }] = useAddOrganisationMutation();
 
   // Handle text input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +53,7 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
   // Handle file input changes (for images)
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    fieldName: keyof AddOrganizationProps
+    fieldName: keyof AddOrganisationProps
   ) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -75,14 +75,14 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
         }
       }
       // Replace axios with RTK Query mutation
-      const response = await addOrganization({
+      const response = await addOrganisation({
         payload: formDataToSend,
       }).unwrap();
 
       console.log("Response:", response);
 
       if (response) {
-        toast.success("Organization added successfully!");
+        toast.success("Organisation added successfully!");
         // Clear the form data after submission
         setFormData({
           name: "",
@@ -105,14 +105,14 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
       if (error?.data?.email?.[0]) {
         toast.error(error.data.email[0]);
       } else {
-        toast.error("Failed to add organization. Please try again.");
+        toast.error("Failed to add organisation. Please try again.");
       }
     }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggleModal} size="lg">
-      <ModalHeader toggle={toggleModal}>Add New Organization</ModalHeader>{" "}
+      <ModalHeader toggle={toggleModal}>Add New Organisation</ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
           <Row>
@@ -120,7 +120,7 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
             <Col md={6} xs={12}>
               <FormGroup>
                 <Label for="name">
-                  Organization Name<span className="text-danger">*</span>
+                  Organisation Name<span className="text-danger">*</span>
                 </Label>
                 <Input
                   type="text"
@@ -128,7 +128,7 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Enter organization name"
+                  placeholder="Enter organisation name"
                   required
                 />
               </FormGroup>
@@ -269,12 +269,12 @@ const AddOrganizationModal: React.FC<AddOrganizationModalProps> = ({
             Cancel
           </Button>
           <Button color="primary" type="submit">
-            {isLoading ? "Saving..." : "Save Organization"}
+            {isLoading ? "Saving..." : "Save Organisation"}
           </Button>
-        </ModalFooter>{" "}
+        </ModalFooter>
       </Form>
     </Modal>
   );
 };
 
-export default AddOrganizationModal;
+export default AddOrganisationModal;

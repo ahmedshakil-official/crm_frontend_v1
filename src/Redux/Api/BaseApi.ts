@@ -24,16 +24,16 @@ export const baseApi = createApi({
     "ClientDetails",
     "AdviserDetails",
     //Common components end
-    
+
     //Network start
-    "OrganizationList",
-    "SingleOrganization",
-    //Network start
+    "OrganisationList",
+    "SingleOrganisation",
+    //Network end
 
     //Organization start
     "IntroducerDetails",
     "CaseFilesDetails",
-    "OrganizationDetails",
+    "OrganizationDetails", //fix this
     "CaseDetails",
     "JointUserDetails",
     "LoanDetails",

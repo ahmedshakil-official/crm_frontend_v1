@@ -1,5 +1,5 @@
-import { useUpdateOrganizationMutation } from "@/Redux/Reducers/Network/Organization/SingleOrganization/SingleOrganizationApi";
-import { UpdateOrganizationModalProps } from "@/Types/Network/OrganizationsTypes";
+import { useUpdateOrganisationMutation } from "@/Redux/Reducers/Network/Organisations/SingleOrganisation/SingleOrganisationApi";
+import { UpdateOrganisationModalProps } from "@/Types/Network/OrganisationsTypes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,11 +18,11 @@ import {
   Row,
 } from "reactstrap";
 
-const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
+const UpdateOrganisationModal: React.FC<UpdateOrganisationModalProps> = ({
   isOpen,
   toggle,
   slug,
-  organizationData,
+  organisationData,
 }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -40,25 +40,25 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
   const [logo, setLogo] = useState<File | null>(null);
   const [oldName, setOldName] = useState("");
   // Rtk hooks
-  const [updateOrganization, { isLoading }] = useUpdateOrganizationMutation();
+  const [updateOrganisation, { isLoading }] = useUpdateOrganisationMutation();
 
   // Set initial form values when modal opens
   useEffect(() => {
-    if (organizationData && isOpen) {
+    if (organisationData && isOpen) {
       setFormData({
-        name: organizationData.name || "",
-        email: organizationData.email || "",
-        primary_mobile: organizationData.primary_mobile || "",
-        other_contact: organizationData.other_contact || "",
-        website: organizationData.website || "",
-        license_no: organizationData.license_no || "",
-        contact_person: organizationData.contact_person || "",
+        name: organisationData.name || "",
+        email: organisationData.email || "",
+        primary_mobile: organisationData.primary_mobile || "",
+        other_contact: organisationData.other_contact || "",
+        website: organisationData.website || "",
+        license_no: organisationData.license_no || "",
+        contact_person: organisationData.contact_person || "",
         contact_person_designation:
-          organizationData.contact_person_designation || "",
+          organisationData.contact_person_designation || "",
       });
-      setOldName(organizationData.name || "");
+      setOldName(organisationData.name || "");
     }
-  }, [organizationData, isOpen]);
+  }, [organisationData, isOpen]);
 
   // Handle input change for text fields
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,12 +95,12 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
         formDataToSend.append("logo", logo);
       }
       // Use RTK Query mutation
-      const response = await updateOrganization({
+      const response = await updateOrganisation({
         slug,
         payload: formDataToSend,
       }).unwrap();
       if (response) {
-        toast.success("Organization updated successfully!");
+        toast.success("Organisation updated successfully!");
         // Redirect if name changed
         if (formData.name !== oldName) {
           router.push("/dashboard/network");
@@ -115,20 +115,20 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
       if (error?.data?.email?.[0]) {
         toast.error(error.data.email[0]);
       } else {
-        toast.error("Failed to add organization. Please try again.");
+        toast.error("Failed to add organisation. Please try again.");
       }
     }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Update Organization</ModalHeader>
+      <ModalHeader toggle={toggle}>Update Organisation</ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
           <Row>
             <Col md={6} xs={12}>
               <FormGroup>
-                <Label for="name">Organization Name</Label>
+                <Label for="name">Organisation Name</Label>
                 <Input
                   type="text"
                   id="name"
@@ -183,10 +183,10 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
                   accept="image/*"
                   onChange={handleFileChange}
                 />
-                {organizationData?.logo ? (
+                {organisationData?.logo ? (
                   <div className="d-flex justify-content-center  mt-2">
                     <Image
-                      src={organizationData.logo}
+                      src={organisationData.logo}
                       alt="Profile"
                       width={80}
                       height={80}
@@ -254,10 +254,10 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
                   accept="image/*"
                   onChange={handleFileChange}
                 />
-                {organizationData?.profile_image ? (
+                {organisationData?.profile_image ? (
                   <div className="d-flex justify-content-center mt-2">
                     <Image
-                      src={organizationData.profile_image}
+                      src={organisationData.profile_image}
                       alt="Profile"
                       width={100}
                       height={80}
@@ -286,4 +286,4 @@ const UpdateOrganizationModal: React.FC<UpdateOrganizationModalProps> = ({
   );
 };
 
-export default UpdateOrganizationModal;
+export default UpdateOrganisationModal;

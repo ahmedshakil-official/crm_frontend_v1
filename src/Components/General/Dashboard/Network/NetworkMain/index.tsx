@@ -7,6 +7,7 @@ import PerformanceOverview from "./PerformanceOverview/PerformanceOverview";
 import ProductPenetration from "./ProductPenetration/ProductPenetration";
 import RecentActivity from "./RecentActivity/RecentActivity";
 import TopPerformingBrokers from "./TopPerformingBrokers/TopPerformingBrokers";
+import Organisations from "./Organisations/Organisations";
 
 const ContainerNetwork = () => {
   return (
@@ -20,7 +21,7 @@ const ContainerNetwork = () => {
         <PerformanceOverview />
         <Charts />
         <NetworkPerformance />
-        <Organizations />
+        <Organisations />
         <Row>
           <ProductPenetration />
           <RecentActivity />
