@@ -1,7 +1,7 @@
-import LoadingSpinner from "@/app/loading";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useGetJointUserInfoQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/JointUser/JointUserDetailsApi";
 import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
+import LoadingSpinner from "@/app/loading";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { Container, Row } from "reactstrap";
 import CalenderContainer from "./Components/Calender/CalenderContainer";
 import CaseDetails from "./Components/CaseDetails/CaseDetails";
 import CaseInfo from "./Components/CaseInfo/CaseInfo";
-import FileManager from "./Components/FileManager/FileManager";
+import Documents from "./Components/Documents/Documents";
 import JointUsers from "./Components/JointUsers/JointUsers";
 import MeetingHistory from "./Components/MeetingHistory/MeetingHistory";
 
@@ -90,7 +90,7 @@ const SingleCaseInfo: React.FC = () => {
           <CaseDetails caseStage={caseInfo?.case_stage || ""} />
         </Row>
         <Row>
-          <FileManager />
+          <Documents />
         </Row>
         <Row>
           <JointUsers

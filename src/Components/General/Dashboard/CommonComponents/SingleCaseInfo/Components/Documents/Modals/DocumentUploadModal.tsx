@@ -1,9 +1,9 @@
 import { useGetCaseUsersQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseUsers/CaseUsersApi";
-import { useAddCaseFilesDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/FileManager/FileManagerDetailsApi";
+import { useUploadCaseDocumentMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/Documents/DocumentsApi";
 import {
-  FileOwnerProps,
-  FileUploadModalProps,
-} from "@/Types/CommonComponents/SingleCaseInfo/FileManager/FileManagerTypes";
+  DocumentOwnerProps,
+  DocumentUploadModalProps,
+} from "@/Types/CommonComponents/SingleCaseInfo/Documents/DocumentsTypes";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -21,27 +21,27 @@ import {
   Row,
 } from "reactstrap";
 
-const FileUploadModal: React.FC<FileUploadModalProps> = ({
+const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({
   isOpen,
   toggle,
 }) => {
-  const [files, setFiles] = useState<File | null>(null);
+  const [documents, setDocuments] = useState<Document | null>(null);
   const params = useParams();
   const { casealias } = params;
-  const [fileOwners, setfileOwners] = useState<FileOwnerProps | null>(null);
+  const [fileOwners, setfileOwners] = useState<DocumentOwnerProps | null>(null);
 
   // rtk hooks
   const { data: caseUsers, isLoading } = useGetCaseUsersQuery({
     case_alias: casealias,
   });
-  const [addCaseFilesDetails, { isLoading: isUploading }] =
-    useAddCaseFilesDetailsMutation();
+  const [uploadCaseDocument, { isLoading: isUploading }] =
+    useUploadCaseDocumentMutation();
 
   const [formData, setFormData] = useState({
     file: "",
     fileType: "",
     fileOwner: 0,
-    fileName: "",
+    DocumentName: "",
     description: "",
     specialNotes: "",
   });
@@ -52,9 +52,9 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     }
   }, [caseUsers]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDocumentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setFiles(e.target.files[0]);
+      setDocuments(e.target.files[0] as unknown as Document);
     }
   };
 
@@ -70,36 +70,36 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!files) {
+    if (!documents) {
       toast.error("Please fill in all required fields.");
       return;
     }
 
     const uploadData = new FormData();
     // Append all fields including the file
-    uploadData.append("file", files as File);
+    uploadData.append("file", documents as unknown as File);
     uploadData.append("file_type", formData.fileType);
     uploadData.append("file_owner", formData.fileOwner.toString());
-    uploadData.append("name", formData.fileName);
+    uploadData.append("name", formData.DocumentName);
     uploadData.append("description", formData.description);
     uploadData.append("special_notes", formData.specialNotes);
 
     try {
-      await addCaseFilesDetails({
+      await uploadCaseDocument({
         case_alias: casealias,
         payload: uploadData,
       }).unwrap();
       // Reset form data after successful upload
-      setFiles(null);
+      setDocuments(null);
       setFormData({
         file: "",
         fileType: "",
         fileOwner: 0,
-        fileName: "",
+        DocumentName: "",
         description: "",
         specialNotes: "",
       });
-      toast.success("File uploaded successfully!");
+      toast.success("Document uploaded successfully!");
       toggle();
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -110,7 +110,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>
-        <span className="fs-4 text-primary">Upload File</span>
+        <span className="fs-4 text-primary">Upload Document</span>
       </ModalHeader>
       <Form onSubmit={handleUpload}>
         <ModalBody>
@@ -118,13 +118,13 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
             <Col md={12}>
               <FormGroup>
                 <Label for="fileUpload" className="form-label">
-                  Select Files<span className="text-danger">*</span>
+                  Select Documents<span className="text-danger">*</span>
                 </Label>
                 <Input
                   type="file"
                   id="fileUpload"
                   name="fileUpload"
-                  onChange={handleFileChange}
+                  onChange={handleDocumentChange}
                 />
               </FormGroup>
             </Col>
@@ -133,7 +133,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
             <Col md={6}>
               <FormGroup>
                 <Label for="fileType" className="form-label">
-                  Select File Type<span className="text-danger">*</span>
+                  Select Document Type<span className="text-danger">*</span>
                 </Label>
                 <Input
                   type="select"
@@ -180,7 +180,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
             <Col md={6}>
               <FormGroup>
                 <Label for="fileOwner" className="form-label">
-                  File Owner<span className="text-danger">*</span>
+                  Document Owner<span className="text-danger">*</span>
                 </Label>
                 <Input
                   type="select"
@@ -205,15 +205,15 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
           <Row>
             <Col md={12}>
               <FormGroup>
-                <Label for="fileName" className="form-label">
-                  File Name
+                <Label for="DocumentName" className="form-label">
+                  Document Name
                 </Label>
                 <Input
                   type="text"
-                  id="fileName"
-                  name="fileName"
-                  placeholder="Write your file name"
-                  value={formData.fileName}
+                  id="DocumentName"
+                  name="DocumentName"
+                  placeholder="Write your document name"
+                  value={formData.DocumentName}
                   onChange={handleInputChange}
                 />
               </FormGroup>
@@ -258,7 +258,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
             Cancel
           </Button>
           <Button color="primary">
-            {isUploading ? "Uploading..." : "Upload File"}
+            {isUploading ? "Uploading..." : "Upload Document"}
           </Button>
         </ModalFooter>
       </Form>
@@ -266,4 +266,4 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   );
 };
 
-export default FileUploadModal;
+export default DocumentUploadModal;

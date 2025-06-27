@@ -1,18 +1,17 @@
-import { useDeleteCaseFilesDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/FileManager/FileManagerDetailsApi";
-import { FileDeleteModalProps } from "@/Types/CommonComponents/SingleCaseInfo/FileManager/FileManagerTypes";
+import { useDeleteCaseDocumentMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/Documents/DocumentsApi";
+import { DocumentDeleteModalProps } from "@/Types/CommonComponents/SingleCaseInfo/Documents/DocumentsTypes";
 import React from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
-const FileDeleteModal: React.FC<FileDeleteModalProps> = ({
+const DocumentDeleteModal: React.FC<DocumentDeleteModalProps> = ({
   isOpen,
   toggle,
   file,
   case_alias,
   fileAlias,
 }) => {
-  const [deleteCaseFilesDetails, { isLoading }] =
-    useDeleteCaseFilesDetailsMutation();
+  const [deleteCaseDocument, { isLoading }] = useDeleteCaseDocumentMutation();
 
   if (!file) {
     return null;
@@ -21,7 +20,7 @@ const FileDeleteModal: React.FC<FileDeleteModalProps> = ({
   const handleDeleteFile = async () => {
     try {
       if (fileAlias) {
-        await deleteCaseFilesDetails({
+        await deleteCaseDocument({
           case_alias: case_alias,
           file_alias: fileAlias,
         }).unwrap();
@@ -53,4 +52,4 @@ const FileDeleteModal: React.FC<FileDeleteModalProps> = ({
   );
 };
 
-export default FileDeleteModal;
+export default DocumentDeleteModal;
