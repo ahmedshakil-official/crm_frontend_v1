@@ -1,7 +1,6 @@
 import { Button, Col, Container, NavLink, Row } from "reactstrap";
 
 const UnderDevelopment = () => {
-
   return (
     <Container className="text-center mt-5">
       <Row>

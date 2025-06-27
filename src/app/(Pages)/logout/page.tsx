@@ -44,7 +44,37 @@ const FallbackLogout: React.FC = () => {
                 You don't have permission to view this page. Please contact your
                 administrator.
               </p>
-              <Button color="primary" onClick={handleLogout}>
+              <Button
+                color="danger"
+                onClick={handleLogout}
+                style={{
+                  animation: "pulseEffect 2s infinite",
+                  background: "linear-gradient(45deg, #ff0000, #ff6b6b)",
+                  border: "none",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                <style>
+                  {`
+      @keyframes pulseEffect {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+        }
+        
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+        }
+        
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+        }
+      }
+    `}
+                </style>
                 {"LOGOUT"}
               </Button>
             </Col>
