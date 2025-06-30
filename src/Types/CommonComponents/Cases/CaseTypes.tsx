@@ -48,6 +48,8 @@ export interface CaseSearchProps {
 export interface AddNewCaseModalProps {
   isOpen: boolean;
   toggle: () => void;
+  leadId?: number;
+  onCaseCreated?: (caseAlias: string) => void;
 }
 
 export interface UpdateCaseModalProps {

@@ -1,0 +1,17 @@
+// Function to generate role-based URL for case details
+export const getCaseUrl = (caseAlias: string, userType: string) => {
+  switch (userType) {
+    case "ADMIN":
+      return `/dashboard/admin/cases/${caseAlias}`;
+    case "NETWORK_ADMIN":
+      return `/dashboard/network/cases/${caseAlias}`;
+    case "LEAD":
+      return `/dashboard/client/cases/${caseAlias}`;
+    case "ORGANIZATION_ADMIN":
+      return `/dashboard/organisation/cases/${caseAlias}`;
+    case "ORGANIZATION_ADVISER":
+      return `/dashboard/orgadviser/cases/${caseAlias}`;
+    default:
+      return "#";
+  }
+};

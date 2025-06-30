@@ -1,5 +1,8 @@
 import { useAddLeadDetailsMutation } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
 import { AddLeadModalProps } from "@/Types/CommonComponents/Directors/LeadTypes";
+import { getCaseUrl } from "@/utils/GetCaseUrl";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -15,9 +18,11 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
+import AddNewCaseModal from "../../../Cases/Cases/Modals/AddNewCaseModal";
 
 const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
   const [addLeadDetails, { isLoading }] = useAddLeadDetailsMutation();
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -35,6 +40,15 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
     degree: "",
   });
 
+  // Add state for AddNewCaseModal
+  const [isCaseModalOpen, setIsCaseModalOpen] = useState(false);
+  const toggleCaseModal = () => setIsCaseModalOpen((prev) => !prev);
+
+  const [createdLeadId, setCreatedLeadId] = useState<number | null>(null);
+
+  const { data: session } = useSession();
+  const userType = session?.user?.user_type;
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -44,7 +58,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
     }));
   };
 
-  const handleSaveLead = async (e: React.FormEvent) => {
+  const handleSaveAndCreateCase = async (e: React.FormEvent) => {
     e.preventDefault();
     const payload = {
       user: {
@@ -66,26 +80,11 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
 
     try {
       const result = await addLeadDetails({ payload });
-
       if (result.data) {
         toast.success("Lead added successfully.");
-        // Reset form and close modal
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          password: "",
-          designation: "",
-          permanent_address: "",
-          present_address: "",
-          dob: "",
-          gender: "",
-          joining_date: "",
-          registration_number: "",
-          degree: "",
-        });
-        toggle();
+        const leadId = result.data.user?.id;
+        setCreatedLeadId(leadId);
+        setIsCaseModalOpen(true);
       } else if ("error" in result) {
         const errorMessage =
           (result.error as any)?.data?.user?.email?.[0] || "Invalid Request...";
@@ -102,12 +101,18 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
     }
   };
 
+  const handleCaseCreated = (caseAlias: string) => {
+    setIsCaseModalOpen(false);
+    toggle();
+    router.push(getCaseUrl(caseAlias, userType as string));
+  };
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Lead</span>
       </ModalHeader>
-      <Form onSubmit={handleSaveLead}>
+      <Form onSubmit={handleSaveAndCreateCase}>
         <ModalBody>
           <Row>
             <Col md={6}>
@@ -301,11 +306,20 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
           <Button color="primary">
             {isLoading ? "Saving..." : "Save Lead"}
           </Button>
+          <Button color="success" onClick={handleSaveAndCreateCase}>
+            Save & Create Case
+          </Button>
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>
         </ModalFooter>
       </Form>
+      <AddNewCaseModal
+        isOpen={isCaseModalOpen}
+        toggle={toggleCaseModal}
+        leadId={createdLeadId || undefined}
+        onCaseCreated={handleCaseCreated}
+      />
     </Modal>
   );
 };
