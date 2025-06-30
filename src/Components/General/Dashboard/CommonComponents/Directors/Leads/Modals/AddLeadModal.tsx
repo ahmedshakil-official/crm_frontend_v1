@@ -1,5 +1,7 @@
 import { useAddLeadDetailsMutation } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
 import { AddLeadModalProps } from "@/Types/CommonComponents/Directors/LeadTypes";
+import { getCaseUrl } from "@/utils/GetCaseUrl";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -43,6 +45,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
   const toggleCaseModal = () => setIsCaseModalOpen((prev) => !prev);
 
   const [createdLeadId, setCreatedLeadId] = useState<number | null>(null);
+
+  const { data: session } = useSession();
+  const userType = session?.user?.user_type;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -96,35 +101,10 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
     }
   };
 
-  // Import getCaseUrl from the correct location
-  // import { getCaseUrl } from "..."; // You may need to move this function to a shared util
-  const getCaseUrl = (caseAlias: string) => {
-    // This should match your existing implementation
-    // You may want to import this from a shared file
-    const userType =
-      (typeof window !== "undefined" &&
-        JSON.parse(localStorage.getItem("session") || "{}")?.user?.user_type) ||
-      null;
-    switch (userType) {
-      case "ADMIN":
-        return `/dashboard/admin/cases/${caseAlias}`;
-      case "NETWORK_ADMIN":
-        return `/dashboard/network/cases/${caseAlias}`;
-      case "LEAD":
-        return `/dashboard/client/cases/${caseAlias}`;
-      case "ORGANIZATION_ADMIN":
-        return `/dashboard/organisation/cases/${caseAlias}`;
-      case "ORGANIZATION_ADVISER":
-        return `/dashboard/orgadviser/cases/${caseAlias}`;
-      default:
-        return "#";
-    }
-  };
-
   const handleCaseCreated = (caseAlias: string) => {
     setIsCaseModalOpen(false);
     toggle();
-    router.push(getCaseUrl(caseAlias));
+    router.push(getCaseUrl(caseAlias, userType as string));
   };
 
   return (
