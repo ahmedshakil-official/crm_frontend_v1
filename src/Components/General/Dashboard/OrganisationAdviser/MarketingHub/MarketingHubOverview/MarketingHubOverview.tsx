@@ -6,7 +6,7 @@ const MarketingHubOverview: React.FC = () => {
   return (
     <Row>
       <Col>
-        <Card>
+        <Card className="rounded-3">
           <CardHeader className="text-end">
             <Button color="primary">
               New Campaign <i className="fa-solid fa-circle-plus ms-1"></i>
