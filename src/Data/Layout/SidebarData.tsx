@@ -228,14 +228,15 @@ const OrganisationAdviserMenu: MenuItem[] = [
             title: "Dashboard",
             type: "link",
           },
-          {
-            path: "/dashboard/orgadviser/calendar",
-            title: "Calendar",
-            type: "link",
-          },
+
           {
             path: "/dashboard/orgadviser/reporting",
             title: "Reporting",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/marketinghub",
+            title: "Marketing Hub",
             type: "link",
           },
           {

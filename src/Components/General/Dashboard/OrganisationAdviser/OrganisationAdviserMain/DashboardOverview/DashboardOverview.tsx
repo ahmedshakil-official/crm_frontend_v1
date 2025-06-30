@@ -118,14 +118,14 @@ const DashboardOverview: React.FC = () => {
         </Card>
       </Col>
 
-      {/* Target Acheivements */}
+      {/* Target Achievement */}
       <Col xl className="mb-2">
         <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
           <CardBody className="p-2">
             <div className="d-flex justify-content-between">
               <div>
                 <CardTitle className="small text-muted text-truncate">
-                  Target Acheivements
+                  Target Achievement
                 </CardTitle>
                 <h4 className="mb-1 text-dark">117%</h4>
                 <p className="text-success small mb-0">Above target</p>

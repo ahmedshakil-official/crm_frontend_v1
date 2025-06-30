@@ -1,13 +1,13 @@
 import { Container } from "reactstrap";
 import OrganisationAdviserBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
-const OrganisationAdviserCalendarContainer: React.FC = () => {
+const OrganisationAdviserMarketingHubContainer: React.FC = () => {
   return (
     <>
       <OrganisationAdviserBreadcrumbs
-        mainTitle="Calendar"
+        mainTitle="Marketing Hub"
         title="Hello there!"
-        activePage="Calendar"
+        activePage="Marketing Hub"
       />
       <Container fluid>
         <h1 className="text-danger text-center">Under Development</h1>
@@ -16,4 +16,4 @@ const OrganisationAdviserCalendarContainer: React.FC = () => {
   );
 };
 
-export default OrganisationAdviserCalendarContainer;
+export default OrganisationAdviserMarketingHubContainer;
