@@ -3,10 +3,12 @@ import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Dir
 import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { AdviserInfoProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
+import { getCaseUrl } from "@/utils/GetCaseUrl";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { TbFileDescription } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -29,7 +31,6 @@ import "../Cases.css";
 import AddNewCaseModal from "./Modals/AddNewCaseModal";
 import DeleteCaseModal from "./Modals/DeleteCaseModal";
 import UpdateCaseModal from "./Modals/UpdateCaseModal";
-import { TbFileDescription } from "react-icons/tb";
 
 const Cases: React.FC = () => {
   const { data: session } = useSession();
@@ -95,24 +96,7 @@ const Cases: React.FC = () => {
     ? Math.ceil(caseData.count / casesPerPage)
     : 1;
 
-  // Function to generate role-based URL for case details
-  const getCaseUrl = (caseAlias: string) => {
-    const userType = session?.user?.user_type;
-    switch (userType) {
-      case "ADMIN":
-        return `/dashboard/admin/cases/${caseAlias}`;
-      case "NETWORK_ADMIN":
-        return `/dashboard/network/cases/${caseAlias}`;
-      case "LEAD":
-        return `/dashboard/client/cases/${caseAlias}`;
-      case "ORGANIZATION_ADMIN":
-        return `/dashboard/organisation/cases/${caseAlias}`;
-      case "ORGANIZATION_ADVISER":
-        return `/dashboard/orgadviser/cases/${caseAlias}`;
-      default:
-        return "#";
-    }
-  };
+  const userType = session?.user?.user_type;
 
   return (
     <>
@@ -436,7 +420,10 @@ const Cases: React.FC = () => {
                         <td>
                           <Link
                             className="text_decoration_hover text-truncate"
-                            href={getCaseUrl(caseItem.alias)}
+                            href={getCaseUrl(
+                              caseItem.alias,
+                              userType as string
+                            )}
                           >
                             {caseItem.name}
                           </Link>

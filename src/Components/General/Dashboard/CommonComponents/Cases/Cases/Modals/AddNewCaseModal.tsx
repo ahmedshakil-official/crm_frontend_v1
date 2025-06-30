@@ -3,6 +3,9 @@ import { useGetLeadDetailsQuery } from "@/Redux/Reducers/CommonComponents/Direct
 import { AddNewCaseModalProps } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { LeadsInfo } from "@/Types/CommonComponents/Directors/LeadTypes";
 
+import { getCaseUrl } from "@/utils/GetCaseUrl";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -20,6 +23,8 @@ import {
 const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   isOpen,
   toggle,
+  leadId,
+  onCaseCreated,
 }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
   // Rtk query
@@ -28,13 +33,24 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   const [addCaseDetails, { isLoading: addCaseLoading }] = useAddCaseMutation();
 
   const [formData, setFormData] = useState({
-    lead: 0,
+    lead: leadId || 0,
     case_category: "",
     applicant_type: "",
     case_status: "",
     case_stage: "",
     notes: "",
   });
+
+  const { data: session } = useSession();
+  const userType = session?.user?.user_type;
+  const router = useRouter();
+
+  // Update formData.lead if leadId changes
+  React.useEffect(() => {
+    if (leadId) {
+      setFormData((prev) => ({ ...prev, lead: leadId }));
+    }
+  }, [leadId]);
 
   // Fetch leads data from backend
   useEffect(() => {
@@ -63,7 +79,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
       if (result.data) {
         toast.success("Case added successfully!");
         setFormData({
-          lead: 0,
+          lead: leadId || 0,
           case_category: "",
           applicant_type: "",
           case_status: "",
@@ -71,12 +87,22 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
           notes: "",
         });
         toggle();
+        if (onCaseCreated && result.data.alias) {
+          handleCaseCreated(result.data.alias);
+        }
       } else {
         toast.error("Invalid Request...");
       }
     } catch (error) {
       console.error("Error during request setup:", error);
     }
+  };
+
+  const handleCaseCreated = (caseAlias: string) => {
+    // Close modals if needed
+    toggle();
+    // Redirect to the new case page
+    router.push(getCaseUrl(caseAlias, userType as string));
   };
 
   return (
@@ -95,6 +121,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
               required
               value={formData.lead}
               onChange={handleChange}
+              disabled={!!leadId}
             >
               <option value="">Select...</option>
               {leads.map((lead) => (
