@@ -8,9 +8,8 @@ import CaseDetails from "../../CommonComponents/SingleCaseInfo/Components/CaseDe
 import ClientBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const ClientSingleCaseContainer: React.FC = () => {
-  const { casealias } = useParams();
   const router = useRouter();
-
+  const { casealias } = useParams();
   const {
     data: caseData,
     isLoading,
