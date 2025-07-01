@@ -2,6 +2,7 @@ import { Container } from "reactstrap";
 import OrganisationAdviserBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import MarketingHubOverview from "./MarketingHubOverview/MarketingHubOverview";
 import PlatformConnections from "./PlatformConnections/PlatformConnections";
+import QuickGlanceTabs from "./QuickGlance/QuickGlanceTabs";
 
 const OrganisationAdviserMarketingHubContainer: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const OrganisationAdviserMarketingHubContainer: React.FC = () => {
       <Container fluid>
         <MarketingHubOverview />
         <PlatformConnections />
+        <QuickGlanceTabs />
       </Container>
     </>
   );
