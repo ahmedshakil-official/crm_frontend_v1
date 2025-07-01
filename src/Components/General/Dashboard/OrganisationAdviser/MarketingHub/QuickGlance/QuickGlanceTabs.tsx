@@ -73,7 +73,7 @@ const QuickGlanceTabs: React.FC = () => {
 
   return (
     <div>
-      <Card className="d-flex justify-content-between align-items-center  rounded-3 p-2 mb-3">
+      <Card className="d-flex justify-content-between align-items-center shadow rounded-3 p-2 mb-3">
         <Nav tabs className="nav-primary border-0 gap-4" pills>
           {PillsTabNav.map((item) => (
             <NavItem key={item.id}>
