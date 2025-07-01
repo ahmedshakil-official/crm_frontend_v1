@@ -8,8 +8,8 @@ import {
   TbSettings,
 } from "react-icons/tb";
 import { Card, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
-import IntegrationsTab from "../../../Organisation/UserSettings/WorkflowsAndIntegrations/WorkflowsAndIntegrationsTabs/IntegrationsTab/IntegrationsTab";
 import OverviewTab from "./OverviewTab/OverviewTab";
+import IntegrationsTab from "./IntegrationsTab/IntegrationsTab";
 
 // Placeholder components for other tabs (replace with actual components as needed)
 const WhatsAppTab = () => <div>WhatsApp Tab Content</div>;
