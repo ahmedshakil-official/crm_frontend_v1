@@ -20,12 +20,18 @@ import {
 import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/AddApplicantCompanyInfoModal";
 import AddDependantFormModal from "./ApplicantDetailsModals/AddApplicantDependantsModal";
 import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useAppSelector, useAppDispatch } from "@/Redux/Hooks";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import LoadingSpinner from "@/app/loading";
 
 const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   applicantsData,
   basicTab,
 }) => {
   const { data: session } = useSession();
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
@@ -35,14 +41,22 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const toggleViewModal = () =>
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
 
-  // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
+  const {
+    data: caseData,
+    isLoading: isCaseFetching,
+    isError,
+  } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
   const [updateApplicantDetails, { isLoading: isUpdatingApplicant }] =
     useUpdateApplicantDetailsMutation();
 
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
   const [formValues, setFormValues] = useState<ApplicantProps>({
-    alias: basicTab || "", // Add this line to initialize alias
+    alias: basicTab || "",
     is_company_application: false,
     title: "",
     maiden_name: "",
@@ -62,7 +76,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     mobile_phone: "",
     work_phone: "",
     email: "",
-    // marketing_preferences: [],
     has_dependants: false,
     number_of_dependants: 0,
     date_of_arrival_uk: "",
@@ -107,15 +120,13 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     updated_by: "",
   });
 
-  // Find the selected applicant based on the `basicTab` value
   const selectedApplicant = applicantsData?.find(
     (applicant) => applicant.alias === basicTab
   );
 
-  // Initialize form values with selected applicant's data
   useEffect(() => {
     if (selectedApplicant) {
-      const { marketing_preferences, ...newValue } = selectedApplicant; // Destructure to exclude marketing_preferences
+      const { marketing_preferences, ...newValue } = selectedApplicant;
       setFormValues(newValue);
     }
   }, [selectedApplicant]);
@@ -151,6 +162,19 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       setIsLoading(false);
     }
   };
+  
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
+    }
+  };
+
+  if (isCaseFetching) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Container>
@@ -1398,7 +1422,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
           </Row>
           {/* Submit Button */}
-          <div className="d-flex justify-content-end">
+          <div className="d-flex justify-content-end gap-3">
             <Button
               type="submit"
               color="primary"
@@ -1408,7 +1432,22 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   selectedApplicant?.updated_by !== null)
               }
             >
-              {isUpdatingApplicant ? "Updating..." : "Update Applicant"}
+              {isUpdatingApplicant ? "Updating..." : "Save Changes"}
+            </Button>
+            <Button
+              type="submit"
+              color="primary"
+              disabled={
+                isLoading ||
+                (session?.user?.user_type === "LEAD" &&
+                  selectedApplicant?.updated_by !== null)
+              }
+              onClick={(e) => {
+                handleSubmit(e);
+                handleNextTab();
+              }}
+            >
+              Save & Next
             </Button>
           </div>
         </Form>

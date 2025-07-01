@@ -6,19 +6,40 @@ import React from "react";
 import { Button, TabContent, TabPane } from "reactstrap";
 import NotesViewTab from "./NotesViewTabs/NotesViewTab";
 import TasksViewTab from "./NotesViewTabs/TasksViewTab";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { toast } from "react-toastify";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 
 export const NotesTabContent: React.FC<NotesTabContentProps> = ({
   tabId,
   setTabId,
 }) => {
   const { casealias } = useParams();
+  const {
+    data: caseData,
+    isLoading: isCaseFetching,
+    isError,
+  } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
+  const dispatch = useAppDispatch();
   const { data, isLoading } = useGetNotesQuery({ case_alias: casealias });
 
   const handleNext = () => setTabId((parseInt(tabId) + 1).toString());
   // Use API data if available, otherwise use static data
   const notes = data?.filter((item: NoteTask) => item.note_task === "NOTE");
   const tasks = data?.filter((item: NoteTask) => item.note_task === "TASK");
-
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
+    }
+  };
   if (isLoading) {
     return (
       <div>
@@ -38,6 +59,17 @@ export const NotesTabContent: React.FC<NotesTabContentProps> = ({
         </TabPane>
         <TabPane tabId="2">
           <TasksViewTab tasks={tasks} />
+          <div className=" d-flex justify-content-end">
+            <Button
+              type="submit"
+              color="primary"
+              onClick={(e) => {
+                handleNextTab();
+              }}
+            >
+              Next
+            </Button>
+          </div>
         </TabPane>
       </TabContent>
     </div>

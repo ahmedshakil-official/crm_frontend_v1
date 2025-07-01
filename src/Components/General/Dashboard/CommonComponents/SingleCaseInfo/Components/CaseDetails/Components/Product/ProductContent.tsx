@@ -1,8 +1,12 @@
 import LoadingSpinner from "@/app/loading";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   useGetProductDetailsQuery,
   useUpdateProductDetailsMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ProductDetails/ProductDetailsApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -40,13 +44,17 @@ const ProductContent: React.FC = () => {
     processing_consent: false,
     application_review: false,
   });
-
+  const {
+    data: caseData,
+    isLoading: isCaseFetching,
+    isError,
+  } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
   const { data: productDetails, isLoading } = useGetProductDetailsQuery({
     case_alias: casealias,
   });
   const [updateProductDetails, { isLoading: isUpdating }] =
     useUpdateProductDetailsMutation();
-
+  const dispatch = useAppDispatch();
   // Update form data when API data is received
   // Update useEffect to properly map the API response
   useEffect(() => {
@@ -112,6 +120,18 @@ const ProductContent: React.FC = () => {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+  };
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
+    }
   };
 
   if (isLoading)
@@ -582,6 +602,16 @@ const ProductContent: React.FC = () => {
       <div className="d-flex justify-content-end gap-2 mt-4">
         <Button color="primary" type="submit" disabled={isUpdating}>
           {isUpdating ? "Saving..." : "Save Changes"}
+        </Button>
+        <Button
+          type="submit"
+          color="primary"
+          onClick={(e) => {
+            handleSubmit(e);
+            handleNextTab();
+          }}
+        >
+          Save & Next
         </Button>
       </div>
     </Form>

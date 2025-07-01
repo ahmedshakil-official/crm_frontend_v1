@@ -15,15 +15,36 @@ import {
 } from "reactstrap";
 import AddPropertyModal from "./Modals/AddPropertyModal";
 import PortfolioSummary from "./PortfolioSummary";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { toast } from "react-toastify";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 
 const PortfolioContent: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const prams = useParams();
   const { casealias } = prams;
-
+  const dispatch = useAppDispatch();
+  const {
+    data: caseData,
+    isLoading: isCaseFetching,
+    isError,
+  } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
   const { data, isLoading } = useGetPortfolioDetailsQuery({
     case_alias: casealias,
   });
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -242,6 +263,17 @@ const PortfolioContent: React.FC = () => {
             </Card>
           </Col>
         </Row>
+        <div className=" d-flex justify-content-end">
+          <Button
+            type="submit"
+            color="primary"
+            onClick={(e) => {
+              handleNextTab();
+            }}
+          >
+            Next
+          </Button>
+        </div>
       </Container>
 
       <AddPropertyModal isOpen={isModalOpen} toggle={toggleModal} />
