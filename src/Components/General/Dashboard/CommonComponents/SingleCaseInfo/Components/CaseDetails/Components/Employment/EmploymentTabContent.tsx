@@ -17,6 +17,10 @@ import {
   Row,
 } from "reactstrap";
 import AddEmploymentDetailsModal from "./EmploymentModals/AddEmploymentDetailsModal";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 
 export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   activeTab,
@@ -34,7 +38,11 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
     updateEmploymentDetails,
     { isLoading: isUpdateEmploymentDetailsLoading },
   ] = useUpdateEmploymentDetailsMutation();
-
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
   // `useEffect` to reset `formValues` when `activeTab` or `activeUser` changes
   useEffect(() => {
     if (activeTab && activeUser !== null) {
@@ -81,6 +89,18 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
       toast.success("Employment details updated successfully.");
     } else {
       toast.error("Failed to update employment details.");
+    }
+  };
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
     }
   };
 
@@ -1193,9 +1213,23 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             >
               Add New
             </Button>
-            <Button color="primary" type="submit">
-              {isUpdateEmploymentDetailsLoading ? "Saving..." : "Save Changes"}
-            </Button>
+            <div className=" d-flex justify-content-end gap-3">
+              <Button color="primary" type="submit">
+                {isUpdateEmploymentDetailsLoading
+                  ? "Saving..."
+                  : "Save Changes"}
+              </Button>
+              <Button
+                type="submit"
+                color="primary"
+                onClick={(e) => {
+                  handleSaveClick(e);
+                  handleNextTab();
+                }}
+              >
+                Save & Next
+              </Button>
+            </div>
           </Col>
         </Row>
       </Form>

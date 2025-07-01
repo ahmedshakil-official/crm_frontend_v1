@@ -15,6 +15,10 @@ import LoanDetailsFormTab1 from "./LoanDetailsFormTabs/LoanDetailsFormTab1";
 import LoanDetailsFormTab2 from "./LoanDetailsFormTabs/LoanDetailsFormTab2";
 import LoanDetailsFormTab3 from "./LoanDetailsFormTabs/LoanDetailsFormTab3";
 import LoanDetailsFormTab4 from "./LoanDetailsFormTabs/LoanDetailsFormTab4";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   tabId,
@@ -23,6 +27,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   const { data: session } = useSession();
   const { casealias } = useParams();
   const { data, isLoading, isError } = useGetCaseLoanDetailsQuery(casealias);
+  const dispatch=useAppDispatch();
 
   // Ensure `data` exists and has elements before accessing `[0]`
   const loandetailsAlias =
@@ -36,6 +41,10 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     );
   const [updateLoanDetails, { isLoading: isUpdating }] =
     useUpdateLoanDetailsMutation();
+    const {
+      data: caseData,
+      isLoading: isCaseFetching,
+    } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
 
   // Initialize form states with default values
   const [formDataTab1, setFormDataTab1] = useState({
@@ -186,6 +195,18 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
       toast.error("Failed to update loan details");
     }
   };
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
+    }
+  };
 
   if (isLoading || isLoandetailsDataLoading)
     return (
@@ -234,20 +255,32 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
             formData={formDataTab4}
             handleFormChange={(name, value) => handleFormChange(4, name, value)}
           />
-          <Button
-            type="submit"
-            color="primary"
-            onClick={handleSave}
-            className="float-end"
-            disabled={
-              isLoading ||
-              isUpdating ||
-              (session?.user?.user_type === "LEAD" &&
-                loandetailsData?.updated_by !== null)
-            }
-          >
-            {isUpdating ? "Saving..." : "Save Details"}
-          </Button>
+          <div className=" d-flex justify-content-end gap-3 mt-2">
+            <Button
+              type="submit"
+              color="primary"
+              onClick={handleSave}
+              className="float-end"
+              disabled={
+                isLoading ||
+                isUpdating ||
+                (session?.user?.user_type === "LEAD" &&
+                  loandetailsData?.updated_by !== null)
+              }
+            >
+              {isUpdating ? "Saving..." : "Save Details"}
+            </Button>
+            <Button
+              type="submit"
+              color="primary"
+              onClick={() => {
+                handleSave();
+                handleNextTab();
+              }}
+            >
+              Save & Next
+            </Button>
+          </div>
         </TabPane>
       </TabContent>
     </div>
