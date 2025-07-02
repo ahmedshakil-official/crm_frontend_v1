@@ -1,10 +1,11 @@
-import { useAppSelector } from "@/Redux/Hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useUpdateComplianceMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 import { RootState } from "@/Redux/Store";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import {
+  Button,
   Card,
   CardBody,
   CardHeader,
@@ -15,9 +16,17 @@ import {
 } from "reactstrap";
 import { ComplianceTabContents } from "./ComplianceTabContents";
 import { ComplianceRatingCard } from "./ComplianceTabContents/ComplianceRatingCard";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 export const ComplianceTab = () => {
   const { casealias } = useParams();
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
   const [basicTab, setBasicTab] = useState("1");
   const complianceState = useAppSelector(
     (state: RootState) => state.compliance
@@ -51,6 +60,19 @@ export const ComplianceTab = () => {
       }
     } catch (error) {
       console.error("Failed to update compliance data:", error);
+    }
+  };
+
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
     }
   };
 
@@ -91,14 +113,23 @@ export const ComplianceTab = () => {
           </CardHeader>
           <CardBody className="px-0 pb-0">
             <ComplianceTabContents tabId={basicTab} setTabId={setBasicTab} />
-            <div className="d-flex justify-content-end mb-3">
-              <button
-                className="btn btn-primary"
+            <div className="d-flex justify-content-end mb-3 gap-3">
+              <Button
+                color="primary"
                 onClick={handleUpdateAll}
                 disabled={isUpdating}
               >
                 {isUpdating ? "Saving..." : "Save Changes"}
-              </button>
+              </Button>
+              <Button
+                color="primary"
+                onClick={async () => {
+                  await handleUpdateAll();
+                  handleNextTab();
+                }}
+              >
+                Save & Next
+              </Button>
             </div>
           </CardBody>
         </CardBody>
