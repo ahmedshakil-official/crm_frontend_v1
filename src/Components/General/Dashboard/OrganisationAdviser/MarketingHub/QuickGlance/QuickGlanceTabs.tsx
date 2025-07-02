@@ -12,9 +12,9 @@ import IntegrationsTab from "./IntegrationsTab/IntegrationsTab";
 import OverviewTab from "./OverviewTab/OverviewTab";
 import SchedulerTab from "./SchedulerTab/SchedulerTab";
 import WhatsAppTab from "./WhatsAppTab/WhatsAppTab";
+import CampaignsTab from "./CampaignsTab/CampaignsTab";
 
 // Placeholder components for other tabs (replace with actual components as needed)
-const CampaignsTab = () => <div>Campaigns Tab Content</div>;
 const InboxTab = () => <div>Inbox Tab Content</div>;
 const AnalyticsTab = () => <div>Analytics Tab Content</div>;
 const LibraryTab = () => <div>Library Tab Content</div>;
