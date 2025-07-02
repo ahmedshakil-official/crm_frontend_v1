@@ -1,5 +1,4 @@
-import { FaEnvelope } from "react-icons/fa";
-import { TbEye, TbUsers } from "react-icons/tb";
+import { TbEye, TbSend, TbUsers } from "react-icons/tb";
 import { Card, CardBody } from "reactstrap";
 
 const RecentActivity = () => {
@@ -10,7 +9,7 @@ const RecentActivity = () => {
         <div>
           <div className="p-2 mb-2 border-l-primary border-2 rounded bg-light-primary d-flex justify-content-start gap-2">
             <div>
-              <FaEnvelope className="fs-4" />
+              <TbSend className="fs-4" />
             </div>
             <div>
               <span className="fw-medium">WhatsApp campaign sent</span>
