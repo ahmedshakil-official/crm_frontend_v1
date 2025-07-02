@@ -1,4 +1,5 @@
 import { Col, Row } from "reactstrap";
+import PostTemplates from "./PostTemplates/PostTemplates";
 import ScheduleSocialPost from "./ScheduleSocialPost/ScheduleSocialPost";
 
 const SchedulerTab: React.FC = () => {
@@ -7,7 +8,9 @@ const SchedulerTab: React.FC = () => {
       <Col md="6">
         <ScheduleSocialPost />
       </Col>
-      <Col md="6"></Col>
+      <Col md="6">
+        <PostTemplates />
+      </Col>
     </Row>
   );
 };
