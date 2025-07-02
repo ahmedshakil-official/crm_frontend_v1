@@ -20,9 +20,18 @@ import {
   Label,
 } from "reactstrap";
 import ExtraAnswerModal from "./Modals/ExtraAnswerModal";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const SuitabilityContent: React.FC = () => {
   const { casealias } = useParams();
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
   const [defaultAnswers, setDefaultAnswers] = useState(defaultAnswersData);
   // Modal State
   const [isExtraAnswerModalOpen, setIsExtraAnswerModalOpen] = useState(false);
@@ -549,6 +558,19 @@ const SuitabilityContent: React.FC = () => {
     } catch (error) {
       console.error("Failed to update suitability:", error);
       toast.error("Failed to save changes. Please try again.");
+    }
+  };
+
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
     }
   };
 
@@ -2394,9 +2416,18 @@ const SuitabilityContent: React.FC = () => {
         </Card>
 
         {/* Button for save changes */}
-        <div className="d-flex justify-content-end mt-3 mb-0">
+        <div className="d-flex justify-content-end mt-3 mb-0 gap-3">
           <Button color="primary" type="submit" disabled={isUpdating}>
             {isUpdating ? "Saving..." : "Save Changes"}
+          </Button>
+          <Button
+            color="primary"
+            onClick={async (e) => {
+              await handleSubmit(e);
+              handleNextTab();
+            }}
+          >
+            Save & Next
           </Button>
         </div>
       </Form>

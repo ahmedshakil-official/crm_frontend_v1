@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import {
+  Button,
   Card,
   CardBody,
   CardHeader,
@@ -9,9 +10,34 @@ import {
   NavLink,
 } from "reactstrap";
 import { FeesTabContent } from "./FeesTabContent";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useParams } from "next/navigation";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { toast } from "react-toastify";
 
 const FeesTab: FC = () => {
+  const { casealias } = useParams();
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
   const [basicTab, setBasicTab] = useState("1");
+
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
+    }
+  };
 
   return (
     <Col xxl="12" className="px-5">
@@ -37,6 +63,11 @@ const FeesTab: FC = () => {
           </CardHeader>
           <CardBody className="px-0 pb-0">
             <FeesTabContent tabId={basicTab} setTabId={setBasicTab} />
+            <div className="d-flex justify-content-end">
+              <Button color="primary" className="mt-3" onClick={handleNextTab}>
+                Next
+              </Button>
+            </div>
           </CardBody>
         </CardBody>
       </Card>
