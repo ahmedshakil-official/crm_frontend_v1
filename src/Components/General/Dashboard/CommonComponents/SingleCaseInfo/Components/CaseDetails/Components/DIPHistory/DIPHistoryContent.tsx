@@ -5,6 +5,10 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import AddNewLenderHistoryModal from "./Modals/AddNewLenderHistoryModal";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -34,6 +38,11 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
   const [updateDIPHistoryDetails, { isLoading }] =
     useUpdateDIPHistoryDetailsMutation();
   const { casealias } = useParams();
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -60,6 +69,19 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
       }
     } catch (error) {
       toast.error("Failed to update DIP History");
+    }
+  };
+
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
     }
   };
 
@@ -364,6 +386,15 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
               </Button>
               <Button color="primary" type="submit">
                 Save History
+              </Button>
+              <Button
+                color="primary"
+                onClick={async (e) => {
+                  await handleSubmit(e);
+                  handleNextTab();
+                }}
+              >
+                Save & Next
               </Button>
             </Col>
           </Row>

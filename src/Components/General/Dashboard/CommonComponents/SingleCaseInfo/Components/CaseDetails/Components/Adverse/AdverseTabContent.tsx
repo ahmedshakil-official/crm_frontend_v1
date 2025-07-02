@@ -36,6 +36,10 @@ import ViewDMPsModal from "./AdverseModals/ViewModals/ViewDMPsModal";
 import ViewIVAsModal from "./AdverseModals/ViewModals/ViewIVAsModal";
 import ViewPayDayLoansModal from "./AdverseModals/ViewModals/ViewPayDayLoansModal";
 import ViewPropertiesRepossessedModal from "./AdverseModals/ViewModals/ViewPropertiesRepossessedModal";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
   const params = useParams();
@@ -46,6 +50,11 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
   });
   const [updateAdverseDetails, { isLoading: isAdverseUpdating }] =
     useUpdateAdverseDetailsMutation();
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
 
   const [formData, setFormData] = useState({
     alias: "",
@@ -217,6 +226,19 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
     }
   };
 
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
+    }
+  };
+
   if (isLoading)
     return (
       <div>
@@ -367,9 +389,20 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
                 </FormGroup>
 
                 {/* Submit Button */}
-                <div className="d-flex justify-content-end mt-4">
+                <div className="d-flex justify-content-end mt-4 gap-3">
                   <Button color="primary" onClick={handleSubmit}>
                     {isAdverseUpdating ? "Saving..." : "Save Changes"}
+                  </Button>
+                  <Button
+                    type="submit"
+                    color="primary"
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      await handleSubmit();
+                      handleNextTab();
+                    }}
+                  >
+                    Save & Next
                   </Button>
                 </div>
               </Form>
