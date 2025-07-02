@@ -8,12 +8,12 @@ import {
   TbSettings,
 } from "react-icons/tb";
 import { Card, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
-import OverviewTab from "./OverviewTab/OverviewTab";
 import IntegrationsTab from "./IntegrationsTab/IntegrationsTab";
+import OverviewTab from "./OverviewTab/OverviewTab";
+import SchedulerTab from "./SchedulerTab/SchedulerTab";
 import WhatsAppTab from "./WhatsAppTab/WhatsAppTab";
 
 // Placeholder components for other tabs (replace with actual components as needed)
-const SchedulerTab = () => <div>Scheduler Tab Content</div>;
 const CampaignsTab = () => <div>Campaigns Tab Content</div>;
 const InboxTab = () => <div>Inbox Tab Content</div>;
 const AnalyticsTab = () => <div>Analytics Tab Content</div>;
