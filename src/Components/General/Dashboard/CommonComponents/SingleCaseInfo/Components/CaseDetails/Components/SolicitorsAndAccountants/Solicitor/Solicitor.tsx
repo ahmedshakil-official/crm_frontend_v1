@@ -25,12 +25,21 @@ import {
 } from "reactstrap";
 import Swal from "sweetalert2";
 import AddSolicitorModal from "../Modals/AddSolicitorModal";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const Solicitor: React.FC = () => {
   const params = useParams();
   const { casealias } = params;
   const { data: solicitorName, isLoading } =
     useGetSolicitorDetailsQuery(undefined);
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
 
   const { data: caseSolicitors, isLoading: isCaseSolicitorLoading } =
     useGetCaseSolicitorDetailsQuery({ case_alias: casealias });
@@ -150,6 +159,19 @@ const Solicitor: React.FC = () => {
     } catch (error) {
       console.error("Failed to update solicitor details:", error);
       toast.error("Failed to update solicitor details. Please try again.");
+    }
+  };
+
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
     }
   };
 
@@ -470,13 +492,23 @@ const Solicitor: React.FC = () => {
                 </Col>
               </Row>
               <Row>
-                <Col md={12} className="d-flex justify-content-end">
+                <Col md={12} className="d-flex justify-content-end gap-3">
                   <Button
                     type="submit"
                     color="primary"
                     disabled={isUpdateLoading}
                   >
                     Update Solicitor Info
+                  </Button>
+                  <Button
+                    color="primary"
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      await handleUpdateSolicitorDetails(e);
+                      handleNextTab();
+                    }}
+                  >
+                    Save & Next
                   </Button>
                 </Col>
               </Row>

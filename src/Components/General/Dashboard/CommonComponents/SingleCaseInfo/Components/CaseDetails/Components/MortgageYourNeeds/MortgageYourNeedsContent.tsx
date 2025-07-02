@@ -1,8 +1,12 @@
 import LoadingSpinner from "@/app/loading";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   useGetMortgageYourNeedsQuery,
   useUpdateMortgageYourNeedsMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/MortgageYourNeeds/MortgageYourNeedsApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -21,6 +25,11 @@ import {
 
 const MortgageYourNeedsContent: React.FC = () => {
   const { casealias } = useParams();
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
 
   // rtk hooks
   const { data: mortgageData, isLoading } = useGetMortgageYourNeedsQuery({
@@ -45,7 +54,7 @@ const MortgageYourNeedsContent: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const formValues = {
       repayment_method: formData.repayment_method,
@@ -109,9 +118,24 @@ const MortgageYourNeedsContent: React.FC = () => {
         payload: formValues,
       }).unwrap();
       toast.success("Mortgage needs updated successfully!");
+      return true;
     } catch (error) {
       console.error("Failed to update mortgage needs:", error);
       toast.error("Failed to update mortgage needs. Please try again.");
+      return false;
+    }
+  };
+
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
     }
   };
 
@@ -1604,9 +1628,20 @@ const MortgageYourNeedsContent: React.FC = () => {
               />
             </FormGroup>
 
-            <div className="d-flex justify-content-end mt-3">
+            <div className="d-flex justify-content-end gap-3 mt-3">
               <Button color="primary" disabled={isUpdating}>
                 {isUpdating ? "Saving..." : "Save Mortgage Needs"}
+              </Button>
+              <Button
+                color="primary"
+                onClick={async () => {
+                  const success = await handleSubmit(new Event('click') as any);
+                  if (success) {
+                    handleNextTab();
+                  }
+                }}
+              >
+                Save & Next
               </Button>
             </div>
           </Form>

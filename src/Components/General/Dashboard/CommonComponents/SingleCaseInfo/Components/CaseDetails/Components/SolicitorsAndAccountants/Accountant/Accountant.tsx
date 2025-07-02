@@ -24,6 +24,10 @@ import {
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
 import Swal from "sweetalert2";
 import AddAccountantModal from "../Modals/AddAccountantModal";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const Accountant: React.FC = () => {
   const params = useParams();
@@ -34,6 +38,11 @@ const Accountant: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<any>({});
   const [activeTab, setActiveTab] = useState<string>("0");
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
 
   const { data: accountantName, isLoading: isAccountantLoading } =
     useGetAccountantDetailsQuery(undefined);
@@ -155,6 +164,18 @@ const Accountant: React.FC = () => {
     } catch (error) {
       console.error("Failed to update accountant details:", error);
       toast.error("Failed to update accountant details. Please try again.");
+    }
+  };
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
     }
   };
 
@@ -413,10 +434,20 @@ const Accountant: React.FC = () => {
               </Col>
             </Row>
             <Row>
-              <Col md={12} className="d-flex justify-content-end">
-                <FormGroup>
+              <Col md={12}>
+                <FormGroup className="d-flex justify-content-end gap-3">
                   <Button color="primary" onClick={handleUpdateAccountant}>
                     Update Accountant Info
+                  </Button>
+                  <Button
+                    color="primary"
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      await handleUpdateAccountant(e);
+                      handleNextTab();
+                    }}
+                  >
+                    Save & Next
                   </Button>
                 </FormGroup>
               </Col>

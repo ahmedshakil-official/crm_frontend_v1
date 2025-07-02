@@ -18,12 +18,35 @@ import {
   Row,
 } from "reactstrap";
 import AddExistingProtectionModal from "./Modals/AddExistingProtectionModal";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const ExistingProtectionContent: React.FC<
   ExistingProtectionTabContentProps
 > = ({ activeTab, activeUser, groupedData }) => {
   const params = useParams();
   const { casealias } = params;
+
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
+
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
+    }
+  };
 
   const [formValues, setFormValues] =
     useState<ExistingProtectionDetailsProps | null>(null);
@@ -645,6 +668,15 @@ const ExistingProtectionContent: React.FC<
             )}
             <Button color="primary" type="submit">
               {isUpdateLoading ? "Saving..." : "Save Changes"}
+            </Button>
+            <Button
+              color="primary"
+              onClick={async (e) => {
+                await handleUpdate(e);
+                handleNextTab();
+              }}
+            >
+              Save & Next
             </Button>
           </div>
         </Form>

@@ -15,6 +15,11 @@ import {
 import AddCreditCommitmentModal from "./CreditCommitmentsModals/AddCreditCommitmentModal";
 import DeleteCreditCommitmentModal from "./CreditCommitmentsModals/DeleteCreditCommitmentModal";
 import UpdateCreditCommitmentModal from "./CreditCommitmentsModals/UpdateCreditCommitmentModal";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { toast } from "react-toastify";
 
 const CreditCommitmentsContent: React.FC = () => {
   const { casealias } = useParams();
@@ -29,7 +34,25 @@ const CreditCommitmentsContent: React.FC = () => {
   // rtk hooks
   const { data: creditCommitments, isLoading } =
     useGetCreditCommitmentsDetailsQuery({ case_alias: casealias });
+  const dispatch = useAppDispatch();
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
   // rtk hooks end
+
+  const currentTab: string | null = useAppSelector(
+    (state) => state.caseDetails.basicTabId
+  );
+
+  const handleNextTab = () => {
+    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    if (nextTabNav) {
+      dispatch(basicTabIndicator(nextTabNav));
+    } else {
+      toast.info("This is the last tab.");
+    }
+  };
 
   if (isLoading)
     return (
@@ -393,6 +416,17 @@ const CreditCommitmentsContent: React.FC = () => {
           {/* </div> */}
         </Col>
       </Row>
+      <div className=" mt-3 d-flex justify-content-end">
+        <Button
+          type="submit"
+          color="primary"
+          onClick={() => {
+            handleNextTab();
+          }}
+        >
+          Next
+        </Button>
+      </div>
       {/* modals start */}
       <AddCreditCommitmentModal
         isOpen={modalIsOpen}
