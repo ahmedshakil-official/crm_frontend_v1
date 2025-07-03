@@ -388,7 +388,7 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
                 Save History
               </Button>
               <Button
-                color="primary"
+                color="secondary"
                 onClick={async (e) => {
                   await handleSubmit(e);
                   handleNextTab();

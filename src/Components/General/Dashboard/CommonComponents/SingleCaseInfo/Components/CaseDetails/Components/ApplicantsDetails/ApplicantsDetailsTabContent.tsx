@@ -1436,7 +1436,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Button>
             <Button
               type="submit"
-              color="primary"
+              color="secondary"
               disabled={
                 isLoading ||
                 (session?.user?.user_type === "LEAD" &&

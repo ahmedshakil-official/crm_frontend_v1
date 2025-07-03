@@ -122,7 +122,7 @@ export const ComplianceTab = () => {
                 {isUpdating ? "Saving..." : "Save Changes"}
               </Button>
               <Button
-                color="primary"
+                color="secondary"
                 onClick={async () => {
                   await handleUpdateAll();
                   handleNextTab();

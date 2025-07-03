@@ -118,7 +118,7 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
           </Button>
           <Button
             type="submit"
-            color="primary"
+            color="secondary"
             onClick={async () => {
               await handleSubmit();
               handleNextTab();

@@ -605,7 +605,7 @@ const ProductContent: React.FC = () => {
         </Button>
         <Button
           type="submit"
-          color="primary"
+          color="secondary"
           onClick={(e) => {
             handleSubmit(e);
             handleNextTab();

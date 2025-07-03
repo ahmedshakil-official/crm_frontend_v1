@@ -440,7 +440,7 @@ const Accountant: React.FC = () => {
                     Update Accountant Info
                   </Button>
                   <Button
-                    color="primary"
+                    color="secondary"
                     onClick={async (e) => {
                       e.preventDefault();
                       await handleUpdateAccountant(e);

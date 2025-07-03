@@ -1221,7 +1221,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Button>
               <Button
                 type="submit"
-                color="primary"
+                color="secondary"
                 onClick={(e) => {
                   handleSaveClick(e);
                   handleNextTab();
