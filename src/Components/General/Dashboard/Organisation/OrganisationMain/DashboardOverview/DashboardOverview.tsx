@@ -13,7 +13,7 @@ const DashboardOverview: React.FC = () => {
     <Row>
       {/* Total Advisers */}
       <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
-        <Card className="border-0 rounded-3 shadow-sm bg-white">
+        <Card className="border-0 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
               <div>
@@ -40,7 +40,7 @@ const DashboardOverview: React.FC = () => {
 
       {/* Active Clients */}
       <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
-        <Card className="border-0 rounded-3 shadow-sm bg-white">
+        <Card className="border-0 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
               <div>
@@ -67,7 +67,7 @@ const DashboardOverview: React.FC = () => {
 
       {/* Cases In Progress */}
       <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
-        <Card className="border-0 rounded-3 shadow-sm bg-white">
+        <Card className="border-0 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
               <div>
@@ -94,7 +94,7 @@ const DashboardOverview: React.FC = () => {
 
       {/* Revenue This Month */}
       <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
-        <Card className="border-0 rounded-3 shadow-sm bg-white">
+        <Card className="border-0 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
               <div>
@@ -121,7 +121,7 @@ const DashboardOverview: React.FC = () => {
 
       {/* Compliance Status */}
       <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
-        <Card className="border-0 rounded-3 shadow-sm bg-white">
+        <Card className="border-0 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
               <div>
@@ -146,7 +146,7 @@ const DashboardOverview: React.FC = () => {
 
       {/* New Card: Employee Satisfaction */}
       <Col xl={2} lg={4} sm={6} xs={12} className="mb-3">
-        <Card className="border-0 rounded-3 shadow-sm bg-white">
+        <Card className="border-0 shadow-sm bg-white">
           <CardBody className="p-3">
             <div className="d-flex justify-content-between">
               <div>

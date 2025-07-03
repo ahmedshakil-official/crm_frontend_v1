@@ -2421,7 +2421,7 @@ const SuitabilityContent: React.FC = () => {
             {isUpdating ? "Saving..." : "Save Changes"}
           </Button>
           <Button
-            color="primary"
+            color="secondary"
             onClick={async (e) => {
               await handleSubmit(e);
               handleNextTab();

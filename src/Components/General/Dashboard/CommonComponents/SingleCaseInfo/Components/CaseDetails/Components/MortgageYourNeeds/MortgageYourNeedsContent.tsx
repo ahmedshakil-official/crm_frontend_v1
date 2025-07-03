@@ -1633,9 +1633,9 @@ const MortgageYourNeedsContent: React.FC = () => {
                 {isUpdating ? "Saving..." : "Save Mortgage Needs"}
               </Button>
               <Button
-                color="primary"
+                color="secondary"
                 onClick={async () => {
-                  const success = await handleSubmit(new Event('click') as any);
+                  const success = await handleSubmit(new Event("click") as any);
                   if (success) {
                     handleNextTab();
                   }

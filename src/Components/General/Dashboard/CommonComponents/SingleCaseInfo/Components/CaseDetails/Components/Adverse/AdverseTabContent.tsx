@@ -395,7 +395,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
                   </Button>
                   <Button
                     type="submit"
-                    color="primary"
+                    color="secondary"
                     onClick={async (e) => {
                       e.preventDefault();
                       await handleSubmit();

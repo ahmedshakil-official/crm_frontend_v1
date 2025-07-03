@@ -75,7 +75,7 @@ const WorkflowsTab: React.FC = () => {
   return (
     <Row>
       <Col>
-        <Card className="px-2 pt-4 pb-2 rounded-3">
+        <Card className="px-2 pt-4 pb-2 ">
           <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
             <Input
               className="w-100"
@@ -93,7 +93,7 @@ const WorkflowsTab: React.FC = () => {
           </div>
           <div>
             {filterIcon && (
-              <Card className="shadow-lg p-3 mb-3 rounded-3 bg-light-success">
+              <Card className="shadow-lg p-3 mb-3 bg-light-success">
                 <Row className="justify-content-center g-3">
                   <Col xs="12" sm="6" md="4">
                     <Label>Status</Label>
@@ -139,7 +139,10 @@ const WorkflowsTab: React.FC = () => {
             )}
             {/* Workflow Cards */}
             {workflows.map((workflow, index) => (
-              <Card key={index} className="mb-3 p-3 rounded-3 shadow bg-light-dark">
+              <Card
+                key={index}
+                className="mb-3 p-3 rounded-3 shadow bg-light-dark"
+              >
                 <Row>
                   <Col md="10">
                     <h5 className="d-flex align-items-center gap-2">

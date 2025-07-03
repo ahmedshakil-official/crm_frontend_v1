@@ -272,7 +272,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
             </Button>
             <Button
               type="submit"
-              color="primary"
+              color="secondary"
               onClick={() => {
                 handleSave();
                 handleNextTab();

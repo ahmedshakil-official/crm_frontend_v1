@@ -501,7 +501,7 @@ const Solicitor: React.FC = () => {
                     Update Solicitor Info
                   </Button>
                   <Button
-                    color="primary"
+                    color="secondary"
                     onClick={async (e) => {
                       e.preventDefault();
                       await handleUpdateSolicitorDetails(e);

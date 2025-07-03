@@ -81,7 +81,7 @@ const UsersTab: React.FC = () => {
       </div>
       <div>
         {filterIcon && (
-          <Card className="shadow-lg p-3 rounded-3 bg-light-success">
+          <Card className="shadow-lg p-3  bg-light-success">
             <Row className="justify-content-center g-3">
               <Col xs="12" sm="6" md="4" lg="3">
                 <Label>Role</Label>

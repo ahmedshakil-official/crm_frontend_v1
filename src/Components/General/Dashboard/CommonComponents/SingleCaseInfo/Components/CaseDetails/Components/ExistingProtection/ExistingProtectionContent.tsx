@@ -670,7 +670,7 @@ const ExistingProtectionContent: React.FC<
               {isUpdateLoading ? "Saving..." : "Save Changes"}
             </Button>
             <Button
-              color="primary"
+              color="secondary"
               onClick={async (e) => {
                 await handleUpdate(e);
                 handleNextTab();
