@@ -6,7 +6,7 @@ const ReportsAndLogsOverview: React.FC = () => {
     <Row>
       {/* Total Reports */}
       <Col md="3" sm="6">
-        <Card className="text-center rounded-3 shadow-sm bg-light-primary">
+        <Card className="text-center  shadow-sm bg-light-primary">
           <CardBody className="d-flex justify-content-between align-items-center">
             <div>
               <CardTitle tag="h6" className="text-start">
@@ -33,7 +33,7 @@ const ReportsAndLogsOverview: React.FC = () => {
 
       {/* Generated Today */}
       <Col md="3" sm="6">
-        <Card className="text-center rounded-3 shadow-sm bg-light-secondary">
+        <Card className="text-center shadow-sm bg-light-secondary">
           <CardBody className="d-flex justify-content-between align-items-center">
             <div>
               <CardTitle tag="h6" className="text-start">
@@ -62,7 +62,7 @@ const ReportsAndLogsOverview: React.FC = () => {
 
       {/* Audit Events */}
       <Col md="3" sm="6">
-        <Card className="text-center rounded-3 shadow-sm bg-light-success">
+        <Card className="text-center shadow-sm bg-light-success">
           <CardBody className="d-flex justify-content-between align-items-center">
             <div>
               <CardTitle tag="h6" className="text-start">
@@ -91,7 +91,7 @@ const ReportsAndLogsOverview: React.FC = () => {
 
       {/* Active Users */}
       <Col md="3" sm="6">
-        <Card className="text-center rounded-3 shadow-sm bg-light-warning">
+        <Card className="text-center shadow-sm bg-light-warning">
           <CardBody className="d-flex justify-content-between align-items-center">
             <div>
               <CardTitle tag="h6" className="text-start">

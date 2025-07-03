@@ -92,7 +92,7 @@ const Documents: React.FC = () => {
         <CardBody>
           <Row>
             {filterIcon && (
-              <Card className="shadow-lg p-3 rounded-3 bg-light-success">
+              <Card className="shadow-lg p-3 bg-light-success">
                 <Row className="g-3">
                   <Col xs="12" sm="6" md="3">
                     <Label>Document Name</Label>

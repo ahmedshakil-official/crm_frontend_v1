@@ -52,7 +52,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
         <Row className="px-3 mt-3">
           {/* 1st card */}
           <Col lg="4" md="12">
-            <Card className="shadow rounded-3">
+            <Card className="shadow">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-primary">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
                   <h4 className="fw-bold">Case User</h4>
@@ -118,7 +118,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
           </Col>
           {/* 2nd card */}
           <Col lg="4" md="12">
-            <Card className="shadow rounded-3">
+            <Card className="shadow">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-warning">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
                   <h4 className="fw-bold">Case Info</h4>
@@ -184,7 +184,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
           </Col>
           {/* 3rd card */}
           <Col lg="4" md="12">
-            <Card className="shadow rounded-3">
+            <Card className="shadow ">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-success">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
                   <h4 className="fw-bold">Assigned Advisor</h4>

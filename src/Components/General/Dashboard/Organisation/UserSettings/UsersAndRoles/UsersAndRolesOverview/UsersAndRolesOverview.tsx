@@ -11,7 +11,7 @@ const UsersAndRolesOverview: React.FC = () => {
     <Row>
       {/* Principal */}
       <Col md="3" sm="6">
-        <Card className="text-center rounded-3 shadow-sm bg-light-primary">
+        <Card className="text-center  shadow-sm bg-light-primary">
           <CardBody className="d-flex justify-content-between align-items-center">
             <div>
               <CardTitle tag="h6">Principal</CardTitle>
@@ -33,7 +33,7 @@ const UsersAndRolesOverview: React.FC = () => {
 
       {/* Adviser */}
       <Col md="3" sm="6">
-        <Card className="text-center rounded-3 shadow-sm bg-light-secondary">
+        <Card className="text-center  shadow-sm bg-light-secondary">
           <CardBody className="d-flex justify-content-between align-items-center">
             <div>
               <CardTitle tag="h6">Adviser</CardTitle>
@@ -55,7 +55,7 @@ const UsersAndRolesOverview: React.FC = () => {
 
       {/* Admin */}
       <Col md="3" sm="6">
-        <Card className="text-center rounded-3 shadow-sm bg-light-success">
+        <Card className="text-center  shadow-sm bg-light-success">
           <CardBody className="d-flex justify-content-between align-items-center">
             <div>
               <CardTitle tag="h6">Admin</CardTitle>
@@ -77,7 +77,7 @@ const UsersAndRolesOverview: React.FC = () => {
 
       {/* Support */}
       <Col md="3" sm="6">
-        <Card className="text-center rounded-3 shadow-sm bg-light-warning">
+        <Card className="text-center  shadow-sm bg-light-warning">
           <CardBody className="d-flex justify-content-between align-items-center">
             <div>
               <CardTitle tag="h6">Support</CardTitle>
