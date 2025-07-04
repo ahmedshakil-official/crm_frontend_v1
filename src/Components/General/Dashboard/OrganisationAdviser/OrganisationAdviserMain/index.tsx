@@ -17,9 +17,7 @@ const OrganisationAdviserContainer: React.FC = () => {
       />
       <Container fluid>
         {/* 1st row  */}
-        <Row>
-          <DashboardOverview />
-        </Row>
+        <DashboardOverview />
         {/* 2nd row  */}
         <Row>
           <Col md={6} sm={12}>
