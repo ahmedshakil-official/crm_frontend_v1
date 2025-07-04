@@ -330,7 +330,7 @@ const FactFindTabContent: FC = () => {
   };
 
   return (
-    <div className="p-3">
+    <div>
       {factFindData.map((item, index) => (
         <DisclosureItem
           key={item.reference}

@@ -49,7 +49,7 @@ const DataProtectionTabContent: FC = () => {
     );
   };
   return (
-    <div className="p-3">
+    <div>
       {dataProtectionData.map((item, index) => (
         <DisclosureItem
           key={item.reference}

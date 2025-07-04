@@ -235,7 +235,7 @@ const EorKfiTabContent: FC = () => {
     );
   };
   return (
-    <div className="p-3">
+    <div>
       {eorKfiData.map((item, index) => (
         <DisclosureItem
           key={item.reference}

@@ -80,7 +80,7 @@ const FeeOutTable = () => {
       </div>
     );
   return (
-    <Container fluid className="panel-body">
+    <>
       <Row className="mb-3">
         <Col sm={12} className="d-flex justify-content-end align-items-center">
           <Button
@@ -186,7 +186,7 @@ const FeeOutTable = () => {
           </div>
         </Col>
       </Row>
-    </Container>
+    </>
   );
 };
 

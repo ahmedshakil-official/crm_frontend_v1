@@ -1,6 +1,9 @@
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useUpdateComplianceMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 import { RootState } from "@/Redux/Store";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -16,9 +19,6 @@ import {
 } from "reactstrap";
 import { ComplianceTabContents } from "./ComplianceTabContents";
 import { ComplianceRatingCard } from "./ComplianceTabContents/ComplianceRatingCard";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 export const ComplianceTab = () => {
   const { casealias } = useParams();
@@ -77,7 +77,7 @@ export const ComplianceTab = () => {
   };
 
   return (
-    <Col xxl="12" className="px-5">
+    <Col xxl="12">
       <Card>
         <CardBody>
           <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-2 pb-2 p-0">
@@ -113,7 +113,7 @@ export const ComplianceTab = () => {
           </CardHeader>
           <CardBody className="px-0 pb-0">
             <ComplianceTabContents tabId={basicTab} setTabId={setBasicTab} />
-            <div className="d-flex justify-content-end mb-3 gap-3">
+            <div className="d-flex justify-content-end mb-3 gap-2 px-2">
               <Button
                 color="primary"
                 onClick={handleUpdateAll}
