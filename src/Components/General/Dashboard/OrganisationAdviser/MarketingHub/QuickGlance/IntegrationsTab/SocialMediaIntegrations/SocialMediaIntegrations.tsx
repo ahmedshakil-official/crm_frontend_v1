@@ -7,7 +7,7 @@ import TwitterCard from "./SocialMediaCards/TwitterCard";
 
 const SocialMediaIntegrations: React.FC = () => {
   return (
-    <Card className="rounded-3">
+    <Card>
       <CardBody>
         <div>
           <h3>

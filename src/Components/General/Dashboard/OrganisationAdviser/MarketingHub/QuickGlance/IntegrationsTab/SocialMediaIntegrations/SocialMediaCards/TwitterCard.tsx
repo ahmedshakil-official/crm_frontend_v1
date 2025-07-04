@@ -12,7 +12,7 @@ import {
 
 const TwitterCard: React.FC = () => {
   return (
-    <Card className="rounded-3 shadow">
+    <Card className="shadow">
       {/* Header Section */}
       <CardBody>
         <Row className="align-items-center">

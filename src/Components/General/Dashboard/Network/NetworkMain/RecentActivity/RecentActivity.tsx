@@ -5,7 +5,7 @@ import { Card, CardBody, CardHeader, Col } from "reactstrap";
 const RecentActivity: React.FC = () => {
   return (
     <Col md={4} xs={12}>
-      <Card className="shadow-sm rounded-4">
+      <Card className="shadow-sm">
         <CardHeader className="bg-white border-bottom">
           <h4 className="mb-0 fw-bold">Recent Activity</h4>
         </CardHeader>

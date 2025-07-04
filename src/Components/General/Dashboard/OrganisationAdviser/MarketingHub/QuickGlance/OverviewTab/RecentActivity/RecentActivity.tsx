@@ -3,7 +3,7 @@ import { Card, CardBody } from "reactstrap";
 
 const RecentActivity = () => {
   return (
-    <Card className="shadow rounded-3 border-0">
+    <Card className="shadow border-0">
       <CardBody>
         <h3 className="mb-3 fw-bold">Recent Activity</h3>
         <div>

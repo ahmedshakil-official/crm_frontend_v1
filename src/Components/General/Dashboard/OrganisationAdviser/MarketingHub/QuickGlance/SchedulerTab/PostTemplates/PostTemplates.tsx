@@ -2,14 +2,14 @@ import { Badge, Button, Card, CardBody } from "reactstrap";
 
 const PostTemplates: React.FC = () => {
   return (
-    <Card className="rounded-3">
+    <Card>
       <CardBody>
         <div className="mb-3">
           <h3>Post Templates</h3>
           <small>Quick start with pre-built content templates</small>
         </div>
         <div>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody>
               <div className="d-flex justify-content-between align-items-center">
                 <h5 className="fw-bold mb-1">First Time Buyer Tips</h5>
@@ -24,7 +24,7 @@ const PostTemplates: React.FC = () => {
               </small>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody>
               <div className="d-flex justify-content-between align-items-center">
                 <h5 className="fw-bold mb-1">Remortgage Reminder</h5>
@@ -39,7 +39,7 @@ const PostTemplates: React.FC = () => {
               </small>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody>
               <div className="d-flex justify-content-between align-items-center">
                 <h5 className="fw-bold mb-1">Client Success Story</h5>

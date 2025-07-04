@@ -5,7 +5,7 @@ const PerformanceOverview: React.FC = () => {
   return (
     <Row className="py-2">
       <Col sm="6" xl="3">
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow">
           <CardBody>
             <div className="d-flex justify-content-between align-items-start mb-2">
               <span className="text-muted small fw-bold">
@@ -21,7 +21,7 @@ const PerformanceOverview: React.FC = () => {
       </Col>
 
       <Col sm="6" xl="3">
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow">
           <CardBody>
             <div className="d-flex justify-content-between align-items-start mb-2">
               <span className="text-muted small fw-bold">Total loan value</span>
@@ -35,7 +35,7 @@ const PerformanceOverview: React.FC = () => {
       </Col>
 
       <Col sm="6" xl="3">
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow">
           <CardBody>
             <div className="d-flex justify-content-between align-items-start mb-2">
               <span className="text-muted small fw-bold">Total Revenue</span>
@@ -47,7 +47,7 @@ const PerformanceOverview: React.FC = () => {
       </Col>
 
       <Col sm="6" xl="3">
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow">
           <CardBody>
             <div className="d-flex justify-content-between align-items-start mb-2">
               <span className="text-muted small fw-bold">

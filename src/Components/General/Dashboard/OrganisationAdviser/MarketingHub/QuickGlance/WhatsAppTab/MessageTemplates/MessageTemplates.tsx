@@ -3,7 +3,7 @@ import { Badge, Button, Card, CardBody } from "reactstrap";
 
 const MessageTemplates: React.FC = () => {
   return (
-    <Card className="rounded-3">
+    <Card>
       <CardBody>
         <div className="mb-3">
           <h3>
@@ -13,7 +13,7 @@ const MessageTemplates: React.FC = () => {
           <small>Pre-built templates for common mortgage scenarios</small>
         </div>
         <div>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody>
               <div className="d-flex justify-content-between mb-2">
                 <h5 className="fw-semibold">New Mortgage Offer</h5>
@@ -28,7 +28,7 @@ const MessageTemplates: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody>
               <div className="d-flex justify-content-between mb-2">
                 <h5 className="fw-semibold">Appointment Reminder</h5>
@@ -44,7 +44,7 @@ const MessageTemplates: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody>
               <div className="d-flex justify-content-between mb-2">
                 <h5 className="fw-semibold">Annual Remortgage Review</h5>
@@ -59,7 +59,7 @@ const MessageTemplates: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody>
               <div className="d-flex justify-content-between mb-2">
                 <h5 className="fw-semibold">Document Request</h5>

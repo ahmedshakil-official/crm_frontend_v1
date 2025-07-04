@@ -28,7 +28,7 @@ const ScheduleSocialPost: React.FC = () => {
   };
 
   return (
-    <Card className="rounded-3">
+    <Card>
       <CardBody>
         <div className="mb-3">
           <h3>

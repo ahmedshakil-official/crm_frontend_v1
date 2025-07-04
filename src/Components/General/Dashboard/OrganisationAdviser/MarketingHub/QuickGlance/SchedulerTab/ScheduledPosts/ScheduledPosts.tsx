@@ -8,14 +8,14 @@ import { Button, Card, CardBody } from "reactstrap";
 
 const ScheduledPosts: React.FC = () => {
   return (
-    <Card className="rounded-3">
+    <Card>
       <CardBody className="pb-0">
         <div className="mb-3">
           <h3>Scheduled posts</h3>
           <small>Manage your upcoming and published posts</small>
         </div>
         <div>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div>
                 <p className="mb-0 text-truncate">
@@ -46,7 +46,7 @@ const ScheduledPosts: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div>
                 <p className="mb-0 text-truncate">
@@ -77,7 +77,7 @@ const ScheduledPosts: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div>
                 <p className="mb-0 text-truncate">

@@ -66,27 +66,33 @@ const Documents: React.FC = () => {
   return (
     <Col sm="12" className="box-col-12">
       <Card>
-        <CardHeader className="d-flex justify-content-between">
-          <Col md="3">
-            <h3>Documents</h3>
-          </Col>
-          <Col md="5" xs="12" className="d-flex justify-content-end gap-2">
-            <Button color="success" onClick={toggleFilterIcon}>
-              {filterIcon ? (
-                <i className="fa-solid fa-filter-circle-xmark"></i>
-              ) : (
-                <i className="fa-solid fa-filter"></i>
-              )}
-            </Button>
-            <Button color="primary" onClick={toggleModal}>
-              Upload Document
-              <i className="fa-regular fa-circle-up ms-1"></i>
-            </Button>
-            <Button>
-              OCR Upload
-              <i className="fa-solid fa-eye ms-1"></i>
-            </Button>
-          </Col>
+        <CardHeader>
+          <Row>
+            <Col lg="3" sm="12">
+              <h3>Documents</h3>
+            </Col>
+            <Col
+              lg="9"
+              sm="12"
+              className="d-flex flex-md-row flex-xs-column justify-content-end gap-2"
+            >
+              <Button color="success" onClick={toggleFilterIcon}>
+                {filterIcon ? (
+                  <i className="fa-solid fa-filter-circle-xmark"></i>
+                ) : (
+                  <i className="fa-solid fa-filter"></i>
+                )}
+              </Button>
+              <Button color="primary" onClick={toggleModal}>
+                Upload Document
+                <i className="fa-regular fa-circle-up ms-1"></i>
+              </Button>
+              <Button>
+                OCR Upload
+                <i className="fa-solid fa-eye ms-1"></i>
+              </Button>
+            </Col>
+          </Row>
         </CardHeader>
 
         <CardBody>

@@ -2,7 +2,7 @@ import { Badge, Button, Card, CardBody, Col, Progress, Row } from "reactstrap";
 
 const ActiveCampaigns: React.FC = () => {
   return (
-    <Card className="rounded-3">
+    <Card>
       <CardBody>
         <div className="mb-3">
           <h3>Active Campaigns</h3>
@@ -12,7 +12,7 @@ const ActiveCampaigns: React.FC = () => {
         </div>
         <div>
           {/* 1st card  */}
-          <Card className="rounded-3 shadow">
+          <Card className="shadow">
             <CardBody>
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <div className="d-flex gap-2">
@@ -106,7 +106,7 @@ const ActiveCampaigns: React.FC = () => {
             </CardBody>
           </Card>
           {/* 2nd card  */}
-          <Card className="rounded-3 shadow">
+          <Card className="shadow">
             <CardBody>
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <div className="d-flex gap-2">
@@ -200,7 +200,7 @@ const ActiveCampaigns: React.FC = () => {
             </CardBody>
           </Card>
           {/* 3rd card  */}
-          <Card className="rounded-3 shadow mb-2">
+          <Card className="shadow mb-2">
             <CardBody>
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <div className="d-flex gap-2">
