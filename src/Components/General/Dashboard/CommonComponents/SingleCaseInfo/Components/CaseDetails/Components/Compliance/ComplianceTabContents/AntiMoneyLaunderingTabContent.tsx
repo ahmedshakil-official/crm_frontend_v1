@@ -93,7 +93,7 @@ const AntiMoneyLaunderingTabContent: FC = () => {
   };
 
   return (
-    <div className="p-3">
+    <div>
       {amlData.map((item, index) => (
         <DisclosureItem
           key={item.reference}

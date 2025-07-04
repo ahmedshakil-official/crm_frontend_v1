@@ -236,7 +236,7 @@ const MandatoryDocumentationTabContent: FC = () => {
   };
 
   return (
-    <div className="p-3">
+    <div>
       {mandatoryDocData.map((item, index) => (
         <DisclosureItem
           key={item.reference}

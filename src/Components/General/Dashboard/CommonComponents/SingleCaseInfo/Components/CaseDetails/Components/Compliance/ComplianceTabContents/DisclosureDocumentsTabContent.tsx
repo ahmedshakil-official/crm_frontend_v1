@@ -79,7 +79,7 @@ const DisclosureDocumentsTabContent: FC = () => {
   };
 
   return (
-    <div className="p-3">
+    <div>
       {disclosureData.map((item, index) => (
         <DisclosureItem
           key={item.reference}

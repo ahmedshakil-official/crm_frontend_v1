@@ -422,7 +422,7 @@ const ComplianceSuitabilityTabContent: FC = () => {
   };
 
   return (
-    <div className="p-3">
+    <div>
       {suitabilityData.map((item, index) => (
         <DisclosureItem
           key={item.reference}

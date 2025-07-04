@@ -98,7 +98,7 @@ const ComplianceApplicationTabContent: FC = () => {
     );
   };
   return (
-    <div className="p-3">
+    <div>
       {applicationData.map((item, index) => (
         <DisclosureItem
           key={item.reference}

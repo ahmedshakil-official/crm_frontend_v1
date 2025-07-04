@@ -1,8 +1,8 @@
-import LoadingSpinner from "@/app/loading";
 import { useGetFeesInDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Fees/FeesApi";
+import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Row, Table } from "reactstrap";
+import { Button, Col, Row, Table } from "reactstrap";
 import AddFeeInModal from "./FeesModals/AddFeeInModal";
 
 const FeeInTable = () => {
@@ -83,7 +83,7 @@ const FeeInTable = () => {
     );
 
   return (
-    <Container fluid className="panel-body">
+    <>
       <Row className="mb-3">
         <Col sm={12} className="d-flex justify-content-end align-items-center">
           <Button
@@ -189,7 +189,7 @@ const FeeInTable = () => {
           </div>
         </Col>
       </Row>
-    </Container>
+    </>
   );
 };
 
