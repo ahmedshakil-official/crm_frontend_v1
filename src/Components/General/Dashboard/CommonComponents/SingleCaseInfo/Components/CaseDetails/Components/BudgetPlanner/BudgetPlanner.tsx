@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Button, Input } from "reactstrap";
-import BudgetPlannerModal from "./BudgetPlannerModals/BudgetPlannerModal";
-import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import { Button, Input } from "reactstrap";
+import BudgetPlannerModal from "./BudgetPlannerModals/BudgetPlannerModal";
 
 const BudgetPlanner: React.FC = () => {
   const params = useParams();
@@ -39,10 +39,12 @@ const BudgetPlanner: React.FC = () => {
           Complete Budget Planner
         </Button>
         <Input type="textarea" placeholder="Enter notes..." rows={4} />
-        <div className="mt-auto d-flex justify-content-end w-100 gap-3">
-          <Button color="success">Save</Button>
-          <Button color="primary" onClick={handleNextTab}>
-            Next
+        <div className="mt-auto d-flex justify-content-end w-100 gap-2">
+          <Button color="primary" disabled>
+            Save Changes
+          </Button>
+          <Button color="secondary" onClick={handleNextTab}>
+            Save & Next
           </Button>
         </div>
       </div>

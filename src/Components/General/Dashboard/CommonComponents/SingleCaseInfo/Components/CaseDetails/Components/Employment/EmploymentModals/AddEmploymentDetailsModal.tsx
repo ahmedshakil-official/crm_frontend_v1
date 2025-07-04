@@ -1185,7 +1185,7 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
             </>
           )}
           <Row>
-            <Col className="d-flex justify-content-end gap-3 pt-3">
+            <Col className="d-flex justify-content-end gap-2 pt-3">
               <Button color="secondary" onClick={toggle}>
                 Cancel
               </Button>

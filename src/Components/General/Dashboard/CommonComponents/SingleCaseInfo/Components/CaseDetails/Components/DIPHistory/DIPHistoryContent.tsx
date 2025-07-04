@@ -1,14 +1,14 @@
-import LoadingSpinner from "@/app/loading";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useUpdateDIPHistoryDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+import LoadingSpinner from "@/app/loading";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import AddNewLenderHistoryModal from "./Modals/AddNewLenderHistoryModal";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -375,10 +375,9 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
             </>
           )}
           <Row>
-            <Col className="mt-4 d-flex justify-content-between align-items-center">
+            <Col className="mt-4 d-flex justify-content-end align-items-center gap-2">
               <Button
-                color="secondary"
-                className="me-2"
+                color="success"
                 onClick={() => setModalIsOpen(true)}
                 type="button"
               >

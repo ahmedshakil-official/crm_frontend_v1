@@ -40,7 +40,7 @@ const FeesTab: FC = () => {
   };
 
   return (
-    <Col xxl="12" className="px-5">
+    <Col xxl="12">
       <Card>
         <CardBody>
           <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-2 pb-2 p-0">
@@ -61,11 +61,11 @@ const FeesTab: FC = () => {
               ))}
             </Nav>
           </CardHeader>
-          <CardBody className="px-0 pb-0">
+          <CardBody className="pxd-0 pbd-0">
             <FeesTabContent tabId={basicTab} setTabId={setBasicTab} />
-            <div className="d-flex justify-content-end">
-              <Button color="primary" className="mt-3" onClick={handleNextTab}>
-                Next
+            <div className="d-flex justify-content-end px-4">
+              <Button color="secondary" className="mt-3" onClick={handleNextTab}>
+                Save & Next
               </Button>
             </div>
           </CardBody>

@@ -1,10 +1,14 @@
-import LoadingSpinner from "@/app/loading";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   useAssignCaseSolicitorMutation,
   useGetCaseSolicitorDetailsQuery,
   useGetSolicitorDetailsQuery,
   useUpdateSolicitorDetailsMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
+import LoadingSpinner from "@/app/loading";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -25,10 +29,6 @@ import {
 } from "reactstrap";
 import Swal from "sweetalert2";
 import AddSolicitorModal from "../Modals/AddSolicitorModal";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const Solicitor: React.FC = () => {
   const params = useParams();
@@ -498,7 +498,7 @@ const Solicitor: React.FC = () => {
                     color="primary"
                     disabled={isUpdateLoading}
                   >
-                    Update Solicitor Info
+                    {isUpdateLoading ? "Saving..." : "Save Changes"}
                   </Button>
                   <Button
                     color="secondary"

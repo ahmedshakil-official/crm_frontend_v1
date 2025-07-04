@@ -16,18 +16,18 @@ import {
   Row,
 } from "reactstrap";
 
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   useAssignCaseAccountantMutation,
   useGetAccountantDetailsQuery,
   useGetCaseAccountantDetailsQuery,
   useUpdateAccountantDetailsMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import Swal from "sweetalert2";
 import AddAccountantModal from "../Modals/AddAccountantModal";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const Accountant: React.FC = () => {
   const params = useParams();
@@ -437,7 +437,7 @@ const Accountant: React.FC = () => {
               <Col md={12}>
                 <FormGroup className="d-flex justify-content-end gap-3">
                   <Button color="primary" onClick={handleUpdateAccountant}>
-                    Update Accountant Info
+                    {isUpdatingLoading ? "Saving..." : "Save Changes"}
                   </Button>
                   <Button
                     color="secondary"

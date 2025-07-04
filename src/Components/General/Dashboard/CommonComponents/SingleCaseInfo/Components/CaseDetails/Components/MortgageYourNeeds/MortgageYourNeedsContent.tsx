@@ -54,7 +54,9 @@ const MortgageYourNeedsContent: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
+  ) => {
     e.preventDefault();
     const formValues = {
       repayment_method: formData.repayment_method,
@@ -1628,9 +1630,9 @@ const MortgageYourNeedsContent: React.FC = () => {
               />
             </FormGroup>
 
-            <div className="d-flex justify-content-end gap-3 mt-3">
+            <div className="d-flex justify-content-end gap-2 mt-3">
               <Button color="primary" disabled={isUpdating}>
-                {isUpdating ? "Saving..." : "Save Mortgage Needs"}
+                {isUpdating ? "Saving..." : "Save Changes"}
               </Button>
               <Button
                 color="secondary"
