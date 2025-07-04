@@ -146,7 +146,7 @@ const SocialMediaInbox: React.FC = () => {
                       </div>
                       <div className="flex-grow-1">
                         <div className="d-flex justify-content-between align-items-center">
-                          <span style={{ fontWeight: 600 }}>{conv.name}</span>
+                          <span className="fw-semibold">{conv.name}</span>
                           <small className="text-muted">{conv.time}</small>
                         </div>
                         <div className="small">{conv.message}</div>
