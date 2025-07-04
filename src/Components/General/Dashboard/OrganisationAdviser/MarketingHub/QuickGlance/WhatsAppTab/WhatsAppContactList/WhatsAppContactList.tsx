@@ -3,7 +3,7 @@ import { Badge, Button, Card, CardBody } from "reactstrap";
 
 const WhatsAppContactList: React.FC = () => {
   return (
-    <Card className="rounded-3">
+    <Card>
       <CardBody>
         <div className="mb-3">
           <h3>
@@ -12,7 +12,7 @@ const WhatsAppContactList: React.FC = () => {
           <small>Manage your CRM contacts for WhatsApp marketing</small>
         </div>
         <div>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div className="d-flex gap-2">
                 <div>
@@ -33,7 +33,7 @@ const WhatsAppContactList: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div className="d-flex gap-2">
                 <div>
@@ -54,7 +54,7 @@ const WhatsAppContactList: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div className="d-flex gap-2">
                 <div>
@@ -75,7 +75,7 @@ const WhatsAppContactList: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div className="d-flex gap-2">
                 <div>
@@ -96,7 +96,9 @@ const WhatsAppContactList: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Button outline color="primary" className="w-100">Import from CRM</Button>
+          <Button outline color="primary" className="w-100">
+            Import from CRM
+          </Button>
         </div>
       </CardBody>
     </Card>

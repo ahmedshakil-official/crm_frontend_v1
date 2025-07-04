@@ -6,7 +6,7 @@ const MarketingHubOverview: React.FC = () => {
   return (
     <Row>
       <Col>
-        <Card className="rounded-3">
+        <Card>
           <CardHeader className="text-end">
             <Button color="primary">
               New Campaign <i className="fa-solid fa-circle-plus ms-1"></i>
@@ -15,7 +15,7 @@ const MarketingHubOverview: React.FC = () => {
           <CardBody className="pb-0">
             <Row className="g-3">
               <Col md={3}>
-                <Card className="border-0 shadow rounded-3">
+                <Card className="border-0 shadow">
                   <CardBody className="d-flex justify-content-between">
                     <div>
                       <h6 className="text-muted">Active Campaigns</h6>
@@ -36,7 +36,7 @@ const MarketingHubOverview: React.FC = () => {
                 </Card>
               </Col>
               <Col md={3}>
-                <Card className="border-0 shadow rounded-3">
+                <Card className="border-0 shadow">
                   <CardBody className="d-flex justify-content-between">
                     <div>
                       <h6 className="text-muted">WhatsApp Messages</h6>
@@ -57,7 +57,7 @@ const MarketingHubOverview: React.FC = () => {
                 </Card>
               </Col>
               <Col md={3}>
-                <Card className="border-0 shadow rounded-3">
+                <Card className="border-0 shadow">
                   <CardBody className="d-flex justify-content-between">
                     <div>
                       <h6 className="text-muted">Scheduled Posts</h6>
@@ -78,7 +78,7 @@ const MarketingHubOverview: React.FC = () => {
                 </Card>
               </Col>
               <Col md={3}>
-                <Card className="border-0 shadow rounded-3">
+                <Card className="border-0 shadow">
                   <CardBody className="d-flex justify-content-between">
                     <div>
                       <h6 className="text-muted">New Leads</h6>

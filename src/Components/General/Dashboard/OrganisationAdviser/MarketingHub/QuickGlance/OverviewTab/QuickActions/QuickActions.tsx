@@ -4,7 +4,7 @@ import { Button, Card, CardBody } from "reactstrap";
 
 const QuickActions: React.FC = () => {
   return (
-    <Card className="rounded-3 border-0 shadow">
+    <Card className="border-0 shadow">
       <CardBody>
         <h3 className="mb-3 fw-bold">Quick Actions</h3>
         <Button

@@ -3,7 +3,7 @@ import { Badge, Button, Card, CardBody } from "reactstrap";
 
 const TeamPermissions: React.FC = () => {
   return (
-    <Card className="rounded-3">
+    <Card>
       <CardBody className="pb-0">
         <div>
           <h3>

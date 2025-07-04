@@ -25,7 +25,7 @@ const LeadAdCampaigns: React.FC = () => {
       <div>
         <Row>
           <Col md="3">
-            <Card className="rounded-3 shadow">
+            <Card className="shadow">
               <CardBody className="d-flex justify-content-between p-2">
                 <div>
                   <p className="mb-1">Total Leads</p>
@@ -44,7 +44,7 @@ const LeadAdCampaigns: React.FC = () => {
             </Card>
           </Col>
           <Col md="3">
-            <Card className="rounded-3 shadow">
+            <Card className="shadow">
               <CardBody className="d-flex justify-content-between p-2">
                 <div>
                   <p className="mb-1">Total Spent</p>
@@ -63,7 +63,7 @@ const LeadAdCampaigns: React.FC = () => {
             </Card>
           </Col>
           <Col md="3">
-            <Card className="rounded-3 shadow">
+            <Card className="shadow">
               <CardBody className="d-flex justify-content-between p-2">
                 <div>
                   <p className="mb-1">Avg Cost Per Lead</p>
@@ -82,7 +82,7 @@ const LeadAdCampaigns: React.FC = () => {
             </Card>
           </Col>
           <Col md="3">
-            <Card className="rounded-3 shadow">
+            <Card className="shadow">
               <CardBody className="d-flex justify-content-between p-2">
                 <div>
                   <p className="mb-1">Conversion Rate</p>

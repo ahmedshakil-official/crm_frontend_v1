@@ -11,7 +11,7 @@ const PlatformConnections: React.FC = () => {
   return (
     <Row>
       <Col>
-        <Card className="border-0 shadow-sm rounded-3">
+        <Card className="border-0 shadow-sm">
           <div className="p-3">
             <h3 className="d-flex align-items-center">
               <TbArrowUp className="me-2" />
@@ -24,7 +24,7 @@ const PlatformConnections: React.FC = () => {
           <div className="p-3 pb-0">
             <Row className="g-3">
               <Col md={3}>
-                <Card className="border-0 rounded-3 px-2 py-3 shadow ">
+                <Card className="border-0 px-2 py-3 shadow ">
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center">
                       <TbBrandFacebook className="me-1 fs-5" />
@@ -40,7 +40,7 @@ const PlatformConnections: React.FC = () => {
                 </Card>
               </Col>
               <Col md={3}>
-                <Card className="border-0 rounded-3 px-2 py-3 shadow">
+                <Card className="border-0 px-2 py-3 shadow">
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center">
                       <TbBrandInstagram className="me-1 fs-5" />
@@ -56,7 +56,7 @@ const PlatformConnections: React.FC = () => {
                 </Card>
               </Col>
               <Col md={3}>
-                <Card className="border-0 rounded-3 px-2 py-3 shadow ">
+                <Card className="border-0 px-2 py-3 shadow ">
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center">
                       <TbBrandLinkedin className="me-1 fs-5" />
@@ -72,7 +72,7 @@ const PlatformConnections: React.FC = () => {
                 </Card>
               </Col>
               <Col md={3}>
-                <Card className="border-0 rounded-3 px-2 py-3 shadow">
+                <Card className="border-0 px-2 py-3 shadow">
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center">
                       <TbBrandTwitter className="me-1 fs-5" />

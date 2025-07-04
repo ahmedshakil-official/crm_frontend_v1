@@ -3,7 +3,7 @@ import { Badge, Card, CardBody } from "reactstrap";
 
 const CampaignHistory: React.FC = () => {
   return (
-    <Card className="rounded-3">
+    <Card>
       <CardBody>
         <div className="mb-3">
           <h3>
@@ -12,7 +12,7 @@ const CampaignHistory: React.FC = () => {
           <small>Track performance of your WhatsApp campaigns</small>
         </div>
         <div>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div className="d-flex gap-2">
                 <div>
@@ -36,7 +36,7 @@ const CampaignHistory: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div className="d-flex gap-2">
                 <div>
@@ -60,7 +60,7 @@ const CampaignHistory: React.FC = () => {
               </div>
             </CardBody>
           </Card>
-          <Card className="shadow rounded-3">
+          <Card className="shadow">
             <CardBody className="d-flex justify-content-between">
               <div className="d-flex gap-2">
                 <div>
