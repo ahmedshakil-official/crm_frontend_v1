@@ -114,7 +114,7 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
             className="px-4"
             onClick={handleSubmit}
           >
-            {isLoading ? "Updating..." : "Save Changes"}
+            {isLoading ? "Saving..." : "Save Changes"}
           </Button>
           <Button
             type="submit"

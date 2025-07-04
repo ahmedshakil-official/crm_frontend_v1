@@ -660,7 +660,7 @@ const ExistingProtectionContent: React.FC<
               )}
             </CardBody>
           </Card>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-end gap-2">
             {formValues?.have_any_existing_Protection_policies_in_place && (
               <Button color="secondary" onClick={toggleModal}>
                 Add new

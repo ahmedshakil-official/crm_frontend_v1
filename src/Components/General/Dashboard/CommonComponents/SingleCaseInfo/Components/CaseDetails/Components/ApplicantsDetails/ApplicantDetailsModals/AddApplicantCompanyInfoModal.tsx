@@ -109,10 +109,10 @@ const AddCompanyDetailsFormModal: React.FC<AddCompanyDetailsFormModalProps> = ({
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="xl">
       <ModalHeader toggle={toggle}>
-        <p className=" fs-2 text-primary fw-bold">Company Applicant</p>
+        <h2 className="text-primary fw-bold">Company Applicant</h2>
       </ModalHeader>
       <ModalBody>
-        <Form onSubmit={handleSubmit} className="p-4 border rounded">
+        <Form onSubmit={handleSubmit} className="p-2">
           <Row>
             <Col md={6}>
               <FormGroup>
@@ -234,7 +234,7 @@ const AddCompanyDetailsFormModal: React.FC<AddCompanyDetailsFormModalProps> = ({
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
+            <Col md={5}>
               <FormGroup>
                 <Label className="small">Address Line 1</Label>
                 <Input
@@ -245,44 +245,53 @@ const AddCompanyDetailsFormModal: React.FC<AddCompanyDetailsFormModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label className="small">City</Label>
-                <Input
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                />
-              </FormGroup>
+            <Col md={7}>
+              <Row>
+                <Col md="4">
+                  <FormGroup>
+                    <Label className="small">City</Label>
+                    <Input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="4">
+                  <FormGroup>
+                    <Label className="small">County</Label>
+                    <Input
+                      type="text"
+                      name="county"
+                      value={formData.county}
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="4">
+                  <FormGroup>
+                    <Label className="small">Country</Label>
+                    <Input
+                      type="text"
+                      name="country"
+                      value={formData.country}
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
-              <FormGroup>
-                <Label className="small">County</Label>
-                <Input
-                  type="text"
-                  name="county"
-                  value={formData.county}
-                  onChange={handleChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label className="small">Country</Label>
-                <Input
-                  type="text"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                />
-              </FormGroup>
-            </Col>
+            <Col md={6}></Col>
+            <Col md={6}></Col>
           </Row>
-          <div className="d-flex justify-content-end mt-4">
+          <div className="d-flex justify-content-end mt-4 gap-2">
             <div title={data?.[0] ? "Data already added" : ""}>
+              <Button color="warning" onClick={toggle} className="me-2">
+                Cancel
+              </Button>
               <Button color="primary" type="submit" disabled={!!data?.[0]}>
                 {isCompanyDetailsAdding ? "Adding..." : "Submit"}
               </Button>

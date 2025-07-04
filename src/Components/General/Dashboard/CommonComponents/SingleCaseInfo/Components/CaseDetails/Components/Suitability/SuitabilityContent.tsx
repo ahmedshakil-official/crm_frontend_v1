@@ -2416,7 +2416,7 @@ const SuitabilityContent: React.FC = () => {
         </Card>
 
         {/* Button for save changes */}
-        <div className="d-flex justify-content-end mt-3 mb-0 gap-3">
+        <div className="d-flex justify-content-end mt-3 mb-0 gap-2">
           <Button color="primary" type="submit" disabled={isUpdating}>
             {isUpdating ? "Saving..." : "Save Changes"}
           </Button>

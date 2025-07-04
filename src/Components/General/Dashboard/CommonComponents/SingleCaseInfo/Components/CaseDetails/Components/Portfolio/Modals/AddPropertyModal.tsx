@@ -120,7 +120,7 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Property</span>
       </ModalHeader>
-      <ModalBody className="px-5 py-4">
+      <ModalBody className="p-4">
         <Form onSubmit={handleSubmit}>
           <Row>
             <Col md={6}>

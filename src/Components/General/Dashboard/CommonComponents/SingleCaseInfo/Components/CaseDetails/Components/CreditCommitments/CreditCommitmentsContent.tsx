@@ -1,7 +1,12 @@
-import LoadingSpinner from "@/app/loading";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useGetCreditCommitmentsDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
+import LoadingSpinner from "@/app/loading";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -15,11 +20,6 @@ import {
 import AddCreditCommitmentModal from "./CreditCommitmentsModals/AddCreditCommitmentModal";
 import DeleteCreditCommitmentModal from "./CreditCommitmentsModals/DeleteCreditCommitmentModal";
 import UpdateCreditCommitmentModal from "./CreditCommitmentsModals/UpdateCreditCommitmentModal";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { toast } from "react-toastify";
 
 const CreditCommitmentsContent: React.FC = () => {
   const { casealias } = useParams();
@@ -119,12 +119,12 @@ const CreditCommitmentsContent: React.FC = () => {
     <Container>
       <Row>
         <Col lg="4" md="12">
-          <Card className="ecommerce-widget rounded-4">
-            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-primary">
+          <Card className="shadow">
+            <CardBody className="support-ticket-font pt-2 pb-3 border-3 rounded-3 border-b-primary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Balance</h4>
+                <h6 className="fw-bold fs-6">Total Balance</h6>
               </CardHeader>
-              <div className="d-flex justify-content-between align-items-center mt-2">
+              <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="text-primary h1">
                   <i className="fa-solid fa-sterling-sign"></i>
                 </span>
@@ -136,12 +136,12 @@ const CreditCommitmentsContent: React.FC = () => {
           </Card>
         </Col>
         <Col lg="4" md="12">
-          <Card className="ecommerce-widget rounded-4">
-            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-secondary">
+          <Card className="shadow">
+            <CardBody className="support-ticket-font pt-2 pb-3 border-3 rounded-3 border-b-secondary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Balance To Be Repaid</h4>
+                <h6 className="fw-bold">Total Balance To Be Repaid</h6>
               </CardHeader>
-              <div className="d-flex justify-content-between align-items-center mt-2">
+              <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="text-secondary h1">
                   <i className="fa-solid fa-sterling-sign"></i>
                 </span>
@@ -153,12 +153,12 @@ const CreditCommitmentsContent: React.FC = () => {
           </Card>
         </Col>
         <Col lg="4" md="12">
-          <Card className="ecommerce-widget rounded-4">
-            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-success">
+          <Card className="shadow">
+            <CardBody className="support-ticket-font pt-2 pb-3 border-3 rounded-3 border-b-success">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Balance To Remain</h4>
+                <h6 className="fw-bold">Total Balance To Remain</h6>
               </CardHeader>
-              <div className="d-flex justify-content-between align-items-center mt-2">
+              <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="text-success h1">
                   <i className="fa-solid fa-sterling-sign"></i>
                 </span>
@@ -173,12 +173,12 @@ const CreditCommitmentsContent: React.FC = () => {
       {/* 2nd row  */}
       <Row>
         <Col lg="4" md="12">
-          <Card className="ecommerce-widget rounded-4">
-            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-primary">
+          <Card className="shadow">
+            <CardBody className="support-ticket-font pt-2 pb-3 border-3 rounded-3 border-b-primary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Monthly Payment</h4>
+                <h6 className="fw-bold">Total Monthly Payment</h6>
               </CardHeader>
-              <div className="d-flex justify-content-between align-items-center mt-2">
+              <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="text-primary h1">
                   <i className="fa-solid fa-calendar-days"></i>
                 </span>
@@ -190,14 +190,12 @@ const CreditCommitmentsContent: React.FC = () => {
           </Card>
         </Col>
         <Col lg="4" md="12">
-          <Card className="ecommerce-widget rounded-4">
-            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-secondary">
+          <Card className="shadow">
+            <CardBody className="support-ticket-font pt-2 pb-3 border-3 rounded-3 border-b-secondary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">
-                  Total Monthly Payment To Be Repaid
-                </h4>
+                <h6 className="fw-bold">Total Monthly Payment To Be Repaid</h6>
               </CardHeader>
-              <div className="d-flex justify-content-between align-items-center mt-2">
+              <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="text-secondary h1">
                   <i className="fa-solid fa-calendar-days"></i>
                 </span>
@@ -209,14 +207,12 @@ const CreditCommitmentsContent: React.FC = () => {
           </Card>
         </Col>
         <Col lg="4" md="12">
-          <Card className="ecommerce-widget rounded-4">
-            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-success">
+          <Card className="shadow">
+            <CardBody className="support-ticket-font pt-2 pb-3 border-3 rounded-3 border-b-success">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">
-                  Total Monthly Payment To Remain
-                </h4>
+                <h6 className="fw-bold">Total Monthly Payment To Remain</h6>
               </CardHeader>
-              <div className="d-flex justify-content-between align-items-center mt-2">
+              <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="text-success h1">
                   <i className="fa-solid fa-calendar-days"></i>
                 </span>
@@ -231,12 +227,12 @@ const CreditCommitmentsContent: React.FC = () => {
       {/* 3r row  */}
       <Row>
         <Col lg="4" md="12">
-          <Card className="ecommerce-widget rounded-4">
-            <CardBody className="support-ticket-font pt-2  border-3 rounded-4 border-b-primary">
+          <Card className="shadow">
+            <CardBody className="support-ticket-font pt-2 pb-3 border-3 rounded-3 border-b-primary">
               <CardHeader className="pt-0 pb-1 m-0 text-center">
-                <h4 className="fw-bold fs-6">Total Settlement Balance</h4>
+                <h6 className="fw-bold">Total Settlement Balance</h6>
               </CardHeader>
-              <div className="d-flex justify-content-between align-items-center mt-2">
+              <div className="d-flex justify-content-between align-items-center mt-3">
                 <span className="text-primary h1">
                   <i className="fa-solid fa-sterling-sign"></i>
                 </span>
@@ -419,12 +415,12 @@ const CreditCommitmentsContent: React.FC = () => {
       <div className=" mt-3 d-flex justify-content-end">
         <Button
           type="submit"
-          color="primary"
+          color="secondary"
           onClick={() => {
             handleNextTab();
           }}
         >
-          Next
+          Save & Next
         </Button>
       </div>
       {/* modals start */}

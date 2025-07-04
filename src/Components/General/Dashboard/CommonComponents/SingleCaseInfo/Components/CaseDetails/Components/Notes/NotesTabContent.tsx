@@ -62,12 +62,12 @@ export const NotesTabContent: React.FC<NotesTabContentProps> = ({
           <div className=" d-flex justify-content-end">
             <Button
               type="submit"
-              color="primary"
+              color="secondary"
               onClick={(e) => {
                 handleNextTab();
               }}
             >
-              Next
+              Save & Next
             </Button>
           </div>
         </TabPane>

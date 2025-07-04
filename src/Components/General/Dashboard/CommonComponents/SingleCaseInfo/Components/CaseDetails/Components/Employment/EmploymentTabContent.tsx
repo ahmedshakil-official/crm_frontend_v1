@@ -1208,12 +1208,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
         <Row>
           <Col className="d-flex justify-content-between pt-3">
             <Button
-              color="secondary"
+              color="success"
               onClick={() => setAddEmploymentModalOpen(true)}
             >
               Add New
             </Button>
-            <div className=" d-flex justify-content-end gap-3">
+            <div className=" d-flex justify-content-end gap-2">
               <Button color="primary" type="submit">
                 {isUpdateEmploymentDetailsLoading
                   ? "Saving..."

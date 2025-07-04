@@ -1,8 +1,13 @@
-import LoadingSpinner from "@/app/loading";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Portfolio/PortfolioApi";
+import LoadingSpinner from "@/app/loading";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { formatDateToDMY } from "@/utils/dateAndTimeFormatter";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -15,11 +20,6 @@ import {
 } from "reactstrap";
 import AddPropertyModal from "./Modals/AddPropertyModal";
 import PortfolioSummary from "./PortfolioSummary";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { toast } from "react-toastify";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 
 const PortfolioContent: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -266,12 +266,12 @@ const PortfolioContent: React.FC = () => {
         <div className=" d-flex justify-content-end">
           <Button
             type="submit"
-            color="primary"
+            color="secondary"
             onClick={(e) => {
               handleNextTab();
             }}
           >
-            Next
+            Save & Next
           </Button>
         </div>
       </Container>
