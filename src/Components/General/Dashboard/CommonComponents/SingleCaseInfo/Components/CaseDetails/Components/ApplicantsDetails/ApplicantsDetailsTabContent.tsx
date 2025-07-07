@@ -1,8 +1,13 @@
 "use client";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { ApplicantProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
 import { ApplicantsUsersProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsUserTypes";
+import LoadingSpinner from "@/app/loading";
 import { countries } from "@/utils/Countries";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,17 +19,14 @@ import {
   Form,
   FormGroup,
   Input,
+  InputGroup,
+  InputGroupText,
   Label,
   Row,
 } from "reactstrap";
 import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/AddApplicantCompanyInfoModal";
 import AddDependantFormModal from "./ApplicantDetailsModals/AddApplicantDependantsModal";
 import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { useAppSelector, useAppDispatch } from "@/Redux/Hooks";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import LoadingSpinner from "@/app/loading";
 
 const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   applicantsData,
@@ -131,6 +133,31 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     }
   }, [selectedApplicant]);
 
+  useEffect(() => {
+    // Calculate years and months when effective_from date changes
+    if (formValues.effective_from) {
+      const effectiveDate = new Date(formValues.effective_from);
+      const today = new Date();
+
+      // Calculate the difference in milliseconds
+      const diffTime = Math.abs(today.getTime() - effectiveDate.getTime());
+
+      // Calculate total months between the two dates
+      const totalMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30.44)); // Average days in a month
+
+      // Calculate years and remaining months
+      const years = Math.floor(totalMonths / 12);
+      const months = totalMonths % 12;
+
+      // Update the form values
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        time_at_address_years: years,
+        time_at_address_months: months,
+      }));
+    }
+  }, [formValues.effective_from]);
+
   if (!selectedApplicant) {
     return <div>No applicant data available.</div>;
   }
@@ -162,7 +189,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       setIsLoading(false);
     }
   };
-  
+
   const handleNextTab = () => {
     const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
     if (nextTabNav) {
@@ -831,24 +858,36 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             <Col md={6}>
               <Label for="time_at_address">Time at this Address</Label>
               <FormGroup className="d-flex justify-content-center align-items-center gap-3">
-                <Input
-                  id="time_at_address_years"
-                  type="number"
-                  placeholder="Years"
-                  value={formValues.time_at_address_years || ""}
-                  onChange={(e) =>
-                    handleInputChange("time_at_address_years", e.target.value)
-                  }
-                />
-                <Input
-                  id="time_at_address"
-                  type="number"
-                  placeholder="Months"
-                  value={formValues.time_at_address_months || ""}
-                  onChange={(e) =>
-                    handleInputChange("time_at_address_months", e.target.value)
-                  }
-                />
+                <InputGroup>
+                  <Input
+                    id="time_at_address_years"
+                    type="number"
+                    placeholder="Years"
+                    readOnly
+                    value={formValues.time_at_address_years || ""}
+                    onChange={(e) =>
+                      handleInputChange("time_at_address_years", e.target.value)
+                    }
+                  />
+                  <InputGroupText>Years</InputGroupText>
+                </InputGroup>
+
+                <InputGroup>
+                  <Input
+                    id="time_at_address"
+                    type="number"
+                    placeholder="Months"
+                    readOnly
+                    value={formValues.time_at_address_months || ""}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "time_at_address_months",
+                        e.target.value
+                      )
+                    }
+                  />
+                  <InputGroupText>Months</InputGroupText>
+                </InputGroup>
               </FormGroup>
             </Col>
           </Row>
