@@ -1,9 +1,10 @@
 import { Col, Row } from "reactstrap";
+import CampaignROIDistribution from "./CampaignROIDistribution/CampaignROIDistribution";
 import LeadConversionFunnel from "./LeadConversionFunnel/LeadConversionFunnel";
 import MarketingAnalyticsOverview from "./MarketingAnalyticsOverview/MarketingAnalyticsOverview";
+import PlatformPerformanceSummary from "./PlatformPerformanceSummary/PlatformPerformanceSummary";
 import SocialMediaPerformance from "./SocialMediaPerformance/SocialMediaPerformance";
 import WhatsAppCampaignPerformance from "./WhatsAppCampaignPerformance/WhatsAppCampaignPerformance";
-import CampaignROIDistribution from "./CampaignROIDistribution/CampaignROIDistribution";
 
 const AnalyticsTab: React.FC = () => {
   return (
@@ -27,6 +28,11 @@ const AnalyticsTab: React.FC = () => {
         </Col>
         <Col md="6" sm="12">
           <CampaignROIDistribution />
+        </Col>
+      </Row>
+      <Row>
+        <Col md="12">
+          <PlatformPerformanceSummary />
         </Col>
       </Row>
     </>

@@ -27,7 +27,7 @@ const SocialMediaPerformance: React.FC = () => {
   return (
     <Card>
       <CardBody>
-        <h2>Social Media Performance</h2>
+        <h3>Social Media Performance</h3>
         <p>Engagement, reach, and leads by platform</p>
         <Chart
           chartType="ColumnChart"

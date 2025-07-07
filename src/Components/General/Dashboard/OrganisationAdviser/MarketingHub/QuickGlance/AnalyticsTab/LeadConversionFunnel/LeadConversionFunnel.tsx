@@ -28,7 +28,7 @@ const LeadConversionFunnel: React.FC = () => {
   return (
     <Card>
       <CardBody>
-        <h2>Lead Conversion Funnel</h2>
+        <h3>Lead Conversion Funnel</h3>
         <p>Track leads through to mortgage completions</p>
         <Chart
           chartType="AreaChart"

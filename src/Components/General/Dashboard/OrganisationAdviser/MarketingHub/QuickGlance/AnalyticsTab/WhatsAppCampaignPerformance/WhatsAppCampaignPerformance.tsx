@@ -29,7 +29,7 @@ const WhatsAppCampaignPerformance: React.FC = () => {
   return (
     <Card>
       <CardBody>
-        <h2>WhatsApp Campaign Performance</h2>
+        <h3>WhatsApp Campaign Performance</h3>
         <p>Message delivery and engagement rates</p>
         <Chart
           chartType="LineChart"

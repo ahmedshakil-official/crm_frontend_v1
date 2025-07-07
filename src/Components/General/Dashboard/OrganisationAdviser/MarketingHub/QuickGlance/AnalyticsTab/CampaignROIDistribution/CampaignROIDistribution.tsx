@@ -52,7 +52,7 @@ const options = {
 const CampaignROIDistribution: React.FC = () => (
   <Card>
     <CardBody>
-      <h2>Campaign ROI Distribution</h2>
+      <h3>Campaign ROI Distribution</h3>
       <p>Return on investment by marketing channel</p>
       <Chart
         options={options as ApexCharts.ApexOptions}
