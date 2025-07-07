@@ -8,6 +8,7 @@ import {
   TbSettings,
 } from "react-icons/tb";
 import { Card, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
+import AnalyticsTab from "./AnalyticsTab/AnalyticsTab";
 import CampaignsTab from "./CampaignsTab/CampaignsTab";
 import InboxTab from "./InboxTab/InboxTab";
 import IntegrationsTab from "./IntegrationsTab/IntegrationsTab";
@@ -16,7 +17,6 @@ import SchedulerTab from "./SchedulerTab/SchedulerTab";
 import WhatsAppTab from "./WhatsAppTab/WhatsAppTab";
 
 // Placeholder components for other tabs (replace with actual components as needed)
-const AnalyticsTab = () => <div>Analytics Tab Content</div>;
 const LibraryTab = () => <div>Library Tab Content</div>;
 
 const QuickGlanceTabs: React.FC = () => {
