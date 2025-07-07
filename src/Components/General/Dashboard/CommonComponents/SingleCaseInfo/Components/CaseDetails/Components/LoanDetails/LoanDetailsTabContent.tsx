@@ -18,7 +18,10 @@ import LoanDetailsFormTab4 from "./LoanDetailsFormTabs/LoanDetailsFormTab4";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import {
+  basicTabIndicator,
+  isRequiredFilled,
+} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   tabId,
@@ -27,7 +30,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   const { data: session } = useSession();
   const { casealias } = useParams();
   const { data, isLoading, isError } = useGetCaseLoanDetailsQuery(casealias);
-  const dispatch=useAppDispatch();
+  const dispatch = useAppDispatch();
 
   // Ensure `data` exists and has elements before accessing `[0]`
   const loandetailsAlias =
@@ -41,10 +44,10 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     );
   const [updateLoanDetails, { isLoading: isUpdating }] =
     useUpdateLoanDetailsMutation();
-    const {
-      data: caseData,
-      isLoading: isCaseFetching,
-    } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
 
   // Initialize form states with default values
   const [formDataTab1, setFormDataTab1] = useState({
@@ -208,6 +211,23 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     }
   };
 
+  const isLoanRequiredFilled =
+    loandetailsData?.property_valuation > 0 &&
+    loandetailsData?.loan_amount > 0 &&
+    loandetailsData?.estimated_value > 0;
+    
+  // Dispatch required fields validation status when loan details data is available
+  useEffect(() => {
+    if (loandetailsData) {
+      dispatch(
+        isRequiredFilled({
+          requiredFilledTabId: "Loan Details",
+          isRequired: isLoanRequiredFilled,
+        })
+      );
+    }
+  }, [loandetailsData, isLoanRequiredFilled, dispatch]);
+  
   if (isLoading || isLoandetailsDataLoading)
     return (
       <div className=" d-flex justify-content-center">

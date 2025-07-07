@@ -23,9 +23,16 @@ import {
   NavLink,
 } from "reactstrap";
 import { CaseDetailsTabContent } from "./Components/CaseDetailsTabContent";
+import { TbCircleCheckFilled } from "react-icons/tb";
 
 const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
   const basicTab = useAppSelector((state: any) => state.caseDetails.basicTabId);
+  const isRequired = useAppSelector(
+    (state: any) => state.caseDetails.isRequired
+  );
+  const requiredFilledTabId = useAppSelector(
+    (state: any) => state.caseDetails.requiredFilledTabId
+  );
   const dispatch = useAppDispatch();
 
   // Map case stages to corresponding tab title data
@@ -79,14 +86,16 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
                 >
                   <NavLink
                     outline
-                    className={`${
-                      basicTab === item.nav ? "active" : ""
-                    } m-2 border border-success rounded p-3 text-center w-100`}
+                    className={`${basicTab === item.nav ? "active" : ""} 
+                     m-2 border d-flex justify-content-center  rounded p-3 text-center w-100`}
                     onClick={() => {
                       dispatch(basicTabIndicator(item.nav));
                     }}
                   >
                     {item.nav}
+                    {requiredFilledTabId === item.nav && isRequired && (
+                      <TbCircleCheckFilled size={18} className=" ms-1" />
+                    )}
                   </NavLink>
                 </NavItem>
               ))}
