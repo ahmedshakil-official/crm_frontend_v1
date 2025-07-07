@@ -66,7 +66,7 @@ const PlatformPerformanceSummary: React.FC = () => {
                   <td>{row.posts}</td>
                   <td>{row.reach}</td>
                   <td>{row.engagement}</td>
-                  <td>{row.leads}</td>
+                  <td className="fw-semibold text-success">{row.leads}</td>
                   <td>{row.costPerLead}</td>
                   <td>
                     <Badge className="bg-light-success">{row.roi}</Badge>{" "}
