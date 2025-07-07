@@ -1,5 +1,6 @@
 import { Container } from "reactstrap";
 import OrganisationAdviserBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import TasksAndCalendarTabs from "./TasksAndCalendarTabs/TasksAndCalendarTabs";
 import TasksAndRemindersOverview from "./TasksAndRemindersOverview/TasksAndRemindersOverview";
 
 const OrganisationAdviserTasksAndRemindersContainer: React.FC = () => {
@@ -12,6 +13,7 @@ const OrganisationAdviserTasksAndRemindersContainer: React.FC = () => {
       />
       <Container fluid>
         <TasksAndRemindersOverview />
+        <TasksAndCalendarTabs />
       </Container>
     </>
   );
