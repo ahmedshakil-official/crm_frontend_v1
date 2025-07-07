@@ -28,7 +28,7 @@ const QuickGlanceTabs: React.FC = () => {
     | "campaigns"
     | "inbox"
     | "analytics"
-    | "library"
+    // | "library"
   >("overview");
 
   const PillsTabNav = [
@@ -63,11 +63,11 @@ const QuickGlanceTabs: React.FC = () => {
       nav: "Analytics",
       icon: <TbGraph className="me-1" />,
     },
-    {
-      id: "library",
-      nav: "Library",
-      icon: <TbBooks className="me-1" />,
-    },
+    // {
+    //   id: "library",
+    //   nav: "Library",
+    //   icon: <TbBooks className="me-1" />,
+    // },
   ];
   const Href = "#"; // Placeholder href, adjust as needed
 
@@ -90,7 +90,7 @@ const QuickGlanceTabs: React.FC = () => {
                       | "campaigns"
                       | "inbox"
                       | "analytics"
-                      | "library"
+                      // | "library"
                   )
                 }
                 style={{ cursor: "pointer" }}
@@ -122,9 +122,9 @@ const QuickGlanceTabs: React.FC = () => {
         <TabPane tabId="analytics">
           {activeTab === "analytics" && <AnalyticsTab />}
         </TabPane>
-        <TabPane tabId="library">
+        {/* <TabPane tabId="library">
           {activeTab === "library" && <LibraryTab />}
-        </TabPane>
+        </TabPane> */}
       </TabContent>
     </div>
   );
