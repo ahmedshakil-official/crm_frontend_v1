@@ -34,6 +34,7 @@ const FallbackLogout: React.FC = () => {
               <Image
                 src={"/assets/images/logout/logouterror.png"}
                 alt="access"
+                className="rounded-2"
                 width={500}
                 height={400}
               />
