@@ -53,6 +53,14 @@ export default withAuth(
       loginUrl.searchParams.set("error", "unauthorized");
       return NextResponse.redirect(loginUrl);
     }
+    if (
+      path.startsWith("/dashboard/orgstaff") &&
+      token.user_type !== "ORGANIZATION_SUPPORT"
+    ) {
+      const loginUrl = new URL("/auth/login", req.url);
+      loginUrl.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(loginUrl);
+    }
 
     return NextResponse.next();
   },
@@ -68,6 +76,7 @@ export const config = {
     "/dashboard/:path*",
     "/dashboard/organisation/:path*",
     "/dashboard/orgadviser/:path*",
+    "/dashboard/orgstaff/:path*",
     "/dashboard/client/:path*",
     "/dashboard/network/:path*",
   ],

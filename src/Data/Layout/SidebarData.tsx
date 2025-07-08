@@ -9,7 +9,7 @@ const NetworkAdminMenu: MenuItem[] = [
     Items: [
       {
         title: "Network",
-        id: 1,
+
         icon: "Home-dashboard",
         type: "sub",
         badge: "1",
@@ -116,7 +116,7 @@ const OrganisationAdminMenu: MenuItem[] = [
     Items: [
       {
         title: "Organisation",
-        id: 1,
+
         icon: "Home-dashboard",
         type: "sub",
         badge: "1",
@@ -213,7 +213,7 @@ const OrganisationAdminMenu: MenuItem[] = [
   },
 ];
 
-//Or Organisation Admin Menu
+//Or Organisation adviser Menu
 const OrganisationAdviserMenu: MenuItem[] = [
   {
     title: "General",
@@ -222,7 +222,6 @@ const OrganisationAdviserMenu: MenuItem[] = [
     Items: [
       {
         title: "Home",
-        id: 1,
         icon: "Home-dashboard",
         type: "sub",
         badge: "4",
@@ -233,7 +232,6 @@ const OrganisationAdviserMenu: MenuItem[] = [
             title: "Dashboard",
             type: "link",
           },
-
           {
             path: "/dashboard/orgadviser/reporting",
             title: "Reporting",
@@ -253,7 +251,6 @@ const OrganisationAdviserMenu: MenuItem[] = [
       },
       {
         title: "Directors",
-        id: 1,
         icon: "Profile",
         type: "sub",
         badge: "3",
@@ -278,7 +275,6 @@ const OrganisationAdviserMenu: MenuItem[] = [
       },
       {
         title: "Cases",
-        id: 1,
         icon: "Pie",
         type: "sub",
         badge: "3",
@@ -304,6 +300,78 @@ const OrganisationAdviserMenu: MenuItem[] = [
     ],
   },
 ];
+//Or Organisation staff Menu
+const OrganisationStaffMenu: MenuItem[] = [
+  {
+    title: "General",
+    lanClass: "lan-1",
+    type: "group",
+    Items: [
+      {
+        title: "Home",
+        icon: "Home-dashboard",
+        type: "sub",
+        badge: "4",
+        lanClass: "lan-3",
+        children: [
+          {
+            path: "/dashboard/orgstaff",
+            title: "Dashboard",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgstaff/tasksandreminders",
+            title: "Tasks & Reminders",
+            type: "link",
+          },
+        ],
+      },
+      {
+        title: "Directors",
+        icon: "Profile",
+        type: "sub",
+        badge: "3",
+        lanClass: "lan-3",
+        children: [
+          {
+            path: "/dashboard/orgstaff/directors/leads",
+            title: "Leads",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgstaff/directors/introducers",
+            title: "Introducers",
+            type: "link",
+          },
+        ],
+      },
+      {
+        title: "Cases",
+        icon: "Pie",
+        type: "sub",
+        badge: "3",
+        lanClass: "lan-3",
+        children: [
+          {
+            path: "/dashboard/orgstaff/cases",
+            title: "All Case",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgstaff/activecases",
+            title: "Active Case",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgstaff/removedcases",
+            title: "Removed Case",
+            type: "link",
+          },
+        ],
+      },
+    ],
+  },
+];
 
 // Lead Menu
 const LeadMenu: MenuItem[] = [
@@ -314,7 +382,7 @@ const LeadMenu: MenuItem[] = [
     Items: [
       {
         title: "Client Home",
-        id: 1,
+
         icon: "Home-dashboard",
         type: "sub",
         badge: "1",
@@ -337,6 +405,7 @@ export {
   NetworkAdminMenu,
   OrganisationAdminMenu,
   OrganisationAdviserMenu,
+  OrganisationStaffMenu,
 };
 
 export const getMenuByRole = (role?: string): MenuItem[] => {
@@ -347,6 +416,8 @@ export const getMenuByRole = (role?: string): MenuItem[] => {
       return OrganisationAdminMenu;
     case "ORGANIZATION_ADVISER":
       return OrganisationAdviserMenu;
+    case "ORGANIZATION_SUPPORT":
+      return OrganisationStaffMenu;
     case "LEAD":
       return LeadMenu;
     default:

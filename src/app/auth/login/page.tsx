@@ -20,7 +20,10 @@ const UserLogin = () => {
       router.push("/dashboard/organisation");
     } else if (session?.user?.user_type === "ORGANIZATION_ADVISER") {
       router.push("/dashboard/orgadviser");
-    } else {
+    } else if (session?.user?.user_type === "ORGANIZATION_SUPPORT") {
+      router.push("/dashboard/orgstaff");
+    }
+     else {
       if (session?.user?.accessToken) {
         router.push("/logout");
       } else {
