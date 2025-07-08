@@ -155,6 +155,11 @@ const OrganisationAdminMenu: MenuItem[] = [
             title: "Introducers",
             type: "link",
           },
+          {
+            path: "/dashboard/organisation/directors/supportstaff",
+            title: "Support Staff",
+            type: "link",
+          },
         ],
       },
       {
@@ -255,6 +260,11 @@ const OrganisationAdviserMenu: MenuItem[] = [
         lanClass: "lan-3",
         children: [
           {
+            path: "/dashboard/orgadviser/directors/leads",
+            title: "Leads",
+            type: "link",
+          },
+          {
             path: "/dashboard/orgadviser/directors/clients",
             title: "Clients",
             type: "link",
@@ -262,11 +272,6 @@ const OrganisationAdviserMenu: MenuItem[] = [
           {
             path: "/dashboard/orgadviser/directors/introducers",
             title: "Introducers",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgadviser/directors/supportstaff",
-            title: "Support Staff",
             type: "link",
           },
         ],
