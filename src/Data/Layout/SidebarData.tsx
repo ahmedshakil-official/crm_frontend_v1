@@ -405,6 +405,7 @@ export {
   NetworkAdminMenu,
   OrganisationAdminMenu,
   OrganisationAdviserMenu,
+  OrganisationStaffMenu,
 };
 
 export const getMenuByRole = (role?: string): MenuItem[] => {
