@@ -18,6 +18,8 @@ export const getRedirectPaths = () => {
       return "/dashboard/organisation";
     case "ORGANIZATION_ADVISER":
       return "/dashboard/orgadviser";
+    case "ORGANIZATION_SUPPORT":
+      return "/dashboard/orgstaff";
     default:
       return "/auth/login";
   }
