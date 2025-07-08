@@ -4,6 +4,7 @@ import { TbCalendar, TbCircleCheck } from "react-icons/tb";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import WorkflowsTab from "../../../Organisation/UserSettings/WorkflowsAndIntegrations/WorkflowsAndIntegrationsTabs/WorkflowsTab/WorkflowsTab";
 import CalendarViewTab from "./CalendarViewTab/CalendarViewTab";
+import TasksTab from "./TasksTab/TasksTab";
 
 const TasksAndCalendarTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"task" | "calendar">("task");
@@ -46,7 +47,7 @@ const TasksAndCalendarTabs: React.FC = () => {
       </div>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="task">
-          {activeTab === "task" && <WorkflowsTab />}
+          {activeTab === "task" && <TasksTab />}
         </TabPane>
         <TabPane tabId="calendar">
           {activeTab === "calendar" && <CalendarViewTab />}
