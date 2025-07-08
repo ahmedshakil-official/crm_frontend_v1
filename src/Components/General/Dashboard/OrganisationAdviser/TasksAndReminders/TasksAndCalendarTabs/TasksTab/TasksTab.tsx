@@ -23,8 +23,8 @@ import {
 
 const TasksTab: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("All");
-  const [filterIcon, setFilterIcon] = React.useState(false);
-  const toggleFilterIcon = () => setFilterIcon(!filterIcon);
+  const [categoryFilter, setCategoryFilter] = React.useState("All Categories");
+  const [statusFilter, setStatusFilter] = React.useState("All Status");
 
   // Sample tasks based on the uploaded image
   const tasks = [
@@ -91,6 +91,38 @@ const TasksTab: React.FC = () => {
     },
   ];
 
+  // Filter tasks based on active tab
+  const filteredByTab = tasks.filter((task) => {
+    if (activeTab === "All") return true;
+    if (activeTab === "Due Today") {
+      // This would need actual date comparison in a real app
+      return task.dueDate.includes("12 Jan");
+    }
+    if (activeTab === "Upcoming") {
+      // This would need actual date comparison in a real app
+      return task.dueDate.includes("13 Jan") || task.dueDate.includes("15 Jan");
+    }
+    if (activeTab === "Overdue") {
+      // This would need actual date comparison in a real app
+      return task.dueDate.includes("9 Jan") || task.dueDate.includes("10 Jan");
+    }
+    return true;
+  });
+
+  // Further filter by category and status
+  const filteredTasks = filteredByTab.filter((task) => {
+    const categoryMatch =
+      categoryFilter === "All Categories" ||
+      task.category === categoryFilter ||
+      (categoryFilter === "No Category" && !task.category);
+    
+    const statusMatch =
+      statusFilter === "All Status" ||
+      task.type === statusFilter;
+    
+    return categoryMatch && statusMatch;
+  });
+
   return (
     <Row>
       <Col>
@@ -148,21 +180,24 @@ const TasksTab: React.FC = () => {
               <Input
                 type="select"
                 className="form-select-sm"
-                style={{ width: "150px", cursor: "pointer" }}
+                style={{ width: "200px", cursor: "pointer" }}
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
               >
                 <option>All Categories</option>
-                <option>Call</option>
-                <option>Review</option>
-                <option>Meeting</option>
-                <option>Follow-up</option>
-                <option>Compliance</option>
-                <option>Document Request</option>
+                <option>First-Time Buyer Mortgage</option>
+                <option>Remortgage Application</option>
+                <option>Buy-to-Let Mortgage</option>
+                <option>Annual Review</option>
+                <option>No Category</option>
               </Input>
 
               <Input
                 type="select"
                 className="form-select-sm"
-                style={{ width: "120px", cursor: "pointer" }}
+                style={{ width: "150px", cursor: "pointer" }}
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
               >
                 <option>All Status</option>
                 <option>Done</option>
@@ -174,7 +209,7 @@ const TasksTab: React.FC = () => {
 
           {/* Task Cards */}
           <Row>
-            {tasks.map((task, index) => (
+            {filteredTasks.map((task, index) => (
               <Col md="12" key={index}>
                 <Card className="p-3 shadow border rounded-3">
                   <Row>
