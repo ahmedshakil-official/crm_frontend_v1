@@ -9,10 +9,11 @@ import {
   NPDTabTitleData,
   OFBTabTitleData,
   RCCTabTitleData,
-} from "@/Data/Organization/Case/CaseDetails/CaseDetailsTabTitleData";
+} from "@/Data/CommonComponentsData/SingleCaseInfo/CaseDetailsData/CaseDetailsTabTitleData";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useEffect } from "react";
+import { TbCircleCheckFilled } from "react-icons/tb";
 import {
   Card,
   CardBody,
@@ -23,7 +24,6 @@ import {
   NavLink,
 } from "reactstrap";
 import { CaseDetailsTabContent } from "./Components/CaseDetailsTabContent";
-import { TbCircleCheckFilled } from "react-icons/tb";
 
 const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
   const basicTab = useAppSelector((state: any) => state.caseDetails.basicTabId);

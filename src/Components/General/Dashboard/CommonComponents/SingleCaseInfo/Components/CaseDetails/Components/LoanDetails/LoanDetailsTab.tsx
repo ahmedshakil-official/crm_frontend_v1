@@ -1,4 +1,4 @@
-import { LoanDetailsFormTabTitleData } from "@/Data/Organization/Case/CaseDetails/CaseDetailsFormTabTitleData";
+import { LoanDetailsFormTabTitleData } from "@/Data/CommonComponentsData/SingleCaseInfo/CaseDetailsData/CaseDetailsFormTabTitleData";
 import { useState } from "react";
 import {
   Card,
