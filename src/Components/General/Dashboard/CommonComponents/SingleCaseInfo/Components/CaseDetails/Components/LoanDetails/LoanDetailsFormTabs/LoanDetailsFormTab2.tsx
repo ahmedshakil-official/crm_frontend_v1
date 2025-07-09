@@ -31,7 +31,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
       <Row>
         <Col md={6}>
           <FormGroup>
-            <Label for="property_valuation">Property Valuation*</Label>
+            <Label for="property_valuation">Property Valuation(£)*</Label>
             <Input
               type="number"
               name="property_valuation"
@@ -47,7 +47,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
         </Col>
         <Col md={6}>
           <FormGroup>
-            <Label for="loan_amount">Loan Amount*</Label>
+            <Label for="loan_amount">Loan Amount(£)*</Label>
             <Input
               type="number"
               name="loan_amount"
@@ -63,7 +63,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
         </Col>
         <Col md={6}>
           <FormGroup>
-            <Label for="estimated_value">Estimated Value*</Label>
+            <Label for="estimated_value">Estimated Value(£)*</Label>
             <Input
               type="number"
               name="estimated_value"
@@ -79,7 +79,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
         </Col>
         <Col md={6}>
           <FormGroup>
-            <Label for="ltv">LTV</Label>
+            <Label for="ltv">LTV(%)</Label>
             <Input
               type="text"
               name="ltv"
