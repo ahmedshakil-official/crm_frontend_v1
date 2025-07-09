@@ -54,7 +54,7 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
         budgetPlannerData?.current_income?.[
           key as keyof typeof budgetPlannerData.current_income
         ] ?? 0;
-      initialCurrentValues[`CurrentBudgetPlanner.${field}`] = String(value);
+      initialCurrentValues[`CurrentBudgetPlanner.${field}`] = value !== 0 ? String(value) : "";
     });
 
     // Post Income
@@ -63,8 +63,8 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
         budgetPlannerData?.post_income?.[
           key as keyof typeof budgetPlannerData.post_income
         ] ?? 0;
-      initialPostValues[`PostCompletionsBudgetPlanner.${field}`] =
-        String(value);
+      initialPostValues[`PostCompletionsBudgetPlanner.${field}`] = value !== 0 ? 
+        String(value) : "";
     });
 
     setCurrentValues((prev) => ({ ...prev, ...initialCurrentValues }));
