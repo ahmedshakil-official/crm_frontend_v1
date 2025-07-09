@@ -116,7 +116,7 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
   ];
 
   const roofTypes = [
-    { value: "TILE", label: "Tile (Any Type)" },
+    { value: "TILE_ANY_TYPE", label: "Tile (Any Type)" },
     { value: "CLAY_TILE", label: "Clay Tile" },
     { value: "SLATE_TILE", label: "Slate Tile" },
     { value: "CONCRETE_TILE", label: "Concrete Tile" },
@@ -124,7 +124,7 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
     { value: "THATCHED", label: "Thatched" },
     { value: "METAL", label: "Metal" },
     { value: "WOOD", label: "Wood" },
-    { value: "PLASTIC", label: "Plastic (e.g. EPDM, PVC, CPE)" },
+    { value: "PLASTIC_EG_EPDM_PVC_CPE", label: "Plastic (e.g. EPDM, PVC, CPE)" },
     { value: "BITUMEN", label: "Bitumen" },
     { value: "GREEN_ROOF", label: "Green Roof" },
     { value: "SHINGLES", label: "Shingles" },
