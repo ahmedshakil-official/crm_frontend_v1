@@ -93,9 +93,6 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
                     }}
                   >
                     {item.nav}
-                    {requiredFilledTabId === item.nav && isRequired && (
-                      <TbCircleCheckFilled size={18} className=" ms-1" />
-                    )}
                   </NavLink>
                 </NavItem>
               ))}

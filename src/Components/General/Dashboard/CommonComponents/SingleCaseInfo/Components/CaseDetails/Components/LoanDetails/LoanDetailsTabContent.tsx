@@ -211,22 +211,6 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     }
   };
 
-  const isLoanRequiredFilled =
-    loandetailsData?.property_valuation > 0 &&
-    loandetailsData?.loan_amount > 0 &&
-    loandetailsData?.estimated_value > 0;
-    
-  // Dispatch required fields validation status when loan details data is available
-  useEffect(() => {
-    if (loandetailsData) {
-      dispatch(
-        isRequiredFilled({
-          requiredFilledTabId: "Loan Details",
-          isRequired: isLoanRequiredFilled,
-        })
-      );
-    }
-  }, [loandetailsData, isLoanRequiredFilled, dispatch]);
   
   if (isLoading || isLoandetailsDataLoading)
     return (
