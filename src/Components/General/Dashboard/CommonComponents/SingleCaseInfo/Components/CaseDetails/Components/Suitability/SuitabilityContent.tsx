@@ -1,4 +1,4 @@
-import { defaultAnswersData } from "@/Data/Organization/Case/CaseDetails/SuitabilityData";
+import { defaultAnswersData } from "@/Data/CommonComponentsData/SingleCaseInfo/CaseDetailsData/SuitabilityData";
 import {
   useGetExtraAnswerQuery,
   useGetSuitabilityQuery,
@@ -566,7 +566,7 @@ const SuitabilityContent: React.FC = () => {
   );
 
   const handleNextTab = () => {
-    const nextTabNav = getNextTabNav(caseData?.case_stage, currentTab!);
+    const nextTabNav: string | null = getNextTabNav(caseData?.case_stage, currentTab!);
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {

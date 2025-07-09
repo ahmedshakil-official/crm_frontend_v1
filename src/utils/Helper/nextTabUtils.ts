@@ -9,13 +9,13 @@ import {
   NPDTabTitleData,
   OFBTabTitleData,
   RCCTabTitleData,
-} from "@/Data/Organization/Case/CaseDetails/CaseDetailsTabTitleData";
+} from "@/Data/CommonComponentsData/SingleCaseInfo/CaseDetailsData/CaseDetailsTabTitleData";
 
 export const getNextTabNav = (
   caseStage: string,
   currentTabNav: string
 ): string | null => {
-    console.log(caseStage);
+  console.log(caseStage);
   // Map case stages to corresponding tab title data
   const tabDataMap: Record<string, any[]> = {
     INQUIRY: InqueryTabTitleData,
