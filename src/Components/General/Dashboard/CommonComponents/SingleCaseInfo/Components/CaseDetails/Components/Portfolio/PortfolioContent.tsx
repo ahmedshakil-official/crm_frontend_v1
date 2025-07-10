@@ -63,7 +63,7 @@ const PortfolioContent: React.FC = () => {
             <CardHeader className="bg-primary">
               <span className="fs-5">Summary of client declared values</span>
             </CardHeader>
-            <CardBody>
+            <CardBody className="p-0 mt-5">
               <PortfolioSummary data={data} />
             </CardBody>
           </Card>
