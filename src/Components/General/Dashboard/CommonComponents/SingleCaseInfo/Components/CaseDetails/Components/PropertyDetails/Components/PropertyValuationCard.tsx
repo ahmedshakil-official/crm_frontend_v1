@@ -40,35 +40,29 @@ const PropertyValuationCard: FC = () => {
     <Card className="shadow-sm border-0 mb-2">
       <CardBody>
         <Row>
-          <Col sm={6} className="mb-2">
-            <FormGroup>
-              <Label for="property_value">
-                Property Purchase Price
-                <span className="required" style={{ visibility: "hidden" }}>
-                  *
-                </span>
-              </Label>
-              <InputGroup>
-                <InputGroupText>£</InputGroupText>
-                <Input
-                  id="property_value"
-                  name="property_value"
-                  type="text"
-                  value={purchasePrice}
-                  readOnly
-                  className="form-control"
-                />
-              </InputGroup>
-            </FormGroup>
-          </Col>
+          {!(purchasePrice === 0 && estimatedValue !== 0) && (
+            <Col sm={6} className="mb-2">
+              <FormGroup>
+                <Label for="property_value">Property Purchase Price</Label>
+                <InputGroup>
+                  <InputGroupText>£</InputGroupText>
+                  <Input
+                    id="property_value"
+                    name="property_value"
+                    type="text"
+                    value={purchasePrice}
+                    readOnly
+                    className="form-control"
+                  />
+                </InputGroup>
+              </FormGroup>
+            </Col>
+          )}
 
           <Col sm={6} className="mb-3">
             <FormGroup>
               <Label for="estimated_valuation">
                 Property Estimated Valuation
-                <span className="required" style={{ visibility: "hidden" }}>
-                  *
-                </span>
               </Label>
               <InputGroup>
                 <InputGroupText>£</InputGroupText>
