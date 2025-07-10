@@ -283,12 +283,11 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
           <Row>
             <Col md={4}>
               <FormGroup>
-                <Label for="monthlyPayment">Monthly Mortgage Payment*</Label>
+                <Label for="monthlyPayment">Monthly Mortgage Payment</Label>
                 <Input
                   id="monthlyPayment"
                   name="monthlyPayment"
                   type="number"
-                  required
                 />
               </FormGroup>
             </Col>
@@ -313,8 +312,8 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
             <Col md={4}>
               <FormGroup check>
                 <Label check>
-                  <Input type="checkbox" name="isHMO" required />
-                  Is the property an HMO*
+                  <Input type="checkbox" name="isHMO" />
+                  Is the property an HMO
                 </Label>
               </FormGroup>
               <FormGroup check>
