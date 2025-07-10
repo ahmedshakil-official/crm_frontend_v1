@@ -187,11 +187,6 @@ export interface PropertyData {
   updated_by: User | null;
 }
 
-export interface PropertyValuationCardProps {
-  propertyValue?: string;
-  estimatedValuation?: string;
-}
-
 export interface FoundPropertyProps {
   onPropertyFound: (value: boolean) => void;
   property: any;

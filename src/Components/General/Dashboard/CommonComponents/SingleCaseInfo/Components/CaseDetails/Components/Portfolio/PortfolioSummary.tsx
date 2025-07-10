@@ -32,7 +32,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
     : 0;
 
   return (
-    <Container>
+    <>
       <Row>
         <Col lg="4" md="12">
           <Card className="shadow">
@@ -140,7 +140,7 @@ const PortfolioSummary: React.FC<{ data: PropertiesTypeProps[] }> = ({
           </Card>
         </Col>
       </Row>
-    </Container>
+    </>
   );
 };
 
