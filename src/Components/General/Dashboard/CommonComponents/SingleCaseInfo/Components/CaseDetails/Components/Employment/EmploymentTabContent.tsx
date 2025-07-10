@@ -1,8 +1,12 @@
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useUpdateEmploymentDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/EmploymentDetails/EmploymentDetailsApi";
 import {
   EmploymentDetailsProps,
   EmploymentTabContentProps,
 } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/EmploymentTypes";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -12,15 +16,12 @@ import {
   Col,
   Form,
   FormGroup,
+  FormText,
   Input,
   Label,
   Row,
 } from "reactstrap";
 import AddEmploymentDetailsModal from "./EmploymentModals/AddEmploymentDetailsModal";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 
 export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   activeTab,
@@ -446,7 +447,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 <Input
                   type="number"
                   id="grossAnnualIncome"
-                  value={formValues?.gross_annual_income || 0}
+                  placeholder="0"
+                  value={formValues?.gross_annual_income || ""}
                   onChange={(e) =>
                     handleInputChange("gross_annual_income", e.target.value)
                   }
@@ -462,7 +464,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 <Input
                   type="number"
                   id="netAnnualIncome"
-                  value={formValues?.net_annual_income || 0}
+                  placeholder="0"
+                  value={formValues?.net_annual_income || ""}
                   onChange={(e) =>
                     handleInputChange("net_annual_income", e.target.value)
                   }
@@ -563,7 +566,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="number"
                     id="bonus"
-                    value={formValues?.bonus || 0}
+                    placeholder="0"
+                    value={formValues?.bonus || ""}
                     onChange={(e) => handleInputChange("bonus", e.target.value)}
                   />
                 </FormGroup>
@@ -620,7 +624,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="number"
                     id="overtime"
-                    value={formValues?.overtime || 0}
+                    placeholder="0"
+                    value={formValues?.overtime || ""}
                     onChange={(e) =>
                       handleInputChange("overtime", e.target.value)
                     }
@@ -679,7 +684,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="number"
                     id="allowance"
-                    value={formValues?.allowance || 0}
+                    placeholder="0"
+                    value={formValues?.allowance || ""}
                     onChange={(e) =>
                       handleInputChange("allowance", e.target.value)
                     }
@@ -744,8 +750,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                       <Input
                         type="number"
                         id="employment_time_year"
-                        placeholder="Years"
-                        value={formValues?.employment_time_year || 0}
+                        placeholder="0"
+                        value={formValues?.employment_time_year || ""}
                         onChange={(e) =>
                           handleInputChange(
                             "employment_time_year",
@@ -753,6 +759,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                           )
                         }
                       />
+                      <FormText>Years</FormText>
                     </FormGroup>
                   </Col>
                   <Col md={6}>
@@ -760,8 +767,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                       <Input
                         type="number"
                         id="employment_time_month"
-                        placeholder="Months"
-                        value={formValues?.employment_time_month || 0}
+                        placeholder="0"
+                        value={formValues?.employment_time_month || ""}
                         onChange={(e) =>
                           handleInputChange(
                             "employment_time_month",
@@ -769,6 +776,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                           )
                         }
                       />
+                      <FormText>Months</FormText>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -1020,7 +1028,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="number"
                     id="salary"
-                    value={formValues?.salary || 0}
+                    placeholder="0"
+                    value={formValues?.salary || ""}
                     onChange={(e) =>
                       handleInputChange("salary", e.target.value)
                     }
@@ -1034,7 +1043,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="number"
                     id="dividends"
-                    value={formValues?.dividends || 0}
+                    placeholder="0"
+                    value={formValues?.dividends || ""}
                     onChange={(e) =>
                       handleInputChange("dividends", e.target.value)
                     }
@@ -1048,7 +1058,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="number"
                     id="turnover"
-                    value={formValues?.turnover || 0}
+                    placeholder="0"
+                    value={formValues?.turnover || ''}
                     onChange={(e) =>
                       handleInputChange("turnover", e.target.value)
                     }
@@ -1181,7 +1192,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="number"
                     id="day_rate"
-                    value={formValues?.day_rate || 0}
+                    placeholder="0"
+                    value={formValues?.day_rate || ""}
                     onChange={(e) =>
                       handleInputChange("day_rate", e.target.value)
                     }
@@ -1195,7 +1207,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                   <Input
                     type="number"
                     id="hourly_rate"
-                    value={formValues?.hourly_rate || 0}
+                    placeholder="0"
+                    value={formValues?.hourly_rate || ""}
                     onChange={(e) =>
                       handleInputChange("hourly_rate", e.target.value)
                     }
