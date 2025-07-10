@@ -20,7 +20,6 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import {
   basicTabIndicator,
-  isRequiredFilled,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
@@ -64,7 +63,9 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   });
 
   const [formDataTab2, setFormDataTab2] = useState({
+    mortgage_type: "",
     property_valuation: 0,
+    purchase_price: 0,
     loan_amount: 0,
     estimated_value: 0,
     ltv: null as string | null,
@@ -114,7 +115,9 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
       });
 
       setFormDataTab2({
+        mortgage_type: loandetailsData.mortgage_type || "",
         property_valuation: loandetailsData.property_valuation || 0,
+        purchase_price: loandetailsData.purchase_price || 0,
         loan_amount: loandetailsData.loan_amount || 0,
         estimated_value: loandetailsData.estimated_value || 0,
         ltv: loandetailsData.ltv || null,
@@ -160,6 +163,10 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     switch (tab) {
       case 1:
         setFormDataTab1((prev) => ({ ...prev, [name]: value }));
+        // Sync mortgage_type between tab1 and tab2
+        if (name === 'mortgage_type') {
+          setFormDataTab2((prev) => ({ ...prev, mortgage_type: value }));
+        }
         break;
       case 2:
         setFormDataTab2((prev) => ({ ...prev, [name]: value }));

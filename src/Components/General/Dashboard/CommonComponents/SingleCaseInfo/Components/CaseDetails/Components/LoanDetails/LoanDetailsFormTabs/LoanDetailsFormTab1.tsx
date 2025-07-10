@@ -1,13 +1,12 @@
 import { LoanDetailsFormTab1Props } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/LoanDetailsTypes";
 import LenderList from "@/utils/LenderList";
-import { Col, Container, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 const LoanDetailsFormTab1: React.FC<LoanDetailsFormTab1Props> = ({
   formData,
   handleFormChange,
 }) => {
   return (
-    <Container>
       <Form>
         <Row>
           {/* First Column */}
@@ -251,7 +250,6 @@ const LoanDetailsFormTab1: React.FC<LoanDetailsFormTab1Props> = ({
           </Col>
         </Row>
       </Form>
-    </Container>
   );
 };
 
