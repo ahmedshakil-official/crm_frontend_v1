@@ -281,7 +281,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 <Input
                   id="title"
                   type="select"
-                  style={{padding:"11px 11px"}}
+                  style={{ padding: "11px 11px" }}
                   value={formValues.title}
                   onChange={(e) => handleInputChange("title", e.target.value)}
                   required
@@ -356,17 +356,30 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             <Col md={6}>
               <Row>
                 <Col md={8}>
-                  <FormGroup>
-                    <Label for="date_of_birth">Date of Birth*</Label>
+                  <Label for="date_of_birth">Date of Birth*</Label>
+                  <FormGroup className="d-flex justify-content-center align-items-center">
                     <Input
                       id="date_of_birth"
                       type="date"
                       value={formValues.date_of_birth || ""}
+                      className="rounded-end-0"
                       onChange={(e) =>
                         handleInputChange("date_of_birth", e.target.value)
                       }
                       required
                     />
+                    <InputGroupText
+                      className="border-start-0 rounded-start-0"
+                      style={{ padding: "11px 20px" }}
+                    >
+                      {formValues.date_of_birth
+                        ? Math.floor(
+                            (new Date().getTime() -
+                              new Date(formValues.date_of_birth).getTime()) /
+                              (1000 * 60 * 60 * 24 * 365.25)
+                          ) + "y"
+                        : "0y"}
+                    </InputGroupText>
                   </FormGroup>
                 </Col>
                 <Col md={4}>
@@ -942,12 +955,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     type="number"
                     placeholder="Years"
                     readOnly
+                    className="rounded-end-0"
                     value={formValues.time_at_address_years || ""}
                     onChange={(e) =>
                       handleInputChange("time_at_address_years", e.target.value)
                     }
                   />
-                  <InputGroupText>Years</InputGroupText>
+                  <InputGroupText className="border-start-0 rounded-start-0">
+                    Years
+                  </InputGroupText>
                 </InputGroup>
 
                 <InputGroup>
@@ -956,6 +972,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     type="number"
                     placeholder="Months"
                     readOnly
+                    className="rounded-end-0"
                     value={formValues.time_at_address_months || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -964,7 +981,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                       )
                     }
                   />
-                  <InputGroupText>Months</InputGroupText>
+                  <InputGroupText className="border-start-0 rounded-start-0">
+                    Months
+                  </InputGroupText>
                 </InputGroup>
               </FormGroup>
             </Col>
