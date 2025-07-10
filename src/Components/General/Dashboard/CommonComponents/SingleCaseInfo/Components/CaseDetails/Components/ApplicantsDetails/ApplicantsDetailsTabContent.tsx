@@ -3,11 +3,16 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import {
+  useGetCaseLoanDetailsQuery,
+  useGetLoanDetailsQuery,
+} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/LoanDetails/LoanDetailsApi";
 import { ApplicantProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
 import { ApplicantsUsersProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsUserTypes";
 import LoadingSpinner from "@/app/loading";
 import { countries } from "@/utils/Countries";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -40,11 +45,14 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [isDependantsViewModalOpen, setIsDependantsViewModalOpen] =
     useState(false);
 
-  const toggleViewModal = () =>
+  const toggleViewModal = () => {
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
+  };
 
   const params = useParams();
   const { casealias } = params;
+
+  // Rtk hooks
   const {
     data: caseData,
     isLoading: isCaseFetching,
@@ -52,6 +60,18 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
   const [updateApplicantDetails, { isLoading: isUpdatingApplicant }] =
     useUpdateApplicantDetailsMutation();
+  const { data } = useGetCaseLoanDetailsQuery(casealias);
+  // Ensure data exists and has elements before accessing [0]
+  const loandetailsAlias =
+    Array.isArray(data) && data.length > 0 ? data[0].alias : null;
+  const { data: loandetailsData, isLoading: isLoandetailsDataLoading } =
+    useGetLoanDetailsQuery(
+      loandetailsAlias
+        ? { case_alias: casealias, loanDetails_alias: loandetailsAlias }
+        : skipToken
+    );
+
+  const applicationType = loandetailsData.application_type;
 
   const currentTab: string | null = useAppSelector(
     (state) => state.caseDetails.basicTabId
@@ -207,43 +227,50 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     <Container>
       <Row>
         <Form onSubmit={handleSubmit}>
-          <Row className="mb-3 border-primary rounded-2 p-3">
-            <h3 className="text-info fs-4 mb-2">Company Applicant</h3>
-            {/* Company Applicant Section */}
-            <FormGroup>
-              <Label>Is this application being made in a company name?</Label>
-              {["yes", "no"].map((option) => (
-                <div key={option}>
-                  <Label>
-                    <Input
-                      type="radio"
-                      name="is_company_application"
-                      value={option}
-                      checked={
-                        formValues.is_company_application === (option === "yes")
-                      }
-                      onChange={(e) =>
-                        handleInputChange(
-                          "is_company_application",
-                          e.target.value === "yes"
-                        )
-                      }
-                      className="me-1"
-                    />
-                    {option.charAt(0).toUpperCase() + option.slice(1)}
-                  </Label>
-                </div>
-              ))}
-              {formValues?.is_company_application && (
-                <Button
-                  onClick={() => setIsCompanyModalOpen(true)}
-                  color="primary"
-                >
-                  Continue with Company Application
-                </Button>
-              )}
-            </FormGroup>
-          </Row>
+          {applicationType === "RESIDENTIAL_MORTGAGE" ||
+          applicationType === "SELECT_APPLICATION_TYPE" ? (
+            ""
+          ) : (
+            <Row className="mb-3 border-primary rounded-2 p-3">
+              <h3 className="text-info fs-4 mb-2">Company Applicant</h3>
+              {/* Company Applicant Section */}
+              <FormGroup>
+                <Label>Is this application being made in a company name?</Label>
+                {["yes", "no"].map((option) => (
+                  <div key={option}>
+                    <Label>
+                      <Input
+                        type="radio"
+                        name="is_company_application"
+                        value={option}
+                        checked={
+                          formValues.is_company_application ===
+                          (option === "yes")
+                        }
+                        onChange={(e) =>
+                          handleInputChange(
+                            "is_company_application",
+                            e.target.value === "yes"
+                          )
+                        }
+                        className="me-1"
+                      />
+                      {option.charAt(0).toUpperCase() + option.slice(1)}
+                    </Label>
+                  </div>
+                ))}
+                {formValues?.is_company_application && (
+                  <Button
+                    onClick={() => setIsCompanyModalOpen(true)}
+                    color="primary"
+                  >
+                    Continue with Company Application
+                  </Button>
+                )}
+              </FormGroup>
+            </Row>
+          )}
+
           <h3 className="text-primary fs-4 mb-2"> Applicant</h3>
           {/* Personal Details Section */}
           <Row>
@@ -1493,12 +1520,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       </Row>
 
       {/* Company Applicant Modal */}
-      <AddCompanyDetailsFormModal
-        isOpen={isCompanyModalOpen}
-        toggle={() => setIsCompanyModalOpen(false)}
-        case_alias={casealias as string}
-        applicantDetails_alias={formValues.alias as string}
-      />
+      {formValues?.is_company_application === true ? (
+        <AddCompanyDetailsFormModal
+          isOpen={isCompanyModalOpen}
+          toggle={() => setIsCompanyModalOpen(false)}
+          case_alias={casealias as string}
+          applicantDetails_alias={formValues.alias as string}
+        />
+      ) : (
+        ""
+      )}
 
       {/* Dependants of Applicant Modal */}
       <AddDependantFormModal
@@ -1508,11 +1539,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
         applicantDetails_alias={formValues.alias as string}
       />
       {/* Modal Component */}
-      <ApplicantDependantsViewModal
-        isOpen={isDependantsViewModalOpen}
-        toggle={toggleViewModal}
-        applicantAlias={formValues.alias as string}
-      />
+      {formValues?.has_dependants === true ? (
+        <ApplicantDependantsViewModal
+          isOpen={isDependantsViewModalOpen}
+          toggle={toggleViewModal}
+          applicantAlias={formValues.alias as string}
+        />
+      ) : (
+        ""
+      )}
     </Container>
   );
 };
