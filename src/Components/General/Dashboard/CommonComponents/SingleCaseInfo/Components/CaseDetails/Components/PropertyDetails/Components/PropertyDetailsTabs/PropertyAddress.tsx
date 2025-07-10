@@ -85,6 +85,7 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
                   House Name or Number <span className="text-danger">*</span>
                 </Label>
                 <Input
+                  type="text"
                   id="house_name_or_number"
                   name="house_name_or_number"
                   value={propertyState.house_name_or_number}

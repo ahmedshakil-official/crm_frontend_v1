@@ -124,7 +124,10 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
     { value: "THATCHED", label: "Thatched" },
     { value: "METAL", label: "Metal" },
     { value: "WOOD", label: "Wood" },
-    { value: "PLASTIC_EG_EPDM_PVC_CPE", label: "Plastic (e.g. EPDM, PVC, CPE)" },
+    {
+      value: "PLASTIC_EG_EPDM_PVC_CPE",
+      label: "Plastic (e.g. EPDM, PVC, CPE)",
+    },
     { value: "BITUMEN", label: "Bitumen" },
     { value: "GREEN_ROOF", label: "Green Roof" },
     { value: "SHINGLES", label: "Shingles" },
@@ -269,7 +272,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                 type="number"
                 id="number_of_storeys_in_the_building"
                 name="number_of_storeys_in_the_building"
-                value={propertyState.number_of_storeys_in_the_building ?? ""}
+                placeholder="0"
+                value={propertyState.number_of_storeys_in_the_building || ""}
                 onChange={handleChange}
               />
             </FormGroup>
@@ -282,7 +286,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                 type="number"
                 id="year_built"
                 name="year_built"
-                value={propertyState.year_built ?? ""}
+                placeholder="0"
+                value={propertyState.year_built || ""}
                 onChange={handleChange}
                 maxLength={4}
               />
@@ -323,7 +328,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                     type="number"
                     id="property_lease_term"
                     name="property_lease_term"
-                    value={propertyState.property_lease_term ?? ""}
+                    placeholder="0"
+                    value={propertyState.property_lease_term || ""}
                     onChange={handleChange}
                   />
                   <span className="input-group-text">Years</span>
@@ -342,7 +348,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                     type="number"
                     id="service_charge_per_month"
                     name="service_charge_per_month"
-                    value={propertyState.service_charge_per_month ?? ""}
+                    placeholder="0"
+                    value={propertyState.service_charge_per_month || ""}
                     onChange={handleChange}
                     step="0.01"
                   />
@@ -359,7 +366,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                     type="number"
                     id="ground_rent_per_annum"
                     name="ground_rent_per_annum"
-                    value={propertyState.ground_rent_per_annum ?? ""}
+                    placeholder="0"
+                    value={propertyState.ground_rent_per_annum || ""}
                     onChange={handleChange}
                     step="0.01"
                   />
@@ -379,7 +387,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                   type="number"
                   id="estimated_value"
                   name="estimated_value"
-                  value={propertyState.estimated_value ?? ""}
+                  placeholder="0"
+                  value={propertyState.estimated_value || ""}
                   onChange={handleChange}
                   step="0.01"
                 />
@@ -396,7 +405,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                 type="number"
                 id="bedrooms"
                 name="bedrooms"
-                value={propertyState.bedrooms ?? ""}
+                placeholder="0"
+                value={propertyState.bedrooms || ""}
                 onChange={handleChange}
               />
             </FormGroup>
@@ -409,7 +419,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                 type="number"
                 id="bathrooms"
                 name="bathrooms"
-                value={propertyState.bathrooms ?? ""}
+                placeholder="0"
+                value={propertyState.bathrooms || ""}
                 onChange={handleChange}
               />
             </FormGroup>
@@ -422,7 +433,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                 type="number"
                 id="reception_rooms"
                 name="reception_rooms"
-                value={propertyState.reception_rooms ?? ""}
+                placeholder="0"
+                value={propertyState.reception_rooms || ""}
                 onChange={handleChange}
               />
             </FormGroup>
@@ -435,7 +447,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                 type="number"
                 id="kitchens"
                 name="kitchens"
-                value={propertyState.kitchens ?? ""}
+                placeholder="0"
+                value={propertyState.kitchens || ""}
                 onChange={handleChange}
               />
             </FormGroup>
@@ -448,7 +461,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                 type="number"
                 id="garages"
                 name="garages"
-                value={propertyState.garages ?? ""}
+                placeholder="0"
+                value={propertyState.garages || ""}
                 onChange={handleChange}
               />
             </FormGroup>
@@ -461,7 +475,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                 type="number"
                 id="parking_spaces"
                 name="parking_spaces"
-                value={propertyState.parking_spaces ?? ""}
+                placeholder="0"
+                value={propertyState.parking_spaces || ""}
                 onChange={handleChange}
               />
             </FormGroup>
@@ -518,7 +533,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                     type="number"
                     id="floor"
                     name="floor"
-                    value={propertyState.floor ?? ""}
+                    placeholder="0"
+                    value={propertyState.floor || ""}
                     onChange={handleChange}
                   />
                 </FormGroup>
@@ -530,7 +546,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                     type="number"
                     id="flats"
                     name="flats"
-                    value={propertyState.flats ?? ""}
+                    placeholder="0"
+                    value={propertyState.flats || ""}
                     onChange={handleChange}
                   />
                 </FormGroup>
@@ -546,7 +563,8 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ propertyData }) => {
                   type="number"
                   id="number_of_units"
                   name="number_of_units"
-                  value={propertyState.number_of_units ?? ""}
+                  placeholder="0"
+                  value={propertyState.number_of_units || ""}
                   onChange={handleChange}
                 />
               </FormGroup>
