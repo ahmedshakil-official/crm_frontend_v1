@@ -23,6 +23,7 @@ import {
   Container,
   Form,
   FormGroup,
+  FormText,
   Input,
   InputGroup,
   InputGroupText,
@@ -280,6 +281,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 <Input
                   id="title"
                   type="select"
+                  style={{padding:"11px 11px"}}
                   value={formValues.title}
                   onChange={(e) => handleInputChange("title", e.target.value)}
                   required
@@ -294,6 +296,52 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
             <Col md={6}>
               <FormGroup>
+                <Label for="first_name">First Name</Label>
+                <Input
+                  id="first_name"
+                  type="text"
+                  value={formValues.applicant?.first_name || ""}
+                  readOnly
+                />
+                <FormText className="text-warning small">
+                  Read Only Field
+                </FormText>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="middle_name">Middle Name(s)</Label>
+                <Input
+                  id="maiden_name"
+                  type="text"
+                  // value={formValues.applicant?.middle_name || ""}
+                  readOnly
+                />
+                <FormText className="text-warning small">
+                  Read Only Field
+                </FormText>
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="last_name">Last Name</Label>
+                <Input
+                  id="last_name"
+                  type="text"
+                  value={formValues.applicant?.last_name || ""}
+                  readOnly
+                />
+                <FormText className="text-warning small">
+                  Read Only Field
+                </FormText>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
                 <Label for="maiden_name">Maiden / Previous Last Name</Label>
                 <Input
                   id="maiden_name"
@@ -305,49 +353,52 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 />
               </FormGroup>
             </Col>
+            <Col md={6}>
+              <Row>
+                <Col md={8}>
+                  <FormGroup>
+                    <Label for="date_of_birth">Date of Birth*</Label>
+                    <Input
+                      id="date_of_birth"
+                      type="date"
+                      value={formValues.date_of_birth || ""}
+                      onChange={(e) =>
+                        handleInputChange("date_of_birth", e.target.value)
+                      }
+                      required
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={4}>
+                  <FormGroup>
+                    <Label for="is_smoker">Are you a smoker?</Label>
+                    {["yes", "no"].map((value) => (
+                      <div key={value}>
+                        <Label className="me-2">
+                          <Input
+                            type="radio"
+                            name="is_smoker"
+                            className="me-1"
+                            value={value}
+                            checked={formValues.is_smoker === (value === "yes")}
+                            onChange={(e) =>
+                              handleInputChange(
+                                "is_smoker",
+                                e.target.value === "yes"
+                              )
+                            }
+                          />
+                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                        </Label>
+                      </div>
+                    ))}
+                  </FormGroup>
+                </Col>
+              </Row>
+            </Col>
           </Row>
 
-          <Row>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="date_of_birth">Date of Birth*</Label>
-                <Input
-                  id="date_of_birth"
-                  type="date"
-                  value={formValues.date_of_birth || ""}
-                  onChange={(e) =>
-                    handleInputChange("date_of_birth", e.target.value)
-                  }
-                  required
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="is_smoker">Are you a smoker?</Label>
-                {["yes", "no"].map((value) => (
-                  <div key={value}>
-                    <Label className="me-2">
-                      <Input
-                        type="radio"
-                        name="is_smoker"
-                        className="me-1"
-                        value={value}
-                        checked={formValues.is_smoker === (value === "yes")}
-                        onChange={(e) =>
-                          handleInputChange(
-                            "is_smoker",
-                            e.target.value === "yes"
-                          )
-                        }
-                      />
-                      {value.charAt(0).toUpperCase() + value.slice(1)}
-                    </Label>
-                  </div>
-                ))}
-              </FormGroup>
-            </Col>
-          </Row>
+          <Row></Row>
 
           <Row>
             <Col md={6}>
