@@ -23,6 +23,8 @@ export interface LoanDetailsFormTab1Props {
 
 export interface LoanDetailsFormTab2Props {
   formData: {
+    mortgage_type: string;
+    purchase_price: number;
     property_valuation: number;
     loan_amount: number;
     estimated_value: number;
