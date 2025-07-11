@@ -3,11 +3,16 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import {
+  useGetCaseLoanDetailsQuery,
+  useGetLoanDetailsQuery,
+} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/LoanDetails/LoanDetailsApi";
 import { ApplicantProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
 import { ApplicantsUsersProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsUserTypes";
 import LoadingSpinner from "@/app/loading";
 import { countries } from "@/utils/Countries";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,6 +23,7 @@ import {
   Container,
   Form,
   FormGroup,
+  FormText,
   Input,
   InputGroup,
   InputGroupText,
@@ -40,11 +46,14 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [isDependantsViewModalOpen, setIsDependantsViewModalOpen] =
     useState(false);
 
-  const toggleViewModal = () =>
+  const toggleViewModal = () => {
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
+  };
 
   const params = useParams();
   const { casealias } = params;
+
+  // Rtk hooks
   const {
     data: caseData,
     isLoading: isCaseFetching,
@@ -52,6 +61,18 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
   const [updateApplicantDetails, { isLoading: isUpdatingApplicant }] =
     useUpdateApplicantDetailsMutation();
+  const { data } = useGetCaseLoanDetailsQuery(casealias);
+  // Ensure data exists and has elements before accessing [0]
+  const loandetailsAlias =
+    Array.isArray(data) && data.length > 0 ? data[0].alias : null;
+  const { data: loandetailsData, isLoading: isLoandetailsDataLoading } =
+    useGetLoanDetailsQuery(
+      loandetailsAlias
+        ? { case_alias: casealias, loanDetails_alias: loandetailsAlias }
+        : skipToken
+    );
+
+  const applicationType = loandetailsData.application_type;
 
   const currentTab: string | null = useAppSelector(
     (state) => state.caseDetails.basicTabId
@@ -207,43 +228,50 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     <Container>
       <Row>
         <Form onSubmit={handleSubmit}>
-          <Row className="mb-3 border-primary rounded-2 p-3">
-            <h3 className="text-info fs-4 mb-2">Company Applicant</h3>
-            {/* Company Applicant Section */}
-            <FormGroup>
-              <Label>Is this application being made in a company name?</Label>
-              {["yes", "no"].map((option) => (
-                <div key={option}>
-                  <Label>
-                    <Input
-                      type="radio"
-                      name="is_company_application"
-                      value={option}
-                      checked={
-                        formValues.is_company_application === (option === "yes")
-                      }
-                      onChange={(e) =>
-                        handleInputChange(
-                          "is_company_application",
-                          e.target.value === "yes"
-                        )
-                      }
-                      className="me-1"
-                    />
-                    {option.charAt(0).toUpperCase() + option.slice(1)}
-                  </Label>
-                </div>
-              ))}
-              {formValues?.is_company_application && (
-                <Button
-                  onClick={() => setIsCompanyModalOpen(true)}
-                  color="primary"
-                >
-                  Continue with Company Application
-                </Button>
-              )}
-            </FormGroup>
-          </Row>
+          {applicationType === "RESIDENTIAL_MORTGAGE" ||
+          applicationType === "SELECT_APPLICATION_TYPE" ? (
+            ""
+          ) : (
+            <Row className="mb-3 border-primary rounded-2 p-3">
+              <h3 className="text-info fs-4 mb-2">Company Applicant</h3>
+              {/* Company Applicant Section */}
+              <FormGroup>
+                <Label>Is this application being made in a company name?</Label>
+                {["yes", "no"].map((option) => (
+                  <div key={option}>
+                    <Label>
+                      <Input
+                        type="radio"
+                        name="is_company_application"
+                        value={option}
+                        checked={
+                          formValues.is_company_application ===
+                          (option === "yes")
+                        }
+                        onChange={(e) =>
+                          handleInputChange(
+                            "is_company_application",
+                            e.target.value === "yes"
+                          )
+                        }
+                        className="me-1"
+                      />
+                      {option.charAt(0).toUpperCase() + option.slice(1)}
+                    </Label>
+                  </div>
+                ))}
+                {formValues?.is_company_application && (
+                  <Button
+                    onClick={() => setIsCompanyModalOpen(true)}
+                    color="primary"
+                  >
+                    Continue with Company Application
+                  </Button>
+                )}
+              </FormGroup>
+            </Row>
+          )}
+
           <h3 className="text-primary fs-4 mb-2"> Applicant</h3>
           {/* Personal Details Section */}
           <Row>
@@ -253,6 +281,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 <Input
                   id="title"
                   type="select"
+                  style={{ padding: "11px 11px" }}
                   value={formValues.title}
                   onChange={(e) => handleInputChange("title", e.target.value)}
                   required
@@ -267,6 +296,52 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             </Col>
             <Col md={6}>
               <FormGroup>
+                <Label for="first_name">First Name</Label>
+                <Input
+                  id="first_name"
+                  type="text"
+                  value={formValues.applicant?.first_name || ""}
+                  readOnly
+                />
+                <FormText className="text-warning small">
+                  Read Only Field
+                </FormText>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="middle_name">Middle Name(s)</Label>
+                <Input
+                  id="maiden_name"
+                  type="text"
+                  // value={formValues.applicant?.middle_name || ""}
+                  readOnly
+                />
+                <FormText className="text-warning small">
+                  Read Only Field
+                </FormText>
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="last_name">Last Name</Label>
+                <Input
+                  id="last_name"
+                  type="text"
+                  value={formValues.applicant?.last_name || ""}
+                  readOnly
+                />
+                <FormText className="text-warning small">
+                  Read Only Field
+                </FormText>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <FormGroup>
                 <Label for="maiden_name">Maiden / Previous Last Name</Label>
                 <Input
                   id="maiden_name"
@@ -278,49 +353,65 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 />
               </FormGroup>
             </Col>
+            <Col md={6}>
+              <Row>
+                <Col md={8}>
+                  <Label for="date_of_birth">Date of Birth*</Label>
+                  <FormGroup className="d-flex justify-content-center align-items-center">
+                    <Input
+                      id="date_of_birth"
+                      type="date"
+                      value={formValues.date_of_birth || ""}
+                      className="rounded-end-0"
+                      onChange={(e) =>
+                        handleInputChange("date_of_birth", e.target.value)
+                      }
+                      required
+                    />
+                    <InputGroupText
+                      className="border-start-0 rounded-start-0"
+                      style={{ padding: "11px 20px" }}
+                    >
+                      {formValues.date_of_birth
+                        ? Math.floor(
+                            (new Date().getTime() -
+                              new Date(formValues.date_of_birth).getTime()) /
+                              (1000 * 60 * 60 * 24 * 365.25)
+                          ) + "y"
+                        : "0y"}
+                    </InputGroupText>
+                  </FormGroup>
+                </Col>
+                <Col md={4}>
+                  <FormGroup>
+                    <Label for="is_smoker">Are you a smoker?</Label>
+                    {["yes", "no"].map((value) => (
+                      <div key={value}>
+                        <Label className="me-2">
+                          <Input
+                            type="radio"
+                            name="is_smoker"
+                            className="me-1"
+                            value={value}
+                            checked={formValues.is_smoker === (value === "yes")}
+                            onChange={(e) =>
+                              handleInputChange(
+                                "is_smoker",
+                                e.target.value === "yes"
+                              )
+                            }
+                          />
+                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                        </Label>
+                      </div>
+                    ))}
+                  </FormGroup>
+                </Col>
+              </Row>
+            </Col>
           </Row>
 
-          <Row>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="date_of_birth">Date of Birth*</Label>
-                <Input
-                  id="date_of_birth"
-                  type="date"
-                  value={formValues.date_of_birth || ""}
-                  onChange={(e) =>
-                    handleInputChange("date_of_birth", e.target.value)
-                  }
-                  required
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="is_smoker">Are you a smoker?</Label>
-                {["yes", "no"].map((value) => (
-                  <div key={value}>
-                    <Label className="me-2">
-                      <Input
-                        type="radio"
-                        name="is_smoker"
-                        className="me-1"
-                        value={value}
-                        checked={formValues.is_smoker === (value === "yes")}
-                        onChange={(e) =>
-                          handleInputChange(
-                            "is_smoker",
-                            e.target.value === "yes"
-                          )
-                        }
-                      />
-                      {value.charAt(0).toUpperCase() + value.slice(1)}
-                    </Label>
-                  </div>
-                ))}
-              </FormGroup>
-            </Col>
-          </Row>
+          <Row></Row>
 
           <Row>
             <Col md={6}>
@@ -463,7 +554,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           </Row>
 
           {/* Conditional Fields */}
-          {formValues.nationality !== "GB" && (
+          {formValues.nationality !== "GB" && formValues.nationality !== "" && (
             <Row>
               <Col md={6}>
                 <FormGroup>
@@ -513,6 +604,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
 
           {/* Visa Details - Hidden if Indefinite Right to Reside is "yes" */}
           {formValues.nationality !== "GB" &&
+            formValues.nationality !== "" &&
             !formValues.indefinite_right_to_reside && (
               <Row>
                 <Col md={6}>
@@ -864,12 +956,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     type="number"
                     placeholder="Years"
                     readOnly
+                    className="rounded-end-0"
                     value={formValues.time_at_address_years || ""}
                     onChange={(e) =>
                       handleInputChange("time_at_address_years", e.target.value)
                     }
                   />
-                  <InputGroupText>Years</InputGroupText>
+                  <InputGroupText className="border-start-0 rounded-start-0">
+                    Years
+                  </InputGroupText>
                 </InputGroup>
 
                 <InputGroup>
@@ -878,6 +973,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                     type="number"
                     placeholder="Months"
                     readOnly
+                    className="rounded-end-0"
                     value={formValues.time_at_address_months || ""}
                     onChange={(e) =>
                       handleInputChange(
@@ -886,7 +982,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                       )
                     }
                   />
-                  <InputGroupText>Months</InputGroupText>
+                  <InputGroupText className="border-start-0 rounded-start-0">
+                    Months
+                  </InputGroupText>
                 </InputGroup>
               </FormGroup>
             </Col>
@@ -1493,12 +1591,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       </Row>
 
       {/* Company Applicant Modal */}
-      <AddCompanyDetailsFormModal
-        isOpen={isCompanyModalOpen}
-        toggle={() => setIsCompanyModalOpen(false)}
-        case_alias={casealias as string}
-        applicantDetails_alias={formValues.alias as string}
-      />
+      {formValues?.is_company_application === true ? (
+        <AddCompanyDetailsFormModal
+          isOpen={isCompanyModalOpen}
+          toggle={() => setIsCompanyModalOpen(false)}
+          case_alias={casealias as string}
+          applicantDetails_alias={formValues.alias as string}
+        />
+      ) : (
+        ""
+      )}
 
       {/* Dependants of Applicant Modal */}
       <AddDependantFormModal
@@ -1508,11 +1610,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
         applicantDetails_alias={formValues.alias as string}
       />
       {/* Modal Component */}
-      <ApplicantDependantsViewModal
-        isOpen={isDependantsViewModalOpen}
-        toggle={toggleViewModal}
-        applicantAlias={formValues.alias as string}
-      />
+      {formValues?.has_dependants === true ? (
+        <ApplicantDependantsViewModal
+          isOpen={isDependantsViewModalOpen}
+          toggle={toggleViewModal}
+          applicantAlias={formValues.alias as string}
+        />
+      ) : (
+        ""
+      )}
     </Container>
   );
 };

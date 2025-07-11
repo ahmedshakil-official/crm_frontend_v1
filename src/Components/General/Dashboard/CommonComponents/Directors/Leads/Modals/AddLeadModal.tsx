@@ -107,6 +107,63 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
     router.push(getCaseUrl(caseAlias, userType as string));
   };
 
+  const handleSaveLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const payload = {
+      user: {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        phone: formData.phone || null,
+        password: formData.password,
+      },
+      designation: formData.designation || null,
+      permanent_address: formData.permanent_address || null,
+      present_address: formData.present_address || null,
+      dob: formData.dob || null,
+      gender: formData.gender,
+      joining_date: formData.joining_date || null,
+      registration_number: formData.registration_number || null,
+      degree: formData.degree || null,
+    };
+
+    try {
+      const result = await addLeadDetails({ payload });
+      if (result.data) {
+        toast.success("Lead added successfully.");
+        // Clear form data
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          password: "",
+          designation: "",
+          permanent_address: "",
+          present_address: "",
+          dob: "",
+          gender: "",
+          joining_date: "",
+          registration_number: "",
+          degree: "",
+        });
+        toggle(); // Close the modal
+      } else if ("error" in result) {
+        const errorMessage =
+          (result.error as any)?.data?.user?.email?.[0] || "Invalid Request...";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Invalid Request...");
+      }
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.user?.email?.[0] ||
+        "An error occurred. Please try again.";
+      toast.error(errorMessage);
+      console.error("Error creating lead:", error);
+    }
+  };
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="lg">
       <ModalHeader toggle={toggle}>
@@ -303,7 +360,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
           </Row>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary">
+          <Button color="primary" onClick={handleSaveLead}>
             {isLoading ? "Saving..." : "Save Lead"}
           </Button>
           <Button color="success" onClick={handleSaveAndCreateCase}>
