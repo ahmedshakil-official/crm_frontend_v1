@@ -47,6 +47,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     { case_alias: casealias },
     { skip: !casealias }
   );
+  console.log("loandetailsData", loandetailsData);
 
   // Initialize form states with default values
   const [formDataTab1, setFormDataTab1] = useState({
@@ -72,10 +73,12 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     term_years: 0,
     term_months: 0,
     interest_only_amount: null as string | null,
-    outstanding_balance: null as string | null,
+    outstanding_balance: "",
+    deposit_amount: 0,
+    deposit_source: null as string | null,
     current_monthly_payment: null as string | null,
     current_lender: "",
-    original_purchase_price: "",
+    original_purchase_price: 0,
     date_of_purchase: null as string | null,
     advice_level: "",
   });
@@ -123,13 +126,15 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
         ltv: loandetailsData.ltv || null,
         term_years: loandetailsData.term_years || 0,
         term_months: loandetailsData.term_months || 0,
-        interest_only_amount: loandetailsData.interest_only_amount || "0.00",
-        outstanding_balance: loandetailsData.outstanding_balance || null,
+        interest_only_amount: loandetailsData.interest_only_amount || 0,
+        outstanding_balance: loandetailsData.outstanding_balance || "",
+        deposit_amount: loandetailsData.deposit_amount || 0,
+        deposit_source: loandetailsData.deposit_source || null,
         current_monthly_payment:
           loandetailsData.current_monthly_payment || null,
         current_lender: loandetailsData.current_lender || "",
         original_purchase_price:
-          loandetailsData.original_purchase_price || "0.00",
+          loandetailsData.original_purchase_price || 0,
         date_of_purchase: loandetailsData.date_of_purchase || null,
         advice_level: loandetailsData.advice_level || "",
       });
