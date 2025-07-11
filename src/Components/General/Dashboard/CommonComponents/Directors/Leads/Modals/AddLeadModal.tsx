@@ -11,6 +11,7 @@ import {
   Form,
   FormGroup,
   Input,
+  InputGroupText,
   Label,
   Modal,
   ModalBody,
@@ -45,6 +46,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
   const toggleCaseModal = () => setIsCaseModalOpen((prev) => !prev);
 
   const [createdLeadId, setCreatedLeadId] = useState<number | null>(null);
+  const [submitType, setSubmitType] = useState<"lead" | "case" | null>(null);
 
   const { data: session } = useSession();
   const userType = session?.user?.user_type;
@@ -165,13 +167,42 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="lg">
+    <Modal isOpen={isOpen} toggle={toggle} size="lg" centered>
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Lead</span>
       </ModalHeader>
-      <Form onSubmit={handleSaveAndCreateCase}>
+      <Form
+        onSubmit={(e) => {
+          if (submitType === "lead") {
+            handleSaveLead(e);
+          } else if (submitType === "case") {
+            handleSaveAndCreateCase(e);
+          }
+        }}
+      >
         <ModalBody>
           <Row>
+            {/* <Col md={6}>
+              <FormGroup>
+                <Label for="title">
+                  Title<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  id="title"
+                  name="title"
+                  type="select"
+                  value={formData.title || ""}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select...</option>
+                  <option value="MR">Mr.</option>
+                  <option value="MRS">Mrs.</option>
+                  <option value="MS">Ms.</option>
+                  <option value="MISS">Miss.</option>
+                </Input>
+              </FormGroup>
+            </Col> */}
             <Col md={6}>
               <FormGroup>
                 <Label for="firstName">
@@ -187,6 +218,18 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 />
               </FormGroup>
             </Col>
+            {/* <Col md={6}>
+              <FormGroup>
+                <Label for="middleName">Middle Name(s)</Label>
+                <Input
+                  id="middleName"
+                  name="middleName"
+                  type="text"
+                  value={formData.middleName || ""}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col> */}
             <Col md={6}>
               <FormGroup>
                 <Label for="lastName">
@@ -202,8 +245,6 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 />
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="email">
@@ -234,8 +275,18 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 />
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
+            {/* <Col md={6}>
+              <FormGroup>
+                <Label for="HomeTelephone">Home Telephone</Label>
+                <Input
+                  id="HomeTelephone"
+                  name="HomeTelephone"
+                  type="text"
+                  value={formData.home_telephone || ""}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col> */}
             <Col md={6}>
               <FormGroup>
                 <Label for="phone">Phone</Label>
@@ -243,9 +294,46 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   id="phone"
                   name="phone"
                   type="text"
-                  value={formData.phone}
+                  value={formData.phone || ""}
                   onChange={handleInputChange}
                 />
+              </FormGroup>
+            </Col>
+            {/* <Col md={6}>
+              <FormGroup>
+                <Label for="WorkNumber">Work Number</Label>
+                <Input
+                  id="WorkNumber"
+                  name="WorkNumber"
+                  type="text"
+                  value={formData.work_number || ""}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col> */}
+            <Col md={6}>
+              <Label for="dob">Date of Birth</Label>
+              <FormGroup className="d-flex">
+                <Input
+                  id="dob"
+                  name="dob"
+                  type="date"
+                  className="rounded-end-0"
+                  value={formData.dob}
+                  onChange={handleInputChange}
+                />
+                <InputGroupText
+                  className="border-start-0 rounded-start-0"
+                  style={{ padding: "6px 10px" }}
+                >
+                  {formData.dob
+                    ? Math.floor(
+                        (new Date().getTime() -
+                          new Date(formData.dob).getTime()) /
+                          (1000 * 60 * 60 * 24 * 365.25)
+                      ) + "y"
+                    : "0y"}
+                </InputGroupText>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -262,97 +350,23 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   required
                 >
                   <option value="">Select...</option>
-                  <option value="MALE">MALE</option>
-                  <option value="FEMALE">FEMALE</option>
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                  <option value="OTHER">Other</option>
                 </Input>
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
+            {/* </Row>
+
+          <Row> */}
             <Col md={6}>
               <FormGroup>
-                <Label for="dob">Date of Birth</Label>
+                <Label for="address_l1">Address L1</Label>
                 <Input
-                  id="dob"
-                  name="dob"
-                  type="date"
-                  value={formData.dob}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="degree">Degree</Label>
-                <Input
-                  id="degree"
-                  name="degree"
-                  type="text"
-                  value={formData.degree}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={4}>
-              <FormGroup>
-                <Label for="joining_date">Joining Date</Label>
-                <Input
-                  id="joining_date"
-                  name="joining_date"
-                  type="date"
-                  value={formData.joining_date}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label for="designation">Designation</Label>
-                <Input
-                  id="designation"
-                  name="designation"
-                  type="text"
-                  value={formData.designation}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label for="registration_number">Registration Number</Label>
-                <Input
-                  id="registration_number"
-                  name="registration_number"
-                  type="text"
-                  value={formData.registration_number}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="present_address">Present Address</Label>
-                <Input
-                  id="present_address"
-                  name="present_address"
+                  id="address_l1"
+                  name="address_l1"
                   type="text"
                   value={formData.present_address}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="permanent_address">Permanent Address</Label>
-                <Input
-                  id="permanent_address"
-                  name="permanent_address"
-                  type="text"
-                  value={formData.permanent_address}
                   onChange={handleInputChange}
                 />
               </FormGroup>
@@ -360,10 +374,18 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
           </Row>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleSaveLead}>
+          <Button
+            type="submit"
+            color="primary"
+            onClick={() => setSubmitType("lead")}
+          >
             {isLoading ? "Saving..." : "Save Lead"}
           </Button>
-          <Button color="success" onClick={handleSaveAndCreateCase}>
+          <Button
+            type="submit"
+            color="success"
+            onClick={() => setSubmitType("case")}
+          >
             Save & Create Case
           </Button>
           <Button color="secondary" onClick={toggle}>
