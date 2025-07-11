@@ -9,9 +9,9 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
 }) => {
   const calculateLTV = (): string => {
     if (
-      formData.loan_amount &&
-      formData.property_valuation > 0 || formData.purchase_price>0 &&
-      formData.loan_amount <= formData.property_valuation
+      (formData.loan_amount && formData.property_valuation > 0) ||
+      (formData.purchase_price > 0 &&
+        formData.loan_amount <= formData.property_valuation)
     ) {
       const ltv = (formData.loan_amount / formData.estimated_value) * 100;
       return Math.min(ltv, 100).toFixed(2); // Cap LTV at 100%
@@ -79,10 +79,11 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
             />
             <FormText className=" text-danger">
               {calculateLTV() === ""
-                ? `Loan Amount can not be more than the ${formData.mortgage_type === "PURCHASE"
-                  ? "Purchase Price"
-                  : "Property Valuation"
-              }*`
+                ? `Loan Amount can not be more than the ${
+                    formData.mortgage_type === "PURCHASE"
+                      ? "Purchase Price"
+                      : "Property Valuation"
+                  }*`
                 : ""}
             </FormText>
           </FormGroup>
@@ -167,60 +168,146 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
             />
           </FormGroup>
         </Col>
-        <Col md={6}>
-          <FormGroup>
-            <Label for="outstanding_balance">Outstanding Balance</Label>
-            <Input
-              type="number"
-              name="outstanding_balance"
-              min="0"
-              value={formData.outstanding_balance || ""}
-              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
-            />
-          </FormGroup>
-        </Col>
-        <Col md={6}>
-          <FormGroup>
-            <Label for="current_monthly_payment">Current Monthly Payment</Label>
-            <Input
-              type="number"
-              name="current_monthly_payment"
-              min="0"
-              value={formData.current_monthly_payment || ""}
-              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
-            />
-          </FormGroup>
-        </Col>
-        <Col md={6}>
-          <FormGroup>
-            <Label for="current_lender">Current Lender</Label>
-            <Input
-              type="select"
-              name="current_lender"
-              value={formData.current_lender}
-              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
-            >
-              <option value="">Select...</option>
-              <option value="UNKNOWN">Unknown</option>
-              {LenderList.map((lender) => (
-                <option key={lender.value} value={lender.label}>
-                  {lender.label}
-                </option>
-              ))}
-            </Input>
-          </FormGroup>
-        </Col>
-        <Col md={6}>
-          <FormGroup>
-            <Label for="date_of_purchase">Date Of Purchase</Label>
-            <Input
-              type="date"
-              name="date_of_purchase"
-              value={formData.date_of_purchase || ""}
-              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
-            />
-          </FormGroup>
-        </Col>
+
+        {(formData.mortgage_type === "PURCHASE" ||
+          formData.mortgage_type === "OTHER") && (
+          <Col md={6}>
+            <FormGroup>
+              <Label for="deposit_amount">Deposit Amount</Label>
+              <Input
+                type="number"
+                name="deposit_amount"
+                min="0"
+                value={formData.deposit_amount || 0}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              />
+            </FormGroup>
+          </Col>
+        )}
+        {(formData.mortgage_type === "PURCHASE" ||
+          formData.mortgage_type === "OTHER") && (
+          <Col md={6}>
+            <FormGroup>
+              <Label for="deposit_source">Deposit Source</Label>
+              <Input
+                type="text"
+                name="deposit_source"
+                value={formData.deposit_source || ""}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              />
+            </FormGroup>
+          </Col>
+        )}
+        {(formData.mortgage_type === "REMORTGAGE" ||
+          formData.mortgage_type === "SECURED_LOAN" ||
+          formData.mortgage_type === "FURTHER_ADVANCE" ||
+          formData.mortgage_type === "PRODUCT_TRANSFER" ||
+          formData.mortgage_type === "OTHER") && (
+          <Col md={6}>
+            <FormGroup>
+              <Label for="outstanding_balance">Outstanding Balance</Label>
+              <Input
+                type="number"
+                name="outstanding_balance"
+                min="0"
+                value={formData.outstanding_balance || ""}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              />
+            </FormGroup>
+          </Col>
+        )}
+        {(formData.mortgage_type === "REMORTGAGE" ||
+          formData.mortgage_type === "SECURED_LOAN" ||
+          formData.mortgage_type === "FURTHER_ADVANCE" ||
+          formData.mortgage_type === "PRODUCT_TRANSFER" ||
+          formData.mortgage_type === "OTHER") && (
+          <Col md={6}>
+            <FormGroup>
+              <Label for="current_monthly_payment">
+                Current Monthly Payment
+              </Label>
+              <Input
+                type="number"
+                name="current_monthly_payment"
+                min="0"
+                value={formData.current_monthly_payment || ""}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              />
+            </FormGroup>
+          </Col>
+        )}
+        {(formData.mortgage_type === "REMORTGAGE" ||
+          formData.mortgage_type === "SECURED_LOAN" ||
+          formData.mortgage_type === "FURTHER_ADVANCE" ||
+          formData.mortgage_type === "PRODUCT_TRANSFER" ||
+          formData.mortgage_type === "OTHER") && (
+          <Col md={6}>
+            <FormGroup>
+              <Label for="current_lender">Current Lender</Label>
+              <Input
+                type="select"
+                name="current_lender"
+                value={formData.current_lender}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              >
+                <option value="">Select...</option>
+                <option value="UNKNOWN">Unknown</option>
+                {LenderList.map((lender) => (
+                  <option key={lender.value} value={lender.value}>
+                    {lender.label}
+                  </option>
+                ))}
+              </Input>
+            </FormGroup>
+          </Col>
+        )}
+        {(formData.mortgage_type === "REMORTGAGE" ||
+          formData.mortgage_type === "SECURED_LOAN" ||
+          formData.mortgage_type === "FURTHER_ADVANCE" ||
+          formData.mortgage_type === "PRODUCT_TRANSFER" ||
+          formData.mortgage_type === "OTHER") && (
+          <Col md={6}>
+            <FormGroup>
+              <Label for="original_purchase_price">
+                Original Purchase Price
+              </Label>
+              <Input
+                type="number"
+                name="original_purchase_price"
+                min="0"
+                value={formData.original_purchase_price || 0}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              />
+            </FormGroup>
+          </Col>
+        )}
+        {formData.mortgage_type === "PURCHASE" || (
+          <Col md={6}>
+            <FormGroup>
+              <Label for="date_of_purchase">Date Of Purchase</Label>
+              <Input
+                type="date"
+                name="date_of_purchase"
+                value={formData.date_of_purchase || ""}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, e.target.value)
+                }
+              />
+            </FormGroup>
+          </Col>
+        )}
         <Col md={6}>
           <FormGroup>
             <Label for="advice_level">Advice Level</Label>
