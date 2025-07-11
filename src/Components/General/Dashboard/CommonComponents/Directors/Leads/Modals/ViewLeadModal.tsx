@@ -17,7 +17,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
 }) => {
   if (!selectedLead) return null;
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="lg">
+    <Modal isOpen={isOpen} toggle={toggle} size="lg" centered>
       <ModalHeader toggle={toggle}>
         <h3 className="text-primary">Lead Information</h3>
       </ModalHeader>
@@ -134,49 +134,6 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
         {/* 4th row  */}
         <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Joining Date:</span>
-            <small>
-              {selectedLead?.joining_date || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Registration Number:</span>
-            <small>
-              {selectedLead?.registration_number || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Designation:</span>
-            <small>
-              {selectedLead?.designation || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-        </Row>
-        {/* 5th row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Degree:</span>
-            <small>
-              {selectedLead?.degree || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">NID:</span>
-            <small>
-              {selectedLead?.user?.nid || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Created At:</span>
             <small>
               {(selectedLead?.created_at &&
@@ -185,9 +142,6 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
               )}
             </small>
           </Col>
-        </Row>
-        {/* 6th row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Created By:</span>
             <small>
@@ -213,6 +167,9 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
               )
             </small>
           </Col>
+        </Row>
+        {/* 5th row  */}
+        <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Permanent Address:</span>
             <small>

@@ -46,6 +46,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
   const toggleCaseModal = () => setIsCaseModalOpen((prev) => !prev);
 
   const [createdLeadId, setCreatedLeadId] = useState<number | null>(null);
+  const [submitType, setSubmitType] = useState<"lead" | "case" | null>(null);
 
   const { data: session } = useSession();
   const userType = session?.user?.user_type;
@@ -170,7 +171,15 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Lead</span>
       </ModalHeader>
-      <Form onSubmit={handleSaveAndCreateCase}>
+      <Form
+        onSubmit={(e) => {
+          if (submitType === "lead") {
+            handleSaveLead(e);
+          } else if (submitType === "case") {
+            handleSaveAndCreateCase(e);
+          }
+        }}
+      >
         <ModalBody>
           <Row>
             {/* <Col md={6}>
@@ -341,9 +350,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   required
                 >
                   <option value="">Select...</option>
-                  <option value="MALE">MALE</option>
-                  <option value="FEMALE">FEMALE</option>
-                  <option value="OTHER">OTHER</option>
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                  <option value="OTHER">Other</option>
                 </Input>
               </FormGroup>
             </Col>
@@ -365,10 +374,18 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
           </Row>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleSaveLead}>
+          <Button
+            type="submit"
+            color="primary"
+            onClick={() => setSubmitType("lead")}
+          >
             {isLoading ? "Saving..." : "Save Lead"}
           </Button>
-          <Button color="success" onClick={handleSaveAndCreateCase}>
+          <Button
+            type="submit"
+            color="success"
+            onClick={() => setSubmitType("case")}
+          >
             Save & Create Case
           </Button>
           <Button color="secondary" onClick={toggle}>
