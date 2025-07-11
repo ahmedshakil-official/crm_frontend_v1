@@ -17,7 +17,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
 }) => {
   if (!selectedLead) return null;
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="lg">
+    <Modal isOpen={isOpen} toggle={toggle} size="lg" centered>
       <ModalHeader toggle={toggle}>
         <h3 className="text-primary">Lead Information</h3>
       </ModalHeader>
