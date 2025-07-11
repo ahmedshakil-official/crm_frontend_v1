@@ -554,7 +554,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           </Row>
 
           {/* Conditional Fields */}
-          {formValues.nationality !== "GB" && (
+          {formValues.nationality !== "GB" && formValues.nationality !== "" && (
             <Row>
               <Col md={6}>
                 <FormGroup>
@@ -604,6 +604,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
 
           {/* Visa Details - Hidden if Indefinite Right to Reside is "yes" */}
           {formValues.nationality !== "GB" &&
+            formValues.nationality !== "" &&
             !formValues.indefinite_right_to_reside && (
               <Row>
                 <Col md={6}>
