@@ -38,7 +38,7 @@ const checkers: Checker[] = [
 const ratingCriteria = {
   green:
     "(Grade 7) File demonstrates Suitability of Advice, KYC and TCF. Thorough factfind/record keeping, and/or suitability letter.",
-  amber:
+  yellow:
     "(Grade 5-6) Weaknesses identified in fact find/record keeping, and/or suitability letter but advice seems acceptable on the face of it. Additional information will help avoid a complaint and meet KYC requirements.",
   red: "(Grades 1-4) Serious weaknesses in fact find/record keeping and/or suitability letter. Significant doubts or difficult to prove whether customer has received suitable advice or been treated fairly.",
 };
@@ -148,6 +148,7 @@ export const ComplianceRatingCard: FC = () => {
               onChange={(date: Date) =>
                 handleAnswerChange("date_file_checked", date)
               }
+            
               dateFormat="dd/MM/yyyy"
               customInput={<CustomInput />}
             />
@@ -253,21 +254,25 @@ export const ComplianceRatingCard: FC = () => {
         <Col xs={12} md={8}>
           {[
             { rating: "green", field: "rating_a" },
-            { rating: "amber", field: "rating_b" },
+            { rating: "yellow", field: "rating_b" },
             { rating: "red", field: "rating_c" },
           ].map(({ rating, field }) => (
             <div key={rating} className="d-flex align-items-start mb-4">
               <div
-                className={`d-flex align-items-center justify-content-center text-white fw-bold fs-4 me-3 rounded ${
-                  rating === "green"
-                    ? "bg-success"
-                    : rating === "amber"
-                    ? "bg-warning"
-                    : "bg-danger"
-                }`}
-                style={{ width: "55px", height: "55px", minWidth: "55px" }}
+                className="d-flex align-items-center justify-content-center text-white fw-bold fs-4 me-3 rounded"
+                style={{
+                  width: "55px",
+                  height: "55px",
+                  minWidth: "55px",
+                  backgroundColor:
+                    rating === "green"
+                      ? "#198754"
+                      : rating === "yellow"
+                      ? "#ffd63a"
+                      : "#dc3545",
+                }}
               >
-                {rating === "green" ? "G" : rating === "amber" ? "A" : "R"}
+                {rating === "green" ? "G" : rating === "yellow" ? "A" : "R"}
               </div>
               <div className="d-flex align-items-start gap-3">
                 <FormGroup check className="mt-2 mb-0">
@@ -277,7 +282,7 @@ export const ComplianceRatingCard: FC = () => {
                     checked={formData[field as keyof ComplianceState] === true}
                     onChange={() => {
                       handleAnswerChange("rating_a", rating === "green");
-                      handleAnswerChange("rating_b", rating === "amber");
+                      handleAnswerChange("rating_b", rating === "yellow");
                       handleAnswerChange("rating_c", rating === "red");
                     }}
                   />
