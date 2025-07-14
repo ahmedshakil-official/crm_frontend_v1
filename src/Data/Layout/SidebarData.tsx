@@ -303,71 +303,60 @@ const OrganisationAdviserMenu: MenuItem[] = [
 //Or Organisation staff Menu
 const OrganisationStaffMenu: MenuItem[] = [
   {
-    title: "General",
+    title: "Home",
     lanClass: "lan-1",
     type: "group",
     Items: [
       {
-        title: "Home",
+        title: "Dashboard",
         icon: "Home-dashboard",
         type: "sub",
         badge: "4",
         lanClass: "lan-3",
-        children: [
-          {
-            path: "/dashboard/orgstaff",
-            title: "Dashboard",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgstaff/tasksandreminders",
-            title: "Tasks & Reminders",
-            type: "link",
-          },
-        ],
+        path: "/dashboard/orgstaff",
       },
       {
-        title: "Directors",
-        icon: "Profile",
+        title: "Case Updates",
+        icon: "Activity",
         type: "sub",
         badge: "3",
         lanClass: "lan-3",
-        children: [
-          {
-            path: "/dashboard/orgstaff/directors/leads",
-            title: "Leads",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgstaff/directors/introducers",
-            title: "Introducers",
-            type: "link",
-          },
-        ],
+        path: "/dashboard/orgstaff/caseupdates",
       },
       {
-        title: "Cases",
-        icon: "Pie",
+        title: "Tasks & Reminders",
+        icon: "Edit",
         type: "sub",
         badge: "3",
         lanClass: "lan-3",
-        children: [
-          {
-            path: "/dashboard/orgstaff/cases",
-            title: "All Case",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgstaff/activecases",
-            title: "Active Case",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgstaff/removedcases",
-            title: "Removed Case",
-            type: "link",
-          },
-        ],
+      },
+      {
+        title: "Advisers",
+        icon: "Work",
+        type: "sub",
+        badge: "3",
+        lanClass: "lan-3",
+      },
+      {
+        title: "Document Management",
+        icon: "Paper",
+        type: "sub",
+        badge: "3",
+        lanClass: "lan-3",
+      },
+      {
+        title: "Chat & Communication",
+        icon: "Chat",
+        type: "sub",
+        badge: "3",
+        lanClass: "lan-3",
+      },
+      {
+        title: "Comments",
+        icon: "Message",
+        type: "sub",
+        badge: "3",
+        lanClass: "lan-3",
       },
     ],
   },
