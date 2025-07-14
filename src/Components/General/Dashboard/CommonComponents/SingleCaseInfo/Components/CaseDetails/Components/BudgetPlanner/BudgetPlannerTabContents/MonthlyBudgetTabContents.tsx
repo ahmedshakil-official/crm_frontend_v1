@@ -3,7 +3,6 @@ import { MonthlyBudgetTabContentsProps } from "@/Types/CommonComponents/SingleCa
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
-  Button,
   Col,
   FormGroup,
   Input,
@@ -144,40 +143,16 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
     return (totalIncome - totalDebt - totalLiving).toFixed(2);
   };
 
-  // Handle copy from current
-  const handleCopyFromCurrent = () => {
-    const newPostValues: Record<string, string> = {};
-    Object.keys(currentValues).forEach((key) => {
-      const newKey = key.replace(
-        "CurrentBudgetPlanner",
-        "PostCompletionsBudgetPlanner"
-      );
-      newPostValues[newKey] = currentValues[key];
-    });
-    setPostValues(newPostValues);
-  };
-
   const renderColumn = (
     title: string,
     prefix: string,
-    showCopyButton?: boolean
+    // showCopyButton?: boolean
   ) => (
     <div className="col-md-6">
       <h4 className="text-center mb-3">{title}</h4>
       <div className="border rounded-3 shadow-sm">
-        <div
-          className={`bg-light border-bottom p-3 ${
-            showCopyButton
-              ? "d-flex justify-content-between align-items-center"
-              : ""
-          }`}
-        >
+        <div className={`bg-light border-bottom p-3`}>
           <span className="fw-bold text-primary">Sub-Totals</span>
-          {showCopyButton && (
-            <Button color="primary" size="sm" onClick={handleCopyFromCurrent}>
-              Copy from Current
-            </Button>
-          )}
         </div>
         <div className="p-3">
           {subtotalFields.map((field) => (
@@ -249,9 +224,6 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
               className="control-label text-primary"
             >
               {availableIncomeField.label}
-              <span className="required" style={{ visibility: "hidden" }}>
-                *
-              </span>
             </Label>
             <Col sm={6}>
               <InputGroup>
@@ -297,7 +269,7 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
       </p>
       <section className="row mt-4">
         {renderColumn("Current", "CurrentBudgetPlanner")}
-        {renderColumn("Post Completion", "PostCompletionsBudgetPlanner", true)}
+        {renderColumn("Post Completion", "PostCompletionsBudgetPlanner")}
       </section>
     </div>
   );
