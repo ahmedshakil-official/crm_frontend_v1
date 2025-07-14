@@ -224,9 +224,6 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
               className="control-label text-primary"
             >
               {availableIncomeField.label}
-              <span className="required" style={{ visibility: "hidden" }}>
-                *
-              </span>
             </Label>
             <Col sm={6}>
               <InputGroup>
