@@ -1,7 +1,6 @@
 import SVG from "@/CommonComponent/SVG";
 import { getMenuByRole } from "@/Data/Layout/SidebarData";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { handlePined } from "@/Redux/Reducers/LayoutSlice";
 import { MenuListType } from "@/Types/LayoutTypes";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
@@ -99,13 +98,6 @@ const Menulist: React.FC<MenuListType> = ({
               pinedMenu.includes(item.title) ? "pined" : ""
             } ${isCurrentActive ? "active" : ""}`}
           >
-            {level === 0 && (
-              <i
-                className="fa-solid fa-thumbtack position-absolute"
-                onClick={() => dispatch(handlePined(item.title))}
-              ></i>
-            )}
-
             <a
               href={item.path || "#"}
               className={`nav-link d-flex align-items-center gap-1 ${
