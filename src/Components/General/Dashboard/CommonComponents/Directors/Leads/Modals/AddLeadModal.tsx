@@ -11,7 +11,6 @@ import {
   Form,
   FormGroup,
   Input,
-  InputGroupText,
   Label,
   Modal,
   ModalBody,
@@ -182,7 +181,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
       >
         <ModalBody>
           <Row>
-            {/* <Col md={6}>
+            <Col md={6}>
               <FormGroup>
                 <Label for="title">
                   Title<span className="text-danger">*</span>
@@ -191,7 +190,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   id="title"
                   name="title"
                   type="select"
-                  value={formData.title || ""}
+                  // value={formData.title || ""}
                   onChange={handleInputChange}
                   required
                 >
@@ -202,7 +201,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   <option value="MISS">Miss.</option>
                 </Input>
               </FormGroup>
-            </Col> */}
+            </Col>
             <Col md={6}>
               <FormGroup>
                 <Label for="firstName">
@@ -218,18 +217,18 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 />
               </FormGroup>
             </Col>
-            {/* <Col md={6}>
+            <Col md={6}>
               <FormGroup>
                 <Label for="middleName">Middle Name(s)</Label>
                 <Input
                   id="middleName"
                   name="middleName"
                   type="text"
-                  value={formData.middleName || ""}
+                  // value={formData.middleName || ""}
                   onChange={handleInputChange}
                 />
               </FormGroup>
-            </Col> */}
+            </Col>
             <Col md={6}>
               <FormGroup>
                 <Label for="lastName">
@@ -260,36 +259,9 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 />
               </FormGroup>
             </Col>
-            {/* <Col md={6}>
-              <FormGroup>
-                <Label for="password">
-                  Password<span className="text-danger">*</span>
-                </Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                />
-              </FormGroup>
-            </Col> */}
-            {/* <Col md={6}>
-              <FormGroup>
-                <Label for="HomeTelephone">Home Telephone</Label>
-                <Input
-                  id="HomeTelephone"
-                  name="HomeTelephone"
-                  type="text"
-                  value={formData.home_telephone || ""}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col> */}
             <Col md={6}>
               <FormGroup>
-                <Label for="phone">Phone</Label>
+                <Label for="phone">Mobile Number</Label>
                 <Input
                   id="phone"
                   name="phone"
@@ -299,41 +271,17 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 />
               </FormGroup>
             </Col>
-            {/* <Col md={6}>
-              <FormGroup>
-                <Label for="WorkNumber">Work Number</Label>
-                <Input
-                  id="WorkNumber"
-                  name="WorkNumber"
-                  type="text"
-                  value={formData.work_number || ""}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col> */}
             <Col md={6}>
-              <Label for="dob">Date of Birth</Label>
-              <FormGroup className="d-flex">
+              <Label for="reasonForEnquiry">Reason For Enquiry</Label>
+              <FormGroup>
                 <Input
-                  id="dob"
-                  name="dob"
-                  type="date"
+                  id="reasonForEnquiry"
+                  name="reasonForEnquiry"
+                  type="text"
                   className="rounded-end-0"
-                  value={formData.dob}
+                  // value={formData.reason_for_enquiry}
                   onChange={handleInputChange}
                 />
-                <InputGroupText
-                  className="border-start-0 rounded-start-0"
-                  style={{ padding: "6px 10px" }}
-                >
-                  {formData.dob
-                    ? Math.floor(
-                        (new Date().getTime() -
-                          new Date(formData.dob).getTime()) /
-                          (1000 * 60 * 60 * 24 * 365.25)
-                      ) + "y"
-                    : "0y"}
-                </InputGroupText>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -354,21 +302,6 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   <option value="FEMALE">Female</option>
                   <option value="OTHER">Other</option>
                 </Input>
-              </FormGroup>
-            </Col>
-            {/* </Row>
-
-          <Row> */}
-            <Col md={6}>
-              <FormGroup>
-                <Label for="address_l1">Address L1</Label>
-                <Input
-                  id="address_l1"
-                  name="address_l1"
-                  type="text"
-                  value={formData.present_address}
-                  onChange={handleInputChange}
-                />
               </FormGroup>
             </Col>
           </Row>
