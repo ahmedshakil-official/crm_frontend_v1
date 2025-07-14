@@ -290,16 +290,18 @@ const Cases: React.FC = () => {
                     <i className="fa-solid fa-filter"></i>
                   )}
                 </Button>
-                <Button
-                  color="primary"
-                  onClick={openAddNewCaseModal}
-                  className="d-flex justify-content-center align-items-center gap-1"
-                >
-                  <span>Add New Case</span>
-                  <span>
-                    <i className="fa-solid fa-circle-plus"></i>
-                  </span>
-                </Button>
+                {userType !== "ORGANIZATION_SUPPORT" && (
+                  <Button
+                    color="primary"
+                    onClick={openAddNewCaseModal}
+                    className="d-flex justify-content-center align-items-center gap-1"
+                  >
+                    <span>Add New Case</span>
+                    <span>
+                      <i className="fa-solid fa-circle-plus"></i>
+                    </span>
+                  </Button>
+                )}
               </Col>
             </Row>
           </CardHeader>
@@ -493,19 +495,22 @@ const Cases: React.FC = () => {
                               size="sm"
                               color="success"
                               className="me-2"
-                              title="Edit Case"
+                              title="Update Case"
                               onClick={() => openUpdateCaseModal(caseItem)}
                             >
                               <i className="icon-pencil-alt"></i>
                             </Button>
-                            <Button
-                              size="sm"
-                              color="danger"
-                              title="Delete Case"
-                              onClick={() => openDeleteCaseModal(caseItem)}
-                            >
-                              <i className="icon-trash"></i>
-                            </Button>
+                            {userType !== "ORGANIZATION_SUPPORT" &&
+                              userType !== "ORGANIZATION_ADVISER" && (
+                                <Button
+                                  size="sm"
+                                  color="danger"
+                                  title="Delete Case"
+                                  onClick={() => openDeleteCaseModal(caseItem)}
+                                >
+                                  <i className="icon-trash"></i>
+                                </Button>
+                              )}
                           </div>
                         </td>
                       </tr>
