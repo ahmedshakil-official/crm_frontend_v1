@@ -260,7 +260,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 />
               </FormGroup>
             </Col>
-            <Col md={6}>
+            {/* <Col md={6}>
               <FormGroup>
                 <Label for="password">
                   Password<span className="text-danger">*</span>
@@ -274,7 +274,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   required
                 />
               </FormGroup>
-            </Col>
+            </Col> */}
             {/* <Col md={6}>
               <FormGroup>
                 <Label for="HomeTelephone">Home Telephone</Label>
