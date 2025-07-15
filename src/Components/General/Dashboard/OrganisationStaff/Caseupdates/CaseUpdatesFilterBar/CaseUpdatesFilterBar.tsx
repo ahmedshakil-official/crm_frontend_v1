@@ -8,7 +8,7 @@ import {
 
 const CaseUpdatesFilterBar: FC = () => {
   return (
-    <Card className="p-3 my-3">
+    <Card className="p-3 my-3 shadow">
       <Row>
         <Col>
           <Input 

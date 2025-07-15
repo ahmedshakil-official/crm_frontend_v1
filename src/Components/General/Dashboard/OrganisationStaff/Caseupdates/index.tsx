@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { Button, Container, Row } from "reactstrap";
 import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
-import CaseUpdatesFilterBar from "./CaseUpdatesFilterBar/CaseUpdatesFilterBar";
 import CaseTimeline from "./CaseTimeline/CaseTimeline";
+import CaseUpdatesFilterBar from "./CaseUpdatesFilterBar/CaseUpdatesFilterBar";
 
 const CaseupdatesContainer: React.FC = () => {
   return (
@@ -13,9 +14,11 @@ const CaseupdatesContainer: React.FC = () => {
       />
       <Container fluid>
         <div className=" d-flex justify-content-end">
-          <Button className="border-0">
-            <small>View All Cases</small>
-          </Button>
+          <Link href="/dashboard/orgstaff/caseupdates/cases" passHref>
+            <Button className="border-0">
+              <small>View All Cases</small>
+            </Button>
+          </Link>
         </div>
         <Row>
           <CaseUpdatesFilterBar />
