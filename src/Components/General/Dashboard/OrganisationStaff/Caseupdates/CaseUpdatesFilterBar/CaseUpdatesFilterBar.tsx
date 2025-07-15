@@ -1,28 +1,23 @@
 import { FC } from "react";
-import {
-  Input,
-  Card,
-  Row,
-  Col,
-} from "reactstrap";
+import { Input, Card, Row, Col } from "reactstrap";
 
 const CaseUpdatesFilterBar: FC = () => {
   return (
-    <Card className="p-3 my-3">
+    <Card className="p-3 my-3 shadow-sm">
       <Row>
         <Col>
-          <Input 
+          <Input
             type="text"
             placeholder="Search cases, advisers, actions..."
             className="form-control"
-            style={{ height: '45px' }}
+            style={{ height: "45px" }}
           />
         </Col>
         <Col>
           <Input
             type="select"
             className="form-control"
-            style={{ height: '45px' }}
+            style={{ height: "45px" }}
           >
             <option>All Advisers</option>
             <option>Adviser 1</option>
@@ -34,7 +29,7 @@ const CaseUpdatesFilterBar: FC = () => {
           <Input
             type="select"
             className="form-control"
-            style={{ height: '45px' }}
+            style={{ height: "45px" }}
           >
             <option>All Stages</option>
             <option>Stage 1</option>
@@ -46,7 +41,7 @@ const CaseUpdatesFilterBar: FC = () => {
           <Input
             type="select"
             className="form-control"
-            style={{ height: '45px' }}
+            style={{ height: "45px" }}
           >
             <option>All Lenders</option>
             <option>Lender 1</option>
@@ -58,7 +53,7 @@ const CaseUpdatesFilterBar: FC = () => {
           <Input
             type="select"
             className="form-control"
-            style={{ height: '45px' }}
+            style={{ height: "45px" }}
           >
             <option>All Statuses</option>
             <option>Status 1</option>
