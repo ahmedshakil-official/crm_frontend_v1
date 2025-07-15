@@ -207,64 +207,16 @@ const OrganisationAdviserMenu: MenuItem[] = [
     Items: [
       {
         title: "Dashboard",
-        icon: "Home-dashboard",
+        icon: "Chart",
         badge: "4",
         lanClass: "lan-3",
         path: "/dashboard/orgadviser",
         type: "link",
       },
       {
-        title: "Cases",
-        icon: "Pie",
+        title: "Users",
         type: "sub",
-        badge: "3",
-        lanClass: "lan-3",
-        children: [
-          {
-            path: "/dashboard/orgadviser/cases",
-            title: "All Case",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgadviser/activecases",
-            title: "Active Case",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgadviser/removedcases",
-            title: "Removed Case",
-            type: "link",
-          },
-        ],
-      },
-      {
-        title: "Directors",
         icon: "Profile",
-        type: "sub",
-        badge: "3",
-        lanClass: "lan-3",
-        children: [
-          {
-            path: "/dashboard/orgadviser/directors/leads",
-            title: "Leads",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgadviser/directors/clients",
-            title: "Clients",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgadviser/directors/introducers",
-            title: "Introducers",
-            type: "link",
-          },
-        ],
-      },
-      {
-        title: "User Settings",
-        type: "sub",
-        icon: "Setting",
         badge: "3",
         lanClass: "lan-4",
         children: [
@@ -281,6 +233,30 @@ const OrganisationAdviserMenu: MenuItem[] = [
           {
             path: "/dashboard/orgadviser/tasksandreminders",
             title: "Tasks & Reminders",
+            type: "link",
+          },
+        ],
+      },
+      {
+        title: "Cases",
+        icon: "Paper",
+        type: "sub",
+        badge: "3",
+        lanClass: "lan-3",
+        children: [
+          {
+            path: "/dashboard/orgadviser/leads",
+            title: "Leads",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/cases",
+            title: "All Case",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/activecases",
+            title: "Active Case",
             type: "link",
           },
         ],
@@ -317,11 +293,11 @@ const OrganisationStaffMenu: MenuItem[] = [
         path: "/dashboard/orgstaff/tasksandreminders",
       },
       {
-        title: "Advisers",
+        title: "Adviser Clients",
         icon: "Work",
         type: "link",
         lanClass: "lan-3",
-        path: "/dashboard/orgstaff/advisers",
+        path: "/dashboard/orgstaff/adviserclient",
       },
       {
         title: "Document Management",
