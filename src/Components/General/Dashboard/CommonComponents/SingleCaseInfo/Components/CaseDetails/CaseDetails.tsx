@@ -1,10 +1,10 @@
 import {
   CompletionTabTitleData,
   DIPTabTitleData,
+  EnqueryTabTitleData,
   FFDTabTitleData,
   FMATabTitleData,
   FOPTabTitleData,
-  InqueryTabTitleData,
   LegalTabTitleData,
   NPDTabTitleData,
   OFBTabTitleData,
@@ -13,7 +13,6 @@ import {
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useEffect } from "react";
-import { TbCircleCheckFilled } from "react-icons/tb";
 import {
   Card,
   CardBody,
@@ -37,7 +36,7 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
 
   // Map case stages to corresponding tab title data
   const tabDataMap: Record<string, any[]> = {
-    INQUIRY: InqueryTabTitleData,
+    ENQUIRY: EnqueryTabTitleData,
     FACT_FIND: FFDTabTitleData,
     RESEARCH_COMPLIANCE_CHECK: RCCTabTitleData,
     DECISION_IN_PRINCIPLE: DIPTabTitleData,

@@ -91,12 +91,7 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
                         </div>
                       </td>
                       <td className="f-w-600">
-                        <a
-                          href={`mailto:${userInfo.joint_user_details?.email}`}
-                          className="text-dark text_decoration_hover"
-                        >
-                          {userInfo.joint_user_details?.email}
-                        </a>
+                        <p>{userInfo.joint_user_details?.email}</p>
                       </td>
                       <td className="font-primary f-w-600">
                         <a

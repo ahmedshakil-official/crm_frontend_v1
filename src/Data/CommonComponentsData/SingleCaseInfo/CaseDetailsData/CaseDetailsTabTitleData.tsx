@@ -1,4 +1,4 @@
-export const InqueryTabTitleData = [
+export const EnqueryTabTitleData = [
   { id: "1", nav: "Loan Details" },
   { id: "2", nav: "Applicant(s) Details" },
   { id: "3", nav: "Portfolio" },

@@ -196,18 +196,7 @@ const Introducers: React.FC<IntroducersProps> = ({
                       {introducer?.user?.last_name}
                     </span>
                   </td>
-                  <td>
-                    {introducer?.official_email ? (
-                      <a
-                        href={`mailto:${introducer.official_email}`}
-                        className="text-black text_decoration_hover"
-                      >
-                        {introducer.official_email}
-                      </a>
-                    ) : (
-                      "-"
-                    )}
-                  </td>
+                  <td>{introducer?.official_email || "-"}</td>
                   <td>
                     {introducer?.official_phone ? (
                       <a
