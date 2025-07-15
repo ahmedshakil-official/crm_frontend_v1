@@ -3,7 +3,7 @@ import { Input, Card, Row, Col } from "reactstrap";
 
 const CaseUpdatesFilterBar: FC = () => {
   return (
-    <Card className="p-3 my-3 shadow-sm">
+    <Card className="p-3 my-3 shadow">
       <Row>
         <Col>
           <Input

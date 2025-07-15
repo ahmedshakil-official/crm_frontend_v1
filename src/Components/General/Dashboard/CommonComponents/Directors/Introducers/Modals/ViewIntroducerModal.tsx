@@ -33,12 +33,7 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Email:</span>
             {selectedIntroducer?.user?.email ? (
-              <a
-                className="text-dark text_decoration_hover small"
-                href={`tel:${selectedIntroducer?.user?.email}`}
-              >
-                {selectedIntroducer.user?.email}
-              </a>
+              <small>{selectedIntroducer.user?.email}</small>
             ) : (
               <span className="text-muted small">Not available</span>
             )}
@@ -46,12 +41,7 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Official Email:</span>
             {selectedIntroducer?.official_email ? (
-              <a
-                className="text-dark text_decoration_hover small"
-                href={`tel:${selectedIntroducer?.official_email}`}
-              >
-                {selectedIntroducer.official_email}
-              </a>
+              <small>{selectedIntroducer.official_email}</small>
             ) : (
               <span className="text-muted small">Not available</span>
             )}

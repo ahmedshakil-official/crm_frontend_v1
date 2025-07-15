@@ -33,12 +33,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Email:</span>
             {selectedClient?.user?.email ? (
-              <a
-                className="text-dark text_decoration_hover small"
-                href={`tel:${selectedClient?.user?.email}`}
-              >
-                {selectedClient.user?.email}
-              </a>
+              <small>{selectedClient.user?.email}</small>
             ) : (
               <span className="text-muted small">Not available</span>
             )}
@@ -46,12 +41,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Official Email:</span>
             {selectedClient?.official_email ? (
-              <a
-                className="text-dark text_decoration_hover small"
-                href={`tel:${selectedClient?.official_email}`}
-              >
-                {selectedClient.official_email}
-              </a>
+              <small>{selectedClient.official_email}</small>
             ) : (
               <span className="text-muted small">Not available</span>
             )}

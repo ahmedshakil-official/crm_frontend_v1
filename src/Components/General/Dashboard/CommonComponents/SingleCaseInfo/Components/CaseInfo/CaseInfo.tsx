@@ -80,12 +80,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       <h6 className="pt-1">
                         <span className="small">Email:</span>{" "}
                         <strong>
-                          <a
-                            className="text-dark text_decoration_hover small"
-                            href={`mailto:${caseInfo?.lead_user?.email}`}
-                          >
-                            {caseInfo?.lead_user?.email}
-                          </a>
+                          <small>{caseInfo?.lead_user?.email}</small>
                         </strong>
                       </h6>
                       <h6 className="pt-1">
@@ -212,12 +207,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       <h6 className="pt-1">
                         <span className="small">Email:</span>{" "}
                         <strong>
-                          <a
-                            className="text-dark text_decoration_hover small"
-                            href={`mailto:${caseInfo?.created_by?.email}`}
-                          >
-                            {caseInfo?.created_by?.email}
-                          </a>
+                          <small>{caseInfo?.created_by?.email}</small>
                         </strong>
                       </h6>
                       <h6 className="pt-1">

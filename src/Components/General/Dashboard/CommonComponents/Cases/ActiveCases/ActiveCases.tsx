@@ -28,11 +28,11 @@ import {
   Table,
 } from "reactstrap";
 import "../Cases.css";
-import AddNewCaseModal from "./Modals/AddNewCaseModal";
-import DeleteCaseModal from "./Modals/DeleteCaseModal";
-import UpdateCaseModal from "./Modals/UpdateCaseModal";
+import AddNewCaseModal from "../Cases/Modals/AddNewCaseModal";
+import DeleteCaseModal from "../Cases/Modals/DeleteCaseModal";
+import UpdateCaseModal from "../Cases/Modals/UpdateCaseModal";
 
-const Cases: React.FC = () => {
+const ActiveCases: React.FC = () => {
   const { data: session } = useSession();
   const [isAddNewCaseModalOpen, setIsAddNewCaseModalOpen] = useState(false);
   const [isUpdateCaseModalOpen, setIsUpdateCaseModalOpen] = useState(false);
@@ -421,110 +421,108 @@ const Cases: React.FC = () => {
                       </td>
                     </tr>
                   ) : caseData?.results?.length > 0 ? (
-                    caseData.results.map((caseItem: CaseInfoPrpos) => (
-                      <tr key={caseItem.alias}>
-                        <td>
-                          <Link
-                            className="text_decoration_hover text-truncate"
-                            href={getCaseUrl(
-                              caseItem.alias,
-                              userType as string
-                            )}
-                          >
-                            {caseItem.is_removed ? (
-                              <s className="text-danger opacity-50">
-                                {caseItem.name}
-                              </s>
-                            ) : (
-                              caseItem.name
-                            )}
-                          </Link>
-                        </td>
-                        <td>
-                          {caseItem.lead_user
-                            ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
-                            : "-"}
-                        </td>
-                        <td>
-                          {caseItem.lead_user.phone ? (
-                            <a
-                              href={`tel:${caseItem.lead_user.phone}`}
-                              className="text-black text_decoration_hover"
+                    caseData.results
+                      .filter((caseItem: CaseInfoPrpos) => !caseItem.is_removed)
+                      .map((caseItem: CaseInfoPrpos) => (
+                        <tr key={caseItem.alias}>
+                          <td>
+                            <Link
+                              className="text_decoration_hover text-truncate"
+                              href={getCaseUrl(
+                                caseItem.alias,
+                                userType as string
+                              )}
                             >
-                              {caseItem.lead_user.phone}
-                            </a>
-                          ) : (
-                            "-"
-                          )}
-                        </td>
-                        <td>
-                          {caseItem.case_category
-                            .split("_")
-                            .map(
-                              (word) =>
-                                word.charAt(0).toUpperCase() +
-                                word.slice(1).toLowerCase()
-                            )
-                            .join(" ")}
-                        </td>
-                        <td>
-                          {caseItem.case_stage
-                            .split("_")
-                            .map(
-                              (word) =>
-                                word.charAt(0).toUpperCase() +
-                                word.slice(1).toLowerCase()
-                            )
-                            .join(" ")}
-                        </td>
-                        <td>{formatDateToDMYAndTime(caseItem.created_at)}</td>
-                        <td>
-                          <p className="m-0">
-                            {caseItem.created_by?.first_name}{" "}
-                            {caseItem.created_by?.last_name}
-                          </p>
-                          <p
-                            className="m-0 opacity-75"
-                            style={{ fontSize: "9px" }}
-                          >
-                            (
-                            {caseItem.created_by?.user_type
-                              ?.split("_")
+                              {caseItem.name}
+                            </Link>
+                          </td>
+                          <td>
+                            {caseItem.lead_user
+                              ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
+                              : "-"}
+                          </td>
+                          <td>
+                            {caseItem.lead_user.phone ? (
+                              <a
+                                href={`tel:${caseItem.lead_user.phone}`}
+                                className="text-black text_decoration_hover"
+                              >
+                                {caseItem.lead_user.phone}
+                              </a>
+                            ) : (
+                              "-"
+                            )}
+                          </td>
+                          <td>
+                            {caseItem.case_category
+                              .split("_")
                               .map(
                                 (word) =>
                                   word.charAt(0).toUpperCase() +
                                   word.slice(1).toLowerCase()
                               )
                               .join(" ")}
-                            )
-                          </p>
-                        </td>
-                        <td>
-                          <div className="d-flex justify-content-center align-items-center">
-                            <Button
-                              size="sm"
-                              color="success"
-                              className="me-2"
-                              title="Update Case"
-                              onClick={() => openUpdateCaseModal(caseItem)}
+                          </td>
+                          <td>
+                            {caseItem.case_stage
+                              .split("_")
+                              .map(
+                                (word) =>
+                                  word.charAt(0).toUpperCase() +
+                                  word.slice(1).toLowerCase()
+                              )
+                              .join(" ")}
+                          </td>
+                          <td>{formatDateToDMYAndTime(caseItem.created_at)}</td>
+                          <td>
+                            <p className="m-0">
+                              {caseItem.created_by?.first_name}{" "}
+                              {caseItem.created_by?.last_name}
+                            </p>
+                            <p
+                              className="m-0 opacity-75"
+                              style={{ fontSize: "9px" }}
                             >
-                              <i className="icon-pencil-alt"></i>
-                            </Button>
-                            {userType !== "ORGANIZATION_SUPPORT" &&
-                              userType !== "ORGANIZATION_ADVISER" && (
-                                <Button
-                                  size="sm"
-                                  color="danger"
-                                  title="Delete Case"
-                                  onClick={() => openDeleteCaseModal(caseItem)}
-                                >
-                                  <i className="icon-trash"></i>
-                                </Button>
-                              )}
-                          </div>
-                        </td>
-                      </tr>
-                    ))
+                              (
+                              {caseItem.created_by?.user_type
+                                ?.split("_")
+                                .map(
+                                  (word) =>
+                                    word.charAt(0).toUpperCase() +
+                                    word.slice(1).toLowerCase()
+                                )
+                                .join(" ")}
+                              )
+                            </p>
+                          </td>
+                          <td>
+                            <div className="d-flex justify-content-center align-items-center">
+                              <Button
+                                size="sm"
+                                color="success"
+                                className="me-2"
+                                title="Update Case"
+                                onClick={() => openUpdateCaseModal(caseItem)}
+                              >
+                                <i className="icon-pencil-alt"></i>
+                              </Button>
+                              {userType !== "ORGANIZATION_SUPPORT" &&
+                                userType !== "ORGANIZATION_ADVISER" && (
+                                  <Button
+                                    size="sm"
+                                    color="danger"
+                                    title="Delete Case"
+                                    onClick={() =>
+                                      openDeleteCaseModal(caseItem)
+                                    }
+                                  >
+                                    <i className="icon-trash"></i>
+                                  </Button>
+                                )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
                   ) : (
                     <tr>
                       <td colSpan={8} className="text-center">
@@ -539,6 +537,24 @@ const Cases: React.FC = () => {
               <div className="d-flex justify-content-between px-4 py-3">
                 <div>
                   <p className="text-success">
+                    {/* Showing{" "}
+                    {caseData?.results?.filter(
+                      (item: CaseInfoPrpos) => !item.is_removed
+                    ).length
+                      ? (currentPage - 1) * casesPerPage + 1
+                      : 0}{" "}
+                    to{" "}
+                    {Math.min(
+                      currentPage * casesPerPage,
+                      caseData?.results?.filter(
+                        (item: CaseInfoPrpos) => !item.is_removed
+                      ).length || 0
+                    )}{" "}
+                    of{" "}
+                    {caseData?.results?.filter(
+                      (item: CaseInfoPrpos) => !item.is_removed
+                    ).length || 0}{" "}
+                    cases */}
                     Showing{" "}
                     {caseData?.results?.length
                       ? (currentPage - 1) * casesPerPage + 1
@@ -546,6 +562,7 @@ const Cases: React.FC = () => {
                     to{" "}
                     {Math.min(currentPage * casesPerPage, caseData?.count || 0)}{" "}
                     of {caseData?.count || 0} cases
+                    <small className="opacity-75 text-danger">(Removed Case not Shown)</small>
                   </p>
                 </div>
                 <Pagination>
@@ -663,4 +680,4 @@ const Cases: React.FC = () => {
   );
 };
 
-export default Cases;
+export default ActiveCases;

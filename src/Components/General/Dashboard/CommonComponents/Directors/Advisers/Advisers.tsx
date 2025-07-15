@@ -195,18 +195,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                       {adviser?.user?.first_name} {adviser?.user?.last_name}
                     </span>
                   </td>
-                  <td>
-                    {adviser?.official_email ? (
-                      <a
-                        href={`mailto:${adviser.official_email}`}
-                        className="text-black text_decoration_hover"
-                      >
-                        {adviser.official_email}
-                      </a>
-                    ) : (
-                      "-"
-                    )}
-                  </td>
+                  <td>{adviser?.official_email || "-"}</td>
                   <td>
                     {adviser?.official_phone ? (
                       <a

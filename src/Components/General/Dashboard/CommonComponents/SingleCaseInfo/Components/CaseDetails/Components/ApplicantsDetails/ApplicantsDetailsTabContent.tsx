@@ -72,7 +72,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
         : skipToken
     );
 
-  const applicationType = loandetailsData.application_type;
+  const applicationType = loandetailsData?.application_type;
 
   const currentTab: string | null = useAppSelector(
     (state) => state.caseDetails.basicTabId

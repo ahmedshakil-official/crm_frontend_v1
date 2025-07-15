@@ -33,12 +33,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Email:</span>
             {selectedLead?.user?.email ? (
-              <a
-                className="text-dark text_decoration_hover small"
-                href={`tel:${selectedLead?.user?.email}`}
-              >
-                {selectedLead.user?.email}
-              </a>
+              <small>{selectedLead.user?.email}</small>
             ) : (
               <span className="text-muted small">Not available</span>
             )}
@@ -46,12 +41,7 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Official Email:</span>
             {selectedLead?.official_email ? (
-              <a
-                className="text-dark text_decoration_hover small"
-                href={`tel:${selectedLead?.official_email}`}
-              >
-                {selectedLead.official_email}
-              </a>
+              <small>{selectedLead.official_email}</small>
             ) : (
               <span className="text-muted small">Not available</span>
             )}
