@@ -181,7 +181,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
       >
         <ModalBody>
           <Row>
-            <Col md={6}>
+            {/* <Col md={6}>
               <FormGroup>
                 <Label for="title">
                   Title<span className="text-danger">*</span>
@@ -190,7 +190,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   id="title"
                   name="title"
                   type="select"
-                  // value={formData.title || ""}
+                  value={formData.title || ""}
                   onChange={handleInputChange}
                   required
                 >
@@ -201,7 +201,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   <option value="MISS">Miss.</option>
                 </Input>
               </FormGroup>
-            </Col>
+            </Col> */}
             <Col md={6}>
               <FormGroup>
                 <Label for="firstName">
@@ -217,18 +217,18 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 />
               </FormGroup>
             </Col>
-            <Col md={6}>
+            {/* <Col md={6}>
               <FormGroup>
                 <Label for="middleName">Middle Name(s)</Label>
                 <Input
                   id="middleName"
                   name="middleName"
                   type="text"
-                  // value={formData.middleName || ""}
+                  value={formData.middleName || ""}
                   onChange={handleInputChange}
                 />
               </FormGroup>
-            </Col>
+            </Col> */}
             <Col md={6}>
               <FormGroup>
                 <Label for="lastName">
@@ -261,17 +261,32 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="phone">Mobile Number</Label>
+                <Label for="password">Password</Label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="phone">
+                  Mobile Number<span className="text-danger">*</span>
+                </Label>
                 <Input
                   id="phone"
                   name="phone"
                   type="text"
                   value={formData.phone || ""}
                   onChange={handleInputChange}
+                  required
                 />
               </FormGroup>
             </Col>
-            <Col md={6}>
+            {/* <Col md={6}>
               <Label for="reasonForEnquiry">Reason For Enquiry</Label>
               <FormGroup>
                 <Input
@@ -279,11 +294,11 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   name="reasonForEnquiry"
                   type="text"
                   className="rounded-end-0"
-                  // value={formData.reason_for_enquiry}
+                  value={formData.reason_for_enquiry}
                   onChange={handleInputChange}
                 />
               </FormGroup>
-            </Col>
+            </Col> */}
             <Col md={6}>
               <FormGroup>
                 <Label for="gender">
