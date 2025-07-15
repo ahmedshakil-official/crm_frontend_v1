@@ -23,7 +23,7 @@ const CaseTimeline = () => {
         >
           <TbBuilding className="text-white" />
         </div>
-        <Card className="p-3 bg-white rounded-3 flex-grow-1">
+        <Card className="p-3 bg-white rounded-3 flex-grow-1 shadow">
           <div className=" d-flex justify-content-between align-items-center">
             <p className="fs-6 fw-semibold">DIP Submitted to Lender</p>
             <p>
@@ -74,7 +74,7 @@ const CaseTimeline = () => {
         >
           <TbClock className="text-white" />
         </div>
-        <Card className="p-3 bg-white rounded-3 flex-grow-1">
+        <Card className="p-3 bg-white rounded-3 flex-grow-1 shadow">
           <div className=" d-flex justify-content-between align-items-center">
             <p className="fs-6 fw-semibold">DIP Submitted to Lender</p>
             <p>
@@ -125,7 +125,7 @@ const CaseTimeline = () => {
         >
           <TbClock className="text-white" />
         </div>
-        <Card className="p-3 bg-white rounded-3 flex-grow-1">
+        <Card className="p-3 bg-white rounded-3 flex-grow-1 shadow">
           <div className=" d-flex justify-content-between align-items-center">
             <p className="fs-6 fw-semibold">DIP Submitted to Lender</p>
             <p>
