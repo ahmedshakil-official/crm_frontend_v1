@@ -317,11 +317,11 @@ const OrganisationStaffMenu: MenuItem[] = [
         path: "/dashboard/orgstaff/tasksandreminders",
       },
       {
-        title: "Advisers",
+        title: "Adviser Clients",
         icon: "Work",
         type: "link",
         lanClass: "lan-3",
-        path: "/dashboard/orgstaff/advisers",
+        path: "/dashboard/orgstaff/adviserclient",
       },
       {
         title: "Document Management",
