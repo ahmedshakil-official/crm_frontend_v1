@@ -88,7 +88,7 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
               onChange={handleInputChange}
             >
               <option value="">Select...</option>
-              <option value="INQUIRY">Inquiry</option>
+              <option value="ENQUIRY">Enquiry</option>
               <option value="FACT_FIND">Fact Find</option>
               <option value="RESEARCH_COMPLIANCE_CHECK">
                 Research and Compliance Check

@@ -359,7 +359,7 @@ const Cases: React.FC = () => {
                       }
                     >
                       <option value="">All Stages</option>
-                      <option value="INQUIRY">Inquiry</option>
+                      <option value="ENQUIRY">Enquiry</option>
                       <option value="FACT_FIND">Fact Find</option>
                       <option value="RESEARCH_COMPLIANCE_CHECK">
                         Research and Compliance Check
