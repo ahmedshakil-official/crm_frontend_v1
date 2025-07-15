@@ -9,7 +9,7 @@ const NetworkAdminMenu: MenuItem[] = [
     Items: [
       {
         title: "Dashboard",
-        icon: "Home-dashboard",
+        icon: "Chart",
         type: "link",
         badge: "1",
         lanClass: "lan-3",
@@ -108,7 +108,7 @@ const OrganisationAdminMenu: MenuItem[] = [
     Items: [
       {
         title: "Dashboard",
-        icon: "Home-dashboard",
+        icon: "Chart",
         type: "link",
         badge: "1",
         lanClass: "lan-3",
@@ -273,7 +273,7 @@ const OrganisationStaffMenu: MenuItem[] = [
     Items: [
       {
         title: "Dashboard",
-        icon: "Home-dashboard",
+        icon: "Chart",
         type: "link",
         lanClass: "lan-3",
         path: "/dashboard/orgstaff",
@@ -294,7 +294,7 @@ const OrganisationStaffMenu: MenuItem[] = [
       },
       {
         title: "Adviser Clients",
-        icon: "Work",
+        icon: "Profile",
         type: "link",
         lanClass: "lan-3",
         path: "/dashboard/orgstaff/adviserclient",
@@ -333,7 +333,6 @@ const LeadMenu: MenuItem[] = [
     Items: [
       {
         title: "Client Home",
-
         icon: "Home-dashboard",
         type: "sub",
         badge: "1",
