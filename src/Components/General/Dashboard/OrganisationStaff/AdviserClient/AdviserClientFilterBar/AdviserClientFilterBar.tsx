@@ -3,12 +3,12 @@ import { Input, Card, Row, Col } from "reactstrap";
 
 const AdviserClientFilterBar: FC = () => {
   return (
-    <Card className="p-3 my-3">
+    <Card className="p-3 my-3 shadow-sm">
       <Row>
         <Col>
           <Input
             type="text"
-            placeholder="Search cases, advisers, actions..."
+            placeholder="Search clients, advisers, emails..."
             className="form-control"
             style={{ height: "45px" }}
           />
@@ -35,18 +35,6 @@ const AdviserClientFilterBar: FC = () => {
             <option>Stage 1</option>
             <option>Stage 2</option>
             <option>Stage 3</option>
-          </Input>
-        </Col>
-        <Col>
-          <Input
-            type="select"
-            className="form-control"
-            style={{ height: "45px" }}
-          >
-            <option>All Lenders</option>
-            <option>Lender 1</option>
-            <option>Lender 2</option>
-            <option>Lender 3</option>
           </Input>
         </Col>
         <Col>

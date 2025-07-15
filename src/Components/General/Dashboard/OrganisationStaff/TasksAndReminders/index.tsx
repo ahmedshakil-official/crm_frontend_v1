@@ -1,18 +1,26 @@
-import { Container } from "reactstrap";
+import { Button, Container } from "reactstrap";
 import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import TaskAndReminderFilterBar from "./TaskAndReminderFilterBar/TaskAndReminderFilterBar";
+import RemindersLists from "./RemindersLists/RemindersLists";
+import { TbPlus } from "react-icons/tb";
 
 const OrgStaffTasksAndRemindersContainer: React.FC = () => {
   return (
     <>
       <OrganisationStaffBreadcrumbs
-        mainTitle="Organisation Staff Dashboard"
-        title="Hello! there"
+        mainTitle="Tasks & Reminders"
+        title="Set and manage reminders for advisers and admin users"
         activePage="Tasks & Reminders"
       />
       <Container fluid>
-        <div className="d-flex justify-content-center align-items-center h-100">
-          <h1 className="text-danger">This page is Under Development</h1>
+        <div className=" d-flex justify-content-end">
+          <Button className="border-0">
+            <TbPlus size={16} />
+            <small className=" ms-2">Create Reminder</small>
+          </Button>
         </div>
+        <TaskAndReminderFilterBar />
+        <RemindersLists />
       </Container>
     </>
   );
