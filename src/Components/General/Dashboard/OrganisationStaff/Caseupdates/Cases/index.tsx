@@ -11,7 +11,6 @@ const OrgStaffCaseUpdateCasesContainer: React.FC = () => {
         parent="Case Updates"
         activePage="Cases"
       />
-
       <Container fluid>
         <Cases />
       </Container>
