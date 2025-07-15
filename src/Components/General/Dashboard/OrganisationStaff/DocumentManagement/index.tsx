@@ -1,18 +1,26 @@
-import { Container } from "reactstrap";
+import { Button, Container, Row } from "reactstrap";
 import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import DocumentManagementFilterBar from "./DocumentManagementFilterBar/DocumentManagementFilterBar";
+import DocumentsLists from "./DocumentsLists/DocumentsLists";
+import { TbUpload } from "react-icons/tb";
 
 const OrgStaffDocumentManagementContainer: React.FC = () => {
   return (
     <>
       <OrganisationStaffBreadcrumbs
-        mainTitle="Organisation Staff Dashboard"
-        title="Hello! there"
+        mainTitle="Document Management"
+        title="Upload, manage, and verify client documents"
         activePage="Document Management"
       />
       <Container fluid>
-        <div className="d-flex justify-content-center align-items-center h-100">
-          <h1 className="text-danger">This page is Under Development</h1>
+        <div className=" d-flex justify-content-end">
+          <Button className="border-0">
+            <TbUpload size={16}/>
+            <small className=" ms-2">Upload Document</small>
+          </Button>
         </div>
+        <DocumentManagementFilterBar />
+        <DocumentsLists />
       </Container>
     </>
   );
