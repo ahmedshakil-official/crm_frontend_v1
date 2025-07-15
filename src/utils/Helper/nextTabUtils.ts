@@ -1,10 +1,10 @@
 import {
   CompletionTabTitleData,
   DIPTabTitleData,
+  EnqueryTabTitleData,
   FFDTabTitleData,
   FMATabTitleData,
   FOPTabTitleData,
-  InqueryTabTitleData,
   LegalTabTitleData,
   NPDTabTitleData,
   OFBTabTitleData,
@@ -18,7 +18,7 @@ export const getNextTabNav = (
   console.log(caseStage);
   // Map case stages to corresponding tab title data
   const tabDataMap: Record<string, any[]> = {
-    INQUIRY: InqueryTabTitleData,
+    INQUIRY: EnqueryTabTitleData,
     FACT_FIND: FFDTabTitleData,
     RESEARCH_COMPLIANCE_CHECK: RCCTabTitleData,
     DECISION_IN_PRINCIPLE: DIPTabTitleData,
