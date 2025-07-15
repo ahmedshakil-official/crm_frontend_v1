@@ -141,7 +141,7 @@ const Cases: React.FC = () => {
                       <CardTitle className="small text-muted">
                         All Cases
                       </CardTitle>
-                      <h4 className="mb-1 text-dark">{caseData?.count}</h4>
+                      <h4 className="mb-1 text-dark">{caseData?.count || 0}</h4>
                     </div>
                     <div>
                       <span
@@ -164,7 +164,11 @@ const Cases: React.FC = () => {
                       <CardTitle className="small text-muted">
                         Active Cases
                       </CardTitle>
-                      <h4 className="mb-1 text-dark">10</h4>
+                      <h4 className="mb-1 text-dark">
+                        {caseData?.results?.filter(
+                          (item: any) => !item.is_removed
+                        ).length || 0}
+                      </h4>
                     </div>
                     <div>
                       <span
@@ -427,7 +431,13 @@ const Cases: React.FC = () => {
                               userType as string
                             )}
                           >
-                            {caseItem.name}
+                            {caseItem.is_removed ? (
+                              <s className="text-danger opacity-50">
+                                {caseItem.name}
+                              </s>
+                            ) : (
+                              caseItem.name
+                            )}
                           </Link>
                         </td>
                         <td>
