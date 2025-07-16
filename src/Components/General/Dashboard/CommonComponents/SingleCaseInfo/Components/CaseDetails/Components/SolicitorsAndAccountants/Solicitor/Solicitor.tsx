@@ -9,6 +9,7 @@ import {
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
 import LoadingSpinner from "@/app/loading";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -33,20 +34,24 @@ import AddSolicitorModal from "../Modals/AddSolicitorModal";
 const Solicitor: React.FC = () => {
   const params = useParams();
   const { casealias } = params;
+  const { data: session } = useSession();
+  const dispatch = useAppDispatch();
+
+  // RTK Hooks
   const { data: solicitorName, isLoading } =
     useGetSolicitorDetailsQuery(undefined);
-  const dispatch = useAppDispatch();
   const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
     { case_alias: casealias },
     { skip: !casealias }
   );
-
   const { data: caseSolicitors, isLoading: isCaseSolicitorLoading } =
     useGetCaseSolicitorDetailsQuery({ case_alias: casealias });
+  console.log("caseSolicitors length:", caseSolicitors?.length);
   const [assignCaseSolicitor, { isLoading: isAssignedLoading }] =
     useAssignCaseSolicitorMutation();
   const [updateSolicitorDetails, { isLoading: isUpdateLoading }] =
     useUpdateSolicitorDetailsMutation();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSolicitor, setSelectedSolicitor] = useState<any>(null);
   const [selectedCaseSolicitor, setSelectedCaseSolicitor] = useState<any>(null);
@@ -256,13 +261,27 @@ const Solicitor: React.FC = () => {
                         md={12}
                         className="d-flex justify-content-between align-content-center gap-3"
                       >
-                        <Button color="success" onClick={toggleModal}>
+                        <Button
+                          color="success"
+                          onClick={toggleModal}
+                          className="border-success"
+                          disabled={
+                            session?.user?.user_type === "CLIENT" &&
+                            Array.isArray(caseSolicitors) &&
+                            caseSolicitors.length > 0
+                          }
+                        >
                           Add New Solicitor
                         </Button>
                         <Button
                           color="primary"
                           onClick={handleAssignSolicitor}
-                          disabled={!selectedSolicitor}
+                          disabled={
+                            !selectedSolicitor ||
+                            (session?.user?.user_type === "CLIENT" &&
+                              Array.isArray(caseSolicitors) &&
+                              caseSolicitors.length > 0)
+                          }
                         >
                           Assign Solicitor
                         </Button>
@@ -496,19 +515,27 @@ const Solicitor: React.FC = () => {
                   <Button
                     type="submit"
                     color="primary"
-                    disabled={isUpdateLoading}
+                    disabled={
+                      isUpdateLoading || session?.user?.user_type === "CLIENT"
+                    }
                   >
                     {isUpdateLoading ? "Saving..." : "Save Changes"}
                   </Button>
                   <Button
                     color="secondary"
                     onClick={async (e) => {
-                      e.preventDefault();
-                      await handleUpdateSolicitorDetails(e);
-                      handleNextTab();
+                      if (session?.user?.user_type === "CLIENT") {
+                        handleNextTab();
+                      } else {
+                        e.preventDefault();
+                        await handleUpdateSolicitorDetails(e);
+                        handleNextTab();
+                      }
                     }}
                   >
-                    Save & Next
+                    {session?.user?.user_type === "CLIENT"
+                      ? "Go To Next"
+                      : "Save & Next"}
                   </Button>
                 </Col>
               </Row>

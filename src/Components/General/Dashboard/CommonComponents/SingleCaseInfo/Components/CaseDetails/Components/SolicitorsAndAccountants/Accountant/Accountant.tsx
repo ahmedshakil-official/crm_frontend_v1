@@ -26,12 +26,14 @@ import {
   useUpdateAccountantDetailsMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SolicitorAndAccountant/SolicitorAndAccountantApi";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
 import AddAccountantModal from "../Modals/AddAccountantModal";
 
 const Accountant: React.FC = () => {
   const params = useParams();
   const { casealias } = params;
+  const { data: session } = useSession();
   const [selectedAccountant, setSelectedAccountant] = useState<any>(null);
   const [selectedCaseAccountant, setSelectedCaseAccountant] =
     useState<any>(null);
@@ -39,6 +41,8 @@ const Accountant: React.FC = () => {
   const [formData, setFormData] = useState<any>({});
   const [activeTab, setActiveTab] = useState<string>("0");
   const dispatch = useAppDispatch();
+
+  // RTK Hooks
   const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
     { case_alias: casealias },
     { skip: !casealias }
@@ -229,7 +233,16 @@ const Accountant: React.FC = () => {
                 md={12}
                 className="d-flex justify-content-between align-content-center gap-3"
               >
-                <Button color="success" onClick={toggleModal}>
+                <Button
+                  color="success"
+                  onClick={toggleModal}
+                  className="border-success"
+                  disabled={
+                    session?.user?.user_type === "CLIENT" &&
+                    Array.isArray(caseAccountants) &&
+                    caseAccountants.length > 0
+                  }
+                >
                   Add New Accountant
                 </Button>
                 <Button
@@ -436,18 +449,30 @@ const Accountant: React.FC = () => {
             <Row>
               <Col md={12}>
                 <FormGroup className="d-flex justify-content-end gap-3">
-                  <Button color="primary" onClick={handleUpdateAccountant}>
+                  <Button
+                    color="primary"
+                    onClick={handleUpdateAccountant}
+                    disabled={
+                      isUpdatingLoading || session?.user?.user_type === "CLIENT"
+                    }
+                  >
                     {isUpdatingLoading ? "Saving..." : "Save Changes"}
                   </Button>
                   <Button
                     color="secondary"
                     onClick={async (e) => {
-                      e.preventDefault();
-                      await handleUpdateAccountant(e);
-                      handleNextTab();
+                      if (session?.user?.user_type === "CLIENT") {
+                        handleNextTab();
+                      } else {
+                        e.preventDefault();
+                        await handleUpdateAccountant(e);
+                        handleNextTab();
+                      }
                     }}
                   >
-                    Save & Next
+                    {session?.user?.user_type === "CLIENT"
+                      ? "Go To Next"
+                      : "Save & Next"}
                   </Button>
                 </FormGroup>
               </Col>
