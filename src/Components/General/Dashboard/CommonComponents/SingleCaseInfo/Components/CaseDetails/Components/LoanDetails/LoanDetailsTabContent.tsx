@@ -280,7 +280,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
               disabled={
                 isLoading ||
                 isUpdating ||
-                (session?.user?.user_type === "LEAD" &&
+                (session?.user?.user_type === "CLIENT" &&
                   loandetailsData?.updated_by !== null)
               }
             >
@@ -293,6 +293,12 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
                 handleSave();
                 handleNextTab();
               }}
+              disabled={
+                isLoading ||
+                isUpdating ||
+                (session?.user?.user_type === "CLIENT" &&
+                  loandetailsData?.updated_by !== null)
+              }
             >
               Save & Next
             </Button>

@@ -5,6 +5,7 @@ import { useGetPortfolioDetailsQuery } from "@/Redux/Reducers/CommonComponents/S
 import LoadingSpinner from "@/app/loading";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { formatDateToDMY } from "@/utils/dateAndTimeFormatter";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -26,6 +27,7 @@ const PortfolioContent: React.FC = () => {
   const prams = useParams();
   const { casealias } = prams;
   const dispatch = useAppDispatch();
+  const { data: session } = useSession();
   const {
     data: caseData,
     isLoading: isCaseFetching,
@@ -77,7 +79,15 @@ const PortfolioContent: React.FC = () => {
                   <h5 className="mb-0 fs-3 text-primary">
                     Additional Properties
                   </h5>
-                  <Button color="success" onClick={toggleModal}>
+                  <Button
+                    color="success"
+                    className="border-success"
+                    onClick={toggleModal}
+                    disabled={
+                      session?.user?.user_type === "CLIENT" &&
+                      data.map((item: any) => item?.alias).length > 0
+                    }
+                  >
                     Add Portfolio
                   </Button>
                 </div>

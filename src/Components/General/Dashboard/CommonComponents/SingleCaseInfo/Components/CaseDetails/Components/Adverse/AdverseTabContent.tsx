@@ -1,10 +1,15 @@
 "use client";
 import LoadingSpinner from "@/app/loading";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import {
   useGetSingleAdverseDetailsQuery,
   useUpdateAdverseDetailsMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/AdverseDetails/AdverseDetailsApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { ApplicantsUsersProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsUserTypes";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -36,14 +41,12 @@ import ViewDMPsModal from "./AdverseModals/ViewModals/ViewDMPsModal";
 import ViewIVAsModal from "./AdverseModals/ViewModals/ViewIVAsModal";
 import ViewPayDayLoansModal from "./AdverseModals/ViewModals/ViewPayDayLoansModal";
 import ViewPropertiesRepossessedModal from "./AdverseModals/ViewModals/ViewPropertiesRepossessedModal";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
   const params = useParams();
   const { casealias } = params;
+  const { data: session } = useSession();
+
   const { data, isLoading } = useGetSingleAdverseDetailsQuery({
     case_alias: casealias,
     adverse_alias: basicTab,
@@ -390,7 +393,15 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
 
                 {/* Submit Button */}
                 <div className="d-flex justify-content-end mt-4 gap-2">
-                  <Button color="primary" onClick={handleSubmit}>
+                  <Button
+                    color="primary"
+                    onClick={handleSubmit}
+                    disabled={
+                      isAdverseUpdating ||
+                      (session?.user?.user_type === "CLIENT" &&
+                        data?.updated_by !== null)
+                    }
+                  >
                     {isAdverseUpdating ? "Saving..." : "Save Changes"}
                   </Button>
                   <Button
@@ -401,6 +412,11 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
                       await handleSubmit();
                       handleNextTab();
                     }}
+                    disabled={
+                      isAdverseUpdating ||
+                      (session?.user?.user_type === "CLIENT" &&
+                        data?.updated_by !== null)
+                    }
                   >
                     Save & Next
                   </Button>

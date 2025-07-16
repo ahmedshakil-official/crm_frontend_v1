@@ -1565,7 +1565,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               color="primary"
               disabled={
                 isLoading ||
-                (session?.user?.user_type === "LEAD" &&
+                (session?.user?.user_type === "CLIENT" &&
                   selectedApplicant?.updated_by !== null)
               }
             >
@@ -1576,7 +1576,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               color="secondary"
               disabled={
                 isLoading ||
-                (session?.user?.user_type === "LEAD" &&
+                (session?.user?.user_type === "CLIENT" &&
                   selectedApplicant?.updated_by !== null)
               }
               onClick={(e) => {

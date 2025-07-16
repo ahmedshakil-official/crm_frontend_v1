@@ -8,7 +8,7 @@ const ClientSingleCase = () => {
       if (typeof window !== "undefined") {
         const newClient = (
           await import(
-            "@/Components/General/Dashboard/Client/[caseAlias]/index"
+            "@/Components/General/Dashboard/Client/[caseAlias]"
           )
         ).default;
         setClient(() => newClient);

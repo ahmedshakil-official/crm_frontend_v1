@@ -29,8 +29,8 @@ const SingleCaseInfo: React.FC = () => {
         return `/dashboard/admin`;
       case "NETWORK_ADMIN":
         return `/dashboard/network/cases`;
-      case "LEAD":
-        return `/dashboard/client`;
+      case "CLIENT":
+        return `/dashboard/client/cases`;
       case "ORGANIZATION_ADMIN":
         return `/dashboard/organisation/cases`;
       case "ORGANIZATION_ADVISER":
