@@ -1,5 +1,5 @@
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { FoundPropertyProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetailsTypes";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
+import { FoundPropertyProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SecurityPropertyTypes";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import {
@@ -31,7 +31,7 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({
     await updateSingleProperty({
       case_alias: casealias,
       property_alias: propertyAlias,
-      updatedPropertyDetails: {
+      updatedSecurityProperty: {
         have_you_found_a_property_yet: value,
       },
     });

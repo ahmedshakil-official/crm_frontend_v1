@@ -1,6 +1,4 @@
 import LoadingSpinner from "@/app/loading";
-import { useGetPropertiesQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { initializeForm } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,7 +6,9 @@ import { Card, CardBody, CardHeader, Nav, NavItem, NavLink } from "reactstrap";
 import FoundProperty from "./Components/FoundProperty";
 import NoteForProperty from "./Components/NoteForProperty";
 import PropertyValuationCard from "./Components/PropertyValuationCard";
-import PropertyDetailsTabContent from "./PropertyDetailsTabContent";
+import SecurityPropertyTabContent from "./SecurityPropertyTabContent";
+import { useGetPropertiesQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
+import { initializeForm } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyFormSlice";
 
 const propertyContentTabs = [
   { id: "1", title: "Property Address" },
@@ -17,7 +17,7 @@ const propertyContentTabs = [
   { id: "4", title: "Valuation/Access Details" },
 ];
 
-const PropertyDetails: React.FC = () => {
+const SecurityProperty: React.FC = () => {
   const { casealias } = useParams();
   const dispatch = useDispatch();
   const [activeContentTab, setActiveContentTab] = useState("1");
@@ -71,7 +71,7 @@ const PropertyDetails: React.FC = () => {
               </Nav>
             </CardHeader>
             <CardBody>
-              <PropertyDetailsTabContent
+              <SecurityPropertyTabContent
                 tabId={activeContentTab}
                 setTabId={setActiveContentTab}
                 propertyData={properties[0]}
@@ -85,4 +85,4 @@ const PropertyDetails: React.FC = () => {
   );
 };
 
-export default PropertyDetails;
+export default SecurityProperty;

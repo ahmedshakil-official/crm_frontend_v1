@@ -1,4 +1,4 @@
-import { PropertyDetailsModalTabProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetailsTypes";
+import { PropertyDetailsModalTabProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SecurityPropertyTypes";
 import { FC, useState } from "react";
 import {
   Card,
@@ -10,9 +10,9 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import PropertyDetailsTabContent from "../PropertyDetailsTabContent";
+import SecurityPropertyTabContent from "../SecurityPropertyTabContent";
 
-const PropertyDetailsModalTab: FC<PropertyDetailsModalTabProps> = ({
+const SecurityPropertyModalTab: FC<PropertyDetailsModalTabProps> = ({
   isOpen,
   toggle,
 }) => {
@@ -43,7 +43,7 @@ const PropertyDetailsModalTab: FC<PropertyDetailsModalTabProps> = ({
             ))}
           </Nav>
           <CardBody>
-            <PropertyDetailsTabContent
+            <SecurityPropertyTabContent
               tabId={activeTab}
               setTabId={setActiveTab}
             />
@@ -54,4 +54,4 @@ const PropertyDetailsModalTab: FC<PropertyDetailsModalTabProps> = ({
   );
 };
 
-export default PropertyDetailsModalTab;
+export default SecurityPropertyModalTab;

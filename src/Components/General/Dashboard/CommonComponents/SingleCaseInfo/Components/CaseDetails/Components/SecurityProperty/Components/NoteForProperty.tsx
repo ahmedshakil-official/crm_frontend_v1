@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { updateProperty } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
+import { updateProperty } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyFormSlice";
 import { RootState } from "@/Redux/Store";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useParams } from "next/navigation";
@@ -44,7 +44,7 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
     const response = await updateSingleProperty({
       case_alias: casealias,
       property_alias: propertyAlias,
-      updatedPropertyDetails: formData,
+      updatedSecurityProperty: formData,
     });
 
     if (response.data) {

@@ -1,7 +1,7 @@
-import { PropertyFormState } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetailsTypes";
+import { SecurityPropertyFormStateProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SecurityPropertyTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: PropertyFormState = {
+const initialState: SecurityPropertyFormStateProps = {
   Properties: {
     property_purchase_price: 0,
     property_estimated_valuation: 0,
@@ -80,18 +80,20 @@ const initialState: PropertyFormState = {
 };
 
 const propertyFormSlice = createSlice({
-  name: "propertyForm",
+  name: "SecurityPropertyForm",
   initialState,
   reducers: {
     updateProperty: (
       state,
-      action: PayloadAction<Partial<PropertyFormState["Properties"]>>
+      action: PayloadAction<
+        Partial<SecurityPropertyFormStateProps["Properties"]>
+      >
     ) => {
       state.Properties = { ...state.Properties, ...action.payload };
     },
     initializeForm: (
       state,
-      action: PayloadAction<PropertyFormState["Properties"]>
+      action: PayloadAction<SecurityPropertyFormStateProps["Properties"]>
     ) => {
       state.Properties = action.payload;
     },

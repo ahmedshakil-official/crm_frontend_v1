@@ -1,5 +1,5 @@
-import { initializeForm } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
-import { PropertyData } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetailsTypes";
+import { initializeForm } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyFormSlice";
+import { PropertyData } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SecurityPropertyTypes";
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Button, TabContent, TabPane } from "reactstrap";
@@ -8,13 +8,13 @@ import AddressDetails from "./Components/PropertyDetailsTabs/PropertyAddress";
 import PropertyDetails from "./Components/PropertyDetailsTabs/PropertyType";
 import ValuationInfo from "./Components/PropertyDetailsTabs/PropertyValuation";
 
-interface PropertyDetailsTabContentProps {
+interface SecurityPropertyTabContentProps {
   tabId: string;
   setTabId: (id: string) => void;
   propertyData?: PropertyData;
 }
 
-const PropertyDetailsTabContent: FC<PropertyDetailsTabContentProps> = ({
+const SecurityPropertyTabContent: FC<SecurityPropertyTabContentProps> = ({
   tabId,
   setTabId,
   propertyData,
@@ -59,4 +59,4 @@ const PropertyDetailsTabContent: FC<PropertyDetailsTabContentProps> = ({
   );
 };
 
-export default PropertyDetailsTabContent;
+export default SecurityPropertyTabContent;
