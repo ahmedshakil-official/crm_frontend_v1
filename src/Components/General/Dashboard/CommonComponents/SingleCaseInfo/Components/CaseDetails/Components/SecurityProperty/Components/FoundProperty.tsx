@@ -1,5 +1,9 @@
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
+import {
+  useGetPropertiesQuery,
+  useUpdatePropertyMutation,
+} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
 import { FoundPropertyProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SecurityPropertyTypes";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import {
@@ -18,7 +22,12 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({
 }) => {
   const { casealias } = useParams();
   const propertyAlias = property.alias;
+  const { data: session } = useSession();
 
+  // RTK Hooks
+  const { data: properties } = useGetPropertiesQuery({
+    case_alias: casealias,
+  });
   const [updateSingleProperty, { isLoading }] = useUpdatePropertyMutation();
 
   const [foundProperty, setFoundProperty] = useState<boolean>(
@@ -71,8 +80,16 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({
                       }
                       onChange={() => handlePropertyFound(true)}
                       className="cursor-pointer me-2"
+                      disabled={
+                        session?.user?.user_type === "CLIENT" &&
+                        properties[0]?.updated_by !== null
+                      }
                     />
-                    <Label check className="cursor-pointer mb-0">
+                    <Label
+                      for="FoundPrimaryPropertyYes"
+                      check
+                      className="cursor-pointer mb-0"
+                    >
                       Yes
                     </Label>
                   </FormGroup>
@@ -88,8 +105,16 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({
                       }
                       onChange={() => handlePropertyFound(false)}
                       className="cursor-pointer me-2"
+                      disabled={
+                        session?.user?.user_type === "CLIENT" &&
+                        properties[0]?.updated_by !== null
+                      }
                     />
-                    <Label check className="cursor-pointer mb-0">
+                    <Label
+                      for="FoundPrimaryPropertyNo"
+                      check
+                      className="cursor-pointer mb-0"
+                    >
                       No
                     </Label>
                   </FormGroup>

@@ -1,10 +1,14 @@
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
+import {
+  useGetPropertiesQuery,
+  useUpdatePropertyMutation,
+} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
 import { updateProperty } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyFormSlice";
 import { RootState } from "@/Redux/Store";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -24,11 +28,17 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
   property_alias,
 }) => {
   const { casealias } = useParams();
+  const { data: session } = useSession();
+
   const formData = useSelector(
     (state: RootState) => state.propertyForm.Properties
   );
   const propertyAlias = property_alias;
 
+  // RTK Hooks
+  const { data: properties } = useGetPropertiesQuery({
+    case_alias: casealias,
+  });
   const [updateSingleProperty, { isLoading }] = useUpdatePropertyMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -113,6 +123,11 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
             name="next"
             className="px-4"
             onClick={handleSubmit}
+            disabled={
+              isLoading ||
+              (session?.user?.user_type === "CLIENT" &&
+                properties[0]?.updated_by !== null)
+            }
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>
@@ -123,6 +138,11 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
               await handleSubmit();
               handleNextTab();
             }}
+            disabled={
+              isLoading ||
+              (session?.user?.user_type === "CLIENT" &&
+                properties[0]?.updated_by !== null)
+            }
           >
             Save & Next
           </Button>
