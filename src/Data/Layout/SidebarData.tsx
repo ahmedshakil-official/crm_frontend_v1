@@ -11,15 +11,13 @@ const NetworkAdminMenu: MenuItem[] = [
         title: "Dashboard",
         icon: "Chart",
         type: "link",
-        badge: "1",
         lanClass: "lan-3",
         path: "/dashboard/network",
       },
       {
         title: "Cases",
-        icon: "Pie",
+        icon: "Paper",
         type: "sub",
-        badge: "3",
         children: [
           {
             path: "/dashboard/network/cases",
@@ -31,18 +29,12 @@ const NetworkAdminMenu: MenuItem[] = [
             title: "Active Cases",
             type: "link",
           },
-          {
-            path: "/dashboard/network/closedcases",
-            title: "Closed Cases",
-            type: "link",
-          },
         ],
       },
       {
         title: "Directors",
         icon: "Profile",
         type: "sub",
-        badge: "4",
         children: [
           {
             path: "/dashboard/network/directors/leads",
@@ -70,7 +62,6 @@ const NetworkAdminMenu: MenuItem[] = [
         title: "User Settings",
         type: "sub",
         icon: "Setting",
-        badge: "4",
         lanClass: "lan-4",
         children: [
           {
@@ -110,15 +101,13 @@ const OrganisationAdminMenu: MenuItem[] = [
         title: "Dashboard",
         icon: "Chart",
         type: "link",
-        badge: "1",
         lanClass: "lan-3",
         path: "/dashboard/organisation",
       },
       {
         title: "Cases",
-        icon: "Pie",
+        icon: "Paper",
         type: "sub",
-        badge: "3",
         children: [
           {
             path: "/dashboard/organisation/cases",
@@ -130,18 +119,12 @@ const OrganisationAdminMenu: MenuItem[] = [
             title: "Active Cases",
             type: "link",
           },
-          {
-            path: "/dashboard/organisation/closedcases",
-            title: "Closed Cases",
-            type: "link",
-          },
         ],
       },
       {
         title: "Directors",
         icon: "Profile",
         type: "sub",
-        badge: "4",
         children: [
           {
             path: "/dashboard/organisation/directors/leads",
@@ -174,7 +157,6 @@ const OrganisationAdminMenu: MenuItem[] = [
         title: "User Settings",
         type: "sub",
         icon: "Setting",
-        badge: "3",
         lanClass: "lan-4",
         children: [
           {
@@ -208,7 +190,6 @@ const OrganisationAdviserMenu: MenuItem[] = [
       {
         title: "Dashboard",
         icon: "Chart",
-        badge: "4",
         lanClass: "lan-3",
         path: "/dashboard/orgadviser",
         type: "link",
@@ -217,7 +198,6 @@ const OrganisationAdviserMenu: MenuItem[] = [
         title: "Users",
         type: "sub",
         icon: "Profile",
-        badge: "3",
         lanClass: "lan-4",
         children: [
           {
@@ -241,7 +221,6 @@ const OrganisationAdviserMenu: MenuItem[] = [
         title: "Cases",
         icon: "Paper",
         type: "sub",
-        badge: "3",
         lanClass: "lan-3",
         children: [
           {
@@ -335,7 +314,6 @@ const LeadMenu: MenuItem[] = [
         title: "Client Home",
         icon: "Home-dashboard",
         type: "sub",
-        badge: "1",
         lanClass: "lan-3",
         children: [
           {
