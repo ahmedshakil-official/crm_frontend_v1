@@ -617,16 +617,22 @@ const ProductContent: React.FC = () => {
           type="submit"
           color="secondary"
           onClick={(e) => {
-            handleSubmit(e);
-            handleNextTab();
+            if (
+              session?.user?.user_type === "CLIENT" &&
+              productDetails[0]?.updated_by !== null
+            ) {
+              handleNextTab();
+            } else {
+              handleSubmit(e);
+              handleNextTab();
+            }
           }}
-          disabled={
-            isUpdating ||
-            (session?.user?.user_type === "CLIENT" &&
-              productDetails[0]?.updated_by !== null)
-          }
         >
-          Save & Next
+          {/* {session?.user?.user_type === "CLIENT" ? "Go to Next" : "Save & Next"} */}
+          {session?.user?.user_type === "CLIENT" &&
+          productDetails[0]?.updated_by !== null
+            ? "Go to Next"
+            : "Save & Next"}
         </Button>
       </div>
     </Form>
