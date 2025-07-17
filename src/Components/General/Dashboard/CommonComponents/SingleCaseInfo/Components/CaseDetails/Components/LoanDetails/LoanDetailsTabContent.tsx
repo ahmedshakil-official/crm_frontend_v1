@@ -285,17 +285,22 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
               type="submit"
               color="secondary"
               onClick={() => {
-                handleSave();
-                handleNextTab();
+                if (
+                  session?.user?.user_type === "CLIENT" &&
+                  loandetailsData?.updated_by !== null
+                ) {
+                  handleNextTab();
+                } else {
+                  handleSave();
+                  handleNextTab();
+                }
               }}
-              disabled={
-                isLoading ||
-                isUpdating ||
-                (session?.user?.user_type === "CLIENT" &&
-                  loandetailsData?.updated_by !== null)
-              }
+              disabled={isLoading || isUpdating}
             >
-              Save & Next
+              {session?.user?.user_type === "CLIENT" &&
+              loandetailsData?.updated_by !== null
+                ? "Go To Next"
+                : "Save & Next"}
             </Button>
           </div>
         </TabPane>
