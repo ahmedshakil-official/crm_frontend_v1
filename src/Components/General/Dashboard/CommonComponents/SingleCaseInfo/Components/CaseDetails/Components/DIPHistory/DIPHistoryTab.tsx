@@ -1,5 +1,6 @@
 import LoadingSpinner from "@/app/loading";
 import { useGetDIPHistoryDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { Button, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
@@ -17,6 +18,7 @@ interface DIPHistoryProps {
 }
 
 const DIPHistoryTab: React.FC = () => {
+  const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState<string>("1");
   const { casealias } = useParams();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -67,9 +69,10 @@ const DIPHistoryTab: React.FC = () => {
         <div className="text-center mt-4">
           <p className="mb-3">No DIP History found</p>
           <Button
-            color="primary"
+            color="success"
             onClick={() => setModalIsOpen(true)}
             type="button"
+            disabled={session?.user?.user_type === "CLIENT" && dipHistories.length > 0}
           >
             Add New Lender History
           </Button>
