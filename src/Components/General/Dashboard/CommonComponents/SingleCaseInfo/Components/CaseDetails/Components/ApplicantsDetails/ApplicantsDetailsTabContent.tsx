@@ -1574,17 +1574,22 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
             <Button
               type="submit"
               color="secondary"
-              disabled={
-                isLoading ||
-                (session?.user?.user_type === "CLIENT" &&
-                  selectedApplicant?.updated_by !== null)
-              }
               onClick={(e) => {
-                handleSubmit(e);
-                handleNextTab();
+                if (
+                  session?.user?.user_type === "CLIENT" &&
+                  selectedApplicant?.updated_by !== null
+                ) {
+                  handleNextTab();
+                } else {
+                  handleSubmit(e);
+                  handleNextTab();
+                }
               }}
             >
-              Save & Next
+              {session?.user?.user_type === "CLIENT" &&
+              selectedApplicant?.updated_by !== null
+                ? "Go To Next"
+                : "Save & Next"}
             </Button>
           </div>
         </Form>
