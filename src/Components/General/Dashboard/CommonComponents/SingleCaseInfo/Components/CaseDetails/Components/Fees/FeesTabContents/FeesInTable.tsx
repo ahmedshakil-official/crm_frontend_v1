@@ -1,11 +1,13 @@
 import { useGetFeesInDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Fees/FeesApi";
 import LoadingSpinner from "@/app/loading";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, Col, Row, Table } from "reactstrap";
 import AddFeeInModal from "./FeesModals/AddFeeInModal";
 
 const FeeInTable = () => {
+  const { data: session } = useSession();
   const { casealias } = useParams();
   const { data: feesInDetails, isLoading } = useGetFeesInDetailsQuery({
     case_alias: casealias,
@@ -90,6 +92,7 @@ const FeeInTable = () => {
             color="primary"
             className="addFee d-flex align-items-center gap-2"
             onClick={toggleModal}
+            disabled={session?.user?.user_type === "CLIENT"}
           >
             Add New Fee In
             <i className="fa-solid fa-circle-plus"></i>
