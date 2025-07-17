@@ -10,7 +10,7 @@ const NotificationHeader = () => {
     <li className="custom-dropdown">
       <a href={Href} onClick={() => setShow(!show)}><SVG iconId="notification" /></a>
       <Badge pill color="primary">4</Badge>
-      <div className={`custom-menu notification-dropdown py-0 overflow-hidden ${show ? "show" : ""}`}>
+      <div className={`custom-menu notification-dropdown py-0 overflow-hidden shadow ${show ? "show" : ""}`}>
         <h3 className="title bg-primary-light">{Notifications} <span className="font-primary">View all</span></h3>
         <ul className="activity-timeline">
             {notificationData.map((item, index) => (

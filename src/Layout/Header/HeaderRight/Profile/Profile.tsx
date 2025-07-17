@@ -1,4 +1,3 @@
-import SVG from "@/CommonComponent/SVG";
 import { Href, ImagePath } from "@/Constant";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -12,10 +11,10 @@ const Profile = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    // signOut();
     await signOut({ redirect: false });
     router.push("/auth/login");
   };
+
   return (
     <li className="profile-nav custom-dropdown">
       <div className="user-wrap">
@@ -39,20 +38,30 @@ const Profile = () => {
             <i className="fa-solid fa-chevron-down" />
           </p>
         </div>
-        <div className={`custom-menu overflow-hidden ${show ? "show" : ""}`}>
+        <div
+          className={`custom-menu overflow-hidden shadow-lg ${
+            show ? "show" : ""
+          }`}
+        >
           <ul className="profile-body">
-            <li className="d-flex gap-2">
+            <li
+              className="d-flex gap-2 text-muted opacity-50"
+              style={{ cursor: "not-allowed" }}
+            >
               <i className="fa-solid fa-user-gear"></i>
               Profile
             </li>
-            <li className="d-flex gap-2">
+            <li
+              className="d-flex gap-2 text-muted opacity-50"
+              style={{ cursor: "not-allowed" }}
+            >
               <i className="fa-solid fa-circle-user"></i>
-              Add User
+              Add user
             </li>
-            <li className="d-flex" onClick={handleLogout}>
-              <SVG className="svg-color" iconId="Login" />
-              <Link className="ms-2" href={Href}>
-                {"Logout"}
+            <li className="d-flex gap-2" onClick={handleLogout}>
+              <i className="fa-solid fa-arrow-right-from-bracket text-danger fs-6"></i>
+              <Link className="text-danger" href={Href}>
+                {"Log out"}
               </Link>
             </li>
           </ul>
