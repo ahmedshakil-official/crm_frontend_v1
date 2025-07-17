@@ -7,6 +7,7 @@ import {
   useUpdateMortgageYourNeedsMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/MortgageYourNeeds/MortgageYourNeedsApi";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -24,6 +25,7 @@ import {
 } from "reactstrap";
 
 const MortgageYourNeedsContent: React.FC = () => {
+  const { data: session } = useSession();
   const { casealias } = useParams();
   const dispatch = useAppDispatch();
   const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
@@ -1631,19 +1633,30 @@ const MortgageYourNeedsContent: React.FC = () => {
             </FormGroup>
 
             <div className="d-flex justify-content-end gap-2 mt-3">
-              <Button color="primary" disabled={isUpdating}>
+              <Button
+                color="primary"
+                disabled={isUpdating || session?.user?.user_type === "CLIENT"}
+              >
                 {isUpdating ? "Saving..." : "Save Changes"}
               </Button>
               <Button
                 color="secondary"
                 onClick={async () => {
-                  const success = await handleSubmit(new Event("click") as any);
-                  if (success) {
+                  if (session?.user?.user_type === "CLIENT") {
                     handleNextTab();
+                  } else {
+                    const success = await handleSubmit(
+                      new Event("click") as any
+                    );
+                    if (success) {
+                      handleNextTab();
+                    }
                   }
                 }}
               >
-                Save & Next
+                {session?.user?.user_type === "CLIENT"
+                  ? "Go To Next"
+                  : "Save & Next"}
               </Button>
             </div>
           </Form>

@@ -277,11 +277,14 @@ const PortfolioContent: React.FC = () => {
           <Button
             type="submit"
             color="secondary"
-            onClick={(e) => {
+            onClick={() => {
               handleNextTab();
             }}
           >
-            Save & Next
+            {session?.user?.user_type === "CLIENT" &&
+            data.map((item: any) => item?.alias).length > 0
+              ? "Go to Next"
+              : "Save & Next"}
           </Button>
         </div>
       </Container>

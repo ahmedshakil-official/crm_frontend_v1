@@ -237,18 +237,18 @@ const Accountant: React.FC = () => {
                   color="success"
                   onClick={toggleModal}
                   className="border-success"
-                  disabled={
-                    session?.user?.user_type === "CLIENT" &&
-                    Array.isArray(caseAccountants) &&
-                    caseAccountants.length > 0
-                  }
+                  disabled={session?.user?.user_type === "CLIENT"}
                 >
                   Add New Accountant
                 </Button>
                 <Button
                   color="primary"
                   onClick={handleAssignAccountant}
-                  disabled={!selectedAccountant || isAccountantAssigned()}
+                  disabled={
+                    !selectedAccountant ||
+                    isAccountantAssigned() ||
+                    session?.user?.user_type === "CLIENT"
+                  }
                 >
                   Assign Accountant
                 </Button>

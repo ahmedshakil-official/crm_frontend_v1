@@ -262,10 +262,7 @@ const CreditCommitmentsContent: React.FC = () => {
             type="submit"
             className="d-flex justify-content-center align-items-center gap-1"
             onClick={() => setModalIsOpen(!modalIsOpen)}
-            disabled={
-              session?.user?.user_type === "CLIENT" &&
-              creditCommitments.map((item: any) => item?.alias).length > 0
-            }
+            disabled={session?.user?.user_type === "CLIENT"}
           >
             <span>Add Credit Item</span>
             <i className="fa-solid fa-circle-plus"></i>
@@ -426,7 +423,7 @@ const CreditCommitmentsContent: React.FC = () => {
             handleNextTab();
           }}
         >
-          Save & Next
+          {session?.user?.user_type === "CLIENT" ? "Go To Next" : "Save & Next"}
         </Button>
       </div>
       {/* modals start */}

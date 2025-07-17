@@ -397,9 +397,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
                     color="primary"
                     onClick={handleSubmit}
                     disabled={
-                      isAdverseUpdating ||
-                      (session?.user?.user_type === "CLIENT" &&
-                        data?.updated_by !== null)
+                      isAdverseUpdating || session?.user?.user_type === "CLIENT"
                     }
                   >
                     {isAdverseUpdating ? "Saving..." : "Save Changes"}
@@ -408,17 +406,18 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
                     type="submit"
                     color="secondary"
                     onClick={async (e) => {
-                      e.preventDefault();
-                      await handleSubmit();
-                      handleNextTab();
+                      if (session?.user?.user_type === "CLIENT") {
+                        handleNextTab();
+                      } else {
+                        e.preventDefault();
+                        await handleSubmit();
+                        handleNextTab();
+                      }
                     }}
-                    disabled={
-                      isAdverseUpdating ||
-                      (session?.user?.user_type === "CLIENT" &&
-                        data?.updated_by !== null)
-                    }
                   >
-                    Save & Next
+                    {session?.user?.user_type === "CLIENT"
+                      ? "Go To Next"
+                      : "Save & Next"}
                   </Button>
                 </div>
               </Form>

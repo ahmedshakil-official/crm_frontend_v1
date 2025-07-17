@@ -1,7 +1,4 @@
-import {
-  useGetPropertiesQuery,
-  useUpdatePropertyMutation,
-} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
 import { FoundPropertyProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SecurityPropertyTypes";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
@@ -25,9 +22,6 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({
   const { data: session } = useSession();
 
   // RTK Hooks
-  const { data: properties } = useGetPropertiesQuery({
-    case_alias: casealias,
-  });
   const [updateSingleProperty, { isLoading }] = useUpdatePropertyMutation();
 
   const [foundProperty, setFoundProperty] = useState<boolean>(
@@ -80,10 +74,7 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({
                       }
                       onChange={() => handlePropertyFound(true)}
                       className="cursor-pointer me-2"
-                      disabled={
-                        session?.user?.user_type === "CLIENT" &&
-                        properties[0]?.updated_by !== null
-                      }
+                      disabled={session?.user?.user_type === "CLIENT"}
                     />
                     <Label
                       for="FoundPrimaryPropertyYes"
@@ -105,10 +96,7 @@ const FoundProperty: React.FC<FoundPropertyProps> = ({
                       }
                       onChange={() => handlePropertyFound(false)}
                       className="cursor-pointer me-2"
-                      disabled={
-                        session?.user?.user_type === "CLIENT" &&
-                        properties[0]?.updated_by !== null
-                      }
+                      disabled={session?.user?.user_type === "CLIENT"}
                     />
                     <Label
                       for="FoundPrimaryPropertyNo"

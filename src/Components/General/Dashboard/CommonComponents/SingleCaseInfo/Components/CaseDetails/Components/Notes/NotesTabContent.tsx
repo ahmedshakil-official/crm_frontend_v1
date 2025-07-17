@@ -1,21 +1,23 @@
 import LoadingSpinner from "@/app/loading";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useGetNotesQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Notes/NotesApi";
 import { NotesTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/NotesAndTaskTypes";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React from "react";
+import { toast } from "react-toastify";
 import { Button, TabContent, TabPane } from "reactstrap";
 import NotesViewTab from "./NotesViewTabs/NotesViewTab";
 import TasksViewTab from "./NotesViewTabs/TasksViewTab";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { toast } from "react-toastify";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 
 export const NotesTabContent: React.FC<NotesTabContentProps> = ({
   tabId,
   setTabId,
 }) => {
+  const { data: session } = useSession();
   const { casealias } = useParams();
   const {
     data: caseData,
@@ -63,11 +65,13 @@ export const NotesTabContent: React.FC<NotesTabContentProps> = ({
             <Button
               type="submit"
               color="secondary"
-              onClick={(e) => {
+              onClick={() => {
                 handleNextTab();
               }}
             >
-              Save & Next
+              {session?.user?.user_type === "CLIENT"
+                ? "Go To Next"
+                : "Save & Next"}
             </Button>
           </div>
         </TabPane>

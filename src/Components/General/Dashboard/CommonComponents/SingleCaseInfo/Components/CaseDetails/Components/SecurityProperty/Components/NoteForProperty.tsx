@@ -1,10 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import {
-  useGetPropertiesQuery,
-  useUpdatePropertyMutation,
-} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
 import { updateProperty } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyFormSlice";
 import { RootState } from "@/Redux/Store";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
@@ -36,9 +33,6 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
   const propertyAlias = property_alias;
 
   // RTK Hooks
-  const { data: properties } = useGetPropertiesQuery({
-    case_alias: casealias,
-  });
   const [updateSingleProperty, { isLoading }] = useUpdatePropertyMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -123,11 +117,7 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
             name="next"
             className="px-4"
             onClick={handleSubmit}
-            disabled={
-              isLoading ||
-              (session?.user?.user_type === "CLIENT" &&
-                properties[0]?.updated_by !== null)
-            }
+            disabled={isLoading || session?.user?.user_type === "CLIENT"}
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>
@@ -135,16 +125,17 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
             type="submit"
             color="secondary"
             onClick={async () => {
-              await handleSubmit();
-              handleNextTab();
+              if (session?.user?.user_type === "CLIENT") {
+                handleNextTab();
+              } else {
+                await handleSubmit();
+                handleNextTab();
+              }
             }}
-            disabled={
-              isLoading ||
-              (session?.user?.user_type === "CLIENT" &&
-                properties[0]?.updated_by !== null)
-            }
           >
-            Save & Next
+            {session?.user?.user_type === "CLIENT"
+              ? "Go to Next"
+              : "Save & Next"}
           </Button>
         </div>
       </CardFooter>

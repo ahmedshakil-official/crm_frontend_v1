@@ -27,7 +27,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
   toggle,
 }) => {
   const { casealias } = useParams();
-  const [isTask, setIsTask] = useState(true);
+  const [isNote, setIsNote] = useState(true);
   const [brokerVisible, setBrokerVisible] = useState(false);
   const [clientVisible, setClientVisible] = useState(false);
   const [priority, setPriority] = useState("LOW");
@@ -62,13 +62,13 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
 
     // Create API payload with null checks
     const apiPayload = {
-      note_task: isTask ? "TASK" : "NOTE",
-      note_visible_to_introducer: !isTask ? brokerVisible : false,
-      note_visible_to_client: !isTask ? clientVisible : false,
+      note_task: isNote ? "NOTE" : "TASK",
+      note_visible_to_introducer: !isNote ? brokerVisible : false,
+      note_visible_to_client: !isNote ? clientVisible : false,
       category: category ? category.toUpperCase().replace(/ /g, "_") : null,
-      task_priority: isTask && priority ? priority : null,
-      due_date: isTask ? combinedDateTime : null,
-      assigned_to: isTask && assignedTo ? parseInt(assignedTo) : null,
+      task_priority: isNote && priority ? priority : null,
+      due_date: isNote ? combinedDateTime : null,
+      assigned_to: isNote && assignedTo ? parseInt(assignedTo) : null,
       note: comments || "",
     };
 
@@ -95,7 +95,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
           </Button>
         }
       >
-        Create Task / Note
+        Create Note/Task
       </ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
@@ -105,15 +105,15 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
                 <Input
                   type="switch"
                   id="taskToggle"
-                  checked={isTask}
-                  onChange={(e) => setIsTask(e.target.checked)}
+                  checked={isNote}
+                  onChange={(e) => setIsNote(e.target.checked)}
                 />
                 <Label check for="taskToggle" className="ms-2">
-                  {isTask ? "Task" : "Note"}
+                  {isNote ? "Note" : "Task"}
                 </Label>
               </FormGroup>
             </Col>
-            {!isTask && (
+            {isNote && (
               <Col md={5}>
                 <Row>
                   <Col md={12}>
@@ -148,7 +148,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
           </Row>
 
           <Row>
-            {isTask && (
+            {!isNote && (
               <Col md={6} className="mb-4">
                 <FormGroup>
                   <Label for="priority">
@@ -170,7 +170,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
               </Col>
             )}
 
-            {isTask && (
+            {!isNote && (
               <Col md={6} className=" mb-4">
                 <FormGroup>
                   <Label for="dueDate">
@@ -203,7 +203,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
               </Col>
             )}
 
-            {isTask && (
+            {!isNote && (
               <Col md={6}>
                 <FormGroup>
                   <Label for="assignedTo">
@@ -223,7 +223,7 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
               </Col>
             )}
 
-            {!isTask && (
+            {isNote && (
               <Col md={6} className=" mt-4">
                 <FormGroup>
                   <Label for="category">

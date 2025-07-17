@@ -265,11 +265,7 @@ const Solicitor: React.FC = () => {
                           color="success"
                           onClick={toggleModal}
                           className="border-success"
-                          disabled={
-                            session?.user?.user_type === "CLIENT" &&
-                            Array.isArray(caseSolicitors) &&
-                            caseSolicitors.length > 0
-                          }
+                          disabled={session?.user?.user_type === "CLIENT"}
                         >
                           Add New Solicitor
                         </Button>
@@ -278,9 +274,7 @@ const Solicitor: React.FC = () => {
                           onClick={handleAssignSolicitor}
                           disabled={
                             !selectedSolicitor ||
-                            (session?.user?.user_type === "CLIENT" &&
-                              Array.isArray(caseSolicitors) &&
-                              caseSolicitors.length > 0)
+                            session?.user?.user_type === "CLIENT"
                           }
                         >
                           Assign Solicitor
