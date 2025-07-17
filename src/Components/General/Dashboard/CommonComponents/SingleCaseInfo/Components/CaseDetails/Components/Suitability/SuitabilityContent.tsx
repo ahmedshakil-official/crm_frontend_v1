@@ -1,10 +1,15 @@
 import { defaultAnswersData } from "@/Data/CommonComponentsData/SingleCaseInfo/CaseDetailsData/SuitabilityData";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   useGetExtraAnswerQuery,
   useGetSuitabilityQuery,
   useUpdateSuitabilityMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Suitability/SuitabilityApi";
 import LoadingSpinner from "@/app/loading";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -20,12 +25,9 @@ import {
   Label,
 } from "reactstrap";
 import ExtraAnswerModal from "./Modals/ExtraAnswerModal";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const SuitabilityContent: React.FC = () => {
+  const { data: session } = useSession();
   const { casealias } = useParams();
   const dispatch = useAppDispatch();
   const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
@@ -566,7 +568,10 @@ const SuitabilityContent: React.FC = () => {
   );
 
   const handleNextTab = () => {
-    const nextTabNav: string | null = getNextTabNav(caseData?.case_stage, currentTab!);
+    const nextTabNav: string | null = getNextTabNav(
+      caseData?.case_stage,
+      currentTab!
+    );
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
@@ -2408,7 +2413,11 @@ const SuitabilityContent: React.FC = () => {
             )}
 
             <div className="d-flex justify-content-start align-items-center">
-              <Button color="info" onClick={toggleExtraAnswerModal}>
+              <Button
+                color="info"
+                onClick={toggleExtraAnswerModal}
+                disabled={isUpdating || session?.user?.user_type === "CLIENT"}
+              >
                 Add More Answer
               </Button>
             </div>
@@ -2417,17 +2426,27 @@ const SuitabilityContent: React.FC = () => {
 
         {/* Button for save changes */}
         <div className="d-flex justify-content-end mt-3 mb-0 gap-2">
-          <Button color="primary" type="submit" disabled={isUpdating}>
+          <Button
+            color="primary"
+            type="submit"
+            disabled={isUpdating || session?.user?.user_type === "CLIENT"}
+          >
             {isUpdating ? "Saving..." : "Save Changes"}
           </Button>
           <Button
             color="secondary"
             onClick={async (e) => {
-              await handleSubmit(e);
-              handleNextTab();
+              if (session?.user?.user_type === "CLIENT") {
+                handleNextTab();
+              } else {
+                await handleSubmit(e);
+                handleNextTab();
+              }
             }}
           >
-            Save & Next
+            {session?.user?.user_type === "CLIENT"
+              ? "Go To Next"
+              : "Save & Next"}
           </Button>
         </div>
       </Form>
