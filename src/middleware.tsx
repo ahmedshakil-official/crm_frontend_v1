@@ -30,7 +30,7 @@ export default withAuth(
       return NextResponse.redirect(loginUrl);
     }
 
-    if (path.startsWith("/dashboard/client") && token.user_type !== "LEAD") {
+    if (path.startsWith("/dashboard/client") && token.user_type !== "CLIENT") {
       const loginUrl = new URL("/auth/login", req.url);
       loginUrl.searchParams.set("error", "unauthorized");
       return NextResponse.redirect(loginUrl);

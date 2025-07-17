@@ -14,7 +14,7 @@ import MortgageYourNeedsContent from "./MortgageYourNeeds/MortgageYourNeedsConte
 import { NotesTab } from "./Notes/NotesTab";
 import PortfolioContent from "./Portfolio/PortfolioContent";
 import ProductContent from "./Product/ProductContent";
-import PropertyDetails from "./PropertyDetails/PropertyDetails";
+import SecurityProperty from "./SecurityProperty/SecurityProperty";
 import SolicitorsAndAccountantsTab from "./SolicitorsAndAccountants/SolicitorsAndAccountantsTab";
 import SuitabilityContent from "./Suitability/SuitabilityContent";
 
@@ -27,7 +27,7 @@ const tabComponents: Record<string, React.FC> = {
   "Credit Commitments": CreditCommitmentsContent,
   Adverse: AdverseTab,
   Portfolio: PortfolioContent,
-  "Security Property": PropertyDetails,
+  "Security Property": SecurityProperty,
   "Solicitors & Accountants": SolicitorsAndAccountantsTab,
   "Budget Planner": BudgetPlanner,
   "Existing Protection": ExistingProtectionTab,

@@ -4,6 +4,7 @@ import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseI
 import { useGetCreditCommitmentsDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CreditCommitmentsDetails/CreditCommitmentsDetailsApi";
 import LoadingSpinner from "@/app/loading";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -23,6 +24,7 @@ import UpdateCreditCommitmentModal from "./CreditCommitmentsModals/UpdateCreditC
 
 const CreditCommitmentsContent: React.FC = () => {
   const { casealias } = useParams();
+  const { data: session } = useSession();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   // Add these states at the top with other state declarations
@@ -50,7 +52,7 @@ const CreditCommitmentsContent: React.FC = () => {
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
-      toast.info("This is the last tab.");
+      toast.warning("This is the last tab.");
     }
   };
 
@@ -260,6 +262,7 @@ const CreditCommitmentsContent: React.FC = () => {
             type="submit"
             className="d-flex justify-content-center align-items-center gap-1"
             onClick={() => setModalIsOpen(!modalIsOpen)}
+            disabled={session?.user?.user_type === "CLIENT"}
           >
             <span>Add Credit Item</span>
             <i className="fa-solid fa-circle-plus"></i>
@@ -420,7 +423,7 @@ const CreditCommitmentsContent: React.FC = () => {
             handleNextTab();
           }}
         >
-          Save & Next
+          {session?.user?.user_type === "CLIENT" ? "Go To Next" : "Save & Next"}
         </Button>
       </div>
       {/* modals start */}

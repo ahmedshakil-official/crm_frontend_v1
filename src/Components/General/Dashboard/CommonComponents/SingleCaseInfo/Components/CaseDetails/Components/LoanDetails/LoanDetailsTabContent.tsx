@@ -1,10 +1,14 @@
 import LoadingSpinner from "@/app/loading";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
   useGetCaseLoanDetailsQuery,
   useGetLoanDetailsQuery,
   useUpdateLoanDetailsMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/LoanDetails/LoanDetailsApi";
 import { LoanDetailsTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/LoanDetailsTypes";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
@@ -15,12 +19,6 @@ import LoanDetailsFormTab1 from "./LoanDetailsFormTabs/LoanDetailsFormTab1";
 import LoanDetailsFormTab2 from "./LoanDetailsFormTabs/LoanDetailsFormTab2";
 import LoanDetailsFormTab3 from "./LoanDetailsFormTabs/LoanDetailsFormTab3";
 import LoanDetailsFormTab4 from "./LoanDetailsFormTabs/LoanDetailsFormTab4";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import {
-  basicTabIndicator,
-} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
   tabId,
@@ -47,7 +45,6 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     { case_alias: casealias },
     { skip: !casealias }
   );
-  console.log("loandetailsData", loandetailsData);
 
   // Initialize form states with default values
   const [formDataTab1, setFormDataTab1] = useState({
@@ -133,8 +130,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
         current_monthly_payment:
           loandetailsData.current_monthly_payment || null,
         current_lender: loandetailsData.current_lender || "",
-        original_purchase_price:
-          loandetailsData.original_purchase_price || 0,
+        original_purchase_price: loandetailsData.original_purchase_price || 0,
         date_of_purchase: loandetailsData.date_of_purchase || null,
         advice_level: loandetailsData.advice_level || "",
       });
@@ -169,7 +165,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
       case 1:
         setFormDataTab1((prev) => ({ ...prev, [name]: value }));
         // Sync mortgage_type between tab1 and tab2
-        if (name === 'mortgage_type') {
+        if (name === "mortgage_type") {
           setFormDataTab2((prev) => ({ ...prev, mortgage_type: value }));
         }
         break;
@@ -219,11 +215,10 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
-      toast.info("This is the last tab.");
+      toast.warning("This is the last tab.");
     }
   };
 
-  
   if (isLoading || isLoandetailsDataLoading)
     return (
       <div className=" d-flex justify-content-center">
@@ -280,7 +275,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
               disabled={
                 isLoading ||
                 isUpdating ||
-                (session?.user?.user_type === "LEAD" &&
+                (session?.user?.user_type === "CLIENT" &&
                   loandetailsData?.updated_by !== null)
               }
             >
@@ -290,11 +285,22 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
               type="submit"
               color="secondary"
               onClick={() => {
-                handleSave();
-                handleNextTab();
+                if (
+                  session?.user?.user_type === "CLIENT" &&
+                  loandetailsData?.updated_by !== null
+                ) {
+                  handleNextTab();
+                } else {
+                  handleSave();
+                  handleNextTab();
+                }
               }}
+              disabled={isLoading || isUpdating}
             >
-              Save & Next
+              {session?.user?.user_type === "CLIENT" &&
+              loandetailsData?.updated_by !== null
+                ? "Go To Next"
+                : "Save & Next"}
             </Button>
           </div>
         </TabPane>

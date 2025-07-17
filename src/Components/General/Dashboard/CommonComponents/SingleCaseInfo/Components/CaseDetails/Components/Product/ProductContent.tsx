@@ -7,6 +7,7 @@ import {
   useUpdateProductDetailsMutation,
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ProductDetails/ProductDetailsApi";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -15,6 +16,7 @@ import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 const ProductContent: React.FC = () => {
   const params = useParams();
   const { casealias } = params;
+  const { data: session } = useSession();
 
   // State to manage form data
   const [formData, setFormData] = useState({
@@ -130,7 +132,7 @@ const ProductContent: React.FC = () => {
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
-      toast.info("This is the last tab.");
+      toast.warning("This is the last tab.");
     }
   };
 
@@ -600,18 +602,37 @@ const ProductContent: React.FC = () => {
       </div>
 
       <div className="d-flex justify-content-end gap-2 mt-4">
-        <Button color="primary" type="submit" disabled={isUpdating}>
+        <Button
+          color="primary"
+          type="submit"
+          disabled={
+            isUpdating ||
+            (session?.user?.user_type === "CLIENT" &&
+              productDetails[0]?.updated_by !== null)
+          }
+        >
           {isUpdating ? "Saving..." : "Save Changes"}
         </Button>
         <Button
           type="submit"
           color="secondary"
           onClick={(e) => {
-            handleSubmit(e);
-            handleNextTab();
+            if (
+              session?.user?.user_type === "CLIENT" &&
+              productDetails[0]?.updated_by !== null
+            ) {
+              handleNextTab();
+            } else {
+              handleSubmit(e);
+              handleNextTab();
+            }
           }}
         >
-          Save & Next
+          {/* {session?.user?.user_type === "CLIENT" ? "Go to Next" : "Save & Next"} */}
+          {session?.user?.user_type === "CLIENT" &&
+          productDetails[0]?.updated_by !== null
+            ? "Go to Next"
+            : "Save & Next"}
         </Button>
       </div>
     </Form>

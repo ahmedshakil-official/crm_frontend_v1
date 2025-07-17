@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/PropertyDetailsApi";
-import { updateProperty } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { useUpdatePropertyMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyApi";
+import { updateProperty } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyFormSlice";
 import { RootState } from "@/Redux/Store";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -24,11 +25,14 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
   property_alias,
 }) => {
   const { casealias } = useParams();
+  const { data: session } = useSession();
+
   const formData = useSelector(
     (state: RootState) => state.propertyForm.Properties
   );
   const propertyAlias = property_alias;
 
+  // RTK Hooks
   const [updateSingleProperty, { isLoading }] = useUpdatePropertyMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -44,7 +48,7 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
     const response = await updateSingleProperty({
       case_alias: casealias,
       property_alias: propertyAlias,
-      updatedPropertyDetails: formData,
+      updatedSecurityProperty: formData,
     });
 
     if (response.data) {
@@ -62,7 +66,7 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
-      toast.info("This is the last tab.");
+      toast.warning("This is the last tab.");
     }
   };
 
@@ -113,6 +117,7 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
             name="next"
             className="px-4"
             onClick={handleSubmit}
+            disabled={isLoading || session?.user?.user_type === "CLIENT"}
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>
@@ -120,11 +125,17 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
             type="submit"
             color="secondary"
             onClick={async () => {
-              await handleSubmit();
-              handleNextTab();
+              if (session?.user?.user_type === "CLIENT") {
+                handleNextTab();
+              } else {
+                await handleSubmit();
+                handleNextTab();
+              }
             }}
           >
-            Save & Next
+            {session?.user?.user_type === "CLIENT"
+              ? "Go to Next"
+              : "Save & Next"}
           </Button>
         </div>
       </CardFooter>

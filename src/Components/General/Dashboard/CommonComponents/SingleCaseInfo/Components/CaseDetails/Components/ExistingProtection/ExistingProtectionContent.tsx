@@ -1,8 +1,13 @@
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { useUpdateExistingProtectionDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ExistingProtection/ExistingProtectionDetailsApi";
 import {
   ExistingProtectionDetailsProps,
   ExistingProtectionTabContentProps,
 } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ExistingProtectionTypes";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -18,16 +23,13 @@ import {
   Row,
 } from "reactstrap";
 import AddExistingProtectionModal from "./Modals/AddExistingProtectionModal";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 
 const ExistingProtectionContent: React.FC<
   ExistingProtectionTabContentProps
 > = ({ activeTab, activeUser, groupedData }) => {
   const params = useParams();
   const { casealias } = params;
+  const { data: session } = useSession();
 
   const dispatch = useAppDispatch();
   const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
@@ -44,7 +46,7 @@ const ExistingProtectionContent: React.FC<
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
-      toast.info("This is the last tab.");
+      toast.warning("This is the last tab.");
     }
   };
 
@@ -662,21 +664,35 @@ const ExistingProtectionContent: React.FC<
           </Card>
           <div className="d-flex justify-content-end gap-2">
             {formValues?.have_any_existing_Protection_policies_in_place && (
-              <Button color="secondary" onClick={toggleModal}>
+              <Button
+                color="info"
+                onClick={toggleModal}
+                disabled={session?.user?.user_type === "CLIENT"}
+              >
                 Add new
               </Button>
             )}
-            <Button color="primary" type="submit">
+            <Button
+              color="primary"
+              type="submit"
+              disabled={session?.user?.user_type === "CLIENT"}
+            >
               {isUpdateLoading ? "Saving..." : "Save Changes"}
             </Button>
             <Button
               color="secondary"
               onClick={async (e) => {
-                await handleUpdate(e);
-                handleNextTab();
+                if (session?.user?.user_type === "CLIENT") {
+                  handleNextTab();
+                } else {
+                  await handleUpdate(e);
+                  handleNextTab();
+                }
               }}
             >
-              Save & Next
+              {session?.user?.user_type === "CLIENT"
+                ? "Go To Next"
+                : "Save & Next"}
             </Button>
           </div>
         </Form>

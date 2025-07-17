@@ -303,8 +303,8 @@ const OrganisationStaffMenu: MenuItem[] = [
   },
 ];
 
-// Lead Menu
-const LeadMenu: MenuItem[] = [
+// CLIENT Menu
+const ClientMenu: MenuItem[] = [
   {
     title: "General",
     lanClass: "lan-1",
@@ -329,7 +329,7 @@ const LeadMenu: MenuItem[] = [
 
 // Export all menus
 export {
-  LeadMenu,
+  ClientMenu,
   NetworkAdminMenu,
   OrganisationAdminMenu,
   OrganisationAdviserMenu,
@@ -346,8 +346,8 @@ export const getMenuByRole = (role?: string): MenuItem[] => {
       return OrganisationAdviserMenu;
     case "ORGANIZATION_SUPPORT":
       return OrganisationStaffMenu;
-    case "LEAD":
-      return LeadMenu;
+    case "CLIENT":
+      return ClientMenu;
     default:
       return [];
   }

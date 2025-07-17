@@ -4,6 +4,7 @@ import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseI
 import { useUpdateComplianceMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Compliance/ComplianceApi";
 import { RootState } from "@/Redux/Store";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -21,6 +22,7 @@ import { ComplianceTabContents } from "./ComplianceTabContents";
 import { ComplianceRatingCard } from "./ComplianceTabContents/ComplianceRatingCard";
 
 export const ComplianceTab = () => {
+  const { data: session } = useSession();
   const { casealias } = useParams();
   const dispatch = useAppDispatch();
   const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
@@ -72,7 +74,7 @@ export const ComplianceTab = () => {
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
-      toast.info("This is the last tab.");
+      toast.warning("This is the last tab.");
     }
   };
 
@@ -117,18 +119,24 @@ export const ComplianceTab = () => {
               <Button
                 color="primary"
                 onClick={handleUpdateAll}
-                disabled={isUpdating}
+                disabled={isUpdating || session?.user?.user_type === "CLIENT"}
               >
                 {isUpdating ? "Saving..." : "Save Changes"}
               </Button>
               <Button
                 color="secondary"
                 onClick={async () => {
-                  await handleUpdateAll();
-                  handleNextTab();
+                  if (session?.user?.user_type === "CLIENT") {
+                    handleNextTab();
+                  } else {
+                    await handleUpdateAll();
+                    handleNextTab();
+                  }
                 }}
               >
-                Save & Next
+                {session?.user?.user_type === "CLIENT"
+                  ? "Go To Next"
+                  : "Save & Next"}
               </Button>
             </div>
           </CardBody>

@@ -14,7 +14,7 @@ const UserLogin = () => {
       router.push("/dashboard/admin");
     } else if (session?.user?.user_type === "NETWORK_ADMIN") {
       router.push("/dashboard/network");
-    } else if (session?.user?.user_type === "LEAD") {
+    } else if (session?.user?.user_type === "CLIENT") {
       router.push("/dashboard/client");
     } else if (session?.user?.user_type === "ORGANIZATION_ADMIN") {
       router.push("/dashboard/organisation");

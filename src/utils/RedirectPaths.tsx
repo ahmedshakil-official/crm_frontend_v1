@@ -8,10 +8,10 @@ export const getRedirectPaths = () => {
 
   const userType = session?.user?.user_type;
   switch (userType) {
-    case "LEAD":
-      return "/dashboard/client";
     case "ADMIN":
       return "/dashboard/admin";
+    case "CLIENT":
+      return "/dashboard/client";
     case "NETWORK_ADMIN":
       return "/dashboard/network";
     case "ORGANIZATION_ADMIN":

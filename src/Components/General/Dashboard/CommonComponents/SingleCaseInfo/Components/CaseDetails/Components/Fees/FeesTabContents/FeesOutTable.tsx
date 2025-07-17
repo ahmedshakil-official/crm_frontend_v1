@@ -1,11 +1,13 @@
 import LoadingSpinner from "@/app/loading";
 import { useGetFeesOutDetailsQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Fees/FeesApi";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Row, Table } from "reactstrap";
+import { Button, Col, Row, Table } from "reactstrap";
 import AddFeeOutModal from "./FeesModals/AddFeeOutModal";
 
 const FeeOutTable = () => {
+  const { data: session } = useSession();
   const { casealias } = useParams();
   const { data: feesOutDetails, isLoading } = useGetFeesOutDetailsQuery({
     case_alias: casealias,
@@ -87,6 +89,7 @@ const FeeOutTable = () => {
             color="primary"
             className="addFee d-flex align-items-center gap-2"
             onClick={toggleModal}
+            disabled={session?.user?.user_type === "CLIENT"}
           >
             Add New Fee Out
             <i className="fa-solid fa-circle-plus"></i>

@@ -1,6 +1,6 @@
-import { updateProperty } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetails/propertyFormSlice";
+import { updateProperty } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyFormSlice";
 import { RootState } from "@/Redux/Store";
-import { PropertyDetailsProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/PropertyDetailsTypes";
+import { PropertyDetailsProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SecurityPropertyTypes";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, FormGroup, Input, InputGroup, Label, Row } from "reactstrap";

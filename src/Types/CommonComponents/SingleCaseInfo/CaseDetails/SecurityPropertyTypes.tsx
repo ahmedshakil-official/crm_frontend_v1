@@ -1,4 +1,4 @@
-export interface PropertyFormState {
+export interface SecurityPropertyFormStateProps {
   Properties: {
     // Valuation and Purchase Details
     alias?: string; // ""

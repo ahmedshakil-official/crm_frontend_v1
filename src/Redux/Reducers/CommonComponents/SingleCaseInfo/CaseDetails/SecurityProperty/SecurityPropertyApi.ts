@@ -1,24 +1,24 @@
 import { baseApi } from "@/Redux/Api/BaseApi";
 
-export const PropertyDetailsApi = baseApi.injectEndpoints({
+export const SecurityPropertyApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getProperties: builder.query({
       query: ({ case_alias }) => ({
         url: `/cases/${case_alias}/property/details/`,
         method: "GET",
       }),
-      providesTags: ["PropertyDetails"],
+      providesTags: ["SecurityProperty"],
     }),
     updateProperty: builder.mutation({
-      query: ({ case_alias, property_alias, updatedPropertyDetails }) => ({
+      query: ({ case_alias, property_alias, updatedSecurityProperty }) => ({
         url: `/cases/${case_alias}/property/details/${property_alias}/`,
         method: "PUT",
-        body: updatedPropertyDetails,
+        body: updatedSecurityProperty,
       }),
-      invalidatesTags: ["PropertyDetails"],
+      invalidatesTags: ["SecurityProperty"],
     }),
   }),
 });
 
 export const { useGetPropertiesQuery, useUpdatePropertyMutation } =
-  PropertyDetailsApi;
+  SecurityPropertyApi;

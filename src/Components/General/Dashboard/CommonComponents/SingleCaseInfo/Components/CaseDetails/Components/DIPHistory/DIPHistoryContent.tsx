@@ -4,6 +4,7 @@ import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseI
 import { useUpdateDIPHistoryDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/DIPHistoryDetails/DIPHistoryDetailsApi";
 import LoadingSpinner from "@/app/loading";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -11,6 +12,7 @@ import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import AddNewLenderHistoryModal from "./Modals/AddNewLenderHistoryModal";
 
 const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
+  const { data: session } = useSession();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     is_this_application_had_a_decision_in_principle:
@@ -81,7 +83,7 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
-      toast.info("This is the last tab.");
+      toast.warning("This is the last tab.");
     }
   };
 
@@ -375,26 +377,42 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
             </>
           )}
           <Row>
-            <Col className="mt-4 d-flex justify-content-end align-items-center gap-2">
-              <Button
-                color="success"
-                onClick={() => setModalIsOpen(true)}
-                type="button"
-              >
-                Add New Lender History
-              </Button>
-              <Button color="primary" type="submit">
-                Save History
-              </Button>
-              <Button
-                color="secondary"
-                onClick={async (e) => {
-                  await handleSubmit(e);
-                  handleNextTab();
-                }}
-              >
-                Save & Next
-              </Button>
+            <Col className="mt-4 d-flex justify-content-between align-items-center gap-2">
+              <div>
+                <Button
+                  color="success"
+                  type="button"
+                  className="border-success"
+                  onClick={() => setModalIsOpen(true)}
+                  disabled={session?.user?.user_type === "CLIENT"}
+                >
+                  Add New Lender History
+                </Button>
+              </div>
+              <div className="d-flex gap-2">
+                <Button
+                  color="primary"
+                  type="submit"
+                  disabled={session?.user?.user_type === "CLIENT"}
+                >
+                  Save History
+                </Button>
+                <Button
+                  color="secondary"
+                  onClick={async (e) => {
+                    if (session?.user?.user_type === "CLIENT") {
+                      handleNextTab();
+                    } else {
+                      await handleSubmit(e);
+                      handleNextTab();
+                    }
+                  }}
+                >
+                  {session?.user?.user_type === "CLIENT"
+                    ? "Go To Next"
+                    : "Save & Next"}
+                </Button>
+              </div>
             </Col>
           </Row>
         </Form>

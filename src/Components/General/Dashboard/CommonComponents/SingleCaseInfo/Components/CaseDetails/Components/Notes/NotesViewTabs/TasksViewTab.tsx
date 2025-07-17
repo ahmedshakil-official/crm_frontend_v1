@@ -1,24 +1,30 @@
 import { TasksViewTabProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/NotesAndTaskTypes";
+import { useSession } from "next-auth/react";
 import { FC, useState } from "react";
 import { Button, Col, Container, Row, Table } from "reactstrap";
 import CreateTaskNoteModal from "../NotesModals/AddNewNoteModal";
 
 const TasksViewTab: FC<TasksViewTabProps> = ({ tasks }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <Container fluid className="py-4">
       <Row className="mb-3">
         <Col className="text-end">
-          <Button color="primary" onClick={() => setModalOpen(true)}>
-            Add New Task
+          <Button
+            color="primary"
+            onClick={() => setModalOpen(true)}
+            disabled={session?.user?.user_type === "CLIENT" && tasks.length > 0}
+          >
+            Add New Note/Task
             <i className="fa-solid fa-circle-plus ms-1"></i>
           </Button>
         </Col>
       </Row>
 
       <div className="table-responsive">
-        <Table striped hover>
+        <Table striped hover responsive>
           <thead>
             <tr>
               <th style={{ minWidth: "100px" }}>Type</th>

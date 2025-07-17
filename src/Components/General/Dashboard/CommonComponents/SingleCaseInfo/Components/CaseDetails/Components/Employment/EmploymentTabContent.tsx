@@ -7,6 +7,7 @@ import {
   EmploymentTabContentProps,
 } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/EmploymentTypes";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -34,6 +35,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   // UseParams with type assertion
   const params = useParams();
   const { casealias } = params;
+  const { data: session } = useSession();
   const [isAddEmploymentModalOpen, setAddEmploymentModalOpen] = useState(false);
   const [
     updateEmploymentDetails,
@@ -101,7 +103,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
-      toast.info("This is the last tab.");
+      toast.warning("This is the last tab.");
     }
   };
 
@@ -1059,7 +1061,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                     type="number"
                     id="turnover"
                     placeholder="0"
-                    value={formValues?.turnover || ''}
+                    value={formValues?.turnover || ""}
                     onChange={(e) =>
                       handleInputChange("turnover", e.target.value)
                     }
@@ -1221,13 +1223,18 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
         <Row>
           <Col className="d-flex justify-content-between pt-3">
             <Button
-              color="success"
+              color="info"
               onClick={() => setAddEmploymentModalOpen(true)}
+              disabled={session?.user?.user_type === "CLIENT"}
             >
               Add New
             </Button>
             <div className=" d-flex justify-content-end gap-2">
-              <Button color="primary" type="submit">
+              <Button
+                color="primary"
+                type="submit"
+                disabled={session?.user?.user_type === "CLIENT"}
+              >
                 {isUpdateEmploymentDetailsLoading
                   ? "Saving..."
                   : "Save Changes"}
@@ -1236,11 +1243,17 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 type="submit"
                 color="secondary"
                 onClick={(e) => {
-                  handleSaveClick(e);
-                  handleNextTab();
+                  if (session?.user?.user_type === "CLIENT") {
+                    handleNextTab();
+                  } else {
+                    handleSaveClick(e);
+                    handleNextTab();
+                  }
                 }}
               >
-                Save & Next
+                {session?.user?.user_type === "CLIENT"
+                  ? "Go To Next"
+                  : "Save & Next"}
               </Button>
             </div>
           </Col>

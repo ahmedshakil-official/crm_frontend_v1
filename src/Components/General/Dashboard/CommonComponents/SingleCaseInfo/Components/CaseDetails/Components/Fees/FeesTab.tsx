@@ -1,4 +1,11 @@
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
+import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
 import { FC, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -10,14 +17,9 @@ import {
   NavLink,
 } from "reactstrap";
 import { FeesTabContent } from "./FeesTabContent";
-import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { useParams } from "next/navigation";
-import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
-import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
-import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
-import { toast } from "react-toastify";
 
 const FeesTab: FC = () => {
+  const { data: session } = useSession();
   const { casealias } = useParams();
   const dispatch = useAppDispatch();
   const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
@@ -35,7 +37,7 @@ const FeesTab: FC = () => {
     if (nextTabNav) {
       dispatch(basicTabIndicator(nextTabNav));
     } else {
-      toast.info("This is the last tab.");
+      toast.warning("This is the last tab.");
     }
   };
 
@@ -64,8 +66,14 @@ const FeesTab: FC = () => {
           <CardBody className="pxd-0 pbd-0">
             <FeesTabContent tabId={basicTab} setTabId={setBasicTab} />
             <div className="d-flex justify-content-end px-4">
-              <Button color="secondary" className="mt-3" onClick={handleNextTab}>
-                Save & Next
+              <Button
+                color="secondary"
+                className="mt-3"
+                onClick={handleNextTab}
+              >
+                {session?.user?.user_type === "CLIENT"
+                  ? "Go To Next"
+                  : "Save & Next"}
               </Button>
             </div>
           </CardBody>

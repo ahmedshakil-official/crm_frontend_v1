@@ -1,5 +1,6 @@
 import { NotesViewTabProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/NotesAndTaskTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
+import { useSession } from "next-auth/react";
 import { FC, useState } from "react";
 import { Trash2 } from "react-feather";
 import { Button, Col, Container, Input, Row, Table } from "reactstrap";
@@ -112,6 +113,7 @@ const renderCell = (
 };
 
 const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
+  const { data: session } = useSession();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -145,8 +147,12 @@ const NotesViewTab: FC<NotesViewTabProps> = ({ notes }) => {
           </div>
         </Col>
         <Col md={8} className="text-end">
-          <Button color="primary" onClick={() => setModalOpen(true)}>
-            Add New Note
+          <Button
+            color="primary"
+            onClick={() => setModalOpen(true)}
+            disabled={session?.user?.user_type === "CLIENT" && notes.length > 0}
+          >
+            Add New Note/Task
             <i className="fa-solid fa-circle-plus ms-1"></i>
           </Button>
         </Col>
