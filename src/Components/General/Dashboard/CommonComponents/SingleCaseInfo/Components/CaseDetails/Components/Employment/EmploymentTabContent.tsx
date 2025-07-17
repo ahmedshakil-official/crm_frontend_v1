@@ -1223,7 +1223,8 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
         <Row>
           <Col className="d-flex justify-content-between pt-3">
             <Button
-              color="info"
+              color="success"
+              className="border-success"
               onClick={() => setAddEmploymentModalOpen(true)}
               disabled={session?.user?.user_type === "CLIENT"}
             >

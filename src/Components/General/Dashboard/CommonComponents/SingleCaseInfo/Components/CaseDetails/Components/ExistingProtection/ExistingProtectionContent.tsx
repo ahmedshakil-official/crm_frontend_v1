@@ -662,38 +662,43 @@ const ExistingProtectionContent: React.FC<
               )}
             </CardBody>
           </Card>
-          <div className="d-flex justify-content-end gap-2">
-            {formValues?.have_any_existing_Protection_policies_in_place && (
+          <div className="d-flex justify-content-between gap-2">
+            <div>
+              {formValues?.have_any_existing_Protection_policies_in_place && (
+                <Button
+                  color="success"
+                  className="border-success"
+                  onClick={toggleModal}
+                  disabled={session?.user?.user_type === "CLIENT"}
+                >
+                  Add new
+                </Button>
+              )}
+            </div>
+            <div className="d-flex gap-2">
               <Button
-                color="info"
-                onClick={toggleModal}
+                color="primary"
+                type="submit"
                 disabled={session?.user?.user_type === "CLIENT"}
               >
-                Add new
+                {isUpdateLoading ? "Saving..." : "Save Changes"}
               </Button>
-            )}
-            <Button
-              color="primary"
-              type="submit"
-              disabled={session?.user?.user_type === "CLIENT"}
-            >
-              {isUpdateLoading ? "Saving..." : "Save Changes"}
-            </Button>
-            <Button
-              color="secondary"
-              onClick={async (e) => {
-                if (session?.user?.user_type === "CLIENT") {
-                  handleNextTab();
-                } else {
-                  await handleUpdate(e);
-                  handleNextTab();
-                }
-              }}
-            >
-              {session?.user?.user_type === "CLIENT"
-                ? "Go To Next"
-                : "Save & Next"}
-            </Button>
+              <Button
+                color="secondary"
+                onClick={async (e) => {
+                  if (session?.user?.user_type === "CLIENT") {
+                    handleNextTab();
+                  } else {
+                    await handleUpdate(e);
+                    handleNextTab();
+                  }
+                }}
+              >
+                {session?.user?.user_type === "CLIENT"
+                  ? "Go To Next"
+                  : "Save & Next"}
+              </Button>
+            </div>
           </div>
         </Form>
         <AddExistingProtectionModal
