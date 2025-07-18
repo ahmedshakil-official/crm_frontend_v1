@@ -23,6 +23,8 @@ import {
   NavLink,
 } from "reactstrap";
 import { CaseDetailsTabContent } from "./Components/CaseDetailsTabContent";
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
   const basicTab = useAppSelector((state: any) => state.caseDetails.basicTabId);
@@ -99,7 +101,14 @@ const CaseDetails: React.FC<{ caseStage: string }> = ({ caseStage }) => {
           </CardHeader>
           {/* Case Details Tab Content */}
           <CardBody className="px-0 pb-0">
-            <CaseDetailsTabContent />
+            <div className="scroll-bar-wrap">
+              <PerfectScrollbar
+                className="scrollbar-margins large-margin scroll-demo pe-0"
+                style={{ width: "100%", maxHeight: "900px" }}
+              >
+                <CaseDetailsTabContent />
+              </PerfectScrollbar>
+            </div>
           </CardBody>
         </CardBody>
       </Card>
