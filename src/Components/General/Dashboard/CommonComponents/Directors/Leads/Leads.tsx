@@ -40,7 +40,9 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
 
   const [selectedLead, setSelectedLead] = useState<Partial<LeadsInfo>>({
     user: {
+      title: "",
       first_name: "",
+      middle_name: "",
       last_name: "",
       profile_image: "",
       nid: "",
@@ -183,7 +185,11 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
                       }}
                       style={{ cursor: "pointer" }}
                     >
-                      {lead?.user?.first_name} {lead?.user?.last_name}
+                      {lead.user?.title
+                        ? lead.user?.title.charAt(0).toUpperCase() +
+                          lead.user?.title.slice(1).toLowerCase()
+                        : ""}
+                      {"."} {lead?.user?.first_name} {lead?.user?.last_name}
                     </span>
                   </td>
                   <td>{lead?.official_email || "-"}</td>

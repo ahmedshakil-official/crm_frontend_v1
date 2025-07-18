@@ -27,7 +27,12 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Name:</span>
             <small>
-              {selectedLead?.user?.first_name} {selectedLead?.user?.last_name}
+              {selectedLead.user?.title
+                ? selectedLead.user?.title.charAt(0).toUpperCase() +
+                  selectedLead.user?.title.slice(1).toLowerCase()
+                : ""}
+              {"."} {selectedLead?.user?.first_name}{" "}
+              {selectedLead?.user?.last_name}
             </small>
           </Col>
           <Col md="4" sm="12" className="d-flex flex-column">
