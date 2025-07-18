@@ -9,13 +9,12 @@ import {
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
   CardBody,
   Col,
-  Form,
   FormGroup,
   FormText,
   Input,
@@ -37,6 +36,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   const { casealias } = params;
   const { data: session } = useSession();
   const [isAddEmploymentModalOpen, setAddEmploymentModalOpen] = useState(false);
+  const submitActionRef = useRef<"save" | "next">("save");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // RTK Hooks
   const [
     updateEmploymentDetails,
     { isLoading: isUpdateEmploymentDetailsLoading },
@@ -90,6 +93,10 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
 
     if (res.data) {
       toast.success("Employment details updated successfully.");
+      // Only go to next tab if this was a Save & Next action
+      if (submitActionRef.current === "next") {
+        handleNextTab();
+      }
     } else {
       toast.error("Failed to update employment details.");
     }
@@ -110,7 +117,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
   return (
     <CardBody className="px-0 pb-0">
       <h4 className="text-primary pb-0 fs-4 mb-4 mt-2">Employment Details</h4>
-      <Form onSubmit={handleSaveClick}>
+      <form ref={formRef} id="employment-form" onSubmit={handleSaveClick}>
         <Row className="d-flex justify-content-center align-items-center">
           <Col md={6}>
             <FormGroup>
@@ -1235,6 +1242,9 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 color="primary"
                 type="submit"
                 disabled={session?.user?.user_type === "CLIENT"}
+                onClick={() => {
+                  submitActionRef.current = "save";
+                }}
               >
                 {isUpdateEmploymentDetailsLoading
                   ? "Saving..."
@@ -1244,11 +1254,12 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
                 type="submit"
                 color="secondary"
                 onClick={(e) => {
+                  e.preventDefault();
                   if (session?.user?.user_type === "CLIENT") {
                     handleNextTab();
                   } else {
-                    handleSaveClick(e);
-                    handleNextTab();
+                    submitActionRef.current = "next";
+                    formRef.current?.requestSubmit();
                   }
                 }}
               >
@@ -1259,7 +1270,7 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             </div>
           </Col>
         </Row>
-      </Form>
+      </form>
 
       {/* Add new employment details */}
       <AddEmploymentDetailsModal

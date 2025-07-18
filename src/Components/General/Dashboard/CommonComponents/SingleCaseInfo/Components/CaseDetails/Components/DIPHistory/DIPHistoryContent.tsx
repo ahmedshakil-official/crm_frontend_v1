@@ -6,14 +6,17 @@ import LoadingSpinner from "@/app/loading";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
 import AddNewLenderHistoryModal from "./Modals/AddNewLenderHistoryModal";
 
 const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
   const { data: session } = useSession();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const submitActionRef = useRef<"save" | "next">("save");
+  const formRef = useRef<HTMLFormElement>(null);
+
   const [formData, setFormData] = useState({
     is_this_application_had_a_decision_in_principle:
       dipData?.is_this_application_had_a_decision_in_principle || false,
@@ -66,6 +69,10 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
       }).unwrap();
       if (res) {
         toast.success("DIP History updated successfully!");
+        // Only go to next tab if this was a Save & Next action
+        if (submitActionRef.current === "next") {
+          handleNextTab();
+        }
       } else {
         toast.error("Failed to update DIP History");
       }
@@ -98,7 +105,7 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
   return (
     <div className="p-3">
       <div className="border rounded p-3 mb-3">
-        <Form onSubmit={handleSubmit}>
+        <form ref={formRef} id="dip-form" onSubmit={handleSubmit}>
           <Row>
             <Col>
               <FormGroup className="mb-4">
@@ -393,6 +400,9 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
                 <Button
                   color="primary"
                   type="submit"
+                  onClick={() => {
+                    submitActionRef.current = "save";
+                  }}
                   disabled={session?.user?.user_type === "CLIENT"}
                 >
                   Save History
@@ -400,11 +410,12 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
                 <Button
                   color="secondary"
                   onClick={async (e) => {
+                    e.preventDefault();
                     if (session?.user?.user_type === "CLIENT") {
                       handleNextTab();
                     } else {
-                      await handleSubmit(e);
-                      handleNextTab();
+                      submitActionRef.current = "next";
+                      formRef.current?.requestSubmit();
                     }
                   }}
                 >
@@ -415,7 +426,7 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
               </div>
             </Col>
           </Row>
-        </Form>
+        </form>
       </div>
       {/* Modal Component */}
       <AddNewLenderHistoryModal

@@ -50,6 +50,9 @@ const SecurityPropertyTabContent: FC<SecurityPropertyTabContentProps> = ({
         </TabPane>
         <TabPane tabId="3">
           <AdditionalInfo />
+          <Button color="primary" onClick={handleNext} className="float-end">
+            Next
+          </Button>
         </TabPane>
         <TabPane tabId="4">
           <ValuationInfo />

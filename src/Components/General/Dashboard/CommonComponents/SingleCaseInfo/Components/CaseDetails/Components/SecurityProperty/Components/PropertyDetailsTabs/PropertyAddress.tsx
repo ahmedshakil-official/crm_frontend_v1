@@ -1,7 +1,7 @@
 import { updateProperty } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/SecurityProperty/SecurityPropertyFormSlice";
 import { RootState } from "@/Redux/Store";
 import { AddressDetailsProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/SecurityPropertyTypes";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -20,6 +20,9 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
     (state: RootState) => state.propertyForm.Properties
   );
 
+  // Add local error state
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
   useEffect(() => {
     if (propertyData) {
       dispatch(
@@ -37,16 +40,66 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
     }
   }, [propertyData, dispatch]);
 
+  // Helper to get error message for each field
+  const getErrorMessage = (name: string) => {
+    switch (name) {
+      case "postcode":
+        return "Postcode is required";
+      case "house_name_or_number":
+        return "House Name or Number is required";
+      case "address_one":
+        return "Address 1 is required";
+      case "city":
+        return "City is required";
+      default:
+        return "This field is required";
+    }
+  };
+
+  // Show errors for required fields immediately on mount
+  useEffect(() => {
+    const newErrors: { [key: string]: string } = {};
+    if (!propertyState.postcode)
+      newErrors.postcode = getErrorMessage("postcode");
+    if (!propertyState.house_name_or_number)
+      newErrors.house_name_or_number = getErrorMessage("house_name_or_number");
+    if (!propertyState.address_one)
+      newErrors.address_one = getErrorMessage("address_one");
+    if (!propertyState.city) newErrors.city = getErrorMessage("city");
+    setErrors(newErrors);
+    // eslint-disable-next-line
+  }, []);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     dispatch(updateProperty({ [name]: value }));
+    // Live validation: show error if field is empty, clear if not
+    setErrors((prev) => ({
+      ...prev,
+      [name]: value.trim() === "" ? getErrorMessage(name) : "",
+    }));
   };
 
+  // Manual validation logic (fallback on submit)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your submit logic here
+    const newErrors: { [key: string]: string } = {};
+
+    if (!propertyState.postcode) newErrors.postcode = "Postcode is required";
+    if (!propertyState.house_name_or_number)
+      newErrors.house_name_or_number = "House Name or Number is required";
+    if (!propertyState.address_one)
+      newErrors.address_one = "Address 1 is required";
+    if (!propertyState.city) newErrors.city = "City is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // dispatch(saveAction(propertyState)); // Uncomment and use your actual save action
     console.log("Form submitted:", propertyState);
   };
 
@@ -74,6 +127,9 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
                   </Button>
                   <Button color="primary">Lookup</Button>
                 </InputGroup>
+                {errors.postcode && (
+                  <div className="text-danger">{errors.postcode}</div>
+                )}
               </FormGroup>
             </Col>
           </Row>
@@ -93,6 +149,11 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
                   maxLength={255}
                   required
                 />
+                {errors.house_name_or_number && (
+                  <div className="text-danger">
+                    {errors.house_name_or_number}
+                  </div>
+                )}
               </FormGroup>
             </Col>
 
@@ -109,6 +170,9 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
                   maxLength={255}
                   required
                 />
+                {errors.address_one && (
+                  <div className="text-danger">{errors.address_one}</div>
+                )}
               </FormGroup>
             </Col>
           </Row>
@@ -140,6 +204,9 @@ const AddressDetails: React.FC<AddressDetailsProps> = ({ propertyData }) => {
                   maxLength={255}
                   required
                 />
+                {errors.city && (
+                  <div className="text-danger">{errors.city}</div>
+                )}
               </FormGroup>
             </Col>
           </Row>

@@ -15,13 +15,12 @@ import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
   Col,
   Container,
-  Form,
   FormGroup,
   FormText,
   Input,
@@ -45,6 +44,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
   const [isDependantsViewModalOpen, setIsDependantsViewModalOpen] =
     useState(false);
+  const submitActionRef = useRef<"save" | "next">("save");
+  const formRef = useRef<HTMLFormElement>(null);
 
   const toggleViewModal = () => {
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
@@ -197,12 +198,16 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await updateApplicantDetails({
+      await updateApplicantDetails({
         case_alias: casealias as string,
         applicantDetails_alias: formValues.alias as string,
         applicantDetails: formValues,
       }).unwrap();
       toast.success("Applicant details updated successfully!");
+      // Only go to next tab if this was a Save & Next action
+      if (submitActionRef.current === "next") {
+        handleNextTab();
+      }
     } catch (error) {
       console.error("Error updating applicant details:", error);
       toast.error("Error updating applicant details!");
@@ -227,7 +232,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   return (
     <Container>
       <Row>
-        <Form onSubmit={handleSubmit}>
+        <form ref={formRef} id="applicant-form" onSubmit={handleSubmit}>
           {applicationType === "RESIDENTIAL_MORTGAGE" ||
           applicationType === "SELECT_APPLICATION_TYPE" ? (
             ""
@@ -410,8 +415,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </Row>
             </Col>
           </Row>
-
-          <Row></Row>
 
           <Row>
             <Col md={6}>
@@ -1568,6 +1571,9 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 (session?.user?.user_type === "CLIENT" &&
                   selectedApplicant?.updated_by !== null)
               }
+              onClick={() => {
+                submitActionRef.current = "save";
+              }}
             >
               {isUpdatingApplicant ? "Updating..." : "Save Changes"}
             </Button>
@@ -1575,14 +1581,15 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               type="submit"
               color="secondary"
               onClick={(e) => {
+                e.preventDefault();
                 if (
                   session?.user?.user_type === "CLIENT" &&
                   selectedApplicant?.updated_by !== null
                 ) {
                   handleNextTab();
                 } else {
-                  handleSubmit(e);
-                  handleNextTab();
+                  submitActionRef.current = "next";
+                  formRef.current?.requestSubmit();
                 }
               }}
             >
@@ -1592,7 +1599,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 : "Save & Next"}
             </Button>
           </div>
-        </Form>
+        </form>
       </Row>
 
       {/* Company Applicant Modal */}
