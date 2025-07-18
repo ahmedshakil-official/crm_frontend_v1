@@ -9,14 +9,16 @@ import {
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
 
 const ProductContent: React.FC = () => {
   const params = useParams();
   const { casealias } = params;
   const { data: session } = useSession();
+  const submitActionRef = useRef<"save" | "next">("save");
+  const formRef = useRef<HTMLFormElement>(null);
 
   // State to manage form data
   const [formData, setFormData] = useState({
@@ -108,6 +110,10 @@ const ProductContent: React.FC = () => {
           productUpdatePayload: formData,
         }).unwrap();
         toast.success("Product details updated successfully!");
+        // Only go to next tab if this was a Save & Next action
+        if (submitActionRef.current === "next") {
+          handleNextTab();
+        }
       }
     } catch (error) {
       console.error("Failed to update product details:", error);
@@ -144,7 +150,12 @@ const ProductContent: React.FC = () => {
     );
 
   return (
-    <Form className="p-3" onSubmit={handleSubmit}>
+    <form
+      ref={formRef}
+      id="product-form"
+      className="p-3"
+      onSubmit={handleSubmit}
+    >
       <h4 className="mb-4 fs-4 text-primary">Product Details</h4>
       <Row>
         <Col md={6}>
@@ -605,6 +616,9 @@ const ProductContent: React.FC = () => {
         <Button
           color="primary"
           type="submit"
+          onClick={() => {
+            submitActionRef.current = "save";
+          }}
           disabled={
             isUpdating ||
             (session?.user?.user_type === "CLIENT" &&
@@ -617,14 +631,15 @@ const ProductContent: React.FC = () => {
           type="submit"
           color="secondary"
           onClick={(e) => {
+            e.preventDefault();
             if (
               session?.user?.user_type === "CLIENT" &&
               productDetails[0]?.updated_by !== null
             ) {
               handleNextTab();
             } else {
-              handleSubmit(e);
-              handleNextTab();
+              submitActionRef.current = "next";
+              formRef.current?.requestSubmit();
             }
           }}
         >
@@ -635,7 +650,7 @@ const ProductContent: React.FC = () => {
             : "Save & Next"}
         </Button>
       </div>
-    </Form>
+    </form>
   );
 };
 

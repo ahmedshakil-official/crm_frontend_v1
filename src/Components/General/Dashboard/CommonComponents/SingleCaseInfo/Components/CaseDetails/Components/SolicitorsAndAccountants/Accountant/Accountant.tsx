@@ -1,6 +1,6 @@
 import LoadingSpinner from "@/app/loading";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import {
@@ -34,6 +34,9 @@ const Accountant: React.FC = () => {
   const params = useParams();
   const { casealias } = params;
   const { data: session } = useSession();
+  const submitActionRef = useRef<"save" | "next">("save");
+  const formRef = useRef<HTMLFormElement>(null);
+
   const [selectedAccountant, setSelectedAccountant] = useState<any>(null);
   const [selectedCaseAccountant, setSelectedCaseAccountant] =
     useState<any>(null);
@@ -165,6 +168,10 @@ const Accountant: React.FC = () => {
 
       setSelectedCaseAccountant(updatedAccountant);
       toast.success("Accountant details updated successfully!");
+      // Only go to next tab if this was a Save & Next action
+      if (submitActionRef.current === "next") {
+        handleNextTab();
+      }
     } catch (error) {
       console.error("Failed to update accountant details:", error);
       toast.error("Failed to update accountant details. Please try again.");
@@ -284,13 +291,17 @@ const Accountant: React.FC = () => {
         </Col>
       </Row>
 
-      <Form>
+      <form
+        ref={formRef}
+        id="accountant-form"
+        onSubmit={handleUpdateAccountant}
+      >
         <Card>
           <CardBody>
             <Row>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="name">Name</Label>
+                  <Label for="name">Name*</Label>
                   <Input
                     id="name"
                     name="name"
@@ -451,7 +462,10 @@ const Accountant: React.FC = () => {
                 <FormGroup className="d-flex justify-content-end gap-3">
                   <Button
                     color="primary"
-                    onClick={handleUpdateAccountant}
+                    type="submit"
+                    onClick={() => {
+                      submitActionRef.current = "save";
+                    }}
                     disabled={
                       isUpdatingLoading || session?.user?.user_type === "CLIENT"
                     }
@@ -460,13 +474,14 @@ const Accountant: React.FC = () => {
                   </Button>
                   <Button
                     color="secondary"
+                    type="submit"
                     onClick={async (e) => {
                       if (session?.user?.user_type === "CLIENT") {
                         handleNextTab();
                       } else {
                         e.preventDefault();
-                        await handleUpdateAccountant(e);
-                        handleNextTab();
+                        submitActionRef.current = "next";
+                        formRef.current?.requestSubmit();
                       }
                     }}
                   >
@@ -479,7 +494,7 @@ const Accountant: React.FC = () => {
             </Row>
           </CardBody>
         </Card>
-      </Form>
+      </form>
 
       <AddAccountantModal isOpen={isModalOpen} toggle={toggleModal} />
     </>

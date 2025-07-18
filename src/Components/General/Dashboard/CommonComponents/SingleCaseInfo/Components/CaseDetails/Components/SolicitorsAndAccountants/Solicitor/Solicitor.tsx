@@ -11,7 +11,7 @@ import LoadingSpinner from "@/app/loading";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -36,6 +36,8 @@ const Solicitor: React.FC = () => {
   const { casealias } = params;
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
+  const submitActionRef = useRef<"save" | "next">("save");
+  const formRef = useRef<HTMLFormElement>(null);
 
   // RTK Hooks
   const { data: solicitorName, isLoading } =
@@ -159,8 +161,11 @@ const Solicitor: React.FC = () => {
       };
 
       setSelectedCaseSolicitor(updatedSolicitor);
-
       toast.success("Solicitor details updated successfully!");
+      // Only go to next tab if this was a Save & Next action
+      if (submitActionRef.current === "next") {
+        handleNextTab();
+      }
     } catch (error) {
       console.error("Failed to update solicitor details:", error);
       toast.error("Failed to update solicitor details. Please try again.");
@@ -319,7 +324,11 @@ const Solicitor: React.FC = () => {
           <hr />
 
           <Row>
-            <Form onSubmit={handleUpdateSolicitorDetails}>
+            <form
+              ref={formRef}
+              id="solicitor-form"
+              onSubmit={handleUpdateSolicitorDetails}
+            >
               <Row>
                 <Col md={6}>
                   <FormGroup>
@@ -330,6 +339,7 @@ const Solicitor: React.FC = () => {
                       type="text"
                       value={formData.qualifications || ""}
                       onChange={handleInputChange}
+                      required
                     />
                   </FormGroup>
                 </Col>
@@ -512,6 +522,9 @@ const Solicitor: React.FC = () => {
                     disabled={
                       isUpdateLoading || session?.user?.user_type === "CLIENT"
                     }
+                    onClick={() => {
+                      submitActionRef.current = "save";
+                    }}
                   >
                     {isUpdateLoading ? "Saving..." : "Save Changes"}
                   </Button>
@@ -522,8 +535,8 @@ const Solicitor: React.FC = () => {
                         handleNextTab();
                       } else {
                         e.preventDefault();
-                        await handleUpdateSolicitorDetails(e);
-                        handleNextTab();
+                        submitActionRef.current = "next";
+                        formRef.current?.requestSubmit();
                       }
                     }}
                   >
@@ -533,7 +546,7 @@ const Solicitor: React.FC = () => {
                   </Button>
                 </Col>
               </Row>
-            </Form>
+            </form>
           </Row>
         </CardBody>
       </Card>
