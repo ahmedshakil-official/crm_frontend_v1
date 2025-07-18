@@ -25,19 +25,14 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
+    title: "",
     firstName: "",
+    middleName: "",
     lastName: "",
     email: "",
     phone: "",
-    password: "",
-    designation: "",
-    permanent_address: "",
-    present_address: "",
     dob: "",
     gender: "",
-    joining_date: "",
-    registration_number: "",
-    degree: "",
   });
 
   // Add state for AddNewCaseModal
@@ -63,20 +58,15 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
     e.preventDefault();
     const payload = {
       user: {
+        title: formData.title,
         first_name: formData.firstName,
+        middle_name: formData.middleName,
         last_name: formData.lastName,
         email: formData.email,
         phone: formData.phone || null,
-        password: formData.password,
       },
-      designation: formData.designation || null,
-      permanent_address: formData.permanent_address || null,
-      present_address: formData.present_address || null,
       dob: formData.dob || null,
       gender: formData.gender,
-      joining_date: formData.joining_date || null,
-      registration_number: formData.registration_number || null,
-      degree: formData.degree || null,
     };
 
     try {
@@ -112,20 +102,15 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
     e.preventDefault();
     const payload = {
       user: {
+        title: formData.title,
         first_name: formData.firstName,
+        middle_name: formData.middleName,
         last_name: formData.lastName,
         email: formData.email,
         phone: formData.phone || null,
-        password: formData.password,
       },
-      designation: formData.designation || null,
-      permanent_address: formData.permanent_address || null,
-      present_address: formData.present_address || null,
       dob: formData.dob || null,
       gender: formData.gender,
-      joining_date: formData.joining_date || null,
-      registration_number: formData.registration_number || null,
-      degree: formData.degree || null,
     };
 
     try {
@@ -134,19 +119,14 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
         toast.success("Lead added successfully.");
         // Clear form data
         setFormData({
+          title: "",
           firstName: "",
+          middleName: "",
           lastName: "",
           email: "",
           phone: "",
-          password: "",
-          designation: "",
-          permanent_address: "",
-          present_address: "",
           dob: "",
           gender: "",
-          joining_date: "",
-          registration_number: "",
-          degree: "",
         });
         toggle(); // Close the modal
       } else if ("error" in result) {
@@ -181,7 +161,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
       >
         <ModalBody>
           <Row>
-            {/* <Col md={6}>
+            <Col md={6}>
               <FormGroup>
                 <Label for="title">
                   Title<span className="text-danger">*</span>
@@ -198,10 +178,15 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   <option value="MR">Mr.</option>
                   <option value="MRS">Mrs.</option>
                   <option value="MS">Ms.</option>
+                  <option value="DR">Dr.</option>
                   <option value="MISS">Miss.</option>
+                  <option value="MADAM">Madam.</option>
+                  <option value="MAIDEN">Maiden.</option>
+                  <option value="PROFESSOR">Professor.</option>
+                  <option value="DOCTOR">Doctor.</option>
                 </Input>
               </FormGroup>
-            </Col> */}
+            </Col>
             <Col md={6}>
               <FormGroup>
                 <Label for="firstName">
@@ -217,7 +202,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 />
               </FormGroup>
             </Col>
-            {/* <Col md={6}>
+            <Col md={6}>
               <FormGroup>
                 <Label for="middleName">Middle Name(s)</Label>
                 <Input
@@ -228,7 +213,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   onChange={handleInputChange}
                 />
               </FormGroup>
-            </Col> */}
+            </Col>
             <Col md={6}>
               <FormGroup>
                 <Label for="lastName">
@@ -256,18 +241,6 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="password">Password</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
                 />
               </FormGroup>
             </Col>
