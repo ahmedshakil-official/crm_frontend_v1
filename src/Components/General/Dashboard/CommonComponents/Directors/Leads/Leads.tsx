@@ -189,7 +189,8 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
                         ? lead.user?.title.charAt(0).toUpperCase() +
                           lead.user?.title.slice(1).toLowerCase()
                         : ""}
-                      {"."} {lead?.user?.first_name} {lead?.user?.last_name}
+                      {"."} {lead?.user?.first_name} {lead?.user?.middle_name}{" "}
+                      {lead?.user?.last_name}
                     </span>
                   </td>
                   <td>{lead?.official_email || "-"}</td>
