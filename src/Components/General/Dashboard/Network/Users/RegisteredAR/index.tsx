@@ -6,10 +6,10 @@ const AdvisersContainer: React.FC = () => {
   return (
     <>
       <NetworkBreadcrumbs
-        mainTitle="Network Advisers"
+        mainTitle="Network AR"
         title="Hello there!"
-        parent="Directors"
-        activePage="Advisers"
+        parent="Network"
+        activePage="AR"
       />
       <Container fluid>
         <Advisers />

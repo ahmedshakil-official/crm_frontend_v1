@@ -8,7 +8,7 @@ const NetworkIntroducers = () => {
       if (typeof window !== "undefined") {
         const newClient = (
           await import(
-            "@/Components/General/Dashboard/Network/Directors/Introducers"
+            "@/Components/General/Dashboard/Network/Users/Introducers"
           )
         ).default;
         setClient(() => newClient);

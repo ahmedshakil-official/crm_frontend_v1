@@ -3,7 +3,7 @@ import { MenuItem } from "@/Types/LayoutTypes";
 // Network Admin Menu
 const NetworkAdminMenu: MenuItem[] = [
   {
-    title: "General",
+    title: "Network",
     lanClass: "lan-1",
     type: "group",
     Items: [
@@ -20,8 +20,13 @@ const NetworkAdminMenu: MenuItem[] = [
         type: "sub",
         children: [
           {
+            path: "/dashboard/network/leads",
+            title: "Leads",
+            type: "link",
+          },
+          {
             path: "/dashboard/network/cases",
-            title: "All Case",
+            title: "All Cases",
             type: "link",
           },
           {
@@ -29,58 +34,58 @@ const NetworkAdminMenu: MenuItem[] = [
             title: "Active Cases",
             type: "link",
           },
+          {
+            path: "/dashboard/network/clients",
+            title: "Clients",
+            type: "link",
+          },
         ],
       },
       {
-        title: "Directors",
+        title: "Users",
         icon: "Profile",
         type: "sub",
         children: [
           {
-            path: "/dashboard/network/directors/leads",
-            title: "Leads",
+            path: "/dashboard/network/organisations",
+            title: "Organisations",
             type: "link",
           },
           {
-            path: "/dashboard/network/directors/clients",
-            title: "Clients",
+            path: "/dashboard/network/registeredar",
+            title: "Registered AR",
             type: "link",
           },
           {
-            path: "/dashboard/network/directors/advisers",
-            title: "Advisers",
-            type: "link",
-          },
-          {
-            path: "/dashboard/network/directors/introducers",
+            path: "/dashboard/network/introducers",
             title: "Introducers",
             type: "link",
           },
         ],
       },
       {
-        title: "User Settings",
+        title: "Reports & Tasks",
         type: "sub",
-        icon: "Setting",
+        icon: "Edit",
         lanClass: "lan-4",
         children: [
           {
-            path: "/dashboard/network/usersettings/usermanagement",
+            path: "/dashboard/network/usermanagement",
             title: "User Management",
             type: "link",
           },
           {
-            path: "/dashboard/network/usersettings/systemreports",
+            path: "/dashboard/network/systemreports",
             title: "System Reports",
             type: "link",
           },
           {
-            path: "/dashboard/network/usersettings/auditlog",
+            path: "/dashboard/network/auditlog",
             title: "Audit Log",
             type: "link",
           },
           {
-            path: "/dashboard/network/usersettings/securitypolicy",
+            path: "/dashboard/network/securitypolicy",
             title: "Security Policy",
             type: "link",
           },
@@ -93,7 +98,7 @@ const NetworkAdminMenu: MenuItem[] = [
 // OrganizationAdminMenu Menu
 const OrganisationAdminMenu: MenuItem[] = [
   {
-    title: "General",
+    title: "Organization",
     lanClass: "lan-1",
     type: "group",
     Items: [
@@ -111,7 +116,7 @@ const OrganisationAdminMenu: MenuItem[] = [
         children: [
           {
             path: "/dashboard/organisation/cases",
-            title: "All Case",
+            title: "All Cases",
             type: "link",
           },
           {
@@ -183,7 +188,7 @@ const OrganisationAdminMenu: MenuItem[] = [
 //Or Organisation adviser Menu
 const OrganisationAdviserMenu: MenuItem[] = [
   {
-    title: "General",
+    title: "Organisation Adviser",
     lanClass: "lan-1",
     type: "group",
     Items: [
@@ -230,7 +235,7 @@ const OrganisationAdviserMenu: MenuItem[] = [
           },
           {
             path: "/dashboard/orgadviser/cases",
-            title: "All Case",
+            title: "All Cases",
             type: "link",
           },
           {
@@ -246,7 +251,7 @@ const OrganisationAdviserMenu: MenuItem[] = [
 //Or Organisation staff Menu
 const OrganisationStaffMenu: MenuItem[] = [
   {
-    title: "Home",
+    title: "Organisation staff",
     lanClass: "lan-1",
     type: "group",
     Items: [
@@ -306,22 +311,16 @@ const OrganisationStaffMenu: MenuItem[] = [
 // CLIENT Menu
 const ClientMenu: MenuItem[] = [
   {
-    title: "General",
+    title: "Client",
     lanClass: "lan-1",
     type: "group",
     Items: [
       {
-        title: "Client Home",
-        icon: "Home-dashboard",
-        type: "sub",
+        title: "Dashboard Home",
+        icon: "Chart",
+        type: "link",
         lanClass: "lan-3",
-        children: [
-          {
-            path: "/dashboard/client",
-            title: "Dashboard",
-            type: "link",
-          },
-        ],
+        path: "/dashboard/client",
       },
     ],
   },
