@@ -44,7 +44,9 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
     Partial<ClientInfoProps>
   >({
     user: {
+      title: "",
       first_name: "",
+      middle_name: "",
       last_name: "",
       profile_image: "",
       nid: "",
@@ -192,7 +194,12 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
                       }}
                       style={{ cursor: "pointer" }}
                     >
-                      {client?.user?.first_name} {client?.user?.last_name}
+                      {client.user?.title
+                        ? client.user?.title.charAt(0).toUpperCase() +
+                          client.user?.title.slice(1).toLowerCase()
+                        : ""}
+                      {"."} {client?.user?.first_name}{" "}
+                      {client?.user?.middle_name} {client?.user?.last_name}
                     </span>
                   </td>
                   <td>{client?.official_email || "-"}</td>

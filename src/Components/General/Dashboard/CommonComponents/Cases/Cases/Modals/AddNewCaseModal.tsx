@@ -34,9 +34,6 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   const [formData, setFormData] = useState({
     lead: leadId || 0,
     case_category: "",
-    applicant_type: "",
-    case_status: "",
-    // case_stage: "",
     notes: "",
   });
 
@@ -80,9 +77,6 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
         setFormData({
           lead: leadId || 0,
           case_category: "",
-          applicant_type: "",
-          case_status: "",
-          // case_stage: "",
           notes: "",
         });
         toggle();
@@ -106,7 +100,9 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Continue to Case</ModalHeader>
+      <ModalHeader toggle={toggle}>
+        {!!leadId ? "Continue to Case" : "Create New Case"}
+      </ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
           <FormGroup>
@@ -125,7 +121,15 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
               <option value="">Select...</option>
               {leads.map((lead) => (
                 <option key={lead.user.id} value={lead.user.id}>
-                  {`${lead.user?.first_name} ${lead.user?.last_name}`}
+                  {`${
+                    lead.user?.title
+                      ? lead.user.title.charAt(0).toUpperCase() +
+                        lead.user.title.slice(1).toLowerCase() +
+                        ". "
+                      : ""
+                  }${lead.user?.first_name}${
+                    lead.user?.middle_name ? " " + lead.user.middle_name : ""
+                  } ${lead.user?.last_name}`}
                 </option>
               ))}
             </Input>

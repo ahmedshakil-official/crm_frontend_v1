@@ -16,17 +16,21 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
   selectedClient,
 }) => {
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="lg">
+    <Modal isOpen={isOpen} toggle={toggle} size="lg" centered>
       <ModalHeader toggle={toggle}>
         <h3 className="text-primary">Client Details</h3>
       </ModalHeader>
       <ModalBody>
-        {/* 1st row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
+        <Row>
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Name:</span>
             <small>
-              {selectedClient?.user?.first_name}{" "}
+              {selectedClient.user?.title
+                ? selectedClient.user?.title.charAt(0).toUpperCase() +
+                  selectedClient.user?.title.slice(1).toLowerCase()
+                : ""}
+              {"."} {selectedClient?.user?.first_name}{" "}
+              {selectedClient?.user?.middle_name}{" "}
               {selectedClient?.user?.last_name}
             </small>
           </Col>
@@ -38,17 +42,6 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               <span className="text-muted small">Not available</span>
             )}
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Official Email:</span>
-            {selectedClient?.official_email ? (
-              <small>{selectedClient.official_email}</small>
-            ) : (
-              <span className="text-muted small">Not available</span>
-            )}
-          </Col>
-        </Row>
-        {/* 2nd row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Phone:</span>
 
@@ -63,20 +56,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               <span className="text-muted small">Not available</span>
             )}
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Official Phone:</span>
-            {selectedClient?.official_phone ? (
-              <a
-                className="text-dark text_decoration_hover small"
-                href={`tel:${selectedClient?.official_phone}`}
-              >
-                {selectedClient.official_phone}
-              </a>
-            ) : (
-              <span className="text-muted small">Not available</span>
-            )}
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Date of Birth:</span>
             <small>
               {selectedClient?.dob || (
@@ -84,10 +64,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-        </Row>
-        {/* 3rd row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Gender:</span>
             <small>
               {selectedClient?.gender ? (
@@ -98,7 +75,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">User Type:</span>
             <small>
               {selectedClient?.user?.user_type ? (
@@ -109,7 +86,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">User Role:</span>
             <small>
               {selectedClient?.role ? (
@@ -120,53 +97,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-        </Row>
-        {/* 4th row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Joining Date:</span>
-            <small>
-              {selectedClient?.joining_date || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Registration Number:</span>
-            <small>
-              {selectedClient?.registration_number || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Designation:</span>
-            <small>
-              {selectedClient?.designation || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-        </Row>
-        {/* 5th row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Degree:</span>
-            <small>
-              {selectedClient?.degree || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">NID:</span>
-            <small>
-              {selectedClient?.user?.nid || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Created At:</span>
             <small>
               {(selectedClient?.created_at &&
@@ -175,10 +106,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-        </Row>
-        {/* 6th row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Created By:</span>
             <small>
               {`${selectedClient?.created_by?.first_name} ${selectedClient?.created_by?.last_name}` || (
@@ -201,22 +129,6 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
                     .join(" ")
                 : "Not available"}
               )
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Permanent Address:</span>
-            <small>
-              {selectedClient?.permanent_address || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Present Address:</span>
-            <small>
-              {selectedClient?.present_address || (
-                <span className="text-muted">Not available</span>
-              )}
             </small>
           </Col>
         </Row>
