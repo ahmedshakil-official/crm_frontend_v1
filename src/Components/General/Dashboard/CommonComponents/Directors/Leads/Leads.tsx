@@ -7,6 +7,7 @@ import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { TbCirclePlus } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -45,24 +46,14 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
       middle_name: "",
       last_name: "",
       profile_image: "",
-      nid: "",
       user_type: "",
-      city: "",
-      state: "",
-      country: "",
-      zip_code: "",
     },
     role: "",
     designation: "",
     official_email: "",
     official_phone: "",
-    permanent_address: "",
-    present_address: "",
     dob: "",
     gender: "",
-    joining_date: "",
-    registration_number: "",
-    degree: "",
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -144,10 +135,8 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
             onClick={openAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
+            <TbCirclePlus size={18} />
             <span>Add Lead</span>
-            <span>
-              <i className="fa-solid fa-circle-plus"></i>
-            </span>
           </Button>
         </Col>
       </Row>

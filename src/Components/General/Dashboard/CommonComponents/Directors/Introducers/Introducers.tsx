@@ -7,6 +7,7 @@ import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { TbCirclePlus } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -151,10 +152,8 @@ const Introducers: React.FC<IntroducersProps> = ({
             onClick={openAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
+            <TbCirclePlus size={18} />
             <span>Add Introducer</span>
-            <span>
-              <i className="fa-solid fa-circle-plus"></i>
-            </span>
           </Button>
         </Col>
       </Row>

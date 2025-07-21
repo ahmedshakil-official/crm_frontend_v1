@@ -98,8 +98,8 @@ const OrganisationsContainer = () => {
                 className="text-md-end text-center mt-2 mt-md-0"
               >
                 <Button color="primary" onClick={toggleModal}>
+                  <TbCirclePlus size={18} className="me-1" />
                   Add Organisation
-                  <TbCirclePlus className="ms-1 fs-5" />
                 </Button>
               </Col>
             </Row>

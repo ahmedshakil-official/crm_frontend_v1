@@ -1,5 +1,6 @@
 import { JointUserProps } from "@/Types/CommonComponents/SingleCaseInfo/JointUser/JointUserTypes";
 import React, { useState } from "react";
+import { TbCirclePlus } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -42,10 +43,8 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
             onClick={toggleAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
-            <span> Add Joint User</span>
-            <span>
-              <i className="fa-solid fa-circle-plus"></i>
-            </span>
+            <TbCirclePlus size={18} className="me-1" />
+            <span>Add Joint User</span>
           </Button>
         </CardHeader>
         <CardBody className="pt-0 recent-order">
