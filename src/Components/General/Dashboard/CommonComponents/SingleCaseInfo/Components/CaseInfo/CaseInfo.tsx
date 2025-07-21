@@ -4,6 +4,7 @@ import {
   SingleCaseProps,
 } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { useState } from "react";
+import { TbCircleArrowUp } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -42,10 +43,8 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             disabled={!caseInfo} // Disable if caseInfo is null
             className="d-flex justify-content-center align-items-center gap-1"
           >
+            <TbCircleArrowUp size={18} />
             <span>Update Info</span>
-            <span>
-              <i className="fa-regular fa-circle-up"></i>
-            </span>
           </Button>
         </CardHeader>
 

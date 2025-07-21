@@ -2,6 +2,7 @@ import { useGetCaseDocumentsQuery } from "@/Redux/Reducers/CommonComponents/Sing
 import { CaseDocumentProps } from "@/Types/CommonComponents/SingleCaseInfo/Documents/DocumentsTypes";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { TbCircleArrowUp, TbEye } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -84,12 +85,12 @@ const Documents: React.FC = () => {
                 )}
               </Button>
               <Button color="primary" onClick={toggleModal}>
+                <TbCircleArrowUp size={18} className="me-1" />
                 Upload Document
-                <i className="fa-regular fa-circle-up ms-1"></i>
               </Button>
               <Button>
+                <TbEye size={18} className="me-1" />
                 OCR Upload
-                <i className="fa-solid fa-eye ms-1"></i>
               </Button>
             </Col>
           </Row>

@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { TbFileDescription } from "react-icons/tb";
+import { TbCirclePlus, TbFileDescription } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -300,10 +300,8 @@ const Cases: React.FC = () => {
                     onClick={openAddNewCaseModal}
                     className="d-flex justify-content-center align-items-center gap-1"
                   >
+                    <TbCirclePlus size={18}/>
                     <span>Add New Case</span>
-                    <span>
-                      <i className="fa-solid fa-circle-plus"></i>
-                    </span>
                   </Button>
                 )}
               </Col>

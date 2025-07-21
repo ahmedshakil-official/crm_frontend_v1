@@ -25,6 +25,7 @@ import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
 import ViewClientModal from "./Modals/ViewClientModal";
+import { TbCirclePlus } from "react-icons/tb";
 
 const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
@@ -49,24 +50,14 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
       middle_name: "",
       last_name: "",
       profile_image: "",
-      nid: "",
       user_type: "",
-      city: "",
-      state: "",
-      country: "",
-      zip_code: "",
     },
     role: "",
     designation: "",
     official_email: "",
     official_phone: "",
-    permanent_address: "",
-    present_address: "",
     dob: "",
     gender: "",
-    joining_date: "",
-    registration_number: "",
-    degree: "",
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -152,10 +143,8 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
             onClick={openAddModal}
             className="d-flex justify-content-center align-items-center gap-1"
           >
+            <TbCirclePlus size={18} />
             <span>Add Client</span>
-            <span>
-              <i className="fa-solid fa-circle-plus"></i>
-            </span>
           </Button>
         </Col>
       </Row>

@@ -56,8 +56,8 @@ const OrganisationCards = () => {
                 className="text-decoration-none"
               >
                 <Button color="primary">
+                  <TbEye className="me-1 fs-5" />
                   View All Organisation
-                  <TbEye className="ms-1 fs-5" />
                 </Button>
               </Link>
             </Col>
