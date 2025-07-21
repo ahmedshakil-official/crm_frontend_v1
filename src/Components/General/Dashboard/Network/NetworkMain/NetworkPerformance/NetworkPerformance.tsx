@@ -36,7 +36,7 @@ const NetworkPerformance: React.FC = () => {
         </Col>
 
         <Col xl="3" md="6">
-          <Card className="bg-light-warnin shadow p-3">
+          <Card className="bg-light-warning shadow p-3">
             <div className="d-flex flex-column">
               <span className="fw-medium">Individual Brokers</span>
               <h3 className="mb-2 fw-semibold mt-2">243</h3>

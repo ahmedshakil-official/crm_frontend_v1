@@ -40,6 +40,7 @@ const SidebarMenuList = () => {
               <div>
                 <h5
                   className={`f-w-700 sidebar-title ${mainMenu.lanClass || ""}`}
+
                 >
                   {t(mainMenu.title)}
                 </h5>
