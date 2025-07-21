@@ -8,7 +8,7 @@ const SecurityPolicyContainer: React.FC = () => {
       <NetworkBreadcrumbs
         mainTitle="Network Security Policy"
         title="Hello there!"
-        parent="User Settings"
+        parent="Reports & Tasks"
         activePage="Security Policy"
       />
       <Container fluid>

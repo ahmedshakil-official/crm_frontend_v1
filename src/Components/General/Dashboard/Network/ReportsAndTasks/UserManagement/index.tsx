@@ -14,7 +14,7 @@ const UserManagementContainer: React.FC = () => {
       <NetworkBreadcrumbs
         mainTitle="Network User Management"
         title="Hello there!"
-        parent="User Settings"
+        parent="Reports & Tasks"
         activePage="User Management"
       />
       <Container fluid>

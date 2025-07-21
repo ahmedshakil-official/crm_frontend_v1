@@ -8,7 +8,7 @@ const AuditLogContainer: React.FC = () => {
       <NetworkBreadcrumbs
         mainTitle="Network Audit Log"
         title="Hello there!"
-        parent="User Settings"
+        parent="Reports & Tasks"
         activePage="Audit Log"
       />
       <Container fluid>

@@ -11,7 +11,7 @@ const SystemReportsContainer: React.FC = () => {
       <NetworkBreadcrumbs
         mainTitle="Network System Reports"
         title="Hello there!"
-        parent="User Settings"
+        parent="Reports & Tasks"
         activePage="System Reports"
       />
       <Container fluid>
