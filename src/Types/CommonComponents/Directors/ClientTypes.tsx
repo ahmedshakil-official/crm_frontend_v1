@@ -1,9 +1,9 @@
 export interface ClientInfoProps {
   alias: string;
   user: {
-    title: String;
+    title: string;
     first_name: string;
-    middle_name?: String;
+    middle_name?: string;
     last_name: string;
     email?: string;
     phone?: string;
