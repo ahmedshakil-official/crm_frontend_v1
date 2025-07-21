@@ -106,7 +106,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Add New Case</ModalHeader>
+      <ModalHeader toggle={toggle}>Continue to Case</ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
           <FormGroup>
