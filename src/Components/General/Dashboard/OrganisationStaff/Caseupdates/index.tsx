@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TbEye } from "react-icons/tb";
 import { Button, Container, Row } from "reactstrap";
 import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
 import CaseTimeline from "./CaseTimeline/CaseTimeline";
@@ -16,6 +17,7 @@ const CaseupdatesContainer: React.FC = () => {
         <div className=" d-flex justify-content-end">
           <Link href="/dashboard/orgstaff/caseupdates/cases" passHref>
             <Button className="border-0">
+              <TbEye size={18} className="me-1"/>
               <small>View All Cases</small>
             </Button>
           </Link>

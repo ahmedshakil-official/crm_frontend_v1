@@ -251,7 +251,7 @@ const OrganisationAdviserMenu: MenuItem[] = [
 //Or Organisation staff Menu
 const OrganisationStaffMenu: MenuItem[] = [
   {
-    title: "Organisation staff",
+    title: "Org. Admin & Support Staff",
     lanClass: "lan-1",
     type: "group",
     Items: [
