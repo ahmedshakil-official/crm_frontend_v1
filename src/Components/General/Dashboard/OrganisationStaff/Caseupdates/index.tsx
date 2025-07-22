@@ -17,8 +17,8 @@ const CaseupdatesContainer: React.FC = () => {
         <div className=" d-flex justify-content-end">
           <Link href="/dashboard/orgstaff/caseupdates/cases" passHref>
             <Button className="border-0">
-              <TbEye size={18} className="me-1"/>
-              <small>View All Cases</small>
+              <TbEye size={18} className="me-1" />
+              View All Cases
             </Button>
           </Link>
         </div>
