@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FiSearch, FiSend } from "react-icons/fi";
 import { TbLink } from "react-icons/tb";
 import {
@@ -151,6 +151,19 @@ const ChatBoard: React.FC = () => {
 
     setMessages([...messages, newMsg]);
     setNewMessage("");
+  };
+  
+  // Add a ref for the chat messages container
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Scroll to bottom whenever messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+  
+  // Function to scroll to the bottom of the messages
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -347,6 +360,8 @@ const ChatBoard: React.FC = () => {
                           </div>
                         </div>
                       ))}
+                      {/* Add this div as the last element in the messages container */}
+                      <div ref={messagesEndRef} />
                     </div>
 
                     {/* Message Input */}
@@ -357,7 +372,7 @@ const ChatBoard: React.FC = () => {
                             <Button
                               color=""
                               style={{ width: "45px", height: "43px" }}
-                              onClick={() => alert("Attach file")}
+                              onClick={() => alert("Attach file(Function undc)")}
                             >
                               <TbLink size={20} />
                             </Button>
