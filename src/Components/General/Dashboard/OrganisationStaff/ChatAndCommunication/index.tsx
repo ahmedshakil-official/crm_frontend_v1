@@ -1,18 +1,17 @@
 import { Container } from "reactstrap";
 import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import ChatBoard from "./ChatBoard/ChatBoard";
 
 const OrgStaffChatAndCommunicationContainer: React.FC = () => {
   return (
     <>
       <OrganisationStaffBreadcrumbs
-        mainTitle="Organisation Staff Dashboard"
-        title="Hello! there"
+        mainTitle="Chat & Communication"
+        title="Welcome back to your Chat & Communication dashboard"
         activePage="Chat & Communication"
       />
       <Container fluid>
-        <div className="d-flex justify-content-center align-items-center h-100">
-          <h1 className="text-danger">This page is Under Development</h1>
-        </div>
+        <ChatBoard />
       </Container>
     </>
   );

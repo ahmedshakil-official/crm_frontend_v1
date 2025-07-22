@@ -1,22 +1,19 @@
 import { Col, Container, Row } from "reactstrap";
-import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
-import DocumentsWorkflow from "./DocumentsWorkflow/DocumentsWorkflow";
-import CaseStatusOverview from "../../OrganisationAdviser/OrganisationAdviserMain/CaseStatusOverview/CaseStatusOverview";
-import CaseProgress from "./CaseProgress/CaseProgress";
-import MyClients from "../../OrganisationAdviser/OrganisationAdviserMain/MyClients/MyClients";
-import Reminders from "./RemindersAndAlerts/RemindersAndAlerts";
-import PendingDocuments from "./PendingDocuments/PendingDocuments";
-import PendingVerifications from "./PendingDocuments/PendingDocuments";
 import AdviserTaskOverview from "./AdviserTaskOverview/AdviserTaskOverview";
+import CaseProgress from "./CaseProgress/CaseProgress";
+import DashboardOverview from "./DashboardOverview/DashboardOverview";
+import DocumentsWorkflow from "./DocumentsWorkflow/DocumentsWorkflow";
+import PendingVerifications from "./PendingDocuments/PendingDocuments";
+import Reminders from "./RemindersAndAlerts/RemindersAndAlerts";
 
 const OrganisationStaffContainer: React.FC = () => {
   return (
     <>
       <OrganisationStaffBreadcrumbs
-        mainTitle="Organisation Staff Dashboard"
-        title="Hello! there"
-        activePage="Staff"
+        mainTitle="Organisation Admin & Support Staff Dashboard"
+        title="Welcome to your dashboard"
+        activePage="Admin & Support Staff"
       />
       <Container fluid>
         {/* 1st row  */}
