@@ -9,7 +9,7 @@ const ReportsAndLogsContainer: React.FC = () => {
       <OrganisationBreadcrumbs
         mainTitle="Reports & Logs"
         title="Monitor activities and generate comprehensive reports"
-        parent="User Settings"
+        parent="Reports & Tasks"
         activePage="Reports & Logs"
       />
       <Container fluid>

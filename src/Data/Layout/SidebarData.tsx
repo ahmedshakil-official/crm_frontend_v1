@@ -1,7 +1,7 @@
 import { MenuItem } from "@/Types/LayoutTypes";
 
-// Network Admin Menu
-const NetworkAdminMenu: MenuItem[] = [
+//NetworkOwnerMenu
+const NetworkOwnerMenu: MenuItem[] = [
   {
     title: "Network",
     lanClass: "lan-1",
@@ -95,8 +95,8 @@ const NetworkAdminMenu: MenuItem[] = [
   },
 ];
 
-// OrganizationAdminMenu Menu
-const OrganisationAdminMenu: MenuItem[] = [
+// OrganisationOwnerMenu
+const OrganisationOwnerMenu: MenuItem[] = [
   {
     title: "Organization",
     lanClass: "lan-1",
@@ -115,6 +115,11 @@ const OrganisationAdminMenu: MenuItem[] = [
         type: "sub",
         children: [
           {
+            path: "/dashboard/organisation/leads",
+            title: "Leads",
+            type: "link",
+          },
+          {
             path: "/dashboard/organisation/cases",
             title: "All Cases",
             type: "link",
@@ -124,58 +129,53 @@ const OrganisationAdminMenu: MenuItem[] = [
             title: "Active Cases",
             type: "link",
           },
+          {
+            path: "/dashboard/organisation/clients",
+            title: "Clients",
+            type: "link",
+          },
         ],
       },
       {
-        title: "Directors",
+        title: "Users",
         icon: "Profile",
         type: "sub",
         children: [
           {
-            path: "/dashboard/organisation/directors/leads",
-            title: "Leads",
-            type: "link",
-          },
-          {
-            path: "/dashboard/organisation/directors/clients",
-            title: "Clients",
-            type: "link",
-          },
-          {
-            path: "/dashboard/organisation/directors/advisers",
+            path: "/dashboard/organisation/advisers",
             title: "Advisers",
             type: "link",
           },
           {
-            path: "/dashboard/organisation/directors/introducers",
+            path: "/dashboard/organisation/introducers",
             title: "Introducers",
             type: "link",
           },
           {
-            path: "/dashboard/organisation/directors/supportstaff",
+            path: "/dashboard/organisation/supportstaff",
             title: "Support Staff",
             type: "link",
           },
         ],
       },
       {
-        title: "User Settings",
+        title: "Reports & Tasks",
         type: "sub",
-        icon: "Setting",
+        icon: "Edit",
         lanClass: "lan-4",
         children: [
           {
-            path: "/dashboard/organisation/usersettings/usersandroles",
+            path: "/dashboard/organisation/usersandroles",
             title: "Users & Roles",
             type: "link",
           },
           {
-            path: "/dashboard/organisation/usersettings/workflowsandintegrations",
+            path: "/dashboard/organisation/workflowsandintegrations",
             title: "Workflows & Integrations",
             type: "link",
           },
           {
-            path: "/dashboard/organisation/usersettings/reportsandlogs",
+            path: "/dashboard/organisation/reportsandlogs",
             title: "Reports & Logs",
             type: "link",
           },
@@ -329,18 +329,18 @@ const ClientMenu: MenuItem[] = [
 // Export all menus
 export {
   ClientMenu,
-  NetworkAdminMenu,
-  OrganisationAdminMenu,
+  NetworkOwnerMenu,
   OrganisationAdviserMenu,
+  OrganisationOwnerMenu,
   OrganisationStaffMenu,
 };
 
 export const getMenuByRole = (role?: string): MenuItem[] => {
   switch (role) {
     case "NETWORK_ADMIN":
-      return NetworkAdminMenu;
+      return NetworkOwnerMenu;
     case "ORGANIZATION_ADMIN":
-      return OrganisationAdminMenu;
+      return OrganisationOwnerMenu;
     case "ORGANIZATION_ADVISER":
       return OrganisationAdviserMenu;
     case "ORGANIZATION_SUPPORT":
