@@ -7,9 +7,10 @@ const OrganisationAdviserTasksAndRemindersContainer: React.FC = () => {
   return (
     <>
       <OrganisationAdviserBreadcrumbs
-        mainTitle="Tasks and Reminders"
+        mainTitle="Tasks & Reminders"
         title="Manage Tasks and Reminders"
-        activePage="Tasks and Reminders"
+        parent="Users"
+        activePage="Tasks & Reminders"
       />
       <Container fluid>
         <TasksAndRemindersOverview />

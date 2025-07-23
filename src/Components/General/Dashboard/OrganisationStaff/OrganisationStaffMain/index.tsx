@@ -11,9 +11,8 @@ const OrganisationStaffContainer: React.FC = () => {
   return (
     <>
       <OrganisationStaffBreadcrumbs
-        mainTitle="Organisation Admin & Support Staff Dashboard"
+        mainTitle="Dashboard"
         title="Welcome to your dashboard"
-        activePage="Admin & Support Staff"
       />
       <Container fluid>
         {/* 1st row  */}

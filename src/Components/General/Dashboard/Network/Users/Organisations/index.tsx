@@ -60,10 +60,6 @@ const OrganisationsContainer = () => {
     indexOfLastItem
   );
 
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
-
   return (
     <>
       <NetworkBreadcrumbs
@@ -122,6 +118,7 @@ const OrganisationsContainer = () => {
                       <Link
                         href={item?.website || "#"}
                         target="_blank"
+                        title="Website"
                         className="text-muted position-absolute top-0 end-0 p-3"
                       >
                         <i
@@ -129,7 +126,6 @@ const OrganisationsContainer = () => {
                           className="fa-solid fa-up-right-from-square"
                         ></i>
                       </Link>
-
                       <CardBody className="p-0 ">
                         <div className="d-flex gap-2">
                           <div className="mt-0 rounded-circle overflow-hidden border-1 border-primary">

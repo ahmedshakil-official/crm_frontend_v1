@@ -13,9 +13,8 @@ const OrganisationContainer = () => {
   return (
     <>
       <OrganisationBreadcrumbs
-        mainTitle="Organisation Dashboard"
+        mainTitle="Dashboard"
         title="Hello there! Welcome back"
-        activePage="Organisation"
       />
       <Container fluid>
         {/* 1st row  */}

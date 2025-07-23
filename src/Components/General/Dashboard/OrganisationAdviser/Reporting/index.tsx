@@ -7,6 +7,7 @@ const OrganisationAdviserReportingContainer: React.FC = () => {
       <OrganisationAdviserBreadcrumbs
         mainTitle="Reporting"
         title="Manage Reporting..."
+        parent="Users"
         activePage="Reporting"
       />
       <Container fluid>

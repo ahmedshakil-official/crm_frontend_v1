@@ -10,6 +10,7 @@ const OrganisationAdviserMarketingHubContainer: React.FC = () => {
       <OrganisationAdviserBreadcrumbs
         mainTitle="Marketing Hub"
         title="Manage your social media and WhatsApp campaigns"
+        parent="Users"
         activePage="Marketing Hub"
       />
       <Container fluid>
