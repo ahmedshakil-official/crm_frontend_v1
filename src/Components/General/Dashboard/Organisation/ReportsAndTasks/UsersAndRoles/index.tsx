@@ -9,7 +9,7 @@ const UsersAndRolesContainer: React.FC = () => {
       <OrganisationBreadcrumbs
         mainTitle="Users & Roles"
         title="Manage user access, roles, and permissions"
-        parent="User Settings"
+        parent="Reports & Tasks"
         activePage="Users & Roles"
       />
       <Container fluid>

@@ -9,7 +9,7 @@ const WorkflowsAndIntegrationContainer: React.FC = () => {
       <OrganisationBreadcrumbs
         mainTitle="Workflows & Integrations"
         title="Manage workflows and integrations"
-        parent="User Settings"
+        parent="Reports & Tasks"
         activePage="Workflows & Integrations"
       />
       <Container fluid>

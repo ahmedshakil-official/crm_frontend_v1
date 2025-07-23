@@ -8,7 +8,7 @@ const OrganisationUsersAndRoles = () => {
       if (typeof window !== "undefined") {
         const newClient = (
           await import(
-            "@/Components/General/Dashboard/Organisation/UserSettings/WorkflowsAndIntegrations"
+            "@/Components/General/Dashboard/Organisation/ReportsAndTasks/WorkflowsAndIntegrations"
           )
         ).default;
         setClient(() => newClient);
