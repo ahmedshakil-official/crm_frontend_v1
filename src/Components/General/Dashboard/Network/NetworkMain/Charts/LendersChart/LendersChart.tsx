@@ -17,14 +17,14 @@ const LendersChart: React.FC = () => {
       "Barclays",
       "HSBC",
       "Rightmove",
-      "Everything else",
+      "Others",
     ],
     series: [15, 13, 13, 12, 10, 8, 7, 22],
     responsive: [
       {
         options: {
           chart: {
-            height: 220,
+            height: 280,
           },
           legend: {
             show: false,
@@ -54,7 +54,6 @@ const LendersChart: React.FC = () => {
             series={PieChartData.series}
             type="pie"
             width={380}
-            height={220}
           />
         </div>
       </CardBody>
