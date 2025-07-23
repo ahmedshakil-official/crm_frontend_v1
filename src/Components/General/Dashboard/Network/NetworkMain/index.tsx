@@ -1,9 +1,9 @@
 import { Container, Row } from "reactstrap";
 import NetworkBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import AdviserStatus from "./AdviserStatus/AdviserStatus";
 import Charts from "./Charts/Charts";
 import OrganisationCards from "./OrganisationCards/OrganisationCards";
 import PerformanceOverview from "./PerformanceOverview/PerformanceOverview";
-import ProductPenetration from "./ProductPenetration/ProductPenetration";
 import RecentActivity from "./RecentActivity/RecentActivity";
 
 const ContainerNetwork = () => {
@@ -18,8 +18,8 @@ const ContainerNetwork = () => {
         <PerformanceOverview />
         <Charts />
         <OrganisationCards />
+        <AdviserStatus />
         <Row>
-          <ProductPenetration />
           <RecentActivity />
         </Row>
       </Container>

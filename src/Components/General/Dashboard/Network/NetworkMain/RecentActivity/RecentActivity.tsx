@@ -4,10 +4,13 @@ import { Card, CardBody, CardHeader, Col } from "reactstrap";
 
 const RecentActivity: React.FC = () => {
   return (
-    <Col md={4} xs={12}>
+    <Col md="6">
       <Card className="shadow-sm">
-        <CardHeader className="bg-white border-bottom">
+        <CardHeader className="bg-white border-bottom d-flex justify-content-between">
           <h4 className="mb-0 fw-bold">Recent Activity</h4>
+          <Link href="#" className="text_decoration_hover">
+            View all activity
+          </Link>
         </CardHeader>
         <CardBody className="p-0">
           <div className="p-3 border-bottom">
@@ -75,12 +78,6 @@ const RecentActivity: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="p-3 text-center">
-            <Link href="#" className="text_decoration_hover">
-              View all activity
-            </Link>
           </div>
         </CardBody>
       </Card>
