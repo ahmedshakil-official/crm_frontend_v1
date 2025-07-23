@@ -1,19 +1,18 @@
 import { Col, Container, Row } from "reactstrap";
 import OrganisationAdviserBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
-import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import CaseStatusOverview from "./CaseStatusOverview/CaseStatusOverview";
+import DashboardOverview from "./DashboardOverview/DashboardOverview";
+import DocumentStatus from "./DocumentStatus/DocumentStatus";
 import MonthlyPerformance from "./MonthlyPerformance/MonthlyPerformance";
 import MyClients from "./MyClients/MyClients";
 import UpcomingTasks from "./UpcommingTasks/UpCommingTasks";
-import DocumentStatus from "./DocumentStatus/DocumentStatus";
 
 const OrganisationAdviserContainer: React.FC = () => {
   return (
     <>
       <OrganisationAdviserBreadcrumbs
-        mainTitle="Organisation Adviser Dashboard"
+        mainTitle="Dashboard"
         title="Hello! there"
-        activePage="Adviser"
       />
       <Container fluid>
         {/* 1st row  */}

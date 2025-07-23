@@ -8,6 +8,7 @@ const OrganisationAdviserActiveCasesContainer: React.FC = () => {
       <OrganisationAdviserBreadcrumbs
         mainTitle="Active Cases"
         title="View and manage active cases"
+        parent="Cases"
         activePage="Active Cases"
       />
       <Container fluid>

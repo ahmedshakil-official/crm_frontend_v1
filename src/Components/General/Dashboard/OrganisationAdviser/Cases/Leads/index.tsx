@@ -8,7 +8,7 @@ const OrganisationAdviserLeadsContainer: React.FC = () => {
       <OrganisationAdviserBreadcrumbs
         mainTitle="Organisation Adviser Leads"
         title="All Leads in Organisation"
-        parent="Directors"
+        parent="Cases"
         activePage="Leads"
       />
       <Container fluid>
