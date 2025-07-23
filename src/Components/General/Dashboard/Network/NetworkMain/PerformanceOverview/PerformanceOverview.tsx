@@ -4,15 +4,15 @@ import { Card, CardBody, Col, Row } from "reactstrap";
 const PerformanceOverview: React.FC = () => {
   return (
     <Row className="py-2">
-      <Col sm="6" xl="3">
+      <Col lg>
         <Card className="border-0 shadow">
           <CardBody>
             <div className="d-flex justify-content-between align-items-start mb-2">
               <span className="text-muted small fw-bold">
-                Mortgage cases completed
+                New Mortgage Enquiry
               </span>
               <span className="badge bg-success-subtle text-success">
-                ↑ + 10%
+                ↑ +10%
               </span>
             </div>
             <h2 className="mb-0 mt-4">800</h2>
@@ -20,46 +20,62 @@ const PerformanceOverview: React.FC = () => {
         </Card>
       </Col>
 
-      <Col sm="6" xl="3">
-        <Card className="border-0 shadow">
-          <CardBody>
-            <div className="d-flex justify-content-between align-items-start mb-2">
-              <span className="text-muted small fw-bold">Total loan value</span>
-              <span className="badge bg-success-subtle text-success">
-                ↑ + 12%
-              </span>
-            </div>
-            <h2 className="mb-0 mt-4">£10,565,328</h2>
-          </CardBody>
-        </Card>
-      </Col>
-
-      <Col sm="6" xl="3">
-        <Card className="border-0 shadow">
-          <CardBody>
-            <div className="d-flex justify-content-between align-items-start mb-2">
-              <span className="text-muted small fw-bold">Total Revenue</span>
-              <span className="badge bg-danger-subtle text-danger">↓ - 3%</span>
-            </div>
-            <h2 className="mb-0 mt-4">140,756</h2>
-          </CardBody>
-        </Card>
-      </Col>
-
-      <Col sm="6" xl="3">
+      <Col lg>
         <Card className="border-0 shadow">
           <CardBody>
             <div className="d-flex justify-content-between align-items-start mb-2">
               <span className="text-muted small fw-bold">
-                Average speed of completion
+                Mortgage Cases Submitted
               </span>
-              <span className="badge bg-danger-subtle text-danger">
-                ↓ - 14%
+              <span className="badge bg-success-subtle text-success">
+                ↑ +12%
               </span>
             </div>
+            <h2 className="mb-0 mt-4">500</h2>
+          </CardBody>
+        </Card>
+      </Col>
+
+      <Col lg>
+        <Card className="border-0 shadow">
+          <CardBody>
+            <div className="d-flex justify-content-between align-items-start mb-2">
+              <span className="text-muted small fw-bold">
+                Mortgage cases offered
+              </span>
+              <span className="badge bg-danger-subtle text-danger">↓ -3%</span>
+            </div>
+            <h2 className="mb-0 mt-4">140</h2>
+          </CardBody>
+        </Card>
+      </Col>
+
+      <Col lg>
+        <Card className="border-0 shadow">
+          <CardBody>
+            <div className="d-flex justify-content-between align-items-start mb-2">
+              <span className="text-muted small fw-bold">
+                Mortgage cases Completed
+              </span>
+              <span className="badge bg-danger-subtle text-danger">↓ +14%</span>
+            </div>
             <div className="mt-4">
-              <h2 className="mb-0 d-inline-block">24 Days</h2>
-              <span className="text-muted ms-2 small">vs previous period</span>
+              <h2 className="mb-0 d-inline-block">240</h2>
+            </div>
+          </CardBody>
+        </Card>
+      </Col>
+      <Col lg>
+        <Card className="border-0 shadow">
+          <CardBody>
+            <div className="d-flex justify-content-between align-items-start mb-2">
+              <span className="text-muted small fw-bold">
+                Insurance Cases Submitted
+              </span>
+              <span className="badge bg-success-subtle text-success">↑ +1%</span>
+            </div>
+            <div className="mt-4">
+              <h2 className="mb-0 d-inline-block">240</h2>
             </div>
           </CardBody>
         </Card>
