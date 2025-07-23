@@ -17,14 +17,14 @@ const ProductsChart: React.FC = () => {
       "Commercial",
       "Protection",
       "GI",
-      "Everything",
+      "Others",
     ],
     series: [25, 22, 15, 12, 8, 8, 3, 5],
     responsive: [
       {
         options: {
           chart: {
-            height: 220,
+            height: 280,
           },
           legend: {
             show: false,
@@ -54,7 +54,6 @@ const ProductsChart: React.FC = () => {
             series={PieChartData.series}
             type="pie"
             width={380}
-            height={220}
           />
         </div>
       </CardBody>
