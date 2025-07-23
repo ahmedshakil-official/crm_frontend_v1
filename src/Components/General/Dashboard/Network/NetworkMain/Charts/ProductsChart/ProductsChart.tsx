@@ -6,25 +6,27 @@ import { Card, CardBody } from "reactstrap";
 const ProductsChart: React.FC = () => {
   const PieChartData: ApexOptions = {
     chart: {
-      width: 380,
+      width: 400, // Increased width
+      height: 300, // Added height
       type: "pie",
     },
     labels: [
-      "FTB",
+      "Purchase",
       "Remortgage",
-      "House Move",
-      "Buy to let",
-      "Commercial",
-      "Protection",
-      "GI",
+      "Secure Loan",
+      "Further Advance",
+      "Product Transfer",
+      "Unsecured",
+      "Invoice Discounting",
+      "Asset Finance",
       "Others",
     ],
-    series: [25, 22, 15, 12, 8, 8, 3, 5],
+    series: [25, 22, 15, 12, 8, 8, 3, 5, 10],
     responsive: [
       {
         options: {
           chart: {
-            height: 280,
+            height: 300, // Increased responsive height
           },
           legend: {
             show: false,
@@ -41,19 +43,24 @@ const ProductsChart: React.FC = () => {
       "#6366F1",
       "#EC4899",
       "#000000",
+      "#C70039",
     ],
   };
 
   return (
     <Card>
       <CommonCardHeader title="Products" />
-      <CardBody className="apex-chart">
-        <div id="piechart">
+      <CardBody
+        className="apex-chart"
+        style={{ width: "100%", maxWidth: "600px" }}
+      >
+        <div id="piechart" style={{ width: "100%", height: "300px" }}>
           <ReactApexChart
             options={PieChartData}
             series={PieChartData.series}
             type="pie"
-            width={380}
+            width="100%"
+            height={300}
           />
         </div>
       </CardBody>
