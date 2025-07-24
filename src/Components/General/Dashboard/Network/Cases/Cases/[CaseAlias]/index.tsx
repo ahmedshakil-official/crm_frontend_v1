@@ -1,14 +1,14 @@
+import Breadcrumbs from "@/Components/General/Dashboard/CommonComponents/Breadcrumbs/Breadcrumbs";
 import SingleCaseInfo from "@/Components/General/Dashboard/CommonComponents/SingleCaseInfo/SingleCaseInfo";
-import NetworkBreadcrumbs from "../../../Breadcrumbs/Breadcrumbs";
 
 const CaseContainer: React.FC = () => {
   return (
     <>
-      <NetworkBreadcrumbs
-        mainTitle="Network Case Status"
-        title="Hello there!"
-        parent="Cases Status"
-        activePage="Case"
+      <Breadcrumbs
+        title="Network Case Status"
+        subTitle="Hello there!"
+        parent="Cases"
+        child="Case"
       />
       <SingleCaseInfo />
     </>

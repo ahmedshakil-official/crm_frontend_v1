@@ -7,6 +7,7 @@ import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { TbCirclePlus } from "react-icons/tb";
 import {
   Button,
   Card,
@@ -25,7 +26,6 @@ import AddClientModal from "./Modals/AddClientModal";
 import DeleteClientModal from "./Modals/DeleteClientModal";
 import UpdateClientModal from "./Modals/UpdateClientModal";
 import ViewClientModal from "./Modals/ViewClientModal";
-import { TbCirclePlus } from "react-icons/tb";
 
 const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
   const [clients, setClients] = useState<ClientInfoProps[]>([]);

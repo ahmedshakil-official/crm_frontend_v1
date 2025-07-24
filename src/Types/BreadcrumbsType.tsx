@@ -1,6 +1,6 @@
 export interface BreadcrumbsProps {
-  mainTitle: string;
   title: string;
+  subTitle: string;
   parent?: string;
-  activePage?: string;
+  child?: string;
 }
