@@ -2,7 +2,7 @@ import { BreadcrumbsProps } from "@/Types/BreadcrumbsType";
 import Link from "next/link";
 import { Breadcrumb, BreadcrumbItem, Col, Container, Row } from "reactstrap";
 
-const OrganisationAdviserBreadcrumbs: React.FC<BreadcrumbsProps> = ({
+const NetworkAdviserBreadcrumbs: React.FC<BreadcrumbsProps> = ({
   mainTitle,
   title,
   activePage,
@@ -34,4 +34,4 @@ const OrganisationAdviserBreadcrumbs: React.FC<BreadcrumbsProps> = ({
   );
 };
 
-export default OrganisationAdviserBreadcrumbs;
+export default NetworkAdviserBreadcrumbs;

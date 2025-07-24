@@ -1,14 +1,8 @@
+import { BreadcrumbsProps } from "@/Types/BreadcrumbsType";
 import Link from "next/link";
 import { Breadcrumb, BreadcrumbItem, Col, Container, Row } from "reactstrap";
 
-interface OrganisationBreadcrumbsProps {
-  mainTitle: string;
-  title: string;
-  parent?: string;
-  activePage?: string;
-}
-
-const OrganisationBreadcrumbs: React.FC<OrganisationBreadcrumbsProps> = ({
+const OrganisationBreadcrumbs: React.FC<BreadcrumbsProps> = ({
   mainTitle,
   title,
   activePage,
