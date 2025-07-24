@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/Components/General/Dashboard/CommonComponents/Breadcrumbs/Breadcrumbs";
 import { useGetSingleOrganisationQuery } from "@/Redux/Reducers/Network/Organisations/SingleOrganisation/SingleOrganisationApi";
 import { OrganisationsProps } from "@/Types/Network/OrganisationsTypes";
 import LoadingSpinner from "@/app/loading";
@@ -5,7 +6,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Container, Row } from "reactstrap";
-import NetworkBreadcrumbs from "../../../Breadcrumbs/Breadcrumbs";
 import DangerZone from "./DangerZone/DangerZone";
 import OrganisationBanner from "./OrganisationProfile/OrganisationBanner";
 
@@ -61,11 +61,11 @@ const OrganisationContainer: React.FC = () => {
     <>
       <Container fluid className="default-dashboard">
         <Row>
-          <NetworkBreadcrumbs
-            mainTitle="Organisation Details"
-            title="Welcome! Continue your journey."
-            parent="Network"
-            activePage="Organisation"
+          <Breadcrumbs
+            title="Organisation Status"
+            subTitle="Welcome! Continue your journey."
+            parent="Users"
+            child="Organisation"
           />
         </Row>
         <Row>

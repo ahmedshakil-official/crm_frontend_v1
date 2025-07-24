@@ -19,7 +19,7 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import NetworkBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import AddOrganisationModal from "./Modals/AddOrganisationModal";
 import "./Organisations.css";
 
@@ -62,11 +62,11 @@ const OrganisationsContainer = () => {
 
   return (
     <>
-      <NetworkBreadcrumbs
-        mainTitle="Network Organisations"
-        title="Hello there!"
-        parent="Network"
-        activePage="Organisations"
+      <Breadcrumbs
+        title="Organisation Status"
+        subTitle="Welcome to the Organisations Status"
+        parent="Users"
+        child="Organisations"
       />
       <Card>
         <Row>

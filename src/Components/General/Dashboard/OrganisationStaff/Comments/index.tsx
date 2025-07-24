@@ -1,17 +1,17 @@
 import { Container } from "reactstrap";
-import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import AddNewComment from "./AddNewComment/AddNewComment";
 import CommentCards from "./CommentCards/CommentCards";
 import InternalComments from "./InternalComments/InternalComments";
 import SearchAndFilters from "./SearchAndFilters/SearchAndFilters";
 
-const index: React.FC = () => {
+const CommentsContainer: React.FC = () => {
   return (
     <>
-      <OrganisationStaffBreadcrumbs
-        mainTitle="Comments"
-        title="Hello! there"
-        activePage="Comments"
+      <Breadcrumbs
+        title="Comments"
+        subTitle="Welcome back to your Comments dashboard"
+        child="Comments"
       />
       <Container fluid>
         <InternalComments />
@@ -23,4 +23,4 @@ const index: React.FC = () => {
   );
 };
 
-export default index;
+export default CommentsContainer;

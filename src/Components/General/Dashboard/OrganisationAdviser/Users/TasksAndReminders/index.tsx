@@ -1,16 +1,16 @@
 import { Container } from "reactstrap";
-import OrganisationAdviserBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import TasksAndCalendarTabs from "./TasksAndCalendarTabs/TasksAndCalendarTabs";
 import TasksAndRemindersOverview from "./TasksAndRemindersOverview/TasksAndRemindersOverview";
 
 const OrganisationAdviserTasksAndRemindersContainer: React.FC = () => {
   return (
     <>
-      <OrganisationAdviserBreadcrumbs
-        mainTitle="Tasks & Reminders"
-        title="Manage Tasks and Reminders"
+      <Breadcrumbs
+        title="Tasks & Reminders"
+        subTitle="Manage Tasks and Reminders"
         parent="Users"
-        activePage="Tasks & Reminders"
+        child="Tasks & Reminders"
       />
       <Container fluid>
         <TasksAndRemindersOverview />

@@ -1,15 +1,15 @@
 import { Container } from "reactstrap";
-import NetworkBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import AuditLogsAndActivityTracking from "./AuditLogsAndActivityTracking/AuditLogsAndActivityTracking";
 
 const AuditLogContainer: React.FC = () => {
   return (
     <>
-      <NetworkBreadcrumbs
-        mainTitle="Network Audit Log"
-        title="Hello there!"
+      <Breadcrumbs
+        title="Audit Log"
+        subTitle="Welcome to the Audit Log List"
         parent="Reports & Tasks"
-        activePage="Audit Log"
+        child="Audit Log"
       />
       <Container fluid>
         <AuditLogsAndActivityTracking />

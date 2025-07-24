@@ -1,15 +1,15 @@
 import { Container } from "reactstrap";
+import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import Advisers from "../../../CommonComponents/Directors/Advisers/Advisers";
-import NetworkBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
 
 const AdvisersContainer: React.FC = () => {
   return (
     <>
-      <NetworkBreadcrumbs
-        mainTitle="Network AR"
-        title="Hello there!"
-        parent="Network"
-        activePage="AR"
+      <Breadcrumbs
+        title="Registered AR Status"
+        subTitle="Welcome to the Registered AR Status"
+        parent="Users"
+        child="ARs"
       />
       <Container fluid>
         <Advisers />

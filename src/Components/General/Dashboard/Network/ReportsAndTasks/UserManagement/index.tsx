@@ -1,5 +1,5 @@
 import { Container, Row } from "reactstrap";
-import NetworkBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import ManageRole from "./ManageRole/ManageRole";
 import ManageUser from "./ManageUser/MangageUser";
@@ -11,11 +11,11 @@ import WeeklyActivity from "./WeeklyActivity/WeeklyActivity";
 const UserManagementContainer: React.FC = () => {
   return (
     <>
-      <NetworkBreadcrumbs
-        mainTitle="Network User Management"
-        title="Hello there!"
+      <Breadcrumbs
+        title="User Management"
+        subTitle="Welcome to the User Management List"
         parent="Reports & Tasks"
-        activePage="User Management"
+        child="User Management"
       />
       <Container fluid>
         <DashboardOverview />

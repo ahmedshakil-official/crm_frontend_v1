@@ -1,5 +1,5 @@
 import { Container } from "reactstrap";
-import OrganisationAdviserBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import MarketingHubOverview from "./MarketingHubOverview/MarketingHubOverview";
 import PlatformConnections from "./PlatformConnections/PlatformConnections";
 import QuickGlanceTabs from "./QuickGlance/QuickGlanceTabs";
@@ -7,11 +7,11 @@ import QuickGlanceTabs from "./QuickGlance/QuickGlanceTabs";
 const OrganisationAdviserMarketingHubContainer: React.FC = () => {
   return (
     <>
-      <OrganisationAdviserBreadcrumbs
-        mainTitle="Marketing Hub"
-        title="Manage your social media and WhatsApp campaigns"
+      <Breadcrumbs
+        title="Marketing Hub"
+        subTitle="Manage your social media and WhatsApp campaigns"
         parent="Users"
-        activePage="Marketing Hub"
+        child="Marketing Hub"
       />
       <Container fluid>
         <MarketingHubOverview />

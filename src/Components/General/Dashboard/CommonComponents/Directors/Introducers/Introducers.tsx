@@ -130,7 +130,7 @@ const Introducers: React.FC<IntroducersProps> = ({
     <Card className="container mt-1">
       <Row className="flex justify-content-between py-4">
         <Col md="3">
-          <h2>Introducer List</h2>
+          <h2>Introducers</h2>
         </Col>
         <Col md={6}>
           <InputGroup>
