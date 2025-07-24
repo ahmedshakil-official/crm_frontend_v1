@@ -1,16 +1,16 @@
 import { TbUpload } from "react-icons/tb";
 import { Button, Container } from "reactstrap";
-import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import DocumentManagementFilterBar from "./DocumentManagementFilterBar/DocumentManagementFilterBar";
 import DocumentsLists from "./DocumentsLists/DocumentsLists";
 
 const OrgStaffDocumentManagementContainer: React.FC = () => {
   return (
     <>
-      <OrganisationStaffBreadcrumbs
-        mainTitle="Document Management"
-        title="Upload, manage, and verify client documents"
-        activePage="Document Management"
+      <Breadcrumbs
+        title="Document Management"
+        subTitle="Upload, manage, and verify client documents"
+        child="Document Management"
       />
       <Container fluid>
         <div className=" d-flex justify-content-end">

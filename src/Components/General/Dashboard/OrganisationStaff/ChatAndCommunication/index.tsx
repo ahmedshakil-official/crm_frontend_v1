@@ -1,14 +1,14 @@
 import { Container } from "reactstrap";
-import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import ChatBoard from "./ChatBoard/ChatBoard";
 
 const OrgStaffChatAndCommunicationContainer: React.FC = () => {
   return (
     <>
-      <OrganisationStaffBreadcrumbs
-        mainTitle="Chat & Communication"
-        title="Welcome back to your Chat & Communication dashboard"
-        activePage="Chat & Communication"
+      <Breadcrumbs
+        title="Chat & Communication"
+        subTitle="Welcome back to your Chat & Communication dashboard"
+        child="Chat & Communication"
       />
       <Container fluid>
         <ChatBoard />

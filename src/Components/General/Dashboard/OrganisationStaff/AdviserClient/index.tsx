@@ -1,15 +1,15 @@
 import { Container, Row } from "reactstrap";
-import OrganisationStaffBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import AdviserClientFilterBar from "./AdviserClientFilterBar/AdviserClientFilterBar";
 import ClientLists from "./ClientLists/ClientLists";
 
 const OrgStaffAdviserClientContainer: React.FC = () => {
   return (
     <>
-      <OrganisationStaffBreadcrumbs
-        mainTitle="Adviser Clients"
-        title="Manage and view all client files across advisers"
-        activePage="Adviser Clients"
+      <Breadcrumbs
+        title="Adviser Clients"
+        subTitle="Manage and view all client files across advisers"
+        child="Adviser Clients"
       />
       <Container fluid>
         <AdviserClientFilterBar />
