@@ -29,14 +29,16 @@ const SingleCaseInfo: React.FC = () => {
         return `/dashboard/admin`;
       case "NETWORK_ADMIN":
         return `/dashboard/network/cases`;
-      case "CLIENT":
-        return `/dashboard/client/cases`;
+      case "NETWORK_ADVISER":
+        return `/dashboard/netadviser/cases`;
       case "ORGANIZATION_ADMIN":
         return `/dashboard/organisation/cases`;
       case "ORGANIZATION_ADVISER":
         return `/dashboard/orgadviser/cases`;
       case "ORGANIZATION_SUPPORT":
         return `/dashboard/orgstaff/caseupdates/cases`;
+      case "CLIENT":
+        return `/dashboard/client/cases`;
       default:
         return `url not found`;
     }

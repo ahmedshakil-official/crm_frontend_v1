@@ -95,6 +95,24 @@ const NetworkOwnerMenu: MenuItem[] = [
   },
 ];
 
+// Network Adviser Menu
+const NetworkAdviserMenu: MenuItem[] = [
+  {
+    title: "Network Adviser",
+    lanClass: "lan-1",
+    type: "group",
+    Items: [
+      {
+        title: "Dashboard",
+        icon: "Chart",
+        type: "link",
+        lanClass: "lan-3",
+        path: "/dashboard/netadviser",
+      },
+    ],
+  },
+];
+
 // OrganisationOwnerMenu
 const OrganisationOwnerMenu: MenuItem[] = [
   {
@@ -329,6 +347,7 @@ const ClientMenu: MenuItem[] = [
 // Export all menus
 export {
   ClientMenu,
+  NetworkAdviserMenu,
   NetworkOwnerMenu,
   OrganisationAdviserMenu,
   OrganisationOwnerMenu,
@@ -341,6 +360,8 @@ export const getMenuByRole = (role?: string): MenuItem[] => {
       return NetworkOwnerMenu;
     case "ORGANIZATION_ADMIN":
       return OrganisationOwnerMenu;
+    case "NETWORK_ADVISER":
+      return NetworkAdviserMenu;
     case "ORGANIZATION_ADVISER":
       return OrganisationAdviserMenu;
     case "ORGANIZATION_SUPPORT":
