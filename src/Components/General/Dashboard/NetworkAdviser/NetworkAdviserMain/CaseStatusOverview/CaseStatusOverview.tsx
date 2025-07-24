@@ -2,117 +2,61 @@ import dynamic from "next/dynamic";
 import React from "react";
 import { Card } from "reactstrap";
 
-// Dynamically import ApexCharts with SSR disabled
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+// Dynamically import Google Charts with SSR disabled
+const Chart = dynamic(() => import("react-google-charts"), { ssr: false });
 
 const CaseStatusOverview: React.FC = () => {
-  // Sample data - replace with actual data from your API
-  const series = [70, 20, 10]; // Compliant, In Progress, Issues
+  // Data matching your image
+  const data = [
+    ["Category", "Percentage"],
+    ["Category 1", 33.3],
+    ["Category 2", 26.7],
+    ["Category 3", 20],
+    ["Category 4", 13.3],
+  ];
 
   const options = {
-    chart: {
-      type: "donut",
-      background: "transparent",
-      animations: {
-        enabled: true,
-        easing: "easeinout",
-        speed: 800,
-        animateGradually: {
-          enabled: true,
-          delay: 150,
-        },
-        dynamicAnimation: {
-          enabled: true,
-          speed: 350,
-        },
-      },
+    title: "",
+    pieHole: 0, // No hole for pie chart (not donut)
+    is3D: true, // Enables 3D view
+    slices: {
+      0: { offset: 0.1 }, // Explode the first slice slightly
     },
-    colors: ["#10b981", "#f59e0b", "#94a3b8"],
-    labels: ["Compliant", "In Progress", "Issues"],
+    pieStartAngle: 0, // No rotation
+    sliceVisibilityThreshold: 0.01, // Show all slices
     legend: {
       position: "right",
-      fontSize: "14px",
-      offsetY: 20,
-      markers: {
-        width: 8,
-        height: 8,
-        radius: 4,
-      },
-      itemMargin: {
-        horizontal: 10,
-        vertical: 5,
+      alignment: "center",
+      textStyle: {
+        color: "#233238",
+        fontSize: 12, // Decreased font size
       },
     },
-    plotOptions: {
-      pie: {
-        donut: {
-          size: "75%",
-          labels: {
-            show: true,
-            name: {
-              show: true,
-              fontSize: "14px",
-              fontFamily: "inherit",
-              color: "#64748b",
-              offsetY: -10,
-            },
-            value: {
-              show: true,
-              fontSize: "24px",
-              fontFamily: "inherit",
-              color: "#1e293b",
-              offsetY: 10,
-              formatter: function (val: number) {
-                return val + "%";
-              },
-            },
-            total: {
-              show: true,
-              label: "Total Cases",
-              color: "#64748b",
-              fontSize: "14px",
-              formatter: function (w: any) {
-                return w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0) + " Cases";
-              },
-            },
-          },
-        },
-      },
+    colors: ["#2c7d7b", "#e97451", "#a5d6a7", "#f99d1c"],
+    backgroundColor: "transparent",
+    chartArea: {
+      left: 30,
+      top: 30,
+      width: "85%",
+      height: "85%"
     },
-    dataLabels: {
-      enabled: false,
+    tooltip: {
+      textStyle: {
+        fontSize: 10 // Decreased tooltip font size
+      }
     },
-    responsive: [
-      {
-        breakpoint: 768,
-        options: {
-          chart: {
-            width: "100%",
-          },
-          legend: {
-            position: "bottom",
-            offsetY: 0,
-            itemMargin: {
-              horizontal: 8,
-              vertical: 2,
-            },
-          },
-        },
-      },
-    ],
-    stroke: {
-      width: 0,
-    },
+    fontSize: 11, // Overall font size
   };
 
   return (
-    <Card className="bg-white p-4 shadow-sm">
-      <h4 className="mb-3 text-lg font-semibold">Case Status Overview</h4>
+    <Card className="bg-white p-3 shadow-sm"> {/* Decreased padding */}
+      <h4 className="mb-2 text-md font-semibold">Case Status Overview</h4> {/* Smaller title */}
       <Chart
-        options={options as any}
-        series={series}
-        type="donut"
-        height={300}
+        chartType="PieChart"
+        data={data}
+        options={options}
+        width="100%"
+        height="330px" // Decreased height
       />
     </Card>
   );
