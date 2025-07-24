@@ -6,7 +6,7 @@ const OrganisationClientsContainer: React.FC = () => {
   return (
     <>
       <Breadcrumbs
-        title="Client List"
+        title="Client Status"
         subTitle="Here you can see all the clients of the organisation"
         parent="Cases"
         child="Clients"

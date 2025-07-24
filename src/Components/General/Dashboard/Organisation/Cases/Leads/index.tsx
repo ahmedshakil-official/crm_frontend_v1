@@ -6,7 +6,7 @@ const OrganisationLeadsContainer: React.FC = () => {
   return (
     <>
       <Breadcrumbs
-        title="Lead List"
+        title="Lead Status"
         subTitle="Here you can see all the leads of the organisation"
         parent="Cases"
         child="Leads"

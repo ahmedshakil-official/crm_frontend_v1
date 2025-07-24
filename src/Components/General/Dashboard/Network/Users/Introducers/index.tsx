@@ -6,8 +6,8 @@ const IntroducersContainer: React.FC = () => {
   return (
     <>
       <Breadcrumbs
-        title="Introducer List"
-        subTitle="Welcome to the Introducer List"
+        title="Introducer Status"
+        subTitle="Welcome to the Introducer Status"
         parent="Users"
         child="Introducers"
       />

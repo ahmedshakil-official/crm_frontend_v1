@@ -63,8 +63,8 @@ const OrganisationsContainer = () => {
   return (
     <>
       <Breadcrumbs
-        title="Organisation List"
-        subTitle="Welcome to the Organisations List"
+        title="Organisation Status"
+        subTitle="Welcome to the Organisations Status"
         parent="Users"
         child="Organisations"
       />

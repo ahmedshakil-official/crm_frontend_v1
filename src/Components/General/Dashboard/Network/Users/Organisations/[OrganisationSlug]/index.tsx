@@ -62,7 +62,7 @@ const OrganisationContainer: React.FC = () => {
       <Container fluid className="default-dashboard">
         <Row>
           <Breadcrumbs
-            title="Organisation Details"
+            title="Organisation Status"
             subTitle="Welcome! Continue your journey."
             parent="Users"
             child="Organisation"
