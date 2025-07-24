@@ -6,8 +6,8 @@ import { Card, CardBody } from "reactstrap";
 const ProductsChart: React.FC = () => {
   const PieChartData: ApexOptions = {
     chart: {
-      width: 400, // Increased width
-      height: 300, // Added height
+      width: 450,
+      height: 280,
       type: "pie",
     },
     labels: [
@@ -26,7 +26,7 @@ const ProductsChart: React.FC = () => {
       {
         options: {
           chart: {
-            height: 300, // Increased responsive height
+            height: 300,
           },
           legend: {
             show: false,
@@ -52,15 +52,15 @@ const ProductsChart: React.FC = () => {
       <CommonCardHeader title="Products" />
       <CardBody
         className="apex-chart"
-        style={{ width: "100%", maxWidth: "600px" }}
+        style={{ width: "100%", maxWidth: "500px" }}
       >
-        <div id="piechart" style={{ width: "100%", height: "300px" }}>
+        <div id="piechart" style={{ width: "100%", height: "280px" }}>
           <ReactApexChart
             options={PieChartData}
             series={PieChartData.series}
             type="pie"
             width="100%"
-            height={300}
+            height={280}
           />
         </div>
       </CardBody>

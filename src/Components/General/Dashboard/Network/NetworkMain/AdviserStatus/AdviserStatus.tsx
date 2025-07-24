@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TbEye } from "react-icons/tb";
 import { Badge, Card, CardBody, Col, Progress, Row, Table } from "reactstrap";
 
 const tableData = [
@@ -97,6 +98,7 @@ const AdviserStatus = () => {
               </Badge>
             </div>
             <Link href="#" className="ms-3 text_decoration_hover">
+              <TbEye size={18} className="me-1" />
               View full report
             </Link>
           </div>
