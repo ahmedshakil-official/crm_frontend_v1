@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "reactstrap";
-import OrganisationBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import CaseCompletionOverTime from "./CaseCompletionOverTime/CaseCompletionOverTime";
 import ClientGrowth from "./ClientGrowth/ClientGrowth";
 import ComplianceStatus from "./ComplianceStatus/ComplianceStatus";
@@ -12,10 +12,7 @@ import TopPerformingAdvisers from "./TopPerformingAdvisers/TopPerformingAdvisers
 const OrganisationContainer = () => {
   return (
     <>
-      <OrganisationBreadcrumbs
-        mainTitle="Dashboard"
-        title="Hello there! Welcome back"
-      />
+      <Breadcrumbs title="Dashboard" subTitle="Hello there! Welcome back" />
       <Container fluid>
         {/* 1st row  */}
         <Row>

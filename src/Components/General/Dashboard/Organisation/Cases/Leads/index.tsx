@@ -1,15 +1,15 @@
 import Leads from "@/Components/General/Dashboard/CommonComponents/Directors/Leads/Leads";
 import { Container } from "reactstrap";
-import OrganisationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 
 const OrganisationLeadsContainer: React.FC = () => {
   return (
     <>
-      <OrganisationBreadcrumbs
-        mainTitle="Organisation Leads"
-        title="Hello there!"
+      <Breadcrumbs
+        title="Lead List"
+        subTitle="Here you can see all the leads of the organisation"
         parent="Cases"
-        activePage="Leads"
+        child="Leads"
       />
       <Container fluid>
         <Leads />

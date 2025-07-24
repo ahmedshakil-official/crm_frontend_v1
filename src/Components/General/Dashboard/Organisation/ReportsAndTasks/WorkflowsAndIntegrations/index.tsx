@@ -1,16 +1,16 @@
 import { Container } from "reactstrap";
-import OrganisationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import WorkflowsAndIntegrationsOverview from "./WorkflowsAndIntegrationsOverview/WorkflowsAndIntegrationsOverview";
 import WorkflowsAndIntegrationsTabs from "./WorkflowsAndIntegrationsTabs/WorkflowsAndIntegrationsTabs";
 
 const WorkflowsAndIntegrationContainer: React.FC = () => {
   return (
     <>
-      <OrganisationBreadcrumbs
-        mainTitle="Workflows & Integrations"
-        title="Manage workflows and integrations"
+      <Breadcrumbs
+        title="Workflows & Integrations"
+        subTitle="Manage workflows and integrations"
         parent="Reports & Tasks"
-        activePage="Workflows & Integrations"
+        child="Workflows & Integrations"
       />
       <Container fluid>
         <WorkflowsAndIntegrationsOverview />

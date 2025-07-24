@@ -1,16 +1,16 @@
 import { Container } from "reactstrap";
-import OrganisationBreadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import UsersAndRolesOverview from "./UsersAndRolesOverview/UsersAndRolesOverview";
 import UsersAndRolesTabs from "./UsersAndRolesTabs/UsersAndRolesTabs";
 
 const UsersAndRolesContainer: React.FC = () => {
   return (
     <>
-      <OrganisationBreadcrumbs
-        mainTitle="Users & Roles"
-        title="Manage user access, roles, and permissions"
+      <Breadcrumbs
+        title="Users & Roles"
+        subTitle="Manage user access, roles, and permissions"
         parent="Reports & Tasks"
-        activePage="Users & Roles"
+        child="Users & Roles"
       />
       <Container fluid>
         <UsersAndRolesOverview />
