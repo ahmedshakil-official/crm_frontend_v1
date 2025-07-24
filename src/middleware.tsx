@@ -30,6 +30,15 @@ export default withAuth(
       return NextResponse.redirect(loginUrl);
     }
 
+    if (
+      path.startsWith("/dashboard/netadviser") &&
+      token.user_type !== "NETWORK_ADVISER"
+    ) {
+      const loginUrl = new URL("/auth/login", req.url);
+      loginUrl.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(loginUrl);
+    }
+
     if (path.startsWith("/dashboard/client") && token.user_type !== "CLIENT") {
       const loginUrl = new URL("/auth/login", req.url);
       loginUrl.searchParams.set("error", "unauthorized");
@@ -74,10 +83,11 @@ export default withAuth(
 export const config = {
   matcher: [
     "/dashboard/:path*",
+    "/dashboard/network/:path*",
+    "/dashboard/netadviser/:path*",
     "/dashboard/organisation/:path*",
     "/dashboard/orgadviser/:path*",
     "/dashboard/orgstaff/:path*",
     "/dashboard/client/:path*",
-    "/dashboard/network/:path*",
   ],
 };

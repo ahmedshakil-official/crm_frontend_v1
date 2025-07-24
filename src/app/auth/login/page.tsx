@@ -14,6 +14,8 @@ const UserLogin = () => {
       router.push("/dashboard/admin");
     } else if (session?.user?.user_type === "NETWORK_ADMIN") {
       router.push("/dashboard/network");
+    } else if (session?.user?.user_type === "NETWORK_ADVISER") {
+      router.push("/dashboard/netadviser");
     } else if (session?.user?.user_type === "CLIENT") {
       router.push("/dashboard/client");
     } else if (session?.user?.user_type === "ORGANIZATION_ADMIN") {
@@ -22,8 +24,7 @@ const UserLogin = () => {
       router.push("/dashboard/orgadviser");
     } else if (session?.user?.user_type === "ORGANIZATION_SUPPORT") {
       router.push("/dashboard/orgstaff");
-    }
-     else {
+    } else {
       if (session?.user?.accessToken) {
         router.push("/logout");
       } else {
