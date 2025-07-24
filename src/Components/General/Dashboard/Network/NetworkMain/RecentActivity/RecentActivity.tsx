@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { TbEye } from "react-icons/tb";
 import { Card, CardBody, CardHeader, Col } from "reactstrap";
 
 const RecentActivity: React.FC = () => {
@@ -9,6 +10,7 @@ const RecentActivity: React.FC = () => {
         <CardHeader className="bg-white border-bottom d-flex justify-content-between">
           <h4 className="mb-0 fw-bold">Recent Activity</h4>
           <Link href="#" className="text_decoration_hover">
+            <TbEye size={18} className="me-1" />
             View all activity
           </Link>
         </CardHeader>
