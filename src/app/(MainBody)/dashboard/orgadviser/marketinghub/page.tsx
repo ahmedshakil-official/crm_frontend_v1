@@ -8,7 +8,7 @@ const OrganisationAdviserMarketingHub = () => {
       if (typeof window !== "undefined") {
         const newClient = (
           await import(
-            "@/Components/General/Dashboard/OrganisationAdviser/MarketingHub"
+            "@/Components/General/Dashboard/OrganisationAdviser/Users/MarketingHub"
           )
         ).default;
         setClient(() => newClient);

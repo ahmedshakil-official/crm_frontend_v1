@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "reactstrap";
-import OrganisationAdviserBreadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import CaseStatusOverview from "./CaseStatusOverview/CaseStatusOverview";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import DocumentStatus from "./DocumentStatus/DocumentStatus";
@@ -10,10 +10,7 @@ import UpcomingTasks from "./UpcommingTasks/UpCommingTasks";
 const OrganisationAdviserContainer: React.FC = () => {
   return (
     <>
-      <OrganisationAdviserBreadcrumbs
-        mainTitle="Dashboard"
-        title="Hello! there"
-      />
+      <Breadcrumbs title="Dashboard" subTitle="Welcome to your dashboard" />
       <Container fluid>
         {/* 1st row  */}
         <DashboardOverview />
