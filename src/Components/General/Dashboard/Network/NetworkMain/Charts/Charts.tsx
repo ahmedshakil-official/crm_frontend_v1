@@ -1,12 +1,12 @@
 import { Col, Row } from "reactstrap";
 import LendersChart from "./LendersChart/LendersChart";
-import ProductsChart from "./ProductsChart/ProductsChart";
+import MortgagesChart from "./MortgagesChart/MortgagesChart";
 
 const Charts: React.FC = () => {
   return (
     <Row>
       <Col sm="12" xl="6" className="box-col-6">
-        <ProductsChart />
+        <MortgagesChart />
       </Col>
       <Col sm="12" xl="6" className="box-col-6">
         <LendersChart />

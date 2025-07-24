@@ -3,7 +3,7 @@ import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 import { Card, CardBody } from "reactstrap";
 
-const ProductsChart: React.FC = () => {
+const MortgagesChart: React.FC = () => {
   const PieChartData: ApexOptions = {
     chart: {
       width: 450,
@@ -49,7 +49,7 @@ const ProductsChart: React.FC = () => {
 
   return (
     <Card>
-      <CommonCardHeader title="Products" />
+      <CommonCardHeader title="Mortgages" />
       <CardBody
         className="apex-chart"
         style={{ width: "100%", maxWidth: "500px" }}
@@ -68,4 +68,4 @@ const ProductsChart: React.FC = () => {
   );
 };
 
-export default ProductsChart;
+export default MortgagesChart;
