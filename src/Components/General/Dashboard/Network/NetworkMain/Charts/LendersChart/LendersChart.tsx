@@ -11,17 +11,17 @@ const LendersChart: React.FC = () => {
       type: "pie",
     },
     labels: [
-      "Halifax",
-      "Nationwide",
-      "Santander",
-      "Natwest",
       "Barclays",
-      "HSBC",
-      "Rightmove",
-      "Lloyds",
+      "Halifax",
+      "NatWest",
+      "Nationwide",
+      "Amicus PLC",
+      "Santander",
+      "Atom Bank",
+      "Accord Mortgages",
       "Others",
     ],
-    series: [15, 13, 13, 12, 10, 8, 7, 22],
+   series: [25, 22, 15, 12, 8, 8, 3, 5, 10],
     responsive: [
       {
         options: {
