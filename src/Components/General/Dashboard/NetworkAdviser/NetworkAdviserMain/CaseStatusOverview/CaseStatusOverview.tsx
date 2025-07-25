@@ -17,10 +17,13 @@ const CaseStatusOverview: React.FC = () => {
 
   const options = {
     title: "",
-    pieHole: 0, // No hole for pie chart (not donut)
-    is3D: true, // Enables 3D view
+    pieHole: 0,
+    is3D: true,
     slices: {
-      0: { offset: 0.1 }, // Explode the first slice slightly
+      0: { offset: 0.08 },
+      1: { offset: 0.03 },
+      3: { offset: 0.03 },
+      2: { offset: 0.03 },
     },
     pieStartAngle: 0, // No rotation
     sliceVisibilityThreshold: 0.01, // Show all slices
@@ -29,7 +32,7 @@ const CaseStatusOverview: React.FC = () => {
       alignment: "center",
       textStyle: {
         color: "#233238",
-        fontSize: 12, // Decreased font size
+        fontSize: 12,
       },
     },
     colors: ["#2c7d7b", "#e97451", "#a5d6a7", "#f99d1c"],
@@ -38,25 +41,25 @@ const CaseStatusOverview: React.FC = () => {
       left: 30,
       top: 30,
       width: "85%",
-      height: "85%"
+      height: "85%",
     },
     tooltip: {
       textStyle: {
-        fontSize: 10 // Decreased tooltip font size
-      }
+        fontSize: 10,
+      },
     },
     fontSize: 11, // Overall font size
   };
 
   return (
-    <Card className="bg-white p-3 shadow-sm"> {/* Decreased padding */}
-      <h4 className="mb-2 text-md font-semibold">Case Status Overview</h4> {/* Smaller title */}
+    <Card className="bg-white p-3 shadow-sm">
+      <h4 className="mb-2 text-md font-semibold">Case Status Overview</h4>{" "}
       <Chart
         chartType="PieChart"
         data={data}
         options={options}
         width="100%"
-        height="330px" // Decreased height
+        height="370px"
       />
     </Card>
   );
