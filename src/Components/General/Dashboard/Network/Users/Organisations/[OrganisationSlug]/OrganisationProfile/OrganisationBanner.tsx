@@ -43,7 +43,7 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
               <Image
                 width={1595}
                 height={300}
-                className="rounded-top-4 w-100 object-fit-cover"
+                className="rounded-top-3 w-100 object-fit-cover"
                 src={
                   organisationInfo?.profile_image ||
                   "/assets/images/other-images/bg-profile.png"
@@ -72,57 +72,60 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
             <CardTitle tag="h3" className="mt-5 text-primary">
               {organisationInfo?.name}
             </CardTitle>
-            <CardText className="text-success">
-              <strong>Network: </strong>{" "}
-              {organisationInfo?.network?.name || "Not Avaiable"}
+            <CardText>
+              <span className="text-muted">Network:</span>{" "}
+              <strong>
+                {organisationInfo?.network?.name ? (
+                  organisationInfo?.network?.name
+                ) : (
+                  <strong className="text-muted">Not Available</strong>
+                )}
+              </strong>
             </CardText>
 
             {/* Contact Details */}
             <Row className="mt-4">
               <Col md={4}>
-                <p>
-                  <strong>Email:</strong>{" "}
-                  {organisationInfo?.email ? (
-                    <a
-                      className="text-dark text_decoration_hover"
-                      href={`mailto:${organisationInfo.email}`}
-                    >
-                      {organisationInfo.email}
-                    </a>
-                  ) : (
-                    "Not Available"
-                  )}
-                </p>
+                <span className="text-muted">Email:</span>{" "}
+                {organisationInfo?.email ? (
+                  <strong>{organisationInfo.email}</strong>
+                ) : (
+                  <strong className="text-muted">Not Available</strong>
+                )}
               </Col>
               <Col md={4}>
-                <p>
-                  <strong>License No:</strong>{" "}
-                  {organisationInfo?.license_no || "Not Avaiable"}
-                </p>
+                <span className="text-muted">License No:</span>{" "}
+                {organisationInfo?.license_no ? (
+                  <strong>{organisationInfo?.license_no}</strong>
+                ) : (
+                  <strong className="text-muted">Not Available</strong>
+                )}
               </Col>
               <Col md={4}>
-                <p>
-                  <strong>Phone:</strong>{" "}
-                  {organisationInfo?.primary_mobile ? (
+                <span className="text-muted">Phone:</span>{" "}
+                {organisationInfo?.primary_mobile ? (
+                  <strong>
                     <a
                       className="text-dark text_decoration_hover"
-                      href={`tel:${organisationInfo.primary_mobile}`}
+                      href={`tel:${organisationInfo?.primary_mobile}`}
                     >
-                      {organisationInfo.primary_mobile}
+                      {organisationInfo?.primary_mobile}
                     </a>
-                  ) : (
-                    "Not Available"
-                  )}
-                </p>
+                  </strong>
+                ) : (
+                  <strong className="text-muted">Not Available</strong>
+                )}
               </Col>
             </Row>
 
             <Row>
               <Col md={12}>
-                <p>
-                  <strong>Location:</strong>{" "}
-                  {organisationInfo?.location || "Not Avaiable"}
-                </p>
+                <span className="text-muted">Location:</span>{" "}
+                {organisationInfo?.location ? (
+                  <strong>{organisationInfo?.location}</strong>
+                ) : (
+                  <strong className="text-muted">Not Available</strong>
+                )}
               </Col>
             </Row>
 
@@ -149,15 +152,15 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
             <Row className="mt-4">
               <Col md={4}>
                 <h5>4,656</h5>
-                <p className="text-secondary">Cases</p>
+                <strong className="text-primary opacity-75">Cases</strong>
               </Col>
               <Col md={4}>
                 <h5>4,656</h5>
-                <p className="text-secondary">Employees</p>
+                <strong className="text-primary opacity-75">Employees</strong>
               </Col>
               <Col md={4}>
                 <h5>118,779</h5>
-                <p className="text-secondary">Clients</p>
+                <strong className="text-primary opacity-75">Clients</strong>
               </Col>
             </Row>
           </CardBody>
