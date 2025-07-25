@@ -11,11 +11,13 @@ const PerformanceOverview: React.FC = () => {
               <span className="text-muted small fw-bold">
                 New Mortgage Enquiry
               </span>
-              <span className="badge bg-success-subtle text-success">
-                ↑ +10%
-              </span>
             </div>
-            <h2 className="mb-0 mt-4">800</h2>
+            <h2 className="mb-0 mt-4">
+              800
+              <small className="text-success" style={{ fontSize: "10px" }}>
+                ↑+10%
+              </small>
+            </h2>
           </CardBody>
         </Card>
       </Col>
@@ -27,11 +29,13 @@ const PerformanceOverview: React.FC = () => {
               <span className="text-muted small fw-bold">
                 Mortgage Cases Submitted
               </span>
-              <span className="badge bg-success-subtle text-success">
-                ↑ +12%
-              </span>
             </div>
-            <h2 className="mb-0 mt-4">500</h2>
+            <h2 className="mb-0 mt-4">
+              500
+              <small className="text-success" style={{ fontSize: "10px" }}>
+                ↑+12%
+              </small>
+            </h2>
           </CardBody>
         </Card>
       </Col>
@@ -43,9 +47,13 @@ const PerformanceOverview: React.FC = () => {
               <span className="text-muted small fw-bold">
                 Mortgage cases offered
               </span>
-              <span className="badge bg-danger-subtle text-danger">↓ -3%</span>
             </div>
-            <h2 className="mb-0 mt-4">140</h2>
+            <h2 className="mb-0 mt-4">
+              140
+              <small className="text-danger" style={{ fontSize: "10px" }}>
+                ↓-3%
+              </small>
+            </h2>
           </CardBody>
         </Card>
       </Col>
@@ -57,10 +65,14 @@ const PerformanceOverview: React.FC = () => {
               <span className="text-muted small fw-bold">
                 Mortgage cases Completed
               </span>
-              <span className="badge bg-danger-subtle text-danger">↓ +14%</span>
             </div>
             <div className="mt-4">
-              <h2 className="mb-0 d-inline-block">240</h2>
+              <h2 className="mb-0 d-inline-block">
+                240
+                <small className="text-success" style={{ fontSize: "10px" }}>
+                  ↑+14%
+                </small>
+              </h2>
             </div>
           </CardBody>
         </Card>
@@ -72,10 +84,14 @@ const PerformanceOverview: React.FC = () => {
               <span className="text-muted small fw-bold">
                 Insurance Cases Submitted
               </span>
-              <span className="badge bg-success-subtle text-success">↑ +1%</span>
             </div>
             <div className="mt-4">
-              <h2 className="mb-0 d-inline-block">240</h2>
+              <h2 className="mb-0 d-inline-block">
+                240
+                <small className="text-success" style={{ fontSize: "10px" }}>
+                  ↑+1%
+                </small>
+              </h2>
             </div>
           </CardBody>
         </Card>
