@@ -118,7 +118,7 @@ const ClientGrowth: React.FC = () => {
         options={options as any}
         series={series}
         type="line"
-        height={220}
+        height={300}
       />
     </Card>
   );

@@ -16,6 +16,8 @@ const TopPerformingAdvisers: React.FC = () => {
     { id: 3, name: "Emma Williams", cases: 22, revenue: 87000, rank: 3 },
     { id: 4, name: "David Lee", cases: 18, revenue: 72000, rank: 4 },
     { id: 5, name: "Jessica Brown", cases: 15, revenue: 65000, rank: 5 },
+    { id: 6, name: "Michael Brown", cases: 15, revenue: 65000, rank: 6 },
+    { id: 7, name: "Daniel Brown", cases: 15, revenue: 65000, rank: 7 },
   ];
 
   const formatCurrency = (amount: number): string => {
@@ -26,11 +28,14 @@ const TopPerformingAdvisers: React.FC = () => {
     <Card className="border-0 rounded-lg bg-white p-3 shadow-sm">
       <CardBody className="p-0">
         <h4>Top Performing Advisers</h4>
-        <div className="space-y-6">
+        <div
+          className="space-y-6 mt-2"
+          style={{ height: "350px", overflow: "auto" }}
+        >
           {advisers.map((adviser) => (
             <div
               key={adviser.id}
-              className="d-flex justify-content-between mt-4"
+              className="d-flex justify-content-between mt-4 px-3 py-1"
             >
               <div className="d-flex justify-content-start gap-2">
                 <div className="d-flex align-items-center justify-content-center">
