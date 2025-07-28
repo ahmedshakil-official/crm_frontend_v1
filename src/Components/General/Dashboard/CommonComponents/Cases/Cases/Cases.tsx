@@ -2,8 +2,8 @@ import { useGetCasesQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesA
 import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
 import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { AdviserInfoProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
-import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { getCaseUrl } from "@/utils/GetCaseUrl";
+import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
@@ -133,8 +133,8 @@ const Cases: React.FC = () => {
           // Actual Content
           <>
             {/* All Cases  */}
-            <Col xl className="mb-2">
-              <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
+            <Col xl>
+              <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
                     <div>
@@ -156,8 +156,8 @@ const Cases: React.FC = () => {
               </Card>
             </Col>
             {/* Active Cases  */}
-            <Col xl className="mb-2">
-              <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
+            <Col xl>
+              <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
                     <div>
@@ -183,8 +183,8 @@ const Cases: React.FC = () => {
               </Card>
             </Col>
             {/* Pending Cases  */}
-            <Col xl className="mb-2">
-              <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
+            <Col xl>
+              <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
                     <div>
@@ -206,8 +206,8 @@ const Cases: React.FC = () => {
               </Card>
             </Col>
             {/* Completed Cases  */}
-            <Col xl className="mb-2">
-              <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
+            <Col xl>
+              <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
                     <div>
@@ -229,8 +229,8 @@ const Cases: React.FC = () => {
               </Card>
             </Col>
             {/* On Hold Cases  */}
-            <Col xl className="mb-2">
-              <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
+            <Col xl>
+              <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
                     <div>
@@ -300,7 +300,7 @@ const Cases: React.FC = () => {
                     onClick={openAddNewCaseModal}
                     className="d-flex justify-content-center align-items-center gap-1"
                   >
-                    <TbCirclePlus size={18}/>
+                    <TbCirclePlus size={18} />
                     <span>Add New Case</span>
                   </Button>
                 )}
