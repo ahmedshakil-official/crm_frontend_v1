@@ -29,8 +29,8 @@ const TopPerformingAdvisers: React.FC = () => {
       <CardBody className="p-0">
         <h4>Top Performing Advisers</h4>
         <div
-          className="space-y-6"
-          style={{ height: "355px", overflow: "auto" }}
+          className="space-y-6 mt-2"
+          style={{ height: "350px", overflow: "auto" }}
         >
           {advisers.map((adviser) => (
             <div
