@@ -36,7 +36,7 @@ const CaseCompletionOverTime: React.FC = () => {
     plotOptions: {
       bar: {
         borderRadius: 4,
-        columnWidth: "70%",
+        columnWidth: "40%",
       },
     },
     colors: ["#10B981", "#F59E0B"],
@@ -115,7 +115,9 @@ const CaseCompletionOverTime: React.FC = () => {
     //   className="case-completion-trend"
     //   style={{ width: "100%", height: "400px" }}
     >
-      <h4 className="text-xl p-3 font-semibold mb-4">Case Completion Over Time</h4>
+      <h4 className="text-xl p-3 font-semibold mb-4">
+        Case Completion Over Time
+      </h4>
       <Chart
         options={options as any}
         series={series}
