@@ -5,8 +5,12 @@ import LoadingSpinner from "@/app/loading";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Container, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
+import OrgAdvisers from "./Advisers/OrgAdvisers";
+import OrgCases from "./Cases/OrgCases";
+import OrgClients from "./Clients/OrgClients";
 import DangerZone from "./DangerZone/DangerZone";
+import OrgLeads from "./Leads/OrgLeads";
 import OrganisationBanner from "./OrganisationProfile/OrganisationBanner";
 
 const OrganisationContainer: React.FC = () => {
@@ -59,23 +63,25 @@ const OrganisationContainer: React.FC = () => {
 
   return (
     <>
-      <Container fluid className="default-dashboard">
+      <Breadcrumbs
+        title="Organisation Status"
+        subTitle="Welcome! Continue your journey."
+        parent="Users"
+        child="Organisation"
+      />
+      <Container fluid>
         <Row>
-          <Breadcrumbs
-            title="Organisation Status"
-            subTitle="Welcome! Continue your journey."
-            parent="Users"
-            child="Organisation"
-          />
-        </Row>
-        <Row>
-          <OrganisationBanner
-            organisationInfo={organisationInfo}
-            isLoading={isLoading}
-          />
-        </Row>
-        <Row>
-          <DangerZone organisationInfo={organisationInfo} />
+          <Col md="12">
+            <OrganisationBanner
+              organisationInfo={organisationInfo}
+              isLoading={isLoading}
+            />
+            <OrgLeads />
+            <OrgCases />
+            <OrgClients />
+            <OrgAdvisers />
+            <DangerZone organisationInfo={organisationInfo} />
+          </Col>
         </Row>
       </Container>
     </>

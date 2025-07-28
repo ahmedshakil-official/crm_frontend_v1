@@ -1,8 +1,8 @@
-import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
+import { useGetClientDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/ClientDetailsApi";
 import {
-  AdviserInfoProps,
-  AdvisersProps,
-} from "@/Types/CommonComponents/Directors/AdviserTypes";
+  ClientInfoProps,
+  ClientsProps,
+} from "@/Types/CommonComponents/Directors/ClientTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
 import { useEffect, useState } from "react";
@@ -23,101 +23,88 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import AddAdviserModal from "./Modals/AddAdviserModal";
-import DeleteAdviserModal from "./Modals/DeleteAdviserModal";
-import UpdateAdviserModal from "./Modals/UpdateAdviserModal";
-import ViewAdviserModal from "./Modals/ViewAdviserModal";
 
-const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
-  const [advisers, setAdvisers] = useState<AdviserInfoProps[]>([]);
+const OrgClients: React.FC<ClientsProps> = ({ clientsPerPage = 5 }) => {
+  const [clients, setClients] = useState<ClientInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [adviserToDelete, setAdviserToDelete] =
-    useState<AdviserInfoProps | null>(null);
+  const [clientToDelete, setClientToDelete] = useState<ClientInfoProps | null>(
+    null
+  );
 
-  const { data: adviserData, isLoading } = useGetAdviserDetailsQuery(undefined);
+  const { data: clientData, isLoading } = useGetClientDetailsQuery(undefined);
 
-  const [selectedAdviser, setSelectedAdviser] = useState<
-    Partial<AdviserInfoProps>
+  const [selectedClient, setSelectedClient] = useState<
+    Partial<ClientInfoProps>
   >({
     user: {
-      id: 0,
+      title: "",
       first_name: "",
+      middle_name: "",
       last_name: "",
       profile_image: "",
-      nid: "",
       user_type: "",
-      city: "",
-      state: "",
-      country: "",
-      zip_code: "",
     },
     role: "",
     designation: "",
     official_email: "",
     official_phone: "",
-    permanent_address: "",
-    present_address: "",
     dob: "",
     gender: "",
-    joining_date: "",
-    registration_number: "",
-    degree: "",
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleViewModal = () => setIsViewModalOpen(!isViewModalOpen);
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
   const toggleDeleteModal = () => setIsDeleteModalOpen(!isDeleteModalOpen);
-
-  const openDeleteModal = (adviser: AdviserInfoProps) => {
-    setAdviserToDelete(adviser);
+  const openDeleteModal = (client: ClientInfoProps) => {
+    setClientToDelete(client);
     toggleDeleteModal();
   };
 
   useEffect(() => {
-    if (adviserData) {
-      const advisersArray: AdviserInfoProps[] = Array.isArray(adviserData)
-        ? adviserData
-        : adviserData.advisers;
-      setAdvisers(advisersArray || []);
+    if (clientData) {
+      const clientsData = Array.isArray(clientData)
+        ? clientData
+        : clientData.clients;
+      setClients(clientsData || []);
     }
-  }, [adviserData]);
+  }, [clientData]);
 
   // openmodals
   const openAddModal = () => {
     toggleModal();
   };
 
-  const openUpdateModal = (adviser: AdviserInfoProps) => {
-    setSelectedAdviser(adviser);
+  const openUpdateModal = (client: ClientInfoProps) => {
+    setSelectedClient(client);
     toggleUpdateModal();
   };
   // openmodals end
 
-  const filteredAdvisers = advisers.filter((adviser) => {
-    const fullName = `${adviser?.user?.first_name || ""} ${
-      adviser?.user?.last_name || ""
+  const filteredClients = clients.filter((client) => {
+    const fullName = `${client?.user?.first_name || ""} ${
+      client?.user?.last_name || ""
     }`.toLowerCase();
 
     return (
       fullName.includes(searchQuery.toLowerCase()) ||
-      adviser?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
+      client?.official_email?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
 
-  const indexOfLastAdviser = currentPage * advisersPerPage;
-  const indexOfFirstAdviser = indexOfLastAdviser - advisersPerPage;
-  const currentAdvisers = filteredAdvisers.slice(
-    indexOfFirstAdviser,
-    indexOfLastAdviser
+  const indexOfLastClient = currentPage * clientsPerPage;
+  const indexOfFirstClient = indexOfLastClient - clientsPerPage;
+  const currentClients = filteredClients.slice(
+    indexOfFirstClient,
+    indexOfLastClient
   );
 
-  const totalPages = Math.ceil(filteredAdvisers.length / advisersPerPage);
+  const totalPages = Math.ceil(filteredClients.length / clientsPerPage);
 
   if (isLoading) {
     return (
@@ -132,7 +119,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
       <CardBody>
         <Row className="flex justify-content-between py-4">
           <Col md="3">
-            <h2>Advisers</h2>
+            <h2>Clients</h2>
           </Col>
           <Col md={6}>
             <InputGroup>
@@ -159,7 +146,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
               className="d-flex justify-content-center align-items-center gap-1"
             >
               <TbCirclePlus size={18} />
-              <span>Add adviser</span>
+              <span>Add Client</span>
             </Button>
           </Col>
         </Row>
@@ -176,6 +163,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                 <th>Action</th>
               </tr>
             </thead>
+
             <tbody>
               {isLoading ? (
                 <tr>
@@ -185,46 +173,51 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                     </div>
                   </td>
                 </tr>
-              ) : currentAdvisers.length > 0 ? (
-                currentAdvisers.map((adviser) => (
-                  <tr key={adviser.alias} className="text-center">
+              ) : currentClients.length > 0 ? (
+                currentClients.map((client: any) => (
+                  <tr key={client.alias} className="text-center">
                     <td>
                       <span
                         className="text_decoration_hover"
                         onClick={() => {
-                          setSelectedAdviser(adviser);
+                          setSelectedClient(client);
                           toggleViewModal();
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        {adviser?.user?.first_name} {adviser?.user?.last_name}
+                        {client.user?.title
+                          ? client.user?.title.charAt(0).toUpperCase() +
+                            client.user?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {client?.user?.first_name}{" "}
+                        {client?.user?.middle_name} {client?.user?.last_name}
                       </span>
                     </td>
-                    <td>{adviser?.official_email || "-"}</td>
+                    <td>{client?.official_email || "-"}</td>
                     <td>
-                      {adviser?.official_phone ? (
+                      {client?.official_phone ? (
                         <a
-                          href={`tel:${adviser?.official_phone}`}
+                          href={`tel:${client?.official_phone}`}
                           className="text-black text_decoration_hover"
                         >
-                          {adviser?.official_phone}
+                          {client?.official_phone}
                         </a>
                       ) : (
                         "-"
                       )}
                     </td>
                     <td>
-                      {adviser?.role?.charAt(0)?.toUpperCase() +
-                        adviser?.role?.slice(1)?.toLowerCase()}
+                      {client?.role?.charAt(0)?.toUpperCase() +
+                        client?.role?.slice(1)?.toLowerCase()}
                     </td>
                     <td>
                       <p className="m-0">
-                        {adviser.created_by?.first_name}{" "}
-                        {adviser.created_by?.last_name}
+                        {client.created_by?.first_name}{" "}
+                        {client.created_by?.last_name}
                       </p>
                       <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
                         (
-                        {adviser.created_by?.user_type
+                        {client.created_by?.user_type
                           ?.split("_")
                           .map(
                             (word: any) =>
@@ -235,14 +228,14 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                         )
                       </p>
                     </td>
-                    <td>{formatDateToDMYAndTime(adviser?.created_at)}</td>
+                    <td>{formatDateToDMYAndTime(client?.created_at)}</td>
                     <td>
                       <div className="d-flex justify-content-center gap-2 align-items-center">
                         <Button
                           color="success"
                           size="sm"
                           title="Update User"
-                          onClick={() => openUpdateModal(adviser)}
+                          onClick={() => openUpdateModal(client)}
                         >
                           <i className="icon-pencil-alt"></i>
                         </Button>
@@ -250,7 +243,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                           color="danger"
                           size="sm"
                           title="Delete User"
-                          onClick={() => openDeleteModal(adviser)}
+                          onClick={() => openDeleteModal(client)}
                         >
                           <i className="icon-trash"></i>
                         </Button>
@@ -261,7 +254,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
               ) : (
                 <tr>
                   <td colSpan={7} className="text-center">
-                    No advisers available.
+                    No clients available.
                   </td>
                 </tr>
               )}
@@ -273,12 +266,12 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
             <div className="px-2">
               <p className="text-success">
                 Showing{" "}
-                {filteredAdvisers.length === 0 ? "0" : indexOfFirstAdviser + 1}{" "}
-                to {Math.min(indexOfLastAdviser, filteredAdvisers.length)} of{" "}
-                {filteredAdvisers.length} Advisers
+                {filteredClients.length === 0 ? "0" : indexOfFirstClient + 1} to{" "}
+                {Math.min(indexOfLastClient, filteredClients.length)} of{" "}
+                {filteredClients.length} Clients
               </p>
             </div>
-            <Pagination>
+            <Pagination className="d-flex justify-content-end p-2">
               <PaginationItem disabled={currentPage === 1}>
                 <PaginationLink first onClick={() => setCurrentPage(1)} />
               </PaginationItem>
@@ -289,7 +282,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                 />
               </PaginationItem>
 
-              {totalPages <= advisersPerPage ? (
+              {totalPages <= clientsPerPage ? (
                 Array.from({ length: totalPages }, (_, i) => i + 1).map(
                   (pageNumber) => (
                     <PaginationItem
@@ -366,30 +359,30 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
         </Row>
 
         {/* modals */}
-        <AddAdviserModal isOpen={isModalOpen} toggle={toggleModal} />
-        <ViewAdviserModal
+        {/* <AddClientModal isOpen={isModalOpen} toggle={toggleModal} />
+        <ViewClientModal
           isOpen={isViewModalOpen}
           toggle={toggleViewModal}
-          selectedAdviser={selectedAdviser}
+          selectedClient={selectedClient}
         />
-        <UpdateAdviserModal
+        <UpdateClientModal
           isOpen={isUpdateModalOpen}
           toggle={toggleUpdateModal}
           onSave={() => {
             toggleUpdateModal();
           }}
-          selectedAdviser={selectedAdviser}
+          selectedClient={selectedClient}
         />
-        <DeleteAdviserModal
+        <DeleteClientModal
           isOpen={isDeleteModalOpen}
           toggle={toggleDeleteModal}
-          adviserAlias={adviserToDelete?.alias || ""}
-          adviserName={`${adviserToDelete?.user?.first_name} ${adviserToDelete?.user?.last_name}`}
-        />
+          clientAlias={clientToDelete?.alias || ""}
+          clientName={`${clientToDelete?.user?.first_name} ${clientToDelete?.user?.last_name}`}
+        /> */}
         {/* modals end */}
       </CardBody>
     </Card>
   );
 };
 
-export default Advisers;
+export default OrgClients;

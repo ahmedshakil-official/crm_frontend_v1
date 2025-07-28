@@ -11,6 +11,7 @@ import { TbCirclePlus } from "react-icons/tb";
 import {
   Button,
   Card,
+  CardBody,
   Col,
   Input,
   InputGroup,
@@ -110,198 +111,176 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
   }
 
   return (
-    <Card className="container mt-1">
-      <Row className="d-flex justify-content-between py-4">
-        <Col md="3" xs="12">
-          <h2>Leads</h2>
-        </Col>
-        <Col md={6} xs="12">
-          <InputGroup>
-            <Input
-              type="text"
-              placeholder="Search by name or email... "
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{ padding: "10px 10px" }}
-            />
-            <InputGroupText className="bg-success rounded-start-0 border-start-0">
-              <FaSearch />
-            </InputGroupText>
-          </InputGroup>
-        </Col>
-        <Col md="3" xs="12" className="d-flex justify-content-end mt-sm-0 mt-2">
-          <Button
-            color="primary"
-            onClick={openAddModal}
-            className="d-flex justify-content-center align-items-center gap-1"
+    <Card>
+      <CardBody>
+        <Row className="d-flex justify-content-between py-4">
+          <Col md="3" xs="12">
+            <h2>Leads</h2>
+          </Col>
+          <Col md={6} xs="12">
+            <InputGroup>
+              <Input
+                type="text"
+                placeholder="Search by name or email... "
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{ padding: "10px 10px" }}
+              />
+              <InputGroupText className="bg-success rounded-start-0 border-start-0">
+                <FaSearch />
+              </InputGroupText>
+            </InputGroup>
+          </Col>
+          <Col
+            md="3"
+            xs="12"
+            className="d-flex justify-content-end mt-sm-0 mt-2"
           >
-            <TbCirclePlus size={18} />
-            <span>Add Lead</span>
-          </Button>
-        </Col>
-      </Row>
-      <Row>
-        <Table hover responsive>
-          <thead className="thead-light">
-            <tr className="text-center">
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Role</th>
-              <th>Created By</th>
-              <th>Created At</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr>
-                <td colSpan={7} className="text-center">
-                  <div className="d-flex justify-content-center align-items-center">
-                    <Spinner color="primary" />
-                  </div>
-                </td>
+            <Button
+              color="primary"
+              onClick={openAddModal}
+              className="d-flex justify-content-center align-items-center gap-1"
+            >
+              <TbCirclePlus size={18} />
+              <span>Add Lead</span>
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Table hover responsive>
+            <thead className="thead-light">
+              <tr className="text-center">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Created By</th>
+                <th>Created At</th>
+                <th>Action</th>
               </tr>
-            ) : currentLeads.length > 0 ? (
-              currentLeads.map((lead) => (
-                <tr key={lead.alias} className="text-center">
-                  <td>
-                    <span
-                      className="text_decoration_hover"
-                      onClick={() => {
-                        setSelectedLead(lead);
-                        toggleViewModal();
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {lead.user?.title
-                        ? lead.user?.title.charAt(0).toUpperCase() +
-                          lead.user?.title.slice(1).toLowerCase()
-                        : ""}
-                      {"."} {lead?.user?.first_name} {lead?.user?.middle_name}{" "}
-                      {lead?.user?.last_name}
-                    </span>
-                  </td>
-                  <td>{lead?.official_email || "-"}</td>
-                  <td>
-                    {lead?.official_phone ? (
-                      <a
-                        href={`tel:${lead?.official_phone}`}
-                        className="text-black text_decoration_hover"
-                      >
-                        {lead?.official_phone}
-                      </a>
-                    ) : (
-                      "-"
-                    )}
-                  </td>
-                  <td>
-                    {lead?.role?.charAt(0)?.toUpperCase() +
-                      lead?.role?.slice(1)?.toLowerCase()}
-                  </td>
-                  <td>
-                    <p className="m-0">
-                      {lead.created_by?.first_name} {lead.created_by?.last_name}
-                    </p>
-                    <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
-                      (
-                      {lead.created_by?.user_type
-                        ?.split("_")
-                        .map(
-                          (word: any) =>
-                            word.charAt(0).toUpperCase() +
-                            word.slice(1).toLowerCase()
-                        )
-                        .join(" ")}
-                      )
-                    </p>
-                  </td>
-                  <td>{formatDateToDMYAndTime(lead?.created_at)}</td>
-
-                  <td>
-                    <div className="d-flex justify-content-center gap-2 align-items-center">
-                      <Button
-                        color="success"
-                        size="sm"
-                        title="Update User"
-                        onClick={() => openUpdateModal(lead)}
-                      >
-                        <i className="icon-pencil-alt"></i>
-                      </Button>
-                      <Button
-                        color="danger"
-                        size="sm"
-                        title="Delete User"
-                        onClick={() => openDeleteModal(lead)}
-                      >
-                        <i className="icon-trash"></i>
-                      </Button>
+            </thead>
+            <tbody>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={7} className="text-center">
+                    <div className="d-flex justify-content-center align-items-center">
+                      <Spinner color="primary" />
                     </div>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={7} className="text-center">
-                  No leads available.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
-      </Row>
-      <Row>
-        <div className="d-flex justify-content-between align-items-center p-3">
-          <div className="px-2">
-            <p className="text-success">
-              Showing {filteredLeads.length === 0 ? "0" : indexOfFirstLead + 1}{" "}
-              to {Math.min(indexOfLastLead, filteredLeads.length)} of{" "}
-              {filteredLeads.length} Leads
-            </p>
-          </div>{" "}
-          <Pagination className="d-flex justify-content-end p-2">
-            <PaginationItem disabled={currentPage === 1}>
-              <PaginationLink first onClick={() => setCurrentPage(1)} />
-            </PaginationItem>
-            <PaginationItem disabled={currentPage === 1}>
-              <PaginationLink
-                previous
-                onClick={() => setCurrentPage(currentPage - 1)}
-              />
-            </PaginationItem>
+              ) : currentLeads.length > 0 ? (
+                currentLeads.map((lead) => (
+                  <tr key={lead.alias} className="text-center">
+                    <td>
+                      <span
+                        className="text_decoration_hover"
+                        onClick={() => {
+                          setSelectedLead(lead);
+                          toggleViewModal();
+                        }}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {lead.user?.title
+                          ? lead.user?.title.charAt(0).toUpperCase() +
+                            lead.user?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {lead?.user?.first_name} {lead?.user?.middle_name}{" "}
+                        {lead?.user?.last_name}
+                      </span>
+                    </td>
+                    <td>{lead?.official_email || "-"}</td>
+                    <td>
+                      {lead?.official_phone ? (
+                        <a
+                          href={`tel:${lead?.official_phone}`}
+                          className="text-black text_decoration_hover"
+                        >
+                          {lead?.official_phone}
+                        </a>
+                      ) : (
+                        "-"
+                      )}
+                    </td>
+                    <td>
+                      {lead?.role?.charAt(0)?.toUpperCase() +
+                        lead?.role?.slice(1)?.toLowerCase()}
+                    </td>
+                    <td>
+                      <p className="m-0">
+                        {lead.created_by?.first_name}{" "}
+                        {lead.created_by?.last_name}
+                      </p>
+                      <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
+                        (
+                        {lead.created_by?.user_type
+                          ?.split("_")
+                          .map(
+                            (word: any) =>
+                              word.charAt(0).toUpperCase() +
+                              word.slice(1).toLowerCase()
+                          )
+                          .join(" ")}
+                        )
+                      </p>
+                    </td>
+                    <td>{formatDateToDMYAndTime(lead?.created_at)}</td>
 
-            {totalPages <= leadsPerPage ? (
-              Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (pageNumber) => (
-                  <PaginationItem
-                    key={pageNumber}
-                    active={pageNumber === currentPage}
-                  >
-                    <PaginationLink onClick={() => setCurrentPage(pageNumber)}>
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                )
-              )
-            ) : (
-              <>
-                <PaginationItem active={currentPage === 1}>
-                  <PaginationLink onClick={() => setCurrentPage(1)}>
-                    1
-                  </PaginationLink>
-                </PaginationItem>
+                    <td>
+                      <div className="d-flex justify-content-center gap-2 align-items-center">
+                        <Button
+                          color="success"
+                          size="sm"
+                          title="Update User"
+                          onClick={() => openUpdateModal(lead)}
+                        >
+                          <i className="icon-pencil-alt"></i>
+                        </Button>
+                        <Button
+                          color="danger"
+                          size="sm"
+                          title="Delete User"
+                          onClick={() => openDeleteModal(lead)}
+                        >
+                          <i className="icon-trash"></i>
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={7} className="text-center">
+                    No leads available.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </Row>
+        <Row>
+          <div className="d-flex justify-content-between align-items-center p-3">
+            <div className="px-2">
+              <p className="text-success">
+                Showing{" "}
+                {filteredLeads.length === 0 ? "0" : indexOfFirstLead + 1} to{" "}
+                {Math.min(indexOfLastLead, filteredLeads.length)} of{" "}
+                {filteredLeads.length} Leads
+              </p>
+            </div>{" "}
+            <Pagination className="d-flex justify-content-end p-2">
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink first onClick={() => setCurrentPage(1)} />
+              </PaginationItem>
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink
+                  previous
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                />
+              </PaginationItem>
 
-                {currentPage > 3 && (
-                  <PaginationItem disabled>
-                    <PaginationLink>...</PaginationLink>
-                  </PaginationItem>
-                )}
-
-                {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
-                  .filter(
-                    (pageNumber) => pageNumber > 1 && pageNumber < totalPages
-                  )
-                  .map((pageNumber) => (
+              {totalPages <= leadsPerPage ? (
+                Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (pageNumber) => (
                     <PaginationItem
                       key={pageNumber}
                       active={pageNumber === currentPage}
@@ -312,59 +291,93 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
                         {pageNumber}
                       </PaginationLink>
                     </PaginationItem>
-                  ))}
-
-                {currentPage < totalPages - 2 && (
-                  <PaginationItem disabled>
-                    <PaginationLink>...</PaginationLink>
+                  )
+                )
+              ) : (
+                <>
+                  <PaginationItem active={currentPage === 1}>
+                    <PaginationLink onClick={() => setCurrentPage(1)}>
+                      1
+                    </PaginationLink>
                   </PaginationItem>
-                )}
 
-                <PaginationItem active={currentPage === totalPages}>
-                  <PaginationLink onClick={() => setCurrentPage(totalPages)}>
-                    {totalPages}
-                  </PaginationLink>
-                </PaginationItem>
-              </>
-            )}
+                  {currentPage > 3 && (
+                    <PaginationItem disabled>
+                      <PaginationLink>...</PaginationLink>
+                    </PaginationItem>
+                  )}
 
-            <PaginationItem disabled={currentPage === totalPages}>
-              <PaginationLink
-                next
-                onClick={() => setCurrentPage(currentPage + 1)}
-              />
-            </PaginationItem>
-            <PaginationItem disabled={currentPage === totalPages}>
-              <PaginationLink last onClick={() => setCurrentPage(totalPages)} />
-            </PaginationItem>
-          </Pagination>
-        </div>
-      </Row>
+                  {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
+                    .filter(
+                      (pageNumber) => pageNumber > 1 && pageNumber < totalPages
+                    )
+                    .map((pageNumber) => (
+                      <PaginationItem
+                        key={pageNumber}
+                        active={pageNumber === currentPage}
+                      >
+                        <PaginationLink
+                          onClick={() => setCurrentPage(pageNumber)}
+                        >
+                          {pageNumber}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
 
-      {/* Modals */}
-      <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
-      <ViewLeadModal
-        isOpen={isViewModalOpen}
-        toggle={toggleViewModal}
-        selectedLead={selectedLead}
-      />
+                  {currentPage < totalPages - 2 && (
+                    <PaginationItem disabled>
+                      <PaginationLink>...</PaginationLink>
+                    </PaginationItem>
+                  )}
 
-      <UpdateLeadModal
-        isOpen={isUpdateModalOpen}
-        toggle={toggleUpdateModal}
-        onSave={() => {
-          toggleUpdateModal();
-        }}
-        selectedLead={selectedLead}
-      />
-      <DeleteLeadModal
-        isOpen={isDeleteModalOpen}
-        toggle={toggleDeleteModal}
-        leadAlias={leadToDelete?.alias}
-        leadName={`${leadToDelete?.user?.first_name} ${leadToDelete?.user?.last_name}`}
-      />
+                  <PaginationItem active={currentPage === totalPages}>
+                    <PaginationLink onClick={() => setCurrentPage(totalPages)}>
+                      {totalPages}
+                    </PaginationLink>
+                  </PaginationItem>
+                </>
+              )}
 
-      {/* modals end */}
+              <PaginationItem disabled={currentPage === totalPages}>
+                <PaginationLink
+                  next
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                />
+              </PaginationItem>
+              <PaginationItem disabled={currentPage === totalPages}>
+                <PaginationLink
+                  last
+                  onClick={() => setCurrentPage(totalPages)}
+                />
+              </PaginationItem>
+            </Pagination>
+          </div>
+        </Row>
+
+        {/* Modals */}
+        <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
+        <ViewLeadModal
+          isOpen={isViewModalOpen}
+          toggle={toggleViewModal}
+          selectedLead={selectedLead}
+        />
+
+        <UpdateLeadModal
+          isOpen={isUpdateModalOpen}
+          toggle={toggleUpdateModal}
+          onSave={() => {
+            toggleUpdateModal();
+          }}
+          selectedLead={selectedLead}
+        />
+        <DeleteLeadModal
+          isOpen={isDeleteModalOpen}
+          toggle={toggleDeleteModal}
+          leadAlias={leadToDelete?.alias}
+          leadName={`${leadToDelete?.user?.first_name} ${leadToDelete?.user?.last_name}`}
+        />
+        {/* modals end */}
+      </CardBody>
     </Card>
   );
 };

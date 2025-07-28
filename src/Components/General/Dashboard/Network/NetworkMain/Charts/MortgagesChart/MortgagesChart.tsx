@@ -1,68 +1,56 @@
 import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
-import { ApexOptions } from "apexcharts";
-import ReactApexChart from "react-apexcharts";
+import { Chart } from "react-google-charts";
 import { Card, CardBody } from "reactstrap";
 
 const MortgagesChart: React.FC = () => {
-  const PieChartData: ApexOptions = {
-    chart: {
-      width: 450,
-      height: 280,
-      type: "pie",
-    },
-    labels: [
-      "Purchase",
-      "Remortgage",
-      "Secure Loan",
-      "Further Advance",
-      "Product Transfer",
-      "Unsecured",
-      "Invoice Discounting",
-      "Asset Finance",
-      "Others",
-    ],
-    series: [25, 22, 15, 12, 8, 8, 3, 5, 10],
-    responsive: [
-      {
-        options: {
-          chart: {
-            height: 300,
-          },
-          legend: {
-            show: false,
-          },
-        },
+  // ChartData: [Label, Value]
+  const chartData = [
+    ["Category", "Value"],
+    ["Purchase", 25],
+    ["Remortgage", 22],
+    ["Secure Loan", 15],
+    ["Further Advance", 12],
+    ["Product Transfer", 8],
+    ["Unsecured", 8],
+    ["Invoice Discounting", 3],
+    ["Asset Finance", 5],
+    ["Others", 10],
+  ];
+
+  const chartOptions = {
+    title: "",
+    is3D: true,
+    pieHole: 0,
+    pieStartAngle: 0,
+    legend: {
+      position: "right" as const,
+      alignment: "center" as const,
+      textStyle: {
+        color: "#333",
+        fontSize: 12,
       },
-    ],
-    colors: [
-      "#308E87",
-      "#D946EF",
-      "#F97316",
-      "#0EA5E9",
-      "#3EB95F",
-      "#6366F1",
-      "#EC4899",
-      "#000000",
-      "#C70039",
-    ],
+    },
+    chartArea: { left: 30, top: 30, width: "90%", height: "90%" },
+    backgroundColor: "transparent",
+    tooltip: {
+      textStyle: {
+        fontSize: 10,
+      },
+    },
+    fontSize: 11,
   };
 
   return (
     <Card>
       <CommonCardHeader title="Mortgages" />
-      <CardBody
-        className="apex-chart"
-        style={{ width: "100%", maxWidth: "500px" }}
-      >
-        <div id="piechart" style={{ width: "100%", height: "280px" }}>
-          <ReactApexChart
-            options={PieChartData}
-            series={PieChartData.series}
-            type="pie"
-            width="100%"
-            height={280}
-          />
-        </div>
+      <CardBody className="google-chart">
+        <Chart
+          chartType="PieChart"
+          width="100%"
+          height="280px"
+          data={chartData}
+          options={chartOptions}
+        />
       </CardBody>
     </Card>
   );
