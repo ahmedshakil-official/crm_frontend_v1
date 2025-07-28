@@ -15,9 +15,7 @@ const OrganisationContainer = () => {
       <Breadcrumbs title="Dashboard" subTitle="Hello there! Welcome back" />
       <Container fluid>
         {/* 1st row  */}
-        <Row>
-          <DashboardOverview />
-        </Row>
+        <DashboardOverview />
         {/* 2nd row  */}
         <Row>
           <Col md={6} sm={12}>
