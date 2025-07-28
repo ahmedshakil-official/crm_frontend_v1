@@ -3,7 +3,6 @@ import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import CaseCompletionOverTime from "./CaseCompletionOverTime/CaseCompletionOverTime";
 import ClientGrowth from "./ClientGrowth/ClientGrowth";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
-import DocumentApprovalQueue from "./DocumentApprovalQueue/DocumentApprovalQueue";
 import MonthlyRevenueTrend from "./MonthlyRevenueTrend/MonthlyRevenueTrend";
 import RecentAuditLogs from "./RecentAuditLogs/RecentAuditLogs";
 import TopPerformingAdvisers from "./TopPerformingAdvisers/TopPerformingAdvisers";
@@ -35,9 +34,6 @@ const OrganisationContainer = () => {
         </Row>
         {/* 4th row  */}
         <Row>
-          <Col md={6} sm={12}>
-            <DocumentApprovalQueue />
-          </Col>
           <Col md={6} sm={12}>
             <RecentAuditLogs />
           </Col>
