@@ -34,7 +34,9 @@ const NetworkAdviserContainer: React.FC = () => {
         </Row>
         {/* 4th row  */}
         <Row>
-          <DocumentStatus />
+          <Col md={6} sm={12}>
+            <DocumentStatus />
+          </Col>
         </Row>
       </Container>
     </>
