@@ -23,12 +23,8 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-import AddAdviserModal from "./Modals/AddAdviserModal";
-import DeleteAdviserModal from "./Modals/DeleteAdviserModal";
-import UpdateAdviserModal from "./Modals/UpdateAdviserModal";
-import ViewAdviserModal from "./Modals/ViewAdviserModal";
 
-const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
+const OrgAdvisers: React.FC<AdvisersProps> = ({ advisersPerPage = 5 }) => {
   const [advisers, setAdvisers] = useState<AdviserInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -366,7 +362,7 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
         </Row>
 
         {/* modals */}
-        <AddAdviserModal isOpen={isModalOpen} toggle={toggleModal} />
+        {/* <AddAdviserModal isOpen={isModalOpen} toggle={toggleModal} />
         <ViewAdviserModal
           isOpen={isViewModalOpen}
           toggle={toggleViewModal}
@@ -385,11 +381,11 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
           toggle={toggleDeleteModal}
           adviserAlias={adviserToDelete?.alias || ""}
           adviserName={`${adviserToDelete?.user?.first_name} ${adviserToDelete?.user?.last_name}`}
-        />
+        /> */}
         {/* modals end */}
       </CardBody>
     </Card>
   );
 };
 
-export default Advisers;
+export default OrgAdvisers;

@@ -13,9 +13,9 @@ const DangerZone: React.FC<FetchSingleOrganisationProps> = ({
   };
   return (
     <>
-      <Card className="shadow-lg">
+      <Card className="shadow p-2">
         <CardHeader className="h3 text-danger">Danger Zone</CardHeader>
-        <CardBody className="border-danger rounded-2 p-3 mb-4">
+        <CardBody className="border-danger rounded-2 mb-4">
           {/** Change Visibility Section **/}
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
