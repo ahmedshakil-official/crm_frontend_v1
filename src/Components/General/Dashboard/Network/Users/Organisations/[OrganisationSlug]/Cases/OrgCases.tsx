@@ -96,6 +96,13 @@ const OrgCases: React.FC = () => {
 
   return (
     <Card>
+      <CardHeader>
+        <div className="d-flex justify-content-between">
+          <div>
+            <CardTitle className="h2">Case Status</CardTitle>
+          </div>
+        </div>
+      </CardHeader>
       <CardBody>
         <Row>
           {/* // Skeleton Loading State */}
