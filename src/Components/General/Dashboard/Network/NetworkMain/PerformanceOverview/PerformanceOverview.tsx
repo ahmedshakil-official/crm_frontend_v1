@@ -12,7 +12,7 @@ const PerformanceOverview: React.FC = () => {
                 New Mortgage Enquiry
               </span>
             </div>
-            <h2 className="mb-0 mt-4">
+            <h2 className="mb-0 mt-3">
               800
               <small className="text-success" style={{ fontSize: "10px" }}>
                 ↑+10%
@@ -30,7 +30,7 @@ const PerformanceOverview: React.FC = () => {
                 Mortgage Cases Submitted
               </span>
             </div>
-            <h2 className="mb-0 mt-4">
+            <h2 className="mb-0 mt-3">
               500
               <small className="text-success" style={{ fontSize: "10px" }}>
                 ↑+12%
@@ -48,7 +48,7 @@ const PerformanceOverview: React.FC = () => {
                 Mortgage cases offered
               </span>
             </div>
-            <h2 className="mb-0 mt-4">
+            <h2 className="mb-0 mt-3">
               140
               <small className="text-danger" style={{ fontSize: "10px" }}>
                 ↓-3%
@@ -66,7 +66,7 @@ const PerformanceOverview: React.FC = () => {
                 Mortgage cases Completed
               </span>
             </div>
-            <div className="mt-4">
+            <div className="mt-3">
               <h2 className="mb-0 d-inline-block">
                 240
                 <small className="text-success" style={{ fontSize: "10px" }}>
@@ -85,7 +85,7 @@ const PerformanceOverview: React.FC = () => {
                 Insurance Cases Submitted
               </span>
             </div>
-            <div className="mt-4">
+            <div className="mt-3">
               <h2 className="mb-0 d-inline-block">
                 240
                 <small className="text-success" style={{ fontSize: "10px" }}>
