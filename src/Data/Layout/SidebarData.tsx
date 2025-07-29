@@ -3,7 +3,7 @@ import { MenuItem } from "@/Types/LayoutTypes";
 //NetworkOwnerMenu
 const NetworkOwnerMenu: MenuItem[] = [
   {
-    title: "Network",
+    title: "Network Owner",
     lanClass: "lan-1",
     type: "group",
     Items: [

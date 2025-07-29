@@ -55,6 +55,7 @@ export const baseApi = createApi({
     //Common components end
 
     //Network start
+    "NetPerformanceOverview",
     "OrganisationList",
     "SingleOrganisation",
     //Network end
@@ -62,7 +63,7 @@ export const baseApi = createApi({
     //Organization start
 
     //Organization end
-    
+
     // Client start
     "CLientApplicationDetails",
   ],

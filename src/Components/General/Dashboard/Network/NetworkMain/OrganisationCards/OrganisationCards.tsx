@@ -15,6 +15,7 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
+import "../../Users/Organisations/Organisations.css";
 
 const OrganisationCards = () => {
   const [searchQuery, setSearchQuery] = useState("");
