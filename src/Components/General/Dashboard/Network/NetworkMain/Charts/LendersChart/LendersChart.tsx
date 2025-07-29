@@ -42,7 +42,7 @@ const LendersChart: React.FC = () => {
 
   return (
     <Card>
-      <CommonCardHeader title="Mortgages" />
+      <CommonCardHeader title="Lenders" />
       <CardBody className="google-chart">
         <Chart
           chartType="PieChart"
