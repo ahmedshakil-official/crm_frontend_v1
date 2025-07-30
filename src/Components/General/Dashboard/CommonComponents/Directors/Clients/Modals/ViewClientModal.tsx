@@ -131,6 +131,24 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )
             </small>
           </Col>
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+            <span className="text-muted">Permanent Address:</span>
+            <small>
+              {(selectedClient?.permanent_address &&
+                formatDateToDMYAndTime(selectedClient?.permanent_address)) || (
+                <span className="text-muted">Not available</span>
+              )}
+            </small>
+          </Col>
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+            <span className="text-muted">Present Address:</span>
+            <small>
+              {(selectedClient?.present_address &&
+                formatDateToDMYAndTime(selectedClient?.present_address)) || (
+                <span className="text-muted">Not available</span>
+              )}
+            </small>
+          </Col>
         </Row>
       </ModalBody>
       <ModalFooter className="d-flex justify-content-end">
