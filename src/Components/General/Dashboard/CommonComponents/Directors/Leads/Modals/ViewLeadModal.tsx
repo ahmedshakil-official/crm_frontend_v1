@@ -108,8 +108,18 @@ const ViewLeadModal: React.FC<ViewLeadModalProps> = ({
           <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Created By:</span>
             <small>
-              {`${selectedLead?.created_by?.first_name} ${selectedLead?.created_by?.last_name}` || (
-                <span className="text-muted">Not available</span>
+              {selectedLead?.created_by ? (
+                <>
+                  {selectedLead.created_by.title
+                    ? selectedLead.created_by.title.charAt(0).toUpperCase() +
+                      selectedLead.created_by.title.slice(1).toLowerCase()
+                    : ""}
+                  {". "} {selectedLead.created_by.first_name}{" "}
+                  {selectedLead.created_by.middle_name}{" "}
+                  {selectedLead.created_by.last_name}
+                </>
+              ) : (
+                "Not available"
               )}
             </small>
             <small

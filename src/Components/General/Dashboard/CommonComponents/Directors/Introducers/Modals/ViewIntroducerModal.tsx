@@ -16,17 +16,22 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
   selectedIntroducer,
 }) => {
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="lg">
+    <Modal isOpen={isOpen} toggle={toggle} size="lg" centered>
       <ModalHeader toggle={toggle}>
         <h3 className="text-primary">Introducer Information</h3>
       </ModalHeader>
       <ModalBody>
         {/* 1st row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
+        <Row>
           <Col md="4" sm="12" className="d-flex flex-column">
             <span className="text-muted">Name:</span>
             <small>
-              {selectedIntroducer?.user?.first_name}{" "}
+              {selectedIntroducer.user?.title
+                ? selectedIntroducer.user?.title.charAt(0).toUpperCase() +
+                  selectedIntroducer.user?.title.slice(1).toLowerCase()
+                : ""}
+              {"."} {selectedIntroducer?.user?.first_name}{" "}
+              {selectedIntroducer?.user?.middle_name}{" "}
               {selectedIntroducer?.user?.last_name}
             </small>
           </Col>
@@ -46,10 +51,7 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
               <span className="text-muted small">Not available</span>
             )}
           </Col>
-        </Row>
-        {/* 2nd row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Phone:</span>
 
             {selectedIntroducer?.user?.phone ? (
@@ -63,7 +65,7 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
               <span className="text-muted small">Not available</span>
             )}
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Official Phone:</span>
             {selectedIntroducer?.official_phone ? (
               <a
@@ -76,7 +78,7 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
               <span className="text-muted small">Not available</span>
             )}
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Date of Birth:</span>
             <small>
               {selectedIntroducer?.dob || (
@@ -84,10 +86,7 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
               )}
             </small>
           </Col>
-        </Row>
-        {/* 3rd row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Gender:</span>
             <small>
               {selectedIntroducer?.gender ? (
@@ -98,7 +97,7 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">User Type:</span>
             <small>
               {selectedIntroducer?.user?.user_type ? (
@@ -108,8 +107,8 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
                 <span className="text-muted">Not available</span>
               )}
             </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          </Col>{" "}
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">User Role:</span>
             <small>
               {selectedIntroducer?.role ? (
@@ -119,54 +118,8 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
                 <span className="text-muted">Not available</span>
               )}
             </small>
-          </Col>
-        </Row>
-        {/* 4th row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Joining Date:</span>
-            <small>
-              {selectedIntroducer?.joining_date || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Registration Number:</span>
-            <small>
-              {selectedIntroducer?.registration_number || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Designation:</span>
-            <small>
-              {selectedIntroducer?.designation || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-        </Row>
-        {/* 5th row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">Degree:</span>
-            <small>
-              {selectedIntroducer?.degree || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
-            <span className="text-muted">NID:</span>
-            <small>
-              {selectedIntroducer?.user?.nid || (
-                <span className="text-muted">Not available</span>
-              )}
-            </small>
-          </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          </Col>{" "}
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Created At:</span>
             <small>
               {(selectedIntroducer?.created_at &&
@@ -175,14 +128,23 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
               )}
             </small>
           </Col>
-        </Row>
-        {/* 6th row  */}
-        <Row className="d-flex justify-content-between align-items-center mb-3">
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Created By:</span>
             <small>
-              {`${selectedIntroducer?.created_by?.first_name} ${selectedIntroducer?.created_by?.last_name}` || (
-                <span className="text-muted">Not available</span>
+              {selectedIntroducer?.created_by ? (
+                <>
+                  {selectedIntroducer.created_by.title
+                    ? selectedIntroducer.created_by.title
+                        .charAt(0)
+                        .toUpperCase() +
+                      selectedIntroducer.created_by.title.slice(1).toLowerCase()
+                    : ""}
+                  {". "} {selectedIntroducer.created_by.first_name}{" "}
+                  {selectedIntroducer.created_by.middle_name}{" "}
+                  {selectedIntroducer.created_by.last_name}
+                </>
+              ) : (
+                "Not available"
               )}
             </small>
             <small
@@ -203,7 +165,7 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
               )
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Permanent Address:</span>
             <small>
               {selectedIntroducer?.permanent_address || (
@@ -211,7 +173,7 @@ const ViewIntroducerModal: React.FC<ViewIntroducerModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="12" className="d-flex flex-column mt-4">
             <span className="text-muted">Present Address:</span>
             <small>
               {selectedIntroducer?.present_address || (

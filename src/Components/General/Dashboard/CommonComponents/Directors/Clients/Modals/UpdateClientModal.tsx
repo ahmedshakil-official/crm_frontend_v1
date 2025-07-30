@@ -36,12 +36,16 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
     setIsModified(false);
   }, [selectedClient]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     const { name, value } = e.target;
     const keys = name.split(".");
+
     setClientData((prev) => {
-      const updatedData = JSON.parse(JSON.stringify(prev)); // Create a deep copy
+      const updatedData = JSON.parse(JSON.stringify(prev));
       let current = updatedData;
       for (let i = 0; i < keys.length - 1; i++) {
         if (!current[keys[i]]) {
@@ -100,7 +104,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                 <Label for="title">Title*</Label>
                 <Input
                   id="title"
-                  name="title"
+                  name="user.title"
                   type="select"
                   value={clientData?.user?.title || ""}
                   onChange={handleChange}
@@ -140,7 +144,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                 <Input
                   type="text"
                   id="middleName"
-                  name="middle_name"
+                  name="user.middle_name"
                   placeholder="Middle Name"
                   value={clientData.user?.middle_name || ""}
                   onChange={handleChange}
@@ -165,7 +169,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
             </Col>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label for="official_email">Official Email*</Label>
+                <Label for="official_email">Official Email</Label>
                 <Input
                   type="text"
                   id="official_email"
@@ -174,7 +178,6 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                   value={clientData.official_email || ""}
                   onChange={handleChange}
                   className="mb-2"
-                  required
                 />
               </FormGroup>
             </Col>
@@ -246,6 +249,42 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                 />
               </FormGroup>
             </Col> */}
+            <Col md={6}>
+              <FormGroup>
+                <Label for="dob">Date of Birth</Label>
+                <Input
+                  id="dob"
+                  name="dob"
+                  type="date"
+                  value={clientData.dob}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="present_address">Present Address</Label>
+                <Input
+                  id="present_address"
+                  name="present_address"
+                  type="text"
+                  value={clientData.present_address}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="permanent_address">Permanent Address</Label>
+                <Input
+                  id="permanent_address"
+                  name="permanent_address"
+                  type="text"
+                  value={clientData.permanent_address}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+            </Col>
           </Row>
         </ModalBody>
         <ModalFooter>

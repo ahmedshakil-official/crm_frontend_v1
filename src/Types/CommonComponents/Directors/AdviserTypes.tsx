@@ -1,32 +1,27 @@
 export interface AdviserInfoProps {
   alias: string;
   user: {
-    id: number;
+    id?: number;
+    title: string;
     first_name: string;
+    middle_name: string;
     last_name: string;
     email?: string;
     phone?: string;
     profile_image?: string;
-    nid: string;
     user_type: string;
-    city: string;
-    state: string;
-    country: string;
-    zip_code: string;
   };
   role: string;
-  designation: string;
   official_email: string;
   official_phone: string;
   permanent_address: string;
   present_address: string;
   dob: string;
   gender: string;
-  joining_date: string;
-  registration_number: string;
-  degree: string;
-  created_by: {
+  created_by?: {
+    title: string;
     first_name: string;
+    middle_name: string;
     last_name: string;
     user_type: string;
   };

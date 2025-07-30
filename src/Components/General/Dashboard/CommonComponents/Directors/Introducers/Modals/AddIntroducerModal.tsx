@@ -24,23 +24,22 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
     useAddIntroducerDetailsMutation();
 
   const [formData, setFormData] = useState({
+    title: "",
     firstName: "",
+    middleName: "",
     lastName: "",
     email: "",
     phone: "",
     password: "",
-    designation: "",
     permanent_address: "",
     present_address: "",
     dob: "",
     gender: "",
-    joining_date: "",
-    registration_number: "",
-    degree: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -50,23 +49,20 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
 
   const handleSaveIntroducer = async (e: React.FormEvent) => {
     e.preventDefault();
-
     let payload = {
       user: {
+        title: formData.title,
         first_name: formData.firstName,
+        middle_name: formData.middleName,
         last_name: formData.lastName,
         email: formData.email,
         phone: formData.phone || null,
         password: formData.password,
       },
-      designation: formData.designation || null,
       permanent_address: formData.permanent_address || null,
       present_address: formData.present_address || null,
       dob: formData.dob || null,
       gender: formData.gender,
-      joining_date: formData.joining_date || null,
-      registration_number: formData.registration_number || null,
-      degree: formData.degree || null,
     };
 
     try {
@@ -75,19 +71,17 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
         toast.success("Introducer added successfully.");
         // Reset form and close modal
         setFormData({
+          title: "",
           firstName: "",
+          middleName: "",
           lastName: "",
           email: "",
           phone: "",
           password: "",
-          designation: "",
           permanent_address: "",
           present_address: "",
           dob: "",
           gender: "",
-          joining_date: "",
-          registration_number: "",
-          degree: "",
         });
         toggle();
       } else if ("error" in result) {
@@ -104,13 +98,38 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="lg">
+    <Modal isOpen={isOpen} toggle={toggle} size="lg" centered>
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Introducer</span>
       </ModalHeader>
       <Form onSubmit={handleSaveIntroducer}>
         <ModalBody>
           <Row>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="title">
+                  Title<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  id="title"
+                  name="title"
+                  type="select"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select...</option>
+                  <option value="MR">Mr.</option>
+                  <option value="MRS">Mrs.</option>
+                  <option value="MS">Ms.</option>
+                  <option value="DR">Dr.</option>
+                  <option value="MISS">Miss.</option>
+                  <option value="MADAM">Madam.</option>
+                  <option value="MAIDEN">Maiden.</option>
+                  <option value="PROFESSOR">Professor.</option>
+                  <option value="DOCTOR">Doctor.</option>
+                </Input>
+              </FormGroup>
+            </Col>
             <Col md={6}>
               <FormGroup>
                 <Label for="firstName">
@@ -123,6 +142,18 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
                   value={formData.firstName}
                   onChange={handleInputChange}
                   required
+                />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for="middleName">Middle Name</Label>
+                <Input
+                  id="middleName"
+                  name="middleName"
+                  type="text"
+                  value={formData.middleName}
+                  onChange={handleInputChange}
                 />
               </FormGroup>
             </Col>
@@ -141,8 +172,6 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
                 />
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="email">
@@ -173,8 +202,6 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
                 />
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="phone">Phone</Label>
@@ -206,8 +233,6 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
                 </Input>
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="dob">Date of Birth</Label>
@@ -220,58 +245,6 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label for="degree">Degree</Label>
-                <Input
-                  id="degree"
-                  name="degree"
-                  type="text"
-                  value={formData.degree}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={4}>
-              <FormGroup>
-                <Label for="joining_date">Joining Date</Label>
-                <Input
-                  id="joining_date"
-                  name="joining_date"
-                  type="date"
-                  value={formData.joining_date}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label for="designation">Designation</Label>
-                <Input
-                  id="designation"
-                  name="designation"
-                  type="text"
-                  value={formData.designation}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label for="registration_number">Registration Number</Label>
-                <Input
-                  id="registration_number"
-                  name="registration_number"
-                  type="text"
-                  value={formData.registration_number}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="present_address">Present Address</Label>

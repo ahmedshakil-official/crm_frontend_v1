@@ -54,7 +54,6 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
       user_type: "",
     },
     role: "",
-    designation: "",
     official_email: "",
     official_phone: "",
     dob: "",
@@ -216,8 +215,13 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
                     </td>
                     <td>
                       <p className="m-0">
-                        {client.created_by?.first_name}{" "}
-                        {client.created_by?.last_name}
+                        {client.created_by?.title
+                          ? client.created_by?.title.charAt(0).toUpperCase() +
+                            client.created_by?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {client?.created_by?.first_name}{" "}
+                        {client?.created_by?.middle_name}{" "}
+                        {client?.created_by?.last_name}
                       </p>
                       <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
                         (

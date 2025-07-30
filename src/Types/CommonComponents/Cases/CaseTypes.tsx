@@ -3,9 +3,11 @@ export interface CaseInfoPrpos {
   lead: number;
   name: string;
   lead_user: {
+    title: string;
     email: string;
     phone: string;
     first_name: string;
+    middle_name: string;
     last_name: string;
     profile_image: string;
     user_type: string;
@@ -18,17 +20,21 @@ export interface CaseInfoPrpos {
   is_removed: boolean;
   created_at: string;
   created_by: {
+    title: string;
     email: string;
     phone: string;
     first_name: string;
+    middle_name: string;
     last_name: string;
     profile_image: null;
     user_type: string;
   };
   updated_by: {
+    title: string;
     email: string;
     phone: string;
     first_name: string;
+    middle_name: string;
     last_name: string;
     profile_image: null;
     user_type: string;

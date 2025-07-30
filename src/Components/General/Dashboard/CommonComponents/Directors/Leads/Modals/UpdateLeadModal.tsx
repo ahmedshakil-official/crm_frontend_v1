@@ -35,7 +35,9 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
     setIsModified(false);
   }, [selectedLead]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     const keys = name.split(".");
     setLeadData((prev: any) => {
@@ -96,7 +98,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
                 <Label for="title">Title*</Label>
                 <Input
                   id="title"
-                  name="title"
+                  name="user.title"
                   type="select"
                   value={leadData?.user?.title || ""}
                   onChange={handleChange}
@@ -161,7 +163,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
             </Col>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label for="dob">Official Email*</Label>
+                <Label for="dob">Official Email</Label>
                 <Input
                   type="text"
                   id="official_email"
@@ -170,7 +172,6 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
                   value={leadData?.official_email || ""}
                   onChange={handleChange}
                   className="mb-2"
-                  required
                 />
               </FormGroup>
             </Col>

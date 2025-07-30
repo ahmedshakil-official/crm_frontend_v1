@@ -1,6 +1,7 @@
 export interface ClientInfoProps {
   alias: string;
   user: {
+    id?: number;
     title: string;
     first_name: string;
     middle_name?: string;
@@ -11,15 +12,18 @@ export interface ClientInfoProps {
     user_type: string;
   };
   role: string;
-  designation: string;
   official_email: string;
   official_phone: string;
   dob: string;
   gender: string;
+  permanent_address: string;
+  present_address: string;
   created_by: {
-    first_name: string;
-    last_name: string;
-    user_type: string;
+    title?: string;
+    first_name?: string;
+    middle_name?: string;
+    last_name?: string;
+    user_type?: string;
   };
   created_at: string;
 }
