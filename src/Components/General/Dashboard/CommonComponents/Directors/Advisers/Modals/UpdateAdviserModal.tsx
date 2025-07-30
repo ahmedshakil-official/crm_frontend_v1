@@ -120,7 +120,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
                 </Input>
               </FormGroup>
             </Col>
-            <Col md={6} xs={12}>
+            <Col md={6} xs={6}>
               <FormGroup>
                 <Label for="firstName">First Name*</Label>
                 <Input
@@ -135,7 +135,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md={6} xs={12}>
+            <Col md={6} xs={6}>
               <FormGroup>
                 <Label for="middleName">Middle Name(s)</Label>
                 <Input
@@ -149,7 +149,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md={6} xs={12}>
+            <Col md={6} xs={6}>
               <FormGroup>
                 <Label for="lastName">Last Name*</Label>
                 <Input
@@ -178,7 +178,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md={6} xs={12}>
+            <Col md={6} xs={6}>
               <FormGroup>
                 <Label for="official_phone">Official Phone</Label>
                 <Input
@@ -192,7 +192,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md={6} xs={12}>
+            <Col md={6} xs={6}>
               <FormGroup>
                 <Label for="dob">Date of Birth</Label>
                 <Input
@@ -206,7 +206,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            {/* <Col md={6} xs={12}>
+            {/* <Col md={6} xs={6}>
               <FormGroup>
                 <Label for="profile_image">Profile Image</Label>
                 <Input
@@ -220,7 +220,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
                 />
               </FormGroup>
             </Col> */}
-            <Col md={6} xs={12}>
+            <Col md={6} xs={6}>
               <FormGroup>
                 <Label for="present_address">Present Address</Label>
                 <Input
@@ -234,7 +234,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-            <Col md={6} xs={12}>
+            <Col md={6} xs={6}>
               <FormGroup>
                 <Label for="permanent_address">Permanent Address</Label>
                 <Input
