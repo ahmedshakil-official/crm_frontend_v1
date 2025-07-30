@@ -42,27 +42,20 @@ const OrgAdvisers: React.FC<AdvisersProps> = ({ advisersPerPage = 5 }) => {
   >({
     user: {
       id: 0,
+      title: "",
       first_name: "",
+      middle_name: "",
       last_name: "",
       profile_image: "",
-      nid: "",
       user_type: "",
-      city: "",
-      state: "",
-      country: "",
-      zip_code: "",
     },
     role: "",
-    designation: "",
     official_email: "",
     official_phone: "",
     permanent_address: "",
     present_address: "",
     dob: "",
     gender: "",
-    joining_date: "",
-    registration_number: "",
-    degree: "",
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -193,7 +186,12 @@ const OrgAdvisers: React.FC<AdvisersProps> = ({ advisersPerPage = 5 }) => {
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        {adviser?.user?.first_name} {adviser?.user?.last_name}
+                        {adviser.user?.title
+                          ? adviser.user?.title.charAt(0).toUpperCase() +
+                            adviser.user?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {adviser?.user?.first_name}{" "}
+                        {adviser?.user?.middle_name} {adviser?.user?.last_name}
                       </span>
                     </td>
                     <td>{adviser?.official_email || "-"}</td>
@@ -215,8 +213,13 @@ const OrgAdvisers: React.FC<AdvisersProps> = ({ advisersPerPage = 5 }) => {
                     </td>
                     <td>
                       <p className="m-0">
-                        {adviser.created_by?.first_name}{" "}
-                        {adviser.created_by?.last_name}
+                        {adviser.created_by?.title
+                          ? adviser.created_by?.title.charAt(0).toUpperCase() +
+                            adviser.created_by?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {adviser?.created_by?.first_name}{" "}
+                        {adviser?.created_by?.middle_name}{" "}
+                        {adviser?.created_by?.last_name}
                       </p>
                       <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
                         (

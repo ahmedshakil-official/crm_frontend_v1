@@ -83,8 +83,17 @@ const JointUsers: React.FC<JointUserProps> = ({ jointUserInfo, isLoading }) => {
                         <div className="d-flex align-items-center gap-3">
                           <div className="flex-grow-1">
                             <h6>
-                              {userInfo.joint_user_details?.first_name}{" "}
-                              {userInfo?.joint_user_details?.last_name}
+                              {userInfo.joint_user_details?.title
+                                ? userInfo.joint_user_details?.title
+                                    .charAt(0)
+                                    .toUpperCase() +
+                                  userInfo.joint_user_details?.title
+                                    .slice(1)
+                                    .toLowerCase()
+                                : ""}
+                              {"."} {userInfo.joint_user_details?.first_name}{" "}
+                              {userInfo.joint_user_details?.middle_name}{" "}
+                              {userInfo.joint_user_details?.last_name}
                             </h6>
                           </div>
                         </div>
