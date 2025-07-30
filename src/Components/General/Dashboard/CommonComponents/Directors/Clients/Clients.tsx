@@ -54,7 +54,6 @@ const Clients: React.FC<ClientsProps> = ({ clientsPerPage = 10 }) => {
       user_type: "",
     },
     role: "",
-    designation: "",
     official_email: "",
     official_phone: "",
     dob: "",
