@@ -46,27 +46,20 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
   >({
     user: {
       id: 0,
+      title: "",
       first_name: "",
+      middle_name: "",
       last_name: "",
       profile_image: "",
-      nid: "",
       user_type: "",
-      city: "",
-      state: "",
-      country: "",
-      zip_code: "",
     },
     role: "",
-    designation: "",
     official_email: "",
     official_phone: "",
     permanent_address: "",
     present_address: "",
     dob: "",
     gender: "",
-    joining_date: "",
-    registration_number: "",
-    degree: "",
   });
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -197,7 +190,13 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        {adviser?.user?.first_name} {adviser?.user?.last_name}
+                        {adviser.user?.title
+                          ? adviser.user?.title.charAt(0).toUpperCase() +
+                            adviser.user?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {adviser?.user?.first_name}{" "}
+                        {adviser?.user?.middle_name} {adviser?.user?.last_name}
+                        {/* {adviser?.user?.first_name} {adviser?.user?.last_name} */}
                       </span>
                     </td>
                     <td>{adviser?.official_email || "-"}</td>

@@ -41,7 +41,6 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    // e.preventDefault(); ← Remove this line! It's not needed for onChange
     const { name, value } = e.target;
     const keys = name.split(".");
 

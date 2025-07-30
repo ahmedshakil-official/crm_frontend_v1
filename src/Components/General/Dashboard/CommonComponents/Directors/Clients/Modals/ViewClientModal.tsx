@@ -22,7 +22,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
       </ModalHeader>
       <ModalBody>
         <Row>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="6" className="d-flex flex-column">
             <span className="text-muted">Name:</span>
             <small>
               {selectedClient.user?.title
@@ -34,7 +34,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               {selectedClient?.user?.last_name}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="6" className="d-flex flex-column">
             <span className="text-muted">Email:</span>
             {selectedClient?.user?.email ? (
               <small>{selectedClient.user?.email}</small>
@@ -42,7 +42,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               <span className="text-muted small">Not available</span>
             )}
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column">
+          <Col md="4" sm="6" className="d-flex flex-column">
             <span className="text-muted">Phone:</span>
 
             {selectedClient?.user?.phone ? (
@@ -56,7 +56,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               <span className="text-muted small">Not available</span>
             )}
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+          <Col md="4" sm="6" className="d-flex flex-column mt-4">
             <span className="text-muted">Date of Birth:</span>
             <small>
               {selectedClient?.dob || (
@@ -64,7 +64,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+          <Col md="4" sm="6" className="d-flex flex-column mt-4">
             <span className="text-muted">Gender:</span>
             <small>
               {selectedClient?.gender ? (
@@ -75,7 +75,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+          <Col md="4" sm="6" className="d-flex flex-column mt-4">
             <span className="text-muted">User Type:</span>
             <small>
               {selectedClient?.user?.user_type ? (
@@ -86,7 +86,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+          <Col md="4" sm="6" className="d-flex flex-column mt-4">
             <span className="text-muted">User Role:</span>
             <small>
               {selectedClient?.role ? (
@@ -97,7 +97,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+          <Col md="4" sm="6" className="d-flex flex-column mt-4">
             <span className="text-muted">Created At:</span>
             <small>
               {(selectedClient?.created_at &&
@@ -106,7 +106,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+          <Col md="4" sm="6" className="d-flex flex-column mt-4">
             <span className="text-muted">Created By:</span>
             <small>
               {`${selectedClient?.created_by?.first_name} ${selectedClient?.created_by?.last_name}` || (
@@ -131,7 +131,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+          <Col md="4" sm="6" className="d-flex flex-column mt-4">
             <span className="text-muted">Permanent Address:</span>
             <small>
               {(selectedClient?.permanent_address &&
@@ -140,7 +140,7 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
               )}
             </small>
           </Col>
-          <Col md="4" sm="12" className="d-flex flex-column mt-4">
+          <Col md="4" sm="6" className="d-flex flex-column mt-4">
             <span className="text-muted">Present Address:</span>
             <small>
               {(selectedClient?.present_address &&
