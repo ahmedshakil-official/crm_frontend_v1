@@ -46,27 +46,20 @@ const Introducers: React.FC<IntroducersProps> = ({
     Partial<IntroducerInfoProps>
   >({
     user: {
+      title: "",
       first_name: "",
+      middle_name: "",
       last_name: "",
       profile_image: "",
-      nid: "",
       user_type: "",
-      city: "",
-      state: "",
-      country: "",
-      zip_code: "",
     },
     role: "",
-    designation: "",
     official_email: "",
     official_phone: "",
     permanent_address: "",
     present_address: "",
     dob: "",
     gender: "",
-    joining_date: "",
-    registration_number: "",
-    degree: "",
   });
 
   const toggleUpdateModal = () => setIsUpdateModalOpen(!isUpdateModalOpen);
@@ -197,7 +190,12 @@ const Introducers: React.FC<IntroducersProps> = ({
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        {introducer?.user?.first_name}{" "}
+                        {introducer.user?.title
+                          ? introducer.user?.title.charAt(0).toUpperCase() +
+                            introducer.user?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {introducer?.user?.first_name}{" "}
+                        {introducer?.user?.middle_name}{" "}
                         {introducer?.user?.last_name}
                       </span>
                     </td>
@@ -220,8 +218,15 @@ const Introducers: React.FC<IntroducersProps> = ({
                     </td>
                     <td>
                       <p className="m-0">
-                        {introducer.created_by?.first_name}{" "}
-                        {introducer.created_by?.last_name}
+                        {introducer.created_by?.title
+                          ? introducer.created_by?.title
+                              .charAt(0)
+                              .toUpperCase() +
+                            introducer.created_by?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {introducer?.created_by?.first_name}{" "}
+                        {introducer?.created_by?.middle_name}{" "}
+                        {introducer?.created_by?.last_name}
                       </p>
                       <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
                         (

@@ -166,7 +166,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
             </Col>
             <Col md="6" xs="12">
               <FormGroup>
-                <Label for="dob">Official Email*</Label>
+                <Label for="official_email">Official Email</Label>
                 <Input
                   type="text"
                   id="official_email"
@@ -175,7 +175,6 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
                   value={advisorData.official_email || ""}
                   onChange={handleChange}
                   className="mb-2"
-                  required
                 />
               </FormGroup>
             </Col>

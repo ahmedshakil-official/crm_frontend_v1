@@ -1,7 +1,7 @@
 export interface AdviserInfoProps {
   alias: string;
   user?: {
-    id: number;
+    id?: number;
     title: string;
     first_name: string;
     middle_name: string;

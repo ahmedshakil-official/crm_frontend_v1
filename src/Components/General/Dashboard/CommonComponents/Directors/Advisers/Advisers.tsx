@@ -196,7 +196,6 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                           : ""}
                         {"."} {adviser?.user?.first_name}{" "}
                         {adviser?.user?.middle_name} {adviser?.user?.last_name}
-                        {/* {adviser?.user?.first_name} {adviser?.user?.last_name} */}
                       </span>
                     </td>
                     <td>{adviser?.official_email || "-"}</td>
@@ -218,8 +217,13 @@ const Advisers: React.FC<AdvisersProps> = ({ advisersPerPage = 10 }) => {
                     </td>
                     <td>
                       <p className="m-0">
-                        {adviser.created_by?.first_name}{" "}
-                        {adviser.created_by?.last_name}
+                        {adviser.created_by?.title
+                          ? adviser.created_by?.title.charAt(0).toUpperCase() +
+                            adviser.created_by?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {adviser?.created_by?.first_name}{" "}
+                        {adviser?.created_by?.middle_name}{" "}
+                        {adviser?.created_by?.last_name}
                       </p>
                       <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
                         (
