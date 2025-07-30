@@ -169,7 +169,7 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
             </Col>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label for="official_email">Official Email*</Label>
+                <Label for="official_email">Official Email</Label>
                 <Input
                   type="text"
                   id="official_email"
@@ -178,7 +178,6 @@ const UpdateClientModal: React.FC<UpdateClientModalProps> = ({
                   value={clientData.official_email || ""}
                   onChange={handleChange}
                   className="mb-2"
-                  required
                 />
               </FormGroup>
             </Col>

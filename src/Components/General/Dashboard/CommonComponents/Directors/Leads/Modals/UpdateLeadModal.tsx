@@ -163,7 +163,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
             </Col>
             <Col md="6" sm="12">
               <FormGroup>
-                <Label for="dob">Official Email*</Label>
+                <Label for="dob">Official Email</Label>
                 <Input
                   type="text"
                   id="official_email"
@@ -172,7 +172,6 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
                   value={leadData?.official_email || ""}
                   onChange={handleChange}
                   className="mb-2"
-                  required
                 />
               </FormGroup>
             </Col>

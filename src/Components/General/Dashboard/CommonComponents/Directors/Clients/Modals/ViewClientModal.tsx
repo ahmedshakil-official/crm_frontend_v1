@@ -109,8 +109,18 @@ const ViewClientModal: React.FC<ViewClientModalProps> = ({
           <Col md="4" sm="6" className="d-flex flex-column mt-4">
             <span className="text-muted">Created By:</span>
             <small>
-              {`${selectedClient?.created_by?.first_name} ${selectedClient?.created_by?.last_name}` || (
-                <span className="text-muted">Not available</span>
+              {selectedClient?.created_by ? (
+                <>
+                  {selectedClient.created_by.title
+                    ? selectedClient.created_by.title.charAt(0).toUpperCase() +
+                      selectedClient.created_by.title.slice(1).toLowerCase()
+                    : ""}
+                  {". "} {selectedClient.created_by.first_name}{" "}
+                  {selectedClient.created_by.middle_name}{" "}
+                  {selectedClient.created_by.last_name}
+                </>
+              ) : (
+                "Not available"
               )}
             </small>
             <small

@@ -50,7 +50,6 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
       user_type: "",
     },
     role: "",
-    designation: "",
     official_email: "",
     official_phone: "",
     dob: "",
@@ -207,8 +206,13 @@ const Leads: React.FC<LeadsProps> = ({ leadsPerPage = 10 }) => {
                     </td>
                     <td>
                       <p className="m-0">
-                        {lead.created_by?.first_name}{" "}
-                        {lead.created_by?.last_name}
+                        {lead.created_by?.title
+                          ? lead.created_by?.title.charAt(0).toUpperCase() +
+                            lead.created_by?.title.slice(1).toLowerCase()
+                          : ""}
+                        {"."} {lead?.created_by?.first_name}{" "}
+                        {lead?.created_by?.middle_name}{" "}
+                        {lead?.created_by?.last_name}
                       </p>
                       <p className="m-0 opacity-75" style={{ fontSize: "9px" }}>
                         (
