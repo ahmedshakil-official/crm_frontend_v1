@@ -104,7 +104,7 @@ const OrganisationsContainer = () => {
                 <Row className="pb-4 d-flex justify-content-center">
                   <Spinner color="primary" />
                 </Row>
-              ) : currentOrganisations.length > 0 ? (
+              ) : currentOrganisations && currentOrganisations?.length > 0 ? (
                 currentOrganisations.map((item) => (
                   <Col
                     sm="6"

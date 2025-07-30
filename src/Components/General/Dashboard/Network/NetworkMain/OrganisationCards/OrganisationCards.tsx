@@ -68,7 +68,7 @@ const OrganisationCards = () => {
               <Row className="pb-4 d-flex justify-content-center">
                 <Spinner color="primary" />
               </Row>
-            ) : organisationList.length > 0 ? (
+            ) : organisationList && organisationList.length > 0 ? (
               organisationList.slice(0, 8).map((item: any) => (
                 <Col
                   sm="6"
