@@ -6,15 +6,15 @@ const MortgagesChart: React.FC = () => {
   // ChartData: [Label, Value]
   const chartData = [
     ["Category", "Value"],
-    ["Purchase", 25],
+    ["Purchase", 55],
     ["Remortgage", 22],
     ["Secure Loan", 15],
     ["Further Advance", 12],
     ["Product Transfer", 8],
-    ["Unsecured", 8],
-    ["Invoice Discounting", 3],
-    ["Asset Finance", 5],
-    ["Others", 10],
+    ["Unsecured", 82],
+    ["Invoice Discounting", 36],
+    ["Asset Finance", 55],
+    ["Other Mortgage", 100],
   ];
 
   const chartOptions = {
