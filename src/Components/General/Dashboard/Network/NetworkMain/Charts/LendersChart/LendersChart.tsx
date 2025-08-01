@@ -30,6 +30,18 @@ const LendersChart: React.FC = () => {
         fontSize: 12,
       },
     },
+    slices: { 0: { offset: 0.05 } },
+    colors: [
+      "#8b5cf6",
+      "#9ca3af",
+      "#ec4899",
+      "#6366f1",
+      "#10b981",
+      "#0ea5e9",
+      "#f97316",
+      "#d946ef",
+      "#f87171",
+    ],
     chartArea: { left: 30, top: 30, width: "90%", height: "90%" },
     backgroundColor: "transparent",
     tooltip: {
