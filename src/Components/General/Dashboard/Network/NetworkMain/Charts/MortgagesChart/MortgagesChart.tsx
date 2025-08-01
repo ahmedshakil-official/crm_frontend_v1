@@ -6,15 +6,15 @@ const MortgagesChart: React.FC = () => {
   // ChartData: [Label, Value]
   const chartData = [
     ["Category", "Value"],
-    ["Purchase", 25],
+    ["Purchase", 55],
     ["Remortgage", 22],
     ["Secure Loan", 15],
     ["Further Advance", 12],
     ["Product Transfer", 8],
-    ["Unsecured", 8],
-    ["Invoice Discounting", 3],
-    ["Asset Finance", 5],
-    ["Others", 10],
+    ["Unsecured", 82],
+    ["Invoice Discounting", 36],
+    ["Asset Finance", 55],
+    ["Other Mortgage", 100],
   ];
 
   const chartOptions = {
@@ -30,6 +30,18 @@ const MortgagesChart: React.FC = () => {
         fontSize: 12,
       },
     },
+    slices: { 0: { offset: 0.05 } },
+    colors: [
+      "#8b5cf6",
+      "#9ca3af",
+      "#ec4899",
+      "#6366f1",
+      "#10b981",
+      "#0ea5e9",
+      "#f97316",
+      "#d946ef",
+      "#f87171",
+    ],
     chartArea: { left: 30, top: 30, width: "90%", height: "90%" },
     backgroundColor: "transparent",
     tooltip: {

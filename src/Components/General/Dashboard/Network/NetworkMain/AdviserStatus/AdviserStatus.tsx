@@ -162,6 +162,8 @@ const AdviserStatus = () => {
                     <td>
                       <div className="d-flex align-items-center">
                         <Progress
+                          animated
+                          striped
                           value={data.penetration}
                           className="w-50 me-2 opacity-75"
                           color={data.penetration < 30 ? "danger" : "success"}

@@ -116,7 +116,7 @@ const OrganisationsContainer = () => {
                   >
                     <Card className="bg-white border organisation_card opacity-100  p-3 position-relative">
                       <Link
-                        href={item?.website || "#"}
+                        href={`/dashboard/network/organisations/${item.slug}`}
                         target="_blank"
                         title="Website"
                         className="text-muted position-absolute top-0 end-0 p-3"
@@ -148,15 +148,7 @@ const OrganisationsContainer = () => {
                             </Link>
                           </h5>
                         </div>
-                        <div className="mt-2">
-                          <Link
-                            href={`mailto:${item.email}`}
-                            className="fs-6 text_decoration_hover mb-2"
-                          >
-                            <small> {item.email}</small>
-                          </Link>
-                        </div>
-
+                        <div className="mt-2 mb-4">{item.email}</div>
                         <div className="d-flex justify-content-between mt-3 pt-2 border-top">
                           <Col className="border-end">
                             <div className="text-center ">
