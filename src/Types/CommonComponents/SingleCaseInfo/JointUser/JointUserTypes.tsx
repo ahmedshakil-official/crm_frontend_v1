@@ -4,9 +4,12 @@ export interface JointUserProps {
   isLoading?: boolean;
   alias?: string;
   joint_user_details?: {
+    id?: number;
+    title?: string;
     email?: string;
     phone?: string;
     first_name?: string;
+    middle_name?: string;
     last_name?: string;
     profile_image?: string | null;
     user_type?: string;
