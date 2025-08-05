@@ -20,8 +20,8 @@ import SuitabilityContent from "./Suitability/SuitabilityContent";
 
 // Define a mapping of tab names to components
 const tabComponents: Record<string, React.FC> = {
-  // DIP
   "Loan Details": LoanDetailsTab,
+  "Application Overview": LoanDetailsTab,
   "Applicant(s) Details": ApplicantsDetailsTab,
   "Employment/Income": EmploymentTab,
   "Credit Commitments": CreditCommitmentsContent,
