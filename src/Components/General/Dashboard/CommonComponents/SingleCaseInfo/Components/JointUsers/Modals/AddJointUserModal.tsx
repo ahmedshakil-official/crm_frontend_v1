@@ -28,7 +28,9 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
     useAddJointUserInfoMutation(undefined);
 
   const [formData, setFormData] = useState({
+    title: "",
     firstName: "",
+    middleName: "",
     lastName: "",
     phone: "",
     email: "",
@@ -60,7 +62,9 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
     e.preventDefault();
     const payload = {
       joint_user: {
+        title: formData.title,
         first_name: formData.firstName,
+        middle_name: formData.middleName,
         last_name: formData.lastName,
         email: formData.email,
         phone: formData.phone,
@@ -76,7 +80,9 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
       toast.success("Joint user added successfully!");
       // Reset form data after successful submission
       setFormData({
+        title: "",
         firstName: "",
+        middleName: "",
         lastName: "",
         phone: "",
         email: "",
@@ -94,13 +100,39 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="lg">
+    <Modal isOpen={isOpen} toggle={toggle} size="lg" centered>
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Add Joint User</span>
       </ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
           <Row>
+            <Col xs={12} md={6}>
+              <FormGroup>
+                <Label for="title" className="form-label">
+                  Title<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="select"
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select...</option>
+                  <option value="MR">Mr.</option>
+                  <option value="MRS">Mrs.</option>
+                  <option value="MS">Ms.</option>
+                  <option value="DR">Dr.</option>
+                  <option value="MISS">Miss.</option>
+                  <option value="MADAM">Madam.</option>
+                  <option value="MAIDEN">Maiden.</option>
+                  <option value="PROFESSOR">Professor.</option>
+                  <option value="DOCTOR">Doctor.</option>
+                </Input>
+              </FormGroup>
+            </Col>
             <Col xs={12} md={6}>
               <FormGroup>
                 <Label for="first_name" className="form-label">
@@ -113,6 +145,21 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
                   required
                   placeholder="Enter first name"
                   value={formData.firstName}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col xs={12} md={6}>
+              <FormGroup>
+                <Label for="middle_name" className="form-label">
+                  Middle Name
+                </Label>
+                <Input
+                  type="text"
+                  id="middle_name"
+                  name="middleName"
+                  placeholder="Enter middle name"
+                  value={formData.middleName}
                   onChange={handleInputChange}
                 />
               </FormGroup>
@@ -132,9 +179,7 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
                   onChange={handleInputChange}
                 />
               </FormGroup>
-            </Col>
-          </Row>
-          <Row>
+            </Col>{" "}
             <Col xs={12} md={6}>
               <FormGroup>
                 <Label for="email" className="form-label">
@@ -167,8 +212,6 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col xs={12} md={6}>
               <FormGroup>
                 <Label for="relationship" className="form-label">

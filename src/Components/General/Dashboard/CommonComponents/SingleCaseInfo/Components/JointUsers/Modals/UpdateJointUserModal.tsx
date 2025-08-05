@@ -28,7 +28,9 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
   const [updateJointUserInfo, { isLoading }] = useUpdateJointUserInfoMutation();
 
   const [formData, setFormData] = useState({
+    title: "",
     first_name: "",
+    middle_name: "",
     last_name: "",
     email: "",
     phone: "",
@@ -40,7 +42,9 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
   useEffect(() => {
     if (user) {
       setFormData({
+        title: user?.joint_user_details?.title || "",
         first_name: user?.joint_user_details?.first_name || "",
+        middle_name: user?.joint_user_details?.middle_name || "",
         last_name: user?.joint_user_details?.last_name || "",
         email: user?.joint_user_details?.email || "",
         phone: user?.joint_user_details?.phone || "",
@@ -92,7 +96,9 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
 
   // Compare current data with the original data
   const hasChanges = !isEqual(formData, {
+    title: user?.joint_user_details?.title || "",
     first_name: user?.joint_user_details?.first_name || "",
+    middle_name: user?.joint_user_details?.middle_name || "",
     last_name: user?.joint_user_details?.last_name || "",
     email: user?.joint_user_details?.email || "",
     phone: user?.joint_user_details?.phone || "",
@@ -101,13 +107,39 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
   });
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal isOpen={isOpen} toggle={toggle} size="lg" centered>
       <ModalHeader toggle={toggle}>
         <span className="fs-4 text-primary">Update Joint User</span>
       </ModalHeader>
       <ModalBody>
         <Form>
           <Row>
+            <Col xl={6} md={12}>
+              <FormGroup>
+                <Label for="title">
+                  Title<span className="text-danger">*</span>
+                </Label>
+                <Input
+                  type="select"
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select...</option>
+                  <option value="MR">Mr.</option>
+                  <option value="MRS">Mrs.</option>
+                  <option value="MS">Ms.</option>
+                  <option value="DR">Dr.</option>
+                  <option value="MISS">Miss.</option>
+                  <option value="MADAM">Madam.</option>
+                  <option value="MAIDEN">Maiden.</option>
+                  <option value="PROFESSOR">Professor.</option>
+                  <option value="DOCTOR">Doctor.</option>
+                </Input>
+              </FormGroup>
+            </Col>
             <Col xl={6} md={12}>
               <FormGroup>
                 <Label for="firstName">First Name</Label>
@@ -121,6 +153,18 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
             </Col>
             <Col xl={6} md={12}>
               <FormGroup>
+                <Label for="middleName">Middle Name</Label>
+                <Input
+                  id="middleName"
+                  name="middle_name"
+                  value={formData.middle_name}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+
+            <Col xl={6} md={12}>
+              <FormGroup>
                 <Label for="lastName">Last Name</Label>
                 <Input
                   id="lastName"
@@ -130,8 +174,6 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col xl={6} md={12}>
               <FormGroup>
                 <Label for="email">Email</Label>
@@ -156,8 +198,6 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
                 />
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col xl={6} md={12}>
               <FormGroup>
                 <Label for="relationship">Relationship</Label>
