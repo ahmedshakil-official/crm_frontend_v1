@@ -255,407 +255,419 @@ const Cases: React.FC = () => {
         )}
       </Row>
       <Row>
-        <Card>
-          <CardHeader>
-            <Row className="flex justify-content-between">
-              <Col md="3">
-                <h3>Cases Overview</h3>
-              </Col>
-              <Col>
-                <InputGroup>
-                  <Input
-                    type="text"
-                    placeholder="Search Case..."
-                    value={searchQuery}
-                    onChange={(e) => {
-                      setSearchQuery(e.target.value);
-                      setCurrentPage(1);
-                    }}
-                    style={{ padding: "10px 10px" }}
-                  />
-                  <InputGroupText className="bg-success rounded-start-0 border-start-0">
-                    <FaSearch />
-                  </InputGroupText>
-                </InputGroup>
-              </Col>
-              <Col
-                md="3"
-                xs="12"
-                className="text-md-end text-center mt-2 mt-md-0 d-flex justify-content-end align-items-center gap-2"
-              >
-                <Button
-                  color="success"
-                  onClick={toggleFilterIcon}
-                  className="me-2"
-                >
-                  {filterIcon ? (
-                    <i className="fa-solid fa-filter-circle-xmark"></i>
-                  ) : (
-                    <i className="fa-solid fa-filter"></i>
-                  )}
-                </Button>
-                {userType !== "ORGANIZATION_SUPPORT" && (
-                  <Button
-                    color="primary"
-                    onClick={openAddNewCaseModal}
-                    className="d-flex justify-content-center align-items-center gap-1"
-                  >
-                    <TbCirclePlus size={18} />
-                    <span>Add New Case</span>
-                  </Button>
-                )}
-              </Col>
-            </Row>
-          </CardHeader>
-          <CardBody className="p-2 m-0">
-            {filterIcon && (
-              <Card className="shadow-lg bg-light-success rounded-3 p-3 mt-3 mb-3">
-                <Row className="justify-content-center g-3">
-                  <Col xs="12" sm="6" md="3">
-                    <Label>Select Employee</Label>
+        <Col>
+          <Card>
+            <CardHeader>
+              <Row className="flex justify-content-between">
+                <Col md="3">
+                  <h3>Cases Overview</h3>
+                </Col>
+                <Col>
+                  <InputGroup>
                     <Input
-                      type="select"
-                      id="employeeFilter"
-                      className="py-1"
-                      value={filters.created_by}
-                      onChange={(e) =>
-                        handleFilterChange("created_by", e.target.value)
-                      }
-                    >
-                      <option value="">All Employee</option>
-                      {adviserData?.map((adviser: AdviserInfoProps) => (
-                        <option key={adviser.alias} value={adviser.user.id}>
-                          {adviser.user.first_name} {adviser.user.last_name}
-                        </option>
-                      ))}
-                    </Input>
-                  </Col>
-                  <Col xs="12" sm="6" md="3">
-                    <Label>Select Category</Label>
-                    <Input
-                      type="select"
-                      id="caseCategory"
-                      className="py-1"
-                      value={filters.case_category}
-                      onChange={(e) =>
-                        handleFilterChange("case_category", e.target.value)
-                      }
-                    >
-                      <option value="">All Categories</option>
-                      <option value="MORTGAGE">Mortgage</option>
-                      <option value="PROTECTION">Protection</option>
-                      <option value="GENERAL_INSURANCE">
-                        General Insurance
-                      </option>
-                    </Input>
-                  </Col>
-                  <Col xs="12" sm="6" md="3">
-                    <Label>Select Stage</Label>
-                    <Input
-                      type="select"
-                      id="caseStage"
-                      className="py-1"
-                      value={filters.case_stage}
-                      onChange={(e) =>
-                        handleFilterChange("case_stage", e.target.value)
-                      }
-                    >
-                      <option value="">All Stages</option>
-                      <option value="ENQUIRY">Enquiry</option>
-                      <option value="FACT_FIND">Fact Find</option>
-                      <option value="RESEARCH_COMPLIANCE_CHECK">
-                        Research and Compliance Check
-                      </option>
-                      <option value="DECISION_IN_PRINCIPLE">
-                        Decision in Principle
-                      </option>
-                      <option value="FULL_MORTGAGE_APPLICATION">
-                        Full Mortgage Application
-                      </option>
-                      <option value="OFFER_FROM_BANK">Offer From Bank</option>
-                      <option value="LEGAL">Legal</option>
-                      <option value="COMPLETION">Completion</option>
-                      <option value="FUTURE_OPPORTUNITY">
-                        Future Opportunity
-                      </option>
-                      <option value="NOT_PROCEED">Not Proceed</option>
-                    </Input>
-                  </Col>
-                  <Col xs="12" sm="6" md="3">
-                    <Label>Clear All Filters</Label>
-                    <Button
-                      outline
-                      className="btn btn-outline-danger w-100 d-flex justify-content-center align-items-center gap-1"
-                      onClick={() => {
-                        setFilters(defaultFilters);
+                      type="text"
+                      placeholder="Search Case..."
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
                         setCurrentPage(1);
                       }}
+                      style={{ padding: "10px 10px" }}
+                    />
+                    <InputGroupText className="bg-success rounded-start-0 border-start-0">
+                      <FaSearch />
+                    </InputGroupText>
+                  </InputGroup>
+                </Col>
+                <Col
+                  md="3"
+                  xs="12"
+                  className="text-md-end text-center mt-2 mt-md-0 d-flex justify-content-end align-items-center gap-2"
+                >
+                  <Button
+                    color="success"
+                    onClick={toggleFilterIcon}
+                    className="me-2"
+                  >
+                    {filterIcon ? (
+                      <i className="fa-solid fa-filter-circle-xmark"></i>
+                    ) : (
+                      <i className="fa-solid fa-filter"></i>
+                    )}
+                  </Button>
+                  {userType !== "ORGANIZATION_SUPPORT" && (
+                    <Button
+                      color="primary"
+                      onClick={openAddNewCaseModal}
+                      className="d-flex justify-content-center align-items-center gap-1"
                     >
-                      Clear<i className="fa-solid fa-xmark"></i>
+                      <TbCirclePlus size={18} />
+                      <span>Add New Case</span>
                     </Button>
-                  </Col>
-                </Row>
-              </Card>
-            )}
-            <Row>
-              <Table hover responsive className="mt-3">
-                <thead className="thead-light text-center">
-                  <tr>
-                    <th>Case Name</th>
-                    <th>Lead User</th>
-                    <th>Phone</th>
-                    <th>Case Category</th>
-                    <th>Case Stage</th>
-                    <th>Created At</th>
-                    <th>Created By</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody className="text-center">
-                  {isLoading ? (
+                  )}
+                </Col>
+              </Row>
+            </CardHeader>
+            <CardBody className="p-2 m-0">
+              {filterIcon && (
+                <Card className="shadow-lg bg-light-success rounded-3 p-3 mt-3 mb-3">
+                  <Row className="justify-content-center g-3">
+                    <Col xs="12" sm="6" md="3">
+                      <Label>Select Employee</Label>
+                      <Input
+                        type="select"
+                        id="employeeFilter"
+                        className="py-1"
+                        value={filters.created_by}
+                        onChange={(e) =>
+                          handleFilterChange("created_by", e.target.value)
+                        }
+                      >
+                        <option value="">All Employee</option>
+                        {adviserData?.map((adviser: AdviserInfoProps) => (
+                          <option key={adviser.alias} value={adviser.user.id}>
+                            {adviser.user.first_name} {adviser.user.last_name}
+                          </option>
+                        ))}
+                      </Input>
+                    </Col>
+                    <Col xs="12" sm="6" md="3">
+                      <Label>Select Category</Label>
+                      <Input
+                        type="select"
+                        id="caseCategory"
+                        className="py-1"
+                        value={filters.case_category}
+                        onChange={(e) =>
+                          handleFilterChange("case_category", e.target.value)
+                        }
+                      >
+                        <option value="">All Categories</option>
+                        <option value="MORTGAGE">Mortgage</option>
+                        <option value="PROTECTION">Protection</option>
+                        <option value="GENERAL_INSURANCE">
+                          General Insurance
+                        </option>
+                      </Input>
+                    </Col>
+                    <Col xs="12" sm="6" md="3">
+                      <Label>Select Stage</Label>
+                      <Input
+                        type="select"
+                        id="caseStage"
+                        className="py-1"
+                        value={filters.case_stage}
+                        onChange={(e) =>
+                          handleFilterChange("case_stage", e.target.value)
+                        }
+                      >
+                        <option value="">All Stages</option>
+                        <option value="ENQUIRY">Enquiry</option>
+                        <option value="FACT_FIND">Fact Find</option>
+                        <option value="RESEARCH_COMPLIANCE_CHECK">
+                          Research and Compliance Check
+                        </option>
+                        <option value="DECISION_IN_PRINCIPLE">
+                          Decision in Principle
+                        </option>
+                        <option value="FULL_MORTGAGE_APPLICATION">
+                          Full Mortgage Application
+                        </option>
+                        <option value="OFFER_FROM_BANK">Offer From Bank</option>
+                        <option value="LEGAL">Legal</option>
+                        <option value="COMPLETION">Completion</option>
+                        <option value="FUTURE_OPPORTUNITY">
+                          Future Opportunity
+                        </option>
+                        <option value="NOT_PROCEED">Not Proceed</option>
+                      </Input>
+                    </Col>
+                    <Col xs="12" sm="6" md="3">
+                      <Label>Clear All Filters</Label>
+                      <Button
+                        outline
+                        className="btn btn-outline-danger w-100 d-flex justify-content-center align-items-center gap-1"
+                        onClick={() => {
+                          setFilters(defaultFilters);
+                          setCurrentPage(1);
+                        }}
+                      >
+                        Clear<i className="fa-solid fa-xmark"></i>
+                      </Button>
+                    </Col>
+                  </Row>
+                </Card>
+              )}
+              <Row>
+                <Table hover responsive className="mt-3">
+                  <thead className="thead-light text-center">
                     <tr>
-                      <td colSpan={8} className="text-center">
-                        <Spinner color="primary" />
-                      </td>
+                      <th>Case Name</th>
+                      <th>Lead User</th>
+                      <th>Phone</th>
+                      <th>Case Category</th>
+                      <th>Case Stage</th>
+                      <th>Created At</th>
+                      <th>Created By</th>
+                      <th>Action</th>
                     </tr>
-                  ) : caseData?.results?.length > 0 ? (
-                    caseData.results.map((caseItem: CaseInfoPrpos) => (
-                      <tr key={caseItem.alias}>
-                        <td>
-                          <Link
-                            className="text_decoration_hover text-truncate"
-                            href={getCaseUrl(
-                              caseItem.alias,
-                              userType as string
-                            )}
-                          >
-                            {caseItem.is_removed ? (
-                              <s className="text-danger opacity-50">
-                                {caseItem.name}
-                              </s>
-                            ) : (
-                              caseItem.name
-                            )}
-                          </Link>
+                  </thead>
+                  <tbody className="text-center">
+                    {isLoading ? (
+                      <tr>
+                        <td colSpan={8} className="text-center">
+                          <Spinner color="primary" />
                         </td>
-                        <td>
-                          {caseItem.lead_user
-                            ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
-                            : "-"}
-                        </td>
-                        <td>
-                          {caseItem.lead_user.phone ? (
-                            <a
-                              href={`tel:${caseItem.lead_user.phone}`}
-                              className="text-black text_decoration_hover"
+                      </tr>
+                    ) : caseData?.results?.length > 0 ? (
+                      caseData.results.map((caseItem: CaseInfoPrpos) => (
+                        <tr key={caseItem.alias}>
+                          <td>
+                            <Link
+                              className="text_decoration_hover text-truncate"
+                              href={getCaseUrl(
+                                caseItem.alias,
+                                userType as string
+                              )}
                             >
-                              {caseItem.lead_user.phone}
-                            </a>
-                          ) : (
-                            "-"
-                          )}
-                        </td>
-                        <td>
-                          {caseItem.case_category
-                            .split("_")
-                            .map(
-                              (word) =>
-                                word.charAt(0).toUpperCase() +
-                                word.slice(1).toLowerCase()
-                            )
-                            .join(" ")}
-                        </td>
-                        <td>
-                          {caseItem.case_stage
-                            .split("_")
-                            .map(
-                              (word) =>
-                                word.charAt(0).toUpperCase() +
-                                word.slice(1).toLowerCase()
-                            )
-                            .join(" ")}
-                        </td>
-                        <td>{formatDateToDMYAndTime(caseItem.created_at)}</td>
-                        <td>
-                          <p className="m-0">
-                            {caseItem.created_by?.first_name}{" "}
-                            {caseItem.created_by?.last_name}
-                          </p>
-                          <p
-                            className="m-0 opacity-75"
-                            style={{ fontSize: "9px" }}
-                          >
-                            (
-                            {caseItem.created_by?.user_type
-                              ?.split("_")
+                              {caseItem.is_removed ? (
+                                <s className="text-danger opacity-50">
+                                  {caseItem.name}
+                                </s>
+                              ) : (
+                                caseItem.name
+                              )}
+                            </Link>
+                          </td>
+                          <td>
+                            {caseItem.lead_user
+                              ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
+                              : "-"}
+                          </td>
+                          <td>
+                            {caseItem.lead_user.phone ? (
+                              <a
+                                href={`tel:${caseItem.lead_user.phone}`}
+                                className="text-black text_decoration_hover"
+                              >
+                                {caseItem.lead_user.phone}
+                              </a>
+                            ) : (
+                              "-"
+                            )}
+                          </td>
+                          <td>
+                            {caseItem.case_category
+                              .split("_")
                               .map(
                                 (word) =>
                                   word.charAt(0).toUpperCase() +
                                   word.slice(1).toLowerCase()
                               )
                               .join(" ")}
-                            )
-                          </p>
-                        </td>
-                        <td>
-                          <div className="d-flex justify-content-center align-items-center">
-                            <Button
-                              size="sm"
-                              color="success"
-                              className="me-2"
-                              title="Update Case"
-                              onClick={() => openUpdateCaseModal(caseItem)}
+                          </td>
+                          <td>
+                            {caseItem.case_stage
+                              .split("_")
+                              .map(
+                                (word) =>
+                                  word.charAt(0).toUpperCase() +
+                                  word.slice(1).toLowerCase()
+                              )
+                              .join(" ")}
+                          </td>
+                          <td>{formatDateToDMYAndTime(caseItem.created_at)}</td>
+                          <td>
+                            <p className="m-0">
+                              {caseItem.created_by?.first_name}{" "}
+                              {caseItem.created_by?.last_name}
+                            </p>
+                            <p
+                              className="m-0 opacity-75"
+                              style={{ fontSize: "9px" }}
                             >
-                              <i className="icon-pencil-alt"></i>
-                            </Button>
-                            {userType !== "ORGANIZATION_SUPPORT" &&
-                              userType !== "ORGANIZATION_ADVISER" && (
-                                <Button
-                                  size="sm"
-                                  color="danger"
-                                  title="Delete Case"
-                                  onClick={() => openDeleteCaseModal(caseItem)}
-                                >
-                                  <i className="icon-trash"></i>
-                                </Button>
-                              )}
-                          </div>
+                              (
+                              {caseItem.created_by?.user_type
+                                ?.split("_")
+                                .map(
+                                  (word) =>
+                                    word.charAt(0).toUpperCase() +
+                                    word.slice(1).toLowerCase()
+                                )
+                                .join(" ")}
+                              )
+                            </p>
+                          </td>
+                          <td>
+                            <div className="d-flex justify-content-center align-items-center">
+                              <Button
+                                size="sm"
+                                color="success"
+                                className="me-2"
+                                title="Update Case"
+                                onClick={() => openUpdateCaseModal(caseItem)}
+                              >
+                                <i className="icon-pencil-alt"></i>
+                              </Button>
+                              {userType !== "ORGANIZATION_SUPPORT" &&
+                                userType !== "ORGANIZATION_ADVISER" && (
+                                  <Button
+                                    size="sm"
+                                    color="danger"
+                                    title="Delete Case"
+                                    onClick={() =>
+                                      openDeleteCaseModal(caseItem)
+                                    }
+                                  >
+                                    <i className="icon-trash"></i>
+                                  </Button>
+                                )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={8} className="text-center">
+                          No cases found.
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={8} className="text-center">
-                        No cases found.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
-            </Row>
-            <Row>
-              <div className="d-flex justify-content-between px-4 py-3">
-                <div>
-                  <p className="text-success">
-                    Showing{" "}
-                    {caseData?.results?.length
-                      ? (currentPage - 1) * casesPerPage + 1
-                      : 0}{" "}
-                    to{" "}
-                    {Math.min(currentPage * casesPerPage, caseData?.count || 0)}{" "}
-                    of {caseData?.count || 0} cases
-                  </p>
+                    )}
+                  </tbody>
+                </Table>
+              </Row>
+              <Row>
+                <div className="d-flex justify-content-between px-4 py-3">
+                  <div>
+                    <p className="text-success">
+                      Showing{" "}
+                      {caseData?.results?.length
+                        ? (currentPage - 1) * casesPerPage + 1
+                        : 0}{" "}
+                      to{" "}
+                      {Math.min(
+                        currentPage * casesPerPage,
+                        caseData?.count || 0
+                      )}{" "}
+                      of {caseData?.count || 0} cases
+                    </p>
+                  </div>
+                  <Pagination>
+                    <PaginationItem disabled={currentPage === 1}>
+                      <PaginationLink first onClick={() => setCurrentPage(1)} />
+                    </PaginationItem>
+                    <PaginationItem disabled={currentPage === 1}>
+                      <PaginationLink
+                        previous
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                      />
+                    </PaginationItem>
+
+                    {/* Generate visible page numbers */}
+                    {(() => {
+                      const pages = [];
+                      const total = pageCount;
+                      const currentPageNumber = currentPage;
+
+                      let start = Math.max(2, currentPageNumber - 2);
+                      let end = Math.min(total - 1, currentPageNumber + 2);
+
+                      // Always show page 1
+                      pages.push(
+                        <PaginationItem
+                          key={1}
+                          active={currentPageNumber === 1}
+                        >
+                          <PaginationLink onClick={() => setCurrentPage(1)}>
+                            1
+                          </PaginationLink>
+                        </PaginationItem>
+                      );
+
+                      // Add ellipsis if needed before middle pages
+                      if (start > 2) {
+                        pages.push(
+                          <PaginationItem key="ellipsis-start" disabled>
+                            <PaginationLink>...</PaginationLink>
+                          </PaginationItem>
+                        );
+                      }
+
+                      // Show middle pages
+                      for (let i = start; i <= end; i++) {
+                        pages.push(
+                          <PaginationItem
+                            key={i}
+                            active={currentPageNumber === i}
+                          >
+                            <PaginationLink onClick={() => setCurrentPage(i)}>
+                              {i}
+                            </PaginationLink>
+                          </PaginationItem>
+                        );
+                      }
+
+                      // Add ellipsis if needed after middle pages
+                      if (end < total - 1) {
+                        pages.push(
+                          <PaginationItem key="ellipsis-end" disabled>
+                            <PaginationLink>...</PaginationLink>
+                          </PaginationItem>
+                        );
+                      }
+
+                      // Always show last page
+                      if (total > 1) {
+                        pages.push(
+                          <PaginationItem
+                            key={total}
+                            active={currentPageNumber === total}
+                          >
+                            <PaginationLink
+                              onClick={() => setCurrentPage(total)}
+                            >
+                              {total}
+                            </PaginationLink>
+                          </PaginationItem>
+                        );
+                      }
+
+                      return pages;
+                    })()}
+
+                    <PaginationItem disabled={currentPage === pageCount}>
+                      <PaginationLink
+                        next
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                      />
+                    </PaginationItem>
+                    <PaginationItem disabled={currentPage === pageCount}>
+                      <PaginationLink
+                        last
+                        onClick={() => setCurrentPage(pageCount)}
+                      />
+                    </PaginationItem>
+                  </Pagination>
                 </div>
-                <Pagination>
-                  <PaginationItem disabled={currentPage === 1}>
-                    <PaginationLink first onClick={() => setCurrentPage(1)} />
-                  </PaginationItem>
-                  <PaginationItem disabled={currentPage === 1}>
-                    <PaginationLink
-                      previous
-                      onClick={() => setCurrentPage(currentPage - 1)}
-                    />
-                  </PaginationItem>
-
-                  {/* Generate visible page numbers */}
-                  {(() => {
-                    const pages = [];
-                    const total = pageCount;
-                    const currentPageNumber = currentPage;
-
-                    let start = Math.max(2, currentPageNumber - 2);
-                    let end = Math.min(total - 1, currentPageNumber + 2);
-
-                    // Always show page 1
-                    pages.push(
-                      <PaginationItem key={1} active={currentPageNumber === 1}>
-                        <PaginationLink onClick={() => setCurrentPage(1)}>
-                          1
-                        </PaginationLink>
-                      </PaginationItem>
-                    );
-
-                    // Add ellipsis if needed before middle pages
-                    if (start > 2) {
-                      pages.push(
-                        <PaginationItem key="ellipsis-start" disabled>
-                          <PaginationLink>...</PaginationLink>
-                        </PaginationItem>
-                      );
-                    }
-
-                    // Show middle pages
-                    for (let i = start; i <= end; i++) {
-                      pages.push(
-                        <PaginationItem
-                          key={i}
-                          active={currentPageNumber === i}
-                        >
-                          <PaginationLink onClick={() => setCurrentPage(i)}>
-                            {i}
-                          </PaginationLink>
-                        </PaginationItem>
-                      );
-                    }
-
-                    // Add ellipsis if needed after middle pages
-                    if (end < total - 1) {
-                      pages.push(
-                        <PaginationItem key="ellipsis-end" disabled>
-                          <PaginationLink>...</PaginationLink>
-                        </PaginationItem>
-                      );
-                    }
-
-                    // Always show last page
-                    if (total > 1) {
-                      pages.push(
-                        <PaginationItem
-                          key={total}
-                          active={currentPageNumber === total}
-                        >
-                          <PaginationLink onClick={() => setCurrentPage(total)}>
-                            {total}
-                          </PaginationLink>
-                        </PaginationItem>
-                      );
-                    }
-
-                    return pages;
-                  })()}
-
-                  <PaginationItem disabled={currentPage === pageCount}>
-                    <PaginationLink
-                      next
-                      onClick={() => setCurrentPage(currentPage + 1)}
-                    />
-                  </PaginationItem>
-                  <PaginationItem disabled={currentPage === pageCount}>
-                    <PaginationLink
-                      last
-                      onClick={() => setCurrentPage(pageCount)}
-                    />
-                  </PaginationItem>
-                </Pagination>
-              </div>
-            </Row>
-          </CardBody>
-          <AddNewCaseModal
-            isOpen={isAddNewCaseModalOpen}
-            toggle={toggleAddNewCaseModal}
-          />
-          <UpdateCaseModal
-            isOpen={isUpdateCaseModalOpen}
-            toggle={toggleUpdateCaseModal}
-            caseData={currentCase as CaseInfoPrpos}
-          />
-          <DeleteCaseModal
-            isOpen={isDeleteCaseModalOpen}
-            toggle={toggleDeleteCaseModal}
-            caseData={currentCase}
-            onDelete={toggleDeleteCaseModal}
-          />
-        </Card>
+              </Row>
+            </CardBody>
+            <AddNewCaseModal
+              isOpen={isAddNewCaseModalOpen}
+              toggle={toggleAddNewCaseModal}
+            />
+            <UpdateCaseModal
+              isOpen={isUpdateCaseModalOpen}
+              toggle={toggleUpdateCaseModal}
+              caseData={currentCase as CaseInfoPrpos}
+            />
+            <DeleteCaseModal
+              isOpen={isDeleteCaseModalOpen}
+              toggle={toggleDeleteCaseModal}
+              caseData={currentCase}
+              onDelete={toggleDeleteCaseModal}
+            />
+          </Card>
+        </Col>
       </Row>
     </>
   );
