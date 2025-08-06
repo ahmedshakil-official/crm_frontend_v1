@@ -6,7 +6,6 @@ const PerformanceOverview: React.FC<CommonDashboardProps> = ({
   isLoading,
   CommonDashboardData,
 }) => {
-  console.log("PerformanceOverview Data:", CommonDashboardData);
   return (
     <>
       {isLoading ? (
