@@ -1,3 +1,11 @@
+export interface Adviser {
+  id?: number;
+  rank?: number;
+  full_name?: string;
+  profile_image?: string;
+  cases_completed?: number;
+  total_loan_amount?: number; // e.g., 125000 or "125000"
+}
 export interface CommonDashboardDataProps {
   summary_cards: {
     new_mortgage_enquiry?: number;
@@ -110,6 +118,7 @@ export interface CommonDashboardDataProps {
     total_introducers?: number;
     total_cases?: number;
   };
+  top_performing_advisers?: Adviser[];
 }
 
 export interface CommonDashboardProps {

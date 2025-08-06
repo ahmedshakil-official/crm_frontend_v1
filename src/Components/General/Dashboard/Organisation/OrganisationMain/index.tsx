@@ -37,7 +37,10 @@ const OrganisationContainer = () => {
             <ClientGrowth />
           </Col>
           <Col md={6} sm={12}>
-            <TopPerformingAdvisers />
+            <TopPerformingAdvisers
+              isLoading={isLoading}
+              CommonDashboardData={CommonDashboardData}
+            />
           </Col>
         </Row>
         {/* 4th row  */}

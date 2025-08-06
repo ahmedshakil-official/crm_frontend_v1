@@ -1,3 +1,4 @@
+import { CommonDashboardProps } from "@/Types/CommonComponents/CommonDashboard/CommonDashboardType";
 import { Card, CardBody } from "reactstrap";
 
 interface Adviser {
@@ -8,18 +9,11 @@ interface Adviser {
   rank: number;
 }
 
-const TopPerformingAdvisers: React.FC = () => {
-  // Sample data - replace with actual data from your API
-  const advisers: Adviser[] = [
-    { id: 1, name: "Sarah Johnson", cases: 28, revenue: 125000, rank: 1 },
-    { id: 2, name: "Michael Chen", cases: 24, revenue: 98000, rank: 2 },
-    { id: 3, name: "Emma Williams", cases: 22, revenue: 87000, rank: 3 },
-    { id: 4, name: "David Lee", cases: 18, revenue: 72000, rank: 4 },
-    { id: 5, name: "Jessica Brown", cases: 15, revenue: 65000, rank: 5 },
-    { id: 6, name: "Michael Brown", cases: 15, revenue: 65000, rank: 6 },
-    { id: 7, name: "Daniel Brown", cases: 15, revenue: 65000, rank: 7 },
-  ];
-
+const TopPerformingAdvisers: React.FC<CommonDashboardProps> = ({
+  isLoading,
+  CommonDashboardData,
+}) => {
+  console.log(CommonDashboardData);
   const formatCurrency = (amount: number): string => {
     return `£${amount.toLocaleString()}`;
   };
@@ -32,9 +26,9 @@ const TopPerformingAdvisers: React.FC = () => {
           className="space-y-6 mt-2"
           style={{ height: "350px", overflow: "auto" }}
         >
-          {advisers.map((adviser) => (
+          {CommonDashboardData?.top_performing_advisers?.map((adviser) => (
             <div
-              key={adviser.id}
+              key={adviser?.id}
               className="d-flex justify-content-between mt-4 px-3 py-1"
             >
               <div className="d-flex justify-content-start gap-2">
@@ -43,17 +37,19 @@ const TopPerformingAdvisers: React.FC = () => {
                     className="d-flex align-items-center justify-content-center rounded-circle text-white bg-primary fw-medium small"
                     style={{ width: "25px", height: "25px" }}
                   >
-                    {adviser.rank}
+                    {adviser?.rank}
                   </span>
                 </div>
                 <div>
-                  <h6 className="fw-semibold">{adviser.name}</h6>
-                  <p className="small">{adviser.cases} cases</p>
+                  <h6 className="fw-semibold">{adviser?.full_name}</h6>
+                  <p className="small">{adviser?.cases_completed} cases</p>
                 </div>
               </div>
               <div className="d-flex justify-content-center flex-column">
                 <h6 className="fw-semibold">
-                  {formatCurrency(adviser.revenue)}
+                  {adviser?.total_loan_amount
+                    ? formatCurrency(adviser?.total_loan_amount)
+                    : "0"}
                 </h6>
                 <p className="small">
                   <i className="fa-solid fa-award text-warning"></i>
