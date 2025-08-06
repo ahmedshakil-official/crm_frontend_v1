@@ -103,7 +103,15 @@ export interface CommonDashboardDataProps {
     WEST_BROMWICH_BUILDING_SOCIETY?: number;
     WEST_ONE_LOANS?: number;
   };
+  counters: {
+    total_advisers?: number;
+    total_clients?: number;
+    total_leads?: number;
+    total_introducers?: number;
+    total_cases?: number;
+  };
 }
+
 export interface CommonDashboardProps {
   isLoading: boolean;
   CommonDashboardData: CommonDashboardDataProps | null;

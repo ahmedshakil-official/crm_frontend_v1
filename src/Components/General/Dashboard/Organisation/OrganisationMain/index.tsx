@@ -1,3 +1,4 @@
+import { useGetCommonDashboardQuery } from "@/Redux/Reducers/CommonComponents/CommonDashboard/CommonDashboardApi";
 import { Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import CaseCompletionOverTime from "./CaseCompletionOverTime/CaseCompletionOverTime";
@@ -8,12 +9,19 @@ import RecentAuditLogs from "./RecentAuditLogs/RecentAuditLogs";
 import TopPerformingAdvisers from "./TopPerformingAdvisers/TopPerformingAdvisers";
 
 const OrganisationContainer = () => {
+  //RTK hooks
+  const { data: CommonDashboardData, isLoading } =
+    useGetCommonDashboardQuery(undefined);
+
   return (
     <>
       <Breadcrumbs title="Dashboard" subTitle="Hello there! Welcome back" />
       <Container fluid>
         {/* 1st row  */}
-        <DashboardOverview />
+        <DashboardOverview
+          isLoading={isLoading}
+          CommonDashboardData={CommonDashboardData}
+        />
         {/* 2nd row  */}
         <Row>
           <Col md={6} sm={12}>
