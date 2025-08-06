@@ -105,7 +105,7 @@ const Cases: React.FC = () => {
         {isLoading ? (
           <>
             {[...Array(5)].map((_, index) => (
-              <Col xl className="mb-2" key={index}>
+              <Col lg className="mb-2" key={index}>
                 <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
                   <CardBody className="p-2">
                     <div className="d-flex justify-content-between">
@@ -133,7 +133,7 @@ const Cases: React.FC = () => {
           // Actual Content
           <>
             {/* All Cases  */}
-            <Col xl>
+            <Col lg>
               <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
@@ -156,7 +156,7 @@ const Cases: React.FC = () => {
               </Card>
             </Col>
             {/* Active Cases  */}
-            <Col xl>
+            <Col lg>
               <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
@@ -183,7 +183,7 @@ const Cases: React.FC = () => {
               </Card>
             </Col>
             {/* Pending Cases  */}
-            <Col xl>
+            <Col lg>
               <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
@@ -206,7 +206,7 @@ const Cases: React.FC = () => {
               </Card>
             </Col>
             {/* Completed Cases  */}
-            <Col xl>
+            <Col lg>
               <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
@@ -229,7 +229,7 @@ const Cases: React.FC = () => {
               </Card>
             </Col>
             {/* On Hold Cases  */}
-            <Col xl>
+            <Col lg>
               <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
