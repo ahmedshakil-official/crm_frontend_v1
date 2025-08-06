@@ -1,3 +1,4 @@
+import { useGetCommonDashboardQuery } from "@/Redux/Reducers/CommonComponents/CommonDashboard/CommonDashboardApi";
 import { Container, Row } from "reactstrap";
 import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import AdviserStatus from "./AdviserStatus/AdviserStatus";
@@ -7,6 +8,10 @@ import PerformanceOverview from "./PerformanceOverview/PerformanceOverview";
 import RecentActivity from "./RecentActivity/RecentActivity";
 
 const ContainerNetwork = () => {
+  //RTK hooks
+  const { data: CommonDashboardData, isLoading } =
+    useGetCommonDashboardQuery(undefined);
+
   return (
     <>
       <Breadcrumbs
@@ -14,8 +19,8 @@ const ContainerNetwork = () => {
         subTitle="Welcome to the Network Dashboard"
       />
       <Container fluid>
-        <PerformanceOverview />
-        <Charts />
+        <PerformanceOverview isLoading={isLoading} CommonDashboardData={CommonDashboardData} />
+        <Charts isLoading={isLoading} CommonDashboardData={CommonDashboardData} />
         <OrganisationCards />
         <AdviserStatus />
         <Row>

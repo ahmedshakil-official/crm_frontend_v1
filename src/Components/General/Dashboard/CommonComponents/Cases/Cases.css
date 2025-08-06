@@ -1,57 +1,39 @@
 /* Continuous rotation animation */
 .rotate-animation {
-    animation: rotate 10s linear infinite; /* Spins in 2 seconds infinitely */
-    display: inline-block; /* Ensures proper alignment */
-  }
-  
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  /* Continuous rotation animation end */
-  
-  /* CSS class for the blinking eye effect */
-  .eye-btn:hover i {
-    animation: blink-eye 1.5s ease-in-out infinite;
-  }
-  
-  @keyframes blink-eye {
-    0% {
-      opacity: 1;
-    }
-    25% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.3;
-    }
-    75% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  /* CSS class for the blinking eye effect end*/
-
-/* Skeleton loading animation */
-.skeleton-loading {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
+  animation: rotate 10s linear infinite; /* Spins in 2 seconds infinitely */
+  display: inline-block; /* Ensures proper alignment */
 }
 
-@keyframes loading {
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Continuous rotation animation end */
+
+/* CSS class for the blinking eye effect */
+.eye-btn:hover i {
+  animation: blink-eye 1.5s ease-in-out infinite;
+}
+
+@keyframes blink-eye {
   0% {
-    background-position: 200% 0;
+    opacity: 1;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  75% {
+    opacity: 1;
   }
   100% {
-    background-position: -200% 0;
+    opacity: 1;
   }
 }
-/* Skeleton loading animation end */
-  
+/* CSS class for the blinking eye effect end*/
