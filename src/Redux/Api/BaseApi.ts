@@ -24,11 +24,17 @@ export const baseApi = createApi({
     "ClientDetails",
     "AdviserDetails",
     "IntroducerDetails",
+    // Common components end
+
     // Single case info start
     "CaseDetails",
     "JointUserDetails",
     "CaseDocuments",
     // Single case info end
+
+    // Common Dashboard start
+    "CommonDashboard",
+    // Common Dashboard end
 
     // Case details start
     "LoanDetails",
@@ -55,7 +61,6 @@ export const baseApi = createApi({
     //Common components end
 
     //Network start
-    "NetPerformanceOverview",
     "OrganisationList",
     "SingleOrganisation",
     //Network end
