@@ -20,7 +20,7 @@ const ContainerNetwork = () => {
       />
       <Container fluid>
         <PerformanceOverview isLoading={isLoading} CommonDashboardData={CommonDashboardData} />
-        <Charts />
+        <Charts isLoading={isLoading} CommonDashboardData={CommonDashboardData} />
         <OrganisationCards />
         <AdviserStatus />
         <Row>

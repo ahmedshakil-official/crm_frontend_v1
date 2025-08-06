@@ -1,21 +1,37 @@
 import CommonCardHeader from "@/CommonComponent/CommonCardHeader";
+import { CommonDashboardProps } from "@/Types/CommonComponents/CommonDashboard/CommonDashboardType";
 import { Chart } from "react-google-charts";
 import { Card, CardBody } from "reactstrap";
 
-const MortgagesChart: React.FC = () => {
-  // ChartData: [Label, Value]
-  const chartData = [
-    ["Category", "Value"],
-    ["Purchase", 55],
-    ["Remortgage", 22],
-    ["Secure Loan", 15],
-    ["Further Advance", 12],
-    ["Product Transfer", 8],
-    ["Unsecured", 82],
-    ["Invoice Discounting", 36],
-    ["Asset Finance", 55],
-    ["Other Mortgage", 100],
-  ];
+const MortgagesChart: React.FC<CommonDashboardProps> = ({
+  isLoading,
+  CommonDashboardData,
+}) => {
+  const chartData: (string | number)[][] = [["Category", "Value"]];
+  if (!isLoading && CommonDashboardData) {
+    const {
+      mortgage_type_counts: {
+        PURCHASE,
+        REMORTGAGE,
+        SECURED_LOAN,
+        FURTHER_ADVANCE,
+        PRODUCT_TRANSFER,
+        UNSECURED,
+        INVOICE_DISCOUNTING,
+        ASSET_FINANCE,
+        OTHER,
+      },
+    } = CommonDashboardData;
+    chartData.push(["Purchase", PURCHASE ?? 0]);
+    chartData.push(["Remortgage", REMORTGAGE ?? 0]);
+    chartData.push(["Secure Loan", SECURED_LOAN ?? 0]);
+    chartData.push(["Further Advance", FURTHER_ADVANCE ?? 0]);
+    chartData.push(["Product Transfer", PRODUCT_TRANSFER ?? 0]);
+    chartData.push(["Unsecured", UNSECURED ?? 0]);
+    chartData.push(["Invoice Discounting", INVOICE_DISCOUNTING ?? 0]);
+    chartData.push(["Asset Finance", ASSET_FINANCE ?? 0]);
+    chartData.push(["Other Mortgage", OTHER ?? 0]);
+  }
 
   const chartOptions = {
     title: "",
@@ -56,13 +72,35 @@ const MortgagesChart: React.FC = () => {
     <Card>
       <CommonCardHeader title="Mortgages" />
       <CardBody className="google-chart">
-        <Chart
-          chartType="PieChart"
-          width="100%"
-          height="280px"
-          data={chartData}
-          options={chartOptions}
-        />
+        {isLoading ? (
+          <div className="d-flex justify-content-between align-items-center gap-3 ms-5">
+            <div
+              className="skeleton-loading"
+              style={{
+                width: "280px",
+                height: "270px",
+                borderRadius: "50%",
+                backgroundColor: "#e0e0e0",
+              }}
+            />
+            <div
+              className="skeleton-loading"
+              style={{
+                width: "50%",
+                height: "100px",
+                backgroundColor: "#e0e0e0",
+              }}
+            />
+          </div>
+        ) : (
+          <Chart
+            chartType="PieChart"
+            width="100%"
+            height="280px"
+            data={chartData}
+            options={chartOptions}
+          />
+        )}
       </CardBody>
     </Card>
   );
