@@ -19,8 +19,14 @@ const ContainerNetwork = () => {
         subTitle="Welcome to the Network Dashboard"
       />
       <Container fluid>
-        <PerformanceOverview isLoading={isLoading} CommonDashboardData={CommonDashboardData} />
-        <Charts isLoading={isLoading} CommonDashboardData={CommonDashboardData} />
+        <PerformanceOverview
+          isLoading={isLoading}
+          CommonDashboardData={CommonDashboardData}
+        />
+        <Charts
+          isLoading={isLoading}
+          CommonDashboardData={CommonDashboardData}
+        />
         <OrganisationCards />
         <AdviserStatus />
         <Row>
