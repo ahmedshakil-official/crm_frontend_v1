@@ -48,15 +48,26 @@ const MortgagesChart: React.FC<CommonDashboardProps> = ({
     },
     slices: { 0: { offset: 0.05 } },
     colors: [
-      "#8b5cf6",
-      "#9ca3af",
-      "#ec4899",
-      "#6366f1",
-      "#10b981",
-      "#0ea5e9",
-      "#f97316",
-      "#d946ef",
-      "#f87171",
+      '#8FA4D7',  // Light Blue
+      '#F28FB1',  // Light Pink
+      '#FFB84D',  // Light Orange
+      '#7BC87F',  // Light Green
+      '#B85CBF',  // Light Purple
+      '#FFD54F',  // Light Yellow
+      '#90A4AE',  // Light Blue Grey
+      '#A1887F',  // Light Brown
+      '#FF8A65',  // Light Deep Orange
+      '#AED581',  // Light Green
+      '#9575CD',  // Light Deep Purple
+      '#4DD0E1',  // Light Cyan
+      '#FFF176',  // Light Yellow
+      '#BDBDBD',  // Light Grey
+      '#EF5350',  // Light Red
+      '#64B5F6',  // Light Blue
+      '#DCE775',  // Light Lime
+      '#FF8A80',  // Light Red
+      '#A5D6A7',  // Light Green
+      '#C5E1A5',  // Lighter Green
     ],
     chartArea: { left: 30, top: 30, width: "90%", height: "90%" },
     backgroundColor: "transparent",
