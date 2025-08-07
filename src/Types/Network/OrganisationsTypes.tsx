@@ -3,6 +3,7 @@ export interface SingleOrganisationsProps {
   organization: {
     slug?: string;
     name?: string;
+    network?: string;
     email?: string;
     logo?: string | null;
     profile_image?: string | null;

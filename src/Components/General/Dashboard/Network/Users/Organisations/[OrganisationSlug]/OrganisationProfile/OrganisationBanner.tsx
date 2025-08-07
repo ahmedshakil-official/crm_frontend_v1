@@ -75,8 +75,8 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
             <CardText>
               <span className="text-muted">Network:</span>{" "}
               <strong>
-                {organisationInfo?.organization?.name ? (
-                  organisationInfo?.organization?.name
+                {organisationInfo?.organization?.network ? (
+                  organisationInfo?.organization?.network
                 ) : (
                   <strong className="text-muted">Not Available</strong>
                 )}
