@@ -60,7 +60,7 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
                   singleOrgInfo?.organization?.logo ||
                   "/assets/images/network/logo.jpg"
                 }
-                alt="Profile"
+                alt="Logo"
                 className="profile-pic object-fit-cover"
               />
               <div className="edit_icon">
