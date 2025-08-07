@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/Components/General/Dashboard/CommonComponents/Breadcrumbs/Breadcrumbs";
 import { useGetSingleOrganisationQuery } from "@/Redux/Reducers/Network/Organisations/SingleOrganisation/SingleOrganisationApi";
-import { OrganisationsProps } from "@/Types/Network/OrganisationsTypes";
+import { SingleOrganisationsProps } from "@/Types/Network/OrganisationsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ import OrganisationBanner from "./OrganisationProfile/OrganisationBanner";
 
 const OrganisationContainer: React.FC = () => {
   const [organisationInfo, setOrganisationInfo] =
-    useState<OrganisationsProps>();
+    useState<SingleOrganisationsProps>();
   const { organisationslug } = useParams();
   const router = useRouter();
 
@@ -39,7 +39,7 @@ const OrganisationContainer: React.FC = () => {
         return;
       }
 
-      if (organisationData.slug !== organisationslug) {
+      if (organisationData?.organization.slug !== organisationslug) {
         router.push("/dashboard/network");
         toast.error("Find Wrong URL! Redirecting...");
         return;

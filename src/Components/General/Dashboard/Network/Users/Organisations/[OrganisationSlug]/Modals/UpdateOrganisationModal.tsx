@@ -31,9 +31,7 @@ const UpdateOrganisationModal: React.FC<UpdateOrganisationModalProps> = ({
     primary_mobile: "",
     other_contact: "",
     website: "",
-    license_no: "",
     contact_person: "",
-    contact_person_designation: "",
   });
 
   const [profileImage, setProfileImage] = useState<File | null>(null);
@@ -46,15 +44,12 @@ const UpdateOrganisationModal: React.FC<UpdateOrganisationModalProps> = ({
   useEffect(() => {
     if (organisationData && isOpen) {
       setFormData({
-        name: organisationData.name || "",
-        email: organisationData.email || "",
-        primary_mobile: organisationData.primary_mobile || "",
-        other_contact: organisationData.other_contact || "",
-        website: organisationData.website || "",
-        license_no: organisationData.license_no || "",
-        contact_person: organisationData.contact_person || "",
-        contact_person_designation:
-          organisationData.contact_person_designation || "",
+        name: organisationData.organization.name || "",
+        email: organisationData.organization.email || "",
+        primary_mobile: organisationData.organization.primary_mobile || "",
+        other_contact: organisationData.organization.other_contact || "",
+        website: organisationData.organization.website || "",
+        contact_person: organisationData.organization.contact_person || "",
       });
       setOldName(organisationData.name || "");
     }
@@ -121,12 +116,14 @@ const UpdateOrganisationModal: React.FC<UpdateOrganisationModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>Update Organisation</ModalHeader>
+    <Modal isOpen={isOpen} toggle={toggle} size="lg" centered>
+      <ModalHeader toggle={toggle}>
+        <h3 className="text-primary">Update Organisation</h3>
+      </ModalHeader>
       <Form onSubmit={handleSubmit}>
         <ModalBody>
           <Row>
-            <Col md={6} xs={12}>
+            <Col md="6">
               <FormGroup>
                 <Label for="name">Organisation Name</Label>
                 <Input
@@ -138,6 +135,21 @@ const UpdateOrganisationModal: React.FC<UpdateOrganisationModalProps> = ({
                   required
                 />
               </FormGroup>
+            </Col>
+            <Col md="6">
+              <FormGroup>
+                <Label for="email">Email</Label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormGroup>
+            </Col>
+            <Col md="6">
               <FormGroup>
                 <Label for="primary_mobile">Primary Phone</Label>
                 <Input
@@ -148,6 +160,8 @@ const UpdateOrganisationModal: React.FC<UpdateOrganisationModalProps> = ({
                   onChange={handleInputChange}
                 />
               </FormGroup>
+            </Col>
+            <Col md="6">
               <FormGroup>
                 <Label for="website">
                   Website{" "}
@@ -163,6 +177,8 @@ const UpdateOrganisationModal: React.FC<UpdateOrganisationModalProps> = ({
                   onChange={handleInputChange}
                 />
               </FormGroup>
+            </Col>
+            <Col md="6">
               <FormGroup>
                 <Label for="contact_person">Contact Person</Label>
                 <Input
@@ -173,7 +189,23 @@ const UpdateOrganisationModal: React.FC<UpdateOrganisationModalProps> = ({
                   onChange={handleInputChange}
                 />
               </FormGroup>
-              {/* Logo Upload */}
+            </Col>
+            <Col md="6">
+              <FormGroup>
+                <Label for="other_contact">Other Contact</Label>
+                <Input
+                  type="text"
+                  id="other_contact"
+                  name="other_contact"
+                  value={formData.other_contact}
+                  onChange={handleInputChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            {/* Logo Upload */}
+            <Col md="6">
               <FormGroup>
                 <Label for="logo">Logo</Label>
                 <Input
@@ -200,51 +232,8 @@ const UpdateOrganisationModal: React.FC<UpdateOrganisationModalProps> = ({
                 )}
               </FormGroup>
             </Col>
-            <Col md={6} xs={12}>
-              <FormGroup>
-                <Label for="email">Email</Label>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="other_contact">Other Contact</Label>
-                <Input
-                  type="text"
-                  id="other_contact"
-                  name="other_contact"
-                  value={formData.other_contact}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="license_no">License No</Label>
-                <Input
-                  type="text"
-                  id="license_no"
-                  name="license_no"
-                  value={formData.license_no}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="contact_person_designation">
-                  Contact Person Designation
-                </Label>
-                <Input
-                  type="text"
-                  id="contact_person_designation"
-                  name="contact_person_designation"
-                  value={formData.contact_person_designation}
-                  onChange={handleInputChange}
-                />
-              </FormGroup>{" "}
-              {/* Profile Image Upload */}
+            {/* Profile Image Upload */}
+            <Col md="6">
               <FormGroup>
                 <Label for="profile_image">Banner Image</Label>
                 <Input

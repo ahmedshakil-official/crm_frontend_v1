@@ -44,7 +44,7 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
                 height={200}
                 className="rounded-top-3 w-100 object-fit-cover"
                 src={
-                  organisationInfo?.profile_image ||
+                  organisationInfo?.organization?.profile_image ||
                   "/assets/images/other-images/bg-profile.png"
                 }
                 alt="Banner"
@@ -57,7 +57,8 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
                 width={120}
                 height={120}
                 src={
-                  organisationInfo?.logo || "/assets/images/network/logo.jpg"
+                  organisationInfo?.organization?.logo ||
+                  "/assets/images/network/logo.jpg"
                 }
                 alt="Profile"
                 className="profile-pic object-fit-cover"
@@ -69,13 +70,13 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
               </div>
             </div>
             <CardTitle tag="h3" className="mt-5 text-primary">
-              {organisationInfo?.name}
+              {organisationInfo?.organization?.name}
             </CardTitle>
             <CardText>
               <span className="text-muted">Network:</span>{" "}
               <strong>
-                {organisationInfo?.network?.name ? (
-                  organisationInfo?.network?.name
+                {organisationInfo?.organization?.name ? (
+                  organisationInfo?.organization?.name
                 ) : (
                   <strong className="text-muted">Not Available</strong>
                 )}
@@ -83,24 +84,24 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
             </CardText>
 
             {/* Contact Details */}
-            <div className="mt-4 d-flex justify-content-between px-5">
+            <div className="mt-4 d-flex justify-content-between px-4">
               <div>
                 <span className="text-muted">Email:</span>{" "}
-                {organisationInfo?.email ? (
-                  <strong>{organisationInfo.email}</strong>
+                {organisationInfo?.organization?.email ? (
+                  <strong>{organisationInfo?.organization?.email}</strong>
                 ) : (
                   <strong className="text-muted">Not Available</strong>
                 )}
               </div>
               <div>
                 <span className="text-muted">Phone:</span>{" "}
-                {organisationInfo?.primary_mobile ? (
+                {organisationInfo?.organization?.primary_mobile ? (
                   <strong>
                     <a
                       className="text-dark text_decoration_hover"
-                      href={`tel:${organisationInfo?.primary_mobile}`}
+                      href={`tel:${organisationInfo?.organization?.primary_mobile}`}
                     >
-                      {organisationInfo?.primary_mobile}
+                      {organisationInfo?.organization?.primary_mobile}
                     </a>
                   </strong>
                 ) : (
@@ -111,23 +112,43 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
             {/* Follower Count */}
             <Row className="mt-4 px-4">
               <Col>
-                <h6 className="fw-bold">4,656</h6>
+                <h6 className="fw-bold">
+                  {Number(
+                    organisationInfo?.counters?.total_cases
+                  ).toLocaleString() || 0}
+                </h6>
                 <strong className="small opacity-50">Cases</strong>
               </Col>
               <Col>
-                <h6 className="fw-bold">4,656</h6>
+                <h6 className="fw-bold">
+                  {Number(
+                    organisationInfo?.counters?.total_leads
+                  ).toLocaleString() || 0}
+                </h6>
                 <strong className="small opacity-50">Leads</strong>
               </Col>
               <Col>
-                <h6 className="fw-bold">118,779</h6>
+                <h6 className="fw-bold">
+                  {Number(
+                    organisationInfo?.counters?.total_clients
+                  ).toLocaleString() || 0}
+                </h6>
                 <strong className="small opacity-50">Clients</strong>
               </Col>
               <Col>
-                <h6 className="fw-bold">118,779</h6>
+                <h6 className="fw-bold">
+                  {Number(
+                    organisationInfo?.counters?.total_advisers
+                  ).toLocaleString() || 0}
+                </h6>
                 <strong className="small opacity-50">Advisers</strong>
               </Col>
               <Col>
-                <h6 className="fw-bold">118,779</h6>
+                <h6 className="fw-bold">
+                  {Number(
+                    organisationInfo?.counters?.total_introducers
+                  ).toLocaleString() || 0}
+                </h6>
                 <strong className="small opacity-50">Introducers</strong>
               </Col>
             </Row>
@@ -138,7 +159,7 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
       <UpdateOrganisationModal
         isOpen={isModalOpen}
         toggle={toggleUpdateModal}
-        slug={organisationInfo?.slug}
+        slug={organisationInfo?.organization?.slug}
         organisationData={organisationInfo}
       />
     </>
