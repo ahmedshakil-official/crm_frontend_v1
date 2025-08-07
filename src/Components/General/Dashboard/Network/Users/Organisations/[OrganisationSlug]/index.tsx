@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/Components/General/Dashboard/CommonComponents/Breadcrumbs/Breadcrumbs";
 import { useGetSingleOrganisationQuery } from "@/Redux/Reducers/Network/Organisations/SingleOrganisation/SingleOrganisationApi";
-import { OrganisationsProps } from "@/Types/Network/OrganisationsTypes";
+import { SingleOrganisationsProps } from "@/Types/Network/OrganisationsTypes";
 import LoadingSpinner from "@/app/loading";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,20 +8,23 @@ import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
 import OrgAdvisers from "./Advisers/OrgAdvisers";
 import OrgCases from "./Cases/OrgCases";
+import OrgLendersChart from "./Charts/LendersChart/LendersChart";
+import OrgMortgagesChart from "./Charts/MortgagesChart/MortgagesChart";
 import OrgClients from "./Clients/OrgClients";
 import DangerZone from "./DangerZone/DangerZone";
 import OrgLeads from "./Leads/OrgLeads";
 import OrganisationBanner from "./OrganisationProfile/OrganisationBanner";
+import Overview from "./Overview/Overview";
 
-const OrganisationContainer: React.FC = () => {
-  const [organisationInfo, setOrganisationInfo] =
-    useState<OrganisationsProps>();
+const SingleOrganisationContainer: React.FC = () => {
+  const [singleOrgInfo, setSingleOrgInfo] =
+    useState<SingleOrganisationsProps>();
   const { organisationslug } = useParams();
   const router = useRouter();
 
   // rtk hooks
   const {
-    data: organisationData,
+    data: singleOrgData,
     isLoading,
     isError,
   } = useGetSingleOrganisationQuery(
@@ -33,21 +36,21 @@ const OrganisationContainer: React.FC = () => {
 
   useEffect(() => {
     if (!isLoading) {
-      if (isError || !organisationData) {
+      if (isError || !singleOrgData) {
         router.push("/dashboard/network");
         toast.error("Find Wrong URL! Redirecting...");
         return;
       }
 
-      if (organisationData.slug !== organisationslug) {
+      if (singleOrgData?.organization.slug !== organisationslug) {
         router.push("/dashboard/network");
         toast.error("Find Wrong URL! Redirecting...");
         return;
       }
 
-      setOrganisationInfo(organisationData);
+      setSingleOrgInfo(singleOrgData);
     }
-  }, [organisationData, organisationslug, router, isLoading, isError]);
+  }, [singleOrgData, organisationslug, router, isLoading, isError]);
 
   if (isLoading) {
     return (
@@ -57,7 +60,7 @@ const OrganisationContainer: React.FC = () => {
     );
   }
 
-  if (isError || !organisationInfo) {
+  if (isError || !singleOrgInfo) {
     return null; // Will redirect in useEffect
   }
 
@@ -71,16 +74,33 @@ const OrganisationContainer: React.FC = () => {
       />
       <Container fluid>
         <Row>
-          <Col md="12">
+          <Col md="4">
             <OrganisationBanner
-              organisationInfo={organisationInfo}
+              singleOrgInfo={singleOrgInfo}
               isLoading={isLoading}
             />
+          </Col>
+          <Col md="4">
+            <OrgMortgagesChart
+              singleOrgInfo={singleOrgInfo}
+              isLoading={isLoading}
+            />
+          </Col>
+          <Col md="4">
+            <OrgLendersChart
+              singleOrgInfo={singleOrgInfo}
+              isLoading={isLoading}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col md="12">
+            <Overview singleOrgInfo={singleOrgInfo} isLoading={isLoading} />
             <OrgLeads />
             <OrgCases />
             <OrgClients />
             <OrgAdvisers />
-            <DangerZone organisationInfo={organisationInfo} />
+            <DangerZone singleOrgInfo={singleOrgInfo} />
           </Col>
         </Row>
       </Container>
@@ -88,4 +108,4 @@ const OrganisationContainer: React.FC = () => {
   );
 };
 
-export default OrganisationContainer;
+export default SingleOrganisationContainer;

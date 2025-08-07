@@ -1,6 +1,5 @@
 import { FetchSingleOrganisationProps } from "@/Types/Network/OrganisationsTypes";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import {
   Button,
@@ -16,7 +15,7 @@ import "../../Organisations.css"; // Import external CSS for styling
 import UpdateOrganisationModal from "../Modals/UpdateOrganisationModal";
 
 const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
-  organisationInfo,
+  singleOrgInfo,
   isLoading,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +29,7 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
       {isLoading ? (
         <Card
           className="d-flex justify-content-center align-items-center w-100"
-          style={{ height: "500px" }}
+          style={{ height: "400px" }}
         >
           <Spinner color="primary" />
         </Card>
@@ -41,11 +40,11 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
             {/* Banner Image inside the Card */}
             <div>
               <Image
-                width={1595}
-                height={300}
+                width={300}
+                height={200}
                 className="rounded-top-3 w-100 object-fit-cover"
                 src={
-                  organisationInfo?.profile_image ||
+                  singleOrgInfo?.organization?.profile_image ||
                   "/assets/images/other-images/bg-profile.png"
                 }
                 alt="Banner"
@@ -58,9 +57,10 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
                 width={120}
                 height={120}
                 src={
-                  organisationInfo?.logo || "/assets/images/network/logo.jpg"
+                  singleOrgInfo?.organization?.logo ||
+                  "/assets/images/network/logo.jpg"
                 }
-                alt="Profile"
+                alt="Logo"
                 className="profile-pic object-fit-cover"
               />
               <div className="edit_icon">
@@ -70,13 +70,13 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
               </div>
             </div>
             <CardTitle tag="h3" className="mt-5 text-primary">
-              {organisationInfo?.name}
+              {singleOrgInfo?.organization?.name}
             </CardTitle>
             <CardText>
               <span className="text-muted">Network:</span>{" "}
               <strong>
-                {organisationInfo?.network?.name ? (
-                  organisationInfo?.network?.name
+                {singleOrgInfo?.organization?.network ? (
+                  singleOrgInfo?.organization?.network
                 ) : (
                   <strong className="text-muted">Not Available</strong>
                 )}
@@ -84,83 +84,72 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
             </CardText>
 
             {/* Contact Details */}
-            <Row className="mt-4">
-              <Col md={4}>
+            <div className="mt-4 d-flex justify-content-between px-4">
+              <div>
                 <span className="text-muted">Email:</span>{" "}
-                {organisationInfo?.email ? (
-                  <strong>{organisationInfo.email}</strong>
+                {singleOrgInfo?.organization?.email ? (
+                  <strong>{singleOrgInfo?.organization?.email}</strong>
                 ) : (
                   <strong className="text-muted">Not Available</strong>
                 )}
-              </Col>
-              <Col md={4}>
-                <span className="text-muted">License No:</span>{" "}
-                {organisationInfo?.license_no ? (
-                  <strong>{organisationInfo?.license_no}</strong>
-                ) : (
-                  <strong className="text-muted">Not Available</strong>
-                )}
-              </Col>
-              <Col md={4}>
+              </div>
+              <div>
                 <span className="text-muted">Phone:</span>{" "}
-                {organisationInfo?.primary_mobile ? (
+                {singleOrgInfo?.organization?.primary_mobile ? (
                   <strong>
                     <a
                       className="text-dark text_decoration_hover"
-                      href={`tel:${organisationInfo?.primary_mobile}`}
+                      href={`tel:${singleOrgInfo?.organization?.primary_mobile}`}
                     >
-                      {organisationInfo?.primary_mobile}
+                      {singleOrgInfo?.organization?.primary_mobile}
                     </a>
                   </strong>
                 ) : (
                   <strong className="text-muted">Not Available</strong>
                 )}
-              </Col>
-            </Row>
-
-            <Row>
-              <Col md={12}>
-                <span className="text-muted">Location:</span>{" "}
-                {organisationInfo?.location ? (
-                  <strong>{organisationInfo?.location}</strong>
-                ) : (
-                  <strong className="text-muted">Not Available</strong>
-                )}
-              </Col>
-            </Row>
-
-            {/* Social Media */}
-            <div className="social-icons mt-3">
-              <Link href="">
-                <Button color="primary" className="mx-2">
-                  <i className="fa-brands fa-facebook-f"></i>
-                </Button>
-              </Link>
-              <Link href="">
-                <Button color="dark" className="mx-2">
-                  <i className="fa-brands fa-twitter"></i>
-                </Button>
-              </Link>
-              <Link href={`${organisationInfo?.website}`} target="_blank">
-                <Button color="success" className="mx-2">
-                  <i className="fa-solid fa-earth-americas"></i>
-                </Button>
-              </Link>
+              </div>
             </div>
-
             {/* Follower Count */}
-            <Row className="mt-4">
-              <Col md={4}>
-                <h5>4,656</h5>
-                <strong className="text-primary opacity-75">Cases</strong>
+            <Row className="mt-4 px-4">
+              <Col>
+                <h6 className="fw-bold">
+                  {Number(
+                    singleOrgInfo?.counters?.total_cases
+                  ).toLocaleString() || 0}
+                </h6>
+                <strong className="small opacity-50">Cases</strong>
               </Col>
-              <Col md={4}>
-                <h5>4,656</h5>
-                <strong className="text-primary opacity-75">Employees</strong>
+              <Col>
+                <h6 className="fw-bold">
+                  {Number(
+                    singleOrgInfo?.counters?.total_leads
+                  ).toLocaleString() || 0}
+                </h6>
+                <strong className="small opacity-50">Leads</strong>
               </Col>
-              <Col md={4}>
-                <h5>118,779</h5>
-                <strong className="text-primary opacity-75">Clients</strong>
+              <Col>
+                <h6 className="fw-bold">
+                  {Number(
+                    singleOrgInfo?.counters?.total_clients
+                  ).toLocaleString() || 0}
+                </h6>
+                <strong className="small opacity-50">Clients</strong>
+              </Col>
+              <Col>
+                <h6 className="fw-bold">
+                  {Number(
+                    singleOrgInfo?.counters?.total_advisers
+                  ).toLocaleString() || 0}
+                </h6>
+                <strong className="small opacity-50">Advisers</strong>
+              </Col>
+              <Col>
+                <h6 className="fw-bold">
+                  {Number(
+                    singleOrgInfo?.counters?.total_introducers
+                  ).toLocaleString() || 0}
+                </h6>
+                <strong className="small opacity-50">Introducers</strong>
               </Col>
             </Row>
           </CardBody>
@@ -170,8 +159,8 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
       <UpdateOrganisationModal
         isOpen={isModalOpen}
         toggle={toggleUpdateModal}
-        slug={organisationInfo?.slug}
-        organisationData={organisationInfo}
+        slug={singleOrgInfo?.organization?.slug}
+        organisationData={singleOrgInfo}
       />
     </>
   );
