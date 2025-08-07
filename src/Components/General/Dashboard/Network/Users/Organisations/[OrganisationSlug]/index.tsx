@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
 import OrgAdvisers from "./Advisers/OrgAdvisers";
 import OrgCases from "./Cases/OrgCases";
+import OrgLendersChart from "./Charts/LendersChart/LendersChart";
+import OrgMortgagesChart from "./Charts/MortgagesChart/MortgagesChart";
 import OrgClients from "./Clients/OrgClients";
 import DangerZone from "./DangerZone/DangerZone";
 import OrgLeads from "./Leads/OrgLeads";
@@ -77,8 +79,18 @@ const SingleOrganisationContainer: React.FC = () => {
               isLoading={isLoading}
             />
           </Col>
-          <Col md="4"></Col>
-          <Col md="4"></Col>
+          <Col md="4">
+            <OrgMortgagesChart
+              singleOrgInfo={singleOrgInfo}
+              isLoading={isLoading}
+            />
+          </Col>
+          <Col md="4">
+            <OrgLendersChart
+              singleOrgInfo={singleOrgInfo}
+              isLoading={isLoading}
+            />
+          </Col>
         </Row>
         <Row>
           <Col md="12">
