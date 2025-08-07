@@ -14,6 +14,7 @@ import OrgClients from "./Clients/OrgClients";
 import DangerZone from "./DangerZone/DangerZone";
 import OrgLeads from "./Leads/OrgLeads";
 import OrganisationBanner from "./OrganisationProfile/OrganisationBanner";
+import Overview from "./Overview/Overview";
 
 const SingleOrganisationContainer: React.FC = () => {
   const [singleOrgInfo, setSingleOrgInfo] =
@@ -94,6 +95,7 @@ const SingleOrganisationContainer: React.FC = () => {
         </Row>
         <Row>
           <Col md="12">
+            <Overview singleOrgInfo={singleOrgInfo} isLoading={isLoading} />
             <OrgLeads />
             <OrgCases />
             <OrgClients />

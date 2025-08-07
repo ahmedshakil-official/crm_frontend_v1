@@ -31,7 +31,7 @@ export interface SingleOrganisationsProps {
     INVOICE_DISCOUNTING?: number;
     ASSET_FINANCE?: number;
     OTHER?: number;
-  }
+  };
   lender_counts: {
     ATOM_BANK?: number;
     ACCORD_MORTGAGES?: number;
@@ -117,6 +117,28 @@ export interface SingleOrganisationsProps {
     VIDA_HOMELOANS?: number;
     WEST_BROMWICH_BUILDING_SOCIETY?: number;
     WEST_ONE_LOANS?: number;
+  };
+  stage_counts: {
+    ENQUIRY?: number;
+    FACT_FIND?: number;
+    RESEARCH_COMPLIANCE_CHECK?: number;
+    DECISION_IN_PRINCIPLE?: number;
+    FULL_MORTGAGE_APPLICATION?: number;
+    OFFER_FROM_BANK?: number;
+    LEGAL?: number;
+    COMPLETION?: number;
+    FUTURE_OPPORTUNITY?: number;
+    NOT_PROCEED?: number;
+  };
+  category_counts: {
+    MORTGAGE?: number;
+    PROTECTION?: number;
+    GENERAL_INSURANCE?: number;
+  };
+  status_counts: {
+    NEW_LEAD?: number;
+    CALL_BACK?: number;
+    MEETING?: number;
   };
 }
 export interface FetchSingleOrganisationProps {
