@@ -1,5 +1,5 @@
 import { useGetOrganisationListQuery } from "@/Redux/Reducers/Network/Organisations/OrganisationListApi";
-import { OrganisationsProps } from "@/Types/Network/OrganisationsTypes";
+import { SingleOrganisationsProps } from "@/Types/Network/OrganisationsTypes";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -24,7 +24,9 @@ import AddOrganisationModal from "./Modals/AddOrganisationModal";
 import "./Organisations.css";
 
 const OrganisationsContainer = () => {
-  const [organisations, setOrganisations] = useState<OrganisationsProps[]>([]);
+  const [organisations, setOrganisations] = useState<
+    SingleOrganisationsProps[]
+  >([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -105,7 +107,7 @@ const OrganisationsContainer = () => {
                   <Spinner color="primary" />
                 </Row>
               ) : currentOrganisations && currentOrganisations?.length > 0 ? (
-                currentOrganisations.map((item) => (
+                currentOrganisations.map((item: any) => (
                   <Col
                     sm="6"
                     xxl="3"
