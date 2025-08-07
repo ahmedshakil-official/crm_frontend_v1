@@ -14,7 +14,7 @@ import {
 import "../../Organisations.css"; // Import external CSS for styling
 import UpdateOrganisationModal from "../Modals/UpdateOrganisationModal";
 
-const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
+const OrganisationProfile: React.FC<FetchSingleOrganisationProps> = ({
   singleOrgInfo,
   isLoading,
 }) => {
@@ -45,7 +45,7 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
                 className="rounded-top-3 w-100 object-fit-cover"
                 src={
                   singleOrgInfo?.organization?.profile_image ||
-                  "/assets/images/other-images/bg-profile.png"
+                  "/assets/images/network/bg-profile.jpg"
                 }
                 alt="Banner"
               />
@@ -166,4 +166,4 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
   );
 };
 
-export default OrganisationBanner;
+export default OrganisationProfile;

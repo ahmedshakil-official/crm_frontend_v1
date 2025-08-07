@@ -13,7 +13,7 @@ import OrgMortgagesChart from "./Charts/MortgagesChart/MortgagesChart";
 import OrgClients from "./Clients/OrgClients";
 import DangerZone from "./DangerZone/DangerZone";
 import OrgLeads from "./Leads/OrgLeads";
-import OrganisationBanner from "./OrganisationProfile/OrganisationBanner";
+import OrganisationProfile from "./OrganisationProfile/OrganisationProfile";
 import Overview from "./Overview/Overview";
 
 const SingleOrganisationContainer: React.FC = () => {
@@ -75,7 +75,7 @@ const SingleOrganisationContainer: React.FC = () => {
       <Container fluid>
         <Row>
           <Col md="4">
-            <OrganisationBanner
+            <OrganisationProfile
               singleOrgInfo={singleOrgInfo}
               isLoading={isLoading}
             />
