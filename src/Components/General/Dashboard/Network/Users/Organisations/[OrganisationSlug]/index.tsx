@@ -13,15 +13,15 @@ import DangerZone from "./DangerZone/DangerZone";
 import OrgLeads from "./Leads/OrgLeads";
 import OrganisationBanner from "./OrganisationProfile/OrganisationBanner";
 
-const OrganisationContainer: React.FC = () => {
-  const [organisationInfo, setOrganisationInfo] =
+const SingleOrganisationContainer: React.FC = () => {
+  const [singleOrgInfo, setSingleOrgInfo] =
     useState<SingleOrganisationsProps>();
   const { organisationslug } = useParams();
   const router = useRouter();
 
   // rtk hooks
   const {
-    data: organisationData,
+    data: singleOrgData,
     isLoading,
     isError,
   } = useGetSingleOrganisationQuery(
@@ -33,21 +33,21 @@ const OrganisationContainer: React.FC = () => {
 
   useEffect(() => {
     if (!isLoading) {
-      if (isError || !organisationData) {
+      if (isError || !singleOrgData) {
         router.push("/dashboard/network");
         toast.error("Find Wrong URL! Redirecting...");
         return;
       }
 
-      if (organisationData?.organization.slug !== organisationslug) {
+      if (singleOrgData?.organization.slug !== organisationslug) {
         router.push("/dashboard/network");
         toast.error("Find Wrong URL! Redirecting...");
         return;
       }
 
-      setOrganisationInfo(organisationData);
+      setSingleOrgInfo(singleOrgData);
     }
-  }, [organisationData, organisationslug, router, isLoading, isError]);
+  }, [singleOrgData, organisationslug, router, isLoading, isError]);
 
   if (isLoading) {
     return (
@@ -57,7 +57,7 @@ const OrganisationContainer: React.FC = () => {
     );
   }
 
-  if (isError || !organisationInfo) {
+  if (isError || !singleOrgInfo) {
     return null; // Will redirect in useEffect
   }
 
@@ -73,16 +73,20 @@ const OrganisationContainer: React.FC = () => {
         <Row>
           <Col md="4">
             <OrganisationBanner
-              organisationInfo={organisationInfo}
+              singleOrgInfo={singleOrgInfo}
               isLoading={isLoading}
             />
           </Col>
+          <Col md="4"></Col>
+          <Col md="4"></Col>
+        </Row>
+        <Row>
           <Col md="12">
             <OrgLeads />
             <OrgCases />
             <OrgClients />
             <OrgAdvisers />
-            <DangerZone organisationInfo={organisationInfo} />
+            <DangerZone singleOrgInfo={singleOrgInfo} />
           </Col>
         </Row>
       </Container>
@@ -90,4 +94,4 @@ const OrganisationContainer: React.FC = () => {
   );
 };
 
-export default OrganisationContainer;
+export default SingleOrganisationContainer;

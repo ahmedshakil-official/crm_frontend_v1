@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardHeader } from "reactstrap";
 import DeleteOrganisationModal from "../Modals/DeleteOrganisationModal";
 
 const DangerZone: React.FC<FetchSingleOrganisationProps> = ({
-  organisationInfo,
+  singleOrgInfo,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Toggle modal state
@@ -83,11 +83,11 @@ const DangerZone: React.FC<FetchSingleOrganisationProps> = ({
             </Button>
           </div>
           {/* Delete modal  */}
-          {organisationInfo?.slug && (
+          {singleOrgInfo?.organization?.slug && (
             <DeleteOrganisationModal
               isOpen={isModalOpen}
               toggle={toggleModal}
-              organisationInfo={organisationInfo}
+              organisationInfo={singleOrgInfo}
             />
           )}
         </CardBody>

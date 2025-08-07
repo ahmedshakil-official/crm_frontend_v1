@@ -23,7 +23,7 @@ export interface SingleOrganisationsProps {
   };
 }
 export interface FetchSingleOrganisationProps {
-  organisationInfo?: SingleOrganisationsProps | undefined;
+  singleOrgInfo?: SingleOrganisationsProps | undefined;
   fetchsetOrganisationInfo?: any;
   isLoading?: boolean;
 }
