@@ -71,11 +71,13 @@ const OrganisationContainer: React.FC = () => {
       />
       <Container fluid>
         <Row>
-          <Col md="12">
+          <Col md="4">
             <OrganisationBanner
               organisationInfo={organisationInfo}
               isLoading={isLoading}
             />
+          </Col>
+          <Col md="12">
             <OrgLeads />
             <OrgCases />
             <OrgClients />

@@ -1,6 +1,5 @@
 import { FetchSingleOrganisationProps } from "@/Types/Network/OrganisationsTypes";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import {
   Button,
@@ -41,8 +40,8 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
             {/* Banner Image inside the Card */}
             <div>
               <Image
-                width={1595}
-                height={300}
+                width={300}
+                height={200}
                 className="rounded-top-3 w-100 object-fit-cover"
                 src={
                   organisationInfo?.profile_image ||
@@ -84,24 +83,16 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
             </CardText>
 
             {/* Contact Details */}
-            <Row className="mt-4">
-              <Col md={4}>
+            <div className="mt-4 d-flex justify-content-between px-5">
+              <div>
                 <span className="text-muted">Email:</span>{" "}
                 {organisationInfo?.email ? (
                   <strong>{organisationInfo.email}</strong>
                 ) : (
                   <strong className="text-muted">Not Available</strong>
                 )}
-              </Col>
-              <Col md={4}>
-                <span className="text-muted">License No:</span>{" "}
-                {organisationInfo?.license_no ? (
-                  <strong>{organisationInfo?.license_no}</strong>
-                ) : (
-                  <strong className="text-muted">Not Available</strong>
-                )}
-              </Col>
-              <Col md={4}>
+              </div>
+              <div>
                 <span className="text-muted">Phone:</span>{" "}
                 {organisationInfo?.primary_mobile ? (
                   <strong>
@@ -115,52 +106,29 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
                 ) : (
                   <strong className="text-muted">Not Available</strong>
                 )}
-              </Col>
-            </Row>
-
-            <Row>
-              <Col md={12}>
-                <span className="text-muted">Location:</span>{" "}
-                {organisationInfo?.location ? (
-                  <strong>{organisationInfo?.location}</strong>
-                ) : (
-                  <strong className="text-muted">Not Available</strong>
-                )}
-              </Col>
-            </Row>
-
-            {/* Social Media */}
-            <div className="social-icons mt-3">
-              <Link href="">
-                <Button color="primary" className="mx-2">
-                  <i className="fa-brands fa-facebook-f"></i>
-                </Button>
-              </Link>
-              <Link href="">
-                <Button color="dark" className="mx-2">
-                  <i className="fa-brands fa-twitter"></i>
-                </Button>
-              </Link>
-              <Link href={`${organisationInfo?.website}`} target="_blank">
-                <Button color="success" className="mx-2">
-                  <i className="fa-solid fa-earth-americas"></i>
-                </Button>
-              </Link>
+              </div>
             </div>
-
             {/* Follower Count */}
-            <Row className="mt-4">
-              <Col md={4}>
-                <h5>4,656</h5>
-                <strong className="text-primary opacity-75">Cases</strong>
+            <Row className="mt-4 px-4">
+              <Col>
+                <h6 className="fw-bold">4,656</h6>
+                <strong className="small opacity-50">Cases</strong>
               </Col>
-              <Col md={4}>
-                <h5>4,656</h5>
-                <strong className="text-primary opacity-75">Employees</strong>
+              <Col>
+                <h6 className="fw-bold">4,656</h6>
+                <strong className="small opacity-50">Leads</strong>
               </Col>
-              <Col md={4}>
-                <h5>118,779</h5>
-                <strong className="text-primary opacity-75">Clients</strong>
+              <Col>
+                <h6 className="fw-bold">118,779</h6>
+                <strong className="small opacity-50">Clients</strong>
+              </Col>
+              <Col>
+                <h6 className="fw-bold">118,779</h6>
+                <strong className="small opacity-50">Advisers</strong>
+              </Col>
+              <Col>
+                <h6 className="fw-bold">118,779</h6>
+                <strong className="small opacity-50">Introducers</strong>
               </Col>
             </Row>
           </CardBody>
