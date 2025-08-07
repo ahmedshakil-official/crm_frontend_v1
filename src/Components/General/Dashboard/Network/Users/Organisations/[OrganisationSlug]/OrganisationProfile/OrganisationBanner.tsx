@@ -29,7 +29,7 @@ const OrganisationBanner: React.FC<FetchSingleOrganisationProps> = ({
       {isLoading ? (
         <Card
           className="d-flex justify-content-center align-items-center w-100"
-          style={{ height: "500px" }}
+          style={{ height: "400px" }}
         >
           <Spinner color="primary" />
         </Card>
