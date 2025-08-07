@@ -125,7 +125,7 @@ const OrgMortgagesChart: React.FC<FetchSingleOrganisationProps> = ({
             style={{ height: "340px", width: "100%" }}
             className="d-flex justify-content-center align-items-center py-5 text-muted"
           >
-            No data available yes
+            No data available yet
           </div>
         ) : (
           <Chart
