@@ -7,7 +7,6 @@ const LoanDetailsFormTab3: React.FC<LoanDetailsFormTab3Props> = ({
   caseStage,
   handleFormChange,
 }) => {
-  console.log("Stage: ", caseStage);
   return (
     <Form>
       <Row>
