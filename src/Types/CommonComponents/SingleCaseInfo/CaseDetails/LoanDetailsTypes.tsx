@@ -34,7 +34,7 @@ export interface LoanDetailsFormTab2Props {
     interest_only_amount: null | string;
     outstanding_balance: null | string;
     deposit_amount: number;
-    deposit_source:string | null;
+    deposit_source: string | null;
     current_monthly_payment: null | string;
     current_lender: string;
     original_purchase_price: number;
@@ -50,7 +50,19 @@ export interface LoanDetailsFormTab3Props {
     dip_expiry_date: string | null;
     expected_completion_date: string | null;
     product_expiry_date: string | null;
+    case_submitted: string | null;
+    valuation_instructed_date: string | null;
+    valuation_booked_date: string | null;
+    valuation_received_date: string | null;
+    valuation_expiry_date: string | null;
+    case_offered_date: string | null;
+    stage_expiry_date: string | null;
+    legals_instructed_date: string | null;
+    exchange_of_contracts_date: string | null;
+    case_completed_date: string | null;
+    review_date: string | null;
   };
+  caseStage?: string;
   handleFormChange: (
     name: string,
     value: string | number | boolean | null
@@ -58,15 +70,18 @@ export interface LoanDetailsFormTab3Props {
 }
 
 export interface LoanDetailsFormTab4Props {
-    formData: {
-      sale_type: string;
-      introduction_type: string;
-      lead_source: string;
-      introducer_payment_terms: string;
-      introducer_fee: string | null;
-      reasons_for_capital_raising: string;
-      accepted_or_declined_by_lender: boolean;
-      case_summary: string;
-    };
-    handleFormChange: (name: string, value: string|number|boolean|null) => void;
-  }
+  formData: {
+    sale_type: string;
+    introduction_type: string;
+    lead_source: string;
+    introducer_payment_terms: string;
+    introducer_fee: string | null;
+    reasons_for_capital_raising: string;
+    accepted_or_declined_by_lender: boolean;
+    case_summary: string;
+  };
+  handleFormChange: (
+    name: string,
+    value: string | number | boolean | null
+  ) => void;
+}
