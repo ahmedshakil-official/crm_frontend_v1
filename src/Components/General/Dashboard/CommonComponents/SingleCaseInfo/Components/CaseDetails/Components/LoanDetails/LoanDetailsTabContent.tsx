@@ -85,6 +85,17 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     dip_expiry_date: null as string | null,
     expected_completion_date: null as string | null,
     product_expiry_date: null as string | null,
+    case_submitted: null as string | null,
+    valuation_instructed_date: null as string | null,
+    valuation_booked_date: null as string | null,
+    valuation_received_date: null as string | null,
+    valuation_expiry_date: null as string | null,
+    case_offered_date: null as string | null,
+    stage_expiry_date: null as string | null,
+    legals_instructed_date: null as string | null,
+    exchange_of_contracts_date: null as string | null,
+    case_completed_date: null as string | null,
+    review_date: null as string | null,
   });
 
   const [formDataTab4, setFormDataTab4] = useState({
@@ -141,6 +152,20 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
         expected_completion_date:
           loandetailsData.expected_completion_date || null,
         product_expiry_date: loandetailsData.product_expiry_date || null,
+        case_submitted: loandetailsData.case_submitted || null,
+        valuation_instructed_date:
+          loandetailsData.valuation_instructed_date || null,
+        valuation_booked_date: loandetailsData.valuation_booked_date || null,
+        valuation_received_date:
+          loandetailsData.valuation_received_date || null,
+        valuation_expiry_date: loandetailsData.valuation_expiry_date || null,
+        case_offered_date: loandetailsData.case_offered_date || null,
+        stage_expiry_date: loandetailsData.stage_expiry_date || null,
+        legals_instructed_date: loandetailsData.legals_instructed_date || null,
+        exchange_of_contracts_date:
+          loandetailsData.exchange_of_contracts_date || null,
+        case_completed_date: loandetailsData.case_completed_date || null,
+        review_date: loandetailsData.review_date || null,
       });
 
       setFormDataTab4({
@@ -255,6 +280,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
         <TabPane tabId="3">
           <LoanDetailsFormTab3
             formData={formDataTab3}
+            caseStage={caseData?.case_stage}
             handleFormChange={(name, value) => handleFormChange(3, name, value)}
           />
           <Button color="primary" onClick={handleNext} className="float-end">
