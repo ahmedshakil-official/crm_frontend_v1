@@ -50,7 +50,6 @@ const OrganisationProfile: React.FC<FetchSingleOrganisationProps> = ({
                 alt="Banner"
               />
             </div>
-
             {/* Profile Image Positioned Over Banner */}
             <div className="profile-container">
               <Image
@@ -82,7 +81,6 @@ const OrganisationProfile: React.FC<FetchSingleOrganisationProps> = ({
                 )}
               </strong>
             </CardText>
-
             {/* Contact Details */}
             <div className="mt-4 d-flex justify-content-between px-4">
               <div>
