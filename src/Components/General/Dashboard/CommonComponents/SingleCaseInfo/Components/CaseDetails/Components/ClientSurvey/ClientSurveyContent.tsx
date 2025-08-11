@@ -58,6 +58,8 @@ const ClientSurveyContent: React.FC = () => {
   const [adviserName, setAdviserName] = React.useState<string>("");
   const [question2, setQuestion2] = React.useState<string>("");
   const [question3, setQuestion3] = React.useState<string>("");
+  const [question4, setQuestion4] = React.useState<string>("");
+
   const [clientSurvey, setClientSurvey] = React.useState<boolean>(false);
 
   // === STEP 1: Extract the Most Relevant Survey Record ===
@@ -99,6 +101,7 @@ const ClientSurveyContent: React.FC = () => {
       setAdviserName("");
       setQuestion2("");
       setQuestion3("");
+      setQuestion4("");
       setClientSurvey(false);
     }
   }, [selectedSurvey]);
@@ -115,6 +118,9 @@ const ClientSurveyContent: React.FC = () => {
   const handleQuestion3Change = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuestion3(e.target.value);
   };
+  const handleQuestion4Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuestion4(e.target.value);
+  };
 
   const handleClientSurveyChange = (value: boolean) => {
     setClientSurvey(value);
@@ -125,6 +131,7 @@ const ClientSurveyContent: React.FC = () => {
         adviser_name: adviserName.trim(),
         is_clarification_explanation_of_the_service_firm: question2,
         is_timely_service_delivery: question3,
+        is_helpfulness_representative: question4,
         client_survey: value,
       };
 
@@ -157,6 +164,7 @@ const ClientSurveyContent: React.FC = () => {
       adviser_name: adviserName.trim(),
       is_clarification_explanation_of_the_service_firm: question2,
       is_timely_service_delivery: question3,
+      is_helpfulness_representative: question4,
       client_survey: clientSurvey,
     };
 
@@ -357,6 +365,32 @@ const ClientSurveyContent: React.FC = () => {
                           value={option.value}
                           checked={question3 === option.value}
                           onChange={handleQuestion3Change}
+                          disabled={isUpdating}
+                        />
+                        <span className="ms-1">{option.label}</span>
+                      </div>
+                    ))}
+                  </FormGroup>
+                </Col>
+              </Row>
+              {/* Question 4 */}
+              <Row className="border-2 border-l-primary border-r-primary border-b-primary p-2">
+                <Col md={6}>
+                  <Label>The helpfulness of any representative of the firm who you dealt with.</Label>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    {ANSWER_OPTIONS.map((option) => (
+                      <div
+                        key={option.value}
+                        className="d-flex align-items-center mb-1"
+                      >
+                        <Input
+                          type="radio"
+                          name="question4"
+                          value={option.value}
+                          checked={question4 === option.value}
+                          onChange={handleQuestion4Change}
                           disabled={isUpdating}
                         />
                         <span className="ms-1">{option.label}</span>
