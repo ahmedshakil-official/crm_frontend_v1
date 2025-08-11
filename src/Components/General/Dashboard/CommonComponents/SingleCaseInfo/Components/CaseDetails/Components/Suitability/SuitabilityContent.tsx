@@ -2424,7 +2424,7 @@ const SuitabilityContent: React.FC = () => {
           </CardBody>
         </Card>
 
-        {/* Button for save changes */}
+        {/* Buttons */}
         <div className="d-flex justify-content-end mt-3 mb-0 gap-2">
           <Button
             color="primary"

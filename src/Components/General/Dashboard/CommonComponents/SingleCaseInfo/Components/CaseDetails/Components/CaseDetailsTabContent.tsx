@@ -3,6 +3,7 @@ import { TabContent } from "reactstrap";
 import { AdverseTab } from "./Adverse/AdverseTab";
 import { ApplicantsDetailsTab } from "./ApplicantsDetails/ApplicantsDetailsTab";
 import BudgetPlanner from "./BudgetPlanner/BudgetPlanner";
+import ClientSurveyContent from "./ClientSurvey/ClientSurveyContent";
 import { ComplianceTab } from "./Compliance/ComplianceTab";
 import CreditCommitmentsContent from "./CreditCommitments/CreditCommitmentsContent";
 import DIPHistoryTab from "./DIPHistory/DIPHistoryTab";
@@ -38,6 +39,7 @@ const tabComponents: Record<string, React.FC> = {
   Suitability: SuitabilityContent,
   Fees: FeesTab,
   Compliance: ComplianceTab,
+  "Client Survey": ClientSurveyContent,
 };
 
 export const CaseDetailsTabContent: React.FC = () => {
