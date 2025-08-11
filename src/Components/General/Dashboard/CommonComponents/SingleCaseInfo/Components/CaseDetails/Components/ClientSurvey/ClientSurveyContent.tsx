@@ -57,6 +57,7 @@ const ClientSurveyContent: React.FC = () => {
   const [adviserName, setAdviserName] = React.useState<string>("");
   const [question2, setQuestion2] = React.useState<string>("");
   const [question3, setQuestion3] = React.useState<string>("");
+  const [clientSurvey, setClientSurvey] = React.useState<boolean>(false);
 
   // === STEP 1: Extract the Most Relevant Survey Record ===
   const selectedSurvey = useMemo(() => {
@@ -91,11 +92,13 @@ const ClientSurveyContent: React.FC = () => {
         selectedSurvey.is_clarification_explanation_of_the_service_firm || ""
       );
       setQuestion3(selectedSurvey.is_timely_service_delivery || "");
+      setClientSurvey(selectedSurvey.client_survey || false);
     } else {
       // No existing survey — initialize as empty
       setAdviserName("");
       setQuestion2("");
       setQuestion3("");
+      setClientSurvey(false);
     }
   }, [selectedSurvey]);
 
@@ -112,6 +115,35 @@ const ClientSurveyContent: React.FC = () => {
     setQuestion3(e.target.value);
   };
 
+  const handleClientSurveyChange = (value: boolean) => {
+    setClientSurvey(value);
+    // Auto-update when clicked
+    if (surveyAlias) {
+      const payload = {
+        case_alias: casealias,
+        adviser_name: adviserName.trim(),
+        is_clarification_explanation_of_the_service_firm: question2,
+        is_timely_service_delivery: question3,
+        client_survey: value,
+      };
+
+      updateClientSurvey({
+        case_alias: casealias,
+        survey_alias: surveyAlias,
+        payload,
+      })
+        .unwrap()
+        .then(() => {
+          toast.success("Client survey updated successfully!");
+        })
+        .catch((error) => {
+          toast.error("Failed to update client survey.");
+          // Revert the state if update fails
+          setClientSurvey(!value);
+        });
+    }
+  };
+
   // === STEP 5: Final Submit (Validation) ===
   // In handleSubmit
   const handleSubmit = async (e: React.FormEvent) => {
@@ -124,6 +156,7 @@ const ClientSurveyContent: React.FC = () => {
       adviser_name: adviserName.trim(),
       is_clarification_explanation_of_the_service_firm: question2,
       is_timely_service_delivery: question3,
+      client_survey: clientSurvey,
     };
 
     try {
@@ -174,138 +207,186 @@ const ClientSurveyContent: React.FC = () => {
     <Card>
       <CardBody>
         {/* Info Banner */}
-        {selectedSurvey === null ? (
-          <Alert color="info" className="mb-4">
-            No survey data found. A new survey will be created when you save.
-          </Alert>
-        ) : (
-          <p className="text-muted small mb-3">
-            Editing survey submitted on{" "}
-            {new Date(selectedSurvey.updated_at).toLocaleDateString()}{" "}
-            {selectedSurvey.adviser_name && (
-              <>
-                by <strong>{selectedSurvey.adviser_name}</strong>
-              </>
+        <div className="d-flex justify-content-between">
+          {session?.user?.user_type !== "CLIENT" && (
+            <div>
+              <Form>
+                <FormGroup>
+                  <div className="d-flex align-items-center mb-3">
+                    <Label className="me-3 mb-0">Client Survey:</Label>
+                    <div className="d-flex gap-2">
+                      <Button
+                        color={clientSurvey ? "success" : "outline-success"}
+                        size="sm"
+                        onClick={() => handleClientSurveyChange(true)}
+                        disabled={isUpdating}
+                      >
+                        Yes
+                      </Button>
+                      <Button
+                        color={!clientSurvey ? "danger" : "outline-danger"}
+                        size="sm"
+                        onClick={() => handleClientSurveyChange(false)}
+                        disabled={isUpdating}
+                      >
+                        No
+                      </Button>
+                    </div>
+                  </div>
+                </FormGroup>
+              </Form>
+            </div>
+          )}
+          <div>
+            {selectedSurvey === null ? (
+              <Alert color="info" className="mb-4">
+                No survey data found. A new survey will be created when you
+                save.
+              </Alert>
+            ) : new Date(selectedSurvey?.created_at)
+                .toISOString()
+                .slice(0, 16) ===
+              new Date(selectedSurvey?.updated_at)
+                .toISOString()
+                .slice(0, 16) ? (
+              ""
+            ) : (
+              <p className="text-muted small mb-3">
+                Editing survey submitted on{" "}
+                {new Date(selectedSurvey.updated_at).toLocaleDateString()}{" "}
+              </p>
             )}
+          </div>
+        </div>
+        {selectedSurvey?.client_survey ? (
+          <>
+            {/* Header */}
+            <Row className="mb-3 d-flex justify-content-between gap-3">
+              <Col className="border-b-primary border-2">
+                <h3 className="text-center">Questions</h3>
+              </Col>
+              <Col className="border-b-primary border-2">
+                <h3 className="text-center">Answers</h3>
+              </Col>
+            </Row>
+            <Form onSubmit={handleSubmit}>
+              {/* Question 1: Adviser Name */}
+              <Row className="border-top border-primary border-2 p-2">
+                <Col md={6}>
+                  <Label htmlFor="adviserName">Your Adviser Name*</Label>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Input
+                      type="text"
+                      id="adviserName"
+                      name="adviser_name"
+                      placeholder="Enter adviser name"
+                      required
+                      value={adviserName}
+                      onChange={handleAdviserNameChange}
+                      disabled={isUpdating}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              {/* Question 2 */}
+              <Row className="border-2 border-l-primary border-r-primary border-b-primary p-2">
+                <Col md={6}>
+                  <Label>
+                    The clarification and explanation of the service to be
+                    provided by the firm.
+                  </Label>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    {ANSWER_OPTIONS.map((option) => (
+                      <div
+                        key={option.value}
+                        className="d-flex align-items-center mb-1"
+                      >
+                        <Input
+                          type="radio"
+                          name="question2"
+                          value={option.value}
+                          checked={question2 === option.value}
+                          onChange={handleQuestion2Change}
+                          disabled={isUpdating}
+                        />
+                        <span className="ms-1">{option.label}</span>
+                      </div>
+                    ))}
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              {/* Question 3 */}
+              <Row className="border-2 border-l-primary border-r-primary border-b-primary p-2">
+                <Col md={6}>
+                  <Label>The timely delivery of the service by the firm.</Label>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    {ANSWER_OPTIONS.map((option) => (
+                      <div
+                        key={option.value}
+                        className="d-flex align-items-center mb-1"
+                      >
+                        <Input
+                          type="radio"
+                          name="question3"
+                          value={option.value}
+                          checked={question3 === option.value}
+                          onChange={handleQuestion3Change}
+                          disabled={isUpdating}
+                        />
+                        <span className="ms-1">{option.label}</span>
+                      </div>
+                    ))}
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              {/* Action Buttons */}
+              <div className="d-flex justify-content-end mt-4 gap-2">
+                <Button color="primary" type="submit" disabled={isUpdating}>
+                  {isUpdating ? "Saving..." : "Save Changes"}
+                </Button>
+
+                <Button
+                  color="secondary"
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    if (
+                      session?.user?.user_type === "CLIENT" &&
+                      selectedSurvey?.updated_by !== null
+                    ) {
+                      handleNextTab();
+                    } else {
+                      await handleSubmit(e);
+                      handleNextTab();
+                    }
+                  }}
+                  disabled={isUpdating}
+                >
+                  {session?.user?.user_type === "CLIENT"
+                    ? "Go To Next"
+                    : "Save & Next"}
+                </Button>
+              </div>
+            </Form>
+          </>
+        ) : session?.user?.user_type === "CLIENT" ? (
+          <p className="fs-3 text-muted text-center text-warning mb-3">
+            Client survey is not enabled. Please! contact your adviser to enable
+            it.
+          </p>
+        ) : (
+          <p className="fs-3 text-muted text-center text-warning mb-3">
+            Survey is not enabled. Please! enable it.
           </p>
         )}
-        {/* Header */}
-        <Row className="mb-3 d-flex justify-content-between gap-3">
-          <Col className="border-b-primary border-2">
-            <h3 className="text-center">Questions</h3>
-          </Col>
-          <Col className="border-b-primary border-2">
-            <h3 className="text-center">Answers</h3>
-          </Col>
-        </Row>
-        <Form onSubmit={handleSubmit}>
-          {/* Question 1: Adviser Name */}
-          <Row className="border-top border-primary border-2 p-2">
-            <Col md={6}>
-              <Label htmlFor="adviserName">Your Adviser Name*</Label>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Input
-                  type="text"
-                  id="adviserName"
-                  name="adviser_name"
-                  placeholder="Enter adviser name"
-                  required
-                  value={adviserName}
-                  onChange={handleAdviserNameChange}
-                  disabled={isUpdating}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-
-          {/* Question 2 */}
-          <Row className="border-2 border-l-primary border-r-primary border-b-primary p-2">
-            <Col md={6}>
-              <Label>
-                The clarification and explanation of the service to be provided
-                by the firm.
-              </Label>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                {ANSWER_OPTIONS.map((option) => (
-                  <div
-                    key={option.value}
-                    className="d-flex align-items-center mb-1"
-                  >
-                    <Input
-                      type="radio"
-                      name="question2"
-                      value={option.value}
-                      checked={question2 === option.value}
-                      onChange={handleQuestion2Change}
-                      disabled={isUpdating}
-                    />
-                    <span className="ms-1">{option.label}</span>
-                  </div>
-                ))}
-              </FormGroup>
-            </Col>
-          </Row>
-
-          {/* Question 3 */}
-          <Row className="border-2 border-l-primary border-r-primary border-b-primary p-2">
-            <Col md={6}>
-              <Label>The timely delivery of the service by the firm.</Label>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                {ANSWER_OPTIONS.map((option) => (
-                  <div
-                    key={option.value}
-                    className="d-flex align-items-center mb-1"
-                  >
-                    <Input
-                      type="radio"
-                      name="question3"
-                      value={option.value}
-                      checked={question3 === option.value}
-                      onChange={handleQuestion3Change}
-                      disabled={isUpdating}
-                    />
-                    <span className="ms-1">{option.label}</span>
-                  </div>
-                ))}
-              </FormGroup>
-            </Col>
-          </Row>
-
-          {/* Action Buttons */}
-          <div className="d-flex justify-content-end mt-4 gap-2">
-            <Button
-              color="primary"
-              type="submit"
-              disabled={isUpdating || session?.user?.user_type === "CLIENT"}
-            >
-              {isUpdating ? "Saving..." : "Save Changes"}
-            </Button>
-
-            <Button
-              color="secondary"
-              onClick={async (e) => {
-                e.preventDefault();
-                if (session?.user?.user_type === "CLIENT") {
-                  handleNextTab();
-                } else {
-                  await handleSubmit(e);
-                  handleNextTab();
-                }
-              }}
-              disabled={isUpdating}
-            >
-              {session?.user?.user_type === "CLIENT"
-                ? "Go To Next"
-                : "Save & Next"}
-            </Button>
-          </div>
-        </Form>
       </CardBody>
     </Card>
   );
