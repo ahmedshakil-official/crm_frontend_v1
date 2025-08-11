@@ -13,6 +13,7 @@ import React, { useEffect, useMemo } from "react";
 import { toast } from "react-toastify";
 import {
   Alert,
+  Badge,
   Button,
   Card,
   CardBody,
@@ -232,6 +233,16 @@ const ClientSurveyContent: React.FC = () => {
                         No
                       </Button>
                     </div>
+                    <Badge
+                      color={
+                        selectedSurvey?.client_survey ? "success" : "danger"
+                      }
+                      className="ms-2"
+                    >
+                      {selectedSurvey?.client_survey
+                        ? "Enabled for Client"
+                        : "Disabled for Client"}
+                    </Badge>
                   </div>
                 </FormGroup>
               </Form>
@@ -251,14 +262,21 @@ const ClientSurveyContent: React.FC = () => {
                 .slice(0, 16) ? (
               ""
             ) : (
-              <p className="text-muted small mb-3">
-                Editing survey submitted on{" "}
-                {new Date(selectedSurvey.updated_at).toLocaleDateString()}{" "}
-              </p>
+              session?.user?.user_type !== "CLIENT" && (
+                <p className="text-muted small mb-3">
+                  Editing survey submitted on{" "}
+                  {new Date(selectedSurvey.updated_at).toLocaleDateString()} by{" "}
+                  <span className="fw-bold">
+                    {selectedSurvey.updated_by?.first_name}{" "}
+                    {selectedSurvey.updated_by?.last_name}
+                  </span>
+                </p>
+              )
             )}
           </div>
         </div>
-        {selectedSurvey?.client_survey ? (
+        {session?.user?.user_type !== "CLIENT" ||
+        !!selectedSurvey?.client_survey ? (
           <>
             {/* Header */}
             <Row className="mb-3 d-flex justify-content-between gap-3">
@@ -377,14 +395,10 @@ const ClientSurveyContent: React.FC = () => {
               </div>
             </Form>
           </>
-        ) : session?.user?.user_type === "CLIENT" ? (
+        ) : (
           <p className="fs-3 text-muted text-center text-warning mb-3">
             Client survey is not enabled. Please! contact your adviser to enable
             it.
-          </p>
-        ) : (
-          <p className="fs-3 text-muted text-center text-warning mb-3">
-            Survey is not enabled. Please! enable it.
           </p>
         )}
       </CardBody>
