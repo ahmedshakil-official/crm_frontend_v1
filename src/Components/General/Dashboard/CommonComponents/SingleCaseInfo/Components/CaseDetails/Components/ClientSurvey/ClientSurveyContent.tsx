@@ -95,6 +95,7 @@ const ClientSurveyContent: React.FC = () => {
         selectedSurvey.is_clarification_explanation_of_the_service_firm || ""
       );
       setQuestion3(selectedSurvey.is_timely_service_delivery || "");
+      setQuestion4(selectedSurvey.is_helpfulness_representative || "");
       setClientSurvey(selectedSurvey.client_survey || false);
     } else {
       // No existing survey — initialize as empty
@@ -107,20 +108,25 @@ const ClientSurveyContent: React.FC = () => {
   }, [selectedSurvey]);
 
   // === STEP 4: Handlers ===
-  const handleAdviserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAdviserName(e.target.value);
-  };
-
-  const handleQuestion2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuestion2(e.target.value);
-  };
-
-  const handleQuestion3Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuestion3(e.target.value);
-  };
-  const handleQuestion4Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuestion4(e.target.value);
-  };
+  const handleInputChange =
+    (field: "adviserName" | "question2" | "question3" | "question4") =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      switch (field) {
+        case "adviserName":
+          setAdviserName(value);
+          break;
+        case "question2":
+          setQuestion2(value);
+          break;
+        case "question3":
+          setQuestion3(value);
+          break;
+        case "question4":
+          setQuestion4(value);
+          break;
+      }
+    };
 
   const handleClientSurveyChange = (value: boolean) => {
     setClientSurvey(value);
@@ -310,7 +316,7 @@ const ClientSurveyContent: React.FC = () => {
                       placeholder="Enter adviser name"
                       required
                       value={adviserName}
-                      onChange={handleAdviserNameChange}
+                      onChange={handleInputChange("adviserName")}
                       disabled={isUpdating}
                     />
                   </FormGroup>
@@ -337,7 +343,7 @@ const ClientSurveyContent: React.FC = () => {
                           name="question2"
                           value={option.value}
                           checked={question2 === option.value}
-                          onChange={handleQuestion2Change}
+                          onChange={handleInputChange("question2")}
                           disabled={isUpdating}
                         />
                         <span className="ms-1">{option.label}</span>
@@ -364,7 +370,7 @@ const ClientSurveyContent: React.FC = () => {
                           name="question3"
                           value={option.value}
                           checked={question3 === option.value}
-                          onChange={handleQuestion3Change}
+                          onChange={handleInputChange("question3")}
                           disabled={isUpdating}
                         />
                         <span className="ms-1">{option.label}</span>
@@ -376,7 +382,10 @@ const ClientSurveyContent: React.FC = () => {
               {/* Question 4 */}
               <Row className="border-2 border-l-primary border-r-primary border-b-primary p-2">
                 <Col md={6}>
-                  <Label>The helpfulness of any representative of the firm who you dealt with.</Label>
+                  <Label>
+                    The helpfulness of any representative of the firm who you
+                    dealt with.
+                  </Label>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
@@ -390,7 +399,7 @@ const ClientSurveyContent: React.FC = () => {
                           name="question4"
                           value={option.value}
                           checked={question4 === option.value}
-                          onChange={handleQuestion4Change}
+                          onChange={handleInputChange("question4")}
                           disabled={isUpdating}
                         />
                         <span className="ms-1">{option.label}</span>
