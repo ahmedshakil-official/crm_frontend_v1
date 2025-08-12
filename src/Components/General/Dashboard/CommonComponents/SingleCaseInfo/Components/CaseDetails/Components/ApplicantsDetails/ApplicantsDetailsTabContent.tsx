@@ -156,6 +156,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     new_address_address_one: null,
     new_address_address_two: null,
     new_address_city: null,
+    new_address_county: null,
+    new_address_postcode: null,
+    new_address_country: null,
+    new_address_effective_from: null,
     updated_by: "",
   });
 
@@ -1690,6 +1694,185 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                       value={formValues.landlord_county || ""}
                       onChange={(e) =>
                         handleInputChange("landlord_county", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </>
+            ) : null}
+          </Row>
+          <Row className="border-light rounded p-2">
+            <Col md={12}>
+              <FormGroup>
+                <Label for="intend_to_move_into_the_new_property">
+                  Do you intend to move into the new property immediately after
+                  completion?
+                </Label>
+                <div className="d-flex flex-wrap">
+                  <Button
+                    className="me-2"
+                    color={
+                      formValues.intend_to_move_into_the_new_property
+                        ? "primary"
+                        : "outline-primary"
+                    }
+                    onClick={() =>
+                      handleInputChange(
+                        "intend_to_move_into_the_new_property",
+                        true
+                      )
+                    }
+                  >
+                    Yes
+                  </Button>
+                  <Button
+                    className="me-2"
+                    color={
+                      !formValues.intend_to_move_into_the_new_property
+                        ? "primary"
+                        : "outline-primary"
+                    }
+                    onClick={() =>
+                      handleInputChange(
+                        "intend_to_move_into_the_new_property",
+                        false
+                      )
+                    }
+                  >
+                    No
+                  </Button>
+                </div>
+              </FormGroup>
+            </Col>
+            {formValues.intend_to_move_into_the_new_property === true ? (
+              <>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="new_address_house_number_or_name">
+                      New Address House Number or Name
+                    </Label>
+                    <Input
+                      id="new_address_house_number_or_name"
+                      type="text"
+                      readOnly
+                      value={formValues.new_address_house_number_or_name || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "new_address_house_number_or_name",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="new_address_address_one">Address Line 1</Label>
+                    <Input
+                      id="new_address_address_one"
+                      type="text"
+                      readOnly
+                      value={formValues.new_address_address_one || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "new_address_address_one",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="new_address_address_two">Address Line 2</Label>
+                    <Input
+                      id="new_address_address_two"
+                      type="text"
+                      readOnly
+                      value={formValues.new_address_address_two || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "new_address_address_two",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="new_address_city">City</Label>
+                    <Input
+                      id="new_address_city"
+                      type="text"
+                      readOnly
+                      value={formValues.new_address_city || ""}
+                      onChange={(e) =>
+                        handleInputChange("new_address_city", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="new_address_county">County</Label>
+                    <Input
+                      id="new_address_county"
+                      type="text"
+                      readOnly
+                      value={formValues.new_address_county || ""}
+                      onChange={(e) =>
+                        handleInputChange("new_address_county", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="new_address_postcode">Postcode</Label>
+                    <Input
+                      id="new_address_postcode"
+                      type="text"
+                      readOnly
+                      value={formValues.new_address_postcode || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "new_address_postcode",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="new_address_country">Country</Label>
+                    <Input
+                      id="new_address_country"
+                      type="text"
+                      readOnly
+                      value={formValues.new_address_country || ""}
+                      onChange={(e) =>
+                        handleInputChange("new_address_country", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="new_address_effective_from">
+                      Effective From
+                    </Label>
+                    <Input
+                      id="new_address_effective_from"
+                      type="text"
+                      readOnly
+                      value={formValues.new_address_effective_from || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "new_address_effective_from",
+                          e.target.value
+                        )
                       }
                     />
                   </FormGroup>

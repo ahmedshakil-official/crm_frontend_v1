@@ -81,6 +81,10 @@ export interface ApplicantProps {
   new_address_address_one: string | null;
   new_address_address_two: string | null;
   new_address_city: string | null;
+  new_address_county: string | null;
+  new_address_postcode: string | null;
+  new_address_country: string | null;
+  new_address_effective_from: string | null;
   updated_by?: any;
 }
 
