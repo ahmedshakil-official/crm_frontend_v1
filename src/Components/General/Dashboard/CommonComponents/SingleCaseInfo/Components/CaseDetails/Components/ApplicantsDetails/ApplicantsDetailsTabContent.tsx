@@ -141,6 +141,21 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     tenure: "",
     year_built: 0,
     notes: "",
+    rental_monthly_payment: null,
+    landlord_name: null,
+    landlord_telephone: null,
+    landlord_email: null,
+    landlord_address_postcode: null,
+    landlord_house_number_or_name: null,
+    landlord_address_line_one: null,
+    landlord_city: null,
+    landlord_county: null,
+    landlord_country: null,
+    intend_to_move_into_the_new_property: false,
+    new_address_house_number_or_name: null,
+    new_address_address_one: null,
+    new_address_address_two: null,
+    new_address_city: null,
     updated_by: "",
   });
 
@@ -1536,7 +1551,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   <FormGroup>
                     <Label for="year_built">Year Built</Label>
                     <Input
-                      id="mortgage_not_to_complete_until_erc_ended"
+                      id="year_built"
                       type="number"
                       value={formValues.year_built || ""}
                       onChange={(e) =>
@@ -1547,6 +1562,140 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
               </>
             )}
+            {formValues.residential_status === "RENTING_PRIVATE" ||
+            formValues.residential_status === "RENTING_LOCAL_AUTHORITY" ? (
+              <>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="rental_monthly_payment">
+                      Rental Monthly Payment
+                    </Label>
+                    <Input
+                      id="rental_monthly_payment"
+                      type="number"
+                      value={formValues.rental_monthly_payment || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "rental_monthly_payment",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="landlord_name">Landlord Name</Label>
+                    <Input
+                      id="landlord_name"
+                      type="text"
+                      value={formValues.landlord_name || ""}
+                      onChange={(e) =>
+                        handleInputChange("landlord_name", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="landlord_telephone">Landlord's Telephone</Label>
+                    <Input
+                      id="landlord_telephone"
+                      type="text"
+                      value={formValues.landlord_telephone || ""}
+                      onChange={(e) =>
+                        handleInputChange("landlord_telephone", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="landlord_email">Landlord's Email</Label>
+                    <Input
+                      id="landlord_email"
+                      type="email"
+                      value={formValues.landlord_email || ""}
+                      onChange={(e) =>
+                        handleInputChange("landlord_email", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <h3 className="mb-2 mt-2">Landlord Address</h3>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="landlord_address_postcode">Postcode</Label>
+                    <Input
+                      id="landlord_address_postcode"
+                      type="text"
+                      value={formValues.landlord_address_postcode || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "landlord_address_postcode",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="landlord_address_line_1">Address Line 1</Label>
+                    <Input
+                      id="landlord_address_line_1"
+                      type="text"
+                      value={formValues.landlord_address_line_one || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "landlord_address_line_one",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="landlord_city">City</Label>
+                    <Input
+                      id="landlord_city"
+                      type="text"
+                      value={formValues.landlord_city || ""}
+                      onChange={(e) =>
+                        handleInputChange("landlord_city", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="landlord_country">Country</Label>
+                    <Input
+                      id="landlord_country"
+                      type="text"
+                      value={formValues.landlord_country || ""}
+                      onChange={(e) =>
+                        handleInputChange("landlord_country", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="landlord_county">County</Label>
+                    <Input
+                      id="landlord_county"
+                      type="text"
+                      value={formValues.landlord_county || ""}
+                      onChange={(e) =>
+                        handleInputChange("landlord_county", e.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </>
+            ) : null}
           </Row>
           <Row>
             <Col md={12}>
