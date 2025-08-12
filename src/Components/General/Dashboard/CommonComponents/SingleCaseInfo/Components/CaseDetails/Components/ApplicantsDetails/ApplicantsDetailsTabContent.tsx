@@ -84,6 +84,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     is_company_application: false,
     title: "",
     maiden_name: "",
+    date_of_name_change: "",
     date_of_birth: "",
     anticipated_retirement_age: 0,
     state_retirement_age: 0,
@@ -332,8 +333,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </FormText>
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="middle_name">Middle Name(s)</Label>
@@ -362,8 +361,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </FormText>
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="maiden_name">Maiden / Previous Last Name</Label>
@@ -377,6 +374,23 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 />
               </FormGroup>
             </Col>
+            {formValues?.maiden_name && (
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="date_of_name_change">
+                    Date of Maiden Name Change (if applicable)
+                  </Label>
+                  <Input
+                    id="date_of_name_change"
+                    type="date"
+                    value={formValues.date_of_name_change || ""}
+                    onChange={(e) =>
+                      handleInputChange("date_of_name_change", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+            )}
             <Col md={6}>
               <Row>
                 <Col md={8}>
@@ -433,9 +447,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 </Col>
               </Row>
             </Col>
-          </Row>
-
-          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="anticipated_retirement_age">
@@ -468,10 +479,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 />
               </FormGroup>
             </Col>
-          </Row>
 
-          {/* Additional Fields */}
-          <Row>
+            {/* Additional Fields */}
             <Col md={6}>
               <FormGroup>
                 <Label for="nationality">Nationality</Label>
@@ -522,8 +531,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 ))}
               </FormGroup>
             </Col>
-          </Row>
-          <Row>
             <Col md={6}>
               <FormGroup>
                 <Label for="marital_status">Marital Status</Label>
@@ -1870,11 +1877,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                             formValues.new_address_country
                               ? formValues.new_address_country
                                   .split("_")
-                                  .map(
-                                    (word) =>
-                                      word
-                                        .toLowerCase()
-                                        .replace(/\b\w/g, (l) => l.toUpperCase())
+                                  .map((word) =>
+                                    word
+                                      .toLowerCase()
+                                      .replace(/\b\w/g, (l) => l.toUpperCase())
                                   )
                                   .join(" ")
                               : ""

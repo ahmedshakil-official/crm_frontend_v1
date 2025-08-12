@@ -8,6 +8,7 @@ export interface ApplicantProps {
   };
   title: string;
   maiden_name: string;
+  date_of_name_change: string;
   date_of_birth: string;
   anticipated_retirement_age: number;
   state_retirement_age: number;
