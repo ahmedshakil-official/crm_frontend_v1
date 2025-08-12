@@ -101,15 +101,7 @@ const ClientSurveyContent: React.FC = () => {
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
 
-    // Prefer a survey that has meaningful data (not placeholder)
-    const validSurvey = sorted.find((survey) => {
-      const hasAdviser =
-        survey.adviser_name &&
-        !["", "N/A", "n/a", "na", "NA"].includes(survey.adviser_name.trim());
-      return hasAdviser;
-    });
-
-    return validSurvey || sorted[0]; // fallback to latest
+    return sorted[0];
   }, [clientSurveyList]);
 
   // === STEP 2: Generate surveyAlias for update ===
@@ -379,7 +371,7 @@ const ClientSurveyContent: React.FC = () => {
       const payload = {
         case_alias: casealias,
         client_survey: value,
-        adviser_name: adviserName.trim(),
+        adviser_name: adviserName,
         is_clarification_explanation_of_the_service_firm: question2,
         is_timely_service_delivery: question3,
         is_helpfulness_representative: question4,
@@ -1444,7 +1436,7 @@ const ClientSurveyContent: React.FC = () => {
                       {["Yes", "No"].map((option) => (
                         <div
                           key={option}
-                          className="d-flex align-items-center mb-1 me-3"
+                          className="d-flex align-items-center me-3"
                         >
                           <Input
                             type="radio"
