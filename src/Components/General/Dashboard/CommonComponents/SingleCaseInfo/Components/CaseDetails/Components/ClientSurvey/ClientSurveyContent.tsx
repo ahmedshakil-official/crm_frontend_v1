@@ -55,6 +55,7 @@ const ClientSurveyContent: React.FC = () => {
     useUpdateClientSurveyMutation();
 
   // Local form state
+  const [clientSurvey, setClientSurvey] = React.useState<boolean>(false);
   const [adviserName, setAdviserName] = React.useState<string>("");
   const [question2, setQuestion2] = React.useState<string>("");
   const [question3, setQuestion3] = React.useState<string>("");
@@ -85,8 +86,9 @@ const ClientSurveyContent: React.FC = () => {
   const [question28, setQuestion28] = React.useState<string>("");
   const [question29, setQuestion29] = React.useState<string>("");
   const [question30, setQuestion30] = React.useState<string>("");
-
-  const [clientSurvey, setClientSurvey] = React.useState<boolean>(false);
+  const [name, setName] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
+  const [phoneNumber, setPhoneNumber] = React.useState<string>("");
 
   // === STEP 1: Extract the Most Relevant Survey Record ===
   const selectedSurvey = useMemo(() => {
@@ -99,15 +101,7 @@ const ClientSurveyContent: React.FC = () => {
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
 
-    // Prefer a survey that has meaningful data (not placeholder)
-    const validSurvey = sorted.find((survey) => {
-      const hasAdviser =
-        survey.adviser_name &&
-        !["", "N/A", "n/a", "na", "NA"].includes(survey.adviser_name.trim());
-      return hasAdviser;
-    });
-
-    return validSurvey || sorted[0]; // fallback to latest
+    return sorted[0];
   }, [clientSurveyList]);
 
   // === STEP 2: Generate surveyAlias for update ===
@@ -116,6 +110,7 @@ const ClientSurveyContent: React.FC = () => {
   // === STEP 3: Sync form state when selectedSurvey changes ===
   useEffect(() => {
     if (selectedSurvey && typeof selectedSurvey === "object") {
+      setClientSurvey(selectedSurvey.client_survey || false);
       setAdviserName(selectedSurvey.adviser_name || "");
       setQuestion2(
         selectedSurvey.is_clarification_explanation_of_the_service_firm || ""
@@ -180,10 +175,13 @@ const ClientSurveyContent: React.FC = () => {
       setQuestion29(
         selectedSurvey.have_any_further_comments_on_the_service_received || ""
       );
-
-      setClientSurvey(selectedSurvey.client_survey || false);
+      setQuestion30(selectedSurvey.do_you_like_someone_to_contact_you || "");
+      setName(selectedSurvey.name || "");
+      setEmail(selectedSurvey.email || "");
+      setPhoneNumber(selectedSurvey.phone_number || "");
     } else {
       // No existing survey — initialize as empty
+      setClientSurvey(false);
       setAdviserName("");
       setQuestion2("");
       setQuestion3("");
@@ -214,8 +212,9 @@ const ClientSurveyContent: React.FC = () => {
       setQuestion28("");
       setQuestion29("");
       setQuestion30("");
-
-      setClientSurvey(false);
+      setName("");
+      setEmail("");
+      setPhoneNumber("");
     }
   }, [selectedSurvey]);
 
@@ -253,6 +252,9 @@ const ClientSurveyContent: React.FC = () => {
         | "question28"
         | "question29"
         | "question30"
+        | "name"
+        | "email"
+        | "phoneNumber"
     ) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -347,6 +349,15 @@ const ClientSurveyContent: React.FC = () => {
         case "question30":
           setQuestion30(value);
           break;
+        case "name":
+          setName(value);
+          break;
+        case "email":
+          setEmail(value);
+          break;
+        case "phoneNumber":
+          setPhoneNumber(value);
+          break;
         default:
           console.warn(`Unknown field: ${field}`);
           break;
@@ -359,7 +370,8 @@ const ClientSurveyContent: React.FC = () => {
     if (surveyAlias) {
       const payload = {
         case_alias: casealias,
-        adviser_name: adviserName.trim(),
+        client_survey: value,
+        adviser_name: adviserName,
         is_clarification_explanation_of_the_service_firm: question2,
         is_timely_service_delivery: question3,
         is_helpfulness_representative: question4,
@@ -389,8 +401,10 @@ const ClientSurveyContent: React.FC = () => {
           question27,
         do_we_better_serve_next_time: question28,
         have_any_further_comments_on_the_service_received: question29,
-
-        client_survey: value,
+        do_you_like_someone_to_contact_you: question30,
+        name: name,
+        email: email,
+        phone_number: phoneNumber,
       };
 
       updateClientSurvey({
@@ -419,6 +433,7 @@ const ClientSurveyContent: React.FC = () => {
 
     const payload = {
       case_alias: casealias,
+      client_survey: clientSurvey,
       adviser_name: adviserName.trim(),
       is_clarification_explanation_of_the_service_firm: question2,
       is_timely_service_delivery: question3,
@@ -449,7 +464,10 @@ const ClientSurveyContent: React.FC = () => {
         question27,
       do_we_better_serve_next_time: question28,
       have_any_further_comments_on_the_service_received: question29,
-      client_survey: clientSurvey,
+      do_you_like_someone_to_contact_you: question30,
+      name: name,
+      email: email,
+      phone_number: phoneNumber,
     };
 
     try {
@@ -1400,6 +1418,69 @@ const ClientSurveyContent: React.FC = () => {
                       name="have_any_further_comments_on_the_service_received"
                       value={question29}
                       onChange={handleInputChange("question29")}
+                      disabled={isUpdating}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+              {/* Question 30 */}
+              <Row className="border-2 border-l-primary border-r-primary border-b-primary p-2">
+                <Col md={6}>
+                  <Label>
+                    How satisfied are you with the service received?
+                  </Label>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <div className="d-flex flex-wrap justify-content-center align-items-center">
+                      {["Yes", "No"].map((option) => (
+                        <div
+                          key={option}
+                          className="d-flex align-items-center me-3"
+                        >
+                          <Input
+                            type="radio"
+                            name="question30"
+                            value={option.toUpperCase()}
+                            checked={question30 === option.toUpperCase()}
+                            onChange={handleInputChange("question30")}
+                            disabled={isUpdating}
+                          />
+                          <span className="ms-1">{option}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="name">Name</Label>
+                    <Input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={name}
+                      onChange={handleInputChange("name")}
+                      disabled={isUpdating}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="email">Email Address (optional)</Label>
+                    <Input
+                      type="text"
+                      id="email"
+                      name="email"
+                      value={email}
+                      onChange={handleInputChange("email")}
+                      disabled={isUpdating}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="phone_number">Phone Number (optional)</Label>
+                    <Input
+                      type="text"
+                      id="phone_number"
+                      name="phone_number"
+                      value={phoneNumber}
+                      onChange={handleInputChange("phoneNumber")}
                       disabled={isUpdating}
                     />
                   </FormGroup>
