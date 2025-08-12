@@ -55,6 +55,7 @@ const ClientSurveyContent: React.FC = () => {
     useUpdateClientSurveyMutation();
 
   // Local form state
+  const [clientSurvey, setClientSurvey] = React.useState<boolean>(false);
   const [adviserName, setAdviserName] = React.useState<string>("");
   const [question2, setQuestion2] = React.useState<string>("");
   const [question3, setQuestion3] = React.useState<string>("");
@@ -86,8 +87,6 @@ const ClientSurveyContent: React.FC = () => {
   const [question29, setQuestion29] = React.useState<string>("");
   const [question30, setQuestion30] = React.useState<string>("");
 
-  const [clientSurvey, setClientSurvey] = React.useState<boolean>(false);
-
   // === STEP 1: Extract the Most Relevant Survey Record ===
   const selectedSurvey = useMemo(() => {
     if (!Array.isArray(clientSurveyList) || clientSurveyList.length === 0)
@@ -116,6 +115,7 @@ const ClientSurveyContent: React.FC = () => {
   // === STEP 3: Sync form state when selectedSurvey changes ===
   useEffect(() => {
     if (selectedSurvey && typeof selectedSurvey === "object") {
+      setClientSurvey(selectedSurvey.client_survey || false);
       setAdviserName(selectedSurvey.adviser_name || "");
       setQuestion2(
         selectedSurvey.is_clarification_explanation_of_the_service_firm || ""
@@ -180,10 +180,10 @@ const ClientSurveyContent: React.FC = () => {
       setQuestion29(
         selectedSurvey.have_any_further_comments_on_the_service_received || ""
       );
-
-      setClientSurvey(selectedSurvey.client_survey || false);
+      setQuestion30(selectedSurvey.do_you_like_someone_to_contact_you || "");
     } else {
       // No existing survey — initialize as empty
+      setClientSurvey(false);
       setAdviserName("");
       setQuestion2("");
       setQuestion3("");
@@ -214,8 +214,6 @@ const ClientSurveyContent: React.FC = () => {
       setQuestion28("");
       setQuestion29("");
       setQuestion30("");
-
-      setClientSurvey(false);
     }
   }, [selectedSurvey]);
 
@@ -359,6 +357,7 @@ const ClientSurveyContent: React.FC = () => {
     if (surveyAlias) {
       const payload = {
         case_alias: casealias,
+        client_survey: value,
         adviser_name: adviserName.trim(),
         is_clarification_explanation_of_the_service_firm: question2,
         is_timely_service_delivery: question3,
@@ -389,8 +388,7 @@ const ClientSurveyContent: React.FC = () => {
           question27,
         do_we_better_serve_next_time: question28,
         have_any_further_comments_on_the_service_received: question29,
-
-        client_survey: value,
+        do_you_like_someone_to_contact_you: question30,
       };
 
       updateClientSurvey({
@@ -419,6 +417,7 @@ const ClientSurveyContent: React.FC = () => {
 
     const payload = {
       case_alias: casealias,
+      client_survey: clientSurvey,
       adviser_name: adviserName.trim(),
       is_clarification_explanation_of_the_service_firm: question2,
       is_timely_service_delivery: question3,
@@ -449,7 +448,7 @@ const ClientSurveyContent: React.FC = () => {
         question27,
       do_we_better_serve_next_time: question28,
       have_any_further_comments_on_the_service_received: question29,
-      client_survey: clientSurvey,
+      do_you_like_someone_to_contact_you: question30,
     };
 
     try {
@@ -1403,6 +1402,37 @@ const ClientSurveyContent: React.FC = () => {
                       disabled={isUpdating}
                     />
                   </FormGroup>
+                </Col>
+              </Row>
+              {/* Question 30 */}
+              <Row className="border-2 border-l-primary border-r-primary border-b-primary p-2">
+                <Col md={6}>
+                  <Label>
+                    How satisfied are you with the service received?
+                  </Label>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <div className="d-flex flex-wrap justify-content-center align-items-center">
+                      {["Yes", "No"].map((option) => (
+                        <div
+                          key={option}
+                          className="d-flex align-items-center mb-1 me-3"
+                        >
+                          <Input
+                            type="radio"
+                            name="question30"
+                            value={option.toUpperCase()}
+                            checked={question30 === option.toUpperCase()}
+                            onChange={handleInputChange("question30")}
+                            disabled={isUpdating}
+                          />
+                          <span className="ms-1">{option}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </FormGroup>
+                    
                 </Col>
               </Row>
 
