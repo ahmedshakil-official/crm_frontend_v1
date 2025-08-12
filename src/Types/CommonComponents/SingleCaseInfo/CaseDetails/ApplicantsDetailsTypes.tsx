@@ -8,6 +8,7 @@ export interface ApplicantProps {
   };
   title: string;
   maiden_name: string;
+  date_of_name_change: string;
   date_of_birth: string;
   anticipated_retirement_age: number;
   state_retirement_age: number;
@@ -66,6 +67,25 @@ export interface ApplicantProps {
   year_built: number;
   notes: string;
   marketing_preferences?: string;
+  rental_monthly_payment: number | null;
+  landlord_name: string | null;
+  landlord_telephone: string | null;
+  landlord_email: string | null;
+  landlord_address_postcode: string | null;
+  landlord_house_number_or_name: string | null;
+  landlord_address_line_one: string | null;
+  landlord_city: string | null;
+  landlord_county: string | null;
+  landlord_country: string | null;
+  intend_to_move_into_the_new_property: boolean;
+  new_address_house_number_or_name: string | null;
+  new_address_address_one: string | null;
+  new_address_address_two: string | null;
+  new_address_city: string | null;
+  new_address_county: string | null;
+  new_address_postcode: string | null;
+  new_address_country: string | null;
+  new_address_effective_from: string | null;
   updated_by?: any;
 }
 
