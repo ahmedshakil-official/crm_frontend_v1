@@ -86,6 +86,9 @@ const ClientSurveyContent: React.FC = () => {
   const [question28, setQuestion28] = React.useState<string>("");
   const [question29, setQuestion29] = React.useState<string>("");
   const [question30, setQuestion30] = React.useState<string>("");
+  const [name, setName] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
+  const [phoneNumber, setPhoneNumber] = React.useState<string>("");
 
   // === STEP 1: Extract the Most Relevant Survey Record ===
   const selectedSurvey = useMemo(() => {
@@ -181,6 +184,9 @@ const ClientSurveyContent: React.FC = () => {
         selectedSurvey.have_any_further_comments_on_the_service_received || ""
       );
       setQuestion30(selectedSurvey.do_you_like_someone_to_contact_you || "");
+      setName(selectedSurvey.name || "");
+      setEmail(selectedSurvey.email || "");
+      setPhoneNumber(selectedSurvey.phone_number || "");
     } else {
       // No existing survey — initialize as empty
       setClientSurvey(false);
@@ -214,6 +220,9 @@ const ClientSurveyContent: React.FC = () => {
       setQuestion28("");
       setQuestion29("");
       setQuestion30("");
+      setName("");
+      setEmail("");
+      setPhoneNumber("");
     }
   }, [selectedSurvey]);
 
@@ -251,6 +260,9 @@ const ClientSurveyContent: React.FC = () => {
         | "question28"
         | "question29"
         | "question30"
+        | "name"
+        | "email"
+        | "phoneNumber"
     ) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -345,6 +357,15 @@ const ClientSurveyContent: React.FC = () => {
         case "question30":
           setQuestion30(value);
           break;
+        case "name":
+          setName(value);
+          break;
+        case "email":
+          setEmail(value);
+          break;
+        case "phoneNumber":
+          setPhoneNumber(value);
+          break;
         default:
           console.warn(`Unknown field: ${field}`);
           break;
@@ -389,6 +410,9 @@ const ClientSurveyContent: React.FC = () => {
         do_we_better_serve_next_time: question28,
         have_any_further_comments_on_the_service_received: question29,
         do_you_like_someone_to_contact_you: question30,
+        name: name,
+        email: email,
+        phone_number: phoneNumber,
       };
 
       updateClientSurvey({
@@ -449,6 +473,9 @@ const ClientSurveyContent: React.FC = () => {
       do_we_better_serve_next_time: question28,
       have_any_further_comments_on_the_service_received: question29,
       do_you_like_someone_to_contact_you: question30,
+      name: name,
+      email: email,
+      phone_number: phoneNumber,
     };
 
     try {
@@ -1432,7 +1459,39 @@ const ClientSurveyContent: React.FC = () => {
                       ))}
                     </div>
                   </FormGroup>
-                    
+                  <FormGroup>
+                    <Label for="name">Name</Label>
+                    <Input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={name}
+                      onChange={handleInputChange("name")}
+                      disabled={isUpdating}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="email">Email Address (optional)</Label>
+                    <Input
+                      type="text"
+                      id="email"
+                      name="email"
+                      value={email}
+                      onChange={handleInputChange("email")}
+                      disabled={isUpdating}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="phone_number">Phone Number (optional)</Label>
+                    <Input
+                      type="text"
+                      id="phone_number"
+                      name="phone_number"
+                      value={phoneNumber}
+                      onChange={handleInputChange("phoneNumber")}
+                      disabled={isUpdating}
+                    />
+                  </FormGroup>
                 </Col>
               </Row>
 
