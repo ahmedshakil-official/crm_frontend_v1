@@ -1866,7 +1866,19 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                           id="new_address_country"
                           type="text"
                           readOnly
-                          value={formValues.new_address_country || ""}
+                          value={
+                            formValues.new_address_country
+                              ? formValues.new_address_country
+                                  .split("_")
+                                  .map(
+                                    (word) =>
+                                      word
+                                        .toLowerCase()
+                                        .replace(/\b\w/g, (l) => l.toUpperCase())
+                                  )
+                                  .join(" ")
+                              : ""
+                          }
                           onChange={(e) =>
                             handleInputChange(
                               "new_address_country",
@@ -1883,7 +1895,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                         </Label>
                         <Input
                           id="new_address_effective_from"
-                          type="text"
+                          type="date"
                           readOnly
                           value={formValues.new_address_effective_from || ""}
                           onChange={(e) =>
