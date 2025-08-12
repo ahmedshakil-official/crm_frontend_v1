@@ -1732,8 +1732,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                         className="me-2"
                         color={
                           !formValues.intend_to_move_into_the_new_property
-                            ? "primary"
-                            : "outline-primary"
+                            ? "danger"
+                            : "outline-danger"
                         }
                         onClick={() =>
                           handleInputChange(
