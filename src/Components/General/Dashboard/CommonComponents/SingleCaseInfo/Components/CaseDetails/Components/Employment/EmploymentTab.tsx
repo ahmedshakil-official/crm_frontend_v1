@@ -105,8 +105,13 @@ export const EmploymentTab = () => {
                       onClick={() => setActiveTab(employment.alias || null)}
                       style={{ cursor: "pointer", fontSize: "0.7rem" }}
                     >
-                      {employment.employment_status}(
-                      {employment.alias.slice(0, 8)})
+                      {employment?.employment_status
+                        ? employment?.employment_status[0].toUpperCase() +
+                          employment?.employment_status.slice(1).toLowerCase()
+                        : "(N/A)"}
+                      {employment.employment_type
+                        ? `(${employment.employment_type})`
+                        : "(N/A)"}
                     </NavLink>
                   </NavItem>
                 ))}
