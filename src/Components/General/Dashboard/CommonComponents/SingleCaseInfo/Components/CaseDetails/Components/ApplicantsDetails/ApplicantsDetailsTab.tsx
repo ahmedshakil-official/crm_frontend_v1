@@ -55,7 +55,17 @@ export const ApplicantsDetailsTab = () => {
                     onClick={() => setBasicTab(applicantData.alias || null)}
                     style={{ cursor: "pointer" }}
                   >
-                    {`${applicantData?.applicant?.first_name} ${applicantData?.applicant?.last_name}`}
+                    {`${
+                      applicantData?.applicant?.title
+                        ? applicantData?.applicant?.title[0].toUpperCase() +
+                          applicantData?.applicant?.title
+                            .slice(1)
+                            .toLowerCase() +
+                          "."
+                        : ""
+                    } ${applicantData?.applicant?.first_name} ${
+                      applicantData?.applicant?.middle_name
+                    } ${applicantData?.applicant?.last_name}`}
                   </NavLink>
                 </NavItem>
               ))}

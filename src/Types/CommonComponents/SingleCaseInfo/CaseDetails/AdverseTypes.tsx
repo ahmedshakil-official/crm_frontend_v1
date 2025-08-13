@@ -1,8 +1,10 @@
 export interface AdverseUser {
+  id: number;
   alias: string;
   email: string;
+  title: string;
   first_name: string;
-  id: number;
+  middle_name: string;
   last_name: string;
   phone: string;
   profile_image: null | string;

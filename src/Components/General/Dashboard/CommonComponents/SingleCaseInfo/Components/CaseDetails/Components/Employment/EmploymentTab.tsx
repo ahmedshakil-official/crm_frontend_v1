@@ -74,7 +74,15 @@ export const EmploymentTab = () => {
                       }}
                       style={{ cursor: "pointer" }}
                     >
-                      {`${user.first_name} ${user.last_name}`}
+                      {`${
+                        user?.title
+                          ? user?.title[0].toUpperCase() +
+                            user?.title.slice(1).toLowerCase() +
+                            "."
+                          : ""
+                      } ${user.first_name} ${user.middle_name} ${
+                        user.last_name
+                      }`}
                     </NavLink>
                   </NavItem>
                 );
@@ -97,8 +105,22 @@ export const EmploymentTab = () => {
                       onClick={() => setActiveTab(employment.alias || null)}
                       style={{ cursor: "pointer", fontSize: "0.7rem" }}
                     >
-                      {employment.employment_status}(
-                      {employment.alias.slice(0, 8)})
+                      {employment?.employment_status
+                        ? (() => {
+                            const label = employment.employment_status.replace(
+                              /_/g,
+                              " "
+                            );
+                            return label
+                              .toLowerCase()
+                              .split(" ")
+                              .map(
+                                (word) =>
+                                  word.charAt(0).toUpperCase() + word.slice(1)
+                              )
+                              .join(" ");
+                          })()
+                        : "(N/A)"}
                     </NavLink>
                   </NavItem>
                 ))}

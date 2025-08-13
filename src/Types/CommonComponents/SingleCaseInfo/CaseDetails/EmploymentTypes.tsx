@@ -5,7 +5,9 @@ export interface EmploymentDetailsProps {
     alias: string;
     email: string;
     phone: string;
+    title: string | null;
     first_name: string;
+    middle_name: string | null;
     last_name: string;
     profile_image: string | null;
     user_type: string;

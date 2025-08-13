@@ -438,8 +438,20 @@ const ActiveCases: React.FC = () => {
                               </Link>
                             </td>
                             <td>
-                              {caseItem.lead_user
-                                ? `${caseItem.lead_user.first_name} ${caseItem.lead_user.last_name}`
+                              {caseItem?.lead_user
+                                ? `${
+                                    caseItem?.lead_user?.title
+                                      ? caseItem.lead_user.title[0].toUpperCase() +
+                                        caseItem.lead_user.title
+                                          .slice(1)
+                                          .toLowerCase() +
+                                        ". "
+                                      : ""
+                                  }${caseItem.lead_user.first_name} ${
+                                    caseItem.lead_user.middle_name
+                                      ? caseItem.lead_user.middle_name + " "
+                                      : ""
+                                  }${caseItem.lead_user.last_name}`
                                 : "-"}
                             </td>
                             <td>
@@ -479,7 +491,17 @@ const ActiveCases: React.FC = () => {
                             </td>
                             <td>
                               <p className="m-0">
+                                {caseItem.created_by?.title
+                                  ? caseItem.created_by.title[0].toUpperCase() +
+                                    caseItem.created_by.title
+                                      .slice(1)
+                                      .toLowerCase() +
+                                    ". "
+                                  : ""}
                                 {caseItem.created_by?.first_name}{" "}
+                                {caseItem.created_by?.middle_name
+                                  ? caseItem.created_by.middle_name + " "
+                                  : ""}
                                 {caseItem.created_by?.last_name}
                               </p>
                               <p

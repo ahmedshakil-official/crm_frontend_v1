@@ -51,14 +51,22 @@ export const AdverseTab = () => {
         <CardBody>
           <CardHeader className="d-flex justify-content-center align-items-center flex-wrap gap-2 pb-2 p-0">
             <Nav className="nav-warning" pills>
-              {adverseData?.map((Adverse: AdverseProps) => (
-                <NavItem key={Adverse.alias}>
+              {adverseData?.map((adverse: AdverseProps) => (
+                <NavItem key={adverse.alias}>
                   <NavLink
-                    className={`${basicTab === Adverse.alias ? "active" : ""}`}
-                    onClick={() => setBasicTab(Adverse.alias || null)}
+                    className={`${basicTab === adverse.alias ? "active" : ""}`}
+                    onClick={() => setBasicTab(adverse.alias || null)}
                     style={{ cursor: "pointer" }}
                   >
-                    {`${Adverse?.user?.first_name} ${Adverse?.user?.last_name}`}
+                    {`${
+                      adverse?.user?.title
+                        ? adverse?.user?.title[0].toUpperCase() +
+                          adverse?.user?.title.slice(1).toLowerCase() +
+                          "."
+                        : ""
+                    } ${adverse?.user?.first_name} ${
+                      adverse?.user?.middle_name
+                    } ${adverse?.user?.last_name}`}
                   </NavLink>
                 </NavItem>
               ))}

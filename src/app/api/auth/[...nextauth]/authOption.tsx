@@ -67,8 +67,22 @@ export const authoption: NextAuthOptions = {
             return {
               id: response.data.user_id || "default_id",
               name:
-                `${response.data.user.first_name || ""} ${response.data.user.last_name || ""}`.trim() ||
-                credentials.email,
+                `${
+                  response.data.user.title
+                    ? response.data.user.title[0].toUpperCase() +
+                      response.data.user.title.slice(1).toLowerCase() +
+                      "." +
+                      " "
+                    : ""
+                }${response.data.user.first_name || ""}${
+                  response.data.user.middle_name
+                    ? " " + response.data.user.middle_name
+                    : ""
+                }${
+                  response.data.user.last_name
+                    ? " " + response.data.user.last_name
+                    : ""
+                }`.trim() || credentials.email,
               email: credentials.email,
               user_type: response.data.user.user_type || "",
               profile_image: response.data.user.profile_image || null,
