@@ -106,11 +106,20 @@ export const EmploymentTab = () => {
                       style={{ cursor: "pointer", fontSize: "0.7rem" }}
                     >
                       {employment?.employment_status
-                        ? employment?.employment_status[0].toUpperCase() +
-                          employment?.employment_status.slice(1).toLowerCase()
-                        : "(N/A)"}
-                      {employment.employment_type
-                        ? `(${employment.employment_type})`
+                        ? (() => {
+                            const label = employment.employment_status.replace(
+                              /_/g,
+                              " "
+                            );
+                            return label
+                              .toLowerCase()
+                              .split(" ")
+                              .map(
+                                (word) =>
+                                  word.charAt(0).toUpperCase() + word.slice(1)
+                              )
+                              .join(" ");
+                          })()
                         : "(N/A)"}
                     </NavLink>
                   </NavItem>
