@@ -1708,7 +1708,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </>
             ) : null}
           </Row>
-          {loandetailsData.application_type === "RESIDENTIAL_MORTGAGE" &&
+          {loandetailsData?.application_type === "RESIDENTIAL_MORTGAGE" &&
             loandetailsData?.mortgage_type === "PURCHASE" &&
             loandetailsData?.case_completed_date !== null && (
               <Row className="border-dark rounded p-2">
