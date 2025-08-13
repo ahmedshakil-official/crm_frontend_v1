@@ -72,7 +72,12 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       <h6 className="pt-1">
                         <span className="small">Name:</span>{" "}
                         <strong className="small">
-                          {caseInfo?.lead_user?.first_name}{" "}
+                          {caseInfo?.lead_user?.title
+                            ? caseInfo.lead_user.title[0].toUpperCase() +
+                              caseInfo.lead_user.title.slice(1).toLowerCase()
+                            : ""}
+                          {"."} {caseInfo?.lead_user?.first_name}{" "}
+                          {caseInfo?.lead_user?.middle_name}{" "}
                           {caseInfo?.lead_user?.last_name}
                         </strong>
                       </h6>
@@ -199,7 +204,12 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                       <h6 className="pt-1">
                         <span className="small">Name:</span>{" "}
                         <strong className="small">
-                          {caseInfo?.created_by?.first_name}{" "}
+                          {caseInfo?.created_by?.title
+                            ? caseInfo.created_by.title[0].toUpperCase() +
+                              caseInfo.created_by.title.slice(1).toLowerCase()
+                            : ""}
+                          {"."} {caseInfo?.created_by?.first_name}{" "}
+                          {caseInfo?.created_by?.middle_name}{" "}
                           {caseInfo?.created_by?.last_name}
                         </strong>
                       </h6>
