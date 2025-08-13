@@ -3,7 +3,9 @@ export interface ApplicantProps {
   alias?: string;
   is_company_application: boolean;
   applicant?: {
+    title?: string;
     first_name: string;
+    middle_name?: string;
     last_name: string;
   };
   title: string;

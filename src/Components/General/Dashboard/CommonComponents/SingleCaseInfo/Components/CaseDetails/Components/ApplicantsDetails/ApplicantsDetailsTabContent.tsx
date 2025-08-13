@@ -339,7 +339,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                 <Input
                   id="maiden_name"
                   type="text"
-                  // value={formValues.applicant?.middle_name || ""}
+                  value={formValues.applicant?.middle_name || ""}
                   readOnly
                 />
                 <FormText className="text-warning small">
