@@ -4,11 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import AddUserModal from "./Modals/AddUserModal";
 
 const Profile = () => {
   const [show, setShow] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
+
+  const handleAddUser = () => {
+    setShowAddUserModal(true);
+  };
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -51,13 +57,17 @@ const Profile = () => {
               <i className="fa-solid fa-user-gear"></i>
               Profile
             </li>
-            <li
-              className="d-flex gap-2 text-muted opacity-50"
-              style={{ cursor: "not-allowed" }}
-            >
-              <i className="fa-solid fa-circle-user"></i>
-              Add user
-            </li>
+            {session?.user?.user_type === "NETWORK_ADMIN" ||
+            session?.user?.user_type === "ORGANIZATION_ADMIN" ? (
+              <li
+                className="d-flex gap-2"
+                style={{ cursor: "pointer" }}
+                onClick={handleAddUser}
+              >
+                <i className="fa-solid fa-circle-user"></i>
+                Add user
+              </li>
+            ) : null}
             <li className="d-flex gap-2" onClick={handleLogout}>
               <i className="fa-solid fa-arrow-right-from-bracket text-danger fs-6"></i>
               <Link className="text-danger" href={Href}>
@@ -67,6 +77,11 @@ const Profile = () => {
           </ul>
         </div>
       </div>
+      {/* Modals */}
+      <AddUserModal
+        isOpen={showAddUserModal}
+        toggle={() => setShowAddUserModal(false)}
+      />
     </li>
   );
 };
