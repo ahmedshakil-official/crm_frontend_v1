@@ -19,6 +19,9 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQuery,
   tagTypes: [
+    //AddUser
+    "AddUser",
+
     //Common components start
     "LeadDetails",
     "ClientDetails",
