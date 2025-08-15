@@ -9,7 +9,7 @@ import RecentActivity from "./RecentActivity/RecentActivity";
 
 const ContainerNetwork = () => {
   //RTK hooks
-  const { data: CommonDashboardData, isLoading } =
+  const { data: commonDashboardData, isLoading } =
     useGetCommonDashboardQuery(undefined);
 
   return (
@@ -21,11 +21,11 @@ const ContainerNetwork = () => {
       <Container fluid>
         <PerformanceOverview
           isLoading={isLoading}
-          CommonDashboardData={CommonDashboardData}
+          commonDashboardData={commonDashboardData}
         />
         <Charts
           isLoading={isLoading}
-          CommonDashboardData={CommonDashboardData}
+          commonDashboardData={commonDashboardData}
         />
         <OrganisationCards />
         <AdviserStatus />

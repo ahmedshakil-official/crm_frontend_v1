@@ -3,7 +3,7 @@ import { Card, CardBody } from "reactstrap";
 
 const TopPerformingAdvisers: React.FC<CommonDashboardProps> = ({
   isLoading,
-  CommonDashboardData,
+  commonDashboardData,
 }) => {
   const formatCurrency = (amount: number): string => {
     return `£${amount.toLocaleString()}`;
@@ -41,13 +41,13 @@ const TopPerformingAdvisers: React.FC<CommonDashboardProps> = ({
               </Card>
             ))}
           </>
-        ) : CommonDashboardData?.top_performing_advisers &&
-          CommonDashboardData.top_performing_advisers.length > 0 ? (
+        ) : commonDashboardData?.top_performing_advisers &&
+          commonDashboardData.top_performing_advisers.length > 0 ? (
           <div
             className="space-y-6 mt-2"
             style={{ height: "350px", overflow: "auto" }}
           >
-            {CommonDashboardData.top_performing_advisers.map((adviser) => (
+            {commonDashboardData.top_performing_advisers.map((adviser) => (
               <div
                 key={adviser?.id || adviser?.rank}
                 className="d-flex justify-content-between mt-4 px-3 py-1"

@@ -4,7 +4,7 @@ import { Card, CardBody, CardTitle, Col, Row } from "reactstrap";
 
 const DashboardOverview: React.FC<CommonDashboardProps> = ({
   isLoading,
-  CommonDashboardData,
+  commonDashboardData,
 }) => {
   return (
     <Row>
@@ -50,7 +50,7 @@ const DashboardOverview: React.FC<CommonDashboardProps> = ({
                       Total Advisers
                     </CardTitle>
                     <h4 className="mb-1 text-dark">
-                      {CommonDashboardData?.counters?.total_advisers}
+                      {commonDashboardData?.counters?.total_advisers}
                     </h4>
                     <p className="text-success small mb-0">
                       +2 <span style={{ fontSize: "8px" }}>this month</span>
@@ -79,7 +79,7 @@ const DashboardOverview: React.FC<CommonDashboardProps> = ({
                       Active Clients
                     </CardTitle>
                     <h4 className="mb-1 text-dark">
-                      {CommonDashboardData?.counters?.total_clients}
+                      {commonDashboardData?.counters?.total_clients}
                     </h4>
                     <p className="text-success small mb-0">
                       +9 <span style={{ fontSize: "8px" }}>this month</span>

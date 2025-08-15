@@ -4,7 +4,7 @@ import { Card, CardBody, Col, Row } from "reactstrap";
 
 const PerformanceOverview: React.FC<CommonDashboardProps> = ({
   isLoading,
-  CommonDashboardData,
+  commonDashboardData,
 }) => {
   return (
     <>
@@ -51,7 +51,7 @@ const PerformanceOverview: React.FC<CommonDashboardProps> = ({
                     </span>
                   </div>
                   <h2 className="mb-0 mt-3">
-                    {CommonDashboardData?.summary_cards?.new_mortgage_enquiry ??
+                    {commonDashboardData?.summary_cards?.new_mortgage_enquiry ??
                       0}
                     {/* Optional: add trend indicator dynamically later */}
                     <small
@@ -73,7 +73,7 @@ const PerformanceOverview: React.FC<CommonDashboardProps> = ({
                     </span>
                   </div>
                   <h2 className="mb-0 mt-3">
-                    {CommonDashboardData?.summary_cards
+                    {commonDashboardData?.summary_cards
                       ?.mortgage_cases_submitted ?? 0}
                     <small
                       className="text-success"
@@ -95,7 +95,7 @@ const PerformanceOverview: React.FC<CommonDashboardProps> = ({
                   </div>
                   <h2 className="mb-0 mt-3">
                     {/* Assuming this field is missing; use 0 or calculate */}
-                    {CommonDashboardData?.summary_cards
+                    {commonDashboardData?.summary_cards
                       ?.mortgage_cases_offered ?? 0}
                     <small className="text-danger" style={{ fontSize: "10px" }}>
                       ↓-3%
@@ -113,7 +113,7 @@ const PerformanceOverview: React.FC<CommonDashboardProps> = ({
                     </span>
                   </div>
                   <h2 className="mb-0 mt-3">
-                    {CommonDashboardData?.summary_cards
+                    {commonDashboardData?.summary_cards
                       ?.mortgage_cases_completed ?? 0}
                     <small
                       className="text-success"
@@ -134,7 +134,7 @@ const PerformanceOverview: React.FC<CommonDashboardProps> = ({
                     </span>
                   </div>
                   <h2 className="mb-0 mt-3">
-                    {CommonDashboardData?.summary_cards
+                    {commonDashboardData?.summary_cards
                       ?.insurance_cases_submitted ?? 0}
                     <small
                       className="text-success"
