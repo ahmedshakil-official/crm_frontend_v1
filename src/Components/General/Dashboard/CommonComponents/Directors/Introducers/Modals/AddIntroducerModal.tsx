@@ -208,7 +208,7 @@ const AddIntroducerModal: React.FC<AddIntroducerModalProps> = ({
                 <Input
                   id="phone"
                   name="phone"
-                  type="text"
+                  type="number"
                   value={formData.phone}
                   onChange={handleInputChange}
                 />

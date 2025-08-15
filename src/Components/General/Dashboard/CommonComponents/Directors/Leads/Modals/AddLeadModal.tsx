@@ -45,6 +45,31 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
   const { data: session } = useSession();
   const userType = session?.user?.user_type;
 
+  // Helper to extract an informative error message from RTK Query results or thrown errors
+  const extractErrorDetail = (err: any): string => {
+    // RTK Query error result (result.error)
+    if (!err) return "An error occurred. Please try again.";
+    // If it's an RTK Query result object containing .error
+    if (err.error) {
+      const data =
+        (err.error as any).data ||
+        (err.error as any).originalStatus ||
+        (err.error as any);
+      return (
+        (data && (data.detail || data?.message)) ||
+        (err.error as any).statusText ||
+        JSON.stringify(err.error)
+      );
+    }
+    // If it's an exception thrown
+    const data = err?.response?.data || err?.data || err;
+    return (
+      (data && (data.detail || data?.message)) ||
+      err.message ||
+      "An error occurred. Please try again."
+    );
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -78,14 +103,19 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
         setIsCaseModalOpen(true);
       } else if ("error" in result) {
         const errorMessage =
-          (result.error as any)?.data?.user?.email?.[0] || "Invalid Request...";
+          (result.error as any)?.data?.user?.email?.[0] ||
+          (result.error as any)?.data?.detail ||
+          extractErrorDetail(result) ||
+          "Invalid Request...";
         toast.error(errorMessage);
       } else {
         toast.error("Invalid Request...");
       }
     } catch (error: any) {
       const errorMessage =
-        error.response?.data?.user?.email?.[0] ||
+        (error?.response?.data?.user?.email?.[0] as string) ||
+        (error?.response?.data?.detail as string) ||
+        extractErrorDetail(error) ||
         "An error occurred. Please try again.";
       toast.error(errorMessage);
       console.error("Error creating lead:", error);
@@ -131,14 +161,19 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
         toggle(); // Close the modal
       } else if ("error" in result) {
         const errorMessage =
-          (result.error as any)?.data?.user?.email?.[0] || "Invalid Request...";
+          (result.error as any)?.data?.user?.email?.[0] ||
+          (result.error as any)?.data?.detail ||
+          extractErrorDetail(result) ||
+          "Invalid Request...";
         toast.error(errorMessage);
       } else {
         toast.error("Invalid Request...");
       }
     } catch (error: any) {
       const errorMessage =
-        error.response?.data?.user?.email?.[0] ||
+        (error?.response?.data?.user?.email?.[0] as string) ||
+        (error?.response?.data?.detail as string) ||
+        extractErrorDetail(error) ||
         "An error occurred. Please try again.";
       toast.error(errorMessage);
       console.error("Error creating lead:", error);
@@ -252,7 +287,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 <Input
                   id="phone"
                   name="phone"
-                  type="text"
+                  type="number"
                   value={formData.phone || ""}
                   onChange={handleInputChange}
                   required

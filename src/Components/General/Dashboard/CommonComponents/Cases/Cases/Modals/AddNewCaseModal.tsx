@@ -6,6 +6,7 @@ import { getCaseUrl } from "@/utils/GetCaseUrl";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { TbCirclePlus } from "react-icons/tb";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -18,6 +19,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
+import AddLeadModal from "../../../Directors/Leads/Modals/AddLeadModal";
 
 const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   isOpen,
@@ -27,8 +29,11 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
 }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
   // Rtk query
-  const { data: leadData, isLoading: leadDataLoading } =
-    useGetLeadDetailsQuery(undefined);
+  const {
+    data: leadData,
+    isLoading: leadDataLoading,
+    refetch: refetchLeads,
+  } = useGetLeadDetailsQuery(undefined);
   const [addCaseDetails, { isLoading: addCaseLoading }] = useAddCaseMutation();
 
   const [formData, setFormData] = useState({
@@ -36,10 +41,23 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
     case_category: "",
     notes: "",
   });
+  const [submitType, setSubmitType] = useState<"save" | "save_view">("save");
 
   const { data: session } = useSession();
   const userType = session?.user?.user_type;
   const router = useRouter();
+
+  const [isAddLeadModalOpen, setIsAddLeadModalOpen] = React.useState(false);
+  const handleOpenAddLead = () => setIsAddLeadModalOpen(true);
+  const handleCloseAddLead = () => {
+    setIsAddLeadModalOpen(false);
+    // Refetch leads after closing the add-lead modal to refresh the list
+    try {
+      refetchLeads();
+    } catch (err) {
+      // ignore
+    }
+  };
 
   // Update formData.lead if leadId changes
   React.useEffect(() => {
@@ -74,14 +92,23 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
       });
       if (result.data) {
         toast.success("Case added successfully!");
+        const alias = result.data.alias;
+        // If user chose Save and Add View, navigate to the case page
+        if (submitType === "save_view" && alias) {
+          // Close modal then navigate
+          toggle();
+          handleCaseCreated(alias);
+          return;
+        }
+        // Default: reset form and close
         setFormData({
           lead: leadId || 0,
           case_category: "",
           notes: "",
         });
         toggle();
-        if (onCaseCreated && result.data.alias) {
-          handleCaseCreated(result.data.alias);
+        if (onCaseCreated && alias) {
+          handleCaseCreated(alias);
         }
       } else {
         toast.error("Invalid Request...");
@@ -119,20 +146,39 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
               disabled={!!leadId}
             >
               <option value="">Select...</option>
-              {leads.map((lead) => (
-                <option key={lead.user.id} value={lead.user.id}>
-                  {`${
-                    lead.user?.title
-                      ? lead.user.title.charAt(0).toUpperCase() +
-                        lead.user.title.slice(1).toLowerCase() +
-                        ". "
-                      : ""
-                  }${lead.user?.first_name}${
-                    lead.user?.middle_name ? " " + lead.user.middle_name : ""
-                  } ${lead.user?.last_name}`}
+              {leads.length > 0 ? (
+                leads.map((lead) => (
+                  <option key={lead.user.id} value={lead.user.id}>
+                    {`${
+                      lead.user?.title
+                        ? lead.user.title.charAt(0).toUpperCase() +
+                          lead.user.title.slice(1).toLowerCase() +
+                          ". "
+                        : ""
+                    }${lead.user?.first_name}${
+                      lead.user?.middle_name ? " " + lead.user.middle_name : ""
+                    } ${lead.user?.last_name}`}
+                  </option>
+                ))
+              ) : (
+                <option value="" disabled>
+                  No leads available
                 </option>
-              ))}
+              )}
             </Input>
+            {leads.length === 0 && (
+              <div className="mt-2">
+                <Button
+                  size="sm"
+                  color="primary"
+                  onClick={handleOpenAddLead}
+                  toggle={toggle}
+                >
+                  <TbCirclePlus size={16} className="me-1" />
+                  Add Lead
+                </Button>
+              </div>
+            )}
           </FormGroup>
           <FormGroup>
             <Label for="case_category">
@@ -164,8 +210,23 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" color="primary" disabled={addCaseLoading}>
-            {addCaseLoading ? "Saving..." : "Save"}
+          {!leadId && (
+            <Button
+              type="submit"
+              color="primary"
+              disabled={addCaseLoading}
+              onClick={() => setSubmitType("save")}
+            >
+              {addCaseLoading ? "Saving..." : "Save"}
+            </Button>
+          )}
+          <Button
+            type="submit"
+            color="success"
+            disabled={addCaseLoading}
+            onClick={() => setSubmitType("save_view")}
+          >
+            {addCaseLoading ? "Saving..." : "Save and Add View"}
           </Button>
           <Button
             type="button"
@@ -177,6 +238,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
           </Button>
         </ModalFooter>
       </Form>
+      <AddLeadModal isOpen={isAddLeadModalOpen} toggle={handleCloseAddLead} />
     </Modal>
   );
 };
