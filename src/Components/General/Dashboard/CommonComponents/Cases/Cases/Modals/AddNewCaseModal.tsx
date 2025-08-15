@@ -158,7 +158,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
             </Input>
             {leads.length === 0 && (
               <div className="mt-2">
-                <Button size="sm" color="primary" onClick={handleOpenAddLead}>
+                <Button size="sm" color="primary" onClick={handleOpenAddLead} toggle={toggle}>
                   <TbCirclePlus size={16} className="me-1" />
                   Add Lead
                 </Button>
