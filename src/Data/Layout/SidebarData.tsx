@@ -160,7 +160,7 @@ const NetworkAdviserMenu: MenuItem[] = [
 // OrganisationOwnerMenu
 const OrganisationOwnerMenu: MenuItem[] = [
   {
-    title: "Organisation",
+    title: "Organisation Owner",
     lanClass: "lan-1",
     type: "group",
     Items: [

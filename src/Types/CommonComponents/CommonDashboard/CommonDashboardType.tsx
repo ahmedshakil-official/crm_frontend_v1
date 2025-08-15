@@ -123,5 +123,5 @@ export interface CommonDashboardDataProps {
 
 export interface CommonDashboardProps {
   isLoading: boolean;
-  CommonDashboardData: CommonDashboardDataProps | null;
+  commonDashboardData: CommonDashboardDataProps | null;
 }

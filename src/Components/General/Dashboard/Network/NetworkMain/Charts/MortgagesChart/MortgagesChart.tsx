@@ -5,10 +5,10 @@ import { Card, CardBody } from "reactstrap";
 
 const MortgagesChart: React.FC<CommonDashboardProps> = ({
   isLoading,
-  CommonDashboardData,
+  commonDashboardData,
 }) => {
   const chartData: (string | number)[][] = [["Category", "Value"]];
-  if (!isLoading && CommonDashboardData) {
+  if (!isLoading && commonDashboardData) {
     const {
       mortgage_type_counts: {
         PURCHASE,
@@ -21,7 +21,7 @@ const MortgagesChart: React.FC<CommonDashboardProps> = ({
         ASSET_FINANCE,
         OTHER,
       },
-    } = CommonDashboardData;
+    } = commonDashboardData;
     chartData.push(["Purchase", PURCHASE ?? 0]);
     chartData.push(["Remortgage", REMORTGAGE ?? 0]);
     chartData.push(["Secure Loan", SECURED_LOAN ?? 0]);
@@ -48,26 +48,26 @@ const MortgagesChart: React.FC<CommonDashboardProps> = ({
     },
     slices: { 0: { offset: 0.05 } },
     colors: [
-      '#8FA4D7',  // Light Blue
-      '#F28FB1',  // Light Pink
-      '#FFB84D',  // Light Orange
-      '#7BC87F',  // Light Green
-      '#B85CBF',  // Light Purple
-      '#FFD54F',  // Light Yellow
-      '#90A4AE',  // Light Blue Grey
-      '#A1887F',  // Light Brown
-      '#FF8A65',  // Light Deep Orange
-      '#AED581',  // Light Green
-      '#9575CD',  // Light Deep Purple
-      '#4DD0E1',  // Light Cyan
-      '#FFF176',  // Light Yellow
-      '#BDBDBD',  // Light Grey
-      '#EF5350',  // Light Red
-      '#64B5F6',  // Light Blue
-      '#DCE775',  // Light Lime
-      '#FF8A80',  // Light Red
-      '#A5D6A7',  // Light Green
-      '#C5E1A5',  // Lighter Green
+      "#8FA4D7", // Light Blue
+      "#F28FB1", // Light Pink
+      "#FFB84D", // Light Orange
+      "#7BC87F", // Light Green
+      "#B85CBF", // Light Purple
+      "#FFD54F", // Light Yellow
+      "#90A4AE", // Light Blue Grey
+      "#A1887F", // Light Brown
+      "#FF8A65", // Light Deep Orange
+      "#AED581", // Light Green
+      "#9575CD", // Light Deep Purple
+      "#4DD0E1", // Light Cyan
+      "#FFF176", // Light Yellow
+      "#BDBDBD", // Light Grey
+      "#EF5350", // Light Red
+      "#64B5F6", // Light Blue
+      "#DCE775", // Light Lime
+      "#FF8A80", // Light Red
+      "#A5D6A7", // Light Green
+      "#C5E1A5", // Lighter Green
     ],
     chartArea: { left: 30, top: 30, width: "90%", height: "90%" },
     backgroundColor: "transparent",

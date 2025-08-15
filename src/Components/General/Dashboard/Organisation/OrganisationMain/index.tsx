@@ -10,7 +10,7 @@ import TopPerformingAdvisers from "./TopPerformingAdvisers/TopPerformingAdvisers
 
 const OrganisationContainer = () => {
   //RTK hooks
-  const { data: CommonDashboardData, isLoading } =
+  const { data: commonDashboardData, isLoading } =
     useGetCommonDashboardQuery(undefined);
 
   return (
@@ -20,7 +20,7 @@ const OrganisationContainer = () => {
         {/* 1st row  */}
         <DashboardOverview
           isLoading={isLoading}
-          CommonDashboardData={CommonDashboardData}
+          commonDashboardData={commonDashboardData}
         />
         {/* 2nd row  */}
         <Row>
@@ -39,7 +39,7 @@ const OrganisationContainer = () => {
           <Col md={6} sm={12}>
             <TopPerformingAdvisers
               isLoading={isLoading}
-              CommonDashboardData={CommonDashboardData}
+              commonDashboardData={commonDashboardData}
             />
           </Col>
         </Row>
