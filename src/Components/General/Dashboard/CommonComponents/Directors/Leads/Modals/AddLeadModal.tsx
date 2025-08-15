@@ -287,7 +287,7 @@ const AddLeadModal: React.FC<AddLeadModalProps> = ({ isOpen, toggle }) => {
                 <Input
                   id="phone"
                   name="phone"
-                  type="text"
+                  type="number"
                   value={formData.phone || ""}
                   onChange={handleInputChange}
                   required

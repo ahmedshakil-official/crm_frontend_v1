@@ -203,7 +203,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, toggle }) => {
                 <Input
                   id="phone"
                   name="phone"
-                  type="text"
+                  type="number"
                   value={formData.phone}
                   onChange={handleInputChange}
                 />

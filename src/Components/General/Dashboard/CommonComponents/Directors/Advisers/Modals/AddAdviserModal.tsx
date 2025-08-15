@@ -208,7 +208,7 @@ const AddAdviserModal: React.FC<AddAdviserModalProps> = ({
                 <Input
                   id="phone"
                   name="phone"
-                  type="text"
+                  type="number"
                   value={formData.phone}
                   onChange={handleInputChange}
                 />
