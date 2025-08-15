@@ -41,12 +41,13 @@ const TopPerformingAdvisers: React.FC<CommonDashboardProps> = ({
               </Card>
             ))}
           </>
-        ) : (
+        ) : CommonDashboardData?.top_performing_advisers &&
+          CommonDashboardData.top_performing_advisers.length > 0 ? (
           <div
             className="space-y-6 mt-2"
             style={{ height: "350px", overflow: "auto" }}
           >
-            {CommonDashboardData?.top_performing_advisers?.map((adviser) => (
+            {CommonDashboardData.top_performing_advisers.map((adviser) => (
               <div
                 key={adviser?.id || adviser?.rank}
                 className="d-flex justify-content-between mt-4 px-3 py-1"
@@ -77,6 +78,10 @@ const TopPerformingAdvisers: React.FC<CommonDashboardProps> = ({
                 </div>
               </div>
             ))}
+          </div>
+        ) : (
+          <div className="d-flex justify-content-center align-items-center h-100">
+            <p className="text-muted">No data available</p>
           </div>
         )}
       </CardBody>
