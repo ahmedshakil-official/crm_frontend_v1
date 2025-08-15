@@ -41,6 +41,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
     case_category: "",
     notes: "",
   });
+  const [submitType, setSubmitType] = useState<"save" | "save_view">("save");
 
   const { data: session } = useSession();
   const userType = session?.user?.user_type;
@@ -91,14 +92,23 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
       });
       if (result.data) {
         toast.success("Case added successfully!");
+        const alias = result.data.alias;
+        // If user chose Save and Add View, navigate to the case page
+        if (submitType === "save_view" && alias) {
+          // Close modal then navigate
+          toggle();
+          handleCaseCreated(alias);
+          return;
+        }
+        // Default: reset form and close
         setFormData({
           lead: leadId || 0,
           case_category: "",
           notes: "",
         });
         toggle();
-        if (onCaseCreated && result.data.alias) {
-          handleCaseCreated(result.data.alias);
+        if (onCaseCreated && alias) {
+          handleCaseCreated(alias);
         }
       } else {
         toast.error("Invalid Request...");
@@ -158,7 +168,12 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
             </Input>
             {leads.length === 0 && (
               <div className="mt-2">
-                <Button size="sm" color="primary" onClick={handleOpenAddLead} toggle={toggle}>
+                <Button
+                  size="sm"
+                  color="primary"
+                  onClick={handleOpenAddLead}
+                  toggle={toggle}
+                >
                   <TbCirclePlus size={16} className="me-1" />
                   Add Lead
                 </Button>
@@ -195,8 +210,23 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button type="submit" color="primary" disabled={addCaseLoading}>
-            {addCaseLoading ? "Saving..." : "Save"}
+          {!leadId && (
+            <Button
+              type="submit"
+              color="primary"
+              disabled={addCaseLoading}
+              onClick={() => setSubmitType("save")}
+            >
+              {addCaseLoading ? "Saving..." : "Save"}
+            </Button>
+          )}
+          <Button
+            type="submit"
+            color="success"
+            disabled={addCaseLoading}
+            onClick={() => setSubmitType("save_view")}
+          >
+            {addCaseLoading ? "Saving..." : "Save and Add View"}
           </Button>
           <Button
             type="button"
