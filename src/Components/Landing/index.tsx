@@ -3,6 +3,7 @@ import UnderDevelopment from "../Other/UnderDevelopment/UnderDevelopment";
 import LandingFooter from "./Components/Footer/LandingFooter";
 import NavBar from "./Components/NavBar/NavBar";
 import "./LandingPageStyle.css";
+import TapTop from "@/Layout/TapTop";
 
 const LandingContainer: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const LandingContainer: React.FC = () => {
         </Container>
       </main>
       <LandingFooter />
+      <TapTop/>
     </>
   );
 };
