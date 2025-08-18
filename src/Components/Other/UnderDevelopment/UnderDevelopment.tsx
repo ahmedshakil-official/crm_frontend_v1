@@ -2,7 +2,7 @@ import { Button, Col, Container, NavLink, Row } from "reactstrap";
 
 const UnderDevelopment = () => {
   return (
-    <Container className="text-center mt-5">
+    <Container className="min-vh-100 text-center mt-5">
       <Row>
         <Col>
           <i
