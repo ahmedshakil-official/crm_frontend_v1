@@ -178,7 +178,8 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
                 type="number"
                 name="deposit_amount"
                 min="0"
-                value={formData.deposit_amount || 0}
+                placeholder="0"
+                value={formData.deposit_amount || ""}
                 onChange={(e) =>
                   handleFormChange(e.target.name, e.target.value)
                 }
