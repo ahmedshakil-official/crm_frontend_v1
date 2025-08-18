@@ -165,7 +165,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
               <FormGroup>
                 <Label for="dob">Official Email</Label>
                 <Input
-                  type="text"
+                  type="email"
                   id="official_email"
                   name="official_email"
                   placeholder="Official Email"
@@ -179,7 +179,7 @@ const UpdateLeadModal: React.FC<UpdateLeadModalProps> = ({
               <FormGroup>
                 <Label for="official_phone">Official Phone</Label>
                 <Input
-                  type="text"
+                  type="number"
                   id="official_phone"
                   name="official_phone"
                   placeholder="Official Phone"

@@ -192,7 +192,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
                 <Input
                   id="phone"
                   name="phone"
-                  type="tel"
+                  type="number"
                   value={formData.phone}
                   onChange={handleInputChange}
                 />

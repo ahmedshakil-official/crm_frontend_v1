@@ -168,7 +168,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
               <FormGroup>
                 <Label for="official_email">Official Email</Label>
                 <Input
-                  type="text"
+                  type="email"
                   id="official_email"
                   name="official_email"
                   placeholder="Official Email"
@@ -182,7 +182,7 @@ const UpdateAdviserModal: React.FC<UpdateAdviserModalProps> = ({
               <FormGroup>
                 <Label for="official_phone">Official Phone</Label>
                 <Input
-                  type="text"
+                  type="number"
                   id="official_phone"
                   name="official_phone"
                   placeholder="Official Phone"
