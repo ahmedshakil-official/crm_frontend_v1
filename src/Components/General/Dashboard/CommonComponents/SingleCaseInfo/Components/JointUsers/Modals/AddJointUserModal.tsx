@@ -202,7 +202,7 @@ const AddJointUserModal: React.FC<AddJointUserModalProps> = ({
                   Phone<span className="text-danger">*</span>
                 </Label>
                 <Input
-                  type="text"
+                  type="number"
                   id="phone"
                   name="phone"
                   required
