@@ -7,7 +7,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       if (typeof window !== "undefined") {
-        const newClient = (await import("@/Components/Home")).default;
+        const newClient = (await import("@/Components/Landing")).default;
         setClient(() => newClient);
       }
     })();

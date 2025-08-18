@@ -1,9 +1,9 @@
 import { Container } from "reactstrap";
 import UnderDevelopment from "../Other/UnderDevelopment/UnderDevelopment";
 import NavBar from "./Components/NavBar/NavBar";
-import "./HomePageStyle.css"
+import "./LandingPageStyle.css";
 
-const HomeContainer: React.FC = () => {
+const LandingContainer: React.FC = () => {
   return (
     <>
       <main>
@@ -16,4 +16,4 @@ const HomeContainer: React.FC = () => {
   );
 };
 
-export default HomeContainer;
+export default LandingContainer;
