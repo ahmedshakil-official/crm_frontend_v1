@@ -49,16 +49,14 @@ const NetworkReportsContainer: React.FC = () => {
     ],
     caseCategories: [
       { value: "", label: "All Categories" },
-      { value: "fraud", label: "Fraud" },
-      { value: "compliance", label: "Compliance" },
-      { value: "security", label: "Security" },
-      { value: "other", label: "Other" },
+      { value: "mortgage", label: "Mortgage" },
+      { value: "protection", label: "Protection" },
+      { value: "general_insurance", label: "General Insurance" },
     ],
     applicantTypes: [
       { value: "", label: "All Types" },
       { value: "individual", label: "Individual" },
-      { value: "business", label: "Business" },
-      { value: "non_profit", label: "Non-Profit" },
+      { value: "joint", label: "Joint" },
     ],
     caseStatuses: [
       { value: "", label: "All Statuses" },
@@ -68,9 +66,22 @@ const NetworkReportsContainer: React.FC = () => {
     ],
     caseStages: [
       { value: "", label: "All Stages" },
-      { value: "investigation", label: "Investigation" },
-      { value: "review", label: "Review" },
-      { value: "resolution", label: "Resolution" },
+      { value: "enquiry", label: "Enquiry" },
+      { value: "fact_find", label: "Fact Find" },
+      {
+        value: "research_compliance_check",
+        label: "Research & Compliance Check",
+      },
+      { value: "decision_in_principle", label: "Decision in Principle" },
+      {
+        value: "full_mortgage_application",
+        label: "Full Mortgage Application",
+      },
+      { value: "offer_from_bank", label: "Offer from Bank" },
+      { value: "legal", label: "Legal" },
+      { value: "completion", label: "Completion" },
+      { value: "future_opportunity", label: "Future Opportunity" },
+      { value: "not_proceed", label: "Not Proceed" },
     ],
   };
 
