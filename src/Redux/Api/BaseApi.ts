@@ -67,6 +67,7 @@ export const baseApi = createApi({
     //Network start
     "OrganisationList",
     "SingleOrganisation",
+    "NetworkReports",
     //Network end
 
     //Organization start
