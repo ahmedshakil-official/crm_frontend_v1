@@ -18,7 +18,6 @@ import {
   Spinner,
 } from "reactstrap";
 import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
-import styles from "./NetworkReports.module.css";
 
 const NetworkReportsContainer: React.FC = () => {
   const [getNetworkReports, { isLoading }] = useGetNetworkReportsMutation();
@@ -148,7 +147,7 @@ const NetworkReportsContainer: React.FC = () => {
   };
 
   return (
-    <div className={styles.networkReportsContainer}>
+    <div>
       <Breadcrumbs
         title="Network Reports"
         subTitle="Generate and analyze comprehensive network reports"
@@ -158,7 +157,7 @@ const NetworkReportsContainer: React.FC = () => {
       <Container fluid>
         <Row className="mb-4">
           <Col>
-            <Card className={`${styles.reportsCard} shadow-sm border-0`}>
+            <Card className="shadow-sm border-0">
               <CardBody>
                 <Row className="align-items-center">
                   <Col md={6}>
@@ -173,7 +172,6 @@ const NetworkReportsContainer: React.FC = () => {
                   <Col md={6} className="text-end">
                     <Button
                       color="success"
-                      className={styles.exportButton}
                       onClick={handleDownloadReport}
                       disabled={isLoading}
                     >
@@ -199,7 +197,7 @@ const NetworkReportsContainer: React.FC = () => {
         {/* Filter Panel */}
         <Row className="mb-4">
           <Col>
-            <Card className={`border-primary ${styles.filterPanel}`}>
+            <Card className="border-primary">
               <CardHeader className="bg-primary text-white">
                 <Row className="align-items-center">
                   <Col>
