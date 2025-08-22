@@ -1,5 +1,4 @@
 import { useGetNetworkReportsMutation } from "@/Redux/Reducers/Network/Reports/NetworkReportsApi";
-import { useState } from "react";
 import {
   Button,
   Card,
@@ -13,9 +12,7 @@ import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import styles from "./NetworkReports.module.css";
 
 const NetworkReportsContainer: React.FC = () => {
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [getNetworkReports, { isLoading, error }] =
-    useGetNetworkReportsMutation();
+  const [getNetworkReports, { isLoading }] = useGetNetworkReportsMutation();
 
   const handleDownloadReport = async () => {
     try {
@@ -61,9 +58,9 @@ const NetworkReportsContainer: React.FC = () => {
                       color="success"
                       className={styles.exportButton}
                       onClick={handleDownloadReport}
-                      disabled={isDownloading}
+                      disabled={isLoading}
                     >
-                      {isDownloading ? (
+                      {isLoading ? (
                         <>
                           <Spinner size="sm" className="me-2" />
                           Downloading...
