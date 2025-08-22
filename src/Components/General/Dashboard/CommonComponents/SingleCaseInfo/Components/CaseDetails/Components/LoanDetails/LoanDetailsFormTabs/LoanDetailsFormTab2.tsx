@@ -87,7 +87,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
                 handleFormChange(e.target.name, Number(e.target.value))
               }
             />
-            {/* <FormText className=" text-danger">
+            <FormText className=" text-danger">
               {calculateLTV() === ""
                 ? `Loan Amount can not be more than the ${
                     formData.mortgage_type === "PURCHASE"
@@ -95,7 +95,7 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
                       : "Property Valuation"
                   }*`
                 : ""}
-            </FormText> */}
+            </FormText>
           </FormGroup>
         </Col>
         <Col md={6}>
