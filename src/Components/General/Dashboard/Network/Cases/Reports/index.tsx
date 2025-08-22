@@ -1,10 +1,19 @@
+"use client";
+
 import { useGetNetworkReportsMutation } from "@/Redux/Reducers/Network/Reports/NetworkReportsApi";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
   CardBody,
+  CardHeader,
   Col,
   Container,
+  Form,
+  FormGroup,
+  Input,
+  Label,
   Row,
   Spinner,
 } from "reactstrap";
@@ -13,10 +22,117 @@ import styles from "./NetworkReports.module.css";
 
 const NetworkReportsContainer: React.FC = () => {
   const [getNetworkReports, { isLoading }] = useGetNetworkReportsMutation();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const [filters, setFilters] = useState({
+    date_filter: "",
+    case_category: "",
+    applicant_type: "",
+    case_status: "",
+    case_stage: "",
+    is_removed: "",
+  });
+
+  const [dateRange, setDateRange] = useState({
+    from_date: "",
+    to_date: "",
+  });
+
+  const filterOptions = {
+    dateFilters: [
+      { value: "today", label: "Today" },
+      { value: "this_week", label: "This Week" },
+      { value: "this_month", label: "This Month" },
+      { value: "this_year", label: "This Year" },
+      { value: "last_30_days", label: "Last 30 Days" },
+      { value: "range", label: "Custom Range" },
+    ],
+    caseCategories: [
+      { value: "", label: "All Categories" },
+      { value: "fraud", label: "Fraud" },
+      { value: "compliance", label: "Compliance" },
+      { value: "security", label: "Security" },
+      { value: "other", label: "Other" },
+    ],
+    applicantTypes: [
+      { value: "", label: "All Types" },
+      { value: "individual", label: "Individual" },
+      { value: "business", label: "Business" },
+      { value: "non_profit", label: "Non-Profit" },
+    ],
+    caseStatuses: [
+      { value: "", label: "All Statuses" },
+      { value: "care", label: "Care" },
+      { value: "closed", label: "Closed" },
+      { value: "pending", label: "Pending" },
+    ],
+    caseStages: [
+      { value: "", label: "All Stages" },
+      { value: "investigation", label: "Investigation" },
+      { value: "review", label: "Review" },
+      { value: "resolution", label: "Resolution" },
+    ],
+  };
+
+  // Load filters from URL on mount
+  useEffect(() => {
+    const params: any = {};
+    searchParams.forEach((value, key) => {
+      params[key] = value;
+    });
+
+    setFilters((prev) => ({ ...prev, ...params }));
+    if (params.from_date || params.to_date) {
+      setDateRange({
+        from_date: params.from_date || "",
+        to_date: params.to_date || "",
+      });
+    }
+  }, [searchParams]);
+
+  const handleFilterChange = (key: string, value: string) => {
+    const updatedFilters = { ...filters, [key]: value };
+    setFilters(updatedFilters);
+  };
+
+  const handleDateRangeChange = (key: string, value: string) => {
+    const updatedRange = { ...dateRange, [key]: value };
+    setDateRange(updatedRange);
+  };
+
+  const clearFilters = () => {
+    const resetFilters = {
+      date_filter: "",
+      case_category: "",
+      applicant_type: "",
+      case_status: "",
+      case_stage: "",
+      is_removed: "",
+    };
+    const resetDate = { from_date: "", to_date: "" };
+    setFilters(resetFilters);
+    setDateRange(resetDate);
+    router.push("?");
+  };
 
   const handleDownloadReport = async () => {
+    if (
+      filters.date_filter === "range" &&
+      (!dateRange.from_date || !dateRange.to_date)
+    ) {
+      alert("Please select both start and end dates for custom range.");
+      return;
+    }
     try {
-      const blob = await getNetworkReports({}).unwrap();
+      const payload = {
+        ...filters,
+        ...(filters.date_filter === "range" && {
+          from_date: dateRange.from_date,
+          to_date: dateRange.to_date,
+        }),
+      };
+      const blob = await getNetworkReports(payload).unwrap();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -27,6 +143,7 @@ const NetworkReportsContainer: React.FC = () => {
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Download failed:", err);
+      alert("Failed to download report. Please try again.");
     }
   };
 
@@ -74,6 +191,215 @@ const NetworkReportsContainer: React.FC = () => {
                     </Button>
                   </Col>
                 </Row>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+
+        {/* Filter Panel */}
+        <Row className="mb-4">
+          <Col>
+            <Card className={`border-primary ${styles.filterPanel}`}>
+              <CardHeader className="bg-primary text-white">
+                <Row className="align-items-center">
+                  <Col>
+                    <h6 className="mb-0">
+                      <i className="fa fa-sliders-h me-2"></i>
+                      Advanced Filters
+                    </h6>
+                  </Col>
+                  <Col xs="auto">
+                    <Button
+                      color="light"
+                      size="sm"
+                      onClick={clearFilters}
+                      className="text-primary"
+                    >
+                      <i className="fa fa-refresh me-1"></i>
+                      Clear All
+                    </Button>
+                  </Col>
+                </Row>
+              </CardHeader>
+              <CardBody className="bg-light">
+                <Form>
+                  <Row>
+                    <Col md={6} lg={4} className="mb-3">
+                      <FormGroup>
+                        <Label className="fw-semibold text-dark">
+                          <i className="fa fa-calendar me-2 text-primary"></i>
+                          Date Range
+                        </Label>
+                        <Input
+                          type="select"
+                          value={filters.date_filter}
+                          onChange={(e) =>
+                            handleFilterChange("date_filter", e.target.value)
+                          }
+                          className="form-select"
+                        >
+                          <option value="" disabled>
+                            Select Date Range
+                          </option>
+                          {filterOptions.dateFilters.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </Input>
+                      </FormGroup>
+                    </Col>
+
+                    {filters.date_filter === "range" && (
+                      <>
+                        <Col md={3} lg={2} className="mb-3">
+                          <FormGroup>
+                            <Label className="fw-semibold text-dark">
+                              Start Date
+                            </Label>
+                            <Input
+                              type="date"
+                              value={dateRange.from_date}
+                              onChange={(e) =>
+                                handleDateRangeChange(
+                                  "from_date",
+                                  e.target.value
+                                )
+                              }
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col md={3} lg={2} className="mb-3">
+                          <FormGroup>
+                            <Label className="fw-semibold text-dark">
+                              End Date
+                            </Label>
+                            <Input
+                              type="date"
+                              value={dateRange.to_date}
+                              onChange={(e) =>
+                                handleDateRangeChange("to_date", e.target.value)
+                              }
+                            />
+                          </FormGroup>
+                        </Col>
+                      </>
+                    )}
+
+                    <Col md={6} lg={3} className="mb-3">
+                      <FormGroup>
+                        <Label className="fw-semibold text-dark">
+                          <i className="fa fa-tag me-2 text-success"></i>
+                          Case Category
+                        </Label>
+                        <Input
+                          type="select"
+                          value={filters.case_category}
+                          onChange={(e) =>
+                            handleFilterChange("case_category", e.target.value)
+                          }
+                          className="form-select"
+                        >
+                          {filterOptions.caseCategories.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </Input>
+                      </FormGroup>
+                    </Col>
+
+                    <Col md={6} lg={3} className="mb-3">
+                      <FormGroup>
+                        <Label className="fw-semibold text-dark">
+                          <i className="fa fa-user me-2 text-info"></i>
+                          Applicant Type
+                        </Label>
+                        <Input
+                          type="select"
+                          value={filters.applicant_type}
+                          onChange={(e) =>
+                            handleFilterChange("applicant_type", e.target.value)
+                          }
+                          className="form-select"
+                        >
+                          {filterOptions.applicantTypes.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </Input>
+                      </FormGroup>
+                    </Col>
+
+                    <Col md={6} lg={3} className="mb-3">
+                      <FormGroup>
+                        <Label className="fw-semibold text-dark">
+                          <i className="fa fa-flag me-2 text-warning"></i>
+                          Case Status
+                        </Label>
+                        <Input
+                          type="select"
+                          value={filters.case_status}
+                          onChange={(e) =>
+                            handleFilterChange("case_status", e.target.value)
+                          }
+                          className="form-select"
+                        >
+                          {filterOptions.caseStatuses.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </Input>
+                      </FormGroup>
+                    </Col>
+
+                    <Col md={6} lg={3} className="mb-3">
+                      <FormGroup>
+                        <Label className="fw-semibold text-dark">
+                          <i className="fa fa-tasks me-2 text-danger"></i>
+                          Case Stage
+                        </Label>
+                        <Input
+                          type="select"
+                          value={filters.case_stage}
+                          onChange={(e) =>
+                            handleFilterChange("case_stage", e.target.value)
+                          }
+                          className="form-select"
+                        >
+                          {filterOptions.caseStages.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </Input>
+                      </FormGroup>
+                    </Col>
+
+                    <Col md={6} lg={3} className="mb-3">
+                      <FormGroup>
+                        <Label className="fw-semibold text-dark">
+                          <i className="fa fa-eye me-2 text-secondary"></i>
+                          Include Removed
+                        </Label>
+                        <Input
+                          type="select"
+                          value={filters.is_removed}
+                          onChange={(e) =>
+                            handleFilterChange("is_removed", e.target.value)
+                          }
+                          className="form-select"
+                        >
+                          <option value="">All Cases</option>
+                          <option value="false">Active Only</option>
+                          <option value="true">Removed Only</option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </Form>
               </CardBody>
             </Card>
           </Col>
