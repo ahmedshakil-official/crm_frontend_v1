@@ -39,6 +39,11 @@ const NetworkOwnerMenu: MenuItem[] = [
             title: "Clients",
             type: "link",
           },
+          {
+            path: "/dashboard/network/reports",
+            title: "Reports",
+            type: "link",
+          },
         ],
       },
       {
