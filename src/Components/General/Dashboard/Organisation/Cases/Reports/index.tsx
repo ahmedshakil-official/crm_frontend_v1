@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetNetworkReportsMutation } from "@/Redux/Reducers/Network/Reports/NetworkReportsApi";
+import { useGetOrganisationReportsMutation } from "@/Redux/Reducers/Organisation/Reports/NetworkReportsApi";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -19,10 +19,11 @@ import {
 } from "reactstrap";
 import Breadcrumbs from "../../../CommonComponents/Breadcrumbs/Breadcrumbs";
 
-const NetworkReportsContainer: React.FC = () => {
-  const [getNetworkReports, { isLoading }] = useGetNetworkReportsMutation();
+const OrganisationReportsContainer: React.FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [getOrganisationReports, { isLoading }] =
+    useGetOrganisationReportsMutation();
 
   const [filters, setFilters] = useState({
     date_filter: "",
@@ -141,11 +142,11 @@ const NetworkReportsContainer: React.FC = () => {
           to_date: dateRange.to_date,
         }),
       };
-      const blob = await getNetworkReports(payload).unwrap();
+      const blob = await getOrganisationReports(payload).unwrap();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "network-report";
+      link.download = "organisation-report";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -159,8 +160,8 @@ const NetworkReportsContainer: React.FC = () => {
   return (
     <div>
       <Breadcrumbs
-        title="Network Reports"
-        subTitle="Generate and analyze comprehensive network reports"
+        title="Organisation Reports"
+        subTitle="Generate and analyze comprehensive organisation reports"
         parent="Cases"
         child="Reports"
       />
@@ -173,10 +174,10 @@ const NetworkReportsContainer: React.FC = () => {
                   <Col md={6}>
                     <h4 className="mb-0 text-primary fw-bold">
                       <i className="fa fa-chart-line me-2"></i>
-                      Network Reports Dashboard
+                      Organisation Reports Dashboard
                     </h4>
                     <p className="text-muted mb-0 mt-1">
-                      Generate comprehensive reports across your network
+                      Generate comprehensive reports across your organisation
                     </p>
                   </Col>
                   <Col md={6} className="text-end">
@@ -419,4 +420,4 @@ const NetworkReportsContainer: React.FC = () => {
   );
 };
 
-export default NetworkReportsContainer;
+export default OrganisationReportsContainer;
