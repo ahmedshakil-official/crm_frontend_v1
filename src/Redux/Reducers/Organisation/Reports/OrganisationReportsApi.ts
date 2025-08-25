@@ -10,7 +10,7 @@ export const OrganisationReportsApi = baseApi.injectEndpoints({
         responseHandler: (response) => response.blob(),
       }),
 
-      invalidatesTags: ["NetworkReports"],
+      invalidatesTags: ["OrganisationReports"],
     }),
   }),
 });

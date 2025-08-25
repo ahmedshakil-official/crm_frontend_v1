@@ -1,8 +1,8 @@
 "use client";
-
-import { useGetOrganisationReportsMutation } from "@/Redux/Reducers/Organisation/Reports/NetworkReportsApi";
+import { useGetOrganisationReportsMutation } from "@/Redux/Reducers/Organisation/Reports/OrganisationReportsApi";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -145,7 +145,7 @@ const OrganisationReportsContainer: React.FC = () => {
       filters.date_filter === "range" &&
       (!dateRange.from_date || !dateRange.to_date)
     ) {
-      alert("Please select both start and end dates for custom range.");
+      toast.error("Please select both start and end dates for custom range.");
       return;
     }
     try {
@@ -166,8 +166,8 @@ const OrganisationReportsContainer: React.FC = () => {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (err) {
-      console.error("Download failed:", err);
-      alert("Failed to download report. Please try again.");
+      // console.error("Download failed:", err);
+      toast.error("Failed to download report. Please try again.");
     }
   };
 
