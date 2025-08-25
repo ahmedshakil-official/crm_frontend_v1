@@ -1,11 +1,19 @@
 import ConfigDB from "@/Config/ThemeConfig";
 import { createSlice } from "@reduxjs/toolkit";
 
+// Load saved theme from localStorage or use default
+const getSavedTheme = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("theme") || "light";
+  }
+  return "light";
+};
+
 let initialState = {
   layout_type: "ltr",
   openCus: false,
   sidebar_types: "compact-wrapper",
-  mix_background_layout: "light-only",
+  mix_background_layout: getSavedTheme(),
   sideBarIconType: "stroke-svg",
   colors: {
     primary_color: "",
@@ -24,17 +32,17 @@ const ThemeCustomizerSlice = createSlice({
       state.layout_type = action.payload;
       if (action.payload === "rtl") {
         document.body.classList.add("rtl");
-        document.body.classList.remove("box-layout","ltr");
+        document.body.classList.remove("box-layout", "ltr");
         document.documentElement.dir = "rtl";
         state.sideBarToggle = false;
       } else if (action.payload === "ltr") {
         document.body.classList.add("ltr");
-        document.body.classList.remove("box-layout","rtl");
+        document.body.classList.remove("box-layout", "rtl");
         document.documentElement.dir = "ltr";
         state.sideBarToggle = false;
       } else if (action.payload === "box-layout") {
         document.body.classList.add("box-layout");
-        document.body.classList.remove("offcanvas","ltr","rtl");
+        document.body.classList.remove("offcanvas", "ltr", "rtl");
         document.documentElement.dir = "ltr";
         state.sideBarToggle = true;
       }
@@ -52,6 +60,8 @@ const ThemeCustomizerSlice = createSlice({
     addSideBarBackGround: (state, action) => {
       ConfigDB.color.mix_background_layout = action.payload;
       state.mix_background_layout = action.payload;
+      // Save to localStorage for persistence
+      localStorage.setItem("theme", action.payload);
     },
     addSidebarIconType: (state, action) => {
       ConfigDB.settings.sidebar.iconType = action.payload;
@@ -77,6 +87,16 @@ const ThemeCustomizerSlice = createSlice({
   },
 });
 
-export const { setLayoutType, setSideBarToggle, addSidebarTypes, addSideBarBackGround, addSidebarIconType, addColor, setOpenCus, scrollToLeft, scrollToRight } = ThemeCustomizerSlice.actions;
+export const {
+  setLayoutType,
+  setSideBarToggle,
+  addSidebarTypes,
+  addSideBarBackGround,
+  addSidebarIconType,
+  addColor,
+  setOpenCus,
+  scrollToLeft,
+  scrollToRight,
+} = ThemeCustomizerSlice.actions;
 
 export default ThemeCustomizerSlice.reducer;
