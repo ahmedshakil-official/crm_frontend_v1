@@ -70,17 +70,21 @@ export const baseApi = createApi({
     "NetworkReports",
     //Network end
 
+    //Network Adviser start
+    "NetworkAdviserReports",
+    //Network Adviser end
+
     //Organization start
     "OrganisationReports",
     //Organization end
 
     //Organization Adviser start
     "OrganisationAdviserReports",
-    //Organization end
+    //Organization Adviser end
 
     //Organization Admin and support staff start
-    "OrganisationAdminReports",
-    //Organization end
+    "OrganisationStaffReports",
+    //Organization Admin and support staff end
 
     // Client start
     "CLientApplicationDetails",
