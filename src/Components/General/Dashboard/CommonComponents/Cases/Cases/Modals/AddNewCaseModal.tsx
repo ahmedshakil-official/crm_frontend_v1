@@ -1,6 +1,8 @@
 import { useAddCaseMutation } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
 import { useGetLeadDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
 import { AddNewCaseModalProps } from "@/Types/CommonComponents/Cases/CaseTypes";
+import { AdviserInfoProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
 import { LeadsInfo } from "@/Types/CommonComponents/Directors/LeadTypes";
 import { getCaseUrl } from "@/utils/GetCaseUrl";
 import { useSession } from "next-auth/react";
@@ -19,6 +21,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
+import AddAdviserModal from "../../../Directors/Advisers/Modals/AddAdviserModal";
 import AddLeadModal from "../../../Directors/Leads/Modals/AddLeadModal";
 
 const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
@@ -28,17 +31,24 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   onCaseCreated,
 }) => {
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
+  const [advisers, setAdvisers] = useState<AdviserInfoProps[]>([]);
   // Rtk query
   const {
     data: leadData,
     isLoading: leadDataLoading,
     refetch: refetchLeads,
   } = useGetLeadDetailsQuery(undefined);
+  const {
+    data: adviserData,
+    isLoading: adviserDataLoading,
+    refetch: refetchAdvisers,
+  } = useGetAdviserDetailsQuery(undefined);
   const [addCaseDetails, { isLoading: addCaseLoading }] = useAddCaseMutation();
 
   const [formData, setFormData] = useState({
     lead: leadId || 0,
     case_category: "",
+    adviser: 0,
     notes: "",
   });
   const [submitType, setSubmitType] = useState<"save" | "save_view">("save");
@@ -48,12 +58,26 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   const router = useRouter();
 
   const [isAddLeadModalOpen, setIsAddLeadModalOpen] = React.useState(false);
+  const [isAddAdviserModalOpen, setIsAddAdviserModalOpen] =
+    React.useState(false);
+
   const handleOpenAddLead = () => setIsAddLeadModalOpen(true);
   const handleCloseAddLead = () => {
     setIsAddLeadModalOpen(false);
     // Refetch leads after closing the add-lead modal to refresh the list
     try {
       refetchLeads();
+    } catch (err) {
+      // ignore
+    }
+  };
+
+  const handleOpenAddAdviser = () => setIsAddAdviserModalOpen(true);
+  const handleCloseAddAdviser = () => {
+    setIsAddAdviserModalOpen(false);
+    // Refetch advisers after closing the add-adviser modal to refresh the list
+    try {
+      refetchAdvisers();
     } catch (err) {
       // ignore
     }
@@ -73,6 +97,16 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
       setLeads(leadsData || []);
     }
   }, [leadData]);
+
+  // Fetch adviser data from backend
+  useEffect(() => {
+    if (adviserData) {
+      const advisersList = Array.isArray(adviserData)
+        ? adviserData
+        : adviserData.advisers;
+      setAdvisers(advisersList || []);
+    }
+  }, [adviserData]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -104,6 +138,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
         setFormData({
           lead: leadId || 0,
           case_category: "",
+          adviser: 0,
           notes: "",
         });
         toggle();
@@ -199,6 +234,53 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
             </Input>
           </FormGroup>
           <FormGroup>
+            <Label for="adviser">Assign Adviser</Label>
+            <Input
+              id="adviser"
+              name="adviser"
+              type="select"
+              value={formData.adviser}
+              onChange={handleChange}
+              disabled={!!leadId}
+            >
+              <option value="">Select...</option>
+              {advisers.length > 0 ? (
+                advisers.map((adviser) => (
+                  <option key={adviser.user.id} value={adviser.user.id}>
+                    {`${
+                      adviser.user?.title
+                        ? adviser.user.title.charAt(0).toUpperCase() +
+                          adviser.user.title.slice(1).toLowerCase() +
+                          ". "
+                        : ""
+                    }${adviser.user?.first_name}${
+                      adviser.user?.middle_name
+                        ? " " + adviser.user.middle_name
+                        : ""
+                    } ${adviser.user?.last_name}`}
+                  </option>
+                ))
+              ) : (
+                <option value="" disabled>
+                  No advisers available
+                </option>
+              )}
+            </Input>
+            {advisers.length === 0 && (
+              <div className="mt-2">
+                <Button
+                  size="sm"
+                  color="primary"
+                  onClick={handleOpenAddAdviser}
+                  toggle={toggle}
+                >
+                  <TbCirclePlus size={16} className="me-1" />
+                  Add Adviser
+                </Button>
+              </div>
+            )}
+          </FormGroup>
+          <FormGroup>
             <Label for="notes">Notes</Label>
             <Input
               id="notes"
@@ -239,6 +321,10 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
         </ModalFooter>
       </Form>
       <AddLeadModal isOpen={isAddLeadModalOpen} toggle={handleCloseAddLead} />
+      <AddAdviserModal
+        isOpen={isAddAdviserModalOpen}
+        toggle={handleCloseAddAdviser}
+      />
     </Modal>
   );
 };
