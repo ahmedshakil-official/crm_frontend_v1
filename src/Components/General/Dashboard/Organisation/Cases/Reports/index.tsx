@@ -85,6 +85,20 @@ const OrganisationReportsContainer: React.FC = () => {
     ],
   };
 
+  // Get current date and calculate date range (one year from today)
+  const getCurrentDateLimits = () => {
+    const today = new Date();
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(today.getFullYear() - 1);
+
+    return {
+      min: oneYearAgo.toISOString().split("T")[0],
+      max: today.toISOString().split("T")[0],
+    };
+  };
+
+  const dateLimits = getCurrentDateLimits();
+
   // Load filters from URL on mount
   useEffect(() => {
     const params: any = {};
@@ -269,6 +283,8 @@ const OrganisationReportsContainer: React.FC = () => {
                             <Input
                               type="date"
                               value={dateRange.from_date}
+                              min={dateLimits.min}
+                              max={dateLimits.max}
                               style={{ padding: "10px 10px" }}
                               onChange={(e) =>
                                 handleDateRangeChange(
@@ -287,6 +303,8 @@ const OrganisationReportsContainer: React.FC = () => {
                             <Input
                               type="date"
                               value={dateRange.to_date}
+                              min={dateLimits.min}
+                              max={dateLimits.max}
                               style={{ padding: "10px 10px" }}
                               onChange={(e) =>
                                 handleDateRangeChange("to_date", e.target.value)
