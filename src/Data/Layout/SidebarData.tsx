@@ -272,29 +272,6 @@ const OrganisationAdviserMenu: MenuItem[] = [
         type: "link",
       },
       {
-        title: "Users",
-        type: "sub",
-        icon: "Profile",
-        lanClass: "lan-4",
-        children: [
-          {
-            path: "/dashboard/orgadviser/reporting",
-            title: "Reporting",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgadviser/marketinghub",
-            title: "Marketing Hub",
-            type: "link",
-          },
-          {
-            path: "/dashboard/orgadviser/tasksandreminders",
-            title: "Tasks & Reminders",
-            type: "link",
-          },
-        ],
-      },
-      {
         title: "Cases",
         icon: "Paper",
         type: "sub",
@@ -313,6 +290,29 @@ const OrganisationAdviserMenu: MenuItem[] = [
           {
             path: "/dashboard/orgadviser/activecases",
             title: "Active Cases",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/reports",
+            title: "Reports",
+            type: "link",
+          },
+        ],
+      },
+      {
+        title: "Users",
+        type: "sub",
+        icon: "Profile",
+        lanClass: "lan-4",
+        children: [
+          {
+            path: "/dashboard/orgadviser/marketinghub",
+            title: "Marketing Hub",
+            type: "link",
+          },
+          {
+            path: "/dashboard/orgadviser/tasksandreminders",
+            title: "Tasks & Reminders",
             type: "link",
           },
         ],
