@@ -342,6 +342,13 @@ const OrganisationStaffMenu: MenuItem[] = [
         path: "/dashboard/orgstaff/caseupdates",
       },
       {
+        title: "Reports",
+        icon: "Folder",
+        type: "link",
+        lanClass: "lan-3",
+        path: "/dashboard/orgstaff/reports",
+      },
+      {
         title: "Tasks & Reminders",
         icon: "Edit",
         type: "link",
