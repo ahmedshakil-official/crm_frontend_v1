@@ -5,7 +5,7 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import AuditLogsTab from "./AuditLogsTab/AuditLogsTab";
 import ReportsTab from "./ReportsTab/ReportsTab";
 
-const ReportsAndLogsTabs: React.FC = () => {
+const SystemReportsAndLogsTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"users" | "roles">("users");
 
   return (
@@ -63,4 +63,4 @@ const ReportsAndLogsTabs: React.FC = () => {
   );
 };
 
-export default ReportsAndLogsTabs;
+export default SystemReportsAndLogsTabs;

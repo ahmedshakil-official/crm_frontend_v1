@@ -1,7 +1,7 @@
 import { TbActivity, TbFileText, TbTrendingUp, TbUsers } from "react-icons/tb";
 import { Card, CardBody, CardText, CardTitle, Col, Row } from "reactstrap";
 
-const ReportsAndLogsOverview: React.FC = () => {
+const SystemReportsAndLogsOverview: React.FC = () => {
   return (
     <Row>
       {/* Total Reports */}
@@ -121,4 +121,4 @@ const ReportsAndLogsOverview: React.FC = () => {
   );
 };
 
-export default ReportsAndLogsOverview;
+export default SystemReportsAndLogsOverview;
