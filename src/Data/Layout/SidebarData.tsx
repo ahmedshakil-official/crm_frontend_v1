@@ -115,28 +115,6 @@ const NetworkAdviserMenu: MenuItem[] = [
         path: "/dashboard/netadviser",
       },
       {
-        title: "Users",
-        icon: "Profile",
-        type: "sub",
-        children: [
-          {
-            path: "/dashboard/netadviser/reporting",
-            title: "Reporting",
-            type: "link",
-          },
-          {
-            path: "/dashboard/netadviser/marketinghub",
-            title: "Marketing Hub",
-            type: "link",
-          },
-          {
-            path: "/dashboard/netadviser/tasksandreminders",
-            title: "Tasks & Reminders",
-            type: "link",
-          },
-        ],
-      },
-      {
         title: "Cases",
         icon: "Paper",
         type: "sub",
@@ -154,6 +132,28 @@ const NetworkAdviserMenu: MenuItem[] = [
           {
             path: "/dashboard/netadviser/activecases",
             title: "Active Cases",
+            type: "link",
+          },
+          {
+            path: "/dashboard/netadviser/reports",
+            title: "Reports",
+            type: "link",
+          },
+        ],
+      },
+      {
+        title: "Users",
+        icon: "Profile",
+        type: "sub",
+        children: [
+          {
+            path: "/dashboard/netadviser/marketinghub",
+            title: "Marketing Hub",
+            type: "link",
+          },
+          {
+            path: "/dashboard/netadviser/tasksandreminders",
+            title: "Tasks & Reminders",
             type: "link",
           },
         ],
