@@ -409,6 +409,7 @@ const Cases: React.FC = () => {
                       <th>Case Stage</th>
                       <th>Created At</th>
                       <th>Created By</th>
+                      <th>Assigned To</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -519,6 +520,43 @@ const Cases: React.FC = () => {
                                 .join(" ")}
                               )
                             </p>
+                          </td>
+                          <td>
+                            {caseItem.assigned_user ? (
+                              <>
+                                <p className="m-0">
+                                  {caseItem.assigned_user.title
+                                    ? caseItem.assigned_user.title[0].toUpperCase() +
+                                      caseItem.assigned_user.title
+                                        .slice(1)
+                                        .toLowerCase() +
+                                      ". "
+                                    : ""}
+                                  {caseItem.assigned_user.first_name}{" "}
+                                  {caseItem.assigned_user.middle_name
+                                    ? caseItem.assigned_user.middle_name + " "
+                                    : ""}
+                                  {caseItem.assigned_user.last_name}
+                                </p>
+                                <p
+                                  className="m-0 opacity-75"
+                                  style={{ fontSize: "9px" }}
+                                >
+                                  (
+                                  {caseItem.assigned_user.user_type
+                                    ?.split("_")
+                                    .map(
+                                      (word) =>
+                                        word.charAt(0).toUpperCase() +
+                                        word.slice(1).toLowerCase()
+                                    )
+                                    .join(" ")}
+                                  )
+                                </p>
+                              </>
+                            ) : (
+                              <span className="text-muted">Not Assigned</span>
+                            )}
                           </td>
                           <td>
                             <div className="d-flex justify-content-center align-items-center">

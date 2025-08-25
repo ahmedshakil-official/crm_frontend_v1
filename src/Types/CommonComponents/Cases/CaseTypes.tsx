@@ -29,6 +29,16 @@ export interface CaseInfoPrpos {
     profile_image: null;
     user_type: string;
   };
+  assigned_user: {
+    title: string;
+    email: string;
+    phone: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    profile_image: null;
+    user_type: string;
+  };
   updated_by: {
     title: string;
     email: string;
