@@ -48,7 +48,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   const [formData, setFormData] = useState({
     lead: leadId || 0,
     case_category: "",
-    adviser: 0,
+    assigned_to: 0,
     notes: "",
   });
   const [submitType, setSubmitType] = useState<"save" | "save_view">("save");
@@ -138,7 +138,7 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
         setFormData({
           lead: leadId || 0,
           case_category: "",
-          adviser: 0,
+          assigned_to: 0,
           notes: "",
         });
         toggle();
@@ -237,9 +237,9 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
             <Label for="adviser">Assign Adviser</Label>
             <Input
               id="adviser"
-              name="adviser"
+              name="assigned_to"
               type="select"
-              value={formData.adviser}
+              value={formData.assigned_to}
               onChange={handleChange}
               disabled={!!leadId}
             >
