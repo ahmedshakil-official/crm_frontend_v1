@@ -201,6 +201,11 @@ const OrganisationOwnerMenu: MenuItem[] = [
             title: "Clients",
             type: "link",
           },
+          {
+            path: "/dashboard/organisation/reports",
+            title: "Reports",
+            type: "link",
+          },
         ],
       },
       {
@@ -242,8 +247,8 @@ const OrganisationOwnerMenu: MenuItem[] = [
             type: "link",
           },
           {
-            path: "/dashboard/organisation/reportsandlogs",
-            title: "Reports & Logs",
+            path: "/dashboard/organisation/systemreportsandlogs",
+            title: "System Reports & Logs",
             type: "link",
           },
         ],
