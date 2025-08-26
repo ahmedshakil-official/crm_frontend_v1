@@ -50,7 +50,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
 
         <Row className="px-3 mt-3">
           {/* 1st card */}
-          <Col>
+          <Col sm="12" md="6" lg="3">
             <Card className="shadow">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-primary">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -116,7 +116,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 2nd card */}
-          <Col>
+          <Col sm="12" md="6" lg="3">
             <Card className="shadow">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-warning">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -182,7 +182,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 3rd card */}
-          <Col>
+          <Col sm="12" md="6" lg="3">
             <Card className="shadow ">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-success">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -241,7 +241,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 4th card */}
-          <Col>
+          <Col sm="12" md="6" lg="3">
             <Card className="shadow ">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-info">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
