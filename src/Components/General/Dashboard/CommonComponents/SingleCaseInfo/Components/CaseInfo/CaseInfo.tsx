@@ -295,7 +295,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                           </h6>
                         </>
                       ) : (
-                        <div className="text-center py-3">
+                        <div className="text-center py-3 mt-2">
                           <h6 className="text-muted">
                             <em>Not Assigned Yet</em>
                           </h6>
