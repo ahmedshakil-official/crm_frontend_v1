@@ -50,7 +50,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
 
         <Row className="px-3 mt-3">
           {/* 1st card */}
-          <Col lg="4" md="12">
+          <Col>
             <Card className="shadow">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-primary">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -116,7 +116,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 2nd card */}
-          <Col lg="4" md="12">
+          <Col>
             <Card className="shadow">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-warning">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
@@ -182,11 +182,11 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             </Card>
           </Col>
           {/* 3rd card */}
-          <Col lg="4" md="12">
+          <Col>
             <Card className="shadow ">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-success">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
-                  <h4 className="fw-bold">Assigned Advisor</h4>
+                  <h4 className="fw-bold">Created By</h4>
                 </CardHeader>
                 {isLoading ? (
                   <Row className="pt-2">
@@ -234,6 +234,73 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
                             : "N/A"}
                         </strong>
                       </h6>
+                    </Col>
+                  </Row>
+                )}
+              </CardBody>
+            </Card>
+          </Col>
+          {/* 4th card */}
+          <Col>
+            <Card className="shadow ">
+              <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-info">
+                <CardHeader className="pt-0 pb-1 m-0 text-center">
+                  <h4 className="fw-bold">Assigned Advisor</h4>
+                </CardHeader>
+                {isLoading ? (
+                  <Row className="pt-2">
+                    <Col xs="12" className="text-center">
+                      <Spinner animation="border" role="status" color="info" />
+                    </Col>
+                  </Row>
+                ) : (
+                  <Row className="pt-2">
+                    <Col xs="12">
+                      {caseInfo?.assigned_user ? (
+                        <>
+                          <h6 className="pt-1">
+                            <span className="small">Name:</span>{" "}
+                            <strong className="small">
+                              {caseInfo?.assigned_user?.title
+                                ? caseInfo.assigned_user.title[0].toUpperCase() +
+                                  caseInfo.assigned_user.title
+                                    .slice(1)
+                                    .toLowerCase()
+                                : ""}
+                              {"."} {caseInfo?.assigned_user?.first_name}{" "}
+                              {caseInfo?.assigned_user?.middle_name}{" "}
+                              {caseInfo?.assigned_user?.last_name}
+                            </strong>
+                          </h6>
+                          <h6 className="pt-1">
+                            <span className="small">Email:</span>{" "}
+                            <strong>
+                              <small>{caseInfo?.assigned_user?.email}</small>
+                            </strong>
+                          </h6>
+                          <h6 className="pt-1">
+                            <span className="small">User Type:</span>{" "}
+                            <strong className="small">
+                              {caseInfo?.assigned_user?.user_type
+                                ? caseInfo.assigned_user?.user_type
+                                    .split("_")
+                                    .map(
+                                      (word) =>
+                                        word.charAt(0).toUpperCase() +
+                                        word.slice(1).toLowerCase()
+                                    )
+                                    .join(" ")
+                                : "N/A"}
+                            </strong>
+                          </h6>
+                        </>
+                      ) : (
+                        <div className="text-center py-3">
+                          <h6 className="text-muted">
+                            <em>Not Assigned Yet</em>
+                          </h6>
+                        </div>
+                      )}
                     </Col>
                   </Row>
                 )}
