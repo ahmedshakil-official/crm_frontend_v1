@@ -33,16 +33,10 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const [advisers, setAdvisers] = useState<AdviserInfoProps[]>([]);
   // Rtk query
-  const {
-    data: leadData,
-    isLoading: leadDataLoading,
-    refetch: refetchLeads,
-  } = useGetLeadDetailsQuery(undefined);
-  const {
-    data: adviserData,
-    isLoading: adviserDataLoading,
-    refetch: refetchAdvisers,
-  } = useGetAdviserDetailsQuery(undefined);
+  const { data: leadData, refetch: refetchLeads } =
+    useGetLeadDetailsQuery(undefined);
+  const { data: adviserData, refetch: refetchAdvisers } =
+    useGetAdviserDetailsQuery(undefined);
   const [addCaseDetails, { isLoading: addCaseLoading }] = useAddCaseMutation();
 
   const [formData, setFormData] = useState({

@@ -30,6 +30,7 @@ export interface CaseInfoPrpos {
     user_type: string;
   };
   assigned_user: {
+    id: number;
     title: string;
     email: string;
     phone: string;
@@ -39,6 +40,7 @@ export interface CaseInfoPrpos {
     profile_image: null;
     user_type: string;
   };
+  assigned_to?: string;
   updated_by: {
     title: string;
     email: string;
