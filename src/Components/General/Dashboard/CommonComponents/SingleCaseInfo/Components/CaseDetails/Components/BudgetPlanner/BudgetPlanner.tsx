@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import { getNextTabNav } from "@/utils/Helper/nextTabUtils";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -9,6 +10,7 @@ import { Button, Input } from "reactstrap";
 import BudgetPlannerModal from "./BudgetPlannerModals/BudgetPlannerModal";
 
 const BudgetPlanner: React.FC = () => {
+  const { data: session } = useSession();
   const params = useParams();
   const { casealias } = params;
   const dispatch = useAppDispatch();
@@ -40,11 +42,18 @@ const BudgetPlanner: React.FC = () => {
         </Button>
         <Input type="textarea" placeholder="Enter notes..." rows={4} />
         <div className="mt-auto d-flex justify-content-end w-100 gap-2">
-          <Button color="primary" disabled>
+          <Button color="primary" title="Api Error!" disabled>
             Save Changes
           </Button>
-          <Button color="secondary" onClick={handleNextTab}>
-            Save & Next
+          <Button
+            color="secondary"
+            onClick={() => {
+              handleNextTab();
+            }}
+          >
+            {session?.user?.user_type === "CLIENT"
+              ? "Go To Next"
+              : "Save & Next"}
           </Button>
         </div>
       </div>

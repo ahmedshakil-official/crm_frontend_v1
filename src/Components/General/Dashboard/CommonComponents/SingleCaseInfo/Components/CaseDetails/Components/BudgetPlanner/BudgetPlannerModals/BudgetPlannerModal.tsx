@@ -2,6 +2,7 @@
 import { useUpdateBudgetPlannerMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
 import { initializeBudgetPlannerForm } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 import { BudgetPlannerModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { FC, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +34,7 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
   isOpen,
   toggle,
 }) => {
+  const { data: session } = useSession();
   const { casealias } = useParams();
   const dispatch = useDispatch();
   const [basicTab, setBasicTab] = useState<number>(1);
@@ -121,7 +123,10 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
         <Button
           color="primary"
           onClick={handleSaveChanges}
-          disabled={!budgetPlannerData.disclaimer && !updatedFields.disclaimer}
+          disabled={
+            (!budgetPlannerData.disclaimer && !updatedFields.disclaimer) ||
+            session?.user?.user_type === "CLIENT"
+          }
         >
           {isLoading ? "Saving..." : "Save Changes"}
         </Button>
