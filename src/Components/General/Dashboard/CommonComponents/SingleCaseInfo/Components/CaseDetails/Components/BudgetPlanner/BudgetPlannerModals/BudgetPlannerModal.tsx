@@ -1,6 +1,9 @@
 "use client";
 import { useUpdateBudgetPlannerMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
-import { initializeBudgetPlannerForm } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
+import {
+  initializeBudgetPlannerForm,
+  updateBudgetPlannerSection,
+} from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 import { BudgetPlannerModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
@@ -41,9 +44,7 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
   const budgetPlannerData = useSelector((state: any) => state.budgetPlanner);
   const [updateBudgetPlanner, { isLoading }] = useUpdateBudgetPlannerMutation();
   // Local state to track only the changes
-  const [updatedFields, setUpdatedFields] = useState<
-    Partial<typeof budgetPlannerData>
-  >({});
+  const [updatedFields, setUpdatedFields] = useState<Record<string, any>>({});
 
   const handleTabClick = (index: number) => {
     setBasicTab(index);
@@ -71,13 +72,23 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
     }
   }, [budgetPlannerData, updatedFields, dispatch, toggle]);
 
-  // Function to update local changes
-  const updateField = (field: keyof typeof budgetPlannerData, value: any) => {
-    setUpdatedFields((prev: Partial<typeof budgetPlannerData>) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
+  // Function to update local changes and store section
+  const updateField = useCallback(
+    (field: string, value: any) => {
+      setUpdatedFields((prev: Record<string, any>) => {
+        if (JSON.stringify(prev[field]) === JSON.stringify(value)) {
+          return prev; // No change, prevent unnecessary updates
+        }
+        const next = { ...prev, [field]: value };
+        // Update only the affected section to avoid heavy reflows
+        dispatch(
+          updateBudgetPlannerSection({ section: field as any, data: value })
+        );
+        return next;
+      });
+    },
+    [dispatch]
+  );
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size="xl">
@@ -108,9 +119,10 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
               <BudgetPlannerTabContent
                 tabId={basicTab}
                 setTabId={setBasicTab}
-                updateField={(field: string, value: any) =>
-                  updateField(field as keyof typeof budgetPlannerData, value)
-                }
+                updateField={useCallback(
+                  (field: string, value: any) => updateField(field, value),
+                  [updateField]
+                )}
               />
             </CardBody>
           </CardBody>

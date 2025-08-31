@@ -60,9 +60,11 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
     "Other Borrowing - Monthly": "other_borrowing",
   };
 
-  // Initialize local state with Redux data
+  // Initialize local state with Redux data (once)
   useEffect(() => {
-    if (!budgetPlannerData) return; // Add early return if data is null
+    if (!budgetPlannerData) return;
+    if (Object.keys(currentValues).length || Object.keys(postValues).length)
+      return;
 
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
@@ -215,6 +217,73 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
       unsecuredBorrowingFieldMappings,
       "post_unsecured_borrowing"
     );
+  }, [postValues, updateField]);
+
+  // Keep Monthly Sub-Total in sync for Debt Repayments (Current + Post)
+  useEffect(() => {
+    if (Object.keys(currentValues).length === 0) return;
+
+    const currentTotal =
+      parseFloat(
+        calculateSectionTotal(
+          currentValues,
+          Object.keys(debtRepaymentFieldMappings),
+          "CurrentBudgetPlanner"
+        )
+      ) +
+      parseFloat(
+        calculateSectionTotal(
+          currentValues,
+          Object.keys(priorityDebtFieldMappings),
+          "CurrentBudgetPlanner"
+        )
+      ) +
+      parseFloat(
+        calculateSectionTotal(
+          currentValues,
+          Object.keys(unsecuredBorrowingFieldMappings),
+          "CurrentBudgetPlanner"
+        )
+      );
+    if (!isNaN(currentTotal)) {
+      updateField("current_sub_total", {
+        ...(budgetPlannerData?.current_sub_total || {}),
+        total_debt_repayment: Number(currentTotal.toFixed(2)),
+      });
+    }
+  }, [currentValues, updateField]);
+
+  useEffect(() => {
+    if (Object.keys(postValues).length === 0) return;
+
+    const postTotal =
+      parseFloat(
+        calculateSectionTotal(
+          postValues,
+          Object.keys(debtRepaymentFieldMappings),
+          "PostCompletionBudgetPlanner"
+        )
+      ) +
+      parseFloat(
+        calculateSectionTotal(
+          postValues,
+          Object.keys(priorityDebtFieldMappings),
+          "PostCompletionBudgetPlanner"
+        )
+      ) +
+      parseFloat(
+        calculateSectionTotal(
+          postValues,
+          Object.keys(unsecuredBorrowingFieldMappings),
+          "PostCompletionBudgetPlanner"
+        )
+      );
+    if (!isNaN(postTotal)) {
+      updateField("post_sub_total", {
+        ...(budgetPlannerData?.post_sub_total || {}),
+        total_debt_repayment: Number(postTotal.toFixed(2)),
+      });
+    }
   }, [postValues, updateField]);
 
   const renderForm = (

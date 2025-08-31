@@ -29,12 +29,15 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
     AvailableIncome: "available_income",
   };
 
-  // Initialize local state with Redux data
+  // Initialize local state with Redux data (once)
   useEffect(() => {
+    if (Object.keys(currentValues).length || Object.keys(postValues).length)
+      return;
+
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
 
-    // Current Sub Totals
+    // Current Sub Totals - Read from store totals first, fallback to empty
     Object.entries(subtotalFieldMappings).forEach(([field, key]) => {
       const value =
         budgetPlannerData?.current_sub_total?.[
@@ -44,13 +47,13 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
         value !== 0 ? String(value) : "";
     });
 
-    // Post Sub Totals
+    // Post Sub Totals - Read from store totals first, fallback to empty
     Object.entries(subtotalFieldMappings).forEach(([field, key]) => {
       const value =
         budgetPlannerData?.post_sub_total?.[
           key as keyof typeof budgetPlannerData.post_sub_total
         ] ?? 0;
-      initialPostValues[`PostCompletionsBudgetPlanner.${field}`] =
+      initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
     });
 
@@ -58,55 +61,67 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
     setPostValues((prev) => ({ ...prev, ...initialPostValues }));
   }, [budgetPlannerData]);
 
-  // Update parent modal with current values
+  // Update parent modal with current values (only Available Income; keep other totals from store)
   useEffect(() => {
-    if (!budgetPlannerData?.current_sub_total) return;
+    if (
+      !budgetPlannerData ||
+      !currentValues ||
+      Object.keys(currentValues).length === 0
+    )
+      return;
 
-    const formattedCurrentValues = {
-      ...Object.entries(currentValues).reduce((acc, [key, value]) => {
-        const fieldName = key.split(".")[1];
-        const reduxFieldName =
-          subtotalFieldMappings[
-            fieldName as keyof typeof subtotalFieldMappings
-          ];
-        if (reduxFieldName) {
-          acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
-        }
-        return acc;
-      }, {} as Record<string, number | 0>),
-      available_income:
-        parseFloat(
-          calculateAvailableIncome(currentValues, "CurrentBudgetPlanner")
-        ) || 0,
-    };
+    const computed =
+      parseFloat(
+        calculateAvailableIncome(currentValues, "CurrentBudgetPlanner")
+      ) || 0;
+    const prev = budgetPlannerData?.current_sub_total?.available_income || 0;
 
-    updateField("current_sub_total", formattedCurrentValues);
-  }, [currentValues, updateField, budgetPlannerData]);
+    if (Math.abs(Number(prev) - computed) > 0.01) {
+      // Only update if difference > 1 cent
+      const formattedCurrentValues = {
+        ...(budgetPlannerData?.current_sub_total || {}),
+        available_income: computed,
+      } as Record<string, number>;
+      updateField("current_sub_total", formattedCurrentValues);
+    }
+  }, [
+    currentValues,
+    updateField,
+    budgetPlannerData?.current_sub_total?.total_income,
+    budgetPlannerData?.current_sub_total?.total_debt_repayment,
+    budgetPlannerData?.current_sub_total?.total_living_expenses,
+  ]);
 
-  // Update parent modal with post values
+  // Update parent modal with post values (only Available Income; keep other totals from store)
   useEffect(() => {
-    if (!budgetPlannerData?.post_sub_total) return;
+    if (
+      !budgetPlannerData ||
+      !postValues ||
+      Object.keys(postValues).length === 0
+    )
+      return;
 
-    const formattedPostValues = {
-      ...Object.entries(postValues).reduce((acc, [key, value]) => {
-        const fieldName = key.split(".")[1];
-        const reduxFieldName =
-          subtotalFieldMappings[
-            fieldName as keyof typeof subtotalFieldMappings
-          ];
-        if (reduxFieldName) {
-          acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
-        }
-        return acc;
-      }, {} as Record<string, number | 0>),
-      available_income:
-        parseFloat(
-          calculateAvailableIncome(postValues, "PostCompletionsBudgetPlanner")
-        ) || 0,
-    };
+    const computed =
+      parseFloat(
+        calculateAvailableIncome(postValues, "PostCompletionBudgetPlanner")
+      ) || 0;
+    const prev = budgetPlannerData?.post_sub_total?.available_income || 0;
 
-    updateField("post_sub_total", formattedPostValues);
-  }, [postValues, updateField, budgetPlannerData]);
+    if (Math.abs(Number(prev) - computed) > 0.01) {
+      // Only update if difference > 1 cent
+      const formattedPostValues = {
+        ...(budgetPlannerData?.post_sub_total || {}),
+        available_income: computed,
+      } as Record<string, number>;
+      updateField("post_sub_total", formattedPostValues);
+    }
+  }, [
+    postValues,
+    updateField,
+    budgetPlannerData?.post_sub_total?.total_income,
+    budgetPlannerData?.post_sub_total?.total_debt_repayment,
+    budgetPlannerData?.post_sub_total?.total_living_expenses,
+  ]);
 
   const subtotalFields = [
     {
@@ -132,20 +147,35 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
     inputId: "CurrentBudgetPlanner_AvailableIncome",
   };
 
-  // Calculate Available Income
+  // Calculate Available Income using store values if local values are empty
   const calculateAvailableIncome = (
     values: Record<string, string>,
     prefix: string
   ) => {
-    const totalIncome = parseFloat(values[`${prefix}.TotalIncome`]) || 0;
-    const totalDebt = parseFloat(values[`${prefix}.TotalDebtRepayment`]) || 0;
-    const totalLiving = parseFloat(values[`${prefix}.TotalHome`]) || 0;
+    const isPost = prefix.includes("PostCompletion");
+    const storeData = isPost
+      ? budgetPlannerData?.post_sub_total
+      : budgetPlannerData?.current_sub_total;
+
+    const totalIncome =
+      parseFloat(values[`${prefix}.TotalIncome`]) ||
+      storeData?.total_income ||
+      0;
+    const totalDebt =
+      parseFloat(values[`${prefix}.TotalDebtRepayment`]) ||
+      storeData?.total_debt_repayment ||
+      0;
+    const totalLiving =
+      parseFloat(values[`${prefix}.TotalHome`]) ||
+      storeData?.total_living_expenses ||
+      0;
+
     return (totalIncome - totalDebt - totalLiving).toFixed(2);
   };
 
   const renderColumn = (
     title: string,
-    prefix: string,
+    prefix: string
     // showCopyButton?: boolean
   ) => (
     <div className="col-md-6">
@@ -182,8 +212,20 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
                     className="subtotal form-control fw-bold"
                     value={
                       prefix === "CurrentBudgetPlanner"
-                        ? currentValues[`${prefix}.${field.id}`] || ""
-                        : postValues[`${prefix}.${field.id}`] || ""
+                        ? currentValues[`${prefix}.${field.id}`] ||
+                          budgetPlannerData?.current_sub_total?.[
+                            subtotalFieldMappings[
+                              field.id as keyof typeof subtotalFieldMappings
+                            ] as keyof typeof budgetPlannerData.current_sub_total
+                          ] ||
+                          ""
+                        : postValues[`${prefix}.${field.id}`] ||
+                          budgetPlannerData?.post_sub_total?.[
+                            subtotalFieldMappings[
+                              field.id as keyof typeof subtotalFieldMappings
+                            ] as keyof typeof budgetPlannerData.post_sub_total
+                          ] ||
+                          ""
                     }
                     onChange={(e) => {
                       const newValues =
@@ -218,7 +260,7 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
               for={
                 prefix === "CurrentBudgetPlanner"
                   ? availableIncomeField.inputId
-                  : `PostCompletionsBudgetPlanner_${availableIncomeField.id}`
+                  : `PostCompletionBudgetPlanner_${availableIncomeField.id}`
               }
               sm={6}
               className="control-label text-primary"
@@ -234,7 +276,7 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
                   id={
                     prefix === "CurrentBudgetPlanner"
                       ? availableIncomeField.inputId
-                      : `PostCompletionsBudgetPlanner_${availableIncomeField.id}`
+                      : `PostCompletionBudgetPlanner_${availableIncomeField.id}`
                   }
                   className="availableIncome form-control fw-bold"
                   readOnly
@@ -269,7 +311,7 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
       </p>
       <section className="row mt-4">
         {renderColumn("Current", "CurrentBudgetPlanner")}
-        {renderColumn("Post Completion", "PostCompletionsBudgetPlanner")}
+        {renderColumn("Post Completion", "PostCompletionBudgetPlanner")}
       </section>
     </div>
   );

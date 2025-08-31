@@ -3,7 +3,7 @@ import { useGetCaseBudgetPlannerQuery } from "@/Redux/Reducers/CommonComponents/
 import { initializeBudgetPlannerForm } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerFormSlice";
 import { BudgetPlannerTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
 import { useParams } from "next/navigation";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Button, TabContent, TabPane } from "reactstrap";
 import DebtRepaymentTabContent from "./BudgetPlannerTabContents/DebtRepaymentTabContent";
@@ -27,17 +27,24 @@ const BudgetPlannerTabContent: FC<BudgetPlannerTabContentProps> = ({
 }) => {
   const { casealias } = useParams();
   const dispatch = useDispatch();
-  const { data, isLoading } = useGetCaseBudgetPlannerQuery({
-    case_alias: casealias as string,
-  });
+  const { data, isLoading, isFetching } = useGetCaseBudgetPlannerQuery(
+    { case_alias: casealias as string },
+    { skip: !casealias }
+  );
+  const initializedRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (data && data[0]) {
-      dispatch(initializeBudgetPlannerForm(data[0]));
+      const alias = (data[0] as any)?.alias ?? JSON.stringify(data[0]);
+      if (initializedRef.current !== alias) {
+        dispatch(initializeBudgetPlannerForm(data[0]));
+        initializedRef.current = alias;
+      }
     }
   }, [data, dispatch]);
 
-  if (isLoading) {
+  // Don't hard-block UI; only show spinner if no data has been initialized yet
+  if (isLoading && !initializedRef.current) {
     return (
       <div>
         <LoadingSpinner />
