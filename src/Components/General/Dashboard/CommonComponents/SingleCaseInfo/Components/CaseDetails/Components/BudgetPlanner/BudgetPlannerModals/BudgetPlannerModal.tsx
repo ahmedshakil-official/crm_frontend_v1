@@ -67,6 +67,11 @@ const BudgetPlannerModal: FC<BudgetPlannerModalProps> = ({
     if (res.data) {
       toast.success("Budget Planner Updated Successfully");
       toggle();
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail ||
+        "Error updating budget planner details!";
+      toast.error(errorMessage);
     } else {
       toast.error("Budget Planner Update Failed");
     }
