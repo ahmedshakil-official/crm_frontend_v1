@@ -56,6 +56,10 @@ export const ComplianceTab = () => {
         });
         if (res.data) {
           toast.success("Compliance data updated successfully");
+        } else if (res.error) {
+          const errorMessage =
+            (res.error as any)?.data?.detail || "Failed to add bankruptcy";
+          toast.error(errorMessage);
         } else {
           toast.error("Failed to update compliance data");
         }
