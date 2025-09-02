@@ -66,7 +66,7 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
       const res = await addCreditCommitmentsDetails({
         case_alias: casealias,
         payload: formData,
-      }).unwrap();
+      });
       setFormData({
         applicant: "",
         joint: "",
@@ -86,8 +86,12 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
         source: "",
         has_the_unsecured_credit_mounted_up: "",
       });
-      if (res) {
+      if (res.data) {
         toast.success("Credit Commitment added successfully");
+      } else if (res.error) {
+        const errorMessage =
+          (res.error as any)?.data?.detail || "Failed to add credit commitment";
+        toast.error(errorMessage);
       } else {
         toast.error("Error adding credit commitment");
       }
