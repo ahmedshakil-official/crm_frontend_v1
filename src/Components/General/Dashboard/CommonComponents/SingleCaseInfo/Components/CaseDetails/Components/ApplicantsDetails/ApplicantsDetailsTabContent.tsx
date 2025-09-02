@@ -218,19 +218,31 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     e.preventDefault();
     setIsLoading(true);
     try {
-      await updateApplicantDetails({
+      const response = await updateApplicantDetails({
         case_alias: casealias as string,
         applicantDetails_alias: formValues.alias as string,
         applicantDetails: formValues,
-      }).unwrap();
-      toast.success("Applicant details updated successfully!");
-      // Only go to next tab if this was a Save & Next action
-      if (submitActionRef.current === "next") {
-        handleNextTab();
+      });
+
+      if (response.data) {
+        toast.success("Applicant details updated successfully!");
+        // Only go to next tab if this was a Save & Next action
+        if (submitActionRef.current === "next") {
+          handleNextTab();
+        }
+      } else if (response.error) {
+        // Extract backend error message - prioritize details field
+        const errorMessage =
+          (response.error as any)?.data?.detail ||
+          "Error updating applicant details!";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Error updating applicant details!");
       }
-    } catch (error) {
-      console.error("Error updating applicant details:", error);
-      toast.error("Error updating applicant details!");
+    } catch (error: any) {
+      // Handle any unexpected errors
+      const errorMessage = error?.message || "An unexpected error occurred";
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
