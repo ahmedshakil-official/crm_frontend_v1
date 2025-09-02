@@ -67,6 +67,10 @@ const AddFeeOutModal: FC<AddFeeOutModalProps> = ({
       setFeeData(initialState); // Reset form
       toggle();
       toast.success("Fee added successfully");
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail || "Failed to add fee.";
+      toast.error(errorMessage);
     } else {
       toast.error("Something went wrong");
     }
