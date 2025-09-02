@@ -51,23 +51,29 @@ const AddAccountantModal: React.FC<AddAccountantModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await accountantDetails({ accountantDetails: formData }).unwrap();
-      toast.success("Accountant added successfully!");
-      toggle();
-      setFormData({
-        name: "",
-        qualifications: "",
-        company_name: "",
-        postcode: "",
-        building_name_or_number: "",
-        street: "",
-        city: "",
-        county: "",
-        country: "",
-        phone_number: "",
-        fax_number: "",
-        email_address: "",
-      });
+      const res = await accountantDetails({ accountantDetails: formData });
+      if (res.data) {
+        toast.success("Accountant added successfully!");
+        toggle();
+        setFormData({
+          name: "",
+          qualifications: "",
+          company_name: "",
+          postcode: "",
+          building_name_or_number: "",
+          street: "",
+          city: "",
+          county: "",
+          country: "",
+          phone_number: "",
+          fax_number: "",
+          email_address: "",
+        });
+      } else if (res.error) {
+        const errorMessage =
+           (res.error as any)?.data?.detail || "Failed to add accountant";
+        toast.error(errorMessage);
+      }
     } catch (error) {
       toast.error("Failed to add accountant. Please try again.");
     }

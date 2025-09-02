@@ -552,11 +552,19 @@ const SuitabilityContent: React.FC = () => {
       },
     };
     try {
-      await updateSuitability({
+      const res = await updateSuitability({
         payload: payload,
         case_alias: casealias,
-      }).unwrap();
-      toast.success("Changes saved successfully!");
+      });
+      if (res.data) {
+        toast.success("Changes saved successfully!");
+      } else if (res.error) {
+        const errorMessage =
+          (res.error as any)?.data?.detail || "Failed to save changes";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Failed to save changes. Please try again!");
+      }
     } catch (error) {
       console.error("Failed to update suitability:", error);
       toast.error("Failed to save changes. Please try again.");
