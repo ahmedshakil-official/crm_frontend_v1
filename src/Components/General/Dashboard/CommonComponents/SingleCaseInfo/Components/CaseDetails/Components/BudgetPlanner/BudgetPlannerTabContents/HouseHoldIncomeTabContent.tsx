@@ -43,8 +43,11 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
     "Other Benefits": "other_benefits",
   };
 
-  // Initialize local state with Redux data
+  // Initialize local state with Redux data (once)
   useEffect(() => {
+    if (Object.keys(currentValues).length || Object.keys(postValues).length)
+      return;
+
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
 
@@ -64,7 +67,7 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
         budgetPlannerData?.post_income?.[
           key as keyof typeof budgetPlannerData.post_income
         ] ?? 0;
-      initialPostValues[`PostCompletionsBudgetPlanner.${field}`] =
+      initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
     });
 
@@ -74,6 +77,8 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
 
   // Update parent modal with current values
   useEffect(() => {
+    if (Object.keys(currentValues).length === 0) return;
+
     const formattedCurrentValues = {
       ...Object.entries(currentValues).reduce((acc, [key, value]) => {
         const fieldName = key.split(".")[1];
@@ -88,10 +93,17 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
     };
 
     updateField("current_income", formattedCurrentValues);
+    // Keep sub_total in sync (merge-safe)
+    updateField("current_sub_total", {
+      ...(budgetPlannerData?.current_sub_total || {}),
+      total_income: formattedCurrentValues.total_income || 0,
+    });
   }, [currentValues, updateField]);
 
   // Update parent modal with post values
   useEffect(() => {
+    if (Object.keys(postValues).length === 0) return;
+
     const formattedPostValues = {
       ...Object.entries(postValues).reduce((acc, [key, value]) => {
         const fieldName = key.split(".")[1];
@@ -106,6 +118,11 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
     };
 
     updateField("post_income", formattedPostValues);
+    // Keep sub_total in sync (merge-safe)
+    updateField("post_sub_total", {
+      ...(budgetPlannerData?.post_sub_total || {}),
+      total_income: formattedPostValues.total_income || 0,
+    });
   }, [postValues, updateField]);
 
   const renderForm = (prefix: string, className: string) => (
@@ -160,7 +177,7 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
     Object.keys(currentValues).forEach((key) => {
       const newKey = key.replace(
         "CurrentBudgetPlanner",
-        "PostCompletionsBudgetPlanner"
+        "PostCompletionBudgetPlanner"
       );
       newPostValues[newKey] = currentValues[key];
     });
@@ -234,12 +251,12 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
               </Button>
             </div>
             <div className="p-3">
-              {renderForm("PostCompletionsBudgetPlanner", "living-expensePC")}
+              {renderForm("PostCompletionBudgetPlanner", "living-expensePC")}
             </div>
             <div className="p-3 bg-light border-top">
               <FormGroup row>
                 <Label
-                  for="PostCompletionsBudgetPlanner_TotalIncome"
+                  for="PostCompletionBudgetPlanner_TotalIncome"
                   sm={6}
                   className="fw-bold text-primary"
                   style={{ fontSize: "0.9rem" }}
@@ -251,8 +268,8 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
                     <InputGroupText>£</InputGroupText>
                     <Input
                       type="number"
-                      name="PostCompletionsBudgetPlanner.TotalIncome"
-                      id="PostCompletionsBudgetPlanner_TotalIncome"
+                      name="PostCompletionBudgetPlanner.TotalIncome"
+                      id="PostCompletionBudgetPlanner_TotalIncome"
                       className="numeric-decimal"
                       readOnly
                       value={calculateTotal(postValues)}

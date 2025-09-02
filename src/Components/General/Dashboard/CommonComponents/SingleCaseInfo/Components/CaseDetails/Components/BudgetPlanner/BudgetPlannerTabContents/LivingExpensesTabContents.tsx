@@ -70,9 +70,11 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
     "Other Insurance": "other_insurance",
   };
 
-  // Initialize local state with Redux data
+  // Initialize local state with Redux data (once)
   useEffect(() => {
     if (!budgetPlannerData) return;
+    if (Object.keys(currentValues).length || Object.keys(postValues).length)
+      return;
 
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
@@ -190,6 +192,59 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
 
     formatValues(postValues, livingCostFieldMappings, "post_living_cost");
     formatValues(postValues, insuranceFieldMappings, "post_insurance");
+  }, [postValues, updateField]);
+
+  // Keep Monthly Sub-Total in sync for Living Expenses (Current + Post)
+  useEffect(() => {
+    if (Object.keys(currentValues).length === 0) return;
+
+    const currentTotal =
+      parseFloat(
+        calculateTotal(
+          currentValues,
+          Object.keys(livingCostFieldMappings),
+          "CurrentBudgetPlanner"
+        )
+      ) +
+      parseFloat(
+        calculateTotal(
+          currentValues,
+          Object.keys(insuranceFieldMappings),
+          "CurrentBudgetPlanner"
+        )
+      );
+    if (!isNaN(currentTotal)) {
+      updateField("current_sub_total", {
+        ...(budgetPlannerData?.current_sub_total || {}),
+        total_living_expenses: Number(currentTotal.toFixed(2)),
+      });
+    }
+  }, [currentValues, updateField]);
+
+  useEffect(() => {
+    if (Object.keys(postValues).length === 0) return;
+
+    const postTotal =
+      parseFloat(
+        calculateTotal(
+          postValues,
+          Object.keys(livingCostFieldMappings),
+          "PostCompletionBudgetPlanner"
+        )
+      ) +
+      parseFloat(
+        calculateTotal(
+          postValues,
+          Object.keys(insuranceFieldMappings),
+          "PostCompletionBudgetPlanner"
+        )
+      );
+    if (!isNaN(postTotal)) {
+      updateField("post_sub_total", {
+        ...(budgetPlannerData?.post_sub_total || {}),
+        total_living_expenses: Number(postTotal.toFixed(2)),
+      });
+    }
   }, [postValues, updateField]);
 
   const toggleNotes = (event: React.MouseEvent, noteId: string) => {
