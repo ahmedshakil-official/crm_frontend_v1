@@ -52,6 +52,10 @@ const AddNewIVAsModal: React.FC<AddNewIVAsModalProps> = ({
     if (res.data) {
       toast.success("IVA Added Successfully");
       toggle();
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail || "Failed to add new IVA";
+      toast.error(errorMessage);
     } else {
       toast.error("Failed to add IVA");
     }

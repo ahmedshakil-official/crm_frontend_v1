@@ -78,6 +78,11 @@ const AddNewCommitmentPaymentsMissedModal: React.FC<
     if (res.data) {
       toast.success("Successfully added new commitment payments missed");
       toggle();
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail ||
+        "Failed to add new commitment payments missed";
+      toast.error(errorMessage);
     } else {
       toast.error("Failed to add new commitment payments missed");
     }

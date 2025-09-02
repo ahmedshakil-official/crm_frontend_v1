@@ -53,6 +53,10 @@ const AddNewRegisteredCCJsModal: React.FC<AddNewRegisteredCCJsModalProps> = ({
     if (res.data) {
       toast.success("CCJ Added Successfully");
       toggle();
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail || "Failed to add new CCJ";
+      toast.error(errorMessage);
     } else {
       toast.error("Failed to add CCJ");
     }

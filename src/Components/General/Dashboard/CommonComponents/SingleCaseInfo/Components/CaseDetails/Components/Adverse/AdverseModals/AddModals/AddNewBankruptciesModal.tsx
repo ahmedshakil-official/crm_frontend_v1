@@ -43,8 +43,12 @@ const AddNewBankruptciesModal: React.FC<AddNewBankruptciesModalProps> = ({
     if (res.data) {
       toast.success("Bankruptcy Added Successfully");
       toggle();
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail || "Failed to add bankruptcy";
+      toast.error(errorMessage);
     } else {
-      toast.error("Failed to add bankruptcy");
+      toast.error("Something went wrong");
     }
   };
 

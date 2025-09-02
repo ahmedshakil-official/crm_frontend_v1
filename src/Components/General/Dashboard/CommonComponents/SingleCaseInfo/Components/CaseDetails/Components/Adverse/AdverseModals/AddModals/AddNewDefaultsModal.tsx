@@ -58,8 +58,12 @@ const AddNewDefaultsModal: React.FC<AddNewDefaultsModalProps> = ({
     if (res.data) {
       toast.success("Default Added Successfully");
       toggle();
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail || "Failed to add new default";
+      toast.error(errorMessage);
     } else {
-      toast.error("Failed to add default");
+      toast.error("Failed to add new default");
     }
   };
 
