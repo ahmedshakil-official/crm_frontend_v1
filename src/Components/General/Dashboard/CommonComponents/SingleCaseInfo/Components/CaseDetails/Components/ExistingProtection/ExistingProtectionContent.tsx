@@ -108,6 +108,11 @@ const ExistingProtectionContent: React.FC<
     });
     if (res.data) {
       toast.success("Updated Successfully!");
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail ||
+        "Failed to update Property details!";
+      toast.error(errorMessage);
     } else {
       toast.error("Failed to update Property details!");
     }
