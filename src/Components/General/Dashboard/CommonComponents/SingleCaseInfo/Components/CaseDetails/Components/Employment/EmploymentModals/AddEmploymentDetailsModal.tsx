@@ -62,6 +62,10 @@ const AddEmploymentDetailsModal: React.FC<AddEmploymentDetailsModalProps> = ({
     toggle(); // Close the modal
     if (res.data) {
       toast.success("Employment details added successfully!");
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail || "Failed to add employment details.";
+      toast.error(errorMessage);
     } else {
       toast.error("Failed to update employment details.");
     }

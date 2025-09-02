@@ -97,6 +97,11 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
       if (submitActionRef.current === "next") {
         handleNextTab();
       }
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail ||
+        "Failed to update employment details.";
+      toast.error(errorMessage);
     } else {
       toast.error("Failed to update employment details.");
     }
