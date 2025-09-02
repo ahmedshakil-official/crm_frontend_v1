@@ -371,40 +371,40 @@ const ClientSurveyContent: React.FC = () => {
       const payload = {
         case_alias: casealias,
         client_survey: value,
-        adviser_name: adviserName,
-        is_clarification_explanation_of_the_service_firm: question2,
-        is_timely_service_delivery: question3,
-        is_helpfulness_representative: question4,
-        the_firm_offices_reasonable: question5,
-        is_accuracy_information_provided: question6,
-        is_clarification_explanation_paid: question7,
-        is_raising_queries_relating_service: question8,
-        is_clarification_explanation_protection_review: question9,
-        is_understanding_of_financial_objectives: question10,
-        is_explanation_consideration_of_attitude_risk: question11,
-        is_explanation_consideration_capacity_loss_of_capital: question12,
-        is_explanation_adviser_product: question13,
-        is_interaction_adviser_professionals: question14,
-        is_suitable_advice_for_your_needs: question15,
-        is_ability_of_the_adviser_undue_pressure_commit: question16,
-        is_timing_deliver_review_by_adviser: question17,
-        the_broker_fee_paid_represents: question18,
-        explanation_broker_fees_including_refund_policy: question19,
-        is_receive_the_value_expected_broker_fee: question20,
-        is_any_other_documentation_provided_to_you: question21,
-        is_timing_arrangements_made_conduct_review_with_you: question22,
-        is_frequency_communications_receive_from_firm: question23,
-        is_relevance_communications_sent_to_the_firm: question24,
-        is_raising_any_queries_on_communications: question25,
-        is_overall_standard_communications_received_from_firm: question26,
-        is_timely_manner_of_receiving_letter_confirming_recommendation:
-          question27,
-        do_we_better_serve_next_time: question28,
-        have_any_further_comments_on_the_service_received: question29,
-        do_you_like_someone_to_contact_you: question30,
-        name: name,
-        email: email,
-        phone_number: phoneNumber,
+        // adviser_name: adviserName,
+        // is_clarification_explanation_of_the_service_firm: question2,
+        // is_timely_service_delivery: question3,
+        // is_helpfulness_representative: question4,
+        // the_firm_offices_reasonable: question5,
+        // is_accuracy_information_provided: question6,
+        // is_clarification_explanation_paid: question7,
+        // is_raising_queries_relating_service: question8,
+        // is_clarification_explanation_protection_review: question9,
+        // is_understanding_of_financial_objectives: question10,
+        // is_explanation_consideration_of_attitude_risk: question11,
+        // is_explanation_consideration_capacity_loss_of_capital: question12,
+        // is_explanation_adviser_product: question13,
+        // is_interaction_adviser_professionals: question14,
+        // is_suitable_advice_for_your_needs: question15,
+        // is_ability_of_the_adviser_undue_pressure_commit: question16,
+        // is_timing_deliver_review_by_adviser: question17,
+        // the_broker_fee_paid_represents: question18,
+        // explanation_broker_fees_including_refund_policy: question19,
+        // is_receive_the_value_expected_broker_fee: question20,
+        // is_any_other_documentation_provided_to_you: question21,
+        // is_timing_arrangements_made_conduct_review_with_you: question22,
+        // is_frequency_communications_receive_from_firm: question23,
+        // is_relevance_communications_sent_to_the_firm: question24,
+        // is_raising_any_queries_on_communications: question25,
+        // is_overall_standard_communications_received_from_firm: question26,
+        // is_timely_manner_of_receiving_letter_confirming_recommendation:
+        //   question27,
+        // do_we_better_serve_next_time: question28,
+        // have_any_further_comments_on_the_service_received: question29,
+        // do_you_like_someone_to_contact_you: question30,
+        // name: name,
+        // email: email,
+        // phone_number: phoneNumber,
       };
 
       updateClientSurvey({
@@ -412,12 +412,23 @@ const ClientSurveyContent: React.FC = () => {
         survey_alias: surveyAlias,
         payload,
       })
-        .unwrap()
-        .then(() => {
-          toast.success("Client survey updated successfully!");
+        .then((response) => {
+          if (response.data) {
+            toast.success("Client survey updated successfully!");
+          } else if (response.error) {
+            // Extract backend error message - prioritize details field
+            const errorMessage =
+              (response.error as any)?.data?.detail ||
+              "Failed to update client survey.";
+            toast.error(errorMessage);
+            // Revert the state if update fails
+            setClientSurvey(!value);
+          }
         })
         .catch((error) => {
-          toast.error("Failed to update client survey.");
+          // Handle any unexpected errors
+          const errorMessage = error?.message || "An unexpected error occurred";
+          toast.error(errorMessage);
           // Revert the state if update fails
           setClientSurvey(!value);
         });
@@ -472,15 +483,28 @@ const ClientSurveyContent: React.FC = () => {
 
     try {
       if (surveyAlias) {
-        await updateClientSurvey({
+        const response = await updateClientSurvey({
           case_alias: casealias,
           survey_alias: surveyAlias,
           payload,
-        }).unwrap();
+        });
+
+        if (response.data) {
+          toast.success("Saved successfully!");
+        } else if (response.error) {
+          // Extract backend error message - prioritize details field
+          const errorMessage =
+            (response.error as any)?.data?.detail ||
+            "Save failed. Check input or contact support.";
+          toast.error(errorMessage);
+        } else {
+          toast.error("Save failed. Check input or contact support.");
+        }
       }
-      toast.success("Saved successfully!");
-    } catch (error) {
-      toast.error("Save failed. Check input or contact support.");
+    } catch (error: any) {
+      // Handle any unexpected errors
+      const errorMessage = error?.message || "An unexpected error occurred";
+      toast.error(errorMessage);
     }
   };
 

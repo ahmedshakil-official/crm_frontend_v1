@@ -104,20 +104,31 @@ const ProductContent: React.FC = () => {
     e.preventDefault();
     try {
       if (productDetails && productDetails[0]) {
-        await updateProductDetails({
+        const response = await updateProductDetails({
           case_alias: casealias,
           product_alias: productDetails[0].alias,
           productUpdatePayload: formData,
-        }).unwrap();
-        toast.success("Product details updated successfully!");
-        // Only go to next tab if this was a Save & Next action
-        if (submitActionRef.current === "next") {
-          handleNextTab();
+        });
+
+        if (response.data) {
+          toast.success("Product details updated successfully!");
+          // Only go to next tab if this was a Save & Next action
+          if (submitActionRef.current === "next") {
+            handleNextTab();
+          }
+        } else if (response.error) {
+          const errorMessage =
+            (response.error as any)?.data?.detail ||
+            "Failed to update product details";
+          toast.error(errorMessage);
+        } else {
+          toast.error("Failed to update product details");
         }
       }
-    } catch (error) {
-      console.error("Failed to update product details:", error);
-      toast.error("Failed to update product details");
+    } catch (error: any) {
+      // Handle any unexpected errors
+      const errorMessage = error?.message || "An unexpected error occurred";
+      toast.error(errorMessage);
     }
   };
 

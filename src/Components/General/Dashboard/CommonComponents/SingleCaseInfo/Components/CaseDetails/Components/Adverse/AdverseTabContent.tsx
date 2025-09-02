@@ -224,6 +224,10 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
     console.log("Response:", res);
     if (res.data) {
       toast.success("Adverse updated successfully");
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail || "Failed to update adverse details!";
+      toast.error(errorMessage);
     } else {
       toast.error("Something went wrong");
     }

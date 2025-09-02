@@ -66,13 +66,17 @@ const DIPHistoryContent: React.FC<{ dipData: any }> = ({ dipData }) => {
         case_alias: casealias,
         dipHistory_alias: dipData?.alias,
         payload: formData,
-      }).unwrap();
-      if (res) {
+      });
+      if (res.data) {
         toast.success("DIP History updated successfully!");
         // Only go to next tab if this was a Save & Next action
         if (submitActionRef.current === "next") {
           handleNextTab();
         }
+      } else if (res.error) {
+        const errorMessage =
+          (res.error as any)?.data?.detail || "Failed to update DIP History";
+        toast.error(errorMessage);
       } else {
         toast.error("Failed to update DIP History");
       }

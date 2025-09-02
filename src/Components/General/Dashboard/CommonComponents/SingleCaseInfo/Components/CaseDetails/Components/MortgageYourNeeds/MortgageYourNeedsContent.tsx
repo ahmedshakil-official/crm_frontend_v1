@@ -117,12 +117,20 @@ const MortgageYourNeedsContent: React.FC = () => {
     };
 
     try {
-      await updateMortgageYourNeeds({
+      const res = await updateMortgageYourNeeds({
         case_alias: casealias,
         payload: formValues,
-      }).unwrap();
-      toast.success("Mortgage needs updated successfully!");
-      return true;
+      });
+      if (res.data) {
+        toast.success("Mortgage needs updated successfully!");
+      } else if (res.error) {
+        const errorMessage =
+          (res.error as any)?.data?.detail ||
+          "Failed to update mortgage needs.";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch (error) {
       console.error("Failed to update mortgage needs:", error);
       toast.error("Failed to update mortgage needs. Please try again.");

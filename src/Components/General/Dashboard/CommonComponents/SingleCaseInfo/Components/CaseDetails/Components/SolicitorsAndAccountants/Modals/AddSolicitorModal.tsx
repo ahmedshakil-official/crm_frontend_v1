@@ -50,9 +50,15 @@ const AddSolicitorModal: React.FC<AddSolicitorModalProps> = ({
         solicitorDetails: payload,
       });
 
-      if (response) {
+      if (response.data) {
         toast.success("Solicitor added successfully!");
         toggle();
+      } else if (response.error) {
+        const errorMessage =
+          (response.error as any)?.data?.detail || "Failed to add solicitor";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Failed to add solicitor. Please try again!");
       }
     } catch (error) {
       console.error("Failed to add solicitor:", error);

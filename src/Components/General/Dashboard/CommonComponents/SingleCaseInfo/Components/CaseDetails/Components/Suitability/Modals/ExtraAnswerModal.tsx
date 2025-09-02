@@ -50,12 +50,16 @@ const ExtraAnswerModal: React.FC<ExtraAnswerModalProps> = ({
           section_choices: formData.section_choices,
           answer: formData.answer,
         },
-      }).unwrap();
-      if (res) {
+      });
+      if (res.data) {
         // Reset form and close modal on success
         setFormData({ section_choices: "", answer: "" });
         toggle();
         toast.success("Answer added successfully");
+      } else if (res.error) {
+        const errorMessage =
+          (res.error as any)?.data?.detail || "Failed to add extra answer";
+        toast.error(errorMessage);
       } else {
         toast.error("Failed to add extra answer");
       }

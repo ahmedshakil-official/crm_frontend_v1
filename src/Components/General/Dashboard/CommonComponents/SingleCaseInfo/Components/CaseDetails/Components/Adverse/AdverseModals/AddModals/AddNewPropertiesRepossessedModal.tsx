@@ -45,8 +45,13 @@ const AddNewPropertiesRepossessedModal: React.FC<
     if (res.data) {
       toast.success("Property Repossessed Added Successfully ");
       toggle();
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail ||
+        "Failed to add new Property Repossessed";
+      toast.error(errorMessage);
     } else {
-      toast.error("Property Repossessed Adding Failed ");
+      toast.error("Failed to add Property Repossessed");
     }
   };
 

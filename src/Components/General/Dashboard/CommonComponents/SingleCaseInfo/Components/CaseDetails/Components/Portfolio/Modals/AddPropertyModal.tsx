@@ -49,7 +49,6 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
     }
 
     const formData = new FormData(e.currentTarget);
-
     try {
       const payload = {
         applicant_ids: selectedApplicants.map((id) => Number(id)),
@@ -90,9 +89,15 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
         propertyDetails: payload,
       });
 
-      if (response) {
+      if (response.data) {
         toast.success("Property added successfully!");
         toggle();
+      } else if (response.error) {
+        const errorMessage =
+          (response.error as any)?.data?.detail || "Failed to add property";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Something went wrong");
       }
     } catch (error) {
       console.error("Failed to add property:", error);

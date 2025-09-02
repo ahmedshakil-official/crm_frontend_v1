@@ -53,6 +53,10 @@ const NoteForProperty: React.FC<{ property_alias: string }> = ({
 
     if (response.data) {
       toast.success("Property Details Updated Successfully");
+    } else if (response.error) {
+      const errorMessage =
+        (response.error as any)?.data?.detail || "Failed to update property";
+      toast.error(errorMessage);
     } else {
       toast.error("Something went wrong");
     }

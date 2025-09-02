@@ -54,6 +54,10 @@ const AddNewPayDayLoansModal: React.FC<AddNewPayDayLoansModalProps> = ({
     if (res.data) {
       toast.success("Pay Day Loan Added Successfully");
       toggle();
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail || "Failed to add new Pay Day Loan";
+      toast.error(errorMessage);
     } else {
       toast.error("Failed to add Pay Day Loan");
     }

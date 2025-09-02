@@ -27,7 +27,7 @@ const BudgetPlannerTabContent: FC<BudgetPlannerTabContentProps> = ({
 }) => {
   const { casealias } = useParams();
   const dispatch = useDispatch();
-  const { data, isLoading, isFetching } = useGetCaseBudgetPlannerQuery(
+  const { data, isLoading } = useGetCaseBudgetPlannerQuery(
     { case_alias: casealias as string },
     { skip: !casealias }
   );

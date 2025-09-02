@@ -55,6 +55,10 @@ const AddNewDMPsModal: React.FC<AddNewDMPsModalProps> = ({
     if (res.data) {
       toast.success("DMP Added Successfully");
       toggle();
+    } else if (res.error) {
+      const errorMessage =
+        (res.error as any)?.data?.detail || "Failed to add new DMP";
+      toast.error(errorMessage);
     } else {
       toast.error("Failed to add DMP");
     }

@@ -220,15 +220,28 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
       ...formDataTab3,
       ...formDataTab4,
     };
-    const response = await updateLoanDetails({
-      case_alias: casealias,
-      loanDetails_alias: loandetailsAlias,
-      mergedData: updatedLoanDetailsData,
-    });
-    if (response.data) {
-      toast.success("Loan details updated successfully");
-    } else {
-      toast.error("Failed to update loan details");
+    try {
+      const response = await updateLoanDetails({
+        case_alias: casealias,
+        loanDetails_alias: loandetailsAlias,
+        mergedData: updatedLoanDetailsData,
+      });
+
+      if (response.data) {
+        toast.success("Loan details updated successfully");
+      } else if (response.error) {
+        // Extract backend error message - prioritize details field
+        const errorMessage =
+          (response.error as any)?.data?.detail ||
+          "Failed to update loan details!";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Failed to update loan details!!!!");
+      }
+    } catch (error: any) {
+      // Handle any unexpected errors
+      const errorMessage = error?.message || "An unexpected error occurred";
+      toast.error(errorMessage);
     }
   };
   const currentTab: string | null = useAppSelector(
@@ -310,15 +323,20 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
             <Button
               type="submit"
               color="secondary"
-              onClick={() => {
+              onClick={async () => {
                 if (
                   session?.user?.user_type === "CLIENT" &&
                   loandetailsData?.updated_by !== null
                 ) {
                   handleNextTab();
                 } else {
-                  handleSave();
-                  handleNextTab();
+                  try {
+                    await handleSave();
+                    handleNextTab();
+                  } catch (error) {
+                    // Error is already handled in handleSave, just prevent navigation
+                    console.error("Save failed, not navigating to next tab");
+                  }
                 }
               }}
               disabled={isLoading || isUpdating}

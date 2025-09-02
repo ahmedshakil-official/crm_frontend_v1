@@ -66,35 +66,39 @@ const AddCreditCommitmentModal: React.FC<AddCreditCommitmentModalProps> = ({
       const res = await addCreditCommitmentsDetails({
         case_alias: casealias,
         payload: formData,
-      }).unwrap();
-      setFormData({
-        applicant: "",
-        joint: "",
-        type: "",
-        company: "",
-        account_no: null,
-        os_balance: "",
-        settlement_balance: "",
-        monthly_repayment: "",
-        interest_rate: "",
-        card_limit: "",
-        term_remaining: "",
-        balloon_payment: "",
-        court_ordered: "",
-        cost_of_credit: "",
-        paid_on_completion: "",
-        source: "",
-        has_the_unsecured_credit_mounted_up: "",
       });
-      if (res) {
+      if (res.data) {
         toast.success("Credit Commitment added successfully");
+        toggle();
+        setFormData({
+          applicant: "",
+          joint: "",
+          type: "",
+          company: "",
+          account_no: null,
+          os_balance: "",
+          settlement_balance: "",
+          monthly_repayment: "",
+          interest_rate: "",
+          card_limit: "",
+          term_remaining: "",
+          balloon_payment: "",
+          court_ordered: "",
+          cost_of_credit: "",
+          paid_on_completion: "",
+          source: "",
+          has_the_unsecured_credit_mounted_up: "",
+        });
+      } else if (res.error) {
+        const errorMessage =
+          (res.error as any)?.data?.detail || "Failed to add credit commitment";
+        toast.error(errorMessage);
       } else {
         toast.error("Error adding credit commitment");
       }
     } catch (error) {
       toast.error("Error adding credit commitment");
     }
-    toggle();
   };
 
   if (isLoading || isAdding) return <LoadingSpinner />;

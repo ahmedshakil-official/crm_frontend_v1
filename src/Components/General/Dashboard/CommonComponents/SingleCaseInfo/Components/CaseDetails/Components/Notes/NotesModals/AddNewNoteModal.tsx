@@ -79,6 +79,10 @@ const CreateTaskNoteModal: FC<CreateTaskNoteModalProps> = ({
     if (response.data) {
       toast.success("Note added successfully");
       toggle();
+    } else if (response.error) {
+      const errorMessage =
+        (response.error as any)?.data?.detail || "Failed to add note";
+      toast.error(errorMessage);
     } else {
       toast.error("Something went wrong");
     }
