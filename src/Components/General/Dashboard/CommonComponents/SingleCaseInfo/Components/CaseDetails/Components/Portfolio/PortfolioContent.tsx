@@ -16,8 +16,6 @@ import {
   CardHeader,
   Col,
   Container,
-  Input,
-  Label,
   Row,
   Table,
 } from "reactstrap";
@@ -270,28 +268,38 @@ const PortfolioContent: React.FC = () => {
                       </tbody>
                     </Table>
                   </div>
-                  <div className="mt-4">
-                    <Label for="note">
-                      Note
-                      <span className="small text-warning">
-                        (This field is read-only)
-                      </span>
-                    </Label>
-                    <Input
-                      id="note"
-                      name="note"
-                      type="textarea"
-                      value={data.map((item: any) => item?.note).join("\n\n")}
-                      rows={3}
-                      readOnly
-                    />
+                  <div className="mt-4 border-1 border-dark p-3 rounded">
+                    <span className="fw-semibold fs-5">Notes:</span>
+                    <ul>
+                      {data.map((item: any, index: number) =>
+                        item?.note ? (
+                          <li
+                            key={item.id}
+                            className="fw-medium mb-4 border-b-primary"
+                          >
+                            <span className="text-decoration-underline fs-6">{`Property ${
+                              index + 1
+                            } note:`}</span>
+                            <br />
+                            <span>{item.note}</span>
+                          </li>
+                        ) : (
+                          <li
+                            key={item.id}
+                            className="text-muted fw-medium fs-6 mb-4 border-b-primary"
+                          >
+                            {`Property ${index + 1} has no note.`}
+                          </li>
+                        )
+                      )}
+                    </ul>
                   </div>
                 </div>
               </CardBody>
             </Card>
           </Col>
         </Row>
-        <div className=" d-flex justify-content-end">
+        <div className="d-flex justify-content-end">
           <Button
             type="submit"
             color="secondary"
