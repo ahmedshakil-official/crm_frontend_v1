@@ -1106,17 +1106,68 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="other_income_source">Other Income Source</Label>
+                  <Label for="other_income_source">Other Income Source*</Label>
                   <Input
-                    type="text"
+                    type="select"
                     id="other_income_source"
+                    required
                     value={formValues?.other_income_source || ""}
                     onChange={(e) =>
                       handleInputChange("other_income_source", e.target.value)
                     }
-                  />
+                  >
+                    <option value="">Select...</option>
+                    <option value="CARERS_ALLOWANCE">Carer's Allowance</option>
+                    <option value="CHILD_BENEFIT">Child Benefit</option>
+                    <option value="CHILD_MAINTENANCE_COURT_ORDERED">
+                      Child Maintenance Court Ordered
+                    </option>
+                    <option value="CHILD_MAINTENANCE_NON_COURT_ORDERED">
+                      Child Maintenance Non Court Ordered
+                    </option>
+                    <option value="CHILD_TAX_CREDITS">Child Tax Credits</option>
+                    <option value="DISABILITY_LIVING_ALLOWANCE">
+                      Disability Living Allowance (DLA)
+                    </option>
+                    <option value="EMPLOYMENT_AND_SUPPORT_ALLOWANCE">
+                      Employment and Support Allowance (ESA)
+                    </option>
+                    <option value="MAINTENANCE_INCOME">
+                      Maintenance Income
+                    </option>
+                    <option value="PERSONAL_INDEPENDENCE_PAYMENTS">
+                      Personal Independence Payments (PIP)
+                    </option>
+                    <option value="MATERNITY_PAY">Maternity Pay</option>
+                    <option value="PENSION_CREDIT">Pension Credit</option>
+                    <option value="RENTAL_INCOME">Rental Income</option>
+                    <option value="WORKING_TAX_CREDITS">
+                      Working Tax Credits
+                    </option>
+                    <option value="OTHER">Other</option>
+                  </Input>
                 </FormGroup>
               </Col>
+              {formValues?.other_income_source === "OTHER" && (
+                <Col md={4}>
+                  <FormGroup>
+                    <Label for="other">
+                      Other Income Source Details
+                    </Label>
+                    <Input
+                      type="text"
+                      id="other"
+                      value={formValues?.other || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "other",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              )}
               <Col md={4}>
                 <FormGroup>
                   <Label for="other_income_start_date">

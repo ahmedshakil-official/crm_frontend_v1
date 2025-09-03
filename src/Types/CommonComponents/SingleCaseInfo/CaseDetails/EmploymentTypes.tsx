@@ -64,6 +64,7 @@ export interface EmploymentDetailsProps {
   income_source: string | null;
   other_income: string | null;
   other_income_source: string | null;
+  other: string | null;
   other_income_start_date: string | null;
   contractor_industry: string | null;
   current_contract_start: string | null;
