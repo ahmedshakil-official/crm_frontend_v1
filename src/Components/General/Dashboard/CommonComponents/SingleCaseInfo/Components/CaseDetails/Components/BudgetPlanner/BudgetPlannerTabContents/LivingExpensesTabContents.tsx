@@ -207,7 +207,10 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
         )
         .reduce((acc, [key, value]) => {
           const fieldName = key.split(".")[1];
-          const reduxFieldName = mappings[fieldName as keyof typeof mappings];
+          // fieldName is a sanitized id (spaces/& removed). Find the API key by matching sanitized label.
+          const reduxFieldName = Object.entries(mappings).find(
+            ([label]) => label.replace(/[\s/&]/g, "") === fieldName
+          )?.[1] as string | undefined;
           if (reduxFieldName) {
             acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
           }
@@ -239,7 +242,10 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
         )
         .reduce((acc, [key, value]) => {
           const fieldName = key.split(".")[1];
-          const reduxFieldName = mappings[fieldName as keyof typeof mappings];
+          // fieldName is a sanitized id (spaces/& removed). Find the API key by matching sanitized label.
+          const reduxFieldName = Object.entries(mappings).find(
+            ([label]) => label.replace(/[\s/&]/g, "") === fieldName
+          )?.[1] as string | undefined;
           if (reduxFieldName) {
             acc[reduxFieldName] = value === "" ? 0 : parseFloat(value);
           }
