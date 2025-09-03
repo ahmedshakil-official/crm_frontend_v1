@@ -935,18 +935,23 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="company_type">Company Type</Label>
+                  <Label for="business_type">Business Type</Label>
                   <Input
                     type="select"
-                    id="company_type"
-                    value={formValues?.company_type || ""}
+                    id="business_type"
+                    value={formValues?.business_type || ""}
                     onChange={(e) =>
-                      handleInputChange("company_type", e.target.value)
+                      handleInputChange("business_type", e.target.value)
                     }
                   >
                     <option value="">Select...</option>
                     <option value="SOLE_TRADER">Sole Trader</option>
-                    <option value="LIMITED_COMPANY">Limited Company</option>
+                    <option value="PUBLIC_LIMITED">
+                      Public Limited Company
+                    </option>
+                    <option value="PRIVATE_LIMITED">
+                      Private Limited Company
+                    </option>
                     <option value="PARTNERSHIP">Partnership</option>
                     <option value="LLP">LLP</option>
                     <option value="INDIVIDUAL">Individual</option>
@@ -1232,6 +1237,19 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             </Row>
           </>
         )}
+        <Row>
+          <Col md={12}>
+            <FormGroup>
+              <Label for="note">Note</Label>
+              <Input
+                type="textarea"
+                id="note"
+                value={formValues?.note || ""}
+                onChange={(e) => handleInputChange("note", e.target.value)}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
         <Row>
           <Col className="d-flex justify-content-between pt-3">
             <Button

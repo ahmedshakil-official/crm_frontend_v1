@@ -53,7 +53,7 @@ export interface EmploymentDetailsProps {
   business_country: string | null;
   job_title: string | null;
   business_name: string | null;
-  company_type: string | null;
+  business_type: string | null;
   percentage_of_business_owned: string | null;
   is_accounts_available: boolean;
   accountant_name: string | null;
@@ -71,6 +71,7 @@ export interface EmploymentDetailsProps {
   time_contracting: string | null;
   day_rate: number | null;
   hourly_rate: number | null;
+  note: string | null;
 }
 
 export interface EmploymentTabContentProps {
