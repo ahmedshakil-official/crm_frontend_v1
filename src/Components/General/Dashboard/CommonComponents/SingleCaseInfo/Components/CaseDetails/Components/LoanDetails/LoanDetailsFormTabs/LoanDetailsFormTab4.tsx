@@ -158,6 +158,17 @@ const LoanDetailsFormTab4: React.FC<LoanDetailsFormTab4Props> = ({
             />
           </FormGroup>
         </Col>
+        <Col sm={12}>
+          <FormGroup>
+            <Label for="note">Note</Label>
+            <Input
+              type="textarea"
+              name="note"
+              value={formData.note}
+              onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+            />
+          </FormGroup>
+        </Col>
       </Row>
     </Form>
   );

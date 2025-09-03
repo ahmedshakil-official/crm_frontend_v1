@@ -12,6 +12,7 @@ export interface LoanDetailsFormTab1Props {
     interest_rate_type: string;
     product_term: string;
     lender: string;
+    other_lender_note: string;
     repayment_method: string;
     repayment_vehicle: string;
   };
@@ -79,6 +80,7 @@ export interface LoanDetailsFormTab4Props {
     reasons_for_capital_raising: string;
     accepted_or_declined_by_lender: boolean;
     case_summary: string;
+    note: string;
   };
   handleFormChange: (
     name: string,
