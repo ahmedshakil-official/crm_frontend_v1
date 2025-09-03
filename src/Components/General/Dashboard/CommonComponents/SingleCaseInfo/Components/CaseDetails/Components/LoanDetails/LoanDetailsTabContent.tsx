@@ -56,6 +56,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     interest_rate_type: "",
     product_term: "",
     lender: "",
+    other_lender_note: "",
     repayment_method: "",
     repayment_vehicle: "",
   });
@@ -107,6 +108,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     reasons_for_capital_raising: "",
     accepted_or_declined_by_lender: false,
     case_summary: "",
+    note: "",
   });
 
   // Update form data when `loandetailsData` is loaded
@@ -121,6 +123,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
         interest_rate_type: loandetailsData.interest_rate_type || "",
         product_term: loandetailsData.product_term || "",
         lender: loandetailsData.lender || "",
+        other_lender_note: loandetailsData.other_lender_note || "",
         repayment_method: loandetailsData.repayment_method || "",
         repayment_vehicle: loandetailsData.repayment_vehicle || "",
       });
@@ -180,6 +183,7 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
         accepted_or_declined_by_lender:
           loandetailsData.accepted_or_declined_by_lender || false,
         case_summary: loandetailsData.case_summary || "",
+        note: loandetailsData.note || "",
       });
     }
   }, [loandetailsData]); // Only run effect when `loandetailsData` changes
@@ -206,10 +210,22 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     }
   };
 
-  const isTab2Valid = () =>
-    formDataTab2.property_valuation &&
-    formDataTab2.loan_amount &&
-    formDataTab2.estimated_value;
+  const isTab2Valid = () => {
+    const isPropertyValuationVisible =
+      formDataTab2.mortgage_type !== "PURCHASE";
+    const isPurchasePriceVisible = formDataTab2.mortgage_type === "PURCHASE";
+
+    const isPropertyValuationValid =
+      isPropertyValuationVisible && formDataTab2.property_valuation > 0;
+    const isPurchasePriceValid =
+      isPurchasePriceVisible && formDataTab2.purchase_price > 0;
+
+    return (
+      (isPropertyValuationValid || isPurchasePriceValid) &&
+      formDataTab2.loan_amount > 0 &&
+      formDataTab2.estimated_value > 0
+    );
+  };
 
   const handleNext = () => setTabId((parseInt(tabId) + 1).toString());
 

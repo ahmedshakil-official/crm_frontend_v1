@@ -180,6 +180,19 @@ const LoanDetailsFormTab1: React.FC<LoanDetailsFormTab1Props> = ({
                 ))}
               </Input>
             </FormGroup>
+            {formData.lender === "OTHER" && (
+              <FormGroup>
+                <Label>Other Lender Note</Label>
+                <Input
+                  type="text"
+                  name="other_lender_note"
+                  value={formData.other_lender_note}
+                  onChange={(e) =>
+                    handleFormChange(e.target.name, e.target.value)
+                  }
+                />
+              </FormGroup>
+            )}
 
             <FormGroup>
               <Label>Repayment Method</Label>

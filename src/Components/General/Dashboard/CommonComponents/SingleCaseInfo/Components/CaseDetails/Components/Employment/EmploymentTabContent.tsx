@@ -935,18 +935,23 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             <>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="company_type">Company Type</Label>
+                  <Label for="business_type">Business Type</Label>
                   <Input
                     type="select"
-                    id="company_type"
-                    value={formValues?.company_type || ""}
+                    id="business_type"
+                    value={formValues?.business_type || ""}
                     onChange={(e) =>
-                      handleInputChange("company_type", e.target.value)
+                      handleInputChange("business_type", e.target.value)
                     }
                   >
                     <option value="">Select...</option>
                     <option value="SOLE_TRADER">Sole Trader</option>
-                    <option value="LIMITED_COMPANY">Limited Company</option>
+                    <option value="PUBLIC_LIMITED">
+                      Public Limited Company
+                    </option>
+                    <option value="PRIVATE_LIMITED">
+                      Private Limited Company
+                    </option>
                     <option value="PARTNERSHIP">Partnership</option>
                     <option value="LLP">LLP</option>
                     <option value="INDIVIDUAL">Individual</option>
@@ -1101,17 +1106,68 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
               </Col>
               <Col md={4}>
                 <FormGroup>
-                  <Label for="other_income_source">Other Income Source</Label>
+                  <Label for="other_income_source">Other Income Source*</Label>
                   <Input
-                    type="text"
+                    type="select"
                     id="other_income_source"
+                    required
                     value={formValues?.other_income_source || ""}
                     onChange={(e) =>
                       handleInputChange("other_income_source", e.target.value)
                     }
-                  />
+                  >
+                    <option value="">Select...</option>
+                    <option value="CARERS_ALLOWANCE">Carer's Allowance</option>
+                    <option value="CHILD_BENEFIT">Child Benefit</option>
+                    <option value="CHILD_MAINTENANCE_COURT_ORDERED">
+                      Child Maintenance Court Ordered
+                    </option>
+                    <option value="CHILD_MAINTENANCE_NON_COURT_ORDERED">
+                      Child Maintenance Non Court Ordered
+                    </option>
+                    <option value="CHILD_TAX_CREDITS">Child Tax Credits</option>
+                    <option value="DISABILITY_LIVING_ALLOWANCE">
+                      Disability Living Allowance (DLA)
+                    </option>
+                    <option value="EMPLOYMENT_AND_SUPPORT_ALLOWANCE">
+                      Employment and Support Allowance (ESA)
+                    </option>
+                    <option value="MAINTENANCE_INCOME">
+                      Maintenance Income
+                    </option>
+                    <option value="PERSONAL_INDEPENDENCE_PAYMENTS">
+                      Personal Independence Payments (PIP)
+                    </option>
+                    <option value="MATERNITY_PAY">Maternity Pay</option>
+                    <option value="PENSION_CREDIT">Pension Credit</option>
+                    <option value="RENTAL_INCOME">Rental Income</option>
+                    <option value="WORKING_TAX_CREDITS">
+                      Working Tax Credits
+                    </option>
+                    <option value="OTHER">Other</option>
+                  </Input>
                 </FormGroup>
               </Col>
+              {formValues?.other_income_source === "OTHER" && (
+                <Col md={4}>
+                  <FormGroup>
+                    <Label for="other">
+                      Other Income Source Details
+                    </Label>
+                    <Input
+                      type="text"
+                      id="other"
+                      value={formValues?.other || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "other",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              )}
               <Col md={4}>
                 <FormGroup>
                   <Label for="other_income_start_date">
@@ -1232,6 +1288,19 @@ export const EmploymentTabContent: React.FC<EmploymentTabContentProps> = ({
             </Row>
           </>
         )}
+        <Row>
+          <Col md={12}>
+            <FormGroup>
+              <Label for="note">Note</Label>
+              <Input
+                type="textarea"
+                id="note"
+                value={formValues?.note || ""}
+                onChange={(e) => handleInputChange("note", e.target.value)}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
         <Row>
           <Col className="d-flex justify-content-between pt-3">
             <Button
