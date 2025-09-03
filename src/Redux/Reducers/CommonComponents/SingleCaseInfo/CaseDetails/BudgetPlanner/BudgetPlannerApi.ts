@@ -21,7 +21,6 @@ export const BudgetPlannerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["BudgetPlanner"],
     }),
-
   }),
 });
 

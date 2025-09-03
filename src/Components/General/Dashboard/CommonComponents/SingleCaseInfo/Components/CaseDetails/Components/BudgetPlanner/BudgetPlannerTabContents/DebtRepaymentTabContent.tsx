@@ -1,7 +1,7 @@
-import { RootState } from "@/Redux/Store";
+import { useGetCaseBudgetPlannerQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
 import { DebtRepaymentTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
+import { useParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   Button,
   Col,
@@ -17,17 +17,27 @@ import {
 const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
   updateField,
 }) => {
-  const budgetPlannerData = useSelector(
-    (state: RootState) =>
-      state.budgetPlanner ?? {
-        current_debt_repayments: {},
-        post_debt_repayments: {},
-        current_priority_debt: {},
-        post_priority_debt: {},
-        current_unsecured_borrowing: {},
-        post_unsecured_borrowing: {},
-      }
+  const { casealias } = useParams();
+  const { data, isLoading, error, refetch } = useGetCaseBudgetPlannerQuery(
+    { case_alias: casealias as string },
+    {
+      skip: !casealias,
+      refetchOnMountOrArgChange: true, // Force refetch on component mount
+      refetchOnReconnect: true,
+      refetchOnFocus: true,
+    }
   );
+
+  // Use the first item from the API data array - SAME AS HOUSEHOLD INCOME
+  const budgetPlannerData = data?.[0] ?? {
+    current_debt_repayments: {},
+    post_debt_repayments: {},
+    current_priority_debt: {},
+    post_priority_debt: {},
+    current_unsecured_borrowing: {},
+    post_unsecured_borrowing: {},
+  };
+
   const [currentValues, setCurrentValues] = useState<Record<string, string>>(
     {}
   );
@@ -60,11 +70,25 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
     "Other Borrowing - Monthly": "other_borrowing",
   };
 
-  // Initialize local state with Redux data (once)
+  // Force a refetch when component mounts or casealias changes
   useEffect(() => {
-    if (!budgetPlannerData) return;
-    if (Object.keys(currentValues).length || Object.keys(postValues).length)
+    if (casealias && refetch) {
+      console.log("Forcing API refetch for debt repayment, case:", casealias);
+      refetch();
+    }
+  }, [casealias, refetch]);
+
+  // Initialize local state with direct API data
+  useEffect(() => {
+    if (
+      !budgetPlannerData?.current_debt_repayments ||
+      !budgetPlannerData?.post_debt_repayments
+    ) {
+      console.log("❌ No debt repayment data available for initialization");
       return;
+    }
+
+    console.log("🔄 Initializing debt repayment state with API data...");
 
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
@@ -77,6 +101,13 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
         ] ?? 0;
       initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
+
+      console.log(
+        `Current ${field} (${key}):`,
+        value,
+        "->",
+        initialCurrentValues[`CurrentBudgetPlanner.${field}`]
+      );
     });
 
     // Post Debt Repayments
@@ -87,6 +118,13 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
         ] ?? 0;
       initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
+
+      console.log(
+        `Post ${field} (${key}):`,
+        value,
+        "->",
+        initialPostValues[`PostCompletionBudgetPlanner.${field}`]
+      );
     });
 
     // Current Priority Debt
@@ -97,6 +135,13 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
         ] ?? 0;
       initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
+
+      console.log(
+        `Current Priority ${field} (${key}):`,
+        value,
+        "->",
+        initialCurrentValues[`CurrentBudgetPlanner.${field}`]
+      );
     });
 
     // Post Priority Debt
@@ -107,6 +152,13 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
         ] ?? 0;
       initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
+
+      console.log(
+        `Post Priority ${field} (${key}):`,
+        value,
+        "->",
+        initialPostValues[`PostCompletionBudgetPlanner.${field}`]
+      );
     });
 
     // Current Unsecured Borrowing
@@ -117,6 +169,13 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
         ] ?? 0;
       initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
+
+      console.log(
+        `Current Unsecured ${field} (${key}):`,
+        value,
+        "->",
+        initialCurrentValues[`CurrentBudgetPlanner.${field}`]
+      );
     });
 
     // Post Unsecured Borrowing
@@ -127,10 +186,23 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
         ] ?? 0;
       initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
+
+      console.log(
+        `Post Unsecured ${field} (${key}):`,
+        value,
+        "->",
+        initialPostValues[`PostCompletionBudgetPlanner.${field}`]
+      );
     });
 
-    setCurrentValues((prev) => ({ ...prev, ...initialCurrentValues }));
-    setPostValues((prev) => ({ ...prev, ...initialPostValues }));
+    console.log("📝 Setting debt repayment state...");
+    console.log("Initial current values:", initialCurrentValues);
+    console.log("Initial post values:", initialPostValues);
+
+    setCurrentValues(initialCurrentValues);
+    setPostValues(initialPostValues);
+
+    console.log("✅ Debt repayment state setting completed");
   }, [budgetPlannerData]);
 
   // Update parent modal with current values
@@ -504,71 +576,89 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
 
   return (
     <div>
-      <p className="fs-9">
-        <small>
-          Add debt repayments like credit card minimum payments here. Do not
-          include regular credit card spending - that goes in living costs.
-        </small>
-      </p>
-      <Row>
-        {renderSection(
-          "Current",
-          "CurrentBudgetPlanner",
-          Object.keys(debtRepaymentFieldMappings),
-          debtRepaymentFieldMappings,
-          true
-        )}
-        {renderSection(
-          "Post Completion",
-          "PostCompletionBudgetPlanner",
-          Object.keys(debtRepaymentFieldMappings),
-          debtRepaymentFieldMappings,
-          true,
-          true
-        )}
-      </Row>
-      <Row className="mt-4">
-        {renderSection(
-          "Priority Debt",
-          "CurrentBudgetPlanner",
-          Object.keys(priorityDebtFieldMappings),
-          priorityDebtFieldMappings
-        )}
-        {renderSection(
-          "Priority Debt",
-          "PostCompletionBudgetPlanner",
-          Object.keys(priorityDebtFieldMappings),
-          priorityDebtFieldMappings,
-          false,
-          true
-        )}
-      </Row>
-      <Row className="mt-4">
-        {renderSection(
-          "Unsecured Borrowing",
-          "CurrentBudgetPlanner",
-          Object.keys(unsecuredBorrowingFieldMappings),
-          unsecuredBorrowingFieldMappings,
-          true
-        )}
-        {renderSection(
-          "Unsecured Borrowing",
-          "PostCompletionBudgetPlanner",
-          Object.keys(unsecuredBorrowingFieldMappings),
-          unsecuredBorrowingFieldMappings,
-          true,
-          true
-        )}
-      </Row>
-      <Row className="mt-4">
-        {renderSection("Total Debt Repayment", "CurrentBudgetPlanner", [], {})}
-        {renderSection(
-          "Total Debt Repayment",
-          "PostCompletionBudgetPlanner",
-          [],
-          {}
-        )}
-      </Row>
+      {isLoading ? (
+        <div className="text-center p-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">
+              Loading debt repayment data...
+            </span>
+          </div>
+          <p className="mt-3 text-muted">Loading debt repayment data...</p>
+        </div>
+      ) : (
+        <>
+          <p className="fs-9">
+            <small>
+              Add debt repayments like credit card minimum payments here. Do not
+              include regular credit card spending - that goes in living costs.
+            </small>
+          </p>
+          <Row>
+            {renderSection(
+              "Current",
+              "CurrentBudgetPlanner",
+              Object.keys(debtRepaymentFieldMappings),
+              debtRepaymentFieldMappings,
+              true
+            )}
+            {renderSection(
+              "Post Completion",
+              "PostCompletionBudgetPlanner",
+              Object.keys(debtRepaymentFieldMappings),
+              debtRepaymentFieldMappings,
+              true,
+              true
+            )}
+          </Row>
+          <Row className="mt-4">
+            {renderSection(
+              "Priority Debt",
+              "CurrentBudgetPlanner",
+              Object.keys(priorityDebtFieldMappings),
+              priorityDebtFieldMappings
+            )}
+            {renderSection(
+              "Priority Debt",
+              "PostCompletionBudgetPlanner",
+              Object.keys(priorityDebtFieldMappings),
+              priorityDebtFieldMappings,
+              false,
+              true
+            )}
+          </Row>
+          <Row className="mt-4">
+            {renderSection(
+              "Unsecured Borrowing",
+              "CurrentBudgetPlanner",
+              Object.keys(unsecuredBorrowingFieldMappings),
+              unsecuredBorrowingFieldMappings,
+              true
+            )}
+            {renderSection(
+              "Unsecured Borrowing",
+              "PostCompletionBudgetPlanner",
+              Object.keys(unsecuredBorrowingFieldMappings),
+              unsecuredBorrowingFieldMappings,
+              true,
+              true
+            )}
+          </Row>
+          <Row className="mt-4">
+            {renderSection(
+              "Total Debt Repayment",
+              "CurrentBudgetPlanner",
+              [],
+              {}
+            )}
+            {renderSection(
+              "Total Debt Repayment",
+              "PostCompletionBudgetPlanner",
+              [],
+              {}
+            )}
+          </Row>
+        </>
+      )}
     </div>
   );
 };
