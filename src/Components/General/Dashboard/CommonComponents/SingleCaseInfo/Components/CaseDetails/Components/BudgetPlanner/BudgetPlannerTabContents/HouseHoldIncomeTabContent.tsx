@@ -1,7 +1,7 @@
-import { RootState } from "@/Redux/Store";
+import { useGetCaseBudgetPlannerQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
 import { HouseHoldIncomeTabContentProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
+import { useParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   Button,
   Col,
@@ -17,13 +17,23 @@ import {
 const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
   updateField,
 }) => {
-  const budgetPlannerData = useSelector(
-    (state: RootState) =>
-      state.budgetPlanner ?? {
-        current_income: {},
-        post_income: {},
-      }
+  const { casealias } = useParams();
+  const { data, isLoading, error, refetch } = useGetCaseBudgetPlannerQuery(
+    { case_alias: casealias as string },
+    {
+      skip: !casealias,
+      refetchOnMountOrArgChange: true, // Force refetch on component mount
+      refetchOnReconnect: true,
+      refetchOnFocus: true,
+    }
   );
+
+  // Use the first item from the API data array
+  const budgetPlannerData = data?.[0] ?? {
+    current_income: {},
+    post_income: {},
+  };
+
   const [currentValues, setCurrentValues] = useState<Record<string, string>>(
     {}
   );
@@ -43,15 +53,27 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
     "Other Benefits": "other_benefits",
   };
 
-  // Initialize local state with Redux data (once)
+  // Force a refetch when component mounts or casealias changes
   useEffect(() => {
-    if (Object.keys(currentValues).length || Object.keys(postValues).length)
+    if (casealias && refetch) {
+      console.log("Forcing API refetch for household income, case:", casealias);
+      refetch();
+    }
+  }, [casealias, refetch]);
+
+  // Initialize local state with direct API data
+  useEffect(() => {
+    if (!budgetPlannerData?.current_income || !budgetPlannerData?.post_income) {
+      console.log("❌ No income data available for initialization");
       return;
+    }
+
+    console.log("🔄 Initializing household income state with API data...");
 
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
 
-    // Current Income
+    // Current Income - Read from API data
     Object.entries(incomeFieldMappings).forEach(([field, key]) => {
       const value =
         budgetPlannerData?.current_income?.[
@@ -59,9 +81,16 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
         ] ?? 0;
       initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
+
+      console.log(
+        `Current ${field} (${key}):`,
+        value,
+        "->",
+        initialCurrentValues[`CurrentBudgetPlanner.${field}`]
+      );
     });
 
-    // Post Income
+    // Post Income - Read from API data
     Object.entries(incomeFieldMappings).forEach(([field, key]) => {
       const value =
         budgetPlannerData?.post_income?.[
@@ -69,10 +98,23 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
         ] ?? 0;
       initialPostValues[`PostCompletionBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
+
+      console.log(
+        `Post ${field} (${key}):`,
+        value,
+        "->",
+        initialPostValues[`PostCompletionBudgetPlanner.${field}`]
+      );
     });
 
-    setCurrentValues((prev) => ({ ...prev, ...initialCurrentValues }));
-    setPostValues((prev) => ({ ...prev, ...initialPostValues }));
+    console.log("📝 Setting household income state...");
+    console.log("Initial current values:", initialCurrentValues);
+    console.log("Initial post values:", initialPostValues);
+
+    setCurrentValues(initialCurrentValues);
+    setPostValues(initialPostValues);
+
+    console.log("✅ Household income state setting completed");
   }, [budgetPlannerData]);
 
   // Update parent modal with current values
@@ -193,95 +235,111 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
 
   return (
     <div>
-      <p className="fs-9">
-        <small>
-          List all monthly household income after tax and deductions.
-        </small>
-      </p>
-      <Row className="g-4">
-        <Col md={6}>
-          <h4 className="text-center mb-3">Current</h4>
-          <div className="border rounded-3 shadow-sm">
-            <div className="bg-light border-bottom p-3">
-              <span className="fw-bold text-primary">Income</span>
-            </div>
-            <div className="p-3">
-              {renderForm("CurrentBudgetPlanner", "living-expense")}
-            </div>
-            <div className="p-3 bg-light border-top">
-              <FormGroup row>
-                <Label
-                  for="CurrentBudgetPlanner_TotalIncome"
-                  sm={6}
-                  className="fw-bold text-primary"
-                  style={{ fontSize: "0.9rem" }}
-                >
-                  Total Income
-                </Label>
-                <Col sm={6}>
-                  <InputGroup>
-                    <InputGroupText>£</InputGroupText>
-                    <Input
-                      type="number"
-                      name="CurrentBudgetPlanner.TotalIncome"
-                      id="CurrentBudgetPlanner_TotalIncome"
-                      className="numeric-decimal fw-bold"
-                      readOnly
-                      value={calculateTotal(currentValues)}
-                      step="0.01"
-                    />
-                  </InputGroup>
-                </Col>
-              </FormGroup>
-            </div>
+      {isLoading ? (
+        <div className="text-center p-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">
+              Loading household income data...
+            </span>
           </div>
-        </Col>
-        <Col md={6}>
-          <h4 className="text-center mb-3">Post Completion</h4>
-          <div className="border rounded-3 shadow-sm">
-            <div className="bg-light border-bottom p-3 d-flex justify-content-between">
-              <span className="fw-bold text-primary">Income</span>
-              <Button
-                color="primary"
-                size="sm"
-                id="copyFromCurrentButton"
-                onClick={handleCopyFromCurrent}
-              >
-                Copy from Current
-              </Button>
-            </div>
-            <div className="p-3">
-              {renderForm("PostCompletionBudgetPlanner", "living-expensePC")}
-            </div>
-            <div className="p-3 bg-light border-top">
-              <FormGroup row>
-                <Label
-                  for="PostCompletionBudgetPlanner_TotalIncome"
-                  sm={6}
-                  className="fw-bold text-primary"
-                  style={{ fontSize: "0.9rem" }}
-                >
-                  Total Income
-                </Label>
-                <Col sm={6}>
-                  <InputGroup>
-                    <InputGroupText>£</InputGroupText>
-                    <Input
-                      type="number"
-                      name="PostCompletionBudgetPlanner.TotalIncome"
-                      id="PostCompletionBudgetPlanner_TotalIncome"
-                      className="numeric-decimal"
-                      readOnly
-                      value={calculateTotal(postValues)}
-                      step="0.01"
-                    />
-                  </InputGroup>
-                </Col>
-              </FormGroup>
-            </div>
-          </div>
-        </Col>
-      </Row>
+          <p className="mt-3 text-muted">Loading household income data...</p>
+        </div>
+      ) : (
+        <>
+          <p className="fs-9">
+            <small>
+              List all monthly household income after tax and deductions.
+            </small>
+          </p>
+          <Row className="g-4">
+            <Col md={6}>
+              <h4 className="text-center mb-3">Current</h4>
+              <div className="border rounded-3 shadow-sm">
+                <div className="bg-light border-bottom p-3">
+                  <span className="fw-bold text-primary">Income</span>
+                </div>
+                <div className="p-3">
+                  {renderForm("CurrentBudgetPlanner", "living-expense")}
+                </div>
+                <div className="p-3 bg-light border-top">
+                  <FormGroup row>
+                    <Label
+                      for="CurrentBudgetPlanner_TotalIncome"
+                      sm={6}
+                      className="fw-bold text-primary"
+                      style={{ fontSize: "0.9rem" }}
+                    >
+                      Total Income
+                    </Label>
+                    <Col sm={6}>
+                      <InputGroup>
+                        <InputGroupText>£</InputGroupText>
+                        <Input
+                          type="number"
+                          name="CurrentBudgetPlanner.TotalIncome"
+                          id="CurrentBudgetPlanner_TotalIncome"
+                          className="numeric-decimal fw-bold"
+                          readOnly
+                          value={calculateTotal(currentValues)}
+                          step="0.01"
+                        />
+                      </InputGroup>
+                    </Col>
+                  </FormGroup>
+                </div>
+              </div>
+            </Col>
+            <Col md={6}>
+              <h4 className="text-center mb-3">Post Completion</h4>
+              <div className="border rounded-3 shadow-sm">
+                <div className="bg-light border-bottom p-3 d-flex justify-content-between">
+                  <span className="fw-bold text-primary">Income</span>
+                  <Button
+                    color="primary"
+                    size="sm"
+                    id="copyFromCurrentButton"
+                    onClick={handleCopyFromCurrent}
+                  >
+                    Copy from Current
+                  </Button>
+                </div>
+                <div className="p-3">
+                  {renderForm(
+                    "PostCompletionBudgetPlanner",
+                    "living-expensePC"
+                  )}
+                </div>
+                <div className="p-3 bg-light border-top">
+                  <FormGroup row>
+                    <Label
+                      for="PostCompletionBudgetPlanner_TotalIncome"
+                      sm={6}
+                      className="fw-bold text-primary"
+                      style={{ fontSize: "0.9rem" }}
+                    >
+                      Total Income
+                    </Label>
+                    <Col sm={6}>
+                      <InputGroup>
+                        <InputGroupText>£</InputGroupText>
+                        <Input
+                          type="number"
+                          name="PostCompletionBudgetPlanner.TotalIncome"
+                          id="PostCompletionBudgetPlanner_TotalIncome"
+                          className="numeric-decimal"
+                          readOnly
+                          value={calculateTotal(postValues)}
+                          step="0.01"
+                        />
+                      </InputGroup>
+                    </Col>
+                  </FormGroup>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </>
+      )}
     </div>
   );
 };

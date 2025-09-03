@@ -1,8 +1,8 @@
-import { RootState } from "@/Redux/Store";
+import { useGetCaseBudgetPlannerQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlanner/BudgetPlannerApi";
 import { LivingExpensesTabContentsProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/BudgetPlannerTypes";
+import { useParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import {
   Button,
   Col,
@@ -18,15 +18,25 @@ import {
 const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
   updateField,
 }) => {
-  const budgetPlannerData = useSelector(
-    (state: RootState) =>
-      state.budgetPlanner ?? {
-        current_living_cost: {},
-        post_living_cost: {},
-        current_insurance: {},
-        post_insurance: {},
-      }
+  const { casealias } = useParams();
+  const { data, isLoading, error, refetch } = useGetCaseBudgetPlannerQuery(
+    { case_alias: casealias as string },
+    {
+      skip: !casealias,
+      refetchOnMountOrArgChange: true, // Force refetch on component mount
+      refetchOnReconnect: true,
+      refetchOnFocus: true,
+    }
   );
+
+  // Use the first item from the API data array - SAME AS HOUSEHOLD INCOME
+  const budgetPlannerData = data?.[0] ?? {
+    current_living_cost: {},
+    post_living_cost: {},
+    current_insurance: {},
+    post_insurance: {},
+  };
+
   const [visibleNotes, setVisibleNotes] = useState<{ [key: string]: boolean }>(
     {}
   );
@@ -70,11 +80,25 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
     "Other Insurance": "other_insurance",
   };
 
-  // Initialize local state with Redux data (once)
+  // Force a refetch when component mounts or casealias changes
   useEffect(() => {
-    if (!budgetPlannerData) return;
-    if (Object.keys(currentValues).length || Object.keys(postValues).length)
+    if (casealias && refetch) {
+      console.log("Forcing API refetch for living expenses, case:", casealias);
+      refetch();
+    }
+  }, [casealias, refetch]);
+
+  // Initialize local state with direct API data
+  useEffect(() => {
+    if (
+      !budgetPlannerData?.current_living_cost ||
+      !budgetPlannerData?.post_living_cost
+    ) {
+      console.log("❌ No living expenses data available for initialization");
       return;
+    }
+
+    console.log("🔄 Initializing living expenses state with API data...");
 
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
@@ -88,6 +112,15 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
       initialCurrentValues[
         `CurrentBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
       ] = value !== 0 ? String(value) : "";
+
+      console.log(
+        `Current Living ${field} (${key}):`,
+        value,
+        "->",
+        initialCurrentValues[
+          `CurrentBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
+        ]
+      );
     });
 
     // Post Living Costs
@@ -99,6 +132,15 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
       initialPostValues[
         `PostCompletionBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
       ] = value !== 0 ? String(value) : "";
+
+      console.log(
+        `Post Living ${field} (${key}):`,
+        value,
+        "->",
+        initialPostValues[
+          `PostCompletionBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
+        ]
+      );
     });
 
     // Current Insurance
@@ -110,6 +152,15 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
       initialCurrentValues[
         `CurrentBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
       ] = value !== 0 ? String(value) : "";
+
+      console.log(
+        `Current Insurance ${field} (${key}):`,
+        value,
+        "->",
+        initialCurrentValues[
+          `CurrentBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
+        ]
+      );
     });
 
     // Post Insurance
@@ -121,10 +172,25 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
       initialPostValues[
         `PostCompletionBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
       ] = value !== 0 ? String(value) : "";
+
+      console.log(
+        `Post Insurance ${field} (${key}):`,
+        value,
+        "->",
+        initialPostValues[
+          `PostCompletionBudgetPlanner.${field.replace(/[\s/&]/g, "")}`
+        ]
+      );
     });
 
-    setCurrentValues((prev) => ({ ...prev, ...initialCurrentValues }));
-    setPostValues((prev) => ({ ...prev, ...initialPostValues }));
+    console.log("📝 Setting living expenses state...");
+    console.log("Initial current values:", initialCurrentValues);
+    console.log("Initial post values:", initialPostValues);
+
+    setCurrentValues(initialCurrentValues);
+    setPostValues(initialPostValues);
+
+    console.log("✅ Living expenses state setting completed");
   }, [budgetPlannerData]);
 
   // Update parent modal with current values
@@ -555,44 +621,58 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
 
   return (
     <div>
-      <p>
-        <small>
-          Please enter all monthly living costs accurately. Convert non-monthly
-          expenses: multiply weekly by 4.3, divide quarterly by 3, annual by 12.
-        </small>
-      </p>
-      <Row>
-        {renderSection(
-          "Current",
-          "CurrentBudgetPlanner",
-          Object.keys(livingCostFieldMappings),
-          livingCostFieldMappings
-        )}
-        {renderSection(
-          "Post Completion",
-          "PostCompletionBudgetPlanner",
-          Object.keys(livingCostFieldMappings),
-          livingCostFieldMappings
-        )}
-      </Row>
-      <Row className="mt-4">
-        {renderSection(
-          "Current",
-          "CurrentBudgetPlanner",
-          Object.keys(insuranceFieldMappings),
-          insuranceFieldMappings
-        )}
-        {renderSection(
-          "Post Completion",
-          "PostCompletionBudgetPlanner",
-          Object.keys(insuranceFieldMappings),
-          insuranceFieldMappings
-        )}
-      </Row>
-      <Row className="mt-4">
-        {renderSection("", "CurrentBudgetPlanner", [], {}, true)}
-        {renderSection("", "PostCompletionBudgetPlanner", [], {}, true)}
-      </Row>
+      {isLoading ? (
+        <div className="text-center p-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">
+              Loading living expenses data...
+            </span>
+          </div>
+          <p className="mt-3 text-muted">Loading living expenses data...</p>
+        </div>
+      ) : (
+        <>
+          <p>
+            <small>
+              Please enter all monthly living costs accurately. Convert
+              non-monthly expenses: multiply weekly by 4.3, divide quarterly by
+              3, annual by 12.
+            </small>
+          </p>
+          <Row>
+            {renderSection(
+              "Current",
+              "CurrentBudgetPlanner",
+              Object.keys(livingCostFieldMappings),
+              livingCostFieldMappings
+            )}
+            {renderSection(
+              "Post Completion",
+              "PostCompletionBudgetPlanner",
+              Object.keys(livingCostFieldMappings),
+              livingCostFieldMappings
+            )}
+          </Row>
+          <Row className="mt-4">
+            {renderSection(
+              "Current",
+              "CurrentBudgetPlanner",
+              Object.keys(insuranceFieldMappings),
+              insuranceFieldMappings
+            )}
+            {renderSection(
+              "Post Completion",
+              "PostCompletionBudgetPlanner",
+              Object.keys(insuranceFieldMappings),
+              insuranceFieldMappings
+            )}
+          </Row>
+          <Row className="mt-4">
+            {renderSection("", "CurrentBudgetPlanner", [], {}, true)}
+            {renderSection("", "PostCompletionBudgetPlanner", [], {}, true)}
+          </Row>
+        </>
+      )}
     </div>
   );
 };
