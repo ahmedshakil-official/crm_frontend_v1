@@ -206,10 +206,22 @@ export const LoanDetailsTabContent: React.FC<LoanDetailsTabContentProps> = ({
     }
   };
 
-  const isTab2Valid = () =>
-    formDataTab2.property_valuation &&
-    formDataTab2.loan_amount &&
-    formDataTab2.estimated_value;
+  const isTab2Valid = () => {
+    const isPropertyValuationVisible =
+      formDataTab2.mortgage_type !== "PURCHASE";
+    const isPurchasePriceVisible = formDataTab2.mortgage_type === "PURCHASE";
+
+    const isPropertyValuationValid =
+      isPropertyValuationVisible && formDataTab2.property_valuation > 0;
+    const isPurchasePriceValid =
+      isPurchasePriceVisible && formDataTab2.purchase_price > 0;
+
+    return (
+      (isPropertyValuationValid || isPurchasePriceValid) &&
+      formDataTab2.loan_amount > 0 &&
+      formDataTab2.estimated_value > 0
+    );
+  };
 
   const handleNext = () => setTabId((parseInt(tabId) + 1).toString());
 

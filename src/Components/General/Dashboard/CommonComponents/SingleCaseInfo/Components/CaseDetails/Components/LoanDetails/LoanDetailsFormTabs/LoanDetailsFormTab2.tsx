@@ -39,40 +39,41 @@ const LoanDetailsFormTab2: React.FC<LoanDetailsFormTab2Props> = ({
   return (
     <Form>
       <Row>
-        <Col md={6}>
-          <FormGroup>
-            <Label
-              for={
-                formData.mortgage_type === "PURCHASE"
-                  ? "purchase_price"
-                  : "property_valuation"
-              }
-            >
-              {formData.mortgage_type === "PURCHASE"
-                ? "Purchase Price(£)*"
-                : "Property Valuation(£)*"}
-            </Label>
-            <Input
-              type="number"
-              name={
-                formData.mortgage_type === "PURCHASE"
-                  ? "purchase_price"
-                  : "property_valuation"
-              }
-              placeholder="0"
-              required
-              min="0"
-              value={
-                formData.mortgage_type === "PURCHASE"
-                  ? formData.purchase_price || ""
-                  : formData.property_valuation || ""
-              }
-              onChange={(e) =>
-                handleFormChange(e.target.name, Number(e.target.value))
-              }
-            />
-          </FormGroup>
-        </Col>
+        {formData?.mortgage_type === "PURCHASE" ? (
+          <Col md={6}>
+            <FormGroup>
+              <Label for="purchase_price">Purchase Price(£)*</Label>
+              <Input
+                type="number"
+                name="purchase_price"
+                placeholder="0"
+                required
+                min="0"
+                value={formData.purchase_price || ""}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, Number(e.target.value))
+                }
+              />
+            </FormGroup>
+          </Col>
+        ) : (
+          <Col md={6}>
+            <FormGroup>
+              <Label for="property_valuation">Property Valuation(£)*</Label>
+              <Input
+                type="number"
+                name="property_valuation"
+                placeholder="0"
+                required
+                min="0"
+                value={formData.property_valuation || ""}
+                onChange={(e) =>
+                  handleFormChange(e.target.name, Number(e.target.value))
+                }
+              />
+            </FormGroup>
+          </Col>
+        )}
         <Col md={6}>
           <FormGroup>
             <Label for="loan_amount">Loan Amount(£)*</Label>
