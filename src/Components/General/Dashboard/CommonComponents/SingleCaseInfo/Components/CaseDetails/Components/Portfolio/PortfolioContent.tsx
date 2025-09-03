@@ -16,6 +16,8 @@ import {
   CardHeader,
   Col,
   Container,
+  Input,
+  Label,
   Row,
   Table,
 } from "reactstrap";
@@ -267,6 +269,22 @@ const PortfolioContent: React.FC = () => {
                         ))}
                       </tbody>
                     </Table>
+                  </div>
+                  <div className="mt-4">
+                    <Label for="note">
+                      Note
+                      <span className="small text-warning">
+                        (This field is read-only)
+                      </span>
+                    </Label>
+                    <Input
+                      id="note"
+                      name="note"
+                      type="textarea"
+                      value={data.map((item: any) => item?.note).join("\n\n")}
+                      rows={3}
+                      readOnly
+                    />
                   </div>
                 </div>
               </CardBody>

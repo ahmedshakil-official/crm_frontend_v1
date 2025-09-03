@@ -374,7 +374,7 @@ const AdverseTabContent: React.FC<ApplicantsUsersProps> = ({ basicTab }) => {
 
                 <FormGroup>
                   <Label for="reasonForAdverse">
-                    Reason for adverse credit (if applicable)
+                    Why did the adverse occur?(If applicable)
                   </Label>
                   <Input
                     type="textarea"

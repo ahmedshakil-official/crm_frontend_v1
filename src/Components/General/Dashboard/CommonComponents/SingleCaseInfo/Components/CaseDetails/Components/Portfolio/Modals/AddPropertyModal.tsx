@@ -83,6 +83,7 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
         remaining_mortgage_term: formData.get("remainingMortgageTerm") || null,
         is_limited_company: true,
         epc_rating: formData.get("epcRating") || null,
+        note: formData.get("note") || null,
       };
       const response = await addPropertyDetails({
         case_alias: casealias,
@@ -491,7 +492,14 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
                 </Input>
               </FormGroup>
             </Col>
-            <Col md={4}></Col>
+          </Row>
+          <Row>
+            <Col sm={12}>
+              <FormGroup>
+                <Label for="note">Note</Label>
+                <Input id="note" name="note" type="textarea" rows={3} />
+              </FormGroup>
+            </Col>
           </Row>
           <Row>
             <Col className="d-flex justify-content-end gap-2">
