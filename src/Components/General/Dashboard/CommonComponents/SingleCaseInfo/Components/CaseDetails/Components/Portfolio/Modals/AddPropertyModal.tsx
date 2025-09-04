@@ -4,6 +4,7 @@ import {
 } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/Portfolio/PortfolioApi";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { X } from "react-feather";
 import { toast } from "react-toastify";
 import {
   Button,
@@ -155,7 +156,13 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
                             removeApplicant(id);
                           }}
                         >
-                          {applicant?.first_name} {applicant?.last_name} ×
+                          {applicant?.title
+                            ? applicant?.title.charAt(0).toUpperCase() +
+                              applicant?.title.slice(1).toLowerCase()
+                            : ""}
+                          {"."} {applicant?.first_name} {applicant?.middle_name}{" "}
+                          {applicant?.last_name}
+                          <span className="ms-1">x</span>
                         </span>
                       );
                     })}
@@ -177,7 +184,9 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
                         className="text-end p-1 bg-primary sticky-top border-bottom dropdown_close"
                         onClick={() => setIsDropdownOpen(false)}
                       >
-                        <span className="fw-bold fs-5">×</span>
+                        <span className="fw-bold fs-5">
+                          <X size={20} />
+                        </span>
                       </div>
                       {/* Dropdown Options */}
                       {filteredData?.map((applicant: any) => (
@@ -186,7 +195,12 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
                           className="px-2 py-1 dropdown_item"
                           onClick={() => handleSelect(applicant.id)}
                         >
-                          {applicant.first_name} {applicant.last_name}
+                          {applicant?.title
+                            ? applicant?.title.charAt(0).toUpperCase() +
+                              applicant?.title.slice(1).toLowerCase()
+                            : ""}
+                          {"."} {applicant?.first_name} {applicant?.middle_name}{" "}
+                          {applicant?.last_name}
                         </div>
                       ))}
                     </div>
