@@ -27,6 +27,7 @@ const ProductContent: React.FC = () => {
     initial_rate_type: "",
     initial_rate_period_type: "",
     initial_rate_period: 0.0,
+    initial_rate_date_period: "",
     reversion_rate: "",
     max_ltv: "",
     annual_percentage_rate: "",
@@ -47,6 +48,7 @@ const ProductContent: React.FC = () => {
     procuration_fee: "",
     processing_consent: false,
     application_review: false,
+    note: "",
   });
   const {
     data: caseData,
@@ -70,6 +72,7 @@ const ProductContent: React.FC = () => {
         initial_rate_type: details.initial_rate_type || "",
         initial_rate_period_type: details.initial_rate_period_type || "",
         initial_rate_period: details.initial_rate_period || null,
+        initial_rate_date_period: details.initial_rate_date_period || "",
         reversion_rate: details.reversion_rate || null,
         max_ltv: details.max_ltv || null,
         annual_percentage_rate: details.annual_percentage_rate || null,
@@ -95,6 +98,7 @@ const ProductContent: React.FC = () => {
         procuration_fee: details.procuration_fee || null,
         processing_consent: details.processing_consent || false,
         application_review: details.application_review || false,
+        note: details.note || "",
       });
     }
   }, [productDetails]);
@@ -237,8 +241,7 @@ const ProductContent: React.FC = () => {
             </Input>
           </FormGroup>
         </Col>
-        {(formData.initial_rate_period_type === "MONTHS" ||
-          formData.initial_rate_period_type === "FIXED_DATE") && (
+        {formData.initial_rate_period_type === "MONTHS" && (
           <Col md={3}>
             <FormGroup>
               <Label for="initialRatePeriod">Initial Rate Period</Label>
@@ -249,6 +252,20 @@ const ProductContent: React.FC = () => {
                 min="0"
                 step="1"
                 value={formData.initial_rate_period || ""}
+                onChange={handleChange}
+              />
+            </FormGroup>
+          </Col>
+        )}
+        {formData.initial_rate_period_type === "FIXED_DATE" && (
+          <Col md={3}>
+            <FormGroup>
+              <Label for="fixedDate">Initial Rate Period (Fixed Date)</Label>
+              <Input
+                id="fixedDate"
+                name="initial_rate_date_period"
+                type="date"
+                value={formData.initial_rate_date_period || ""}
                 onChange={handleChange}
               />
             </FormGroup>
@@ -410,7 +427,6 @@ const ProductContent: React.FC = () => {
           </FormGroup>
         </Col>
       </Row>
-
       <Row>
         <Col md={4}>
           <FormGroup>
@@ -454,7 +470,6 @@ const ProductContent: React.FC = () => {
           </FormGroup>
         </Col>
       </Row>
-
       <Row>
         <Col md={4}>
           <FormGroup>
@@ -501,7 +516,6 @@ const ProductContent: React.FC = () => {
           </FormGroup>
         </Col>
       </Row>
-
       <Row>
         <Col md={6}>
           <FormGroup>
@@ -622,6 +636,22 @@ const ProductContent: React.FC = () => {
           to contact you regarding your mortgage arrangements.
         </small>
       </div>
+
+      <Row>
+        <Col md={12} className="mt-4">
+          <FormGroup>
+            <Label for="note">Note</Label>
+            <Input
+              type="textarea"
+              id="note"
+              name="note"
+              rows={4}
+              value={formData.note}
+              onChange={handleChange}
+            />
+          </FormGroup>
+        </Col>
+      </Row>
 
       <div className="d-flex justify-content-end gap-2 mt-4">
         <Button
