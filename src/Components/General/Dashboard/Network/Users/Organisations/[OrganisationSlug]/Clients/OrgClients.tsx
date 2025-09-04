@@ -1,10 +1,13 @@
-import { useGetClientDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/ClientDetailsApi";
+import AddClientModal from "@/Components/General/Dashboard/CommonComponents/Directors/Clients/Modals/AddClientModal";
+import ViewClientModal from "@/Components/General/Dashboard/CommonComponents/Directors/Clients/Modals/ViewClientModal";
+import { useGetOrgClientsQuery } from "@/Redux/Reducers/Network/Organisations/SingleOrganisation/OrgClientsApi";
 import {
   ClientInfoProps,
   ClientsProps,
 } from "@/Types/CommonComponents/Directors/ClientTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { TbCirclePlus } from "react-icons/tb";
@@ -25,6 +28,7 @@ import {
 } from "reactstrap";
 
 const OrgClients: React.FC<ClientsProps> = ({ clientsPerPage = 5 }) => {
+  const { organisationslug } = useParams();
   const [clients, setClients] = useState<ClientInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,7 +40,12 @@ const OrgClients: React.FC<ClientsProps> = ({ clientsPerPage = 5 }) => {
     null
   );
 
-  const { data: clientData, isLoading } = useGetClientDetailsQuery(undefined);
+  const { data: clientData, isLoading } = useGetOrgClientsQuery(
+    { organisationslug },
+    {
+      skip: !organisationslug,
+    }
+  );
 
   const [selectedClient, setSelectedClient] = useState<
     Partial<ClientInfoProps>
@@ -363,12 +372,13 @@ const OrgClients: React.FC<ClientsProps> = ({ clientsPerPage = 5 }) => {
         </Row>
 
         {/* modals */}
-        {/* <AddClientModal isOpen={isModalOpen} toggle={toggleModal} />
+        <AddClientModal isOpen={isModalOpen} toggle={toggleModal} />
         <ViewClientModal
           isOpen={isViewModalOpen}
           toggle={toggleViewModal}
           selectedClient={selectedClient}
         />
+        {/*
         <UpdateClientModal
           isOpen={isUpdateModalOpen}
           toggle={toggleUpdateModal}

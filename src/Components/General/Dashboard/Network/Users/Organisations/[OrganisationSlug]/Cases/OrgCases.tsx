@@ -1,5 +1,9 @@
+import AddNewCaseModal from "@/Components/General/Dashboard/CommonComponents/Cases/Cases/Modals/AddNewCaseModal";
+import DeleteCaseModal from "@/Components/General/Dashboard/CommonComponents/Cases/Cases/Modals/DeleteCaseModal";
+import UpdateCaseModal from "@/Components/General/Dashboard/CommonComponents/Cases/Cases/Modals/UpdateCaseModal";
 import { useGetCasesQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
 import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
+import { useGetOrgCasesQuery } from "@/Redux/Reducers/Network/Organisations/SingleOrganisation/OrgCases";
 import { CaseInfoPrpos } from "@/Types/CommonComponents/Cases/CaseTypes";
 import { AdviserInfoProps } from "@/Types/CommonComponents/Directors/AdviserTypes";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
@@ -8,13 +12,12 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { TbCirclePlus, TbFileDescription } from "react-icons/tb";
+import { TbCirclePlus } from "react-icons/tb";
 import {
   Button,
   Card,
   CardBody,
   CardHeader,
-  CardTitle,
   Col,
   Input,
   InputGroup,
@@ -52,7 +55,7 @@ const OrgCases: React.FC = () => {
   const { data: adviserData, isLoading: isAdviserLoading } =
     useGetAdviserDetailsQuery(undefined);
 
-  const { data: caseData, isLoading: isCaseLoading } = useGetCasesQuery({
+  const { data: caseData, isLoading: isCaseLoading } = useGetOrgCasesQuery({
     search: searchQuery,
     ...filters,
     page: currentPage,
@@ -96,170 +99,7 @@ const OrgCases: React.FC = () => {
 
   return (
     <Card>
-      <CardHeader>
-        <div className="d-flex justify-content-between">
-          <div>
-            <CardTitle className="h2">Case Status</CardTitle>
-          </div>
-        </div>
-      </CardHeader>
       <CardBody>
-        <Row>
-          {/* // Skeleton Loading State */}
-          {isLoading ? (
-            <>
-              {[...Array(5)].map((_, index) => (
-                <Col xl className="mb-2" key={index}>
-                  <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
-                    <CardBody className="p-2">
-                      <div className="d-flex justify-content-between">
-                        <div style={{ width: "70%" }}>
-                          <div
-                            className="skeleton-loading mb-2"
-                            style={{ width: "80%", height: "16px" }}
-                          />
-                          <div
-                            className="skeleton-loading"
-                            style={{ width: "50%", height: "24px" }}
-                          />
-                        </div>
-                        <div
-                          className="skeleton-loading rounded-3"
-                          style={{ width: "30px", height: "30px" }}
-                        />
-                      </div>
-                    </CardBody>
-                  </Card>
-                </Col>
-              ))}
-            </>
-          ) : (
-            // Actual Content
-            <>
-              {/* All Cases  */}
-              <Col xl>
-                <Card className="shadow p-2">
-                  <CardBody className="p-2">
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <CardTitle className="small text-muted">
-                          All Cases
-                        </CardTitle>
-                        <h4 className="mb-1 text-dark">
-                          {caseData?.count || 0}
-                        </h4>
-                      </div>
-                      <div>
-                        <span
-                          className="d-flex justify-content-center align-items-center bg-light-primary rounded-3"
-                          style={{ width: "30px", height: "30px" }}
-                        >
-                          <TbFileDescription className="fs-6" />
-                        </span>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              {/* Active Cases  */}
-              <Col xl>
-                <Card className="shadow p-2">
-                  <CardBody className="p-2">
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <CardTitle className="small text-muted">
-                          Active Cases
-                        </CardTitle>
-                        <h4 className="mb-1 text-dark">
-                          {caseData?.results?.filter(
-                            (item: any) => !item.is_removed
-                          ).length || 0}
-                        </h4>
-                      </div>
-                      <div>
-                        <span
-                          className="d-flex justify-content-center align-items-center bg-light-success rounded-3"
-                          style={{ width: "30px", height: "30px" }}
-                        >
-                          <TbFileDescription className="fs-6" />
-                        </span>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              {/* Pending Cases  */}
-              <Col xl>
-                <Card className="shadow p-2">
-                  <CardBody className="p-2">
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <CardTitle className="small text-muted">
-                          Pending Cases
-                        </CardTitle>
-                        <h4 className="mb-1 text-dark">10</h4>
-                      </div>
-                      <div>
-                        <span
-                          className="d-flex justify-content-center align-items-center bg-light-warning rounded-3"
-                          style={{ width: "30px", height: "30px" }}
-                        >
-                          <TbFileDescription className="fs-6" />
-                        </span>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              {/* Completed Cases  */}
-              <Col xl>
-                <Card className="shadow p-2">
-                  <CardBody className="p-2">
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <CardTitle className="small text-muted">
-                          Completed Cases
-                        </CardTitle>
-                        <h4 className="mb-1 text-dark">10</h4>
-                      </div>
-                      <div>
-                        <span
-                          className="d-flex justify-content-center align-items-center bg-light-info rounded-3"
-                          style={{ width: "30px", height: "30px" }}
-                        >
-                          <TbFileDescription className="fs-6" />
-                        </span>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              {/* On Hold Cases  */}
-              <Col xl>
-                <Card className="shadow p-2">
-                  <CardBody className="p-2">
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <CardTitle className="small text-muted">
-                          On Hold Cases
-                        </CardTitle>
-                        <h4 className="mb-1 text-dark">10</h4>
-                      </div>
-                      <div>
-                        <span
-                          className="d-flex justify-content-center align-items-center bg-light-dark rounded-3"
-                          style={{ width: "30px", height: "30px" }}
-                        >
-                          <TbFileDescription className="fs-6" />
-                        </span>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-            </>
-          )}
-        </Row>
         <Row>
           <Card className="mb-0">
             <CardHeader>
@@ -414,6 +254,7 @@ const OrgCases: React.FC = () => {
                       <th>Case Stage</th>
                       <th>Created At</th>
                       <th>Created By</th>
+                      <th>Assigned To</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -525,6 +366,43 @@ const OrgCases: React.FC = () => {
                                 .join(" ")}
                               )
                             </p>
+                          </td>
+                          <td>
+                            {caseItem.assigned_user ? (
+                              <>
+                                <p className="m-0">
+                                  {caseItem.assigned_user.title
+                                    ? caseItem.assigned_user.title[0].toUpperCase() +
+                                      caseItem.assigned_user.title
+                                        .slice(1)
+                                        .toLowerCase() +
+                                      ". "
+                                    : ""}
+                                  {caseItem.assigned_user.first_name}{" "}
+                                  {caseItem.assigned_user.middle_name
+                                    ? caseItem.assigned_user.middle_name + " "
+                                    : ""}
+                                  {caseItem.assigned_user.last_name}
+                                </p>
+                                <p
+                                  className="m-0 opacity-75"
+                                  style={{ fontSize: "9px" }}
+                                >
+                                  (
+                                  {caseItem.assigned_user.user_type
+                                    ?.split("_")
+                                    .map(
+                                      (word) =>
+                                        word.charAt(0).toUpperCase() +
+                                        word.slice(1).toLowerCase()
+                                    )
+                                    .join(" ")}
+                                  )
+                                </p>
+                              </>
+                            ) : (
+                              <span className="text-muted">Not Assigned</span>
+                            )}
                           </td>
                           <td>
                             <div className="d-flex justify-content-center align-items-center">
@@ -679,21 +557,21 @@ const OrgCases: React.FC = () => {
                 </div>
               </Row>
             </CardBody>
-            {/* <AddNewCaseModal
-            isOpen={isAddNewCaseModalOpen}
-            toggle={toggleAddNewCaseModal}
-          />
-          <UpdateCaseModal
-            isOpen={isUpdateCaseModalOpen}
-            toggle={toggleUpdateCaseModal}
-            caseData={currentCase as CaseInfoPrpos}
-          />
-          <DeleteCaseModal
-            isOpen={isDeleteCaseModalOpen}
-            toggle={toggleDeleteCaseModal}
-            caseData={currentCase}
-            onDelete={toggleDeleteCaseModal}
-          /> */}
+            <AddNewCaseModal
+              isOpen={isAddNewCaseModalOpen}
+              toggle={toggleAddNewCaseModal}
+            />
+            <UpdateCaseModal
+              isOpen={isUpdateCaseModalOpen}
+              toggle={toggleUpdateCaseModal}
+              caseData={currentCase as CaseInfoPrpos}
+            />
+            <DeleteCaseModal
+              isOpen={isDeleteCaseModalOpen}
+              toggle={toggleDeleteCaseModal}
+              caseData={currentCase}
+              onDelete={toggleDeleteCaseModal}
+            />
           </Card>
         </Row>
       </CardBody>

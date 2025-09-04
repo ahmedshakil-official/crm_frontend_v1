@@ -1,10 +1,13 @@
-import { useGetAdviserDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/AdviserDetailsApi";
+import AddAdviserModal from "@/Components/General/Dashboard/CommonComponents/Directors/Advisers/Modals/AddAdviserModal";
+import ViewAdviserModal from "@/Components/General/Dashboard/CommonComponents/Directors/Advisers/Modals/ViewAdviserModal";
+import { useGetOrgAdvisersQuery } from "@/Redux/Reducers/Network/Organisations/SingleOrganisation/OrgAdvisersApi";
 import {
   AdviserInfoProps,
   AdvisersProps,
 } from "@/Types/CommonComponents/Directors/AdviserTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { TbCirclePlus } from "react-icons/tb";
@@ -25,6 +28,7 @@ import {
 } from "reactstrap";
 
 const OrgAdvisers: React.FC<AdvisersProps> = ({ advisersPerPage = 5 }) => {
+  const { organisationslug } = useParams();
   const [advisers, setAdvisers] = useState<AdviserInfoProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,7 +39,12 @@ const OrgAdvisers: React.FC<AdvisersProps> = ({ advisersPerPage = 5 }) => {
   const [adviserToDelete, setAdviserToDelete] =
     useState<AdviserInfoProps | null>(null);
 
-  const { data: adviserData, isLoading } = useGetAdviserDetailsQuery(undefined);
+  const { data: adviserData, isLoading } = useGetOrgAdvisersQuery(
+    { organisationslug },
+    {
+      skip: !organisationslug,
+    }
+  );
 
   const [selectedAdviser, setSelectedAdviser] = useState<
     Partial<AdviserInfoProps>
@@ -365,12 +374,13 @@ const OrgAdvisers: React.FC<AdvisersProps> = ({ advisersPerPage = 5 }) => {
         </Row>
 
         {/* modals */}
-        {/* <AddAdviserModal isOpen={isModalOpen} toggle={toggleModal} />
+        <AddAdviserModal isOpen={isModalOpen} toggle={toggleModal} />
         <ViewAdviserModal
           isOpen={isViewModalOpen}
           toggle={toggleViewModal}
           selectedAdviser={selectedAdviser}
         />
+        {/*
         <UpdateAdviserModal
           isOpen={isUpdateModalOpen}
           toggle={toggleUpdateModal}
