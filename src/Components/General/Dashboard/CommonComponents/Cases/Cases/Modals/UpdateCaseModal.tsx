@@ -80,12 +80,21 @@ const UpdateCaseModal: React.FC<UpdateCaseModalProps> = ({
 
   const handleSubmit = async () => {
     try {
-      await updateCaseDetails({
+      const res = await updateCaseDetails({
         caseAlias: caseData?.alias,
         payload: formData,
       });
-      toggle();
-      toast.success("Case updated successfully.");
+      if (res.data) {
+        toast.success("Case updated successfully.");
+        toggle();
+      } else if (res.error) {
+        const errorMessage =
+          (res.error as any)?.data?.detail ||
+          "Failed to update the case. Please try again.";
+        toast.error(errorMessage);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     } catch (error) {
       console.error("Error updating case:", error);
       toast.error("Failed to update the case. Please try again.");
