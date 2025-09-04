@@ -1,10 +1,13 @@
-import { useGetLeadDetailsQuery } from "@/Redux/Reducers/CommonComponents/Directors/LeadDetalisApi";
+import AddLeadModal from "@/Components/General/Dashboard/CommonComponents/Directors/Leads/Modals/AddLeadModal";
+import ViewLeadModal from "@/Components/General/Dashboard/CommonComponents/Directors/Leads/Modals/ViewLeadModal";
+import { useGetOrgLeadsQuery } from "@/Redux/Reducers/Network/Organisations/SingleOrganisation/OrgLeadsApi";
 import {
   LeadsInfo,
   LeadsProps,
 } from "@/Types/CommonComponents/Directors/LeadTypes";
 import LoadingSpinner from "@/app/loading";
 import { formatDateToDMYAndTime } from "@/utils/dateAndTimeFormatter";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { TbCirclePlus } from "react-icons/tb";
@@ -23,12 +26,9 @@ import {
   Spinner,
   Table,
 } from "reactstrap";
-// import AddLeadModal from "./Modals/AddLeadModal";
-// import DeleteLeadModal from "./Modals/DeleteLeadModal";
-// import UpdateLeadModal from "./Modals/UpdateLeadModal";
-// import ViewLeadModal from "./Modals/ViewLeadModal";
 
 const OrgLeads: React.FC<LeadsProps> = ({ leadsPerPage = 5 }) => {
+  const { organisationslug } = useParams();
   const [leads, setLeads] = useState<LeadsInfo[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,7 +38,12 @@ const OrgLeads: React.FC<LeadsProps> = ({ leadsPerPage = 5 }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [leadToDelete, setLeadToDelete] = useState<LeadsInfo | null>(null);
   // rtk hooks
-  const { data: leadData, isLoading } = useGetLeadDetailsQuery(undefined);
+  const { data: leadData, isLoading } = useGetOrgLeadsQuery(
+    { organisationslug },
+    {
+      skip: !organisationslug,
+    }
+  );
 
   const [selectedLead, setSelectedLead] = useState<Partial<LeadsInfo>>({
     user: {
@@ -359,13 +364,13 @@ const OrgLeads: React.FC<LeadsProps> = ({ leadsPerPage = 5 }) => {
         </Row>
 
         {/* Modals */}
-        {/* <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
-      <ViewLeadModal
-        isOpen={isViewModalOpen}
-        toggle={toggleViewModal}
-        selectedLead={selectedLead}
-      />
-
+        <AddLeadModal isOpen={isModalOpen} toggle={toggleModal} />
+        <ViewLeadModal
+          isOpen={isViewModalOpen}
+          toggle={toggleViewModal}
+          selectedLead={selectedLead}
+        />
+        {/*
       <UpdateLeadModal
         isOpen={isUpdateModalOpen}
         toggle={toggleUpdateModal}
