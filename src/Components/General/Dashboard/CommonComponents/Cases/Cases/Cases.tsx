@@ -416,7 +416,7 @@ const Cases: React.FC = () => {
                   <tbody className="text-center">
                     {isLoading ? (
                       <tr>
-                        <td colSpan={8} className="text-center">
+                        <td colSpan={9} className="text-center">
                           <Spinner color="primary" />
                         </td>
                       </tr>
@@ -588,7 +588,7 @@ const Cases: React.FC = () => {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan={8} className="text-center">
+                        <td colSpan={9} className="text-center">
                           No cases found.
                         </td>
                       </tr>

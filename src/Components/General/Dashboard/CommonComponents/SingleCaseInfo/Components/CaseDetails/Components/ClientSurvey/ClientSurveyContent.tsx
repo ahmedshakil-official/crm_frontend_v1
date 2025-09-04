@@ -89,6 +89,7 @@ const ClientSurveyContent: React.FC = () => {
   const [name, setName] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
   const [phoneNumber, setPhoneNumber] = React.useState<string>("");
+  const [note, setNote] = React.useState<string>("");
 
   // === STEP 1: Extract the Most Relevant Survey Record ===
   const selectedSurvey = useMemo(() => {
@@ -179,6 +180,7 @@ const ClientSurveyContent: React.FC = () => {
       setName(selectedSurvey.name || "");
       setEmail(selectedSurvey.email || "");
       setPhoneNumber(selectedSurvey.phone_number || "");
+      setNote(selectedSurvey.note || "");
     } else {
       // No existing survey — initialize as empty
       setClientSurvey(false);
@@ -215,6 +217,7 @@ const ClientSurveyContent: React.FC = () => {
       setName("");
       setEmail("");
       setPhoneNumber("");
+      setNote("");
     }
   }, [selectedSurvey]);
 
@@ -255,6 +258,7 @@ const ClientSurveyContent: React.FC = () => {
         | "name"
         | "email"
         | "phoneNumber"
+        | "note"
     ) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -358,6 +362,8 @@ const ClientSurveyContent: React.FC = () => {
         case "phoneNumber":
           setPhoneNumber(value);
           break;
+        case "note":
+          setNote(value);
         default:
           console.warn(`Unknown field: ${field}`);
           break;
@@ -371,40 +377,6 @@ const ClientSurveyContent: React.FC = () => {
       const payload = {
         case_alias: casealias,
         client_survey: value,
-        // adviser_name: adviserName,
-        // is_clarification_explanation_of_the_service_firm: question2,
-        // is_timely_service_delivery: question3,
-        // is_helpfulness_representative: question4,
-        // the_firm_offices_reasonable: question5,
-        // is_accuracy_information_provided: question6,
-        // is_clarification_explanation_paid: question7,
-        // is_raising_queries_relating_service: question8,
-        // is_clarification_explanation_protection_review: question9,
-        // is_understanding_of_financial_objectives: question10,
-        // is_explanation_consideration_of_attitude_risk: question11,
-        // is_explanation_consideration_capacity_loss_of_capital: question12,
-        // is_explanation_adviser_product: question13,
-        // is_interaction_adviser_professionals: question14,
-        // is_suitable_advice_for_your_needs: question15,
-        // is_ability_of_the_adviser_undue_pressure_commit: question16,
-        // is_timing_deliver_review_by_adviser: question17,
-        // the_broker_fee_paid_represents: question18,
-        // explanation_broker_fees_including_refund_policy: question19,
-        // is_receive_the_value_expected_broker_fee: question20,
-        // is_any_other_documentation_provided_to_you: question21,
-        // is_timing_arrangements_made_conduct_review_with_you: question22,
-        // is_frequency_communications_receive_from_firm: question23,
-        // is_relevance_communications_sent_to_the_firm: question24,
-        // is_raising_any_queries_on_communications: question25,
-        // is_overall_standard_communications_received_from_firm: question26,
-        // is_timely_manner_of_receiving_letter_confirming_recommendation:
-        //   question27,
-        // do_we_better_serve_next_time: question28,
-        // have_any_further_comments_on_the_service_received: question29,
-        // do_you_like_someone_to_contact_you: question30,
-        // name: name,
-        // email: email,
-        // phone_number: phoneNumber,
       };
 
       updateClientSurvey({
@@ -479,6 +451,7 @@ const ClientSurveyContent: React.FC = () => {
       name: name,
       email: email,
       phone_number: phoneNumber,
+      note: note,
     };
 
     try {
@@ -1505,6 +1478,17 @@ const ClientSurveyContent: React.FC = () => {
                       name="phone_number"
                       value={phoneNumber}
                       onChange={handleInputChange("phoneNumber")}
+                      disabled={isUpdating}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="note">Additional Note (optional)</Label>
+                    <Input
+                      type="textarea"
+                      id="note"
+                      name="note"
+                      value={note}
+                      onChange={handleInputChange("note")}
                       disabled={isUpdating}
                     />
                   </FormGroup>
