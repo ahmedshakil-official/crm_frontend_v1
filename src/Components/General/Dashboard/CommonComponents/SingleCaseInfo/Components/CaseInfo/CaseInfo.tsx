@@ -54,7 +54,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             <Card className="shadow">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-primary">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
-                  <h4 className="fw-bold">Case User</h4>
+                  <h6 className="fw-bold">Case User</h6>
                 </CardHeader>
                 {isLoading ? (
                   <Row className="pt-2">
@@ -120,7 +120,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             <Card className="shadow">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-warning">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
-                  <h4 className="fw-bold">Case Info</h4>
+                  <h6 className="fw-bold">Case Info</h6>
                 </CardHeader>
                 {isLoading ? (
                   <Row className="pt-2">
@@ -186,7 +186,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             <Card className="shadow ">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-success">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
-                  <h4 className="fw-bold">Created By</h4>
+                  <h6 className="fw-bold">Created By</h6>
                 </CardHeader>
                 {isLoading ? (
                   <Row className="pt-2">
@@ -245,7 +245,7 @@ const CaseInfo: React.FC<SingleCaseProps> = ({ caseInfo, isLoading }) => {
             <Card className="shadow ">
               <CardBody className="support-ticket-font pt-2 border-3 rounded-3 border-b-info">
                 <CardHeader className="pt-0 pb-1 m-0 text-center">
-                  <h4 className="fw-bold">Assigned Advisor</h4>
+                  <h6 className="fw-bold">Assigned Advisor</h6>
                 </CardHeader>
                 {isLoading ? (
                   <Row className="pt-2">
