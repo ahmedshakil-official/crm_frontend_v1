@@ -44,6 +44,7 @@ export const baseApi = createApi({
     "ApplicantsDetails",
     "Dependants",
     "CompanyDetails",
+    "PreviousAddress",
     "EmploymentDetails",
     "CreditCommitmentsDetails",
     "AdverseDetails",
