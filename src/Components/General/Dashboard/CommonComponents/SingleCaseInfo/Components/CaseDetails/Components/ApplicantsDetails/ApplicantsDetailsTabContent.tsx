@@ -31,7 +31,9 @@ import {
 } from "reactstrap";
 import AddCompanyDetailsFormModal from "./ApplicantDetailsModals/AddApplicantCompanyInfoModal";
 import AddDependantFormModal from "./ApplicantDetailsModals/AddApplicantDependantsModal";
+import AddPreviousAddressModal from "./ApplicantDetailsModals/AddPreviousAddressModal";
 import ApplicantDependantsViewModal from "./ApplicantDetailsModals/ApplicantDependantsViewModal";
+import ViewPreviousAddressModal from "./ApplicantDetailsModals/ViewPreviousAddressModal";
 
 const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   applicantsData,
@@ -44,6 +46,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
   const [isDependantsViewModalOpen, setIsDependantsViewModalOpen] =
     useState(false);
+  const [isAddPreviousAddressModalOpen, setIsAddPreviousAddressModalOpen] =
+    useState(false);
+  const [isViewPreviousAddressModalOpen, setIsViewPreviousAddressModalOpen] =
+    useState(false);
   const submitActionRef = useRef<"save" | "next">("save");
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -55,11 +61,10 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const { casealias } = params;
 
   // Rtk hooks
-  const {
-    data: caseData,
-    isLoading: isCaseFetching,
-    isError,
-  } = useGetSingleCaseQuery({ case_alias: casealias }, { skip: !casealias });
+  const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
+    { case_alias: casealias },
+    { skip: !casealias }
+  );
   const [updateApplicantDetails, { isLoading: isUpdatingApplicant }] =
     useUpdateApplicantDetailsMutation();
   const { data } = useGetCaseLoanDetailsQuery(casealias);
@@ -976,7 +981,12 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
           <Row>
             <Col md={6}>
               <FormGroup>
-                <Label for="effective_from">Effective From*</Label>
+                <Label for="effective_from">
+                  Effective From*
+                  <small className="text-danger">
+                    (Three years address history required)
+                  </small>
+                </Label>
                 <Input
                   id="effective_from"
                   type="date"
@@ -1030,7 +1040,30 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
               </FormGroup>
             </Col>
           </Row>
-
+          <Row>
+            <Col md={6}>
+              {formValues.effective_from &&
+                new Date(formValues.effective_from) >
+                  new Date(
+                    new Date().setFullYear(new Date().getFullYear() - 3)
+                  ) && (
+                  <div className="d-flex gap-3 mt-2 mb-3">
+                    <Button
+                      color="primary"
+                      onClick={() => setIsAddPreviousAddressModalOpen(true)}
+                    >
+                      Add Previous Address
+                    </Button>
+                    <Button
+                      color="success"
+                      onClick={() => setIsViewPreviousAddressModalOpen(true)}
+                    >
+                      View Previous Address
+                    </Button>
+                  </div>
+                )}
+            </Col>
+          </Row>
           <Row>
             <Col md={6}>
               <FormGroup>
@@ -2024,6 +2057,19 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
       ) : (
         ""
       )}
+      <AddPreviousAddressModal
+        isOpen={isAddPreviousAddressModalOpen}
+        toggle={() =>
+          setIsAddPreviousAddressModalOpen(!isAddPreviousAddressModalOpen)
+        }
+      />
+      <ViewPreviousAddressModal
+        isOpen={isViewPreviousAddressModalOpen}
+        toggle={() =>
+          setIsViewPreviousAddressModalOpen(!isViewPreviousAddressModalOpen)
+        }
+        applicantAlias={formValues.alias as string}
+      />
     </Container>
   );
 };
