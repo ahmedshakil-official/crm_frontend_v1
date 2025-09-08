@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -22,6 +23,54 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
   isOpen,
   toggle,
 }) => {
+  const [timeAtAddress, setTimeAtAddress] = useState({ years: 0, months: 0 });
+
+  useEffect(() => {
+    const effectiveFromInput = document.getElementById(
+      "pre_effective_from"
+    ) as HTMLInputElement;
+    const effectiveToInput = document.getElementById(
+      "pre_effective_to"
+    ) as HTMLInputElement;
+
+    const calculateTimeAtAddress = () => {
+      const effectiveFrom = effectiveFromInput?.value;
+      const effectiveTo = effectiveToInput?.value;
+
+      if (effectiveFrom && effectiveTo) {
+        const fromDate = new Date(effectiveFrom);
+        const toDate = new Date(effectiveTo);
+
+        if (fromDate <= toDate) {
+          const totalMonths =
+            (toDate.getFullYear() - fromDate.getFullYear()) * 12 +
+            (toDate.getMonth() - fromDate.getMonth());
+
+          const years = Math.floor(totalMonths / 12);
+          const months = totalMonths % 12;
+
+          setTimeAtAddress({ years, months });
+        } else {
+          setTimeAtAddress({ years: 0, months: 0 });
+          alert("Effective From date cannot be later than Effective To date.");
+        }
+      } else {
+        setTimeAtAddress({ years: 0, months: 0 });
+      }
+    };
+
+    effectiveFromInput?.addEventListener("change", calculateTimeAtAddress);
+    effectiveToInput?.addEventListener("change", calculateTimeAtAddress);
+
+    // Trigger calculation on initial render
+    calculateTimeAtAddress();
+
+    return () => {
+      effectiveFromInput?.removeEventListener("change", calculateTimeAtAddress);
+      effectiveToInput?.removeEventListener("change", calculateTimeAtAddress);
+    };
+  }, [timeAtAddress]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
@@ -97,14 +146,14 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
             </Col>
             <Col md="6">
               <FormGroup>
-                <Label for="effective_from">Effective From*</Label>
-                <Input id="effective_from" type="date" required />
+                <Label for="pre_effective_from">Effective From*</Label>
+                <Input id="pre_effective_from" type="date" required />
               </FormGroup>
             </Col>
             <Col md="6">
               <FormGroup>
-                <Label for="effective_to">Effective To*</Label>
-                <Input id="effective_to" type="date" required />
+                <Label for="pre_effective_to">Effective To*</Label>
+                <Input id="pre_effective_to" type="date" required />
               </FormGroup>
             </Col>
             <Col md="6">
@@ -115,7 +164,8 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                     <Input
                       id="time_at_address_years"
                       type="number"
-                      placeholder="0"
+                      value={timeAtAddress.years}
+                      readOnly
                       className="rounded-end-0"
                     />
                     <InputGroupText className="border-start-0 rounded-start-0">
@@ -126,7 +176,8 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                     <Input
                       id="time_at_address_months"
                       type="number"
-                      placeholder="0"
+                      value={timeAtAddress.months}
+                      readOnly
                       className="rounded-end-0"
                     />
                     <InputGroupText className="border-start-0 rounded-start-0">
