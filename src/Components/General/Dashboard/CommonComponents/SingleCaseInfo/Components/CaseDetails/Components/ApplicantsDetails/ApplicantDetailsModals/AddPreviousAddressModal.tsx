@@ -17,11 +17,13 @@ import {
 export interface AddPreviousAddressModalProps {
   isOpen: boolean;
   toggle: () => void;
+  effectiveFromDate: string;
 }
 
 const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
   isOpen,
   toggle,
+  effectiveFromDate,
 }) => {
   const [timeAtAddress, setTimeAtAddress] = useState({ years: 0, months: 0 });
 
@@ -153,7 +155,12 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
             <Col md="6">
               <FormGroup>
                 <Label for="pre_effective_to">Effective To*</Label>
-                <Input id="pre_effective_to" type="date" required />
+                <Input
+                  id="pre_effective_to"
+                  type="date"
+                  value={effectiveFromDate || ""}
+                  required
+                />
               </FormGroup>
             </Col>
             <Col md="6">
