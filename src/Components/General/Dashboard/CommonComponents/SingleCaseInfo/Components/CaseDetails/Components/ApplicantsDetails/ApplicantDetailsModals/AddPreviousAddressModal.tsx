@@ -1,3 +1,4 @@
+import { AddPreviousAddressModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -13,12 +14,6 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-
-export interface AddPreviousAddressModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  effectiveFromDate: string;
-}
 
 const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
   isOpen,

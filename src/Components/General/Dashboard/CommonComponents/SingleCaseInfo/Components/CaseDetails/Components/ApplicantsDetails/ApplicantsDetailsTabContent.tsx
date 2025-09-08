@@ -41,6 +41,8 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
 }) => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
+  const params = useParams();
+  const { casealias } = params;
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [isDependantsModalOpen, setIsDependantsModalOpen] = useState(false);
@@ -56,9 +58,6 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const toggleViewModal = () => {
     setIsDependantsViewModalOpen(!isDependantsViewModalOpen);
   };
-
-  const params = useParams();
-  const { casealias } = params;
 
   // Rtk hooks
   const { data: caseData, isLoading: isCaseFetching } = useGetSingleCaseQuery(
@@ -2069,7 +2068,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
         toggle={() =>
           setIsViewPreviousAddressModalOpen(!isViewPreviousAddressModalOpen)
         }
-        applicantAlias={formValues.alias as string}
+        applicantAlias={formValues.alias}
       />
     </Container>
   );

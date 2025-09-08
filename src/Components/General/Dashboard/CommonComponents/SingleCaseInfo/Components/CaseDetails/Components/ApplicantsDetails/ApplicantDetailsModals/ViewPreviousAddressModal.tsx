@@ -1,22 +1,47 @@
+import { useGetPreviousAddressQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantPreviousAddressApi";
+import {
+  PreviousAddressProps,
+  ViewPreviousAddressModalProps,
+} from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { TbCirclePlus } from "react-icons/tb";
 import { Button, Modal, ModalBody, ModalHeader, Table } from "reactstrap";
+import AddPreviousAddressModal from "./AddPreviousAddressModal";
 
-export interface ViewPreviousAddressModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  applicantAlias?: string;
-}
 const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
   isOpen,
   toggle,
   applicantAlias,
 }) => {
+  const params = useParams();
+  const { casealias } = params;
+  const [isAddPreviousAddressModalOpen, setIsAddPreviousAddressModalOpen] =
+    useState(false);
+
+  // RTK api hooks
+  const { data: previousAddressesData, isLoading } = useGetPreviousAddressQuery(
+    {
+      case_alias: casealias || "",
+      applicantDetails_alias: applicantAlias || "",
+    }
+  );
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered size="xl">
       <ModalHeader toggle={toggle}>
         <h3 className="text-primary">View Previous Address</h3>
       </ModalHeader>
       <ModalBody>
+        <div className="d-flex justify-content-end align-items-center mb-3">
+          <Button
+            color="primary"
+            onClick={() => setIsAddPreviousAddressModalOpen(true)}
+          >
+            <TbCirclePlus size={18} /> Add Previous Address
+          </Button>
+        </div>
         <Table responsive bordered hover>
           <thead>
             <tr>
@@ -35,32 +60,54 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
             </tr>
           </thead>
           <tbody className="small">
-            <tr>
-              <td>12345</td>
-              <td>House 1</td>
-              <td>Street 1</td>
-              <td>City A</td>
-              <td>County B</td>
-              <td>Country C</td>
-              <td>2023-01-01</td>
-              <td>2024-01-01</td>
-              <td>1 Year, 0 Months</td>
-              <td>Owner</td>
-              <td>Example notes</td>
-              <td>
-                <div className="d-flex gap-2">
-                  <Button color="primary" size="sm">
-                    <FaEdit />
-                  </Button>
-                  <Button color="danger" size="sm">
-                    <FaTrash />
-                  </Button>
-                </div>
-              </td>
-            </tr>
+            {isLoading ? (
+              <tr>
+                <td colSpan={12} className="text-center">
+                  Loading...
+                </td>
+              </tr>
+            ) : previousAddressesData && previousAddressesData.length > 0 ? (
+              previousAddressesData.map((addressData: PreviousAddressProps) => (
+                <tr key={addressData.id}>
+                  <td>{addressData.postcode}</td>
+                  <td>{addressData.house_name_or_number}</td>
+                  <td>{addressData.address_line1}</td>
+                  <td>{addressData.city}</td>
+                  <td>{addressData.county}</td>
+                  <td>{addressData.country}</td>
+                  <td>{addressData.pre_effective_from}</td>
+                  <td>{addressData.pre_effective_to}</td>
+                  <td>{addressData.time_at_address}</td>
+                  <td>{addressData.residential_status}</td>
+                  <td>{addressData.notes}</td>
+                  <td>
+                    <div className="d-flex gap-2">
+                      <Button color="primary" size="sm">
+                        <FaEdit />
+                      </Button>
+                      <Button color="danger" size="sm">
+                        <FaTrash />
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={12} className="text-center">
+                  No previous addresses found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </ModalBody>
+      <AddPreviousAddressModal
+        isOpen={isAddPreviousAddressModalOpen}
+        toggle={() =>
+          setIsAddPreviousAddressModalOpen(!isAddPreviousAddressModalOpen)
+        }
+      />
     </Modal>
   );
 };

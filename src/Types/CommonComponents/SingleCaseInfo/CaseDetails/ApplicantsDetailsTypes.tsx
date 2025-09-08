@@ -128,3 +128,31 @@ export interface ApplicantCompanyProps {
   county: string;
   country: string;
 }
+
+// Previous address types
+export interface PreviousAddressProps {
+  id: string;
+  postcode: string;
+  house_name_or_number: string;
+  address_line1: string;
+  city: string;
+  county: string;
+  country: string;
+  pre_effective_from: string;
+  pre_effective_to: string;
+  time_at_address: string;
+  residential_status: string;
+  notes: string;
+}
+
+export interface ViewPreviousAddressModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  applicantAlias?: string;
+}
+
+export interface AddPreviousAddressModalProps {
+  isOpen: boolean;
+  toggle: () => void;
+  effectiveFromDate?: string;
+}
