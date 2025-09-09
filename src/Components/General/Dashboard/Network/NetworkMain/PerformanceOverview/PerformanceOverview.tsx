@@ -1,6 +1,7 @@
 import { CommonDashboardProps } from "@/Types/CommonComponents/CommonDashboard/CommonDashboardType";
 import React from "react";
-import { Card, CardBody, Col, Row } from "reactstrap";
+import { TbFileInvoice } from "react-icons/tb";
+import { Card, CardBody, CardTitle, Col, Row } from "reactstrap";
 
 const PerformanceOverview: React.FC<CommonDashboardProps> = ({
   isLoading,
@@ -44,105 +45,126 @@ const PerformanceOverview: React.FC<CommonDashboardProps> = ({
           <>
             <Col lg>
               <Card className="border-0 shadow">
-                <CardBody>
-                  <div className="d-flex justify-content-between align-items-start mb-2">
-                    <span className="text-muted small fw-bold">
-                      New Mortgage Enquiry
-                    </span>
+                <CardBody className="p-4">
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <CardTitle className="text-muted small fw-bold text-truncate">
+                        New Mortgage Enquiry
+                      </CardTitle>
+                      <h4 className="mb-1 text-dark">
+                        {commonDashboardData?.summary_cards
+                          ?.new_mortgage_enquiry ?? 0}
+                      </h4>
+                    </div>
+                    <div>
+                      <span
+                        className="d-flex justify-content-center align-items-center bg-light-dark rounded-3"
+                        style={{ width: "30px", height: "30px" }}
+                      >
+                        <TbFileInvoice className="fs-6" />
+                      </span>
+                    </div>
                   </div>
-                  <h2 className="mb-0 mt-3">
-                    {commonDashboardData?.summary_cards?.new_mortgage_enquiry ??
-                      0}
-                    {/* Optional: add trend indicator dynamically later */}
-                    <small
-                      className="text-success"
-                      style={{ fontSize: "10px" }}
-                    >
-                      ↑+12%
-                    </small>
-                  </h2>
                 </CardBody>
               </Card>
             </Col>
             <Col lg>
               <Card className="border-0 shadow">
-                <CardBody>
-                  <div className="d-flex justify-content-between align-items-start mb-2">
-                    <span className="text-muted small fw-bold">
-                      Mortgage Cases Submitted
-                    </span>
+                <CardBody className="p-4">
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <CardTitle className="text-muted small fw-bold text-truncate">
+                        Mortgage Cases Submitted
+                      </CardTitle>
+                      <h4 className="mb-1 text-dark">
+                        {commonDashboardData?.summary_cards
+                          ?.mortgage_cases_submitted ?? 0}
+                      </h4>
+                    </div>
+                    <div>
+                      <span
+                        className="d-flex justify-content-center align-items-center bg-light-dark rounded-3"
+                        style={{ width: "30px", height: "30px" }}
+                      >
+                        <TbFileInvoice className="fs-6" />
+                      </span>
+                    </div>
                   </div>
-                  <h2 className="mb-0 mt-3">
-                    {commonDashboardData?.summary_cards
-                      ?.mortgage_cases_submitted ?? 0}
-                    <small
-                      className="text-success"
-                      style={{ fontSize: "10px" }}
-                    >
-                      ↑+8%
-                    </small>
-                  </h2>
                 </CardBody>
               </Card>
             </Col>
             <Col lg>
               <Card className="border-0 shadow">
-                <CardBody>
-                  <div className="d-flex justify-content-between align-items-start mb-2">
-                    <span className="text-muted small fw-bold">
-                      Mortgage Cases Offered
-                    </span>
+                <CardBody className="p-4">
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <CardTitle className="text-muted small fw-bold text-truncate">
+                        Mortgage Cases Offered
+                      </CardTitle>
+                      <h4 className="mb-1 text-dark">
+                        {commonDashboardData?.summary_cards
+                          ?.mortgage_cases_offered ?? 0}
+                      </h4>
+                    </div>
+                    <div>
+                      <span
+                        className="d-flex justify-content-center align-items-center bg-light-dark rounded-3"
+                        style={{ width: "30px", height: "30px" }}
+                      >
+                        <TbFileInvoice className="fs-6" />
+                      </span>
+                    </div>
                   </div>
-                  <h2 className="mb-0 mt-3">
-                    {/* Assuming this field is missing; use 0 or calculate */}
-                    {commonDashboardData?.summary_cards
-                      ?.mortgage_cases_offered ?? 0}
-                    <small className="text-danger" style={{ fontSize: "10px" }}>
-                      ↓-3%
-                    </small>
-                  </h2>
                 </CardBody>
               </Card>
             </Col>
             <Col lg>
               <Card className="border-0 shadow">
-                <CardBody>
-                  <div className="d-flex justify-content-between align-items-start mb-2">
-                    <span className="text-muted small fw-bold">
-                      Mortgage Cases Completed
-                    </span>
+                <CardBody className="p-4">
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <CardTitle className="text-muted small fw-bold text-truncate">
+                        Mortgage Cases Completed
+                      </CardTitle>
+                      <h4 className="mb-1 text-dark">
+                        {commonDashboardData?.summary_cards
+                          ?.mortgage_cases_completed ?? 0}
+                      </h4>
+                    </div>
+                    <div>
+                      <span
+                        className="d-flex justify-content-center align-items-center bg-light-dark rounded-3"
+                        style={{ width: "30px", height: "30px" }}
+                      >
+                        <TbFileInvoice className="fs-6" />
+                      </span>
+                    </div>
                   </div>
-                  <h2 className="mb-0 mt-3">
-                    {commonDashboardData?.summary_cards
-                      ?.mortgage_cases_completed ?? 0}
-                    <small
-                      className="text-success"
-                      style={{ fontSize: "10px" }}
-                    >
-                      ↑+14%
-                    </small>
-                  </h2>
                 </CardBody>
               </Card>
             </Col>
             <Col lg>
               <Card className="border-0 shadow">
-                <CardBody>
-                  <div className="d-flex justify-content-between align-items-start mb-2">
-                    <span className="text-muted small fw-bold">
-                      Insurance Cases Submitted
-                    </span>
+                <CardBody className="p-4">
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <CardTitle className="text-muted small fw-bold text-truncate">
+                        Insurance Cases Submitted
+                      </CardTitle>
+                      <h4 className="mb-1 text-dark">
+                        {commonDashboardData?.summary_cards
+                          ?.insurance_cases_submitted ?? 0}
+                      </h4>
+                    </div>
+                    <div>
+                      <span
+                        className="d-flex justify-content-center align-items-center bg-light-dark rounded-3"
+                        style={{ width: "30px", height: "30px" }}
+                      >
+                        <TbFileInvoice className="fs-6" />
+                      </span>
+                    </div>
                   </div>
-                  <h2 className="mb-0 mt-3">
-                    {commonDashboardData?.summary_cards
-                      ?.insurance_cases_submitted ?? 0}
-                    <small
-                      className="text-success"
-                      style={{ fontSize: "10px" }}
-                    >
-                      ↑+1%
-                    </small>
-                  </h2>
                 </CardBody>
               </Card>
             </Col>

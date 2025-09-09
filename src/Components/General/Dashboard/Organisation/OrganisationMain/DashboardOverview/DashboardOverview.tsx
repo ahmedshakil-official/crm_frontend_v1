@@ -11,8 +11,8 @@ const DashboardOverview: React.FC<CommonDashboardProps> = ({
       {isLoading ? (
         // Skeleton Loaders
         [...Array(3)].map((_, index) => (
-          <Col lg className="mb-2" key={index}>
-            <Card className="border-0 p-2 rounded-2 shadow-sm bg-white">
+          <Col md className="mb-2" key={index}>
+            <Card className="border-0 p-2 rounded-2 shadow">
               <CardBody className="p-2">
                 <div className="d-flex justify-content-between">
                   <div style={{ width: "80%" }}>
@@ -41,8 +41,8 @@ const DashboardOverview: React.FC<CommonDashboardProps> = ({
       ) : (
         // Render actual performance cards
         <>
-          <Col lg>
-            <Card className="border-0 shadow-sm bg-white">
+          <Col md>
+            <Card className="border-0 shadow">
               <CardBody className="p-4">
                 <div className="d-flex justify-content-between">
                   <div>
@@ -52,9 +52,6 @@ const DashboardOverview: React.FC<CommonDashboardProps> = ({
                     <h4 className="mb-1 text-dark">
                       {commonDashboardData?.counters?.total_advisers}
                     </h4>
-                    <p className="text-success small mb-0">
-                      +2 <span style={{ fontSize: "8px" }}>this month</span>
-                    </p>
                   </div>
                   <div>
                     <span
@@ -70,8 +67,8 @@ const DashboardOverview: React.FC<CommonDashboardProps> = ({
           </Col>
 
           {/* Active Clients */}
-          <Col lg>
-            <Card className="border-0 shadow-sm bg-white">
+          <Col md>
+            <Card className="border-0 shadow">
               <CardBody className="p-4">
                 <div className="d-flex justify-content-between">
                   <div>
@@ -81,9 +78,6 @@ const DashboardOverview: React.FC<CommonDashboardProps> = ({
                     <h4 className="mb-1 text-dark">
                       {commonDashboardData?.counters?.total_clients}
                     </h4>
-                    <p className="text-success small mb-0">
-                      +9 <span style={{ fontSize: "8px" }}>this month</span>
-                    </p>
                   </div>
                   <div>
                     <span
@@ -98,8 +92,8 @@ const DashboardOverview: React.FC<CommonDashboardProps> = ({
             </Card>
           </Col>
           {/* Revenue This Month */}
-          <Col lg>
-            <Card className="border-0 shadow-sm bg-white">
+          <Col md>
+            <Card className="border-0 shadow">
               <CardBody className="p-4">
                 <div className="d-flex justify-content-between">
                   <div>
@@ -107,10 +101,6 @@ const DashboardOverview: React.FC<CommonDashboardProps> = ({
                       Revenue This Month
                     </CardTitle>
                     <h4 className="mb-1 text-dark">£67,000</h4>
-                    <p className="text-success small mb-0">
-                      +21.8%{" "}
-                      <span style={{ fontSize: "8px" }}>vs last month</span>
-                    </p>
                   </div>
                   <div>
                     <span
