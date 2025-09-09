@@ -1,4 +1,8 @@
+import { useAddPreviousAddressMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantPreviousAddressApi";
+import { AddPreviousAddressModalProps } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Button,
   Col,
@@ -14,18 +18,33 @@ import {
   Row,
 } from "reactstrap";
 
-export interface AddPreviousAddressModalProps {
-  isOpen: boolean;
-  toggle: () => void;
-  effectiveFromDate: string;
-}
-
 const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
   isOpen,
   toggle,
+  applicantAlias,
   effectiveFromDate,
 }) => {
+  const params = useParams();
+  const { casealias } = params;
   const [timeAtAddress, setTimeAtAddress] = useState({ years: 0, months: 0 });
+  const [formData, setFormData] = useState({
+    postcode: "",
+    house_name_or_number: "",
+    address_line1: "",
+    city: "",
+    county: "",
+    country: "",
+    pre_effective_from: effectiveFromDate,
+    pre_effective_to: "",
+    time_at_address_years: timeAtAddress.years,
+    time_at_address_months: timeAtAddress.months,
+    residential_status: "",
+    notes: "",
+  });
+
+  // RTK Hooks
+  const [addPreviousAddress, { isLoading: isSaving }] =
+    useAddPreviousAddressMutation();
 
   useEffect(() => {
     const effectiveFromInput = document.getElementById(
@@ -73,9 +92,23 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
     };
   }, [timeAtAddress]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
+    try {
+      const res = await addPreviousAddress({
+        case_alias: casealias,
+        applicantDetails_alias: applicantAlias,
+        previousAddressInfo: formData,
+      });
+      if (res.data) {
+        toast.success("Previous address added successfully");
+        toggle();
+      } else {
+        toast.error("Failed to add previous address");
+      }
+    } catch (error) {
+      toast.error("Failed to add previous address");
+    }
   };
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
@@ -231,7 +264,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
             Cancel
           </Button>
           <Button color="primary" type="submit">
-            Save Address
+            {isSaving ? " Saving..." : "Save Address"}
           </Button>
         </ModalFooter>
       </Form>

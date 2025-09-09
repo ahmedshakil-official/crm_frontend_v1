@@ -17,8 +17,22 @@ export const ApplicantPreviousAddressApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["ApplicantsDetails", "PreviousAddress"],
     }),
+    deletePreviousAddress: builder.mutation({
+      query: ({
+        case_alias,
+        applicantDetails_alias,
+        previousAddress_alias,
+      }) => ({
+        url: `/cases/${case_alias}/applicant/details/${applicantDetails_alias}/applicant/address/${previousAddress_alias}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["ApplicantsDetails", "PreviousAddress"],
+    }),
   }),
 });
 
-export const { useGetPreviousAddressQuery, useAddPreviousAddressMutation } =
-  ApplicantPreviousAddressApi;
+export const {
+  useGetPreviousAddressQuery,
+  useAddPreviousAddressMutation,
+  useDeletePreviousAddressMutation,
+} = ApplicantPreviousAddressApi;
