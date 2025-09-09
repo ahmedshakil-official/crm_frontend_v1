@@ -8,7 +8,7 @@ const OrgStaffSingleCaseAlias = () => {
       if (typeof window !== "undefined") {
         const newClient = (
           await import(
-            "@/Components/General/Dashboard/OrganisationStaff/Caseupdates/Cases/[CaseAlias]"
+            "@/Components/General/Dashboard/OrganisationStaff/Caseupdates/[CaseAlias]"
           )
         ).default;
         setClient(() => newClient);
