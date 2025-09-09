@@ -104,8 +104,8 @@ const ActiveCases: React.FC = () => {
         {/* // Skeleton Loading State */}
         {isLoading ? (
           <>
-            {[...Array(5)].map((_, index) => (
-              <Col xl key={index}>
+            {[...Array(4)].map((_, index) => (
+              <Col md key={index}>
                 <Card className="p-2 shadow">
                   <CardBody className="p-2">
                     <div className="d-flex justify-content-between">
@@ -133,7 +133,7 @@ const ActiveCases: React.FC = () => {
           // Actual Content
           <>
             {/* All Cases  */}
-            <Col xl>
+            <Col md>
               <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
@@ -156,7 +156,7 @@ const ActiveCases: React.FC = () => {
               </Card>
             </Col>
             {/* Active Cases  */}
-            <Col xl>
+            <Col md>
               <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
@@ -183,7 +183,7 @@ const ActiveCases: React.FC = () => {
               </Card>
             </Col>
             {/* Pending Cases  */}
-            <Col xl>
+            <Col md>
               <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
@@ -206,7 +206,7 @@ const ActiveCases: React.FC = () => {
               </Card>
             </Col>
             {/* Completed Cases  */}
-            <Col xl>
+            <Col md>
               <Card className="p-2 shadow">
                 <CardBody className="p-2">
                   <div className="d-flex justify-content-between">
@@ -219,29 +219,6 @@ const ActiveCases: React.FC = () => {
                     <div>
                       <span
                         className="d-flex justify-content-center align-items-center bg-light-info rounded-3"
-                        style={{ width: "30px", height: "30px" }}
-                      >
-                        <TbFileDescription className="fs-6" />
-                      </span>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            {/* On Hold Cases  */}
-            <Col xl>
-              <Card className="p-2 shadow">
-                <CardBody className="p-2">
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <CardTitle className="small text-muted">
-                        On Hold Cases
-                      </CardTitle>
-                      <h4 className="mb-1 text-dark">10</h4>
-                    </div>
-                    <div>
-                      <span
-                        className="d-flex justify-content-center align-items-center bg-light-dark rounded-3"
                         style={{ width: "30px", height: "30px" }}
                       >
                         <TbFileDescription className="fs-6" />

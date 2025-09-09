@@ -4,8 +4,8 @@ import AdviserTaskOverview from "./AdviserTaskOverview/AdviserTaskOverview";
 import CaseProgress from "./CaseProgress/CaseProgress";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
 import DocumentsWorkflow from "./DocumentsWorkflow/DocumentsWorkflow";
-import PendingVerifications from "./PendingDocuments/PendingDocuments";
-import Reminders from "./RemindersAndAlerts/RemindersAndAlerts";
+import RecentActivity from "./RecentActivity/RecentActivity";
+import UpcomingTasks from "./UpcommingTasks/UpCommingTasks";
 
 const OrganisationStaffContainer: React.FC = () => {
   return (
@@ -26,10 +26,10 @@ const OrganisationStaffContainer: React.FC = () => {
         {/* 3rd row  */}
         <Row>
           <Col md={6} sm={12}>
-            <PendingVerifications />
+            <RecentActivity />
           </Col>
           <Col md={6} sm={12}>
-            <Reminders />
+            <UpcomingTasks />
           </Col>
         </Row>
         {/* 4th row  */}

@@ -1,77 +1,42 @@
-import React from "react";
-import { Card, CardBody, Badge } from "reactstrap";
 import Link from "next/link";
+import React from "react";
+import { Badge, Card, CardBody } from "reactstrap";
 
 interface ClientData {
   name: string;
-  company: string;
   value: string;
   cases: number;
   lastContact: string;
   nextMeeting: string;
-  priority: "High" | "Medium" | "Low";
-  status: "Active" | "Pending" | "Inactive";
+  status: string;
 }
 
 const MyClients: React.FC = () => {
   const clients: ClientData[] = [
     {
       name: "Sarah Williams",
-      company: "Tech Solutions Ltd",
       value: "£450K",
       cases: 3,
       lastContact: "2 days ago",
       nextMeeting: "Tomorrow 10:00 AM",
-      priority: "High",
-      status: "Active",
+      status: "Enquiry",
     },
     {
       name: "Michael Chen",
-      company: "Global Investments",
       value: "£280K",
       cases: 1,
       lastContact: "1 week ago",
       nextMeeting: "Friday 2:00 PM",
-      priority: "Medium",
-      status: "Pending",
+      status: "Decision In Principle",
     },
   ];
-
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "High":
-        return "danger";
-      case "Medium":
-        return "warning";
-      case "Low":
-        return "info";
-      default:
-        return "secondary";
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Active":
-        return "success";
-      case "Pending":
-        return "warning";
-      case "Inactive":
-        return "secondary";
-      default:
-        return "secondary";
-    }
-  };
 
   return (
     <Card className="border-0 shadow-sm h-100">
       <CardBody className="p-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h4 className="text-xl font-semibold m-0">My Clients</h4>
-          <Link
-            href="#"
-            className="btn btn-primary btn-sm rounded-3 px-3"
-          >
+          <Link href="#" className="btn btn-primary btn-sm rounded-3 px-3">
             View All
           </Link>
         </div>
@@ -85,17 +50,9 @@ const MyClients: React.FC = () => {
               <CardBody className="p-3">
                 <div className="d-flex justify-content-between align-items-start mb-2">
                   <div>
-                    <div className="d-flex align-items-center gap-2">
-                      <h5 className="mb-1">{client.company}</h5>
-                      {/* <div> */}
-                        <Badge color={getPriorityColor(client.priority)}>
-                          {client.priority}
-                        </Badge>
-                      {/* </div> */}
-                    </div>
-                    <p className="text-muted mb-0">{client.name}</p>
+                    <h5 className="mb-1">{client.name}</h5>
                   </div>
-                  <Badge color={getStatusColor(client.status)} >
+                  <Badge color="secondary" className="text-capitalize">
                     {client.status}
                   </Badge>
                 </div>
@@ -126,9 +83,6 @@ const MyClients: React.FC = () => {
                     </button>
                     <button className="btn text-success btn-sm rounded-circle">
                       <i className="fa-solid fa-envelope"></i>
-                    </button>
-                    <button className="btn text-info btn-sm rounded-circle">
-                      <i className="fa-solid fa-eye"></i>
                     </button>
                     <button className="btn text-warning btn-sm rounded-circle">
                       <i className="fa-solid fa-pen"></i>
