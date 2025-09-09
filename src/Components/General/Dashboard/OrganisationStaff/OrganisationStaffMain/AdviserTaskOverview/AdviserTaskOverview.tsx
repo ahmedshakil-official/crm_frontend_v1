@@ -1,9 +1,8 @@
-import React from "react";
-import { Card, CardBody, Row, Col } from "reactstrap";
+import { Card, CardBody, Col, Row } from "reactstrap";
 
 const AdviserTaskOverview = () => {
   return (
-    <Card className="border-0 p-3 rounded-2 shadow-sm bg-white">
+    <Card className="border-0 p-3 rounded-2 shadow-sm bg-white mt-4">
       <h5 className="mb-3">Adviser Task Overview</h5>
       <Row>
         <Col md={3}>
