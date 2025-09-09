@@ -35,7 +35,6 @@ const AddDependantFormModal: React.FC<AddDependantFormModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
     const response = await addDependants({
       case_alias,
       applicantDetails_alias,

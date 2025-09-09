@@ -2061,6 +2061,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
         toggle={() =>
           setIsAddPreviousAddressModalOpen(!isAddPreviousAddressModalOpen)
         }
+        applicantAlias={formValues.alias}
         effectiveFromDate={formValues.effective_from}
       />
       <ViewPreviousAddressModal

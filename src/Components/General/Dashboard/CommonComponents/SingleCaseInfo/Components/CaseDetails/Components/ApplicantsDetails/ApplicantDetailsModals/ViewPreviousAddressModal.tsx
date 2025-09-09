@@ -9,6 +9,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { TbCirclePlus } from "react-icons/tb";
 import { Button, Modal, ModalBody, ModalHeader, Table } from "reactstrap";
 import AddPreviousAddressModal from "./AddPreviousAddressModal";
+import DeletePreviousAddressModal from "./DeletePreviousAddressModal";
 
 const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
   isOpen,
@@ -19,12 +20,16 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
   const { casealias } = params;
   const [isAddPreviousAddressModalOpen, setIsAddPreviousAddressModalOpen] =
     useState(false);
+  const [
+    isDeletePreviousAddressModalOpen,
+    setIsDeletePreviousAddressModalOpen,
+  ] = useState(false);
 
   // RTK api hooks
   const { data: previousAddressesData, isLoading } = useGetPreviousAddressQuery(
     {
-      case_alias: casealias || "",
-      applicantDetails_alias: applicantAlias || "",
+      case_alias: casealias,
+      applicantDetails_alias: applicantAlias,
     }
   );
 
@@ -34,14 +39,16 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
         <h3 className="text-primary">View Previous Address</h3>
       </ModalHeader>
       <ModalBody>
-        <div className="d-flex justify-content-end align-items-center mb-3">
-          <Button
-            color="primary"
-            onClick={() => setIsAddPreviousAddressModalOpen(true)}
-          >
-            <TbCirclePlus size={18} /> Add Previous Address
-          </Button>
-        </div>
+        {previousAddressesData && previousAddressesData.length > 0 && (
+          <div className="d-flex justify-content-end align-items-center mb-3">
+            <Button
+              color="primary"
+              onClick={() => setIsAddPreviousAddressModalOpen(true)}
+            >
+              <TbCirclePlus size={18} /> Add Previous Address
+            </Button>
+          </div>
+        )}
         <Table responsive bordered hover>
           <thead>
             <tr>
@@ -68,7 +75,7 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
               </tr>
             ) : previousAddressesData && previousAddressesData.length > 0 ? (
               previousAddressesData.map((addressData: PreviousAddressProps) => (
-                <tr key={addressData.id}>
+                <tr key={addressData.alias}>
                   <td>{addressData.postcode}</td>
                   <td>{addressData.house_name_or_number}</td>
                   <td>{addressData.address_line1}</td>
@@ -77,15 +84,24 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
                   <td>{addressData.country}</td>
                   <td>{addressData.pre_effective_from}</td>
                   <td>{addressData.pre_effective_to}</td>
-                  <td>{addressData.time_at_address}</td>
+                  <td>
+                    {addressData.time_at_address_years} years,{" "}
+                    {addressData.time_at_address_months} months
+                  </td>
                   <td>{addressData.residential_status}</td>
                   <td>{addressData.notes}</td>
                   <td>
                     <div className="d-flex gap-2">
-                      <Button color="primary" size="sm">
+                      <Button color="primary" size="sm" disabled>
                         <FaEdit />
                       </Button>
-                      <Button color="danger" size="sm">
+                      <Button
+                        color="danger"
+                        size="sm"
+                        onClick={() =>
+                          setIsDeletePreviousAddressModalOpen(true)
+                        }
+                      >
                         <FaTrash />
                       </Button>
                     </div>
@@ -106,6 +122,20 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
         isOpen={isAddPreviousAddressModalOpen}
         toggle={() =>
           setIsAddPreviousAddressModalOpen(!isAddPreviousAddressModalOpen)
+        }
+      />
+      {/* Delete Previous Address Modal */}
+      <DeletePreviousAddressModal
+        isOpen={isDeletePreviousAddressModalOpen}
+        toggle={() =>
+          setIsDeletePreviousAddressModalOpen(!isDeletePreviousAddressModalOpen)
+        }
+        casealias={casealias[0]}
+        applicantDetails_alias={applicantAlias || ""}
+        previousAddress_alias={
+          previousAddressesData && previousAddressesData.length > 0
+            ? previousAddressesData[0].alias
+            : ""
         }
       />
     </Modal>

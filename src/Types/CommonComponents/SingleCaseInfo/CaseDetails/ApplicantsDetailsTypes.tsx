@@ -131,7 +131,7 @@ export interface ApplicantCompanyProps {
 
 // Previous address types
 export interface PreviousAddressProps {
-  id: string;
+  alias: string;
   postcode: string;
   house_name_or_number: string;
   address_line1: string;
@@ -140,9 +140,11 @@ export interface PreviousAddressProps {
   country: string;
   pre_effective_from: string;
   pre_effective_to: string;
-  time_at_address: string;
+  time_at_address_years: string;
+  time_at_address_months: string;
   residential_status: string;
   notes: string;
+  complete_previous_address?: boolean;
 }
 
 export interface ViewPreviousAddressModalProps {
@@ -154,5 +156,7 @@ export interface ViewPreviousAddressModalProps {
 export interface AddPreviousAddressModalProps {
   isOpen: boolean;
   toggle: () => void;
+  case_alias?: string;
+  applicantAlias?: string;
   effectiveFromDate?: string;
 }
