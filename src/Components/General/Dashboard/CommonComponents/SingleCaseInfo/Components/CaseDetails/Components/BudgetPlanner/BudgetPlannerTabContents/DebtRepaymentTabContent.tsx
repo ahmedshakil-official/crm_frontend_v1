@@ -319,7 +319,6 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
       );
     if (!isNaN(currentTotal)) {
       updateField("current_sub_total", {
-        ...(budgetPlannerData?.current_sub_total || {}),
         total_debt_repayment: Number(currentTotal.toFixed(2)),
       });
     }
@@ -352,7 +351,6 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
       );
     if (!isNaN(postTotal)) {
       updateField("post_sub_total", {
-        ...(budgetPlannerData?.post_sub_total || {}),
         total_debt_repayment: Number(postTotal.toFixed(2)),
       });
     }

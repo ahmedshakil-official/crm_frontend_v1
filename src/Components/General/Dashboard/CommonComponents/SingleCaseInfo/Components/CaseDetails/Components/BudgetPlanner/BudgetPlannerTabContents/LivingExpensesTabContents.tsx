@@ -287,7 +287,6 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
       );
     if (!isNaN(currentTotal)) {
       updateField("current_sub_total", {
-        ...(budgetPlannerData?.current_sub_total || {}),
         total_living_expenses: Number(currentTotal.toFixed(2)),
       });
     }
@@ -313,7 +312,6 @@ const LivingExpensesTabContents: FC<LivingExpensesTabContentsProps> = ({
       );
     if (!isNaN(postTotal)) {
       updateField("post_sub_total", {
-        ...(budgetPlannerData?.post_sub_total || {}),
         total_living_expenses: Number(postTotal.toFixed(2)),
       });
     }

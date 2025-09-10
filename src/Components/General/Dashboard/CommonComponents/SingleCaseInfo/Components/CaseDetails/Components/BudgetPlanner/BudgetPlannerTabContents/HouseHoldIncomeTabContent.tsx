@@ -136,8 +136,8 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
 
     updateField("current_income", formattedCurrentValues);
     // Keep sub_total in sync (merge-safe)
+    // Only update the field we own to avoid overwriting other sub-totals
     updateField("current_sub_total", {
-      ...(budgetPlannerData?.current_sub_total || {}),
       total_income: formattedCurrentValues.total_income || 0,
     });
   }, [currentValues, updateField]);
@@ -161,8 +161,8 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
 
     updateField("post_income", formattedPostValues);
     // Keep sub_total in sync (merge-safe)
+    // Only update the field we own to avoid overwriting other sub-totals
     updateField("post_sub_total", {
-      ...(budgetPlannerData?.post_sub_total || {}),
       total_income: formattedPostValues.total_income || 0,
     });
   }, [postValues, updateField]);
