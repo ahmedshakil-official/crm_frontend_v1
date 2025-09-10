@@ -78,11 +78,8 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
 
     if (Math.abs(Number(prev) - computed) > 0.01) {
       // Only update if difference > 1 cent
-      const formattedCurrentValues = {
-        ...(budgetPlannerData?.current_sub_total || {}),
-        available_income: computed,
-      } as Record<string, number>;
-      updateField("current_sub_total", formattedCurrentValues);
+      // Only update our own key to avoid clobbering other sub-total fields
+      updateField("current_sub_total", { available_income: computed });
     }
   }, [
     currentValues,
@@ -109,11 +106,8 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
 
     if (Math.abs(Number(prev) - computed) > 0.01) {
       // Only update if difference > 1 cent
-      const formattedPostValues = {
-        ...(budgetPlannerData?.post_sub_total || {}),
-        available_income: computed,
-      } as Record<string, number>;
-      updateField("post_sub_total", formattedPostValues);
+      // Only update our own key to avoid clobbering other sub-total fields
+      updateField("post_sub_total", { available_income: computed });
     }
   }, [
     postValues,
