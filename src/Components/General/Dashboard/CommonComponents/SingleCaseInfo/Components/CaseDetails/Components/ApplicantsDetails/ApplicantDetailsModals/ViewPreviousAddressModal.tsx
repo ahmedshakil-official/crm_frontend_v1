@@ -68,7 +68,7 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
               <th>Time at Address</th>
               <th>Residential Status</th>
               <th>Notes</th>
-              <th>Actions</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody className="small">

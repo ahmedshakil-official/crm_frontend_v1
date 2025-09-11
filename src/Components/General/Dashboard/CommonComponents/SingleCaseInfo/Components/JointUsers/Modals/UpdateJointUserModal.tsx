@@ -37,6 +37,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     relationship: "",
     notes: "",
   });
+  console.log("formData", formData);
 
   // Populate formData when user changes
   useEffect(() => {
@@ -86,6 +87,7 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
     if (res.data) {
       toast.success("User updated successfully!");
       toggle();
+      console.log("Update successful:", res.data);
     } else if ("error" in res) {
       const errorMessage =
         (res.error as any)?.data?.joint_user?.email?.[0] ||
