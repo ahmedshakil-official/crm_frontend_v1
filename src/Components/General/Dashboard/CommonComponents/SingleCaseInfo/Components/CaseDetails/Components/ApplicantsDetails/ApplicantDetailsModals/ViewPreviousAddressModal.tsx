@@ -30,6 +30,10 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
     {
       case_alias: casealias,
       applicantDetails_alias: applicantAlias,
+    },
+    {
+      skip: !isOpen || !casealias || !applicantAlias,
+      refetchOnMountOrArgChange: true,
     }
   );
 
