@@ -53,10 +53,20 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
     "Other Benefits": "other_benefits",
   };
 
+  // Prevent typing negative/exponential signs and sanitize negatives
+  const blockInvalidChar = (e: any) => {
+    if (["e", "E", "+", "-"].includes(e.key)) e.preventDefault();
+  };
+  const sanitizeNumberInput = (v: string) => {
+    if (v === "") return "";
+    const n = parseFloat(v);
+    return isNaN(n) || n < 0 ? "0" : v;
+  };
+
   // Force a refetch when component mounts or casealias changes
   useEffect(() => {
     if (casealias && refetch) {
-      console.log("Forcing API refetch for household income, case:", casealias);
+      // console.log("Forcing API refetch for household income, case:", casealias);
       refetch();
     }
   }, [casealias, refetch]);
@@ -64,11 +74,11 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
   // Initialize local state with direct API data
   useEffect(() => {
     if (!budgetPlannerData?.current_income || !budgetPlannerData?.post_income) {
-      console.log("❌ No income data available for initialization");
+      // console.log("❌ No income data available for initialization");
       return;
     }
 
-    console.log("🔄 Initializing household income state with API data...");
+    // console.log("🔄 Initializing household income state with API data...");
 
     const initialCurrentValues: Record<string, string> = {};
     const initialPostValues: Record<string, string> = {};
@@ -82,12 +92,12 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
       initialCurrentValues[`CurrentBudgetPlanner.${field}`] =
         value !== 0 ? String(value) : "";
 
-      console.log(
-        `Current ${field} (${key}):`,
-        value,
-        "->",
-        initialCurrentValues[`CurrentBudgetPlanner.${field}`]
-      );
+      // console.log(
+      //   `Current ${field} (${key}):`,
+      //   value,
+      //   "->",
+      //   initialCurrentValues[`CurrentBudgetPlanner.${field}`]
+      // );
     });
 
     // Post Income - Read from API data
@@ -107,14 +117,14 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
       );
     });
 
-    console.log("📝 Setting household income state...");
-    console.log("Initial current values:", initialCurrentValues);
-    console.log("Initial post values:", initialPostValues);
+    // console.log("📝 Setting household income state...");
+    // console.log("Initial current values:", initialCurrentValues);
+    // console.log("Initial post values:", initialPostValues);
 
     setCurrentValues(initialCurrentValues);
     setPostValues(initialPostValues);
 
-    console.log("✅ Household income state setting completed");
+    // console.log("✅ Household income state setting completed");
   }, [budgetPlannerData]);
 
   // Update parent modal with current values
@@ -190,16 +200,20 @@ const HouseHoldIncomeTabContent: FC<HouseHoldIncomeTabContentProps> = ({
                   className={`numeric-decimal ${className}`}
                   placeholder="0.00"
                   step="0.01"
+                  min={0}
+                  inputMode="decimal"
+                  onKeyDown={blockInvalidChar}
                   value={
                     prefix === "CurrentBudgetPlanner"
                       ? currentValues[fieldName] || ""
                       : postValues[fieldName] || ""
                   }
                   onChange={(e) => {
+                    const safe = sanitizeNumberInput(e.target.value);
                     const newValues =
                       prefix === "CurrentBudgetPlanner"
-                        ? { ...currentValues, [fieldName]: e.target.value }
-                        : { ...postValues, [fieldName]: e.target.value };
+                        ? { ...currentValues, [fieldName]: safe }
+                        : { ...postValues, [fieldName]: safe };
                     prefix === "CurrentBudgetPlanner"
                       ? setCurrentValues(newValues)
                       : setPostValues(newValues);

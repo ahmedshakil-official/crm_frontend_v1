@@ -204,6 +204,7 @@ const MonthlyBudgetTabContents: FC<MonthlyBudgetTabContentsProps> = ({
                         : `Post_${field.inputId}`
                     }
                     className="subtotal form-control fw-bold"
+                    readOnly
                     value={
                       prefix === "CurrentBudgetPlanner"
                         ? currentValues[`${prefix}.${field.id}`] ||

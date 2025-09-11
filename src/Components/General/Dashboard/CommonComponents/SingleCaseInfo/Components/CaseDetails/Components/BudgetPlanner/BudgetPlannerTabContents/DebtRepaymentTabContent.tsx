@@ -70,6 +70,16 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
     "Other Borrowing - Monthly": "other_borrowing",
   };
 
+  // Enforce positive numeric input
+  const blockInvalidChar = (e: any) => {
+    if (["e", "E", "+", "-"].includes(e.key)) e.preventDefault();
+  };
+  const sanitizeNumberInput = (v: string) => {
+    if (v === "") return "";
+    const n = parseFloat(v);
+    return isNaN(n) || n < 0 ? "0" : v;
+  };
+
   // Force a refetch when component mounts or casealias changes
   useEffect(() => {
     if (casealias && refetch) {
@@ -384,16 +394,20 @@ const DebtRepaymentTabContent: FC<DebtRepaymentTabContentProps> = ({
                   className="numeric-decimal debt-repayment"
                   placeholder="0.00"
                   step="0.01"
+                  min={0}
+                  inputMode="decimal"
+                  onKeyDown={blockInvalidChar}
                   value={
                     prefix === "CurrentBudgetPlanner"
                       ? currentValues[fieldName] || ""
                       : postValues[fieldName] || ""
                   }
                   onChange={(e) => {
+                    const safe = sanitizeNumberInput(e.target.value);
                     const newValues =
                       prefix === "CurrentBudgetPlanner"
-                        ? { ...currentValues, [fieldName]: e.target.value }
-                        : { ...postValues, [fieldName]: e.target.value };
+                        ? { ...currentValues, [fieldName]: safe }
+                        : { ...postValues, [fieldName]: safe };
                     prefix === "CurrentBudgetPlanner"
                       ? setCurrentValues(newValues)
                       : setPostValues(newValues);
