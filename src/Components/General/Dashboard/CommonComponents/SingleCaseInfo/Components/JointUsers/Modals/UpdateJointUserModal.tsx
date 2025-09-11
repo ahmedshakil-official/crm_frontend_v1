@@ -71,7 +71,9 @@ const UpdateJointUserModal: React.FC<UpdateJointUserModalProps> = ({
       userAlias: user.alias,
       updatedJointuserInfo: {
         joint_user: {
+          title: formData.title,
           first_name: formData.first_name,
+          middle_name: formData.middle_name,
           last_name: formData.last_name,
           phone: formData.phone,
 
