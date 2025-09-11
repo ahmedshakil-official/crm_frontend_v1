@@ -1,4 +1,5 @@
 import { useDeletePreviousAddressMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantPreviousAddressApi";
+import { useParams } from "next/navigation";
 import React from "react";
 import { toast } from "react-toastify";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
@@ -6,7 +7,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 export interface DeletePreviousAddressModalProps {
   isOpen: boolean;
   toggle: () => void;
-  casealias: string;
+  // casealias: string;
   applicantDetails_alias: string;
   previousAddress_alias: string;
 }
@@ -14,24 +15,30 @@ export interface DeletePreviousAddressModalProps {
 const DeletePreviousAddressModal: React.FC<DeletePreviousAddressModalProps> = ({
   isOpen,
   toggle,
-  casealias,
+  // casealias,
   applicantDetails_alias,
   previousAddress_alias,
 }) => {
+  const params = useParams();
+  const { casealias } = params;
   const [deletePreviousAddress, { isLoading: isDeleting }] =
     useDeletePreviousAddressMutation();
 
   const handleDelete = async () => {
     try {
-      await deletePreviousAddress({
-        casealias: casealias,
+      const res = await deletePreviousAddress({
+        case_alias: casealias,
         applicantDetails_alias: applicantDetails_alias,
         previousAddress_alias: previousAddress_alias,
       });
-      toast.success("Previous address deleted successfully");
+      if (res) {
+        toggle();
+        toast.success("Previous address deleted successfully");
+      } else {
+        toast.error("Failed to delete previous address!!");
+      }
     } catch (error) {
-      console.error("Failed to delete previous address:", error);
-      toast.error("Failed to delete previous address");
+      toast.error("Failed to delete previous address!");
     }
   };
 

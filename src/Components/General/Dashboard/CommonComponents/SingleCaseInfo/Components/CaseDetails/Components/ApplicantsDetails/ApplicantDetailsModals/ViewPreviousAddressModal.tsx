@@ -5,7 +5,7 @@ import {
 } from "@/Types/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetailsTypes";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { TbCirclePlus } from "react-icons/tb";
 import { Button, Modal, ModalBody, ModalHeader, Table } from "reactstrap";
 import AddPreviousAddressModal from "./AddPreviousAddressModal";
@@ -24,12 +24,17 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
     isDeletePreviousAddressModalOpen,
     setIsDeletePreviousAddressModalOpen,
   ] = useState(false);
+  const [selectedAddressAlias, setSelectedAddressAlias] = useState<string>("");
 
   // RTK api hooks
   const { data: previousAddressesData, isLoading } = useGetPreviousAddressQuery(
     {
       case_alias: casealias,
       applicantDetails_alias: applicantAlias,
+    },
+    {
+      skip: !isOpen || !casealias || !applicantAlias,
+      refetchOnMountOrArgChange: true,
     }
   );
 
@@ -63,7 +68,7 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
               <th>Time at Address</th>
               <th>Residential Status</th>
               <th>Notes</th>
-              <th>Actions</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody className="small">
@@ -88,19 +93,26 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
                     {addressData.time_at_address_years} years,{" "}
                     {addressData.time_at_address_months} months
                   </td>
-                  <td>{addressData.residential_status}</td>
+                  <td>
+                    {addressData.residential_status
+                      ?.split("_")
+                      .map(
+                        (word) =>
+                          word.charAt(0).toUpperCase() +
+                          word.slice(1).toLowerCase()
+                      )
+                      .join(" ")}
+                  </td>
                   <td>{addressData.notes}</td>
                   <td>
-                    <div className="d-flex gap-2">
-                      <Button color="primary" size="sm" disabled>
-                        <FaEdit />
-                      </Button>
+                    <div className="d-flex justify-content-center">
                       <Button
                         color="danger"
                         size="sm"
-                        onClick={() =>
-                          setIsDeletePreviousAddressModalOpen(true)
-                        }
+                        onClick={() => {
+                          setSelectedAddressAlias(addressData.alias);
+                          setIsDeletePreviousAddressModalOpen(true);
+                        }}
                       >
                         <FaTrash />
                       </Button>
@@ -130,13 +142,9 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
         toggle={() =>
           setIsDeletePreviousAddressModalOpen(!isDeletePreviousAddressModalOpen)
         }
-        casealias={casealias[0]}
+        // casealias={casealias || ""}
         applicantDetails_alias={applicantAlias || ""}
-        previousAddress_alias={
-          previousAddressesData && previousAddressesData.length > 0
-            ? previousAddressesData[0].alias
-            : ""
-        }
+        previousAddress_alias={selectedAddressAlias}
       />
     </Modal>
   );

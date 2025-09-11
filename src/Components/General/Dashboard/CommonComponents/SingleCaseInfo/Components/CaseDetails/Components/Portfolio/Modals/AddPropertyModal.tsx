@@ -391,7 +391,7 @@ const AddPropertyModal: React.FC<AddPortfolioContentModalProps> = ({
             <Col md={4}>
               <FormGroup>
                 <Label for="toBeRepaid">To Be Repaid</Label>
-                <Input id="toBeRepaid" name="toBeRepaid" type="text" />
+                <Input id="toBeRepaid" name="toBeRepaid" type="number" />
               </FormGroup>
             </Col>
           </Row>

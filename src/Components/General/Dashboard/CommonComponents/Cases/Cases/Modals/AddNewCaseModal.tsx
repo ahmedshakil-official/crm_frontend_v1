@@ -235,7 +235,6 @@ const AddNewCaseModal: React.FC<AddNewCaseModalProps> = ({
               type="select"
               value={formData.assigned_to}
               onChange={handleChange}
-              disabled={!!leadId}
             >
               <option value="">Select...</option>
               {advisers.length > 0 ? (

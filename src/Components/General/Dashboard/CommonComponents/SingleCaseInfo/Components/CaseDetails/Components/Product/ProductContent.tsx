@@ -27,7 +27,7 @@ const ProductContent: React.FC = () => {
     initial_rate_type: "",
     initial_rate_period_type: "",
     initial_rate_period: 0.0,
-    initial_rate_date_period: "",
+    initial_rate_date_period: null,
     reversion_rate: "",
     max_ltv: "",
     annual_percentage_rate: "",
@@ -108,10 +108,18 @@ const ProductContent: React.FC = () => {
     e.preventDefault();
     try {
       if (productDetails && productDetails[0]) {
+        // Clean up the form data before sending
+        const cleanedFormData = { ...formData };
+
+        // Ensure date fields are properly formatted or null
+        if (cleanedFormData.initial_rate_date_period === "") {
+          cleanedFormData.initial_rate_date_period = null;
+        }
+
         const response = await updateProductDetails({
           case_alias: casealias,
           product_alias: productDetails[0].alias,
-          productUpdatePayload: formData,
+          productUpdatePayload: cleanedFormData,
         });
 
         if (response.data) {
@@ -139,9 +147,16 @@ const ProductContent: React.FC = () => {
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
+    let processedValue = type === "checkbox" ? checked : value;
+
+    // Handle date fields - ensure empty dates are null instead of empty string
+    if (type === "date" && value === "") {
+      processedValue = "";
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: processedValue,
     }));
   };
   const currentTab: string | null = useAppSelector(
