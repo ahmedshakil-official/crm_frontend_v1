@@ -29,8 +29,8 @@ export interface EmploymentDetailsProps {
   employer_country: string | null;
   employment_commenced: string | null;
   employment_ended: string | null;
-  gross_annual_income: number | null;
-  net_annual_income: number | null;
+  gross_monthly_income: number | null;
+  net_monthly_income: number | null;
   is_probationary_period: boolean;
   is_income_in_foreign_currency: boolean;
   further_details: number | null;
@@ -62,7 +62,7 @@ export interface EmploymentDetailsProps {
   dividends: number | null;
   turnover: number | null;
   income_source: string | null;
-  other_income: string | null;
+  other_income: number | null;
   other_income_source: string | null;
   other: string | null;
   other_income_start_date: string | null;
