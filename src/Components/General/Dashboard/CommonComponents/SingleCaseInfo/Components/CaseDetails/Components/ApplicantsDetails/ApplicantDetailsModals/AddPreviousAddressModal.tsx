@@ -27,20 +27,20 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
   const params = useParams();
   const { casealias } = params;
   const [timeAtAddress, setTimeAtAddress] = useState({ years: 0, months: 0 });
-  const [formData, setFormData] = useState({
-    postcode: "",
-    house_name_or_number: "",
-    address_line1: "",
-    city: "",
-    county: "",
-    country: "",
-    pre_effective_from: "",
-    pre_effective_to: effectiveFromDate || "",
-    time_at_address_years: timeAtAddress.years,
-    time_at_address_months: timeAtAddress.months,
-    residential_status: "",
-    notes: "",
-  });
+  // const [formData, setFormData] = useState({
+  //   postcode: "",
+  //   house_name_or_number: "",
+  //   address_line1: "",
+  //   city: "",
+  //   county: "",
+  //   country: "",
+  //   pre_effective_from: "",
+  //   pre_effective_to: effectiveFromDate || "",
+  //   time_at_address_years: timeAtAddress.years,
+  //   time_at_address_months: timeAtAddress.months,
+  //   residential_status: "",
+  //   notes: "",
+  // });
 
   // RTK Hooks
   const [addPreviousAddress, { isLoading: isSaving }] =
@@ -73,7 +73,9 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
           setTimeAtAddress({ years, months });
         } else {
           setTimeAtAddress({ years: 0, months: 0 });
-          alert("Effective From date cannot be later than Effective To date.");
+          toast.error(
+            "Effective From date cannot be later than Effective To date."
+          );
         }
       } else {
         setTimeAtAddress({ years: 0, months: 0 });
@@ -94,11 +96,33 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Get form data from the form elements
+    const form = e.target as HTMLFormElement;
+    const formDataFromForm = new FormData(form);
+
+    const previousAddressInfo = {
+      postcode: formDataFromForm.get("postcode") as string,
+      house_name_or_number: formDataFromForm.get(
+        "house_name_or_number"
+      ) as string,
+      address_line1: formDataFromForm.get("address_line1") as string,
+      city: formDataFromForm.get("city") as string,
+      county: formDataFromForm.get("county") as string,
+      country: formDataFromForm.get("country") as string,
+      pre_effective_from: formDataFromForm.get("pre_effective_from") as string,
+      pre_effective_to: formDataFromForm.get("pre_effective_to") as string,
+      time_at_address_years: timeAtAddress.years,
+      time_at_address_months: timeAtAddress.months,
+      residential_status: formDataFromForm.get("residential_status") as string,
+      notes: formDataFromForm.get("notes") as string,
+    };
+
     try {
       const res = await addPreviousAddress({
         case_alias: casealias,
         applicantDetails_alias: applicantAlias,
-        previousAddressInfo: formData,
+        previousAddressInfo,
       });
       if (res.data) {
         toast.success("Previous address added successfully");
@@ -123,6 +147,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                 <Label for="postcode">Postcode*</Label>
                 <Input
                   id="postcode"
+                  name="postcode"
                   type="text"
                   placeholder="Enter postcode"
                   required
@@ -134,6 +159,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                 <Label for="house_name_or_number">House Name or Number*</Label>
                 <Input
                   id="house_name_or_number"
+                  name="house_name_or_number"
                   type="text"
                   placeholder="Enter house name or number"
                   required
@@ -145,6 +171,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                 <Label for="address_line1">Address Line 1*</Label>
                 <Input
                   id="address_line1"
+                  name="address_line1"
                   type="text"
                   placeholder="Enter address line 1"
                   required
@@ -156,6 +183,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                 <Label for="city">City*</Label>
                 <Input
                   id="city"
+                  name="city"
                   type="text"
                   placeholder="Enter city"
                   required
@@ -165,7 +193,12 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
             <Col md="6">
               <FormGroup>
                 <Label for="county">County</Label>
-                <Input id="county" type="text" placeholder="Enter county" />
+                <Input
+                  id="county"
+                  name="county"
+                  type="text"
+                  placeholder="Enter county"
+                />
               </FormGroup>
             </Col>
             <Col md="6">
@@ -173,6 +206,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                 <Label for="country">Country*</Label>
                 <Input
                   id="country"
+                  name="country"
                   type="text"
                   placeholder="Enter country"
                   required
@@ -182,7 +216,12 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
             <Col md="6">
               <FormGroup>
                 <Label for="pre_effective_from">Effective From*</Label>
-                <Input id="pre_effective_from" type="date" required />
+                <Input
+                  id="pre_effective_from"
+                  name="pre_effective_from"
+                  type="date"
+                  required
+                />
               </FormGroup>
             </Col>
             <Col md="6">
@@ -190,6 +229,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                 <Label for="pre_effective_to">Effective To*</Label>
                 <Input
                   id="pre_effective_to"
+                  name="pre_effective_to"
                   type="date"
                   value={effectiveFromDate || ""}
                   required
@@ -230,7 +270,12 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
             <Col md="6">
               <FormGroup>
                 <Label for="residential_status">Residential Status*</Label>
-                <Input id="residential_status" type="select" required>
+                <Input
+                  id="residential_status"
+                  name="residential_status"
+                  type="select"
+                  required
+                >
                   <option value="">Select...</option>
                   <option value="OWNER">Owner</option>
                   <option value="RENTING_PRIVATE">Renting - Private</option>
@@ -252,6 +297,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                 <Label for="notes">Notes</Label>
                 <Input
                   id="notes"
+                  name="notes"
                   type="textarea"
                   placeholder="Enter any additional notes"
                 />
