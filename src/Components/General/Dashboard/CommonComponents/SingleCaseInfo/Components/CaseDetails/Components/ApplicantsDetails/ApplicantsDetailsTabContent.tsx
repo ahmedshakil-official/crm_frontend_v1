@@ -1,6 +1,7 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useGetSingleCaseQuery } from "@/Redux/Reducers/CommonComponents/Cases/CasesApi";
+import { useGetPreviousAddressQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantPreviousAddressApi";
 import { useUpdateApplicantDetailsMutation } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantsDetailsApi";
 import { basicTabIndicator } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/CaseDetailsTabIndicatorSlice";
 import {
@@ -67,6 +68,7 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
   const [updateApplicantDetails, { isLoading: isUpdatingApplicant }] =
     useUpdateApplicantDetailsMutation();
   const { data } = useGetCaseLoanDetailsQuery(casealias);
+
   // Ensure data exists and has elements before accessing [0]
   const loandetailsAlias =
     Array.isArray(data) && data.length > 0 ? data[0].alias : null;
@@ -167,6 +169,19 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
     new_address_effective_from: null,
     updated_by: "",
   });
+
+  // RTK previous address api hooks
+  const { data: previousAddressesData, isLoading: isPreviousAddressesLoading } =
+    useGetPreviousAddressQuery(
+      {
+        case_alias: casealias,
+        applicantDetails_alias: formValues.alias,
+      },
+      {
+        skip: !casealias || !formValues.alias,
+        refetchOnMountOrArgChange: true,
+      }
+    );
 
   const selectedApplicant = applicantsData?.find(
     (applicant) => applicant.alias === basicTab
@@ -1046,19 +1061,26 @@ const ApplicantsDetailsTabContent: React.FC<ApplicantsUsersProps> = ({
                   new Date(
                     new Date().setFullYear(new Date().getFullYear() - 3)
                   ) && (
-                  <div className="d-flex gap-3 mt-2 mb-3">
-                    <Button
-                      color="primary"
-                      onClick={() => setIsAddPreviousAddressModalOpen(true)}
-                    >
-                      Add Previous Address
-                    </Button>
-                    <Button
-                      color="success"
-                      onClick={() => setIsViewPreviousAddressModalOpen(true)}
-                    >
-                      View Previous Address
-                    </Button>
+                  <div className="mb-3">
+                    <div className="d-flex gap-3 mt-2 mb-2">
+                      <Button
+                        color="primary"
+                        onClick={() => setIsAddPreviousAddressModalOpen(true)}
+                        disabled={previousAddressesData?.length > 0}
+                      >
+                        Add Previous Address
+                      </Button>
+                      <Button
+                        color="success"
+                        onClick={() => setIsViewPreviousAddressModalOpen(true)}
+                      >
+                        View Previous Address
+                      </Button>
+                    </div>
+                    <small className="text-danger">
+                      Note: If you add a new address, the previous address
+                      button will be disabled.
+                    </small>
                   </div>
                 )}
             </Col>

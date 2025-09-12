@@ -1,3 +1,4 @@
+import LoadingSpinner from "@/app/loading";
 import { useGetPreviousAddressQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantPreviousAddressApi";
 import {
   PreviousAddressProps,
@@ -74,8 +75,8 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
           <tbody className="small">
             {isLoading ? (
               <tr>
-                <td colSpan={12} className="text-center">
-                  Loading...
+                <td colSpan={12} className="text-center p-2">
+                  <LoadingSpinner />
                 </td>
               </tr>
             ) : previousAddressesData && previousAddressesData.length > 0 ? (
