@@ -1,66 +1,69 @@
-'use client';
+"use client";
 
-import React from 'react';
-import dynamic from 'next/dynamic';
-import { Card } from 'reactstrap';
+import dynamic from "next/dynamic";
+import { Card } from "reactstrap";
 
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 const CaseProgress = () => {
   const options = {
     chart: {
-      type: 'bar',
-      height: 200,
+      type: "bar",
+      height: 300,
       toolbar: {
-        show: false
-      }
+        show: false,
+      },
     },
     plotOptions: {
       bar: {
         horizontal: true,
-        barHeight: '40%',
-        borderRadius: 4
-      }
+        barHeight: "40%",
+        borderRadius: 4,
+      },
     },
     dataLabels: {
-      enabled: false
+      enabled: false,
     },
     xaxis: {
-      categories: ['Sarah J.', 'Michael C.', 'Emma W.', 'James W.'],
+      categories: ["Sarah J.", "Michael C.", "Emma W.", "James W."],
       labels: {
         formatter: function (val: number) {
-          return Math.round(val * 100) + '%';
-        }
+          return Math.round(val * 100) + "%";
+        },
       },
       min: 0,
       max: 1,
-      tickAmount: 4
+      tickAmount: 4,
     },
     yaxis: {
       labels: {
         style: {
-          colors: ['#6E6E6E']
-        }
-      }
+          colors: ["#6E6E6E"],
+        },
+      },
     },
-    colors: ['#7366FF'],
+    colors: ["#7366FF"],
     grid: {
-      borderColor: '#f0f0f0',
-      strokeDashArray: 3
+      borderColor: "#f0f0f0",
+      strokeDashArray: 3,
     },
     tooltip: {
       y: {
-        formatter: function(val: number) {
-          return Math.round(val * 100) + '%';
-        }
-      }
-    }
+        formatter: function (val: number) {
+          return Math.round(val * 100) + "%";
+        },
+      },
+    },
   };
 
-  const series = [{
-    name: 'Progress',
-    data: [0.85, 0.65, 0.45, 0.25]
-  }];
+  const series = [
+    {
+      name: "Progress",
+      data: [0.85, 0.65, 0.45, 0.25],
+    },
+  ];
 
   return (
     <Card className="border-0 p-3 shadow-sm bg-white">
@@ -69,7 +72,7 @@ const CaseProgress = () => {
         options={options as any}
         series={series}
         type="bar"
-        height="300px"
+        height="340px"
       />
     </Card>
   );

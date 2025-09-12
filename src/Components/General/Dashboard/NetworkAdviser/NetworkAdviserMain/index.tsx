@@ -6,6 +6,7 @@ import DocumentStatus from "./DocumentStatus/DocumentStatus";
 import MonthlyPerformance from "./MonthlyPerformance/MonthlyPerformance";
 import MyClients from "./MyClients/MyClients";
 import UpcomingTasks from "./UpcommingTasks/UpCommingTasks";
+import OrganisationCards from "./OrganisationCards/OrganisationCards";
 
 const NetworkAdviserContainer: React.FC = () => {
   return (
@@ -36,6 +37,9 @@ const NetworkAdviserContainer: React.FC = () => {
         <Row>
           <Col md={6} sm={12}>
             <DocumentStatus />
+          </Col>
+          <Col md={6} sm={12}>
+            <OrganisationCards />
           </Col>
         </Row>
       </Container>
