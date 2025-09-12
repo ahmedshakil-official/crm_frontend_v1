@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { TbEye } from "react-icons/tb";
-import { Badge, Card, CardBody, Col, Progress, Row, Table } from "reactstrap";
+import { Badge, Card, CardBody, Col, Row, Table } from "reactstrap";
 
 const tableData = [
   {
@@ -14,8 +14,6 @@ const tableData = [
     bridging: 80,
     protection: 5,
     insurance: 5,
-    penetration: 80,
-    change: 12,
   },
   {
     rank: 2,
@@ -28,8 +26,6 @@ const tableData = [
     bridging: 80,
     protection: 5,
     insurance: 5,
-    penetration: 29,
-    change: 4,
   },
   {
     rank: 3,
@@ -42,8 +38,6 @@ const tableData = [
     bridging: 80,
     protection: 5,
     insurance: 5,
-    penetration: 29,
-    change: 13,
   },
   {
     rank: 4,
@@ -56,8 +50,6 @@ const tableData = [
     bridging: 80,
     protection: 5,
     insurance: 5,
-    penetration: 50,
-    change: 4,
   },
   {
     rank: 5,
@@ -70,8 +62,6 @@ const tableData = [
     bridging: 80,
     protection: 5,
     insurance: 5,
-    penetration: 50,
-    change: 20,
   },
   // Add more data as needed
 ];
@@ -119,31 +109,7 @@ const AdviserStatus = () => {
                   </th>
                   <th className="border-0 small text-uppercase">Bridging</th>
                   <th className="border-0 small text-uppercase">Protection</th>
-                  <th className="border-0 small text-uppercase">GI</th>
-                  <th className="border-0 small text-uppercase">
-                    Conversion Rate
-                  </th>
-                  <th className="border-0 small text-uppercase">
-                    <div className="d-flex justify-content-center align-items-center me-1">
-                      <span>CHANGE</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path d="m3 16 4 4 4-4" />
-                        <path d="M7 20V4" />
-                        <path d="m21 8-4-4-4 4" />
-                        <path d="M17 4v16" />
-                      </svg>
-                    </div>
-                  </th>
+                  <th className="border-0 small text-uppercase">General Insurance</th>
                 </tr>
               </thead>
               <tbody className="text-center">
@@ -159,28 +125,6 @@ const AdviserStatus = () => {
                     <td>{data.bridging}</td>
                     <td>{data.protection}</td>
                     <td>{data.insurance}</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <Progress
-                          animated
-                          striped
-                          value={data.penetration}
-                          className="w-50 me-2 opacity-75"
-                          color={data.penetration < 30 ? "danger" : "success"}
-                          style={{ height: "6px" }}
-                        />
-                        <span>{data.penetration}%</span>
-                      </div>
-                    </td>
-                    <td>
-                      <span
-                        className={`text-${
-                          data.change >= 5 ? "success" : "danger"
-                        }`}
-                      >
-                        {data.change >= 5 ? "↑" : "↓"} {Math.abs(data.change)}%
-                      </span>
-                    </td>
                   </tr>
                 ))}
               </tbody>
