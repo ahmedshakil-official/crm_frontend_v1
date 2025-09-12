@@ -76,7 +76,8 @@ const OrganisationCards = () => {
                 >
                   <Card className="bg-white border organisation_card opacity-100  p-3 position-relative">
                     <Link
-                      href={`/dashboard/network/organisations/${item.slug}`}
+                      // href={`/dashboard/network/organisations/${item.slug}`}
+                      href="#"
                       target="_blank"
                       className="text-muted position-absolute top-0 end-0 p-3"
                     >
@@ -100,7 +101,7 @@ const OrganisationCards = () => {
                         <h5 className="mb-1">
                           <Link
                             className="text-black fw-bold text_decoration_hover"
-                            href={`/dashboard/network/organisations/${item.slug}`}
+                            href="#"
                           >
                             {item.name}
                           </Link>
