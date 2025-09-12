@@ -159,4 +159,6 @@ export interface AddPreviousAddressModalProps {
   case_alias?: string;
   applicantAlias?: string;
   effectiveFromDate?: string;
+  lastEffectiveFromDate?: string;
+  applicantDetailsAlias?: string;
 }

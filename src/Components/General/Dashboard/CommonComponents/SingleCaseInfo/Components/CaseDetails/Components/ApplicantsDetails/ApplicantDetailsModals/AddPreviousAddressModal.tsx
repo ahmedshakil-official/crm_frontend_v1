@@ -23,6 +23,8 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
   toggle,
   applicantAlias,
   effectiveFromDate,
+  lastEffectiveFromDate,
+  applicantDetailsAlias,
 }) => {
   const params = useParams();
   const { casealias } = params;
@@ -107,7 +109,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
     try {
       const res = await addPreviousAddress({
         case_alias: casealias,
-        applicantDetails_alias: applicantAlias,
+        applicantDetails_alias: applicantAlias || applicantDetailsAlias,
         previousAddressInfo,
       });
       if (res.data) {
@@ -120,6 +122,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
       toast.error("Failed to add previous address");
     }
   };
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered size="lg">
       <ModalHeader toggle={toggle}>
@@ -214,6 +217,13 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                         )
                           .toISOString()
                           .split("T")[0]
+                      : lastEffectiveFromDate
+                      ? new Date(
+                          new Date(lastEffectiveFromDate).getTime() -
+                            24 * 60 * 60 * 1000
+                        )
+                          .toISOString()
+                          .split("T")[0]
                       : new Date().toISOString().split("T")[0]
                   }
                   required
@@ -228,7 +238,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                   name="pre_effective_to"
                   type="date"
                   readOnly={!!effectiveFromDate}
-                  value={effectiveFromDate || ""}
+                  value={effectiveFromDate || lastEffectiveFromDate || ""}
                   required
                 />
               </FormGroup>

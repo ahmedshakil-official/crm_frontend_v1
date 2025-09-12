@@ -136,6 +136,12 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
         toggle={() =>
           setIsAddPreviousAddressModalOpen(!isAddPreviousAddressModalOpen)
         }
+        lastEffectiveFromDate={
+          previousAddressesData && previousAddressesData.length > 0
+            ? previousAddressesData[0].pre_effective_from
+            : undefined
+        }
+        applicantDetailsAlias={applicantAlias || ""}
       />
       {/* Delete Previous Address Modal */}
       <DeletePreviousAddressModal
@@ -143,7 +149,6 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
         toggle={() =>
           setIsDeletePreviousAddressModalOpen(!isDeletePreviousAddressModalOpen)
         }
-        // casealias={casealias || ""}
         applicantDetails_alias={applicantAlias || ""}
         previousAddress_alias={selectedAddressAlias}
       />
