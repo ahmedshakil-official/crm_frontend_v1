@@ -27,20 +27,6 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
   const params = useParams();
   const { casealias } = params;
   const [timeAtAddress, setTimeAtAddress] = useState({ years: 0, months: 0 });
-  // const [formData, setFormData] = useState({
-  //   postcode: "",
-  //   house_name_or_number: "",
-  //   address_line1: "",
-  //   city: "",
-  //   county: "",
-  //   country: "",
-  //   pre_effective_from: "",
-  //   pre_effective_to: effectiveFromDate || "",
-  //   time_at_address_years: timeAtAddress.years,
-  //   time_at_address_months: timeAtAddress.months,
-  //   residential_status: "",
-  //   notes: "",
-  // });
 
   // RTK Hooks
   const [addPreviousAddress, { isLoading: isSaving }] =
@@ -220,6 +206,16 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                   id="pre_effective_from"
                   name="pre_effective_from"
                   type="date"
+                  max={
+                    effectiveFromDate
+                      ? new Date(
+                          new Date(effectiveFromDate).getTime() -
+                            24 * 60 * 60 * 1000
+                        )
+                          .toISOString()
+                          .split("T")[0]
+                      : new Date().toISOString().split("T")[0]
+                  }
                   required
                 />
               </FormGroup>
@@ -231,6 +227,7 @@ const AddPreviousAddressModal: React.FC<AddPreviousAddressModalProps> = ({
                   id="pre_effective_to"
                   name="pre_effective_to"
                   type="date"
+                  readOnly={!!effectiveFromDate}
                   value={effectiveFromDate || ""}
                   required
                 />
