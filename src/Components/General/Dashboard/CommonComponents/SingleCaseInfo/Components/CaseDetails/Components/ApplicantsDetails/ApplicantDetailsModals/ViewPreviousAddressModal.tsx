@@ -1,3 +1,4 @@
+import LoadingSpinner from "@/app/loading";
 import { useGetPreviousAddressQuery } from "@/Redux/Reducers/CommonComponents/SingleCaseInfo/CaseDetails/ApplicantsDetails/ApplicantPreviousAddressApi";
 import {
   PreviousAddressProps,
@@ -74,8 +75,8 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
           <tbody className="small">
             {isLoading ? (
               <tr>
-                <td colSpan={12} className="text-center">
-                  Loading...
+                <td colSpan={12} className="text-center p-2">
+                  <LoadingSpinner />
                 </td>
               </tr>
             ) : previousAddressesData && previousAddressesData.length > 0 ? (
@@ -135,6 +136,12 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
         toggle={() =>
           setIsAddPreviousAddressModalOpen(!isAddPreviousAddressModalOpen)
         }
+        lastEffectiveFromDate={
+          previousAddressesData && previousAddressesData.length > 0
+            ? previousAddressesData[0].pre_effective_from
+            : undefined
+        }
+        applicantDetailsAlias={applicantAlias || ""}
       />
       {/* Delete Previous Address Modal */}
       <DeletePreviousAddressModal
@@ -142,7 +149,6 @@ const ViewPreviousAddressModal: React.FC<ViewPreviousAddressModalProps> = ({
         toggle={() =>
           setIsDeletePreviousAddressModalOpen(!isDeletePreviousAddressModalOpen)
         }
-        // casealias={casealias || ""}
         applicantDetails_alias={applicantAlias || ""}
         previousAddress_alias={selectedAddressAlias}
       />
