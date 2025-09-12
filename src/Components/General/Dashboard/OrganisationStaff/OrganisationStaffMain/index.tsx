@@ -2,8 +2,8 @@ import { Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "../../CommonComponents/Breadcrumbs/Breadcrumbs";
 import AdviserTaskOverview from "./AdviserTaskOverview/AdviserTaskOverview";
 import CaseProgress from "./CaseProgress/CaseProgress";
+import CaseStatusOverview from "./CaseStatusOverview/CaseStatusOverview";
 import DashboardOverview from "./DashboardOverview/DashboardOverview";
-import DocumentsWorkflow from "./DocumentsWorkflow/DocumentsWorkflow";
 import RecentActivity from "./RecentActivity/RecentActivity";
 import UpcomingTasks from "./UpcommingTasks/UpCommingTasks";
 
@@ -17,7 +17,7 @@ const OrganisationStaffContainer: React.FC = () => {
         {/* 2nd row  */}
         <Row>
           <Col md={6} sm={12}>
-            <DocumentsWorkflow />
+            <CaseStatusOverview />
           </Col>
           <Col md={6} sm={12}>
             <CaseProgress />
