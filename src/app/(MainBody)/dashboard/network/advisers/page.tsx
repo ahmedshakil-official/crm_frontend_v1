@@ -8,7 +8,7 @@ const NetworkAdvisers = () => {
       if (typeof window !== "undefined") {
         const newClient = (
           await import(
-            "@/Components/General/Dashboard/Network/Users/RegisteredAR"
+            "@/Components/General/Dashboard/Network/Users/Advisers"
           )
         ).default;
         setClient(() => newClient);

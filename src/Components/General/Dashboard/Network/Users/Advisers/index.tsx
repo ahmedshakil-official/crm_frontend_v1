@@ -6,10 +6,10 @@ const AdvisersContainer: React.FC = () => {
   return (
     <>
       <Breadcrumbs
-        title="Registered AR Status"
-        subTitle="Welcome to the Registered AR Status"
+        title="Registered Advisers Status"
+        subTitle="Welcome to the Registered Advisers Status"
         parent="Users"
-        child="ARs"
+        child="Advisers"
       />
       <Container fluid>
         <Advisers />
