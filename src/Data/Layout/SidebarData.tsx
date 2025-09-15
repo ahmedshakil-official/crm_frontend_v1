@@ -57,8 +57,8 @@ const NetworkOwnerMenu: MenuItem[] = [
             type: "link",
           },
           {
-            path: "/dashboard/network/registeredar",
-            title: "Registered AR",
+            path: "/dashboard/network/advisers",
+            title: "Registered Advisers",
             type: "link",
           },
           {
