@@ -40,7 +40,6 @@ const MonthlyPerformance: React.FC = () => {
       offsetY: -20,
       style: {
         fontSize: "12px",
-        colors: ["#64748b"],
       },
     },
     stroke: {
@@ -58,7 +57,6 @@ const MonthlyPerformance: React.FC = () => {
       },
       labels: {
         style: {
-          colors: "#64748b",
           fontSize: "12px",
         },
       },
@@ -74,7 +72,6 @@ const MonthlyPerformance: React.FC = () => {
       },
       labels: {
         style: {
-          colors: "#64748b",
           fontSize: "12px",
         },
       },

@@ -249,7 +249,6 @@ const LendersChart: React.FC<CommonDashboardProps> = ({
       position: "right" as const,
       alignment: "center" as const,
       textStyle: {
-        color: "#333",
         fontSize: 12,
       },
     },

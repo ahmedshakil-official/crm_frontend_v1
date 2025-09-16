@@ -53,7 +53,7 @@ const CaseStatusOverview: React.FC = () => {
               show: true,
               fontSize: "14px",
               fontFamily: "inherit",
-              color: "#64748b",
+              // color: "#64748b",
               offsetY: -10,
             },
             value: {
