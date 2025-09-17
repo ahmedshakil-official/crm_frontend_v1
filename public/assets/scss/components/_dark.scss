@@ -1625,6 +1625,100 @@
   div[class*="chart"] svg text {
     fill: var(--body-font-color) !important;
   }
+
+  // ApexCharts dark mode styles
+  .apex-chart {
+    .apexcharts-legend-text {
+      fill: var(--body-font-color) !important;
+    }
+
+    .apexcharts-datalabel {
+      fill: var(--body-font-color) !important;
+    }
+
+    .apexcharts-datalabel-label,
+    .apexcharts-datalabel-value {
+      fill: var(--body-font-color) !important;
+    }
+
+    .apexcharts-pie-label {
+      fill: var(--body-font-color) !important;
+    }
+
+    .apexcharts-text {
+      fill: var(--body-font-color) !important;
+    }
+
+    // Donut chart specific selectors
+    .apexcharts-datalabels-group text {
+      fill: var(--body-font-color) !important;
+    }
+
+    .apexcharts-datalabel-name,
+    .apexcharts-datalabel-value {
+      fill: var(--body-font-color) !important;
+    }
+
+    // Legend selectors
+    .apexcharts-legend {
+      .apexcharts-legend-text {
+        fill: var(--body-font-color) !important;
+        color: var(--body-font-color) !important;
+      }
+    }
+
+    // More specific legend selectors
+    .apexcharts-legend-series {
+      color: var(--body-font-color) !important;
+    }
+
+    .apexcharts-legend-text {
+      fill: var(--body-font-color) !important;
+      color: var(--body-font-color) !important;
+    }
+
+    // Target legend spans specifically
+    .apexcharts-legend span {
+      color: var(--body-font-color) !important;
+    }
+
+    // Generic text selectors
+    text {
+      fill: var(--body-font-color) !important;
+    }
+
+    tspan {
+      fill: var(--body-font-color) !important;
+    }
+
+    // Bar chart specific selectors
+    .apexcharts-xaxis-texts-g,
+    .apexcharts-yaxis-texts-g {
+      text {
+        fill: var(--body-font-color) !important;
+      }
+    }
+
+    .apexcharts-xaxis-title-text,
+    .apexcharts-yaxis-title-text {
+      fill: var(--body-font-color) !important;
+    }
+
+    // Grid lines for dark mode
+    .apexcharts-grid {
+      .apexcharts-gridlines-horizontal line,
+      .apexcharts-gridlines-vertical line {
+        stroke: var(--border-color) !important;
+      }
+    }
+
+    // Data labels
+    .apexcharts-datalabels {
+      text {
+        fill: var(--body-font-color) !important;
+      }
+    }
+  }
   .apexcharts-tooltip.apexcharts-theme-light {
     border: 1px solid var(--border-color);
     background: var(--body-color);

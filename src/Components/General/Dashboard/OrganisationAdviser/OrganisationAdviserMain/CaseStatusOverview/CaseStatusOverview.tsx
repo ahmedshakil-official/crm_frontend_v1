@@ -33,6 +33,10 @@ const CaseStatusOverview: React.FC = () => {
       position: "right",
       fontSize: "14px",
       offsetY: 20,
+      labels: {
+        colors: undefined, // Let CSS handle the colors
+        useSeriesColors: false,
+      },
       markers: {
         width: 8,
         height: 8,
@@ -53,15 +57,15 @@ const CaseStatusOverview: React.FC = () => {
               show: true,
               fontSize: "14px",
               fontFamily: "inherit",
-              // color: "#64748b",
               offsetY: -10,
+              color: undefined, // Let CSS handle the color
             },
             value: {
               show: true,
               fontSize: "24px",
               fontFamily: "inherit",
-              color: "#1e293b",
               offsetY: 10,
+              color: undefined, // Let CSS handle the color
               formatter: function (val: number) {
                 return val + "%";
               },
@@ -69,10 +73,15 @@ const CaseStatusOverview: React.FC = () => {
             total: {
               show: true,
               label: "Total Cases",
-              color: "#64748b",
               fontSize: "14px",
+              color: undefined, // Let CSS handle the color
               formatter: function (w: any) {
-                return w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0) + " Cases";
+                return (
+                  w.globals.seriesTotals.reduce(
+                    (a: number, b: number) => a + b,
+                    0
+                  ) + " Cases"
+                );
               },
             },
           },
@@ -108,12 +117,14 @@ const CaseStatusOverview: React.FC = () => {
   return (
     <Card className="bg-white p-4 shadow-sm">
       <h4 className="mb-3 text-lg font-semibold">Case Status Overview</h4>
-      <Chart
-        options={options as any}
-        series={series}
-        type="donut"
-        height={300}
-      />
+      <div className="apex-chart w-100">
+        <Chart
+          options={options as any}
+          series={series}
+          type="donut"
+          height={300}
+        />
+      </div>
     </Card>
   );
 };
