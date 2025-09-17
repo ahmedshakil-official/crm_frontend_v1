@@ -26,7 +26,7 @@ const CaseStatusOverview: React.FC = () => {
     pieStartAngle: 0, // No rotation
     sliceVisibilityThreshold: 0.01, // Show all slices
     legend: {
-      position: "right",
+      position: "bottom",
       alignment: "center",
       textStyle: {
         color: "#233238",
@@ -51,7 +51,8 @@ const CaseStatusOverview: React.FC = () => {
 
   return (
     <Card className="bg-white p-3 shadow-sm">
-      <h4 className="mb-2 text-md font-semibold">Case Status Overview</h4>{" "}
+      <h4 className="mb-2 text-md font-semibold">Case Status Overview</h4>
+      <div className="google-chart">
       <Chart
         chartType="PieChart"
         data={data}
@@ -59,6 +60,7 @@ const CaseStatusOverview: React.FC = () => {
         width="100%"
         height="370px"
       />
+      </div>
     </Card>
   );
 };

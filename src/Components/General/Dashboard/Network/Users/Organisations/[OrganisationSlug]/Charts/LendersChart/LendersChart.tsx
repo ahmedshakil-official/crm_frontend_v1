@@ -7,7 +7,7 @@ const OrgLendersChart: React.FC<FetchSingleOrganisationProps> = ({
   isLoading,
   singleOrgInfo,
 }) => {
-  console.log("ttt: ",singleOrgInfo?.lender_counts)
+  console.log("ttt: ", singleOrgInfo?.lender_counts);
   const chartData: (string | number)[][] = [["Category", "Value"]];
   let allValuesZero = true;
 
@@ -186,9 +186,9 @@ const OrgLendersChart: React.FC<FetchSingleOrganisationProps> = ({
       VIDA_HOMELOANS ?? 0,
       WEST_BROMWICH_BUILDING_SOCIETY ?? 0,
       WEST_ONE_LOANS ?? 0,
-    ]
+    ];
 
-     allValuesZero = values.every((value) => value === 0);
+    allValuesZero = values.every((value) => value === 0);
 
     // Push all lenders with formatted names
     chartData.push(["Atom Bank", ATOM_BANK ?? 0]);
@@ -341,7 +341,6 @@ const OrgLendersChart: React.FC<FetchSingleOrganisationProps> = ({
       position: "right" as const,
       alignment: "center" as const,
       textStyle: {
-        color: "#333",
         fontSize: 12,
       },
     },

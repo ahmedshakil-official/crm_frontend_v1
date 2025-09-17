@@ -13,6 +13,7 @@ const data = [
 const options = {
   chartArea: { width: "60%" },
   colors: ["#a259ff", "#ff9900"],
+  backgroundColor: "transparent",
   hAxis: {
     title: "Platform",
     minValue: 0,
@@ -29,13 +30,15 @@ const SocialMediaPerformance: React.FC = () => {
       <CardBody>
         <h3>Social Media Performance</h3>
         <p>Engagement, reach, and leads by platform</p>
-        <Chart
-          chartType="ColumnChart"
-          width="100%"
-          height="300px"
-          data={data}
-          options={options}
-        />
+        <div className="google-chart">
+          <Chart
+            chartType="ColumnChart"
+            width="100%"
+            height="300px"
+            data={data}
+            options={options}
+          />
+        </div>
       </CardBody>
     </Card>
   );

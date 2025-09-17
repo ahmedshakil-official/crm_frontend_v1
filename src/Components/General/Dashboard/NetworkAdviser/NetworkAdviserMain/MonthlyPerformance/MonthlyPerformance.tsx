@@ -40,7 +40,7 @@ const MonthlyPerformance: React.FC = () => {
       offsetY: -20,
       style: {
         fontSize: "12px",
-        colors: ["#64748b"],
+        colors: undefined, // Let CSS handle the color
       },
     },
     stroke: {
@@ -58,8 +58,8 @@ const MonthlyPerformance: React.FC = () => {
       },
       labels: {
         style: {
-          colors: "#64748b",
           fontSize: "12px",
+          colors: undefined, // Let CSS handle the color
         },
       },
     },
@@ -67,15 +67,16 @@ const MonthlyPerformance: React.FC = () => {
       title: {
         text: "Performance",
         style: {
-          color: "#64748b",
+          // color: "#64748b",
           fontSize: "13px",
           fontWeight: "500",
+          color: undefined, // Let CSS handle the color
         },
       },
       labels: {
         style: {
-          colors: "#64748b",
           fontSize: "12px",
+          colors: undefined, // Let CSS handle the color
         },
       },
     },
@@ -94,7 +95,7 @@ const MonthlyPerformance: React.FC = () => {
       },
     },
     tooltip: {
-      theme: "light",
+      theme: "light", // Keep as light, CSS will handle dark mode
       y: {
         formatter: function (val: number) {
           return val + " cases";
@@ -109,6 +110,10 @@ const MonthlyPerformance: React.FC = () => {
       position: "top",
       horizontalAlign: "right",
       fontSize: "13px",
+      labels: {
+        colors: undefined, // Let CSS handle the color
+        useSeriesColors: false,
+      },
       markers: {
         width: 10,
         height: 10,
@@ -120,7 +125,7 @@ const MonthlyPerformance: React.FC = () => {
     },
     grid: {
       show: true,
-      borderColor: "#e2e8f0",
+      borderColor: "transparent", // Let CSS handle grid colors
       strokeDashArray: 4,
       padding: {
         top: 20,
@@ -147,12 +152,14 @@ const MonthlyPerformance: React.FC = () => {
       <h4 className="text-lg font-semibold mb-4 text-slate-800">
         Monthly Performance vs Target
       </h4>
-      <Chart
-        options={options as any}
-        series={series}
-        type="bar"
-        height="320px"
-      />
+      <div className="apex-chart w-100">
+        <Chart
+          options={options as any}
+          series={series}
+          type="bar"
+          height="320px"
+        />
+      </div>
     </Card>
   );
 };

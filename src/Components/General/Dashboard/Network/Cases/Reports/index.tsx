@@ -196,7 +196,14 @@ const NetworkReportsContainer: React.FC = () => {
                     <Button
                       color="success"
                       onClick={handleDownloadReport}
-                      disabled={isLoading}
+                      disabled={
+                        isLoading ||
+                        (!filters.date_filter &&
+                          !filters.case_category &&
+                          !filters.applicant_type &&
+                          !filters.case_status &&
+                          !filters.case_stage)
+                      }
                     >
                       {isLoading ? (
                         <>

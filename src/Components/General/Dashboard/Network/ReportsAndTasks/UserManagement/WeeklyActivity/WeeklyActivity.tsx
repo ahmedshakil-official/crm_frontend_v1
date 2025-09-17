@@ -73,7 +73,7 @@ const WeeklyActivity: React.FC = () => {
       <Card>
         <CardBody className="p-4">
           <h3 className="mb-3">Daily Activity Overview</h3>
-          <div>
+          <div className="apex-chart">
             <ReactApexChart
               options={options}
               series={series}

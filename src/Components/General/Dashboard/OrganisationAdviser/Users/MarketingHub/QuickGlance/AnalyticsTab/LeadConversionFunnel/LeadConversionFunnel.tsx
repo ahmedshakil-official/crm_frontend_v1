@@ -13,6 +13,7 @@ const options = {
   isStacked: true,
   chartArea: { width: "70%" },
   colors: ["#c9b037", "#0081a7", "#00afb9", "#a259ff"],
+  backgroundColor: "transparent",
   legend: { position: "top" },
   hAxis: {
     title: "Month",
@@ -30,13 +31,15 @@ const LeadConversionFunnel: React.FC = () => {
       <CardBody>
         <h3>Lead Conversion Funnel</h3>
         <p>Track leads through to mortgage completions</p>
-        <Chart
-          chartType="AreaChart"
-          width="100%"
-          height="300px"
-          data={data}
-          options={options}
-        />
+        <div className="google-chart">
+          <Chart
+            chartType="AreaChart"
+            width="100%"
+            height="300px"
+            data={data}
+            options={options}
+          />
+        </div>
       </CardBody>
     </Card>
   );

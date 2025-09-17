@@ -13,6 +13,7 @@ const data = [
 const options = {
   chartArea: { width: "70%" },
   colors: ["#4285F4", "#34A853", "#FBBC05"],
+  backgroundColor: "transparent",
   curveType: "function",
   legend: { position: "top" },
   hAxis: {
@@ -31,13 +32,15 @@ const WhatsAppCampaignPerformance: React.FC = () => {
       <CardBody>
         <h3>WhatsApp Campaign Performance</h3>
         <p>Message delivery and engagement rates</p>
-        <Chart
-          chartType="LineChart"
-          width="100%"
-          height="300px"
-          data={data}
-          options={options}
-        />
+        <div className="google-chart">
+          <Chart
+            chartType="LineChart"
+            width="100%"
+            height="300px"
+            data={data}
+            options={options}
+          />
+        </div>
       </CardBody>
     </Card>
   );
