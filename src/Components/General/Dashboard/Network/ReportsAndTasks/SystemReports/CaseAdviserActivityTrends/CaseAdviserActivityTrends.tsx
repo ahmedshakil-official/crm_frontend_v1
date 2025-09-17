@@ -18,6 +18,9 @@ const CaseAdviserActivityTrends: React.FC = () => {
     colors: ["#2E93fA", "#66DA26"],
     dataLabels: {
       enabled: true,
+      style: {
+        colors: undefined, // Let CSS handle the color
+      },
       background: {
         enabled: true,
         padding: 4,
@@ -36,12 +39,13 @@ const CaseAdviserActivityTrends: React.FC = () => {
       style: {
         fontSize: "18px",
         fontWeight: "700",
+        color: undefined, // Let CSS handle the color
       },
     },
     grid: {
-      borderColor: "#e7e7e7",
+      borderColor: "#e2e8f0", // Keep visible grid for both themes
       row: {
-        colors: ["#f3f3f3", "transparent"],
+        colors: ["#f9fafb", "transparent"], // Light alternating rows for better readability
         opacity: 0.5,
       },
     },
@@ -55,11 +59,27 @@ const CaseAdviserActivityTrends: React.FC = () => {
       categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
       title: {
         text: "Month",
+        style: {
+          color: undefined, // Let CSS handle the color
+        },
+      },
+      labels: {
+        style: {
+          colors: undefined, // Let CSS handle the color
+        },
       },
     },
     yaxis: {
       title: {
         text: "Number of Activities",
+        style: {
+          color: undefined, // Let CSS handle the color
+        },
+      },
+      labels: {
+        style: {
+          colors: undefined, // Let CSS handle the color
+        },
       },
       min: 0,
       max: 400,
@@ -71,6 +91,10 @@ const CaseAdviserActivityTrends: React.FC = () => {
       floating: true,
       offsetY: -25,
       offsetX: -5,
+      labels: {
+        colors: undefined, // Let CSS handle the color
+        useSeriesColors: false,
+      },
     },
     tooltip: {
       shared: true,
@@ -100,7 +124,7 @@ const CaseAdviserActivityTrends: React.FC = () => {
   return (
     <Col md={6}>
       <Card className="shadow-sm">
-        <CardBody>
+        <CardBody className="apex-chart w-100">
           <ReactApexChart
             options={chartOptions}
             series={chartSeries}

@@ -1710,6 +1710,28 @@
       .apexcharts-gridlines-vertical line {
         stroke: var(--border-color) !important;
       }
+
+      // Override grid border color in dark mode
+      line {
+        stroke: var(--border-color) !important;
+      }
+    }
+
+    // Grid background and border
+    .apexcharts-gridrow,
+    .apexcharts-gridlines-horizontal,
+    .apexcharts-gridlines-vertical {
+      stroke: var(--border-color) !important;
+    }
+
+    // Override alternating row colors in dark mode
+    .apexcharts-gridrow rect {
+      fill: transparent !important;
+    }
+
+    // Grid row backgrounds
+    .apexcharts-grid-row {
+      fill: transparent !important;
     }
 
     // Data labels
