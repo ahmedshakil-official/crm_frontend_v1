@@ -80,7 +80,10 @@ const TopPerformingAdvisers: React.FC<CommonDashboardProps> = ({
             ))}
           </div>
         ) : (
-          <div className="d-flex justify-content-center align-items-center h-100">
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "350px" }}
+          >
             <p className="text-muted">No data available</p>
           </div>
         )}

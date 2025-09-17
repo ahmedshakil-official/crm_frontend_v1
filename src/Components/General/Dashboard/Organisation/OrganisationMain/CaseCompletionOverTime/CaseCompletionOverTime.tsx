@@ -111,19 +111,18 @@ const CaseCompletionOverTime: React.FC = () => {
   ];
 
   return (
-    <Card
-    //   className="case-completion-trend"
-    //   style={{ width: "100%", height: "400px" }}
-    >
+    <Card>
       <h4 className="text-xl p-3 font-semibold mb-4">
         Case Completion Over Time
       </h4>
-      <Chart
-        options={options as any}
-        series={series}
-        type="bar"
-        height="300px"
-      />
+      <div className="apex-chart w-100">
+        <Chart
+          options={options as any}
+          series={series}
+          type="bar"
+          height="300px"
+        />
+      </div>
     </Card>
   );
 };
