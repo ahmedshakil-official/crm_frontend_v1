@@ -30,7 +30,7 @@ const CaseStatusOverview: React.FC = () => {
     colors: ["#10b981", "#f59e0b", "#94a3b8"],
     labels: ["Compliant", "In Progress", "Issues"],
     legend: {
-      position: "right",
+      position: "bottom",
       fontSize: "14px",
       offsetY: 20,
       labels: {
@@ -122,7 +122,7 @@ const CaseStatusOverview: React.FC = () => {
           options={options as any}
           series={series}
           type="donut"
-          height={300}
+          height={340}
         />
       </div>
     </Card>

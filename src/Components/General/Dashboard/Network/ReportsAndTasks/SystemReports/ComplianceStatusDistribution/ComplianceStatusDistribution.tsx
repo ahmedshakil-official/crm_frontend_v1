@@ -12,6 +12,7 @@ const ComplianceStatusDistribution: React.FC = () => {
 
   const options = {
     title: "Compliance Status Distribution",
+    backgroundColor: "transparent",
     is3D: true,
     colors: ["#10b981", "#9ca3af", "#0ea5e9"],
     pieHole: 0.4,
@@ -36,7 +37,7 @@ const ComplianceStatusDistribution: React.FC = () => {
   return (
     <Col md="6">
       <Card className="shadow-sm">
-        <CardBody>
+        <CardBody className="google-chart">
           <Chart
             chartType="PieChart"
             width={"100%"}

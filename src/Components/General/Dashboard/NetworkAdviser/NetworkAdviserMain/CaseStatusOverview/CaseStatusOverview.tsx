@@ -26,7 +26,7 @@ const CaseStatusOverview: React.FC = () => {
     pieStartAngle: 0, // No rotation
     sliceVisibilityThreshold: 0.01, // Show all slices
     legend: {
-      position: "right",
+      position: "bottom",
       alignment: "center",
       textStyle: {
         fontSize: 12,
