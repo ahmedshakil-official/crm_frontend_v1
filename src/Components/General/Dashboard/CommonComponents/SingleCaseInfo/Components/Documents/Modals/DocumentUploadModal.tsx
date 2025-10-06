@@ -124,6 +124,7 @@ const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({
                   type="file"
                   id="fileUpload"
                   name="fileUpload"
+                  multiple
                   onChange={handleDocumentChange}
                 />
               </FormGroup>
